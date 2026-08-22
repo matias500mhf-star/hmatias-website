@@ -1249,3 +1249,161 @@ footer .brand {
   }
 
 }
+/* =========================
+   PORTFÓLIO / PROJETOS
+========================= */
+
+.project-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.project-card{
+  background:#fff;
+  border:1px solid var(--line);
+  overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.project-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 35px rgba(17,19,21,.08);
+}
+
+.project-image{
+  height:300px;
+  display:flex;
+  align-items:flex-end;
+  padding:24px;
+  background:linear-gradient(135deg,#e9ebeb,#cfd3d4);
+  position:relative;
+  overflow:hidden;
+}
+
+.project-image::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    180deg,
+    transparent 45%,
+    rgba(17,19,21,.45) 100%
+  );
+}
+
+.project-image span{
+  position:relative;
+  z-index:1;
+  color:#fff;
+  font:700 12px Manrope;
+  letter-spacing:2px;
+}
+
+.project-construction{
+  background:
+    linear-gradient(
+      135deg,
+      #d9dcdd 0%,
+      #aeb4b6 45%,
+      #737a7d 100%
+    );
+}
+
+.project-remodeling{
+  background:
+    linear-gradient(
+      135deg,
+      #eeeeec 0%,
+      #d0d0ca 50%,
+      #999b96 100%
+    );
+}
+
+.project-maintenance{
+  background:
+    linear-gradient(
+      135deg,
+      #dfe2e1 0%,
+      #b7bcbd 50%,
+      #858b8d 100%
+    );
+}
+
+.project-cleaning{
+  background:
+    linear-gradient(
+      135deg,
+      #f0f1ef 0%,
+      #d5d8d6 50%,
+      #a5aaa8 100%
+    );
+}
+
+.project-content{
+  padding:28px;
+}
+
+.project-number{
+  font-size:11px;
+  color:#92989c;
+  font-weight:600;
+}
+
+.project-content h3{
+  font:700 25px/1.15 Manrope;
+  letter-spacing:-1px;
+  margin:35px 0 12px;
+}
+
+.project-content p{
+  font-size:14px;
+  line-height:1.7;
+  color:#72787c;
+  margin:0;
+  max-width:520px;
+}
+
+.projects-footer{
+  margin-top:25px;
+  padding:32px;
+  border:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:30px;
+  background:var(--soft);
+}
+
+.projects-footer p{
+  margin:0;
+  color:#697078;
+  font-size:14px;
+}
+
+.projects-footer strong{
+  color:var(--ink);
+  font-size:15px;
+}
+
+
+/* =========================
+   RESPONSIVO — PROJETOS
+========================= */
+
+@media(max-width:800px){
+
+  .project-grid{
+    grid-template-columns:1fr;
+  }
+
+  .project-image{
+    height:240px;
+  }
+
+  .projects-footer{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+}
