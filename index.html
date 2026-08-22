@@ -4,36 +4,117 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="description" content="HMATIAS – Prestação de Serviços, SU, Lda. Empresa angolana especializada em prestação de serviços e construção, manutenção, remodelação, limpeza, fornecimento, serviços administrativos e soluções empresariais.">
+  <!-- Primary metadata -->
+  <title>HMATIAS | Prestação de Serviços & Construção em Angola</title>
+  <meta name="description" content="HMATIAS — Serviços e Construção em Luanda: manutenção, remodelação, limpeza, fornecimento e soluções empresariais. Contacte-nos para orçamentos.">
+  <link rel="canonical" href="https://comercialhmatiasps.com/">
 
-  <meta name="keywords" content="HMATIAS, construção Angola, prestação de serviços Angola, manutenção, remodelação, limpeza profissional, fornecimento, serviços administrativos, soluções empresariais, Luanda">
-
-  <meta name="author" content="HMATIAS – Prestação de Serviços, SU, Lda.">
-
-  <meta property="og:title" content="HMATIAS | Prestação de Serviços & Construção">
-  <meta property="og:description" content="Prestação de serviços, construção, manutenção, remodelação, limpeza, fornecimento e soluções empresariais em Angola.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://comercialhmatiasps.com/">
-
+  <!-- Favicon & theme -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <meta name="theme-color" content="#111111">
 
-  <title>HMATIAS | Prestação de Serviços & Construção em Angola</title>
+  <!-- Open Graph -->
+  <meta property="og:locale" content="pt_AO">
+  <meta property="og:title" content="HMATIAS | Prestação de Serviços & Construção">
+  <meta property="og:description" content="Prestação de serviços, construção, manutenção e soluções empresariais em Angola.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://comercialhmatiasps.com/">
+  <meta property="og:image" content="https://comercialhmatiasps.com/og-image.jpg">
 
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HMATIAS | Prestação de Serviços & Construção">
+  <meta name="twitter:description" content="Prestação de serviços, construção e soluções empresariais em Angola.">
+  <meta name="twitter:image" content="https://comercialhmatiasps.com/og-image.jpg">
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="style.css" as="style">
+  <!-- If using web fonts: -->
+  <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- Minimal critical CSS for accessibility & skip link (keeps layout stable until style.css loads) -->
+  <style>
+    /* Skip-link: visually hidden but visible on keyboard focus */
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      z-index: 1000;
+    }
+    .skip-link:focus,
+    .skip-link:active {
+      left: 1rem;
+      top: 1rem;
+      width: auto;
+      height: auto;
+      padding: 0.5rem 1rem;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    /* Visible focus for keyboard users (prefer :focus-visible when available) */
+    :focus {
+      outline: 3px solid #ffbf47;
+      outline-offset: 2px;
+    }
+    /* Reduce focus styling for mouse users (if supported) */
+    :focus:not(:focus-visible) {
+      outline: none;
+    }
+
+    /* Make headings readable if CSS hasn't loaded */
+    h1, h2, h3 { font-weight: 600; }
+  </style>
+
+  <!-- Structured data for LocalBusiness (edit sameAs and logos to match your accounts/paths) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "HMATIAS – Prestação de Serviços, SU, Lda.",
+    "url": "https://comercialhmatiasps.com/",
+    "logo": "https://comercialhmatiasps.com/logo.png",
+    "telephone": "+244948806673",
+    "email": "comercial@matiasps.ao",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Luanda",
+      "addressCountry": "AO"
+    },
+    "sameAs": [
+      "https://www.facebook.com/yourpage",
+      "https://www.instagram.com/yourprofile"
+    ]
+  }
+  </script>
+
+  <meta name="author" content="HMATIAS – Prestação de Serviços, SU, Lda.">
+  <meta name="keywords" content="HMATIAS, construção Angola, prestação de serviços Angola, manutenção, remodelação, limpeza profissional">
 </head>
 
 <body>
 
+  <!-- Skip link for keyboard users -->
+  <a class="skip-link" href="#inicio">Ir para o conteúdo</a>
+
   <!-- =========================
        NAVEGAÇÃO
   ========================== -->
-  <header class="nav">
+  <header class="nav" role="banner">
 
     <a class="brand" href="#inicio" aria-label="HMATIAS - Página inicial">
       <span>H</span>MATIAS
     </a>
 
-    <nav aria-label="Navegação principal">
+    <nav aria-label="Navegação principal" role="navigation">
       <a href="#empresa">Empresa</a>
       <a href="#servicos">Serviços</a>
       <a href="#solucoes">Soluções Empresariais</a>
@@ -46,6 +127,7 @@
       href="https://wa.me/244948806673"
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="Falar connosco no WhatsApp (abre em nova janela)"
     >
       Falar connosco
     </a>
@@ -53,12 +135,12 @@
   </header>
 
 
-  <main>
+  <main id="main" role="main">
 
     <!-- =========================
          HERO
     ========================== -->
-    <section id="inicio" class="hero">
+    <section id="inicio" class="hero" tabindex="-1">
 
       <div class="hero-copy">
 
@@ -88,7 +170,7 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            Falar no WhatsApp <span>↗</span>
+            Falar no WhatsApp <span aria-hidden="true">↗</span>
           </a>
 
         </div>
@@ -96,20 +178,20 @@
       </div>
 
 
-      <div class="hero-card">
+      <div class="hero-card" aria-hidden="false">
 
         <div class="card-label">
           O nosso compromisso
         </div>
 
-        <div class="line"></div>
+        <div class="line" aria-hidden="true"></div>
 
         <p>
           Compreender a necessidade, apresentar uma solução clara
           e executar cada serviço com responsabilidade e rigor.
         </p>
 
-        <div class="stat">
+        <div class="stat" aria-hidden="true">
           <strong>01</strong>
           <span>
             Um parceiro para diferentes necessidades operacionais
@@ -125,13 +207,13 @@
     <!-- =========================
          ÁREAS DE ATUAÇÃO
     ========================== -->
-    <section class="section capabilities">
+    <section class="section capabilities" aria-labelledby="areas-title">
 
       <div class="section-head">
 
         <div>
           <p class="eyebrow">ÁREAS DE ATUAÇÃO</p>
-          <h2>
+          <h2 id="areas-title">
             Um parceiro para
             <em>diferentes necessidades.</em>
           </h2>
@@ -190,7 +272,7 @@
     <!-- =========================
          EMPRESA
     ========================== -->
-    <section id="empresa" class="section company">
+    <section id="empresa" class="section company" aria-labelledby="empresa-title">
 
       <div>
 
@@ -198,7 +280,7 @@
           01 · A EMPRESA
         </p>
 
-        <h2>
+        <h2 id="empresa-title">
           Uma empresa orientada para
           <em>resultados.</em>
         </h2>
@@ -235,7 +317,7 @@
     <!-- =========================
          SERVIÇOS
     ========================== -->
-    <section id="servicos" class="section services">
+    <section id="servicos" class="section services" aria-labelledby="servicos-title">
 
       <div class="section-head">
 
@@ -245,7 +327,7 @@
             02 · SERVIÇOS
           </p>
 
-          <h2>
+          <h2 id="servicos-title">
             O que fazemos
           </h2>
 
@@ -263,146 +345,91 @@
 
         <!-- Serviço 01 -->
         <article>
-
           <span>01</span>
-
-          <h3>
-            Construção & Obras
-          </h3>
-
+          <h3>Construção & Obras</h3>
           <p>
             Execução de obras, construção civil, salas de apoio,
             intervenções em instalações, pavimentação e outros
             trabalhos de construção de acordo com as necessidades
             do projeto.
           </p>
-
         </article>
-
 
         <!-- Serviço 02 -->
         <article>
-
           <span>02</span>
-
-          <h3>
-            Remodelação
-          </h3>
-
+          <h3>Remodelação</h3>
           <p>
             Remodelação, adaptação e melhoria de escritórios,
             lojas, instalações empresariais, espaços comerciais
             e outros ambientes.
           </p>
-
         </article>
-
 
         <!-- Serviço 03 -->
         <article>
-
           <span>03</span>
-
-          <h3>
-            Manutenção & Reparação
-          </h3>
-
+          <h3>Manutenção & Reparação</h3>
           <p>
             Reparação e manutenção de coberturas, instalações,
             estruturas e espaços, com intervenções destinadas
             à conservação e continuidade operacional.
           </p>
-
         </article>
-
 
         <!-- Serviço 04 -->
         <article>
-
           <span>04</span>
-
-          <h3>
-            Limpeza Profissional
-          </h3>
-
+          <h3>Limpeza Profissional</h3>
           <p>
             Limpeza de escritórios, lojas, instalações empresariais,
             espaços comerciais e limpeza pós-obra, incluindo
             serviços periódicos e intervenções específicas.
           </p>
-
         </article>
-
 
         <!-- Serviço 05 -->
         <article>
-
           <span>05</span>
-
-          <h3>
-            Fornecimento
-          </h3>
-
+          <h3>Fornecimento</h3>
           <p>
             Fornecimento de materiais, equipamentos e produtos
             de apoio às operações, obras e necessidades correntes
             de empresas e organizações.
           </p>
-
         </article>
-
 
         <!-- Serviço 06 -->
         <article>
-
           <span>06</span>
-
-          <h3>
-            Serviços Administrativos
-          </h3>
-
+          <h3>Serviços Administrativos</h3>
           <p>
             Apoio administrativo, organização documental,
             preparação e tratamento de documentação e outros
             serviços de suporte às necessidades das empresas.
           </p>
-
         </article>
-
 
         <!-- Serviço 07 -->
         <article>
-
           <span>07</span>
-
-          <h3>
-            Soluções Empresariais
-          </h3>
-
+          <h3>Soluções Empresariais</h3>
           <p>
             Serviços personalizados para empresas e organizações,
             desenvolvidos de acordo com necessidades específicas
             e requisitos operacionais.
           </p>
-
         </article>
-
 
         <!-- Serviço 08 -->
         <article>
-
           <span>08</span>
-
-          <h3>
-            Projetos Personalizados
-          </h3>
-
+          <h3>Projetos Personalizados</h3>
           <p>
             Analisamos necessidades específicas e estruturamos
             soluções adequadas ao tipo de serviço, dimensão,
             prazo e requisitos apresentados pelo cliente.
           </p>
-
         </article>
 
       </div>
@@ -413,7 +440,7 @@
     <!-- =========================
          SOLUÇÕES EMPRESARIAIS
     ========================== -->
-    <section id="solucoes" class="section business-solutions">
+    <section id="solucoes" class="section business-solutions" aria-labelledby="solucoes-title">
 
       <div class="section-head">
 
@@ -423,7 +450,7 @@
             03 · SOLUÇÕES EMPRESARIAIS
           </p>
 
-          <h2>
+          <h2 id="solucoes-title">
             Um parceiro para
             <em>as necessidades da sua empresa.</em>
           </h2>
@@ -441,67 +468,40 @@
       <div class="solutions-grid">
 
         <article>
-
           <span>01</span>
-
-          <h3>
-            Contratos de Manutenção
-          </h3>
-
+          <h3>Contratos de Manutenção</h3>
           <p>
             Serviços programados de manutenção e conservação
             das instalações, de acordo com as necessidades
             e periodicidade definida pelo cliente.
           </p>
-
         </article>
 
-
         <article>
-
           <span>02</span>
-
-          <h3>
-            Contratos de Limpeza
-          </h3>
-
+          <h3>Contratos de Limpeza</h3>
           <p>
             Planos de limpeza periódica para escritórios,
             lojas, instalações empresariais e outros espaços.
           </p>
-
         </article>
 
-
         <article>
-
           <span>03</span>
-
-          <h3>
-            Obras & Remodelações
-          </h3>
-
+          <h3>Obras & Remodelações</h3>
           <p>
             Execução de intervenções, melhorias, adaptações
             e remodelações de espaços empresariais.
           </p>
-
         </article>
 
-
         <article>
-
           <span>04</span>
-
-          <h3>
-            Fornecimento Empresarial
-          </h3>
-
+          <h3>Fornecimento Empresarial</h3>
           <p>
             Apoio no fornecimento de materiais, equipamentos
             e produtos necessários à operação ou execução de projetos.
           </p>
-
         </article>
 
       </div>
@@ -539,7 +539,7 @@
     <!-- =========================
          PROJETOS
     ========================== -->
-    <section id="projetos" class="section projects">
+    <section id="projetos" class="section projects" aria-labelledby="projetos-title">
 
       <div class="section-head">
 
@@ -549,7 +549,7 @@
             04 · PROJETOS & EXPERIÊNCIA
           </p>
 
-          <h2>
+          <h2 id="projetos-title">
             Trabalho que fala
             <em>por nós.</em>
           </h2>
@@ -567,7 +567,7 @@
 
       <div class="project-note">
 
-        <div class="plus">+</div>
+        <div class="plus" aria-hidden="true">+</div>
 
         <h3>
           Portfólio HMATIAS
@@ -586,7 +586,7 @@
     <!-- =========================
          PORQUÊ HMATIAS
     ========================== -->
-    <section class="section why-us">
+    <section class="section why-us" aria-labelledby="why-title">
 
       <div class="section-head">
 
@@ -596,7 +596,7 @@
             05 · PORQUÊ HMATIAS
           </p>
 
-          <h2>
+          <h2 id="why-title">
             Profissionalismo em cada
             <em>etapa.</em>
           </h2>
@@ -614,66 +614,39 @@
       <div class="why-grid">
 
         <article>
-
           <strong>01</strong>
-
-          <h3>
-            Responsabilidade
-          </h3>
-
+          <h3>Responsabilidade</h3>
           <p>
             Compromisso com as necessidades apresentadas
             e com os serviços acordados.
           </p>
-
         </article>
 
-
         <article>
-
           <strong>02</strong>
-
-          <h3>
-            Organização
-          </h3>
-
+          <h3>Organização</h3>
           <p>
             Planeamento e comunicação clara ao longo
             do processo de execução.
           </p>
-
         </article>
 
-
         <article>
-
           <strong>03</strong>
-
-          <h3>
-            Versatilidade
-          </h3>
-
+          <h3>Versatilidade</h3>
           <p>
             Diferentes áreas de serviço através
             de um único parceiro.
           </p>
-
         </article>
 
-
         <article>
-
           <strong>04</strong>
-
-          <h3>
-            Proximidade
-          </h3>
-
+          <h3>Proximidade</h3>
           <p>
             Contacto direto e acompanhamento
             das necessidades de cada cliente.
           </p>
-
         </article>
 
       </div>
@@ -684,7 +657,7 @@
     <!-- =========================
          CONTACTOS
     ========================== -->
-    <section id="contactos" class="contact">
+    <section id="contactos" class="contact" aria-labelledby="contactos-title">
 
       <div>
 
@@ -692,7 +665,7 @@
           06 · CONTACTOS
         </p>
 
-        <h2>
+        <h2 id="contactos-title">
           Vamos falar sobre
           <em>o seu projeto.</em>
         </h2>
@@ -713,9 +686,8 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          WhatsApp <span>↗</span>
+          WhatsApp <span aria-hidden="true">↗</span>
         </a>
-
 
         <a
           href="mailto:comercial@matiasps.ao"
@@ -724,14 +696,12 @@
           comercial@matiasps.ao
         </a>
 
-
         <a
           href="mailto:geral@matiasps.ao"
           class="contact-link"
         >
           geral@matiasps.ao
         </a>
-
 
         <a
           href="tel:+244948806673"
@@ -740,12 +710,24 @@
           +244 948 80 66 73
         </a>
 
-
-        <span class="contact-link">
+        <span class="contact-link" aria-hidden="false">
           Luanda, Angola
         </span>
 
       </div>
+
+      <!-- Optional: lightweight contact form (requires server-side handling) -->
+      <!--
+      <form action="/contact" method="post" class="contact-form" aria-label="Formulário de contacto">
+        <label for="name">Nome</label>
+        <input id="name" name="name" required>
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email" required>
+        <label for="message">Mensagem</label>
+        <textarea id="message" name="message" required></textarea>
+        <button type="submit">Enviar pedido</button>
+      </form>
+      -->
 
     </section>
 
@@ -755,7 +737,7 @@
   <!-- =========================
        FOOTER
   ========================== -->
-  <footer>
+  <footer role="contentinfo">
 
     <div class="brand">
       <span>H</span>MATIAS
@@ -778,6 +760,36 @@
     </p>
 
   </footer>
+
+  <!-- Lightweight script: updates nav aria-current based on intersection (improves a11y & keyboard users) -->
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
+
+      const nav = document.querySelector('header nav');
+      if (!nav) return;
+      const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+      const sections = links.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+
+      const setActive = (id) => {
+        links.forEach(a => {
+          try {
+            a.setAttribute('aria-current', a.getAttribute('href') === ('#' + id));
+          } catch (e) {}
+        });
+      };
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+          }
+        });
+      }, { root: null, rootMargin: '0px 0px -60% 0px', threshold: 0.1 });
+
+      sections.forEach(s => observer.observe(s));
+    })();
+  </script>
 
 </body>
 </html>
