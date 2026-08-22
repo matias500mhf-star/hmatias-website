@@ -608,7 +608,7 @@ em{
 }
 
 /* ========================================= 
-   CONTACTO
+   CONTACTO - FORMULÁRIO COMPACTO
    ========================================= */
 
 .contact{
@@ -649,13 +649,13 @@ em{
 .contact-actions{
   display:flex;
   flex-direction:column;
-  gap:16px;
-  min-width:320px;
+  gap:12px;
+  min-width:340px;
 }
 
 .contact-link{
   color:#d1d5db;
-  font-size:var(--text-base);
+  font-size:var(--text-sm);
   line-height:var(--lh-normal);
   transition:color 0.2s ease;
 }
@@ -664,53 +664,75 @@ em{
   color:#fff;
 }
 
+/* Formulário Compacto e Moderno */
 .contact-form{
-  background:#fff;
-  padding:24px;
-  border-radius:12px;
+  background:#1a2332;
+  padding:20px;
+  border-radius:10px;
   color:var(--ink);
-  margin-top:16px;
+  margin-top:20px;
+  border:1px solid #2a3847;
 }
 
 .contact-form label{
   display:block;
-  font-size:var(--text-sm);
+  font-size:12px;
   font-weight:600;
-  margin:14px 0 8px;
-  color:#333;
+  margin:12px 0 6px;
+  color:#bbb;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
 }
 
 .contact-form input,
 .contact-form textarea{
   width:100%;
-  padding:12px;
-  border:1.5px solid #d9dde0;
-  border-radius:8px;
-  font-size:var(--text-base);
+  padding:10px 12px;
+  border:1px solid #2a3847;
+  border-radius:6px;
+  font-size:13px;
   font-family:var(--font-body);
-  transition:border-color 0.2s ease;
+  background:#0f1823;
+  color:#fff;
+  transition:all 0.2s ease;
+  margin-bottom:8px;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder{
+  color:#666;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus{
   outline:none;
-  border-color:var(--ink);
-  background:#fafbfb;
+  border-color:#5a9fff;
+  background:#1a2a3a;
+  box-shadow:0 0 0 3px rgba(90,159,255,0.1);
 }
 
 .contact-form button{
-  margin-top:16px;
+  margin-top:8px;
+  width:100%;
+  padding:10px 16px;
+  font-size:12px;
 }
 
 .form-note{
-  font-size:var(--text-sm);
-  color:#888;
-  margin-top:12px;
-  line-height:var(--lh-normal);
+  font-size:11px;
+  color:#999;
+  margin-top:10px;
+  line-height:1.4;
 }
 
 .form-note a{
-  color:#555;
+  color:#5a9fff;
+  text-decoration:none;
+  transition:color 0.2s ease;
+}
+
+.form-note a:hover{
+  color:#7aafff;
   text-decoration:underline;
 }
 
@@ -911,6 +933,10 @@ footer > div:last-child{
   .button{
     width:100%;
     justify-content:center;
+  }
+  
+  .contact-actions{
+    min-width:100%;
   }
 }
 
