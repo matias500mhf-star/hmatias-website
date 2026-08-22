@@ -1,0 +1,24 @@
+# HMATIAS Website Robots.txt
+# Permite aos motores de busca indexar o site
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Crawl delay para respeitar o servidor
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://comercialhmatiasps.com/sitemap.xml
+
+# Específico para Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Específico para Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
