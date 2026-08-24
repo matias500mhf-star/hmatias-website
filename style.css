@@ -224,3 +224,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+
+/* Conversão e confiança */
+.why-us{padding:82px 0;background:#f8fbfe}
+.why-us-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.why-us-grid article{background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px 24px;box-shadow:0 10px 30px rgba(6,45,86,.06)}
+.why-us-grid span{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#eaf4fd;color:var(--blue);font-size:12px;font-weight:800;margin-bottom:18px}
+.why-us-grid h3{font-size:17px;margin-bottom:8px}
+.why-us-grid p,.project-caption p{font-size:13px;color:var(--muted)}
+.project-caption p{margin-top:7px}
+.project-caption a{display:inline-block;margin-top:12px;color:var(--blue);font-size:12px;font-weight:800}
+.whatsapp-float{position:fixed;right:22px;bottom:22px;z-index:60;display:inline-flex;align-items:center;gap:8px;padding:13px 17px;border-radius:999px;background:#159447;color:#fff;font-size:13px;font-weight:800;box-shadow:0 12px 28px rgba(21,148,71,.28);transition:transform .2s,background .2s}
+.whatsapp-float:hover{background:#10783a;transform:translateY(-2px)}
+.whatsapp-float span{font-size:16px}
+@media(max-width:850px){.why-us-grid{grid-template-columns:1fr}.whatsapp-float{right:14px;bottom:14px}}
