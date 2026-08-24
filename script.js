@@ -33,8 +33,9 @@ Serviço: ${servico}
 Mensagem:
 ${mensagem}`;
 
-  const phone = "244900000000"; // SUBSTITUIR pelo WhatsApp real da HMATIAS
+  const phone = "244948806673";
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
 });
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const year = document.getElementById("year");
+if (year) year.textContent = new Date().getFullYear();

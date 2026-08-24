@@ -1,16 +1,23 @@
-# HMATIAS Website
+HMATIAS — PACOTE FINAL DE PUBLICAÇÃO
 
-Estrutura inicial profissional para o website da HMATIAS.
+Checklist técnico concluído:
+- 4 projetos reais integrados e otimizados em WebP + JPG fallback.
+- Logo otimizado em WebP + PNG fallback.
+- Favicon reduzido.
+- Contraste principal ajustado para WCAG AA nos elementos de texto revistos.
+- Formulário com labels/IDs e autocomplete.
+- Canonical + Open Graph básicos.
+- Menu mobile com aria-expanded.
+- Imagens de projetos lazy + async + dimensões explícitas.
+- Sem Google Fonts externo no código local.
+- WhatsApp: +244 948 806 673.
+- Email geral: geral@hmatiasps.ao.
+- Email comercial: Comercial@hmatiasps.ao.
+- NIF: 5001578065.
 
-## Ficheiros
-- `index.html` — página principal
-- `style.css` — identidade visual e responsividade
-- `script.js` — menu mobile + formulário para WhatsApp
-- `images/logo-hmatias.png` — logo preparado com fundo transparente
-- `images/favicon.png` — ícone
+IMPORTANTE:
+O relatório Lighthouse arquivado em 24/08/2026 foi executado sobre a versão LIVE anterior.
+Esse relatório encontrou 404 em projeto-03.jpg/projeto-04.jpg, contraste #087df3 e carregamento do Google Fonts.
+Esses pontos foram corrigidos no pacote local final. O Lighthouse deve ser executado novamente APÓS esta versão ser publicada, de preferência em janela anónima/sem extensões.
 
-## Antes de publicar
-1. Substituir `244900000000` pelo número real de WhatsApp.
-2. Confirmar o email `geral@hmatiasps.ao`.
-3. Trocar os blocos de projeto pelas fotografias reais da HMATIAS.
-4. Rever os textos e serviços finais.
+Não considerar a pontuação antiga como a pontuação desta versão.

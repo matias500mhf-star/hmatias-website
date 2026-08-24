@@ -1,10 +1,10 @@
 :root{
   --navy:#062d56;
   --navy-2:#0b3e70;
-  --blue:#087df3;
+  --blue:#0065cc;
   --sky:#43b7f3;
   --ink:#102d4d;
-  --muted:#66758a;
+  --muted:#5b697a;
   --light:#f4f8fc;
   --white:#fff;
   --border:#dce6f0;
@@ -12,7 +12,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:Inter,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
+body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
 a{text-decoration:none;color:inherit}
 img{max-width:100%;display:block}
 .container{width:min(1180px,calc(100% - 40px));margin:auto}
@@ -33,7 +33,7 @@ img{max-width:100%;display:block}
 .nav-actions{display:flex;gap:12px;align-items:center}
 .whatsapp{border:1px solid #b7e6ca;border-radius:10px;padding:12px 17px;color:#159447;font-weight:700;font-size:13px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:15px;border:0;border-radius:9px;padding:14px 23px;font-weight:700;font-size:14px;cursor:pointer;transition:.25s}
-.btn-primary{background:var(--blue);color:#fff;box-shadow:0 10px 25px rgba(8,125,243,.22)}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 10px 25px rgba(0,101,204,.20)}
 .btn-primary:hover{transform:translateY(-2px);background:#006edb}
 .btn-small{padding:13px 19px}
 .btn-outline-light{border:1px solid rgba(255,255,255,.7);color:#fff}
@@ -64,16 +64,16 @@ repeating-linear-gradient(90deg,rgba(6,45,86,.22) 0 4px,transparent 4px 68px),
 repeating-linear-gradient(0deg,rgba(6,45,86,.18) 0 4px,transparent 4px 62px);
 border:9px solid rgba(255,255,255,.65);box-shadow:inset 0 0 0 2px rgba(6,45,86,.2)}
 .visual-card:after{content:"";position:absolute;right:8%;bottom:9%;width:35%;height:18%;background:#eef4f8;transform:skewX(-28deg);box-shadow:0 20px 25px rgba(0,0,0,.2)}
-.visual-overlay{position:absolute;right:7%;bottom:18%;padding:18px 22px;background:rgba(6,45,86,.9);border-left:5px solid var(--sky);font-size:13px}
+.visual-overlay{position:absolute;z-index:3;right:7%;bottom:18%;padding:18px 22px;background:rgba(6,45,86,.9);border-left:5px solid var(--sky);font-size:13px}
 .visual-overlay small{display:block;color:#b7d8ef;margin-top:3px}
-.hero-shape{position:absolute;left:49%;top:0;height:100%;width:95px;background:rgba(8,125,243,.85);transform:skewX(-31deg);z-index:1}
+.hero-shape{position:absolute;left:49%;top:0;height:100%;width:95px;background:rgba(0,101,204,.85);transform:skewX(-31deg);z-index:1}
 
 .services{padding:78px 0;background:#fff}
 .section-heading{margin-bottom:34px;display:flex;justify-content:space-between;align-items:end;gap:30px}
 .section-heading.center{display:block;text-align:center;max-width:720px;margin:0 auto 40px}
 .section-heading h2,.company h2,.contact h2{font-size:clamp(30px,3vw,43px);line-height:1.15;letter-spacing:-1.3px}
 .section-heading p{max-width:560px;color:var(--muted);font-size:14px}
-.service-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .service-card{padding:26px 22px;border:1px solid var(--border);border-radius:13px;background:#fff;box-shadow:var(--shadow);transition:.25s}
 .service-card:hover{transform:translateY(-6px);border-color:#a9d4f7}
 .service-icon{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:#eaf4fd;color:var(--blue);font-size:24px;font-weight:800;margin-bottom:18px}
@@ -84,11 +84,11 @@ border:9px solid rgba(255,255,255,.65);box-shadow:inset 0 0 0 2px rgba(6,45,86,.
 .company{padding:90px 0;background:var(--light)}
 .company-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:90px;align-items:center}
 .company h2{margin-bottom:20px}
-.company h2 span{color:var(--blue)}
+.company h2 span{color:#005aa8}
 .company p{color:var(--muted);font-size:15px;margin-bottom:13px;max-width:680px}
 .company-points{display:grid;gap:10px;margin-top:25px}
 .company-points div{display:flex;align-items:center;gap:16px;padding:12px 15px;background:#fff;border:1px solid var(--border);border-radius:9px}
-.company-points b{color:var(--blue);font-size:13px}
+.company-points b{color:#005aa8;font-size:13px}
 .company-points span{font-weight:600;font-size:13px}
 .company-panel{min-height:390px;border-radius:24px;background:linear-gradient(145deg,var(--navy),#0b65a4);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:55px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
 .company-panel:after{content:"";position:absolute;width:270px;height:270px;border:1px solid rgba(255,255,255,.12);border-radius:50%;right:-80px;bottom:-80px}
@@ -101,15 +101,8 @@ border:9px solid rgba(255,255,255,.65);box-shadow:inset 0 0 0 2px rgba(6,45,86,.
 .project-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:18px}
 .project{border:1px solid var(--border);border-radius:13px;overflow:hidden;background:#fff;box-shadow:0 10px 35px rgba(6,45,86,.07)}
 .project-large{grid-row:span 2}
-.project-placeholder{height:250px;background:linear-gradient(135deg,#6b8291,#d6e1e7 50%,#3b586d);display:flex;align-items:flex-end;padding:20px;position:relative}
-.project-large .project-placeholder{height:530px}
-.project-placeholder:before{content:"";position:absolute;inset:18% 12% 0 12%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.4) 0 3px,transparent 3px 52px),repeating-linear-gradient(0deg,rgba(6,45,86,.18) 0 3px,transparent 3px 48px);border:8px solid rgba(255,255,255,.5)}
-.project-placeholder.office{background:linear-gradient(135deg,#a7866b,#f0ece7 48%,#6c7c87)}
-.project-placeholder.clean{background:linear-gradient(135deg,#b5d8e5,#eef7fa 48%,#9bbbc5)}
-.project-placeholder.supply{background:linear-gradient(135deg,#35506a,#b66c42 60%,#263b50)}
-.project-placeholder span{position:relative;z-index:2;background:var(--navy);color:#fff;padding:7px 10px;border-radius:5px;font-size:10px;font-weight:800;letter-spacing:1px}
 .project-caption{padding:16px 18px}
-.project-caption small{color:var(--blue);font-size:10px;font-weight:800;text-transform:uppercase}
+.project-caption small{color:#005aa8;font-size:10px;font-weight:800;text-transform:uppercase}
 .project-caption h3{font-size:16px;margin-top:3px}
 
 .cta{background:linear-gradient(100deg,var(--navy),#075e9c);color:#fff;padding:65px 0}
@@ -129,7 +122,7 @@ border:9px solid rgba(255,255,255,.65);box-shadow:inset 0 0 0 2px rgba(6,45,86,.
 .contact-form label:nth-of-type(3),.contact-form label:nth-of-type(4),.contact-form button,.form-note{grid-column:1/-1}
 .contact-form input,.contact-form select,.contact-form textarea{width:100%;border:1px solid #d8e2ec;border-radius:8px;padding:12px 13px;font:inherit;font-size:13px;outline:0;background:#fff}
 .contact-form textarea{resize:vertical}
-.contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(8,125,243,.08)}
+.contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,101,204,.08)}
 .form-note{font-size:11px;color:var(--muted)}
 
 footer{background:#031f3d;color:#bcd1e3;padding:55px 0 18px}
@@ -188,6 +181,14 @@ footer p{font-size:12px;margin-top:8px}
 }
 
 /* Galeria real de projetos HMATIAS */
+
+
+/* --- Performance & accessibility --- */
+.project, .company, .contact, .services, .projects{
+  content-visibility:auto;
+  contain-intrinsic-size:1px 700px;
+}
+.project picture{display:block;width:100%;height:100%}
 .project-image{
   width:100%;
   height:250px;
@@ -195,5 +196,29 @@ footer p{font-size:12px;margin-top:8px}
   display:block;
   background:#e8eef4;
 }
+.project-image[width][height]{aspect-ratio:auto}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid rgba(0,101,204,.35);
+  outline-offset:3px;
+}
+.menu-toggle{cursor:pointer}
+.service-card a{color:#005aa8}
+
+/* Galeria de projetos */
+.project picture{display:block;width:100%}
+.project-image{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  display:block;
+  background:#e8eef4;
+  transition:transform .35s ease;
+}
 .project:hover .project-image{transform:scale(1.02)}
-.project-image{transition:transform .35s ease}
+
+/* Acessibilidade */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid rgba(0,101,204,.35);
+  outline-offset:3px;
+}
+.menu-toggle{cursor:pointer}
