@@ -1,20 +1,14 @@
 {
-  "name": "HMATIAS",
+  "name": "HMATIAS – Prestação de Serviços SU, LDA",
   "short_name": "HMATIAS",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#111315",
-  "description": "HMATIAS – Prestação de Serviços & Construção em Angola",
+  "theme_color": "#062d56",
+  "description": "Construção, facilities services, fornecimento e apoio empresarial em Luanda.",
   "icons": [
     {
-      "src": "/images/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/images/icon-512.png",
-      "sizes": "512x512",
+      "src": "/images/favicon.png",
       "type": "image/png"
     }
   ]
