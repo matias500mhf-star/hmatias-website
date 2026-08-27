@@ -30,24 +30,5 @@ form?.addEventListener("submit", (event) => {
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
 });
 
-// Kent Offshore: acrescenta o logótipo oficial no cartão de fornecedor sem alterar o layout existente.
-const kentCard = [...document.querySelectorAll(".service-card")].find(card =>
-  card.querySelector("h3")?.textContent.trim().toLowerCase() === "kent offshore"
-);
-if (kentCard) {
-  const logo = document.createElement("img");
-  logo.src = "https://kentoffshore.com/wp-content/uploads/2023/06/logo-kent-offshore.png";
-  logo.alt = "Kent Offshore";
-  logo.loading = "lazy";
-  logo.decoding = "async";
-  logo.style.cssText = "display:block;width:auto;max-width:210px;height:54px;object-fit:contain;object-position:left center;margin:0 0 18px;";
-  kentCard.insertBefore(logo, kentCard.querySelector("h3"));
-
-  const contact = document.createElement("p");
-  contact.innerHTML = '<strong>Contacto comercial na Namíbia: Abisai Shikongo</strong>';
-  const existing = [...kentCard.querySelectorAll("p")].find(p => p.textContent.includes("Contacto comercial"));
-  if (!existing) kentCard.insertBefore(contact, kentCard.querySelector("p"));
-}
-
 const year = document.getElementById("year");
 if (year) year.textContent = new Date().getFullYear();
