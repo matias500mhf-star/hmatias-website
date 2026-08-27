@@ -30,7 +30,7 @@ form?.addEventListener("submit", (event) => {
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
 });
 
-// Remove qualquer imagem/logo antigo da Kent Offshore aplicado por CSS e mantém apenas o conteúdo correto.
+// Mantém o cartão Kent Offshore limpo, sem qualquer logótipo/imagem adicional.
 const kentCard = [...document.querySelectorAll(".service-card")].find(card =>
   card.querySelector("h3")?.textContent.trim().toLowerCase() === "kent offshore"
 );
@@ -44,49 +44,57 @@ if (kentCard) {
   }
 }
 
-// Cabeçalho com ticker horizontal em andamento, mantendo a localização fixa.
+// Barra superior: localização fixa + restante da informação em ticker horizontal contínuo.
 const topbar = document.querySelector(".topbar");
 const topbarInner = document.querySelector(".topbar-inner");
 const locationLabel = topbarInner?.querySelector(":scope > span:first-child");
 const topLinks = document.querySelector(".top-links");
 const topContact = document.querySelector(".top-contact");
 
-if (topbar && topbarInner && topLinks) {
+if (topbar && topbarInner && topLinks && topContact) {
   topbar.classList.add("hmatias-livebar");
   topbarInner.classList.add("hmatias-livebar-inner");
-  if (locationLabel) locationLabel.classList.add("hmatias-location");
+  locationLabel?.classList.add("hmatias-location");
+
+  topLinks.innerHTML = "";
   topLinks.classList.add("hmatias-ticker");
+  topContact.classList.add("hmatias-ticker-contact");
 
   const tickerItems = [
-    "Construção & Infraestrutura",
-    "Facilities & Manutenção",
-    "HMATIAS Supply · Procurement",
-    "Fornecimento Empresarial",
-    "Projetos reais · HMATIAS",
-    "Parcerias & Soluções Empresariais"
+    "Qualidade",
+    "Compromisso",
+    "Resultados",
+    "☎ +244 948 806 673",
+    "✉ geral@hmatiasps.ao",
+    "comercial@hmatiasps.ao"
   ];
-  topLinks.innerHTML = `<div class="hmatias-ticker-track">${tickerItems.map((item, i) => `${i ? '<span class="ticker-sep">•</span>' : ''}<span class="ticker-item">${item}</span>`).join("")}</div>`;
 
-  if (topContact) topContact.classList.add("hmatias-top-contact");
+  const tickerHtml = tickerItems.map(item => `<span class="ticker-item">${item}</span><span class="ticker-sep">•</span>`).join("");
+  const track = document.createElement("div");
+  track.className = "hmatias-ticker-track";
+  track.innerHTML = tickerHtml + tickerHtml;
+  topLinks.appendChild(track);
 
   const style = document.createElement("style");
   style.textContent = `
     .hmatias-livebar{overflow:hidden}
-    .hmatias-livebar-inner{gap:22px}
+    .hmatias-livebar-inner{gap:18px}
     .hmatias-location{flex:0 0 auto;white-space:nowrap;font-weight:800;color:#fff}
     .hmatias-ticker{position:relative;flex:1;min-width:0;overflow:hidden;height:38px;display:flex!important;align-items:center;white-space:nowrap}
-    .hmatias-ticker-track{display:inline-flex;align-items:center;min-width:max-content;animation:hmatiasTicker 28s linear infinite}
-    .ticker-item{display:inline-block;color:#e9f5ff;font-size:11px;font-weight:800;letter-spacing:.15px}
-    .ticker-sep{display:inline-block;margin:0 13px;color:#57bdf0;font-size:12px}
-    .hmatias-top-contact{flex:0 0 auto}
+    .hmatias-ticker-track{display:flex;align-items:center;width:max-content;animation:hmatiasTicker 38s linear infinite}
+    .ticker-item{display:inline-block;color:#e9f5ff;font-size:11px;font-weight:800;letter-spacing:.12px}
+    .ticker-sep{display:inline-block;margin:0 12px;color:#57bdf0;font-size:12px}
+    .hmatias-ticker-contact{flex:0 0 auto;display:flex!important;align-items:center}
+    .hmatias-ticker-contact a{color:#fff!important}
     .hmatias-livebar:hover .hmatias-ticker-track{animation-play-state:paused}
-    @keyframes hmatiasTicker{from{transform:translateX(0)}to{transform:translateX(-50%)} }
+    @keyframes hmatiasTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     .whatsapp{display:inline-flex;align-items:center;gap:7px;background:#159447;color:#fff!important;border-color:#159447!important;box-shadow:0 6px 16px rgba(21,148,71,.18)}
     .whatsapp::before{content:"↗";font-size:13px;font-weight:900}
     .whatsapp:hover{background:#117b3b!important;border-color:#117b3b!important;transform:translateY(-1px)}
     #fornecedores .service-card.featured .service-icon{background-image:none!important}
-    @media(max-width:1100px){.hmatias-livebar-inner{gap:14px}.hmatias-top-contact{display:none}}
-    @media(max-width:850px){.hmatias-livebar{height:34px}.hmatias-livebar-inner{height:34px;justify-content:flex-start}.hmatias-location{font-size:10px}.hmatias-ticker{height:34px}.hmatias-ticker-track{animation-duration:24s}.ticker-item{font-size:10px}.topbar{font-size:10px}.nav-actions{display:none}.whatsapp-float{display:flex!important;align-items:center;gap:7px}}
+    @media(max-width:1100px){.hmatias-livebar-inner{gap:12px}.hmatias-ticker-contact{display:none!important}}
+    @media(max-width:850px){.hmatias-livebar{height:34px}.hmatias-livebar-inner{height:34px;justify-content:flex-start}.hmatias-location{font-size:10px}.hmatias-ticker{height:34px}.hmatias-ticker-track{animation-duration:34s}.ticker-item{font-size:10px}.topbar{font-size:10px}.nav-actions{display:none}.whatsapp-float{display:flex!important;align-items:center;gap:7px}}
+    @media(prefers-reduced-motion:reduce){.hmatias-ticker-track{animation:none;transform:none}}
   `;
   document.head.appendChild(style);
 }
