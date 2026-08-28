@@ -31,8 +31,9 @@ const ALLOWED_ORIGINS = new Set([
 
 function corsHeaders(origin) {
   const headers = {
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Max-Age": "86400",
     "Vary": "Origin",
   };
   if (ALLOWED_ORIGINS.has(origin)) headers["Access-Control-Allow-Origin"] = origin;
@@ -62,8 +63,12 @@ export default {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
 
-    if (request.method === "GET" && (url.pathname === "/health" || url.pathname === "/api/ai")) {
+    if (request.method === "GET" && url.pathname === "/health") {
       return json({ status: "ok", service: "hmatias-ai-assistant" }, 200, origin);
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/ai") {
+      return json({ status: "ok", service: "hmatias-ai-assistant", endpoint: "POST /api/ai" }, 200, origin);
     }
 
     if (url.pathname !== "/api/ai" || request.method !== "POST") {
@@ -73,25 +78,41 @@ export default {
     if (!ALLOWED_ORIGINS.has(origin)) return json({ error: "Origin not allowed" }, 403, origin);
 
     const contentType = request.headers.get("Content-Type") || "";
-    if (!contentType.toLowerCase().includes("application/json")) return json({ error: "Content-Type must be application/json" }, 415, origin);
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return json({ error: "Content-Type must be application/json" }, 415, origin);
+    }
 
     let body;
-    try { body = await request.json(); } catch { return json({ error: "Invalid JSON" }, 400, origin); }
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: "Invalid JSON" }, 400, origin);
+    }
 
-    const message = typeof body?.message === "string" ? body.message.trim() : "";
-    if (!message) return json({ error: "Message is required" }, 400, origin);
-    if (message.length > 1200) return json({ error: "Message too long" }, 413, origin);
+    // The current website widget sends { message, history }.
+    // Also accept { messages } so the Worker remains compatible with generic clients.
+    let messages = [];
+    if (Array.isArray(body?.messages)) {
+      messages = body.messages;
+    } else {
+      const message = typeof body?.message === "string" ? body.message.trim() : "";
+      const history = Array.isArray(body?.history) ? body.history : [];
+      messages = [...history, ...(message ? [{ role: "user", content: message }] : [])];
+    }
 
-    const history = Array.isArray(body?.history)
-      ? body.history.slice(-6).filter(item => item && (item.role === "user" || item.role === "assistant") && typeof item.content === "string").map(item => ({ role: item.role, content: item.content.slice(0, 1200) }))
-      : [];
+    messages = messages
+      .slice(-8)
+      .filter(item => item && (item.role === "user" || item.role === "assistant") && typeof item.content === "string")
+      .map(item => ({ role: item.role, content: item.content.trim().slice(0, 1200) }))
+      .filter(item => item.content);
+
+    if (!messages.length) return json({ error: "Message is required" }, 400, origin);
 
     try {
       const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct-fast", {
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          ...history,
-          { role: "user", content: message },
+          ...messages,
         ],
         max_tokens: 450,
         temperature: 0.2,
@@ -99,10 +120,15 @@ export default {
 
       const answer = result?.response?.trim();
       if (!answer) return json({ error: "Empty AI response" }, 502, origin);
-      return json({ answer }, 200, origin);
+
+      // Current website widget expects { answer }.
+      return json({ answer, reply: answer }, 200, origin);
     } catch (error) {
       console.error("HMATIAS AI error", error);
-      return json({ error: "O assistente está temporariamente indisponível. Contacte a HMATIAS pelo WhatsApp: +244 948 806 673." }, 503, origin);
+      return json({
+        error: "O assistente está temporariamente indisponível.",
+        reply: "O assistente está temporariamente indisponível. Contacte a HMATIAS pelo WhatsApp: +244 948 806 673."
+      }, 503, origin);
     }
   },
 };
