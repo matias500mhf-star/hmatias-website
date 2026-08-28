@@ -46,6 +46,8 @@ function json(data, status, origin) {
       "Content-Type": "application/json; charset=utf-8",
       ...corsHeaders(origin),
       "Cache-Control": "no-store",
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
     },
   });
 }
@@ -67,6 +69,11 @@ export default {
       return json({ error: "Origin not allowed" }, 403, origin);
     }
 
+    const contentType = request.headers.get("Content-Type") || "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return json({ error: "Content-Type must be application/json" }, 415, origin);
+    }
+
     let body;
     try {
       body = await request.json();
@@ -85,7 +92,7 @@ export default {
       : [];
 
     try {
-      const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+      const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct-fast", {
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           ...history,
