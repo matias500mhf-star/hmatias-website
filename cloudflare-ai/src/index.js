@@ -30,13 +30,13 @@ const ALLOWED_ORIGINS = new Set([
 ]);
 
 function corsHeaders(origin) {
-  const allowed = ALLOWED_ORIGINS.has(origin) ? origin : "https://comercialhmatiasps.com";
-  return {
-    "Access-Control-Allow-Origin": allowed,
+  const headers = {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Vary": "Origin",
   };
+  if (ALLOWED_ORIGINS.has(origin)) headers["Access-Control-Allow-Origin"] = origin;
+  return headers;
 }
 
 function json(data, status, origin) {
@@ -55,40 +55,35 @@ function json(data, status, origin) {
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("Origin") || "";
+    const url = new URL(request.url);
 
     if (request.method === "OPTIONS") {
+      if (origin && !ALLOWED_ORIGINS.has(origin)) return json({ error: "Origin not allowed" }, 403, origin);
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
 
-    const url = new URL(request.url);
+    if (request.method === "GET" && (url.pathname === "/health" || url.pathname === "/api/ai")) {
+      return json({ status: "ok", service: "hmatias-ai-assistant" }, 200, origin);
+    }
+
     if (url.pathname !== "/api/ai" || request.method !== "POST") {
       return json({ error: "Not found" }, 404, origin);
     }
 
-    if (!ALLOWED_ORIGINS.has(origin)) {
-      return json({ error: "Origin not allowed" }, 403, origin);
-    }
+    if (!ALLOWED_ORIGINS.has(origin)) return json({ error: "Origin not allowed" }, 403, origin);
 
     const contentType = request.headers.get("Content-Type") || "";
-    if (!contentType.toLowerCase().includes("application/json")) {
-      return json({ error: "Content-Type must be application/json" }, 415, origin);
-    }
+    if (!contentType.toLowerCase().includes("application/json")) return json({ error: "Content-Type must be application/json" }, 415, origin);
 
     let body;
-    try {
-      body = await request.json();
-    } catch {
-      return json({ error: "Invalid JSON" }, 400, origin);
-    }
+    try { body = await request.json(); } catch { return json({ error: "Invalid JSON" }, 400, origin); }
 
     const message = typeof body?.message === "string" ? body.message.trim() : "";
     if (!message) return json({ error: "Message is required" }, 400, origin);
     if (message.length > 1200) return json({ error: "Message too long" }, 413, origin);
 
     const history = Array.isArray(body?.history)
-      ? body.history.slice(-6).filter(item =>
-          item && (item.role === "user" || item.role === "assistant") && typeof item.content === "string"
-        ).map(item => ({ role: item.role, content: item.content.slice(0, 1200) }))
+      ? body.history.slice(-6).filter(item => item && (item.role === "user" || item.role === "assistant") && typeof item.content === "string").map(item => ({ role: item.role, content: item.content.slice(0, 1200) }))
       : [];
 
     try {
@@ -107,9 +102,7 @@ export default {
       return json({ answer }, 200, origin);
     } catch (error) {
       console.error("HMATIAS AI error", error);
-      return json({
-        error: "O assistente está temporariamente indisponível. Contacte a HMATIAS pelo WhatsApp: +244 948 806 673."
-      }, 503, origin);
+      return json({ error: "O assistente está temporariamente indisponível. Contacte a HMATIAS pelo WhatsApp: +244 948 806 673." }, 503, origin);
     }
   },
 };
