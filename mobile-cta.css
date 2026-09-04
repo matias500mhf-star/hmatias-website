@@ -1,17 +1,21 @@
-/* HMATIAS — Mobile conversion bar
-   Lightweight, dependency-free. Desktop remains unchanged. */
+/* HMATIAS — Mobile conversion dock
+   Compact, strategic and unobtrusive on small screens. */
 .mobile-cta{display:none}
 @media (max-width:850px){
-  body{padding-bottom:72px}
-  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:9999;display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:8px;padding:8px max(10px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-right));background:rgba(255,255,255,.96);border-top:1px solid rgba(6,45,86,.12);box-shadow:0 -8px 30px rgba(6,45,86,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-  .mobile-cta a{min-height:52px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;text-decoration:none;font-size:12px;font-weight:800;line-height:1;text-align:center;box-sizing:border-box}
+  body{padding-bottom:78px}
+  .mobile-cta{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:4px;width:max-content;max-width:calc(100% - 24px);padding:5px;background:rgba(255,255,255,.97);border:1px solid rgba(6,45,86,.12);border-radius:18px;box-shadow:0 12px 34px rgba(6,45,86,.20)}
+  .mobile-cta a{min-width:82px;height:46px;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;border-radius:13px;text-decoration:none;font-size:11px;font-weight:850;line-height:1;text-align:center;box-sizing:border-box;white-space:nowrap}
   .mobile-cta .cta-whatsapp{background:#128c7e;color:#fff}
-  .mobile-cta .cta-call{background:#eef4f8;color:#062d56;border:1px solid rgba(6,45,86,.1)}
+  .mobile-cta .cta-call{background:#f1f5f8;color:#062d56}
   .mobile-cta .cta-quote{background:#062d56;color:#fff}
   .mobile-cta a:focus-visible{outline:3px solid #57bdf0;outline-offset:2px}
 }
-@media (max-width:360px){
-  .mobile-cta{gap:5px;padding-left:7px;padding-right:7px}
-  .mobile-cta a{min-height:50px;font-size:11px;border-radius:10px}
+@media (max-width:430px){
+  .mobile-cta{bottom:12px}
+  .mobile-cta a{min-width:72px;height:44px;padding:0 9px;font-size:10px}
 }
-@media (prefers-reduced-motion:reduce){.mobile-cta *{scroll-behavior:auto}}
+@media (max-width:360px){
+  .mobile-cta{max-width:calc(100% - 14px);gap:3px;padding:4px;border-radius:16px}
+  .mobile-cta a{min-width:0;flex:1;height:42px;padding:0 8px;font-size:10px}
+}
+@media (prefers-reduced-motion:reduce){.mobile-cta{transform:translateX(-50%)}}
