@@ -16,3 +16,5 @@ body{letter-spacing:-.01em;-webkit-font-smoothing:antialiased;text-rendering:opt
 .contact-form{box-shadow:0 18px 48px rgba(6,45,86,.08)}
 .whatsapp-float{box-shadow:0 14px 34px rgba(21,148,71,.24)}
 @media(max-width:850px){.services,.projects,.sectors,.why-us,.company,.contact{padding:68px 0}.hero-copy{padding:55px 0 45px}.hero h1{letter-spacing:-1.8px}.service-card,.sector-grid article,.why-us-grid article{padding:23px 20px}.whatsapp-float{right:14px;bottom:14px}}
+@media (min-width:851px){main>section:nth-child(n+3){content-visibility:auto;contain-intrinsic-size:700px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}.hmatias-ticker-track{animation:none!important}}
