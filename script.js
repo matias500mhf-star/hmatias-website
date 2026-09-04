@@ -15,3 +15,5 @@ if(!document.querySelector('link[data-hmatias-premium]')){const p=document.creat
 /* Mobile conversion bar: loaded through the existing script to avoid touching the large index.html. */
 if(!document.querySelector('link[data-hmatias-mobile-cta-css]')){const c=document.createElement('link');c.rel='stylesheet';c.href='mobile-cta.css?v=1';c.dataset.hmatiasMobileCtaCss='true';document.head.appendChild(c);}
 if(!document.querySelector('script[data-hmatias-mobile-cta]')){const j=document.createElement('script');j.src='mobile-cta.js?v=1';j.defer=true;j.dataset.hmatiasMobileCta='true';document.head.appendChild(j);}
+/* Performance layer: content-visibility and reduced-motion optimizations. */
+if(!document.querySelector('script[data-hmatias-performance]')){const p=document.createElement('script');p.src='performance.js?v=1';p.defer=true;p.dataset.hmatiasPerformance='true';document.head.appendChild(p);}
