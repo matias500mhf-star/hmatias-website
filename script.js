@@ -18,7 +18,7 @@ if(!document.querySelector('link[data-hmatias-assistant-css]')){const a=document
 if(!document.querySelector('script[data-hmatias-assistant]')){const a=document.createElement('script');a.src='assistant.js?v=1';a.defer=true;a.dataset.hmatiasAssistant='true';document.head.appendChild(a);}
 
 /* HERO: imagem mais luminosa, nítida e premium sem perder o contraste do texto */
-const premiumVisual=document.createElement('style');premiumVisual.textContent=`.hero-photo img{filter:brightness(1.18) saturate(1.06) contrast(1.02)!important}.visual-card:before{background:linear-gradient(90deg,rgba(6,45,86,.76) 0%,rgba(6,45,86,.28) 45%,rgba(6,45,86,.02) 100%),linear-gradient(180deg,rgba(6,45,86,.02) 35%,rgba(6,45,86,.42) 100%)!important}.visual-overlay{background:rgba(6,45,86,.88)!important;box-shadow:0 16px 38px rgba(0,0,0,.24)!important}`;document.head.appendChild(premiumVisual);
+const premiumVisual=document.createElement('style');premiumVisual.textContent=`.hero-photo img{filter:brightness(1.18) saturate(1.06) contrast(1.02)!important}.visual-card:before{background:linear-gradient(90deg,rgba(6,45,86,.76) 0%,rgba(6,45,86,.28) 45%,rgba(6,45,86,.02) 100%),linear-gradient(180deg,rgba(6,45,86,.02) 35%,rgba(6,45,86,.42) 100%)!important}.visual-overlay{background:rgba(6,45,86,.88)!important;box-shadow:0 16px 38px rgba(0,0,0,.24)!important}.project picture{cursor:zoom-in}.project picture img{transition:transform .45s ease,filter .45s ease}.project picture:hover img{transform:scale(1.025);filter:saturate(1.04) contrast(1.06) brightness(1.03)}`;document.head.appendChild(premiumVisual);
 
 /* PORTFÓLIO: publicar imediatamente os dois novos registos enviados ao repositório */
 const projectGrid=document.querySelector('.project-grid');
@@ -35,3 +35,20 @@ if(projectGrid&&!projectGrid.dataset.newProjects){
     projectGrid.appendChild(article);
   });
 }
+
+/* LIGHTBOX PREMIUM: abrir qualquer fotografia do portfólio em tamanho grande */
+const lightbox=document.createElement('div');
+lightbox.className='hmatias-lightbox';
+lightbox.setAttribute('aria-hidden','true');
+lightbox.innerHTML='<button class="hmatias-lightbox-close" type="button" aria-label="Fechar fotografia">×</button><div class="hmatias-lightbox-stage"><img alt=""><div class="hmatias-lightbox-caption"></div></div>';
+const lightboxStyle=document.createElement('style');
+lightboxStyle.textContent=`.hmatias-lightbox{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:30px;background:rgba(2,18,35,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.hmatias-lightbox.open{display:flex}.hmatias-lightbox-stage{position:relative;max-width:min(94vw,1400px);max-height:90vh;text-align:center}.hmatias-lightbox-stage img{display:block;max-width:94vw;max-height:82vh;width:auto;height:auto;object-fit:contain;border-radius:10px;box-shadow:0 28px 80px rgba(0,0,0,.45)}.hmatias-lightbox-caption{margin-top:12px;color:#fff;font-size:12px;font-weight:800;letter-spacing:.04em}.hmatias-lightbox-close{position:fixed;top:18px;right:22px;width:46px;height:46px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(255,255,255,.1);color:#fff;font-size:30px;line-height:1;cursor:pointer}.hmatias-lightbox-close:hover{background:rgba(255,255,255,.18)}body.hmatias-lightbox-open{overflow:hidden}@media(max-width:850px){.hmatias-lightbox{padding:16px}.hmatias-lightbox-stage img{max-width:96vw;max-height:78vh}.hmatias-lightbox-close{top:12px;right:12px}}`;
+document.head.appendChild(lightboxStyle);document.body.appendChild(lightbox);
+const lbImg=lightbox.querySelector('img'),lbCaption=lightbox.querySelector('.hmatias-lightbox-caption');
+function openLightbox(img){lbImg.src=img.currentSrc||img.src;lbImg.alt=img.alt||'Projeto HMATIAS';lbCaption.textContent=img.alt||'Projeto real · HMATIAS';lightbox.classList.add('open');lightbox.setAttribute('aria-hidden','false');document.body.classList.add('hmatias-lightbox-open');}
+function closeLightbox(){lightbox.classList.remove('open');lightbox.setAttribute('aria-hidden','true');document.body.classList.remove('hmatias-lightbox-open');lbImg.removeAttribute('src');}
+document.querySelectorAll('.project picture').forEach(p=>p.addEventListener('click',()=>openLightbox(p.querySelector('img'))));
+lightbox.querySelector('.hmatias-lightbox-close').addEventListener('click',closeLightbox);lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lightbox.classList.contains('open'))closeLightbox();});
+
+/* HERO loading: reforçar prioridade da imagem principal */
+const heroImg=document.querySelector('.hero-photo img');if(heroImg){heroImg.loading='eager';heroImg.fetchPriority='high';heroImg.decoding='async';}
