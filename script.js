@@ -16,3 +16,22 @@ if(!document.querySelector('link[data-hmatias-mobile-cta-css]')){const c=documen
 if(!document.querySelector('script[data-hmatias-mobile-cta]')){const j=document.createElement('script');j.src='mobile-cta.js?v=1';j.defer=true;j.dataset.hmatiasMobileCta='true';document.head.appendChild(j);}
 if(!document.querySelector('link[data-hmatias-assistant-css]')){const a=document.createElement('link');a.rel='stylesheet';a.href='assistant.css?v=1';a.dataset.hmatiasAssistantCss='true';document.head.appendChild(a);}
 if(!document.querySelector('script[data-hmatias-assistant]')){const a=document.createElement('script');a.src='assistant.js?v=1';a.defer=true;a.dataset.hmatiasAssistant='true';document.head.appendChild(a);}
+
+/* HERO: imagem mais luminosa, nítida e premium sem perder o contraste do texto */
+const premiumVisual=document.createElement('style');premiumVisual.textContent=`.hero-photo img{filter:brightness(1.18) saturate(1.06) contrast(1.02)!important}.visual-card:before{background:linear-gradient(90deg,rgba(6,45,86,.76) 0%,rgba(6,45,86,.28) 45%,rgba(6,45,86,.02) 100%),linear-gradient(180deg,rgba(6,45,86,.02) 35%,rgba(6,45,86,.42) 100%)!important}.visual-overlay{background:rgba(6,45,86,.88)!important;box-shadow:0 16px 38px rgba(0,0,0,.24)!important}`;document.head.appendChild(premiumVisual);
+
+/* PORTFÓLIO: publicar imediatamente os dois novos registos enviados ao repositório */
+const projectGrid=document.querySelector('.project-grid');
+if(projectGrid&&!projectGrid.dataset.newProjects){
+  projectGrid.dataset.newProjects='published';
+  const newProjects=[
+    {file:'projeto-06.jpeg',title:'Novo Projeto HMATIAS · 06',tag:'Projeto Real · HMATIAS',alt:'Novo projeto real da HMATIAS — projeto 06'},
+    {file:'projeto-08.jpg',title:'Novo Projeto HMATIAS · 08',tag:'Projeto Real · HMATIAS',alt:'Novo projeto real da HMATIAS — projeto 08'}
+  ];
+  newProjects.forEach(p=>{
+    const article=document.createElement('article');
+    article.className='project project-new';
+    article.innerHTML=`<picture><img class="project-image" src="${p.file}" alt="${p.alt}" loading="lazy" decoding="async"></picture><div class="project-caption"><small>${p.tag}</small><h3>${p.title}</h3><p>Registo real integrado no portfólio visual da HMATIAS.</p><a href="#orcamento">Falar sobre este projeto →</a></div>`;
+    projectGrid.appendChild(article);
+  });
+}
