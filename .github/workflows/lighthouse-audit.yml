@@ -1,0 +1,73 @@
+name: Lighthouse Audit
+
+on:
+  push:
+    branches:
+      - audit/lighthouse-2026-09-09
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run mobile Lighthouse
+        run: |
+          npx --yes lighthouse https://comercialhmatiasps.com/ \
+            --chrome-flags='--headless --no-sandbox' \
+            --output=json \
+            --output-path=./lighthouse-mobile.json \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --form-factor=mobile \
+            --screenEmulation.mobile=true \
+            --quiet
+
+      - name: Run desktop Lighthouse
+        run: |
+          npx --yes lighthouse https://comercialhmatiasps.com/ \
+            --chrome-flags='--headless --no-sandbox' \
+            --output=json \
+            --output-path=./lighthouse-desktop.json \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --preset=desktop \
+            --quiet
+
+      - name: Print summary
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          for (const name of ['mobile','desktop']) {
+            const x=JSON.parse(fs.readFileSync(`lighthouse-${name}.json`,'utf8'));
+            const c=x.categories;
+            const a=x.audits;
+            const pct=k=>Math.round(c[k].score*100);
+            const ms=k=>Math.round(a[k].numericValue||0);
+            console.log(`\n${name.toUpperCase()}`);
+            console.log(`Performance: ${pct('performance')}`);
+            console.log(`Accessibility: ${pct('accessibility')}`);
+            console.log(`Best Practices: ${pct('best-practices')}`);
+            console.log(`SEO: ${pct('seo')}`);
+            console.log(`FCP: ${ms('first-contentful-paint')} ms`);
+            console.log(`LCP: ${ms('largest-contentful-paint')} ms`);
+            console.log(`TBT: ${ms('total-blocking-time')} ms`);
+            console.log(`CLS: ${a['cumulative-layout-shift'].numericValue}`);
+            console.log(`Speed Index: ${ms('speed-index')} ms`);
+          }
+          NODE
+
+      - name: Upload Lighthouse reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: |
+            lighthouse-mobile.json
+            lighthouse-desktop.json
+          retention-days: 7
