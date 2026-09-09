@@ -35,6 +35,18 @@ if(projectGrid&&!projectGrid.dataset.newProjects){
   });
 }
 
+/* HMATIAS CLEAN: imagem comercial do Pine Gel 500 ml */
+const cleanProduct=document.querySelector('#produtos .commerce-product');
+if(cleanProduct&&!cleanProduct.querySelector('.hmatias-product-photo')){
+  const visual=document.createElement('div');
+  visual.className='hmatias-product-photo';
+  visual.innerHTML=`<img src="https://res.cloudinary.com/www-ebaaba-com/image/upload/v1728998772/products/Screenshot_2024-10-15_132518-removebg-preview_p9p4ov.png" alt="Pine Gel 500 ml - HMATIAS Clean" width="900" height="900" loading="lazy" decoding="async" referrerpolicy="no-referrer"><span>Imagem do formato 500 ml</span>`;
+  cleanProduct.prepend(visual);
+  const ps=document.createElement('style');
+  ps.textContent=`.hmatias-product-photo{position:relative;display:flex;align-items:center;justify-content:center;min-height:310px;margin:-6px -6px 24px;padding:24px;border:1px solid #e3ebf2;border-radius:16px;background:radial-gradient(circle at 50% 38%,#fff 0,#f7fafc 62%,#eef4f8 100%);overflow:hidden}.hmatias-product-photo img{display:block;width:min(100%,390px);height:auto;max-height:300px;object-fit:contain;filter:drop-shadow(0 16px 20px rgba(6,45,86,.14))}.hmatias-product-photo span{position:absolute;left:14px;bottom:12px;padding:6px 9px;border-radius:999px;background:rgba(6,45,86,.9);color:#fff;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}@media(max-width:850px){.hmatias-product-photo{min-height:250px;padding:18px}.hmatias-product-photo img{max-height:240px}}`;
+  document.head.appendChild(ps);
+}
+
 /* LIGHTBOX PREMIUM: abrir qualquer fotografia do portfólio em tamanho grande */
 const lightbox=document.createElement('div');
 lightbox.className='hmatias-lightbox';
