@@ -7,6 +7,7 @@ body{letter-spacing:-.01em;-webkit-font-smoothing:antialiased;text-rendering:opt
 .proof-strip{box-shadow:0 12px 35px rgba(6,45,86,.055)}.proof-grid strong{letter-spacing:.01em}
 .services,.projects{padding:88px 0}.sectors,.why-us{padding:90px 0}
 .section-heading h2,.company h2,.contact h2,.supply h2{letter-spacing:-1.8px;font-weight:850}.section-heading p{line-height:1.75}
+.cta .eyebrow{color:#005aa8}
 .service-card,.sector-grid article,.why-us-grid article,.project{box-shadow:0 8px 30px rgba(6,45,86,.055);border-color:#e1e9f1}.service-card:hover,.sector-grid article:hover{box-shadow:0 18px 40px rgba(6,45,86,.11)}
 .service-card{padding:29px 25px}.service-icon{border-radius:14px;width:48px;height:48px;font-size:21px}.service-card h3,.sector-grid h3,.why-us-grid h3{font-weight:850}
 .project{box-shadow:0 12px 38px rgba(6,45,86,.08)}.project-image{filter:saturate(.98) contrast(1.05);transition:transform .45s ease,filter .45s ease}.project:hover .project-image{transform:scale(1.025);filter:saturate(1.02) contrast(1.07)}
