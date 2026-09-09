@@ -20,7 +20,9 @@
 .commerce-price span{display:block;color:var(--commerce-muted);font-size:11px;margin-top:5px}
 .commerce-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 .commerce-note{display:block;margin-top:16px;color:#708397;font-size:10px;line-height:1.55}
-.commerce-catalog{padding:30px;background:linear-gradient(145deg,#062d56,#075f9f);color:#fff;border-color:transparent;display:flex;flex-direction:column;justify-content:center}
+.commerce-catalog{padding:30px;background:linear-gradient(145deg,#062d56,#075f9f);color:#fff;border-color:transparent;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.commerce-catalog:before{content:"";display:block;width:100%;height:245px;margin-bottom:24px;border-radius:14px;background:#fff url('images/products/pine-gel-500ml.webp') center/contain no-repeat;box-shadow:inset 0 0 0 1px rgba(6,45,86,.08),0 12px 30px rgba(0,0,0,.12)}
+.commerce-catalog:after{content:"Pine Gel · imagem do formato 500 ml";position:absolute;top:246px;left:44px;padding:6px 9px;border-radius:999px;background:rgba(6,45,86,.88);color:#fff;font-size:9px;font-weight:800;letter-spacing:.04em}
 .commerce-catalog h3{color:#fff;font-size:26px}
 .commerce-catalog>p{color:#cfe3f2}
 .commerce-tags{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 26px}
@@ -37,6 +39,6 @@
 .business-card .business-price small{display:block;font-size:10px;color:var(--commerce-muted);font-weight:800;text-transform:uppercase;letter-spacing:.07em}
 .business-card .business-price strong{display:block;font-size:28px;color:var(--commerce-navy);letter-spacing:-.8px;margin:4px 0 14px}
 .business-legal{margin-top:18px;padding:13px 16px;border-radius:10px;background:#f7fafc;border:1px solid #e5edf4;color:#6a7c8e;font-size:10px;line-height:1.55}
-@media(max-width:1100px){.commerce-shell{grid-template-columns:1fr}.business-grid{grid-template-columns:1fr 1fr}.business-card:last-child{grid-column:1/-1}}
-@media(max-width:850px){.commerce-products,.business-services{padding:62px 0}.commerce-product,.commerce-catalog,.business-card{padding:22px 19px}.commerce-use{grid-template-columns:1fr}.commerce-price-row{align-items:flex-start;flex-direction:column}.commerce-actions{justify-content:flex-start}.commerce-price strong{font-size:30px}.business-grid{grid-template-columns:1fr}.business-card:last-child{grid-column:auto}.business-card{min-height:0}}
-@media(max-width:520px){.commerce-shell{gap:14px}.commerce-badges{margin-bottom:16px}.commerce-product h3,.commerce-catalog h3,.business-card h3{font-size:21px}.commerce-actions{width:100%}.commerce-actions .btn,.commerce-catalog .btn,.business-card .btn{width:100%}.commerce-price strong{font-size:28px}}
+@media(max-width:1100px){.commerce-shell{grid-template-columns:1fr}.business-grid{grid-template-columns:1fr 1fr}.business-card:last-child{grid-column:1/-1}.commerce-catalog:before{height:300px}.commerce-catalog:after{top:301px}}
+@media(max-width:850px){.commerce-products,.business-services{padding:62px 0}.commerce-product,.commerce-catalog,.business-card{padding:22px 19px}.commerce-use{grid-template-columns:1fr}.commerce-price-row{align-items:flex-start;flex-direction:column}.commerce-actions{justify-content:flex-start}.commerce-price strong{font-size:30px}.business-grid{grid-template-columns:1fr}.business-card:last-child{grid-column:auto}.business-card{min-height:0}.commerce-catalog:before{height:260px}.commerce-catalog:after{top:260px;left:32px}}
+@media(max-width:520px){.commerce-shell{gap:14px}.commerce-badges{margin-bottom:16px}.commerce-product h3,.commerce-catalog h3,.business-card h3{font-size:21px}.commerce-actions{width:100%}.commerce-actions .btn,.commerce-catalog .btn,.business-card .btn{width:100%}.commerce-price strong{font-size:28px}.commerce-catalog:before{height:220px;margin-bottom:22px}.commerce-catalog:after{top:220px;left:28px;font-size:8px}}
