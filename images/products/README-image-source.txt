@@ -1,1 +1,0 @@
-HMATIAS Clean product image source marker. The active Pine Gel image is stored as pine-gel-500ml.jpg.
