@@ -3,6 +3,41 @@
   const menuToggle=document.querySelector('.menu-toggle');
   const navMenu=document.querySelector('.nav-menu');
 
+  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reducedMotion&&'IntersectionObserver' in window){
+    const motionItems=[...document.querySelectorAll([
+      '.section-heading',
+      '.service-card',
+      '.sector-grid article',
+      '.company-grid > *',
+      '.why-us-grid article',
+      '.project',
+      '.supply-inner > *',
+      '.cta-inner > *',
+      '.contact-grid > *',
+      '.business-service-card',
+      '.business-contact-grid > *',
+      '.booking-hero-grid > *',
+      '.booking-layout > *',
+      '.booking-scope-grid article'
+    ].join(','))];
+
+    motionItems.forEach((item,index)=>{
+      item.classList.add('motion-reveal');
+      item.style.setProperty('--motion-delay',`${Math.min(index%4,3)*55}ms`);
+    });
+
+    const motionObserver=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting)return;
+        entry.target.classList.add('is-visible');
+        motionObserver.unobserve(entry.target);
+      });
+    },{rootMargin:'0px 0px -7% 0px',threshold:.08});
+
+    motionItems.forEach(item=>motionObserver.observe(item));
+  }
+
   menuToggle?.addEventListener('click',()=>{
     const open=navMenu?.classList.toggle('open');
     menuToggle.setAttribute('aria-expanded',String(Boolean(open)));

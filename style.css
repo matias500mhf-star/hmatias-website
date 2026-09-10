@@ -6,4 +6,4 @@
 /* HMATIAS FINAL A11Y HARDENING 2026-09-10 */
 .service-card > a,.division-card > a{display:inline-flex;align-items:center;min-height:44px;padding-block:10px}
 @media(max-width:850px){.nav-menu a{display:flex;align-items:center;min-height:44px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+.motion-reveal{opacity:0;transform:translateY(18px);transition:opacity .58s ease var(--motion-delay,0ms),transform .58s cubic-bezier(.2,.7,.2,1) var(--motion-delay,0ms);will-change:opacity,transform}.motion-reveal.is-visible{opacity:1;transform:none;will-change:auto}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.motion-reveal{opacity:1!important;transform:none!important}}
