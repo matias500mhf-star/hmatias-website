@@ -1,0 +1,24 @@
+{
+  "$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
+  "name": "hmatias-ai-assistant",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-28",
+  "workers_dev": true,
+  "ai": {
+    "binding": "AI"
+  },
+  "d1_databases": [
+    {
+      "binding": "LEADS_DB",
+      "database_name": "hmatias-leads",
+      "database_id": "<CLOUDFLARE_D1_DATABASE_ID>",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "LEAD_NOTIFICATION_TO": "comercial@hmatiasps.ao"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
