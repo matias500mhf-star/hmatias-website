@@ -1,0 +1,47 @@
+name: Organize HMATIAS footer legal links
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  organize-footer:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Separate legal links from contact links
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          pt_old = '<div><strong>Contacto</strong><a href="mailto:geral@hmatiasps.ao">geral@hmatiasps.ao</a><a href="mailto:comercial@hmatiasps.ao">comercial@hmatiasps.ao</a><a href="https://wa.me/244948806673" target="_blank" rel="noopener">WhatsApp</a><a href="privacidade.html">Política de Privacidade</a><a href="termos.html">Termos & Condições</a></div>'
+          pt_new = '<div><strong>Contacto</strong><a href="mailto:geral@hmatiasps.ao">geral@hmatiasps.ao</a><a href="mailto:comercial@hmatiasps.ao">comercial@hmatiasps.ao</a><a href="https://wa.me/244948806673" target="_blank" rel="noopener">WhatsApp</a><strong>Legal</strong><a href="privacidade.html">Política de Privacidade</a><a href="termos.html">Termos & Condições</a></div>'
+
+          en_old = '<div><strong>Contact</strong><a href="mailto:geral@hmatiasps.ao">geral@hmatiasps.ao</a><a href="mailto:comercial@hmatiasps.ao">comercial@hmatiasps.ao</a><a href="https://wa.me/244948806673" target="_blank" rel="noopener">WhatsApp</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms & Conditions</a></div>'
+          en_new = '<div><strong>Contact</strong><a href="mailto:geral@hmatiasps.ao">geral@hmatiasps.ao</a><a href="mailto:comercial@hmatiasps.ao">comercial@hmatiasps.ao</a><a href="https://wa.me/244948806673" target="_blank" rel="noopener">WhatsApp</a><strong>Legal</strong><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms & Conditions</a></div>'
+
+          changed = []
+          for p in Path('.').glob('*.html'):
+              s = p.read_text(encoding='utf-8')
+              ns = s.replace(pt_old, pt_new).replace(en_old, en_new)
+              if ns != s:
+                  p.write_text(ns, encoding='utf-8')
+                  changed.append(p.name)
+
+          print('Footer updated:', ', '.join(changed) if changed else 'none')
+          PY
+      - name: Commit organized footer
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add '*.html'
+          if git diff --cached --quiet; then
+            echo 'No footer changes needed'
+          else
+            git commit -m 'fix(footer): separate legal links from contact links'
+            git push
+          fi
