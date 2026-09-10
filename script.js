@@ -59,30 +59,9 @@
     });
   }
 
-  const clickStyle=document.createElement('style');
-  clickStyle.textContent='.service-card[data-card-link],.division-card[data-card-link]{cursor:pointer}.service-card[data-card-link]:focus-visible,.division-card[data-card-link]:focus-visible{outline:3px solid #48baf5;outline-offset:4px}.btn-outline{border:1px solid #cbd8e5;background:#fff;color:#062d56;box-shadow:none}.btn-outline:hover{border-color:#0065cc;color:#0065cc;background:#f7fbff}@media(max-width:620px){.business-contact-form .btn-outline{width:100%;justify-content:center}}';
-  document.head.appendChild(clickStyle);
-
-  document.querySelectorAll('.service-card,.division-card').forEach(card=>{
-    const primary=card.querySelector('a[href]');
-    if(!primary)return;
-    card.dataset.cardLink='true';
-    card.tabIndex=0;
-    card.setAttribute('role','link');
-    card.setAttribute('aria-label',(card.querySelector('h3')?.textContent||primary.textContent||'').trim());
-    card.addEventListener('click',e=>{
-      if(e.target.closest('a,button,input,select,textarea,label'))return;
-      if(primary.target==='_blank')window.open(primary.href,'_blank','noopener');
-      else location.href=primary.href;
-    });
-    card.addEventListener('keydown',e=>{
-      if(e.key!=='Enter'&&e.key!==' ')return;
-      if(e.target.closest('a,button,input,select,textarea'))return;
-      e.preventDefault();
-      if(primary.target==='_blank')window.open(primary.href,'_blank','noopener');
-      else location.href=primary.href;
-    });
-  });
+  const utilityStyle=document.createElement('style');
+  utilityStyle.textContent='.btn-outline{border:1px solid #cbd8e5;background:#fff;color:#062d56;box-shadow:none}.btn-outline:hover{border-color:#0065cc;color:#0065cc;background:#f7fbff}@media(max-width:620px){.business-contact-form .btn-outline{width:100%;justify-content:center}}';
+  document.head.appendChild(utilityStyle);
 
   const navLinks=[...document.querySelectorAll('.nav-menu a[href^="#"]')];
   const sections=navLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
@@ -99,37 +78,9 @@
   back.type='button';
   back.setAttribute('aria-label',pageEnglish?'Back to top':'Voltar ao início');
   back.textContent='↑';
-  back.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+  back.addEventListener('click',()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
   document.body.appendChild(back);
   addEventListener('scroll',()=>back.classList.toggle('show',scrollY>320),{passive:true});
-
-  const projectPictures=document.querySelectorAll('.project picture');
-  if(projectPictures.length){
-    const lightbox=document.createElement('div');
-    lightbox.className='hmatias-lightbox';
-    lightbox.setAttribute('aria-hidden','true');
-    lightbox.innerHTML=`<button class="hmatias-lightbox-close" type="button" aria-label="${pageEnglish?'Close image':'Fechar fotografia'}">×</button><div class="hmatias-lightbox-stage"><img alt=""><div class="hmatias-lightbox-caption"></div></div>`;
-    const css=document.createElement('style');
-    css.textContent='.hmatias-lightbox{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:30px;background:rgba(2,18,35,.94);backdrop-filter:blur(10px)}.hmatias-lightbox.open{display:flex}.hmatias-lightbox-stage{max-width:min(94vw,1400px);max-height:90vh;text-align:center}.hmatias-lightbox-stage img{display:block;max-width:94vw;max-height:82vh;width:auto;height:auto;object-fit:contain;border-radius:10px;box-shadow:0 28px 80px rgba(0,0,0,.45)}.hmatias-lightbox-caption{margin-top:12px;color:#fff;font-size:12px;font-weight:800}.hmatias-lightbox-close{position:fixed;top:18px;right:22px;width:46px;height:46px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(255,255,255,.1);color:#fff;font-size:30px;cursor:pointer}body.hmatias-lightbox-open{overflow:hidden}@media(max-width:850px){.hmatias-lightbox{padding:16px}.hmatias-lightbox-close{top:12px;right:12px}}';
-    document.head.appendChild(css);
-    document.body.appendChild(lightbox);
-    const img=lightbox.querySelector('img');
-    const cap=lightbox.querySelector('.hmatias-lightbox-caption');
-    const close=()=>{lightbox.classList.remove('open');lightbox.setAttribute('aria-hidden','true');document.body.classList.remove('hmatias-lightbox-open');img.removeAttribute('src');};
-    projectPictures.forEach(p=>p.addEventListener('click',()=>{
-      const source=p.querySelector('img');
-      if(!source)return;
-      img.src=source.currentSrc||source.src;
-      img.alt=source.alt||'HMATIAS';
-      cap.textContent=source.alt||'HMATIAS';
-      lightbox.classList.add('open');
-      lightbox.setAttribute('aria-hidden','false');
-      document.body.classList.add('hmatias-lightbox-open');
-    }));
-    lightbox.querySelector('.hmatias-lightbox-close').addEventListener('click',close);
-    lightbox.addEventListener('click',e=>{if(e.target===lightbox)close();});
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lightbox.classList.contains('open'))close();});
-  }
 
   const heroImg=document.querySelector('.hero-photo img');
   if(heroImg){heroImg.loading='eager';heroImg.fetchPriority='high';heroImg.decoding='async';}
