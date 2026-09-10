@@ -2,7 +2,7 @@ name: Final HMATIAS site hardening
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/final-site-hardening-2026-09-10]
   workflow_dispatch:
 
 permissions:
@@ -101,7 +101,6 @@ jobs:
               if n!=1: raise RuntimeError('Missing twitter:image')
               return s
 
-          # Homepage PT
           p=Path('index.html'); s=p.read_text(encoding='utf-8')
           title='HMATIAS | Construção Civil, Facilities &amp; Supply em Luanda'
           desc='Construção civil, facilities, manutenção e procurement para empresas em Angola. Soluções HMATIAS com execução, fornecimento e apoio operacional.'
@@ -115,7 +114,6 @@ jobs:
           s=s.replace('script.js?v=3','script.js?v=4')
           p.write_text(s,encoding='utf-8')
 
-          # Homepage EN
           p=Path('en.html'); s=p.read_text(encoding='utf-8')
           title='HMATIAS | Construction, Facilities &amp; Supply in Luanda'
           desc='Civil construction, facilities, maintenance and procurement for businesses in Angola. HMATIAS delivers execution, supply and operational support.'
@@ -129,7 +127,6 @@ jobs:
           s=s.replace('script.js?v=3','script.js?v=4')
           p.write_text(s,encoding='utf-8')
 
-          # Core service pages: social preview + supply title refinement + cache-bust JS.
           social_pages={
               'construcao.html':'HMATIAS — Construção Civil e Infraestrutura em Luanda',
               'construction.html':'HMATIAS — Civil Construction and Infrastructure in Luanda',
@@ -150,7 +147,6 @@ jobs:
                   s=set_title(s,t); s=set_meta(s,'og:title',t,True); s=set_meta(s,'twitter:title',t)
               p.write_text(s,encoding='utf-8')
 
-          # All remaining pages use the new JS version where present.
           for p in Path('.').glob('*.html'):
               s=p.read_text(encoding='utf-8')
               ns=s.replace('script.js?v=3','script.js?v=4')
