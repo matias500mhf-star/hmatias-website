@@ -18,3 +18,11 @@
 @media(max-width:560px){.header-contact a[href^="mailto:"]{display:none}.header-social a{height:44px}.hmatias-topbar .topbar-inner{min-height:44px}.hmatias-header .brand,.hmatias-header .brand img{width:190px}}
 
 .mobile-quote-link{display:none!important}@media(max-width:850px){.hmatias-header .nav-menu .mobile-quote-link{display:flex!important;justify-content:center;margin:8px;color:#fff;background:#0065cc;border-radius:9px}}
+
+/* Centre the contact group independently of the social links. */
+.hmatias-topbar .topbar-inner{display:grid;grid-template-columns:94px minmax(0,1fr) 94px;gap:12px}
+.header-contact{grid-column:2;justify-content:center;flex-wrap:wrap;gap:8px 20px;padding:6px 0;text-align:center}
+.header-contact a{white-space:nowrap}
+.header-social{grid-column:3;justify-self:end;margin-left:0}
+@media(max-width:760px){.hmatias-topbar .topbar-inner{grid-template-columns:minmax(0,1fr) 94px;gap:8px}.header-contact{grid-column:1;gap:4px 14px}.header-social{grid-column:2}.header-contact a[href^="mailto:"]{display:inline}}
+@media(max-width:460px){.hmatias-topbar .topbar-inner{grid-template-columns:1fr}.header-contact{grid-column:1;justify-content:center}.header-contact a[href^="tel:"]{flex-basis:100%}.header-social{grid-column:1;justify-self:end}.header-contact a{font-size:12px}}
