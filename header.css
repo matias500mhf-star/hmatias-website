@@ -1,0 +1,20 @@
+/* Compact contact strip and clear navigation, based on the supplied reference. */
+.hmatias-topbar{height:auto;min-height:40px;background:#062d56}
+.hmatias-topbar .topbar-inner{min-height:40px;display:flex;justify-content:space-between;gap:16px}
+.header-contact{display:flex;align-items:center;gap:24px;font-size:12px}
+.header-contact a{color:#fff}
+.header-social{display:flex;align-items:center;gap:6px;margin-left:auto}
+.header-social a{display:flex;align-items:center;justify-content:center;width:44px;height:40px;color:#fff;border-radius:4px}
+.header-social img{display:block;filter:brightness(0) invert(1)}
+.header-social a:hover{background:#0b477c}
+.hmatias-header .nav{min-height:92px;gap:22px}
+.hmatias-header .brand,.hmatias-header .brand img{width:220px}
+.hmatias-header .nav-menu{gap:22px}
+.hmatias-header .nav-menu a{font-size:14px;letter-spacing:0;padding:31px 0 28px}
+.hmatias-header .nav-actions{gap:16px}
+.hmatias-header .nav-actions .btn{font-size:13px;white-space:nowrap;padding:13px 17px}
+@media(max-width:1100px){.hmatias-header .nav{gap:14px}.hmatias-header .brand,.hmatias-header .brand img{width:175px}.hmatias-header .nav-menu{gap:14px}.hmatias-header .nav-menu a{font-size:13px}.hmatias-header .nav-actions{gap:10px}}
+@media(max-width:850px){.hmatias-header .nav{min-height:78px}.hmatias-header .nav-menu{top:78px;gap:0}.hmatias-header .nav-menu a{padding:13px 15px;font-size:15px}.hmatias-topbar .topbar-inner{justify-content:space-between}.header-contact{gap:12px}.header-contact a{font-size:12px}.hmatias-header .nav-actions{display:none}}
+@media(max-width:560px){.header-contact a[href^="mailto:"]{display:none}.header-social a{height:44px}.hmatias-topbar .topbar-inner{min-height:44px}.hmatias-header .brand,.hmatias-header .brand img{width:190px}}
+
+.mobile-quote-link{display:none!important}@media(max-width:850px){.hmatias-header .nav-menu .mobile-quote-link{display:flex!important;justify-content:center;margin:8px;color:#fff;background:#0065cc;border-radius:9px}}

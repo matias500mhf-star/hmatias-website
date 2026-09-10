@@ -51,6 +51,13 @@
     navMenu.appendChild(mobileLang);
   }
 
+  const headerQuote=document.querySelector('.hmatias-header .nav-actions [data-quote-link]');
+  if(navMenu&&headerQuote){
+    const mobileQuote=headerQuote.cloneNode(true);
+    mobileQuote.classList.add('mobile-quote-link');
+    navMenu.appendChild(mobileQuote);
+  }
+
   document.querySelectorAll('.nav-menu a').forEach(a=>a.addEventListener('click',()=>{
     navMenu?.classList.remove('open');
     menuToggle?.setAttribute('aria-expanded','false');
