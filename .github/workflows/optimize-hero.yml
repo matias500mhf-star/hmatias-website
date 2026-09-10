@@ -2,7 +2,7 @@ name: Final HMATIAS site hardening
 
 on:
   push:
-    branches: [main, feature/final-site-hardening-2026-09-10]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
