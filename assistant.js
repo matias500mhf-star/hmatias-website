@@ -1,54 +1,118 @@
 (()=>{
-  const APIS=['https://api.comercialhmatiasps.com/api/ai','/api/ai'];
+  const API_URLS=['https://api.comercialhmatiasps.com/api/ai','/api/ai'];
   const WA='https://wa.me/244948806673';
   const pageEnglish=(document.documentElement.lang||'').toLowerCase().startsWith('en');
 
-  function addMessage(box,text,kind){const el=document.createElement('div');el.className=`hmatias-assistant-msg ${kind}`;el.textContent=text;box.appendChild(el);box.scrollTop=box.scrollHeight;return el;}
-  function wantsEnglish(raw){return pageEnglish||/\b(hello|hi|price|service|visa|appointment|cleaning|construction|supply|contact|where|document|quote|business|product)\b/i.test(raw);}
+  const add=(box,text,kind)=>{
+    const el=document.createElement('div');
+    el.className=`hmatias-assistant-msg ${kind}`;
+    el.textContent=text;
+    box.appendChild(el);
+    box.scrollTop=box.scrollHeight;
+    return el;
+  };
+
+  const prefersEnglish=raw=>pageEnglish||/\b(hello|hi|price|service|visa|appointment|cleaning|construction|facilities|supply|contact|document|quote|business|product)\b/i.test(raw);
 
   function localAnswer(raw){
-    const m=raw.toLowerCase(),en=wantsEnglish(raw);
-    if(/agendamento|consular|visto|visa|appointment/.test(m))return en?'HMATIAS Business Services provides administrative support for consular appointments and visa processes. The price is on request because scope varies by destination, visa type, documentation and level of assistance. HMATIAS does not sell appointment slots and does not guarantee appointment availability or visa approval. Official consular/VFS fees are separate unless expressly included in a quotation.':'A HMATIAS Business Services presta apoio administrativo para agendamentos consulares e processos de visto. O preço é sob consulta porque varia conforme o destino, tipo de visto, documentação e nível de acompanhamento. A HMATIAS não vende vagas, não garante disponibilidade de agendamento nem aprovação do visto. Taxas consulares/VFS são separadas, salvo indicação expressa na cotação.';
-    if(/p3.*pine|pine.*500|500\s*ml/.test(m))return en?'HMATIAS Clean currently presents P3 Pine Gel in the 500 ml format. Price, stock and delivery conditions are confirmed by the commercial team before purchase.':'A HMATIAS Clean apresenta o P3 Pine Gel no formato de 500 ml. O preço, stock e condições de entrega são confirmados pela equipa comercial antes da compra.';
-    if(/t563p|taurus.*pine|pine.*5\s*kg|5\s*kg.*pine/.test(m))return en?'Taurus Pine Gel T563P 5 kg has a reference unit price of 26,500 Kz and 24,500 Kz per unit for 4 or more units. Stock, transport and delivery must be confirmed before purchase.':'O Taurus Pine Gel T563P de 5 kg tem preço unitário de referência de 26.500 Kz e, para 4 ou mais unidades, 24.500 Kz por unidade. Stock, transporte e entrega devem ser confirmados antes da compra.';
-    if(/hmatias clean|produto[s]? de limpeza|cleaning|detergent|detergente|disinfect|desinfetante|higiene|consumíveis|consumiveis|pack.*limpeza/.test(m))return en?'HMATIAS Clean supplies cleaning and hygiene products for domestic and professional use. The catalogue includes Pine Gel plus detergents, disinfectants, floor-cleaning products, consumables and business cleaning packs. Unpriced items are quoted according to stock, format and quantity.':'A HMATIAS Clean comercializa e fornece produtos de limpeza e higiene para uso doméstico e profissional. O catálogo inclui Pine Gel e categorias como detergentes, desinfetantes, limpeza de pisos, consumíveis e packs para empresas. Produtos sem preço publicado são cotados conforme stock, formato e quantidade.';
-    if(/administrativ|documental|document|business support|apoio empresarial|pm[e]?|carta|declaraç|declarac|formataç|formatac|digitalizaç|digitalizac|proposta comercial|quotation|cotação|cotacao|presentation|apresentaç|apresentac/.test(m))return en?'HMATIAS Business Services provides administrative and document support. Administrative & Document Support starts at 5,000 Kz, Business Support starts at 15,000 Kz, and SME Administrative Support starts at 75,000 Kz/month. Visa and consular appointment support is priced on request. Final pricing depends on volume, complexity and deadline.':'A HMATIAS Business Services presta apoio administrativo e documental. Administrativo & Documental: desde 5.000 Kz. Business Support: desde 15.000 Kz. Apoio Administrativo PME: desde 75.000 Kz/mês. Agendamentos consulares e apoio a vistos: sob consulta. Os valores dependem do volume, complexidade e prazo.';
-    if(/preço|preco|valor|quanto custa|orçamento|orcamento|price|cost|quote/.test(m))return en?'Some reference prices are published on the website. Products and services without a fixed price are quoted after confirming stock, quantity, transport, complexity and deadline. Tell me which product or service you need.':'Alguns preços de referência estão publicados no site. Para produtos ou serviços sem preço fixo, a HMATIAS confirma stock, quantidade, transporte, complexidade e prazo antes da cotação. Diga-me qual produto ou serviço pretende.';
-    if(/constru|obra|betão|betao|paviment|infraestrutura|construction|infrastructure|paving|concrete/.test(m))return en?'HMATIAS works in civil construction, infrastructure, paving, concrete and related support. For an initial assessment, send the location, type of work and a short description.':'A HMATIAS atua em construção civil, infraestrutura, pavimentação, betonagem e trabalhos de apoio. Para avaliar o projeto, envie localização, tipo de trabalho e uma breve descrição.';
-    if(/remodel|reabilita|renovat|bathroom|kitchen|acabamento/.test(m))return en?'HMATIAS carries out remodelling and renovation of spaces, including finishes and related works. Send photos, approximate measurements and the objective of the intervention for an initial assessment.':'A HMATIAS executa remodelação e renovação de espaços, incluindo acabamentos e trabalhos associados. Envie fotos, medidas aproximadas e o objetivo da intervenção para uma análise inicial.';
-    if(/facilities|manuten|maintenance|instalaç|instalac/.test(m))return en?'HMATIAS provides facilities, maintenance, cleaning and operational support for business premises. Scope is confirmed according to need and required frequency.':'A HMATIAS presta serviços de facilities, manutenção, limpeza e apoio operacional para instalações e espaços empresariais. O escopo é confirmado conforme a necessidade e a frequência pretendida.';
-    if(/supply|procurement|sourcing|fornecimento|equipamento|material|fornecedor|supplier/.test(m))return en?'HMATIAS Supply supports national, regional and international sourcing, procurement and supply. Send the reference, specification and quantity so the team can assess sourcing options.':'A HMATIAS Supply apoia sourcing, procurement e fornecimento nacional, regional e internacional. Envie referência, especificação e quantidade para a equipa avaliar opções de fornecimento.';
-    if(/contact|telefone|whatsapp|email|e-mail/.test(m))return en?'You can contact HMATIAS on WhatsApp +244 948 806 673, geral@hmatiasps.ao or comercial@hmatiasps.ao.':'Pode contactar a HMATIAS pelo WhatsApp +244 948 806 673, pelo e-mail geral@hmatiasps.ao ou comercial@hmatiasps.ao.';
-    if(/onde|morada|endereço|endereco|localiza|where|address|location/.test(m))return en?'HMATIAS is based in Viana, Bairro 1 de Maio, House No. 31, Luanda, Angola.':'A HMATIAS está sediada em Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola.';
-    if(/privacidade|dados pessoais|termos|condições|condicoes|privacy|terms/.test(m))return en?'The website includes a Privacy Policy and Terms & Conditions. For specific questions, contact geral@hmatiasps.ao.':'O site dispõe de Política de Privacidade e Termos & Condições. Para questões específicas, pode contactar geral@hmatiasps.ao.';
-    return en?'I can help with construction, remodelling, facilities, HMATIAS Clean, Business Services, consular/visa administrative support, HMATIAS Supply, procurement, reference pricing and quotations. Tell me what product or service you need.':'Posso orientar sobre construção, remodelação, facilities, HMATIAS Clean, Business Services, apoio administrativo a vistos/agendamentos consulares, HMATIAS Supply, procurement, preços de referência e pedidos de orçamento. Diga o produto ou serviço que pretende.';
+    const m=raw.toLowerCase();
+    const en=prefersEnglish(raw);
+    if(/agendamento|consular|visto|visa|appointment/.test(m))return en
+      ?'HMATIAS Business Services provides administrative support for consular appointments and visa processes. Pricing is on request because scope varies by destination, visa type, documentation and level of assistance. HMATIAS does not sell appointment slots, guarantee availability or guarantee visa approval. Official consular/VFS fees are separate unless expressly included in a quotation.'
+      :'A HMATIAS Business Services presta apoio administrativo para agendamentos consulares e processos de visto. O preço é sob consulta porque varia conforme destino, tipo de visto, documentação e nível de acompanhamento. A HMATIAS não vende vagas, não garante disponibilidade de agendamento nem aprovação do visto. Taxas consulares/VFS são separadas, salvo indicação expressa na cotação.';
+    if(/123.*pine|pine.*500|500\s*ml/.test(m))return en
+      ?'HMATIAS Clean presents 123 Pine Gel in the 500 ml format. Price, stock and delivery conditions are confirmed by the commercial team before purchase.'
+      :'A HMATIAS Clean apresenta o 123 Pine Gel no formato de 500 ml. O preço, stock e condições de entrega são confirmados pela equipa comercial antes da compra.';
+    if(/t563p|taurus.*pine|pine.*5\s*kg|5\s*kg.*pine/.test(m))return en
+      ?'Taurus Pine Gel T563P 5 kg has a reference unit price of 26,500 Kz and 24,500 Kz per unit for 4 or more units. Stock, transport and delivery must be confirmed before purchase.'
+      :'O Taurus Pine Gel T563P de 5 kg tem preço unitário de referência de 26.500 Kz e, para 4 ou mais unidades, 24.500 Kz por unidade. Stock, transporte e entrega devem ser confirmados antes da compra.';
+    if(/hmatias clean|produto[s]? de limpeza|cleaning|detergent|detergente|disinfect|desinfetante|higiene|consum/.test(m))return en
+      ?'HMATIAS Clean is a dedicated HMATIAS division for cleaning and hygiene products. Its catalogue is available at hmatias-clean-en.html. Unpriced items are quoted after confirming stock, format, quantity and delivery.'
+      :'A HMATIAS Clean é uma divisão dedicada a produtos de limpeza e higiene. O catálogo próprio está em hmatias-clean.html. Produtos sem preço publicado são cotados após confirmação de stock, formato, quantidade e entrega.';
+    if(/administrativ|documental|document|business support|apoio empresarial|pm[e]?|carta|declaraç|formataç|digitalizaç|proposta|quotation|cotação|presentation|apresentaç/.test(m))return en
+      ?'HMATIAS Business Services provides administrative and document support. Administrative & Document Support starts at 5,000 Kz, Business Support starts at 15,000 Kz, and SME Administrative Support starts at 75,000 Kz/month. Visa and consular appointment support is priced on request.'
+      :'A HMATIAS Business Services presta apoio administrativo e documental. Administrativo & Documental: desde 5.000 Kz. Business Support: desde 15.000 Kz. Apoio Administrativo PME: desde 75.000 Kz/mês. Agendamentos consulares e apoio a vistos: sob consulta.';
+    if(/constru|obra|betão|betao|paviment|infraestrutura|construction|infrastructure|paving|concrete/.test(m))return en
+      ?'HMATIAS works in civil construction, infrastructure, concrete, paving and remodelling. The dedicated Construction & Infrastructure page explains capabilities and the assessment process.'
+      :'A HMATIAS atua em construção civil, infraestrutura, betonagem, pavimentação e remodelação. A página Construção & Infraestrutura apresenta as capacidades e o processo de avaliação.';
+    if(/facilities|manuten|maintenance|instalaç|instalac|limpeza empresarial/.test(m))return en
+      ?'HMATIAS Facilities Services covers maintenance, cleaning and operational support for business premises under an agreed scope and frequency.'
+      :'A HMATIAS Facilities Services cobre manutenção, limpeza e apoio operacional para instalações empresariais, com escopo e frequência definidos.';
+    if(/supply|procurement|sourcing|fornecimento|equipamento|material|fornecedor|supplier/.test(m))return en
+      ?'HMATIAS Supply supports national, regional and international sourcing, procurement and business supply. Send the reference, specification, quantity and target timing for assessment.'
+      :'A HMATIAS Supply apoia sourcing, procurement e fornecimento nacional, regional e internacional. Envie referência, especificação, quantidade e prazo pretendido para avaliação.';
+    if(/preço|preco|valor|quanto custa|orçamento|orcamento|price|cost|quote/.test(m))return en
+      ?'Reference prices are published only where they are sufficiently defined. Variable products and services are quoted after confirming stock, quantity, transport, complexity and deadline. Tell me which item you need.'
+      :'Os preços de referência são publicados apenas quando estão suficientemente definidos. Produtos e serviços variáveis são cotados após confirmação de stock, quantidade, transporte, complexidade e prazo. Diga-me o que pretende.';
+    if(/contact|telefone|whatsapp|email|e-mail/.test(m))return en
+      ?'Contact HMATIAS on WhatsApp +244 948 806 673, geral@hmatiasps.ao or comercial@hmatiasps.ao.'
+      :'Pode contactar a HMATIAS pelo WhatsApp +244 948 806 673, geral@hmatiasps.ao ou comercial@hmatiasps.ao.';
+    if(/onde|morada|endereço|endereco|localiza|where|address|location/.test(m))return en
+      ?'HMATIAS is based in Viana, Bairro 1 de Maio, House No. 31, Luanda, Angola.'
+      :'A HMATIAS está sediada em Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola.';
+    return en
+      ?'I can help with Construction & Infrastructure, Facilities, HMATIAS Supply, HMATIAS Clean, Business Services, visa/consular administrative support, reference pricing and quotations.'
+      :'Posso orientar sobre Construção & Infraestrutura, Facilities, HMATIAS Supply, HMATIAS Clean, Business Services, apoio administrativo a vistos/agendamentos consulares, preços de referência e pedidos de orçamento.';
   }
 
-  async function askAPI(message,history){for(const url of APIS){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),5500);try{const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,history}),signal:controller.signal});clearTimeout(timer);if(!res.ok)continue;const data=await res.json();const answer=(data.answer||data.reply||data.response||'').trim();if(answer)return answer;}catch(e){clearTimeout(timer);}}throw new Error('AI unavailable');}
-
-  function enhancePortugueseSite(){
-    if(pageEnglish)return;
-    const head=document.head;
-    if(!head.querySelector('link[hreflang="en"]')){const pt=document.createElement('link');pt.rel='alternate';pt.hreflang='pt-AO';pt.href='https://comercialhmatiasps.com/';head.appendChild(pt);const en=document.createElement('link');en.rel='alternate';en.hreflang='en';en.href='https://comercialhmatiasps.com/en.html';head.appendChild(en);}
-    const actions=document.querySelector('.nav-actions');
-    if(actions&&!actions.querySelector('.hmatias-lang-switch')){const lang=document.createElement('a');lang.className='hmatias-lang-switch';lang.href='en.html';lang.hreflang='en';lang.textContent='EN';lang.setAttribute('aria-label','English version');actions.prepend(lang);}
-    const section=document.querySelector('#administrativo');
-    const container=section?.querySelector('.container')||section;
-    if(container&&!container.querySelector('.hmatias-visa-service')){const panel=document.createElement('div');panel.className='hmatias-visa-service';panel.innerHTML=`<div class="hmatias-visa-copy"><span class="eyebrow">SERVIÇO SOB CONSULTA</span><h3>Agendamentos Consulares & Apoio Administrativo a Vistos</h3><p>Apoio na organização documental, preparação administrativa do processo e utilização de plataformas oficiais. A HMATIAS não vende vagas e não garante disponibilidade de agendamento nem aprovação do visto.</p><div class="hmatias-visa-actions"><a class="btn btn-light" href="servicos-administrativos.html#vistos">Ver catálogo e condições →</a><a class="hmatias-visa-quote" href="https://wa.me/244948806673?text=Ol%C3%A1%20HMATIAS%2C%20gostaria%20de%20solicitar%20uma%20cota%C3%A7%C3%A3o%20para%20Agendamentos%20Consulares%20%26%20Apoio%20a%20Vistos." target="_blank" rel="noopener">Solicitar cotação</a></div></div><div class="hmatias-visa-qr"><img src="images/qr/apoio-vistos-whatsapp.svg" alt="Código QR para solicitar cotação de apoio a vistos pelo WhatsApp" width="150" height="150"><small>Digitalize para pedir cotação</small></div>`;container.appendChild(panel);}
-    const footer=document.querySelector('footer .footer-grid');
-    if(footer&&!footer.querySelector('.hmatias-catalog-link')){const col=footer.querySelector('div:nth-child(3)')||footer.lastElementChild;if(col){const a=document.createElement('a');a.className='hmatias-catalog-link';a.href='servicos-administrativos.html';a.textContent='Catálogo Business Services';col.appendChild(a);}}
-    if(!document.getElementById('hmatias-bilingual-styles')){const s=document.createElement('style');s.id='hmatias-bilingual-styles';s.textContent=`.hmatias-lang-switch{display:inline-flex;align-items:center;justify-content:center;min-width:40px;padding:8px 10px;border:1px solid #ccd9e5;border-radius:999px;color:#062d56;text-decoration:none;font-size:12px;font-weight:900;letter-spacing:.06em;background:#fff}.hmatias-visa-service{margin-top:30px;display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:28px;align-items:center;padding:30px;background:linear-gradient(135deg,#062d56,#0a477d);color:#fff;border-radius:22px;box-shadow:0 24px 60px rgba(6,45,86,.18)}.hmatias-visa-copy h3{margin:7px 0 10px;font-size:clamp(24px,3vw,34px)}.hmatias-visa-copy p{margin:0;color:#dceaf5;line-height:1.7}.hmatias-visa-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.hmatias-visa-quote{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border:1px solid rgba(255,255,255,.35);border-radius:9px;color:#fff;text-decoration:none;font-weight:900}.hmatias-visa-qr{background:#fff;border-radius:16px;padding:12px;text-align:center}.hmatias-visa-qr img{display:block;width:100%;height:auto}.hmatias-visa-qr small{display:block;color:#567084;margin-top:6px;font-weight:800}@media(max-width:850px){.hmatias-visa-service{grid-template-columns:1fr}.hmatias-visa-qr{max-width:170px}.hmatias-lang-switch{min-width:36px;padding:7px 8px}}`;head.appendChild(s);}
+  async function askAPI(message,history){
+    for(const url of API_URLS){
+      const controller=new AbortController();
+      const timer=setTimeout(()=>controller.abort(),5000);
+      try{
+        const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,history}),signal:controller.signal});
+        clearTimeout(timer);
+        if(!res.ok)continue;
+        const data=await res.json();
+        const answer=(data.answer||data.reply||data.response||'').trim();
+        if(answer)return answer;
+      }catch(_){clearTimeout(timer);}
+    }
+    throw new Error('AI unavailable');
   }
 
   function init(){
-    enhancePortugueseSite();
     if(document.querySelector('.hmatias-assistant'))return;
-    const t=pageEnglish?{label:'HMATIAS Assistant',sub:'Services, products, pricing and quotations.',close:'Close assistant',msg:'Message',placeholder:'Product, service or quotation?',send:'Send',toggle:'Assistant',hello:'Hello. I am the HMATIAS virtual assistant. I can help with construction, HMATIAS Clean products, Business Services, visa/consular administrative support, Supply, reference pricing and quotations.',loading:'Preparing response…'}:{label:'Assistente HMATIAS',sub:'Serviços, produtos, preços e orçamento.',close:'Fechar assistente',msg:'Mensagem',placeholder:'Produto, serviço ou orçamento?',send:'Enviar',toggle:'Assistente',hello:'Olá. Sou o assistente virtual da HMATIAS. Posso orientar sobre construção, produtos HMATIAS Clean, Business Services, apoio administrativo a vistos/agendamentos consulares, Supply, preços de referência e pedidos de orçamento.',loading:'A preparar resposta…'};
-    const root=document.createElement('aside');root.className='hmatias-assistant';root.setAttribute('aria-label',t.label);root.innerHTML=`<div class="hmatias-assistant-panel"><div class="hmatias-assistant-head"><div><strong>${t.label}</strong><small>${t.sub}</small></div><button class="hmatias-assistant-close" type="button" aria-label="${t.close}">×</button></div><div class="hmatias-assistant-messages" aria-live="polite"></div><div class="hmatias-assistant-links"><a href="${WA}" target="_blank" rel="noopener">WhatsApp</a><a href="mailto:comercial@hmatiasps.ao">E-mail</a></div><form class="hmatias-assistant-form"><input aria-label="${t.msg}" maxlength="1000" autocomplete="off" placeholder="${t.placeholder}"><button type="submit" aria-label="${t.send}">${t.send}</button></form></div><button class="hmatias-assistant-toggle" type="button" aria-expanded="false"><span aria-hidden="true">✦</span> ${t.toggle}</button>`;document.body.appendChild(root);
-    const toggle=root.querySelector('.hmatias-assistant-toggle'),close=root.querySelector('.hmatias-assistant-close'),box=root.querySelector('.hmatias-assistant-messages'),form=root.querySelector('form'),input=form.querySelector('input');let history=[];
-    function setOpen(open){root.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));if(open&&!box.children.length)addMessage(box,t.hello,'bot');if(open)requestAnimationFrame(()=>input.focus());}
-    toggle.addEventListener('click',()=>setOpen(!root.classList.contains('open')));close.addEventListener('click',()=>setOpen(false));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&root.classList.contains('open'))setOpen(false)});
-    form.addEventListener('submit',async e=>{e.preventDefault();const message=input.value.trim();if(!message)return;input.value='';addMessage(box,message,'user');const loading=addMessage(box,t.loading,'bot');loading.classList.add('hmatias-assistant-loading');let answer='';try{answer=await askAPI(message,history)}catch(err){answer=localAnswer(message)}loading.remove();addMessage(box,answer,'bot');history=[...history,{role:'user',content:message},{role:'assistant',content:answer}].slice(-8);});
+    const t=pageEnglish
+      ?{label:'HMATIAS Assistant',sub:'Core services, divisions and quotations.',close:'Close assistant',msg:'Message',placeholder:'What do you need?',send:'Send',toggle:'Assistant',hello:'Hello. I can guide you through HMATIAS Construction, Facilities, Supply, HMATIAS Clean, Business Services and quotation requests.',loading:'Preparing response…'}
+      :{label:'Assistente HMATIAS',sub:'Serviços principais, divisões e cotações.',close:'Fechar assistente',msg:'Mensagem',placeholder:'O que precisa?',send:'Enviar',toggle:'Assistente',hello:'Olá. Posso orientar sobre Construção, Facilities, Supply, HMATIAS Clean, Business Services e pedidos de cotação.',loading:'A preparar resposta…'};
+    const root=document.createElement('aside');
+    root.className='hmatias-assistant';
+    root.setAttribute('aria-label',t.label);
+    root.innerHTML=`<div class="hmatias-assistant-panel"><div class="hmatias-assistant-head"><div><strong>${t.label}</strong><small>${t.sub}</small></div><button class="hmatias-assistant-close" type="button" aria-label="${t.close}">×</button></div><div class="hmatias-assistant-messages" aria-live="polite"></div><div class="hmatias-assistant-links"><a href="${WA}" target="_blank" rel="noopener">WhatsApp</a><a href="mailto:comercial@hmatiasps.ao">E-mail</a></div><form class="hmatias-assistant-form"><input aria-label="${t.msg}" maxlength="1000" autocomplete="off" placeholder="${t.placeholder}"><button type="submit" aria-label="${t.send}">${t.send}</button></form></div><button class="hmatias-assistant-toggle" type="button" aria-expanded="false"><span aria-hidden="true">✦</span> ${t.toggle}</button>`;
+    document.body.appendChild(root);
+    const toggle=root.querySelector('.hmatias-assistant-toggle');
+    const close=root.querySelector('.hmatias-assistant-close');
+    const box=root.querySelector('.hmatias-assistant-messages');
+    const form=root.querySelector('form');
+    const input=form.querySelector('input');
+    let history=[];
+
+    const setOpen=open=>{
+      root.classList.toggle('open',open);
+      toggle.setAttribute('aria-expanded',String(open));
+      if(open&&!box.children.length)add(box,t.hello,'bot');
+      if(open)requestAnimationFrame(()=>input.focus());
+    };
+    toggle.addEventListener('click',()=>setOpen(!root.classList.contains('open')));
+    close.addEventListener('click',()=>setOpen(false));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&root.classList.contains('open'))setOpen(false);});
+
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();
+      const message=input.value.trim();
+      if(!message)return;
+      input.value='';
+      add(box,message,'user');
+      const loading=add(box,t.loading,'bot');
+      loading.classList.add('hmatias-assistant-loading');
+      let answer;
+      try{answer=await askAPI(message,history);}
+      catch(_){answer=localAnswer(message);}
+      loading.remove();
+      add(box,answer,'bot');
+      history=[...history,{role:'user',content:message},{role:'assistant',content:answer}].slice(-8);
+    });
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
