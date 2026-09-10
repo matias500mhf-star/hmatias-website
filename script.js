@@ -60,7 +60,7 @@
   }
 
   const clickStyle=document.createElement('style');
-  clickStyle.textContent='.service-card[data-card-link],.division-card[data-card-link]{cursor:pointer}.service-card[data-card-link]:focus-visible,.division-card[data-card-link]:focus-visible{outline:3px solid #48baf5;outline-offset:4px}';
+  clickStyle.textContent='.service-card[data-card-link],.division-card[data-card-link]{cursor:pointer}.service-card[data-card-link]:focus-visible,.division-card[data-card-link]:focus-visible{outline:3px solid #48baf5;outline-offset:4px}.btn-outline{border:1px solid #cbd8e5;background:#fff;color:#062d56;box-shadow:none}.btn-outline:hover{border-color:#0065cc;color:#0065cc;background:#f7fbff}@media(max-width:620px){.business-contact-form .btn-outline{width:100%;justify-content:center}}';
   document.head.appendChild(clickStyle);
 
   document.querySelectorAll('.service-card,.division-card').forEach(card=>{
