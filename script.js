@@ -170,7 +170,7 @@
   }
 
   const utilityStyle=document.createElement('style');
-  utilityStyle.textContent='.btn-outline{border:1px solid #cbd8e5;background:#fff;color:#062d56;box-shadow:none}.btn-outline:hover{border-color:#0065cc;color:#0065cc;background:#f7fbff}.mobile-lang-switch{display:none!important}@media(max-width:850px){.nav-menu .mobile-lang-switch{display:flex!important;align-items:center;justify-content:flex-start;margin-top:8px;padding-top:14px!important;border-top:1px solid #dce6f0!important;color:#0065cc!important;font-weight:900!important}}@media(max-width:620px){.business-contact-form .btn-outline{width:100%;justify-content:center}}';
+  utilityStyle.textContent='.btn-outline{border:1px solid #cbd8e5;background:#fff;color:#062d56;box-shadow:none}.btn-outline:hover{border-color:#0065cc;color:#0065cc;background:#f7fbff}.mobile-lang-switch{display:none!important}@media(max-width:850px){.nav-menu .mobile-lang-switch{display:flex!important;align-items:center;justify-content:flex-start;margin-top:8px;padding-top:14px!important;border-top:1px solid #dce6f0!important;color:#0065cc!important;font-weight:700!important}}@media(max-width:620px){.business-contact-form .btn-outline{width:100%;justify-content:center}}';
   document.head.appendChild(utilityStyle);
 
   const navLinks=[...document.querySelectorAll('.nav-menu a[href^="#"]')];

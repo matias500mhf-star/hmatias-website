@@ -1,0 +1,24 @@
+/* One locally hosted font and a shared, responsive type hierarchy. */
+@font-face{font-family:'HMATIAS Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url('fonts/inter-latin-variable.woff2') format('woff2')}
+:root{--font-site:'HMATIAS Inter',Arial,sans-serif;--type-body:1rem;--type-ui:.875rem;--type-small:.75rem}
+body.hmatias-type{font-family:var(--font-site);font-size:var(--type-body);font-weight:400;line-height:1.65;letter-spacing:normal;font-optical-sizing:auto}
+.hmatias-type :is(button,input,select,textarea){font-family:var(--font-site)}
+.hmatias-type :is(h1,h2,h3,h4){font-family:var(--font-site);font-weight:700;letter-spacing:-.025em;overflow-wrap:break-word}
+body.hmatias-type h1{font-size:clamp(2rem,1.4rem + 2.5vw,3.5rem);line-height:1.15}
+body.hmatias-type h2{font-size:clamp(1.625rem,1.2rem + 1.5vw,2.5rem);line-height:1.25}
+body.hmatias-type h3{font-size:clamp(1.125rem,1rem + .4vw,1.375rem);line-height:1.35}
+body.hmatias-type main p,body.hmatias-type main li{font-size:var(--type-body);line-height:1.65}
+body.hmatias-type :is(.booking-form-card,.booking-panel,.supply-card) h2{font-size:1.5rem}
+body.hmatias-type :is(.eyebrow,.division-card-kicker,.division-kicker){font-size:var(--type-small);font-weight:600;letter-spacing:.1em;line-height:1.5}
+body.hmatias-type :is(.btn,.lang-switch){font-family:var(--font-site);font-size:var(--type-ui);font-weight:600;line-height:1.4}
+body.hmatias-type :is(label,.form-field label,.booking-field label){font-size:var(--type-ui);font-weight:600;line-height:1.5}
+body.hmatias-type :is(input,select,textarea){font-size:1rem;line-height:1.5}
+body.hmatias-type :is(.booking-smallprint,.form-privacy-note,.form-note){font-size:var(--type-small);line-height:1.6}
+body.hmatias-type footer :is(p,a){font-size:var(--type-ui);line-height:1.6}
+body.hmatias-type .copyright{font-size:var(--type-small);line-height:1.6}
+body.hmatias-type .hmatias-header .nav-menu a{font-size:var(--type-ui);font-weight:600;letter-spacing:normal}
+body.hmatias-type .header-contact{gap:8px 18px}
+body.hmatias-type .header-contact a{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:var(--type-small);font-weight:500;line-height:1.5}
+.contact-icon{flex:none;display:block;width:1rem;height:1rem;filter:brightness(0) invert(1)}
+@media(max-width:1100px){body.hmatias-type .hmatias-header .nav-menu{gap:12px}body.hmatias-type .hmatias-header .nav{gap:12px}}
+@media(max-width:850px){body.hmatias-type .hmatias-header .nav-menu a{font-size:1rem}body.hmatias-type .header-contact{gap:6px 14px}}
