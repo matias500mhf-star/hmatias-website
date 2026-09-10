@@ -1,53 +1,64 @@
-const menuToggle=document.querySelector('.menu-toggle'),navMenu=document.querySelector('.nav-menu');
-menuToggle?.addEventListener('click',()=>{const open=navMenu.classList.toggle('open');menuToggle.setAttribute('aria-expanded',String(open));});
+const menuToggle=document.querySelector('.menu-toggle');
+const navMenu=document.querySelector('.nav-menu');
+menuToggle?.addEventListener('click',()=>{const open=navMenu?.classList.toggle('open');menuToggle.setAttribute('aria-expanded',String(Boolean(open)));});
 document.querySelectorAll('.nav-menu a').forEach(a=>a.addEventListener('click',()=>{navMenu?.classList.remove('open');menuToggle?.setAttribute('aria-expanded','false');}));
-const ADDRESS='Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',EMAIL='geral@hmatiasps.ao';
-const loc=document.querySelector('.topbar-inner > span:first-child');if(loc){loc.textContent='📍 '+ADDRESS;loc.classList.add('hmatias-location');}
-const cl=document.querySelector('.contact-list');if(cl){const a=[...cl.querySelectorAll('span')].find(x=>x.textContent.includes('Luanda, Angola'));if(a)a.innerHTML='<span>⌖</span> '+ADDRESS;}
-const footer=document.querySelector('footer .footer-grid > div:first-child');if(footer&&!footer.querySelector('.hmatias-address')){const p=document.createElement('p');p.className='hmatias-address';p.textContent=ADDRESS;footer.appendChild(p);}
+
+const ADDRESS='Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola';
+const EMAIL='geral@hmatiasps.ao';
+const loc=document.querySelector('.topbar-inner > span:first-child');
+if(loc){loc.textContent='📍 '+ADDRESS;loc.classList.add('hmatias-location');}
+const cl=document.querySelector('.contact-list');
+if(cl){const a=[...cl.querySelectorAll('span')].find(x=>x.textContent.includes('Luanda, Angola'));if(a)a.innerHTML='<span>⌖</span> '+ADDRESS;}
+const footer=document.querySelector('footer .footer-grid > div:first-child');
+if(footer&&!footer.querySelector('.hmatias-address')){const p=document.createElement('p');p.className='hmatias-address';p.textContent=ADDRESS;footer.appendChild(p);}
 const year=document.getElementById('year');if(year)year.textContent=String(new Date().getFullYear());
-const form=document.getElementById('contactForm');if(form){const tel=form.querySelector('#telefone');if(tel)tel.required=true;if(!form.querySelector('#email')){const label=document.createElement('label');label.htmlFor='email';label.innerHTML='E-mail<input id="email" type="email" name="email" autocomplete="email" placeholder="seu@email.com">';const phoneLabel=form.querySelector('label[for="telefone"]');phoneLabel?.before(label);}form.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(form),text=`Olá HMATIAS.\n\nNome: ${d.get('nome')||''}\nEmpresa: ${d.get('empresa')||'Não indicada'}\nE-mail: ${d.get('email')||'Não indicado'}\nTelefone/WhatsApp: ${d.get('telefone')||'Não indicado'}\nServiço: ${d.get('servico')||'Não indicado'}\n\nMensagem:\n${d.get('mensagem')||''}`;window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener');});}
-const ld=document.querySelector('script[type="application/ld+json"]');if(ld)try{const x=JSON.parse(ld.textContent);x.address={...(x.address||{}),streetAddress:'Bairro 1 de Maio, Casa n.º 31',addressLocality:'Viana',addressRegion:'Luanda',addressCountry:'AO'};x.telephone='+244948806673';x.email=EMAIL;ld.textContent=JSON.stringify(x);}catch(e){}
-document.querySelectorAll('a[href^="https://wa.me/244948806673"]').forEach(a=>{if(!a.href.includes('text='))a.href='https://wa.me/244948806673?text='+encodeURIComponent('Olá HMATIAS, gostaria de solicitar um orçamento. Podem orientar-me?');});
-const topbar=document.querySelector('.topbar'),topbarInner=document.querySelector('.topbar-inner'),topLinks=document.querySelector('.top-links'),topContact=document.querySelector('.top-contact');if(topbar&&topbarInner&&topLinks&&matchMedia('(min-width:851px)').matches){topbar.classList.add('hmatias-livebar');topbarInner.classList.add('hmatias-livebar-inner');topLinks.classList.add('hmatias-ticker');const items=['Construção & Infraestrutura','Facilities & Manutenção','HMATIAS Clean · Produtos','HMATIAS Supply · Procurement','Business Services','Projetos reais · HMATIAS'];const m=items.map(x=>`<span class="ticker-item">${x}</span><span class="ticker-sep">•</span>`).join('');topLinks.innerHTML=`<div class="hmatias-ticker-track">${m}${m}</div>`;topContact?.classList.add('hmatias-top-contact');const s=document.createElement('style');s.textContent='.hmatias-livebar{overflow:hidden}.hmatias-livebar-inner{gap:22px}.hmatias-location{flex:0 0 auto;white-space:nowrap;font-weight:800;color:#fff}.hmatias-ticker{position:relative;flex:1;min-width:0;overflow:hidden;height:38px;display:flex!important;align-items:center;white-space:nowrap}.hmatias-ticker-track{display:inline-flex;align-items:center;min-width:max-content;animation:hmatiasTicker 34s linear infinite}.ticker-item{display:inline-block;color:#e9f5ff;font-size:11px;font-weight:800}.ticker-sep{margin:0 13px;color:#57bdf0}@keyframes hmatiasTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}@media(max-width:1100px){.hmatias-top-contact{display:none}}';document.head.appendChild(s);}
-const navLinks=[...document.querySelectorAll('.nav-menu a[href^="#"]')],sections=navLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);if(sections.length){const io=new IntersectionObserver(es=>{const v=es.filter(x=>x.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(v)navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${v.target.id}`));},{rootMargin:'-28% 0px -58% 0px',threshold:[.05,.15,.3,.5]});sections.forEach(s=>io.observe(s));}
-const back=document.createElement('button');back.className='hmatias-backtop';back.type='button';back.setAttribute('aria-label','Voltar ao início');back.textContent='↑';back.onclick=()=>scrollTo({top:0,behavior:'smooth'});document.body.appendChild(back);addEventListener('scroll',()=>back.classList.toggle('show',scrollY>260),{passive:true});
-if(!document.querySelector('link[data-hmatias-premium]')){const p=document.createElement('link');p.rel='stylesheet';p.href='premium.css?v=5';p.dataset.hmatiasPremium='true';document.head.appendChild(p);}
-if(!document.querySelector('link[data-hmatias-assistant-css]')){const a=document.createElement('link');a.rel='stylesheet';a.href='assistant.css?v=1';a.dataset.hmatiasAssistantCss='true';document.head.appendChild(a);}
-if(!document.querySelector('script[data-hmatias-assistant]')){const a=document.createElement('script');a.src='assistant.js?v=3';a.defer=true;a.dataset.hmatiasAssistant='true';document.head.appendChild(a);}
 
-/* HERO: imagem mais luminosa, nítida e premium sem perder o contraste do texto */
-const premiumVisual=document.createElement('style');premiumVisual.textContent=`.hero-photo img{filter:brightness(1.18) saturate(1.06) contrast(1.02)!important}.visual-card:before{background:linear-gradient(90deg,rgba(6,45,86,.76) 0%,rgba(6,45,86,.28) 45%,rgba(6,45,86,.02) 100%),linear-gradient(180deg,rgba(6,45,86,.02) 35%,rgba(6,45,86,.42) 100%)!important}.visual-overlay{background:rgba(6,45,86,.88)!important;box-shadow:0 16px 38px rgba(0,0,0,.24)!important}.project picture{cursor:zoom-in}.project picture img{transition:transform .45s ease,filter .45s ease}.project picture:hover img{transform:scale(1.025);filter:saturate(1.04) contrast(1.06) brightness(1.03)}`;document.head.appendChild(premiumVisual);
-
-/* PORTFÓLIO: publicar os dois registos adicionais existentes no repositório */
-const projectGrid=document.querySelector('.project-grid');
-if(projectGrid&&!projectGrid.dataset.newProjects){
-  projectGrid.dataset.newProjects='published';
-  const newProjects=[
-    {file:'projeto-06.jpeg',title:'Projeto HMATIAS · 06',tag:'Projeto Real · HMATIAS',alt:'Projeto real da HMATIAS — projeto 06'},
-    {file:'projeto-08.jpg',title:'Projeto HMATIAS · 08',tag:'Projeto Real · HMATIAS',alt:'Projeto real da HMATIAS — projeto 08'}
-  ];
-  newProjects.forEach(p=>{
-    const article=document.createElement('article');
-    article.className='project project-new';
-    article.innerHTML=`<picture><img class="project-image" src="${p.file}" alt="${p.alt}" loading="lazy" decoding="async"></picture><div class="project-caption"><small>${p.tag}</small><h3>${p.title}</h3><p>Registo real integrado no portfólio visual da HMATIAS.</p><a href="#orcamento">Falar sobre este projeto →</a></div>`;
-    projectGrid.appendChild(article);
-  });
+const form=document.getElementById('contactForm');
+if(form){
+  const tel=form.querySelector('#telefone');if(tel)tel.required=true;
+  if(!form.querySelector('#email')){const label=document.createElement('label');label.htmlFor='email';label.innerHTML='E-mail<input id="email" type="email" name="email" autocomplete="email" placeholder="seu@email.com">';form.querySelector('label[for="telefone"]')?.before(label);}
+  form.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(form);const text=`Olá HMATIAS.\n\nNome: ${d.get('nome')||''}\nEmpresa: ${d.get('empresa')||'Não indicada'}\nE-mail: ${d.get('email')||'Não indicado'}\nTelefone/WhatsApp: ${d.get('telefone')||'Não indicado'}\nServiço: ${d.get('servico')||'Não indicado'}\n\nMensagem:\n${d.get('mensagem')||''}`;window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener');});
 }
 
-/* LIGHTBOX PREMIUM: abrir qualquer fotografia do portfólio em tamanho grande */
-const lightbox=document.createElement('div');
-lightbox.className='hmatias-lightbox';
-lightbox.setAttribute('aria-hidden','true');
-lightbox.innerHTML='<button class="hmatias-lightbox-close" type="button" aria-label="Fechar fotografia">×</button><div class="hmatias-lightbox-stage"><img alt=""><div class="hmatias-lightbox-caption"></div></div>';
-const lightboxStyle=document.createElement('style');
-lightboxStyle.textContent=`.hmatias-lightbox{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:30px;background:rgba(2,18,35,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.hmatias-lightbox.open{display:flex}.hmatias-lightbox-stage{position:relative;max-width:min(94vw,1400px);max-height:90vh;text-align:center}.hmatias-lightbox-stage img{display:block;max-width:94vw;max-height:82vh;width:auto;height:auto;object-fit:contain;border-radius:10px;box-shadow:0 28px 80px rgba(0,0,0,.45)}.hmatias-lightbox-caption{margin-top:12px;color:#fff;font-size:12px;font-weight:800;letter-spacing:.04em}.hmatias-lightbox-close{position:fixed;top:18px;right:22px;width:46px;height:46px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(255,255,255,.1);color:#fff;font-size:30px;line-height:1;cursor:pointer}.hmatias-lightbox-close:hover{background:rgba(255,255,255,.18)}body.hmatias-lightbox-open{overflow:hidden}@media(max-width:850px){.hmatias-lightbox{padding:16px}.hmatias-lightbox-stage img{max-width:96vw;max-height:78vh}.hmatias-lightbox-close{top:12px;right:12px}}`;
-document.head.appendChild(lightboxStyle);document.body.appendChild(lightbox);
+const ld=document.querySelector('script[type="application/ld+json"]');
+if(ld)try{const x=JSON.parse(ld.textContent);x.address={...(x.address||{}),streetAddress:'Bairro 1 de Maio, Casa n.º 31',addressLocality:'Viana',addressRegion:'Luanda',addressCountry:'AO'};x.telephone='+244948806673';x.email=EMAIL;ld.textContent=JSON.stringify(x);}catch(e){}
+document.querySelectorAll('a[href^="https://wa.me/244948806673"]').forEach(a=>{if(!a.href.includes('text='))a.href='https://wa.me/244948806673?text='+encodeURIComponent('Olá HMATIAS, gostaria de solicitar um orçamento. Podem orientar-me?');});
+
+const topbar=document.querySelector('.topbar');
+const topbarInner=document.querySelector('.topbar-inner');
+const topLinks=document.querySelector('.top-links');
+const topContact=document.querySelector('.top-contact');
+if(topbar&&topbarInner&&topLinks&&matchMedia('(min-width:851px)').matches){
+  topbar.classList.add('hmatias-livebar');topbarInner.classList.add('hmatias-livebar-inner');topLinks.classList.add('hmatias-ticker');
+  const items=['Construção & Infraestrutura','Facilities & Manutenção','HMATIAS Clean · Produtos','HMATIAS Supply · Procurement','Business Services','Projetos reais · HMATIAS'];
+  const m=items.map(x=>`<span class="ticker-item">${x}</span><span class="ticker-sep">•</span>`).join('');
+  topLinks.innerHTML=`<div class="hmatias-ticker-track">${m}${m}</div>`;topContact?.classList.add('hmatias-top-contact');
+  const s=document.createElement('style');s.textContent='.hmatias-livebar{overflow:hidden}.hmatias-livebar-inner{gap:22px}.hmatias-location{flex:0 0 auto;white-space:nowrap;font-weight:800;color:#fff}.hmatias-ticker{position:relative;flex:1;min-width:0;overflow:hidden;height:38px;display:flex!important;align-items:center;white-space:nowrap}.hmatias-ticker-track{display:inline-flex;align-items:center;min-width:max-content;animation:hmatiasTicker 34s linear infinite}.ticker-item{display:inline-block;color:#e9f5ff;font-size:11px;font-weight:800}.ticker-sep{margin:0 13px;color:#57bdf0}@keyframes hmatiasTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}@media(max-width:1100px){.hmatias-top-contact{display:none}}';document.head.appendChild(s);
+}
+
+const navLinks=[...document.querySelectorAll('.nav-menu a[href^="#"]')];
+const sections=navLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+if(sections.length){const io=new IntersectionObserver(es=>{const v=es.filter(x=>x.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(v)navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${v.target.id}`));},{rootMargin:'-28% 0px -58% 0px',threshold:[.05,.15,.3,.5]});sections.forEach(s=>io.observe(s));}
+
+const back=document.createElement('button');back.className='hmatias-backtop';back.type='button';back.setAttribute('aria-label','Voltar ao início');back.textContent='↑';back.onclick=()=>scrollTo({top:0,behavior:'smooth'});document.body.appendChild(back);addEventListener('scroll',()=>back.classList.toggle('show',scrollY>260),{passive:true});
+
+if(!document.querySelector('link[data-hmatias-premium]')){const p=document.createElement('link');p.rel='stylesheet';p.href='premium.css?v=5';p.dataset.hmatiasPremium='true';document.head.appendChild(p);}
+if(!document.querySelector('link[data-hmatias-assistant-css]')){const a=document.createElement('link');a.rel='stylesheet';a.href='assistant.css?v=1';a.dataset.hmatiasAssistantCss='true';document.head.appendChild(a);}
+if(!document.querySelector('script[data-hmatias-assistant]')){const a=document.createElement('script');a.src='assistant.js?v=4';a.defer=true;a.dataset.hmatiasAssistant='true';document.head.appendChild(a);}
+
+const premiumVisual=document.createElement('style');premiumVisual.textContent=`.hero-photo img{filter:brightness(1.18) saturate(1.06) contrast(1.02)!important}.visual-card:before{background:linear-gradient(90deg,rgba(6,45,86,.76) 0%,rgba(6,45,86,.28) 45%,rgba(6,45,86,.02) 100%),linear-gradient(180deg,rgba(6,45,86,.02) 35%,rgba(6,45,86,.42) 100%)!important}.visual-overlay{background:rgba(6,45,86,.88)!important;box-shadow:0 16px 38px rgba(0,0,0,.24)!important}.project picture{cursor:zoom-in}.project picture img{transition:transform .45s ease,filter .45s ease}.project picture:hover img{transform:scale(1.025);filter:saturate(1.04) contrast(1.06) brightness(1.03)}`;document.head.appendChild(premiumVisual);
+
+const projectGrid=document.querySelector('.project-grid');
+if(projectGrid&&!projectGrid.dataset.newProjects){projectGrid.dataset.newProjects='published';[
+  {file:'projeto-06.jpeg',title:'Projeto HMATIAS · 06',tag:'Projeto Real · HMATIAS',alt:'Projeto real da HMATIAS — projeto 06'},
+  {file:'projeto-08.jpg',title:'Projeto HMATIAS · 08',tag:'Projeto Real · HMATIAS',alt:'Projeto real da HMATIAS — projeto 08'}
+].forEach(p=>{const article=document.createElement('article');article.className='project project-new';article.innerHTML=`<picture><img class="project-image" src="${p.file}" alt="${p.alt}" loading="lazy" decoding="async"></picture><div class="project-caption"><small>${p.tag}</small><h3>${p.title}</h3><p>Registo real integrado no portfólio visual da HMATIAS.</p><a href="#orcamento">Falar sobre este projeto →</a></div>`;projectGrid.appendChild(article);});}
+
+const lightbox=document.createElement('div');lightbox.className='hmatias-lightbox';lightbox.setAttribute('aria-hidden','true');lightbox.innerHTML='<button class="hmatias-lightbox-close" type="button" aria-label="Fechar fotografia">×</button><div class="hmatias-lightbox-stage"><img alt=""><div class="hmatias-lightbox-caption"></div></div>';
+const lightboxStyle=document.createElement('style');lightboxStyle.textContent=`.hmatias-lightbox{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:30px;background:rgba(2,18,35,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.hmatias-lightbox.open{display:flex}.hmatias-lightbox-stage{position:relative;max-width:min(94vw,1400px);max-height:90vh;text-align:center}.hmatias-lightbox-stage img{display:block;max-width:94vw;max-height:82vh;width:auto;height:auto;object-fit:contain;border-radius:10px;box-shadow:0 28px 80px rgba(0,0,0,.45)}.hmatias-lightbox-caption{margin-top:12px;color:#fff;font-size:12px;font-weight:800;letter-spacing:.04em}.hmatias-lightbox-close{position:fixed;top:18px;right:22px;width:46px;height:46px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(255,255,255,.1);color:#fff;font-size:30px;line-height:1;cursor:pointer}.hmatias-lightbox-close:hover{background:rgba(255,255,255,.18)}body.hmatias-lightbox-open{overflow:hidden}@media(max-width:850px){.hmatias-lightbox{padding:16px}.hmatias-lightbox-stage img{max-width:96vw;max-height:78vh}.hmatias-lightbox-close{top:12px;right:12px}}`;document.head.appendChild(lightboxStyle);document.body.appendChild(lightbox);
 const lbImg=lightbox.querySelector('img'),lbCaption=lightbox.querySelector('.hmatias-lightbox-caption');
 function openLightbox(img){lbImg.src=img.currentSrc||img.src;lbImg.alt=img.alt||'Projeto HMATIAS';lbCaption.textContent=img.alt||'Projeto real · HMATIAS';lightbox.classList.add('open');lightbox.setAttribute('aria-hidden','false');document.body.classList.add('hmatias-lightbox-open');}
 function closeLightbox(){lightbox.classList.remove('open');lightbox.setAttribute('aria-hidden','true');document.body.classList.remove('hmatias-lightbox-open');lbImg.removeAttribute('src');}
-document.querySelectorAll('.project picture').forEach(p=>p.addEventListener('click',()=>openLightbox(p.querySelector('img'))));
-lightbox.querySelector('.hmatias-lightbox-close').addEventListener('click',closeLightbox);lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lightbox.classList.contains('open'))closeLightbox();});
+document.querySelectorAll('.project picture').forEach(p=>p.addEventListener('click',()=>openLightbox(p.querySelector('img'))));lightbox.querySelector('.hmatias-lightbox-close').addEventListener('click',closeLightbox);lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lightbox.classList.contains('open'))closeLightbox();});
 
-/* HERO loading: reforçar prioridade da imagem principal */
 const heroImg=document.querySelector('.hero-photo img');if(heroImg){heroImg.loading='eager';heroImg.fetchPriority='high';heroImg.decoding='async';}
