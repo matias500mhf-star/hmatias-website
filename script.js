@@ -17,23 +17,16 @@
 
   const form=document.getElementById('contactForm');
   if(form){
-    const serviceSelect=form.querySelector('select[name="servico"]');
-    if(serviceSelect&&!Array.from(serviceSelect.options).some(o=>/Business Services|Apoio administrativo/i.test(o.textContent||''))){
-      const option=document.createElement('option');
-      option.textContent=pageEnglish?'HMATIAS Business Services / Administrative & Visa Support':'HMATIAS Business Services / Apoio administrativo & Vistos';
-      const other=Array.from(serviceSelect.options).find(o=>/^(Outro|Other)$/i.test((o.textContent||'').trim()));
-      serviceSelect.insertBefore(option,other||null);
-    }
-
     form.addEventListener('submit',e=>{
       e.preventDefault();
+      if(!form.reportValidity())return;
       const d=new FormData(form);
-      const name=d.get('nome')||'';
-      const company=d.get('empresa')||(pageEnglish?'Not provided':'Não indicada');
-      const email=d.get('email')||(pageEnglish?'Not provided':'Não indicado');
-      const phone=d.get('telefone')||(pageEnglish?'Not provided':'Não indicado');
-      const service=d.get('servico')||(pageEnglish?'Not provided':'Não indicado');
-      const message=d.get('mensagem')||'';
+      const name=String(d.get('nome')||'').trim();
+      const company=String(d.get('empresa')||(pageEnglish?'Not provided':'Não indicada')).trim();
+      const email=String(d.get('email')||(pageEnglish?'Not provided':'Não indicado')).trim();
+      const phone=String(d.get('telefone')||(pageEnglish?'Not provided':'Não indicado')).trim();
+      const service=String(d.get('servico')||(pageEnglish?'Not provided':'Não indicado')).trim();
+      const message=String(d.get('mensagem')||'').trim();
       const text=pageEnglish
         ?`Hello HMATIAS.\n\nName: ${name}\nCompany: ${company}\nE-mail: ${email}\nPhone/WhatsApp: ${phone}\nService: ${service}\n\nMessage:\n${message}`
         :`Olá HMATIAS.\n\nNome: ${name}\nEmpresa: ${company}\nE-mail: ${email}\nTelefone/WhatsApp: ${phone}\nServiço: ${service}\n\nMensagem:\n${message}`;
@@ -41,27 +34,29 @@
     });
   }
 
-  const servicesSection=document.querySelector('.services');
-  if(servicesSection&&!document.getElementById(pageEnglish?'specialised-divisions':'divisoes')){
-    const section=document.createElement('section');
-    section.className='divisions';
-    section.id=pageEnglish?'specialised-divisions':'divisoes';
-    section.innerHTML=pageEnglish
-      ?`<div class="container"><div class="section-heading center"><span class="eyebrow blue">SPECIALISED DIVISIONS</span><h2>Complementary solutions with dedicated catalogues.</h2><p>Specialised HMATIAS divisions remain separate from our core construction, facilities and supply offering, while staying easy to discover from the institutional website.</p></div><div class="division-grid"><article class="division-card"><div><span class="division-kicker">HMATIAS BUSINESS SERVICES</span><h3>Administrative, document & visa support</h3><p>Administrative and document support for professionals and companies, including administrative assistance with consular appointments and visa processes.</p><div class="division-actions"><a class="btn btn-primary" href="business-services.html">Explore Business Services →</a></div></div><div class="division-media"><span class="division-symbol">BS</span></div></article><article class="division-card"><div><span class="division-kicker">HMATIAS CLEAN</span><h3>Cleaning & hygiene products</h3><p>Cleaning and hygiene products for professional and domestic use, with a dedicated catalogue and quantity supply options.</p><div class="division-actions"><a class="btn btn-primary" href="hmatias-clean-en.html">Explore HMATIAS Clean →</a></div></div><div class="division-media"><span class="division-symbol">HC</span></div></article></div></div>`
-      :`<div class="container"><div class="section-heading center"><span class="eyebrow blue">DIVISÕES ESPECIALIZADAS</span><h2>Soluções complementares com catálogos próprios.</h2><p>As divisões especializadas da HMATIAS permanecem separadas das áreas centrais de construção, facilities e supply, mas continuam facilmente identificáveis a partir do site institucional.</p></div><div class="division-grid"><article class="division-card"><div><span class="division-kicker">HMATIAS BUSINESS SERVICES</span><h3>Apoio administrativo, documental & vistos</h3><p>Apoio administrativo e documental para profissionais e empresas, incluindo assistência administrativa a agendamentos consulares e processos de visto.</p><div class="division-actions"><a class="btn btn-primary" href="servicos-administrativos.html">Conhecer Business Services →</a></div></div><div class="division-media"><span class="division-symbol">BS</span></div></article><article class="division-card"><div><span class="division-kicker">HMATIAS CLEAN</span><h3>Produtos de limpeza & higiene</h3><p>Produtos de limpeza e higiene para uso profissional e doméstico, com catálogo próprio e fornecimento por quantidade.</p><div class="division-actions"><a class="btn btn-primary" href="hmatias-clean.html">Conhecer HMATIAS Clean →</a></div></div><div class="division-media"><span class="division-symbol">HC</span></div></article></div></div>`;
-    servicesSection.insertAdjacentElement('afterend',section);
-
-    if(navMenu&&!navMenu.querySelector(`a[href="#${section.id}"]`)){
-      const link=document.createElement('a');
-      link.href=`#${section.id}`;
-      link.textContent=pageEnglish?'Divisions':'Divisões';
-      const projectsLink=Array.from(navMenu.querySelectorAll('a')).find(a=>a.getAttribute('href')===(pageEnglish?'#projects':'#projetos'));
-      navMenu.insertBefore(link,projectsLink||null);
-      link.addEventListener('click',()=>{
-        navMenu.classList.remove('open');
-        menuToggle?.setAttribute('aria-expanded','false');
-      });
-    }
+  const businessForm=document.getElementById('businessContactForm');
+  if(businessForm){
+    const status=document.getElementById('businessFormStatus');
+    businessForm.addEventListener('submit',e=>{
+      e.preventDefault();
+      if(!businessForm.reportValidity()){
+        if(status)status.textContent=pageEnglish?'Please complete the required fields.':'Preencha os campos obrigatórios.';
+        return;
+      }
+      const d=new FormData(businessForm);
+      const clean=value=>String(value||'').trim().replace(/\s+/g,' ');
+      const name=clean(d.get('client_name'));
+      const contact=clean(d.get('contact'));
+      const email=clean(d.get('email'))||(pageEnglish?'Not provided':'Não indicado');
+      const location=clean(d.get('location'))||(pageEnglish?'Not provided':'Não indicada');
+      const service=clean(d.get('service_type'));
+      const details=String(d.get('details')||'').trim().slice(0,1000);
+      const text=pageEnglish
+        ?`Hello HMATIAS Business Services.\n\nName / Entity: ${name}\nPhone / WhatsApp: ${contact}\nE-mail: ${email}\nLocation: ${location}\nService: ${service}\n\nRequest:\n${details}`
+        :`Olá HMATIAS Business Services.\n\nNome / Entidade: ${name}\nTelefone / WhatsApp: ${contact}\nE-mail: ${email}\nLocalização: ${location}\nServiço: ${service}\n\nPedido:\n${details}`;
+      if(status)status.textContent=pageEnglish?'Request prepared. WhatsApp will open for your review and final sending.':'Pedido preparado. O WhatsApp será aberto para revisão e envio final.';
+      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener');
+    });
   }
 
   const clickStyle=document.createElement('style');
