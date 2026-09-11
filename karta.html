@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+  <meta charset="UTF-8">
+  <script src="analytics.js?v=1" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KARTA, produto digital HMATIAS em fase Alpha: carteira de identidade local-first com perfil, PIN local e cofre documental encriptado.">
+  <meta name="theme-color" content="#062d56">
+  <meta name="robots" content="noindex,nofollow">
+  <title>KARTA | Produto Digital HMATIAS — Alpha</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="stylesheet" href="style.css?v=visual-2">
+  <link rel="stylesheet" href="premium.css?v=freeze-1">
+  <link rel="stylesheet" href="division.css?v=type-1">
+  <link rel="stylesheet" href="header.css?v=visual-2">
+  <link rel="preload" href="fonts/inter-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="typography.css?v=type-1">
+  <link rel="stylesheet" href="karta.css?v=alpha-051">
+</head>
+<body class="hmatias-type karta-page">
+  <div class="topbar hmatias-topbar"><div class="container topbar-inner"><div class="header-contact"><a href="tel:+244948806673"><img class="contact-icon" src="images/contact-phone.svg" width="16" height="16" alt="" aria-hidden="true">+244 948 806 673</a><a href="mailto:geral@hmatiasps.ao"><img class="contact-icon" src="images/contact-email.svg" width="16" height="16" alt="" aria-hidden="true">geral@hmatiasps.ao</a><a href="mailto:comercial@hmatiasps.ao"><img class="contact-icon" src="images/contact-email.svg" width="16" height="16" alt="" aria-hidden="true">comercial@hmatiasps.ao</a></div><div class="header-social"><a href="https://www.linkedin.com/in/henrique-matias-8059891a0/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn — Henrique Matias"><img src="images/social-linkedin.svg" width="18" height="18" alt=""></a><a href="https://wa.me/244948806673" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><img src="images/social-whatsapp.svg" width="19" height="19" alt=""></a></div></div></div>
+  <header class="header hmatias-header" id="header"><div class="container nav"><a class="brand" href="/" aria-label="HMATIAS"><picture><img src="logo-hmatias.png" alt="HMATIAS – Prestação de Serviços SU, LDA" width="400" height="382"></picture></a><button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button><nav class="nav-menu" aria-label="Navegação principal"><a href="/">Início</a><a href="/#empresa">Sobre nós</a><a href="/#servicos">Serviços</a><a href="/#projetos">Projetos</a><a href="/#divisoes">Divisões</a></nav><div class="nav-actions"><a class="btn btn-primary btn-small" href="mailto:comercial@hmatiasps.ao?subject=KARTA%20-%20Interesse">Contactar HMATIAS</a></div></div></header>
+
+<main>
+  <section class="karta-hero">
+    <div class="container karta-hero-grid">
+      <div class="karta-hero-copy">
+        <div class="karta-kicker">KARTA · PRODUTO DIGITAL HMATIAS <span class="karta-status">Alpha 0.5.1</span></div>
+        <h1>A sua identidade digital, sob o seu controlo.</h1>
+        <p>O KARTA é uma carteira de identidade local-first em desenvolvimento pela HMATIAS. A versão Alpha concentra-se em armazenamento local seguro, perfil de identidade e organização de cópias documentais sem depender de uma conta online para abrir a carteira.</p>
+        <div class="karta-hero-actions"><a class="btn btn-light" href="#capacidades">Ver capacidades →</a><a class="btn btn-outline-light" href="#seguranca">Segurança e limites</a></div>
+        <p class="karta-note">Versão de desenvolvimento. As cópias documentais e credenciais inseridas manualmente são locais e não constituem documentos oficiais, credenciais verificadas ou prova de identidade emitida por uma autoridade.</p>
+      </div>
+
+      <div class="karta-phone-wrap" aria-label="Pré-visualização conceptual da interface KARTA">
+        <div class="karta-phone"><div class="karta-screen">
+          <div class="karta-screen-top"><div class="karta-screen-brand"><span class="karta-mark">KARTA</span><span class="karta-alpha">ALPHA 0.5.1</span></div></div>
+          <div class="karta-wallet-card"><small>Carteira local</small><strong>Perfil de identidade</strong><span>Protegido por PIN local · Produto HMATIAS</span></div>
+          <div class="karta-screen-section"><h3>A minha KARTA</h3>
+            <div class="karta-screen-item"><div class="karta-screen-icon">ID</div><div><strong>Perfil</strong><span>Nome e nacionalidade opcional</span></div></div>
+            <div class="karta-screen-item"><div class="karta-screen-icon">▣</div><div><strong>Documentos</strong><span>Cópias locais encriptadas</span></div></div>
+            <div class="karta-screen-item"><div class="karta-screen-icon">✓</div><div><strong>Credenciais locais</strong><span>Marcadas como não verificadas</span></div></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="karta-proof"><div class="container karta-proof-grid">
+    <div><strong>Local-first</strong><span>A carteira abre sem conta de servidor ou login por e-mail.</span></div>
+    <div><strong>PIN local</strong><span>Criação e desbloqueio com PIN de seis dígitos.</span></div>
+    <div><strong>Cofre encriptado</strong><span>Cópias documentais protegidas localmente com AES-GCM.</span></div>
+    <div><strong>Identidade HMATIAS</strong><span>Mesmos tokens visuais, tipografia Inter e assinatura institucional.</span></div>
+  </div></section>
+
+  <section class="karta-section" id="capacidades"><div class="container">
+    <div class="karta-heading"><span class="eyebrow blue">ALPHA ATUAL</span><h2>O que já existe no KARTA.</h2><p>O Alpha 0.5.1 prioriza uma base funcional pequena e verificável. Funcionalidades que dependem de emissores, validação externa ou infraestrutura de confiança continuam fora do produto ativo.</p></div>
+    <div class="karta-feature-grid">
+      <article class="karta-feature"><b>01</b><h3>Criação de carteira local</h3><p>Primeira utilização com aviso Alpha, aceitação dos termos e definição do PIN sem obrigar a criar uma conta remota.</p></article>
+      <article class="karta-feature"><b>02</b><h3>Perfil de identidade</h3><p>Nome editável e nacionalidade opcional guardados localmente. O nome do perfil aparece no cartão principal da carteira.</p></article>
+      <article class="karta-feature"><b>03</b><h3>Cofre documental</h3><p>Importação de PDF, JPG e PNG e suporte a cópias de frente e verso, armazenadas de forma encriptada no dispositivo.</p></article>
+      <article class="karta-feature"><b>04</b><h3>Credenciais de teste</h3><p>Adicionar, consultar e remover credenciais locais para testar o ciclo da carteira, sempre identificadas como não oficiais e não verificadas.</p></article>
+      <article class="karta-feature"><b>05</b><h3>Bloquear ou eliminar</h3><p>O utilizador pode bloquear a sessão e eliminar a carteira local, removendo também os dados locais associados.</p></article>
+      <article class="karta-feature"><b>06</b><h3>Interface HMATIAS</h3><p>Paleta azul institucional, tipografia Inter, assinatura “Um produto HMATIAS” e componentes alinhados com o website empresarial.</p></article>
+    </div>
+  </div></section>
+
+  <section class="karta-section white" id="seguranca"><div class="container">
+    <div class="karta-heading"><span class="eyebrow blue">SEGURANÇA & TRANSPARÊNCIA</span><h2>O Alpha não finge ser mais do que é.</h2><p>A arquitetura atual foi desenhada para testar a experiência local com fronteiras claras entre informação guardada pelo utilizador e uma futura identidade verificável.</p></div>
+    <div class="karta-security">
+      <div class="karta-security-card"><h3>Proteções implementadas</h3><div class="karta-security-list">
+        <div><strong>Armazenamento local protegido</strong><span>Estado sensível da carteira é mantido em armazenamento seguro do dispositivo.</span></div>
+        <div><strong>Encriptação do cofre</strong><span>As cópias documentais locais utilizam AES-GCM para confidencialidade e integridade.</span></div>
+        <div><strong>Sem login obrigatório no servidor</strong><span>A experiência principal não depende da disponibilidade da API para entrar na carteira.</span></div>
+        <div><strong>Eliminação controlada</strong><span>O utilizador pode apagar a carteira local e os dados associados pela própria aplicação.</span></div>
+      </div></div>
+      <div class="karta-warning"><h3>Ainda não disponível</h3><p>Estas capacidades permanecem deliberadamente fora do Alpha até existir a respetiva camada de segurança e verificação.</p><ul>
+        <li>Emissão de identidade oficial ou validação por autoridade pública.</li>
+        <li>Verificação criptográfica de credenciais interoperáveis.</li>
+        <li>Partilha por QR como prova verificável.</li>
+        <li>Biometria para desbloqueio.</li>
+        <li>Sincronização em cloud e recuperação remota da carteira.</li>
+      </ul></div>
+    </div>
+  </div></section>
+
+  <section class="karta-section"><div class="container">
+    <div class="karta-heading"><span class="eyebrow blue">ROADMAP DE PRODUTO</span><h2>Evolução controlada, sem atalhos.</h2><p>O próximo avanço depende primeiro de um APK reproduzível e validado em dispositivo físico. A camada online e de verificação só entra depois dessa base estar estável.</p></div>
+    <div class="karta-roadmap">
+      <article class="active"><small>Agora</small><h3>Alpha 0.5.1</h3><p>Carteira local, perfil, PIN, credenciais de teste, cofre documental e branding HMATIAS.</p></article>
+      <article><small>Próximo</small><h3>Validação Android</h3><p>Build reproduzível, instalação física, testes de permissões, importação e persistência.</p></article>
+      <article><small>Depois</small><h3>Identidade verificável</h3><p>Definição de emissores, modelos de confiança, QR e verificação criptográfica com padrões apropriados.</p></article>
+      <article><small>Escala</small><h3>Serviços conectados</h3><p>API, sincronização segura e recuperação apenas quando os requisitos de segurança estiverem formalizados.</p></article>
+    </div>
+  </div></section>
+
+  <section class="karta-section karta-company"><div class="container karta-company-grid"><div><span class="eyebrow">UM PRODUTO HMATIAS</span><h2>KARTA faz parte da evolução digital da HMATIAS.</h2><p>O produto é desenvolvido sob a mesma identidade institucional da HMATIAS — Prestação de Serviços, SU, LDA., com foco em soluções práticas, controlo do utilizador e construção progressiva de uma base técnica sustentável.</p></div><a class="btn btn-light" href="mailto:comercial@hmatiasps.ao?subject=KARTA%20-%20Interesse">Manifestar interesse →</a></div></section>
+</main>
+
+<footer><div class="container footer-grid"><div><picture><img src="logo-hmatias.png" alt="HMATIAS" class="footer-logo" width="245" height="80" loading="lazy" decoding="async"></picture><p>Prestação de Serviços SU, LDA.</p><p>Viana · Luanda · Angola</p></div><div><strong>Empresa</strong><a href="/#empresa">Sobre nós</a><a href="/#projetos">Projetos</a><a href="construcao.html">Construção</a><a href="facilities.html">Facilities</a></div><div><strong>Serviços & Divisões</strong><a href="supply.html">HMATIAS Supply</a><a href="hmatias-clean.html">HMATIAS Clean</a><a href="servicos-administrativos.html">Business Services</a></div><div><strong>Contacto</strong><a href="mailto:geral@hmatiasps.ao">geral@hmatiasps.ao</a><a href="mailto:comercial@hmatiasps.ao">comercial@hmatiasps.ao</a><a href="https://wa.me/244948806673" target="_blank" rel="noopener">WhatsApp</a></div><div><strong>Legal</strong><a href="privacy.html">Política de Privacidade</a><a href="terms.html">Termos & Condições</a></div></div><div class="container copyright">© <span id="year"></span> HMATIAS SU, LDA. | NIF: 5001578065 · Registo Comercial: 24.094-23 · Matrícula: 24094-23/230713 · Todos os direitos reservados.</div></footer>
+<script src="script.js?v=visual-2" defer></script>
+</body>
+</html>
