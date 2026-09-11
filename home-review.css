@@ -1,0 +1,66 @@
+/* Homepage layout refinements, shared by the Portuguese and English versions. */
+.hmatias-home main > section { content-visibility: visible; contain-intrinsic-size: none; }
+.hmatias-home main > section[id] { scroll-margin-top: 12px; }
+.hmatias-home .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 540px; }
+.hmatias-home .hero-copy { padding: 64px 40px 56px 0; }
+body.hmatias-home .hero h1 { font-size: clamp(2rem, 1.25rem + 2.6vw, 3rem); line-height: 1.15; letter-spacing: -.035em; max-width: 15ch; }
+.hmatias-home .hero-copy > p { max-width: 48ch; }
+.hmatias-home .hero-visual { min-height: 540px; }
+.hmatias-home .hero-values { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; margin-top: 32px; }
+.hmatias-home .hero-values div { font-size: .8125rem; }
+.hmatias-home .hero-values strong { font-size: .875rem; }
+.hmatias-home .section-heading.center p { margin: 14px auto 0; }
+.hmatias-home :is(.service-grid, .why-us-grid) { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.hmatias-home :is(.hero-grid, .service-grid, .why-us-grid, .company-grid, .contact-grid, .footer-grid) > * { min-width: 0; }
+.hmatias-home .service-card { display: flex; flex-direction: column; padding: 28px; }
+.hmatias-home .service-card p { min-height: 0; margin-bottom: 20px; }
+.hmatias-home .service-card a { margin-top: auto; align-self: flex-start; }
+.hmatias-home :is(.service-card, .project-caption, .division-card) a { min-height: 44px; display: inline-flex; align-items: center; }
+.hmatias-home .contact-grid { gap: 56px; }
+.hmatias-home .contact-form { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; }
+.hmatias-home .contact-form label { min-width: 0; }
+.hmatias-home .contact-form .form-wide { grid-column: 1 / -1; }
+.hmatias-home .contact-form :is(input, select, textarea) { min-width: 0; }
+.hmatias-home .contact-form textarea { min-height: 144px; }
+.hmatias-home :is(.btn, .menu-toggle, .lang-switch) { min-height: 44px; }
+.hmatias-home .lang-switch { display: inline-flex; align-items: center; }
+.hmatias-home .whatsapp-float { right: 18px; bottom: 18px; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; }
+.hmatias-home .whatsapp-float img { width: 24px; height: 24px; filter: brightness(0) invert(1); }
+.hmatias-home .hmatias-assistant { right: 18px; bottom: 78px; }
+.hmatias-home .hmatias-assistant-toggle { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; }
+.hmatias-home .hmatias-assistant-toggle > span { display: none; }
+.hmatias-home .hmatias-assistant-toggle svg { width: 23px; height: 23px; }
+.hmatias-home .hmatias-assistant-close { width: 44px; height: 44px; }
+.hmatias-home .hmatias-assistant-links a { min-height: 44px; display: inline-flex; align-items: center; }
+.hmatias-home.contact-in-view .whatsapp-float,
+.hmatias-home.contact-in-view .hmatias-assistant:not(.open) { visibility: hidden; }
+.hmatias-home footer { padding-bottom: 82px; }
+@media (max-width: 1000px) and (min-width: 851px) {
+  .hmatias-home .hero-copy { padding-right: 28px; }
+  .hmatias-home .hero-actions { flex-wrap: wrap; }
+}
+@media (max-width: 850px) {
+  .hmatias-home .hero-grid { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .hmatias-home .hero-copy { padding: 48px 0; }
+  .hmatias-home .hero h1 { max-width: 20ch; }
+  .hmatias-home .hero-values { max-width: 560px; }
+  .hmatias-home .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hmatias-home .why-us-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .hmatias-home .why-us-grid article { padding: 24px; }
+  .hmatias-home .contact-grid { gap: 32px; }
+}
+@media (max-width: 560px) {
+  .hmatias-home .hero-copy { padding: 36px 0 40px; }
+  .hmatias-home .hero h1 { max-width: 17ch; }
+  .hmatias-home .hero-actions { gap: 12px; margin-top: 24px; }
+  .hmatias-home .hero-values { gap: 16px; margin-top: 28px; }
+  .hmatias-home :is(.service-grid, .contact-form) { grid-template-columns: minmax(0, 1fr); }
+  .hmatias-home :is(.service-card, .contact-form) { padding: 24px; }
+  .hmatias-home .section-heading { margin-bottom: 28px; }
+  .hmatias-home .whatsapp-float { right: 10px; bottom: 12px; width: 44px; height: 44px; }
+  .hmatias-home .hmatias-assistant { right: 10px; bottom: 66px; }
+  .hmatias-home .hmatias-assistant-toggle { width: 44px; height: 44px; }
+  .hmatias-home .hmatias-assistant-panel { bottom: 66px; }
+}
+
+.hmatias-home .hmatias-assistant-msg { font-size: .875rem; line-height: 1.5; }

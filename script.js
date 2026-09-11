@@ -190,7 +190,18 @@
   back.textContent='↑';
   back.addEventListener('click',()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
   document.body.appendChild(back);
-  addEventListener('scroll',()=>back.classList.toggle('show',scrollY>320),{passive:true});
+  const updateBackToTop=()=>back.classList.toggle('show',scrollY>320);
+  addEventListener('scroll',updateBackToTop,{passive:true});
+  updateBackToTop();
+
+  // Keep floating shortcuts clear of the homepage contact form.
+  const homeContact=document.querySelector('.hmatias-home .contact');
+  if(homeContact&&'IntersectionObserver' in window){
+    const contactObserver=new IntersectionObserver(entries=>{
+      document.body.classList.toggle('contact-in-view',entries[0].isIntersecting);
+    });
+    contactObserver.observe(homeContact);
+  }
 
   const heroImg=document.querySelector('.hero-photo img');
   if(heroImg){heroImg.loading='eager';heroImg.fetchPriority='high';heroImg.decoding='async';}

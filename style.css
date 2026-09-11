@@ -7,3 +7,6 @@
 .service-card > a,.division-card > a{display:inline-flex;align-items:center;min-height:44px;padding-block:10px}
 @media(max-width:850px){.nav-menu a{display:flex;align-items:center;min-height:44px}}
 .motion-reveal{opacity:0;transform:translateY(18px);transition:opacity .58s ease var(--motion-delay,0ms),transform .58s cubic-bezier(.2,.7,.2,1) var(--motion-delay,0ms);will-change:opacity,transform}.motion-reveal.is-visible{opacity:1;transform:none;will-change:auto}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.motion-reveal{opacity:1!important;transform:none!important}}
+
+/* Accessible back-to-top control; keep it out of the document flow. */
+.hmatias-backtop{position:fixed;left:18px;bottom:18px;z-index:60;display:grid;place-items:center;width:44px;height:44px;border:1px solid #cbd8e5;border-radius:50%;background:#fff;color:#062d56;font:600 1.25rem Arial,sans-serif;box-shadow:0 6px 18px rgba(6,45,86,.12);cursor:pointer;visibility:hidden;opacity:0;transition:opacity .2s ease}.hmatias-backtop.show{visibility:visible;opacity:1}@media(max-width:560px){.hmatias-backtop{left:10px;bottom:12px}}

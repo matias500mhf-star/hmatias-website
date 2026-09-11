@@ -25,4 +25,6 @@
 .header-contact a{white-space:nowrap}
 .header-social{grid-column:3;justify-self:end;margin-left:0}
 @media(max-width:760px){.hmatias-topbar .topbar-inner{grid-template-columns:minmax(0,1fr) 94px;gap:8px}.header-contact{grid-column:1;gap:4px 14px}.header-social{grid-column:2}.header-contact a[href^="mailto:"]{display:inline}}
-@media(max-width:460px){.hmatias-topbar .topbar-inner{grid-template-columns:1fr}.header-contact{grid-column:1;justify-content:center}.header-contact a[href^="tel:"]{flex-basis:100%}.header-social{grid-column:1;justify-self:end}.header-contact a{font-size:0.75rem}}
+@media(max-width:460px){.hmatias-topbar .topbar-inner{grid-template-columns:44px minmax(0,1fr) 44px;gap:8px}.header-contact{grid-column:2;flex-direction:column;justify-content:center}.header-social{grid-column:3;flex-direction:column;gap:0;justify-self:end}.header-contact a{font-size:0.75rem}}
+
+@media(max-width:850px){.hmatias-header .nav-menu{max-height:calc(100dvh - 90px);overflow-y:auto;overscroll-behavior:contain}}
