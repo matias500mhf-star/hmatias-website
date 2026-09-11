@@ -7,6 +7,13 @@
     ?(homePage?'#contact':'en.html#contact')
     :(homePage?'#contacto':'/#contacto');
 
+  // Route legacy HMATIAS Clean links to the fresh cache-safe pages.
+  document.querySelectorAll('a[href]').forEach(a=>{
+    const href=a.getAttribute('href')||'';
+    if(href==='hmatias-clean.html'||href==='/hmatias-clean.html')a.setAttribute('href','clean.html?v=20260911');
+    if(href==='hmatias-clean-en.html'||href==='/hmatias-clean-en.html')a.setAttribute('href','clean-en.html?v=20260911');
+  });
+
   // Keep quotation CTAs direct: homepage requests go straight to the contact form,
   // while service-page header CTAs return directly to the corresponding home contact form.
   document.querySelectorAll('[data-quote-link]').forEach(a=>a.setAttribute('href',homeContactHref));
