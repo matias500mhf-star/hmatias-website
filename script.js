@@ -2,6 +2,35 @@
   const pageEnglish=(document.documentElement.lang||'').toLowerCase().startsWith('en');
   const menuToggle=document.querySelector('.menu-toggle');
   const navMenu=document.querySelector('.nav-menu');
+  const homePage=document.body.classList.contains('hmatias-home');
+  const homeContactHref=pageEnglish
+    ?(homePage?'#contact':'en.html#contact')
+    :(homePage?'#contacto':'/#contacto');
+
+  // Keep quotation CTAs direct: homepage requests go straight to the contact form,
+  // while service-page header CTAs return directly to the corresponding home contact form.
+  document.querySelectorAll('[data-quote-link]').forEach(a=>a.setAttribute('href',homeContactHref));
+  if(homePage){
+    const legacyQuoteAnchor=pageEnglish?'#quote':'#orcamento';
+    document.querySelectorAll(`a[href="${legacyQuoteAnchor}"]`).forEach(a=>a.setAttribute('href',homeContactHref));
+  }
+
+  // Service-card symbols are decorative; the adjacent heading and link already provide context.
+  document.querySelectorAll('.service-icon').forEach(icon=>icon.setAttribute('aria-hidden','true'));
+
+  if(menuToggle&&navMenu){
+    if(!navMenu.id)navMenu.id='main-navigation';
+    menuToggle.setAttribute('aria-controls',navMenu.id);
+  }
+
+  const setMenuState=open=>{
+    navMenu?.classList.toggle('open',Boolean(open));
+    menuToggle?.setAttribute('aria-expanded',String(Boolean(open)));
+    menuToggle?.setAttribute('aria-label',pageEnglish
+      ?(open?'Close menu':'Open menu')
+      :(open?'Fechar menu':'Abrir menu'));
+  };
+  setMenuState(false);
 
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!reducedMotion&&'IntersectionObserver' in window){
@@ -38,10 +67,7 @@
     motionItems.forEach(item=>motionObserver.observe(item));
   }
 
-  menuToggle?.addEventListener('click',()=>{
-    const open=navMenu?.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded',String(Boolean(open)));
-  });
+  menuToggle?.addEventListener('click',()=>setMenuState(!navMenu?.classList.contains('open')));
 
   const desktopLang=document.querySelector('.nav-actions .lang-switch[data-lang-switch]');
   if(navMenu&&desktopLang&&!navMenu.querySelector('.mobile-lang-switch')){
@@ -58,10 +84,7 @@
     navMenu.appendChild(mobileQuote);
   }
 
-  document.querySelectorAll('.nav-menu a').forEach(a=>a.addEventListener('click',()=>{
-    navMenu?.classList.remove('open');
-    menuToggle?.setAttribute('aria-expanded','false');
-  }));
+  document.querySelectorAll('.nav-menu a').forEach(a=>a.addEventListener('click',()=>setMenuState(false)));
 
   const year=document.getElementById('year');
   if(year)year.textContent=String(new Date().getFullYear());
@@ -97,10 +120,7 @@
       bookingNav.textContent=pageEnglish?'Book':'Agendar';
       const contactNav=[...navMenu.querySelectorAll('a')].find(a=>/#(?:business-contact|contacto-business)$/.test(a.getAttribute('href')||''));
       navMenu.insertBefore(bookingNav,contactNav||navMenu.querySelector('.mobile-lang-switch'));
-      bookingNav.addEventListener('click',()=>{
-        navMenu.classList.remove('open');
-        menuToggle?.setAttribute('aria-expanded','false');
-      });
+      bookingNav.addEventListener('click',()=>setMenuState(false));
     }
 
     const formActions=businessForm.querySelector('.form-actions');
