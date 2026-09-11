@@ -35,9 +35,35 @@ body.hmatias-home .hero h1 { font-size: clamp(2rem, 1.25rem + 2.6vw, 3rem); line
 .hmatias-home.contact-in-view .whatsapp-float,
 .hmatias-home.contact-in-view .hmatias-assistant:not(.open) { visibility: hidden; }
 .hmatias-home footer { padding-bottom: 82px; }
+
+/* Stronger institutional presentation for About HMATIAS. */
+.hmatias-home .company-impact { padding: 96px 0; background: linear-gradient(180deg,#fff 0%,#f7fbff 100%); }
+.hmatias-home .company-impact-grid { display: grid; grid-template-columns: minmax(0,1.12fr) minmax(330px,.88fr); gap: 56px; align-items: stretch; }
+.hmatias-home .company-overline { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+.hmatias-home .company-overline .eyebrow { margin-bottom: 0; }
+.hmatias-home .company-since { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #cfe2f2; border-radius: 999px; background: #fff; color: #174b78; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.hmatias-home .company-since::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #0065cc; box-shadow: 0 0 0 4px rgba(0,101,204,.10); }
+.hmatias-home .company-impact h2 { max-width: 760px; margin-bottom: 22px; }
+.hmatias-home .company-impact .company-lead { max-width: 760px; color: #284761; font-size: 1.03rem; line-height: 1.75; }
+.hmatias-home .company-impact .company-copy { max-width: 760px; line-height: 1.75; }
+.hmatias-home .company-trust-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 28px; }
+.hmatias-home .company-trust-card { padding: 17px 18px; border: 1px solid #d9e6f0; border-radius: 14px; background: rgba(255,255,255,.9); box-shadow: 0 8px 25px rgba(6,45,86,.045); }
+.hmatias-home .company-trust-card small { display: block; margin-bottom: 5px; color: #71869a; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.hmatias-home .company-trust-card strong { display: block; color: #062d56; font-size: .95rem; line-height: 1.35; }
+.hmatias-home .company-identity-card { position: relative; min-height: 430px; overflow: hidden; display: flex; flex-direction: column; padding: 38px; border-radius: 24px; background: linear-gradient(145deg,#062d56 0%,#0a4d82 58%,#0a6cb0 100%); color: #fff; box-shadow: 0 22px 55px rgba(6,45,86,.16); }
+.hmatias-home .company-identity-card::after { content: ""; position: absolute; width: 310px; height: 310px; right: -105px; bottom: -115px; border: 1px solid rgba(255,255,255,.13); border-radius: 50%; box-shadow: 0 0 0 55px rgba(255,255,255,.035); pointer-events: none; }
+.hmatias-home .company-identity-kicker { position: relative; z-index: 1; color: #b8dbf1; font-size: .72rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.hmatias-home .company-founded-year { position: relative; z-index: 1; margin: 24px 0 6px; color: #65c4f5; font-size: clamp(4.6rem,8vw,6.8rem); font-weight: 800; line-height: .88; letter-spacing: -.065em; }
+.hmatias-home .company-founded-date { position: relative; z-index: 1; display: block; max-width: 26ch; color: #fff; font-size: 1.12rem; line-height: 1.35; }
+.hmatias-home .company-identity-card > p { position: relative; z-index: 1; max-width: 36ch; margin: 16px 0 0; color: #d7e8f4; font-size: .84rem; line-height: 1.65; }
+.hmatias-home .company-identity-meta { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: auto; padding-top: 28px; }
+.hmatias-home .company-identity-meta span { display: grid; gap: 4px; padding-top: 13px; border-top: 1px solid rgba(255,255,255,.18); color: #cbe1ef; font-size: .74rem; line-height: 1.45; }
+.hmatias-home .company-identity-meta b { color: #fff; font-size: .8rem; }
+
 @media (max-width: 1000px) and (min-width: 851px) {
   .hmatias-home .hero-copy { padding-right: 28px; }
   .hmatias-home .hero-actions { flex-wrap: wrap; }
+  .hmatias-home .company-impact-grid { gap: 34px; grid-template-columns: minmax(0,1fr) minmax(300px,.82fr); }
 }
 @media (max-width: 850px) {
   .hmatias-home .hero-grid { grid-template-columns: minmax(0, 1fr); min-height: 0; }
@@ -48,6 +74,8 @@ body.hmatias-home .hero h1 { font-size: clamp(2rem, 1.25rem + 2.6vw, 3rem); line
   .hmatias-home .why-us-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .hmatias-home .why-us-grid article { padding: 24px; }
   .hmatias-home .contact-grid { gap: 32px; }
+  .hmatias-home .company-impact-grid { grid-template-columns: 1fr; gap: 30px; }
+  .hmatias-home .company-identity-card { min-height: 360px; }
 }
 @media (max-width: 560px) {
   .hmatias-home .hero-copy { padding: 36px 0 40px; }
@@ -61,6 +89,12 @@ body.hmatias-home .hero h1 { font-size: clamp(2rem, 1.25rem + 2.6vw, 3rem); line
   .hmatias-home .hmatias-assistant { right: 10px; bottom: 66px; }
   .hmatias-home .hmatias-assistant-toggle { width: 44px; height: 44px; }
   .hmatias-home .hmatias-assistant-panel { bottom: 66px; }
+  .hmatias-home .company-impact { padding: 68px 0; }
+  .hmatias-home .company-overline { align-items: flex-start; flex-direction: column; }
+  .hmatias-home .company-since { white-space: normal; }
+  .hmatias-home .company-trust-grid { grid-template-columns: 1fr; }
+  .hmatias-home .company-identity-card { min-height: 340px; padding: 28px 24px; }
+  .hmatias-home .company-identity-meta { grid-template-columns: 1fr; }
 }
 
 .hmatias-home .hmatias-assistant-msg { font-size: .875rem; line-height: 1.5; }
