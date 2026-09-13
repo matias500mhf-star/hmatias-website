@@ -1,0 +1,30 @@
+/* HMATIAS Supply — structured multi-item request builder */
+.supply-request-section{padding:82px 0;background:#f7fafc;border-top:1px solid #e3ebf2;border-bottom:1px solid #e3ebf2}
+.supply-request-layout{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:42px;align-items:start}
+.supply-request-copy{position:sticky;top:116px}
+.supply-request-copy h2{margin:9px 0 14px;color:#062d56;font-size:clamp(1.9rem,3vw,2.75rem);line-height:1.08;letter-spacing:-.035em}
+.supply-request-copy p{max-width:52ch;color:#5f7387;line-height:1.72}
+.supply-request-points{display:grid;gap:10px;margin-top:24px}
+.supply-request-points span{display:flex;gap:9px;color:#496077;font-size:.82rem;line-height:1.5}
+.supply-request-points span::before{content:"✓";color:#0f7d3d;font-weight:800}
+.supply-request-form{padding:26px;border:1px solid #d9e5ef;border-radius:18px;background:#fff;box-shadow:0 16px 44px rgba(6,45,86,.07)}
+.supply-request-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.supply-request-field{display:grid;gap:7px;min-width:0}
+.supply-request-field.full{grid-column:1/-1}
+.supply-request-field label{color:#2c4964;font-size:.76rem;font-weight:700}
+.supply-request-field input,.supply-request-field textarea{width:100%;min-width:0;padding:12px 13px;border:1px solid #cfdce7;border-radius:10px;background:#fff;color:#17324d;font:inherit}
+.supply-request-field textarea{min-height:104px;resize:vertical}
+.supply-items{grid-column:1/-1;display:grid;gap:12px;margin:4px 0}
+.supply-items-head{display:flex;justify-content:space-between;gap:14px;align-items:center}
+.supply-items-head strong{color:#062d56;font-size:.9rem}
+.supply-add-item{border:0;background:#eaf4fd;color:#075fae;border-radius:9px;padding:10px 13px;font:inherit;font-size:.78rem;font-weight:750;cursor:pointer}
+.supply-item{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.2fr) 105px 42px;gap:10px;align-items:end;padding:14px;border:1px solid #dce7f0;border-radius:13px;background:#f9fcff}
+.supply-item label{display:grid;gap:6px;color:#496077;font-size:.69rem;font-weight:700}
+.supply-item input{width:100%;min-width:0;padding:10px 11px;border:1px solid #cfdce7;border-radius:8px;background:#fff;color:#17324d;font:inherit;font-size:.9rem}
+.supply-remove-item{width:40px;height:40px;border:1px solid #efd1d1;border-radius:9px;background:#fff;color:#a33b3b;font-size:1rem;cursor:pointer}
+.supply-request-consent{grid-column:1/-1;display:flex;gap:9px;align-items:flex-start;color:#61758a;font-size:.75rem;line-height:1.5}
+.supply-request-consent input{width:16px;height:16px;margin-top:2px;flex:none}
+.supply-request-actions{grid-column:1/-1;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.supply-request-status{margin:0;color:#0f7d3d;font-size:.76rem;font-weight:700}
+@media(max-width:940px){.supply-request-layout{grid-template-columns:1fr;gap:28px}.supply-request-copy{position:static}.supply-item{grid-template-columns:1fr 1fr 90px 42px}}
+@media(max-width:680px){.supply-request-section{padding:62px 0}.supply-request-form{padding:21px 17px}.supply-request-grid{grid-template-columns:1fr}.supply-request-field.full,.supply-items,.supply-request-consent,.supply-request-actions{grid-column:auto}.supply-item{grid-template-columns:1fr}.supply-remove-item{width:100%;height:42px}.supply-request-actions .btn{width:100%}}
