@@ -101,7 +101,12 @@
     }
   };
 
-  let cart = safeParse(sessionStorage.getItem(storageKey))
+  const readStoredCart = () => {
+    try { return sessionStorage.getItem(storageKey) || '[]'; }
+    catch { return '[]'; }
+  };
+
+  let cart = safeParse(readStoredCart())
     .filter(item => item && typeof item.name === 'string')
     .slice(0, 20)
     .map(item => ({
