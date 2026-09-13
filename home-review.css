@@ -1,12 +1,14 @@
 /* Homepage layout refinements, shared by the Portuguese and English versions. */
 .hmatias-home main > section { content-visibility: visible; contain-intrinsic-size: none; }
 .hmatias-home main > section[id] { scroll-margin-top: 12px; }
-.hmatias-home .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 540px; }
-.hmatias-home .hero-copy { padding: 64px 40px 56px 0; }
-body.hmatias-home .hero h1 { font-size: clamp(2rem, 1.25rem + 2.6vw, 3rem); line-height: 1.15; letter-spacing: -.035em; max-width: 15ch; }
-.hmatias-home .hero-copy > p { max-width: 48ch; }
-.hmatias-home .hero-visual { min-height: 540px; }
-.hmatias-home .hero-values { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; margin-top: 32px; }
+.hmatias-home .hero-grid { grid-template-columns: minmax(0, 1.03fr) minmax(0, .97fr); min-height: 600px; }
+.hmatias-home .hero-copy { padding: 74px 48px 64px 0; }
+.hmatias-home .hero .eyebrow { margin-bottom: 22px; color: #cfe7f7; font-size: .76rem; font-weight: 800; letter-spacing: .16em; line-height: 1.45; }
+body.hmatias-home .hero h1 { font-size: clamp(3rem, 1.65rem + 4vw, 4.5rem); line-height: .99; letter-spacing: -.055em; max-width: 10ch; font-weight: 780; text-wrap: balance; }
+.hmatias-home .hero-copy > p { max-width: 42ch; margin-top: 22px; color: rgba(255,255,255,.88); font-size: 1.05rem; line-height: 1.62; }
+.hmatias-home .hero-actions { margin-top: 30px; }
+.hmatias-home .hero-visual { min-height: 600px; }
+.hmatias-home .hero-values { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; margin-top: 34px; }
 .hmatias-home .hero-values div { font-size: .8125rem; }
 .hmatias-home .hero-values strong { font-size: .875rem; }
 .hmatias-home .section-heading.center p { margin: 14px auto 0; }
@@ -61,14 +63,19 @@ body.hmatias-home .hero h1 { font-size: clamp(2rem, 1.25rem + 2.6vw, 3rem); line
 .hmatias-home .company-identity-meta b { color: #fff; font-size: .8rem; }
 
 @media (max-width: 1000px) and (min-width: 851px) {
-  .hmatias-home .hero-copy { padding-right: 28px; }
+  .hmatias-home .hero-grid { min-height: 560px; }
+  .hmatias-home .hero-copy { padding: 62px 32px 58px 0; }
+  body.hmatias-home .hero h1 { font-size: clamp(2.8rem, 4.7vw, 3.75rem); max-width: 11ch; }
+  .hmatias-home .hero-visual { min-height: 560px; }
   .hmatias-home .hero-actions { flex-wrap: wrap; }
   .hmatias-home .company-impact-grid { gap: 34px; grid-template-columns: minmax(0,1fr) minmax(300px,.82fr); }
 }
 @media (max-width: 850px) {
   .hmatias-home .hero-grid { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-  .hmatias-home .hero-copy { padding: 48px 0; }
-  .hmatias-home .hero h1 { max-width: 20ch; }
+  .hmatias-home .hero-copy { padding: 52px 0 48px; }
+  .hmatias-home .hero .eyebrow { margin-bottom: 18px; }
+  body.hmatias-home .hero h1 { font-size: clamp(2.75rem, 7vw, 4rem); line-height: 1; max-width: 12ch; }
+  .hmatias-home .hero-copy > p { max-width: 46ch; }
   .hmatias-home .hero-values { max-width: 560px; }
   .hmatias-home .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hmatias-home .why-us-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
@@ -78,9 +85,11 @@ body.hmatias-home .hero h1 { font-size: clamp(2rem, 1.25rem + 2.6vw, 3rem); line
   .hmatias-home .company-identity-card { min-height: 360px; }
 }
 @media (max-width: 560px) {
-  .hmatias-home .hero-copy { padding: 36px 0 40px; }
-  .hmatias-home .hero h1 { max-width: 17ch; }
-  .hmatias-home .hero-actions { gap: 12px; margin-top: 24px; }
+  .hmatias-home .hero-copy { padding: 40px 0 42px; }
+  .hmatias-home .hero .eyebrow { font-size: .68rem; letter-spacing: .14em; }
+  body.hmatias-home .hero h1 { font-size: clamp(2.35rem, 10.7vw, 3.3rem); line-height: 1.01; max-width: 13ch; letter-spacing: -.045em; }
+  .hmatias-home .hero-copy > p { margin-top: 18px; font-size: .98rem; line-height: 1.58; }
+  .hmatias-home .hero-actions { gap: 12px; margin-top: 26px; }
   .hmatias-home .hero-values { gap: 16px; margin-top: 28px; }
   .hmatias-home :is(.service-grid, .contact-form) { grid-template-columns: minmax(0, 1fr); }
   .hmatias-home :is(.service-card, .contact-form) { padding: 24px; }
