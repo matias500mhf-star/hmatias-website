@@ -20,8 +20,8 @@
 
   const copy = isEn ? {
     eyebrow: 'STRUCTURED REQUEST',
-    title: 'Send the exact requirement, not a generic message.',
-    intro: 'List the material, product or equipment required, including references, specifications and quantities. The commercial team can then assess sourcing and quotation more efficiently.',
+    title: 'Structure the requirement with technical and commercial detail.',
+    intro: 'List the material, product or equipment required, including references, specifications and quantities. This gives the commercial team a clear basis for sourcing, comparison and quotation.',
     points: ['Multiple items in one request', 'Reference and specification captured per item', 'Price, availability, lead time and logistics confirmed before commitment'],
     entity: 'Name / Company *',
     phone: 'Phone / WhatsApp *',
@@ -36,7 +36,7 @@
     remove: 'Remove item',
     notes: 'Logistics or additional notes',
     consent: 'I confirm that HMATIAS may use the information above to assess and respond to this commercial request.',
-    submit: 'Prepare Supply request →',
+    submit: 'Prepare sourcing request →',
     status: 'Request prepared. WhatsApp will open for review and final sending.',
     required: 'Please complete the required fields before preparing the request.',
     itemPlaceholder: 'e.g. industrial pump, cable, anti-corrosion coating',
@@ -51,8 +51,8 @@
     notProvided: 'Not provided'
   } : {
     eyebrow: 'PEDIDO ESTRUTURADO',
-    title: 'Envie a necessidade exata, não uma mensagem genérica.',
-    intro: 'Liste o material, produto ou equipamento pretendido, incluindo referências, especificações e quantidades. Assim, a equipa comercial consegue avaliar sourcing e cotação com maior precisão.',
+    title: 'Estruture a necessidade com detalhe técnico e comercial.',
+    intro: 'Liste o material, produto ou equipamento pretendido, incluindo referências, especificações e quantidades. A equipa comercial terá assim uma base clara para pesquisa, comparação e cotação.',
     points: ['Vários itens no mesmo pedido', 'Referência e especificação registadas por item', 'Preço, disponibilidade, prazo e logística confirmados antes do compromisso'],
     entity: 'Nome / Empresa *',
     phone: 'Telefone / WhatsApp *',
@@ -67,7 +67,7 @@
     remove: 'Remover item',
     notes: 'Logística ou observações adicionais',
     consent: 'Confirmo que a HMATIAS pode utilizar as informações acima para avaliar e responder a este pedido comercial.',
-    submit: 'Preparar pedido de Supply →',
+    submit: 'Preparar pedido de sourcing →',
     status: 'Pedido preparado. O WhatsApp será aberto para revisão e envio final.',
     required: 'Preencha os campos obrigatórios antes de preparar o pedido.',
     itemPlaceholder: 'Ex.: bomba industrial, cabo, revestimento anticorrosivo',
