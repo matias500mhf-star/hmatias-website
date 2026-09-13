@@ -1,4 +1,6 @@
 (()=>{
+  'use strict';
+
   const pageEnglish=(document.documentElement.lang||'').toLowerCase().startsWith('en');
   const menuToggle=document.querySelector('.menu-toggle');
   const navMenu=document.querySelector('.nav-menu');
@@ -7,11 +9,11 @@
     ?(homePage?'#contact':'en.html#contact')
     :(homePage?'#contacto':'/#contacto');
 
-  // Route legacy HMATIAS Clean links to the fresh cache-safe pages.
+  // Route legacy HMATIAS Clean links to the current canonical pages.
   document.querySelectorAll('a[href]').forEach(a=>{
     const href=a.getAttribute('href')||'';
-    if(href==='hmatias-clean.html'||href==='/hmatias-clean.html')a.setAttribute('href','clean.html?v=20260911');
-    if(href==='hmatias-clean-en.html'||href==='/hmatias-clean-en.html')a.setAttribute('href','clean-en.html?v=20260911');
+    if(href==='hmatias-clean.html'||href==='/hmatias-clean.html')a.setAttribute('href','clean.html');
+    if(href==='hmatias-clean-en.html'||href==='/hmatias-clean-en.html')a.setAttribute('href','clean-en.html');
   });
 
   // Keep quotation CTAs direct: homepage requests go straight to the contact form,
@@ -22,7 +24,7 @@
     document.querySelectorAll(`a[href="${legacyQuoteAnchor}"]`).forEach(a=>a.setAttribute('href',homeContactHref));
   }
 
-  // Service-card symbols are decorative; the adjacent heading and link already provide context.
+  // Service-card symbols are decorative; the adjacent heading and link provide the context.
   document.querySelectorAll('.service-icon').forEach(icon=>icon.setAttribute('aria-hidden','true'));
 
   if(menuToggle&&navMenu){
@@ -46,6 +48,7 @@
       '.service-card',
       '.sector-grid article',
       '.company-grid > *',
+      '.company-impact-grid > *',
       '.why-us-grid article',
       '.project',
       '.supply-inner > *',
@@ -53,9 +56,13 @@
       '.contact-grid > *',
       '.business-service-card',
       '.business-contact-grid > *',
+      '.business-process-card',
       '.booking-hero-grid > *',
       '.booking-layout > *',
-      '.booking-scope-grid article'
+      '.booking-scope-grid article',
+      '.unit-card',
+      '.unit-proof > *',
+      '.unit-step'
     ].join(','))];
 
     motionItems.forEach((item,index)=>{
@@ -85,13 +92,36 @@
   }
 
   const headerQuote=document.querySelector('.hmatias-header .nav-actions [data-quote-link]');
-  if(navMenu&&headerQuote){
+  if(navMenu&&headerQuote&&!navMenu.querySelector('.mobile-quote-link')){
     const mobileQuote=headerQuote.cloneNode(true);
     mobileQuote.classList.add('mobile-quote-link');
     navMenu.appendChild(mobileQuote);
   }
 
+  // A dedicated WhatsApp action remains visible inside the mobile menu.
+  if(navMenu&&!navMenu.querySelector('.mobile-whatsapp-link')){
+    const mobileWhatsApp=document.createElement('a');
+    mobileWhatsApp.className='mobile-whatsapp-link';
+    mobileWhatsApp.href='https://wa.me/244948806673';
+    mobileWhatsApp.target='_blank';
+    mobileWhatsApp.rel='noopener noreferrer';
+    mobileWhatsApp.textContent=pageEnglish?'WhatsApp — Contact HMATIAS':'WhatsApp — Falar com a HMATIAS';
+    mobileWhatsApp.setAttribute('aria-label',mobileWhatsApp.textContent);
+    navMenu.appendChild(mobileWhatsApp);
+  }
+
   document.querySelectorAll('.nav-menu a').forEach(a=>a.addEventListener('click',()=>setMenuState(false)));
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&navMenu?.classList.contains('open')){
+      setMenuState(false);
+      menuToggle?.focus();
+    }
+  });
+  document.addEventListener('click',event=>{
+    if(!navMenu?.classList.contains('open'))return;
+    if(navMenu.contains(event.target)||menuToggle?.contains(event.target))return;
+    setMenuState(false);
+  });
 
   const year=document.getElementById('year');
   if(year)year.textContent=String(new Date().getFullYear());
@@ -109,9 +139,9 @@
       const service=String(d.get('servico')||(pageEnglish?'Not provided':'Não indicado')).trim();
       const message=String(d.get('mensagem')||'').trim();
       const text=pageEnglish
-        ?`Hello HMATIAS.\n\nName: ${name}\nCompany: ${company}\nE-mail: ${email}\nPhone/WhatsApp: ${phone}\nService: ${service}\n\nMessage:\n${message}`
-        :`Olá HMATIAS.\n\nNome: ${name}\nEmpresa: ${company}\nE-mail: ${email}\nTelefone/WhatsApp: ${phone}\nServiço: ${service}\n\nMensagem:\n${message}`;
-      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener');
+        ?`Hello HMATIAS.\n\nName: ${name}\nCompany: ${company}\nE-mail: ${email}\nPhone / WhatsApp: ${phone}\nService: ${service}\n\nRequest:\n${message}`
+        :`Olá HMATIAS.\n\nNome: ${name}\nEmpresa: ${company}\nE-mail: ${email}\nTelefone / WhatsApp: ${phone}\nServiço: ${service}\n\nPedido:\n${message}`;
+      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
     });
   }
 
@@ -158,7 +188,7 @@
         ?`Hello HMATIAS Business Services.\n\nName / Entity: ${name}\nPhone / WhatsApp: ${contact}\nE-mail: ${email}\nLocation: ${location}\nService: ${service}\n\nRequest:\n${details}`
         :`Olá HMATIAS Business Services.\n\nNome / Entidade: ${name}\nTelefone / WhatsApp: ${contact}\nE-mail: ${email}\nLocalização: ${location}\nServiço: ${service}\n\nPedido:\n${details}`;
       if(status)status.textContent=pageEnglish?'Request prepared. WhatsApp will open for your review and final sending.':'Pedido preparado. O WhatsApp será aberto para revisão e envio final.';
-      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener');
+      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
     });
   }
 
@@ -192,7 +222,7 @@
         ?`Hello HMATIAS. I would like to request an appointment.\n\nName / Entity: ${name}\nPhone / WhatsApp: ${contact}\nE-mail: ${email}\nService: ${service}\nMeeting format: ${mode}\nPreferred date: ${date}\nTime window: ${windowName}\nLocation: ${location}\n\nBrief context:\n${notes}\n\nI understand that this is an appointment request and the time is only confirmed after an express response from HMATIAS.`
         :`Olá HMATIAS. Pretendo solicitar um agendamento.\n\nNome / Entidade: ${name}\nTelefone / WhatsApp: ${contact}\nE-mail: ${email}\nServiço: ${service}\nModalidade: ${mode}\nData preferida: ${date}\nPeríodo: ${windowName}\nLocalização: ${location}\n\nContexto breve:\n${notes}\n\nCompreendo que este é um pedido de agendamento e que o horário só fica confirmado após resposta expressa da HMATIAS.`;
       if(status)status.textContent=pageEnglish?'Appointment request prepared. WhatsApp will open for review and sending.':'Pedido de agendamento preparado. O WhatsApp será aberto para revisão e envio.';
-      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener');
+      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
     });
   }
 
@@ -205,7 +235,11 @@
   if(sections.length&&'IntersectionObserver' in window){
     const io=new IntersectionObserver(entries=>{
       const visible=entries.filter(x=>x.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-      if(visible)navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${visible.target.id}`));
+      if(visible)navLinks.forEach(a=>{
+        const active=a.getAttribute('href')===`#${visible.target.id}`;
+        a.classList.toggle('active',active);
+        if(active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');
+      });
     },{rootMargin:'-28% 0px -58% 0px',threshold:[.05,.15,.3,.5]});
     sections.forEach(s=>io.observe(s));
   }
@@ -232,4 +266,14 @@
 
   const heroImg=document.querySelector('.hero-photo img');
   if(heroImg){heroImg.loading='eager';heroImg.fetchPriority='high';heroImg.decoding='async';}
+
+  // Supply pages receive the structured multi-item sourcing request builder.
+  const canonical=document.querySelector('link[rel="canonical"]')?.href||location.href;
+  if(/\/supply(?:-en)?\.html(?:$|[?#])/.test(canonical)&&!document.querySelector('script[data-hmatias-supply-request]')){
+    const supplyScript=document.createElement('script');
+    supplyScript.src='supply-request.js?v=20260913';
+    supplyScript.defer=true;
+    supplyScript.dataset.hmatiasSupplyRequest='true';
+    document.body.appendChild(supplyScript);
+  }
 })();
