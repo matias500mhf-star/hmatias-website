@@ -62,6 +62,192 @@ body.hmatias-home .hero h1 { font-size: clamp(3rem, 1.65rem + 4vw, 4.5rem); line
 .hmatias-home .company-identity-meta span { display: grid; gap: 4px; padding-top: 13px; border-top: 1px solid rgba(255,255,255,.18); color: #cbe1ef; font-size: .74rem; line-height: 1.45; }
 .hmatias-home .company-identity-meta b { color: #fff; font-size: .8rem; }
 
+/* Final visual consistency pass: restrained B2B iconography, type and spacing. */
+.hmatias-home :is(.services,.projects,.sectors,.home-divisions,.company-impact,.contact) .eyebrow,
+.hmatias-home .supply > .container > div > .eyebrow {
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  line-height: 1.45;
+}
+.hmatias-home .section-heading h2,
+.hmatias-home :is(.supply,.company-impact,.contact) h2 {
+  font-weight: 760;
+  letter-spacing: -.035em;
+}
+.hmatias-home .section-heading p {
+  font-size: .94rem;
+  line-height: 1.7;
+}
+.hmatias-home .services { padding-top: 88px; padding-bottom: 88px; }
+.hmatias-home .service-card {
+  border-radius: 16px;
+  border-color: #d9e5ef;
+  box-shadow: 0 12px 34px rgba(6,45,86,.065);
+}
+.hmatias-home .service-card:hover {
+  transform: translateY(-4px);
+  border-color: #aacfe9;
+  box-shadow: 0 18px 42px rgba(6,45,86,.09);
+}
+.hmatias-home .service-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid #d7e7f4;
+  border-radius: 13px;
+  background-color: #f1f7fc;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px 25px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.75);
+  font-size: 0;
+}
+.hmatias-home .service-card:nth-child(1) .service-icon { background-image: url('images/icon-service-construction.svg'); }
+.hmatias-home .service-card:nth-child(2) .service-icon { background-image: url('images/icon-service-remodel.svg'); }
+.hmatias-home .service-card:nth-child(3) .service-icon { background-image: url('images/icon-service-facilities.svg'); }
+.hmatias-home .service-card:nth-child(4) .service-icon { background-image: url('images/icon-service-supply.svg'); }
+.hmatias-home .service-card:nth-child(5) .service-icon { background-image: url('images/icon-service-procurement.svg'); }
+.hmatias-home .service-card:nth-child(6) .service-icon { background-image: url('images/icon-service-projects.svg'); }
+.hmatias-home .service-card h3 {
+  margin-bottom: 10px;
+  color: #0b3358;
+  font-size: 1.08rem;
+  font-weight: 730;
+  letter-spacing: -.018em;
+}
+body.hmatias-home .service-card p {
+  color: #5a7084;
+  font-size: .9rem;
+  line-height: 1.65;
+}
+.hmatias-home .service-card a {
+  color: #075fae;
+  font-size: .8rem;
+  font-weight: 700;
+}
+.hmatias-home .projects { padding-top: 88px; padding-bottom: 88px; }
+.hmatias-home .project {
+  border-color: #d9e5ef;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(6,45,86,.06);
+}
+.hmatias-home .project-caption { padding: 21px 22px 22px; }
+.hmatias-home .project-caption small {
+  color: #1268b2;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  line-height: 1.45;
+}
+.hmatias-home .project-caption h3 {
+  margin: 7px 0 7px;
+  color: #0b3358;
+  font-size: 1.08rem;
+  font-weight: 730;
+  letter-spacing: -.018em;
+}
+body.hmatias-home .project-caption p {
+  color: #5a7084;
+  font-size: .88rem;
+  line-height: 1.62;
+}
+.hmatias-home .project-caption a {
+  color: #075fae;
+  font-size: .79rem;
+  font-weight: 700;
+}
+.hmatias-home .supply { padding-top: 92px; padding-bottom: 92px; }
+.hmatias-home .supply h2 { line-height: 1.12; }
+body.hmatias-home .supply p { font-size: .94rem; line-height: 1.7; }
+.hmatias-home .supply-list { gap: 12px 28px; }
+.hmatias-home .supply-list span { font-size: .82rem; line-height: 1.5; }
+.hmatias-home .supply-card {
+  border-radius: 18px;
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.07);
+}
+.hmatias-home .supply-card > span {
+  font-size: .68rem;
+  letter-spacing: .14em;
+}
+.hmatias-home .supply-card strong {
+  font-size: 1.28rem;
+  font-weight: 720;
+  letter-spacing: -.02em;
+}
+.hmatias-home .division-card {
+  border-radius: 16px;
+  border-color: #d9e5ef;
+  box-shadow: 0 10px 28px rgba(6,45,86,.05);
+}
+.hmatias-home .division-card-kicker {
+  color: #1768aa;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+.hmatias-home .division-card h3 {
+  color: #0b3358;
+  font-weight: 730;
+  letter-spacing: -.018em;
+}
+body.hmatias-home .division-card p { color: #5a7084; font-size: .9rem; line-height: 1.65; }
+.hmatias-home .sector-grid article {
+  border-radius: 15px;
+  border-color: #d9e5ef;
+  box-shadow: 0 8px 24px rgba(6,45,86,.04);
+}
+.hmatias-home .sector-grid span {
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.hmatias-home .sector-grid h3 {
+  color: #0b3358;
+  font-size: 1rem;
+  font-weight: 720;
+  letter-spacing: -.015em;
+}
+body.hmatias-home .sector-grid p { color: #5a7084; font-size: .86rem; line-height: 1.62; }
+.hmatias-home .company-impact .company-lead,
+.hmatias-home .company-impact .company-copy { color: #4d657a; }
+.hmatias-home .contact { padding-top: 92px; padding-bottom: 92px; }
+.hmatias-home .contact-list a,
+.hmatias-home .contact-list > span { font-size: .84rem; line-height: 1.55; }
+.hmatias-home .contact-form {
+  border-radius: 16px;
+  border-color: #d9e5ef;
+  box-shadow: 0 14px 38px rgba(6,45,86,.07);
+}
+.hmatias-home .contact-form label {
+  color: #23445f;
+  font-size: .76rem;
+  font-weight: 700;
+}
+.hmatias-home footer {
+  padding-top: 60px;
+  background: #041f3c;
+}
+.hmatias-home .footer-grid { gap: 34px; }
+.hmatias-home .footer-grid strong {
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+body.hmatias-home footer :is(p,a) {
+  font-size: .78rem;
+  line-height: 1.65;
+}
+.hmatias-home .footer-grid a { color: #bfd2e2; }
+.hmatias-home .footer-grid a:hover { color: #fff; }
+.hmatias-home .copyright {
+  color: #8fa9bf;
+  font-size: .71rem;
+  line-height: 1.65;
+}
+
 @media (max-width: 1000px) and (min-width: 851px) {
   .hmatias-home .hero-grid { min-height: 560px; }
   .hmatias-home .hero-copy { padding: 62px 32px 58px 0; }
@@ -83,6 +269,10 @@ body.hmatias-home .hero h1 { font-size: clamp(3rem, 1.65rem + 4vw, 4.5rem); line
   .hmatias-home .contact-grid { gap: 32px; }
   .hmatias-home .company-impact-grid { grid-template-columns: 1fr; gap: 30px; }
   .hmatias-home .company-identity-card { min-height: 360px; }
+  .hmatias-home .services,
+  .hmatias-home .projects,
+  .hmatias-home .supply,
+  .hmatias-home .contact { padding-top: 76px; padding-bottom: 76px; }
 }
 @media (max-width: 560px) {
   .hmatias-home .hero-copy { padding: 40px 0 42px; }
@@ -104,6 +294,11 @@ body.hmatias-home .hero h1 { font-size: clamp(3rem, 1.65rem + 4vw, 4.5rem); line
   .hmatias-home .company-trust-grid { grid-template-columns: 1fr; }
   .hmatias-home .company-identity-card { min-height: 340px; padding: 28px 24px; }
   .hmatias-home .company-identity-meta { grid-template-columns: 1fr; }
+  .hmatias-home .service-icon { width: 46px; height: 46px; background-size: 23px 23px; border-radius: 12px; }
+  .hmatias-home .services,
+  .hmatias-home .projects,
+  .hmatias-home .supply,
+  .hmatias-home .contact { padding-top: 64px; padding-bottom: 64px; }
 }
 
 .hmatias-home .hmatias-assistant-msg { font-size: .875rem; line-height: 1.5; }
