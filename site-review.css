@@ -44,6 +44,11 @@ body.hmatias-type .eyebrow{
   line-height:1.45;
 }
 
+/* Preserve contrast in dark institutional sections. */
+body.hmatias-type :is(.hero,.unit-hero,.supply,.company-panel,.company-identity-card,.how-buy,.business-contact-copy,.visa-feature) :is(h1,h2,h3,h4){color:#fff}
+body.hmatias-type :is(.hero,.unit-hero,.supply,.company-panel,.company-identity-card,.how-buy,.business-contact-copy,.visa-feature) p{color:rgba(235,245,252,.86)}
+body.hmatias-type :is(.hero,.unit-hero,.supply,.company-panel,.company-identity-card,.how-buy,.business-contact-copy,.visa-feature) strong{color:inherit}
+
 /* Navigation and controls */
 body.hmatias-type :is(.btn,.btn-outline,.lang-switch,.nav-menu a){
   font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif);
@@ -67,7 +72,7 @@ body.hmatias-type textarea:focus-visible{
 
 /* Core service pages */
 body.hmatias-type .unit-hero-grid{gap:48px}
-body.hmatias-type .unit-hero h1{max-width:17ch}
+body.hmatias-type .unit-hero h1{max-width:17ch;color:#fff}
 body.hmatias-type .unit-hero p{max-width:64ch;color:rgba(255,255,255,.86)}
 body.hmatias-type .unit-hero-panel{
   border-radius:18px;
@@ -100,6 +105,20 @@ body.hmatias-type :is(.service-card,.project,.division-card){border-radius:16px}
 body.hmatias-type .section-heading>p{line-height:1.72}
 body.hmatias-type .project-caption p,
 body.hmatias-type .division-card p{line-height:1.65}
+body.hmatias-type .hero h1{color:#fff}
+body.hmatias-type .supply h2{color:#fff}
+
+/* Contact line icon system */
+body.hmatias-type .contact-list a,
+body.hmatias-type .contact-list>span{align-items:center}
+body.hmatias-type .contact-list-icon{
+  flex:none;
+  width:18px;
+  height:18px;
+  object-fit:contain;
+}
+body.hmatias-type .contact-list .contact-list-icon.email,
+body.hmatias-type .contact-list .contact-list-icon.phone{filter:none}
 
 /* Forms */
 body.hmatias-type :is(.contact-form,.business-contact-form,.clean-quote-form,.booking-form-card){
@@ -125,6 +144,7 @@ body.hmatias-type .service-row p{line-height:1.65}
 body.hmatias-type .service-price-value{white-space:nowrap}
 body.hmatias-type .visa-feature{border-radius:18px}
 body.hmatias-type .visa-disclaimer{line-height:1.65}
+body.hmatias-type .business-contact-copy h2{color:#fff}
 
 /* Legal pages also use the same locally hosted type system. */
 body.hmatias-type .content{font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif)}
