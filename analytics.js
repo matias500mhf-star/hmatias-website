@@ -98,4 +98,10 @@
   tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
   tag.dataset.hmatiasAnalytics = measurementId;
   document.head.appendChild(tag);
+
+  const events = document.createElement('script');
+  events.src = 'analytics-events.js?v=20260914';
+  events.defer = true;
+  events.dataset.hmatiasAnalyticsEvents = 'true';
+  document.head.appendChild(events);
 })();
