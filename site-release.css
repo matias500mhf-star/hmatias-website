@@ -2,7 +2,7 @@
    Purpose: keep the institutional homepage focused, preserve header media,
    separate KARTA as a digital product, and protect mobile floating controls. */
 
-/* Header: restore the original desktop arrangement.
+/* Header: restore the original arrangement.
    Phone + both e-mails stay centred; social links stay at the upper-right. */
 .hmatias-topbar .topbar-inner{display:grid!important;grid-template-columns:94px minmax(0,1fr) 94px!important;gap:12px!important;align-items:center!important;justify-content:normal!important}
 .hmatias-topbar .header-contact{grid-column:2!important;display:flex!important;align-items:center!important;justify-content:center!important;justify-self:stretch!important;flex-wrap:wrap!important;gap:8px 20px!important;min-width:0;padding:6px 0!important;text-align:center!important}
@@ -52,18 +52,22 @@ body.hmatias-assistant-open .whatsapp-float{opacity:0!important;visibility:hidde
 .whatsapp-float{transition:opacity .18s ease,visibility .18s ease,transform .2s ease}
 
 @media(max-width:850px){
-  /* Preserve the former compact mobile topbar: phone left, social icons right. */
-  .hmatias-topbar .topbar-inner{grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important}
-  .hmatias-topbar .header-contact{grid-column:1!important;justify-content:flex-start!important;justify-self:stretch!important;flex-wrap:nowrap!important;gap:10px!important;padding:4px 0!important;text-align:left!important}
-  .hmatias-topbar .header-contact a[href^="mailto:"]{display:none!important}
-  .hmatias-topbar .header-social{grid-column:2!important;justify-self:end!important;justify-content:flex-end!important;gap:2px!important}
+  /* Mobile keeps the same information hierarchy: all contacts visible and centred,
+     with the social links in their own right-aligned row so nothing is squeezed. */
+  .hmatias-topbar .topbar-inner{grid-template-columns:minmax(0,1fr)!important;gap:0!important;align-items:center!important;padding-top:4px!important;padding-bottom:4px!important}
+  .hmatias-topbar .header-contact{grid-column:1!important;justify-content:center!important;justify-self:stretch!important;flex-wrap:wrap!important;gap:4px 12px!important;padding:3px 0 1px!important;text-align:center!important}
+  body.hmatias-type .hmatias-topbar .header-contact a[href^="mailto:"],.hmatias-topbar .header-contact a[href^="mailto:"]{display:inline-flex!important}
+  .hmatias-topbar .header-contact a{font-size:.72rem!important}
+  .hmatias-topbar .header-social{grid-column:1!important;justify-self:end!important;justify-content:flex-end!important;gap:2px!important;margin-top:1px!important}
   .hmatias-header .nav-menu .mobile-karta-link{display:flex!important;align-items:center;gap:10px;color:#0b3358;background:#f2f7fb;border:1px solid #d8e6f1;border-radius:9px;margin:7px 0;padding:11px 13px!important;font-weight:800}
   .mobile-karta-mark{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:8px;background:linear-gradient(145deg,#062d56,#0b65a4);color:#fff;font-size:.75rem;font-weight:800}
 }
 
 @media(max-width:600px){
-  .hmatias-topbar .header-contact a[href^="tel:"]{font-size:.72rem!important}
-  .hmatias-topbar .header-social a{width:34px!important;height:38px!important;background-size:18px 18px!important}
+  .hmatias-topbar .header-contact{gap:3px 9px!important}
+  .hmatias-topbar .header-contact a{font-size:.68rem!important}
+  .hmatias-topbar .header-contact a[href^="tel:"]::before,.hmatias-topbar .header-contact a[href^="mailto:"]::before{width:14px;height:14px;flex-basis:14px;background-size:14px 14px}
+  .hmatias-topbar .header-social a{width:34px!important;height:34px!important;background-size:18px 18px!important}
   body.hmatias-home .whatsapp-float,body:not(.hmatias-home) .whatsapp-float{right:max(14px,env(safe-area-inset-right))!important;bottom:max(16px,calc(16px + env(safe-area-inset-bottom)))!important}
   body.hmatias-home .hmatias-assistant,body:not(.hmatias-home) .hmatias-assistant{right:max(14px,env(safe-area-inset-right))!important;bottom:max(124px,calc(124px + env(safe-area-inset-bottom)))!important}
   .footer-karta-link{max-width:100%}
