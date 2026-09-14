@@ -24,6 +24,23 @@
     document.head.appendChild(script);
   };
 
+  const loadReleaseLayer = () => {
+    if (!document.querySelector('link[data-hmatias-site-release]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'site-release.css?v=20260914-2';
+      link.dataset.hmatiasSiteRelease = 'true';
+      document.head.appendChild(link);
+    }
+    if (!document.querySelector('script[data-hmatias-site-release]')) {
+      const script = document.createElement('script');
+      script.src = 'site-release.js?v=20260914-2';
+      script.defer = true;
+      script.dataset.hmatiasSiteRelease = 'true';
+      document.head.appendChild(script);
+    }
+  };
+
   const addInstagramLink = () => {
     document.querySelectorAll('.header-social').forEach(group => {
       if (group.querySelector('[data-hmatias-instagram]')) return;
@@ -81,6 +98,7 @@
   const bootstrapSharedUi = () => {
     ensureReviewStyles();
     loadSiteEnhancements();
+    loadReleaseLayer();
     addInstagramLink();
     normalizeLegacyCleanLinks();
     loadPortfolioLayer();
@@ -88,6 +106,7 @@
 
   ensureReviewStyles();
   loadSiteEnhancements();
+  loadReleaseLayer();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', bootstrapSharedUi, { once: true });
   } else {
