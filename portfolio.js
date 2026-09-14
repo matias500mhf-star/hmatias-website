@@ -7,7 +7,7 @@
   const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
   const contactHref = isEn ? '#contact' : '#contacto';
 
-  // Load only the small stylesheet needed by the new catalogue/KARTA blocks.
+  // Load only the small stylesheet needed by the works catalogue block.
   if (!document.querySelector('link[data-hmatias-final-showcase]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -59,7 +59,7 @@
     const h3 = supplyPrimary.querySelector('h3');
     const p = supplyPrimary.querySelector('p');
     const a = supplyPrimary.querySelector('a');
-    if (h3) h3.textContent = isEn ? 'Supply & Procurement' : 'Supply & Procurement';
+    if (h3) h3.textContent = 'Supply & Procurement';
     if (p) p.textContent = isEn
       ? 'Procurement, sourcing and business supply of materials, consumables, products and equipment according to specification, quantity and operational need.'
       : 'Procurement, sourcing e fornecimento empresarial de materiais, consumíveis, produtos e equipamentos conforme especificação, quantidade e necessidade operacional.';
@@ -79,33 +79,18 @@
     projectsSection.insertAdjacentElement('afterend', catalogue);
   }
 
-  // Clarify the divisions area and add KARTA as a digital product, not as a construction service.
+  // Keep the homepage focused on the operating divisions. KARTA remains a separate digital product page.
   const divisions = document.querySelector('#divisoes, #divisions');
   if (divisions) {
     const eyebrow = divisions.querySelector('.section-heading .eyebrow');
     const title = divisions.querySelector('.section-heading h2');
     const intro = divisions.querySelector('.section-heading p');
-    if (eyebrow) eyebrow.textContent = isEn ? 'HMATIAS DIVISIONS & PRODUCTS' : 'DIVISÕES & PRODUTOS HMATIAS';
-    if (title) title.textContent = isEn ? 'Specialised services and digital products under one institutional structure.' : 'Serviços especializados e produtos digitais sob a mesma estrutura institucional.';
-    if (intro) intro.textContent = isEn ? 'HMATIAS keeps construction, facilities and supply as core operational areas, with specialised divisions and digital products presented separately.' : 'A HMATIAS mantém construção, facilities e supply como áreas operacionais principais, apresentando separadamente as divisões especializadas e os produtos digitais.';
-    const cards = divisions.querySelector('.division-cards');
-    if (cards && !cards.querySelector('[data-karta-card]')) {
-      const karta = document.createElement('article');
-      karta.className = 'division-card karta';
-      karta.dataset.kartaCard = 'true';
-      karta.innerHTML = isEn
-        ? '<span class="division-card-kicker">Digital Product · Alpha</span><h3>KARTA Wallet Mobile</h3><p>A mobile-first digital identity wallet in development, focused on secure access, identity profile, document storage architecture and audit trail.</p><a href="karta-en.html">Discover KARTA <span>→</span></a>'
-        : '<span class="division-card-kicker">Produto Digital · Alpha</span><h3>KARTA Wallet Mobile</h3><p>Carteira digital de identidade mobile-first em desenvolvimento, focada em acesso seguro, perfil de identidade, arquitetura de armazenamento de documentos e registo de atividade.</p><a href="karta.html">Conhecer KARTA <span>→</span></a>';
-      cards.appendChild(karta);
-    }
-    if (!document.querySelector('.karta-teaser')) {
-      const teaser = document.createElement('section');
-      teaser.className = 'karta-teaser';
-      teaser.setAttribute('aria-labelledby', 'karta-teaser-title');
-      teaser.innerHTML = isEn ? `
-        <div class="container karta-teaser-grid"><div class="karta-copy"><span class="karta-badge">HMATIAS DIGITAL · ALPHA</span><h2 id="karta-teaser-title">KARTA Wallet Mobile</h2><p>Your identity. Your documents. Your control. KARTA is being developed as a secure digital identity wallet with a mobile-first experience.</p><div class="karta-points"><span>Secure wallet access</span><span>Identity profile</span><span>Document storage architecture</span><span>Audit trail</span></div><a class="btn btn-primary" href="karta-en.html">View product page →</a></div><div class="karta-device" aria-hidden="true"><div class="karta-notch"></div><div class="karta-screen"><small>KARTA</small><strong>Identity Wallet</strong><span>ALPHA</span><i></i><i></i><i></i></div></div></div>` : `
-        <div class="container karta-teaser-grid"><div class="karta-copy"><span class="karta-badge">HMATIAS DIGITAL · ALPHA</span><h2 id="karta-teaser-title">KARTA Wallet Mobile</h2><p>A sua identidade. Os seus documentos. O seu controlo. A KARTA está em desenvolvimento como carteira digital de identidade com experiência mobile-first.</p><div class="karta-points"><span>Acesso seguro à carteira</span><span>Perfil de identidade</span><span>Arquitetura de armazenamento de documentos</span><span>Registo de atividade</span></div><a class="btn btn-primary" href="karta.html">Ver página do produto →</a></div><div class="karta-device" aria-hidden="true"><div class="karta-notch"></div><div class="karta-screen"><small>KARTA</small><strong>Identity Wallet</strong><span>ALPHA</span><i></i><i></i><i></i></div></div></div>`;
-      divisions.insertAdjacentElement('afterend', teaser);
-    }
+    if (eyebrow) eyebrow.textContent = isEn ? 'HMATIAS DIVISIONS' : 'DIVISÕES HMATIAS';
+    if (title) title.textContent = isEn ? 'Specialised solutions under the same institutional structure.' : 'Soluções especializadas sob a mesma estrutura institucional.';
+    if (intro) intro.textContent = isEn
+      ? 'Alongside the core construction, facilities and supply areas, HMATIAS maintains specialised divisions with their own pages for detailed commercial information.'
+      : 'Além das áreas principais de execução, facilities e supply, a HMATIAS mantém divisões especializadas com páginas próprias para informação comercial detalhada.';
+    divisions.querySelectorAll('[data-karta-card]').forEach(node => node.remove());
   }
+  document.querySelectorAll('.karta-teaser').forEach(node => node.remove());
 })();
