@@ -1,208 +1,23 @@
-/* HMATIAS — site-wide professional review layer.
-   Loaded after existing styles to standardise typography, spacing, forms and mobile behaviour
-   without replacing the current visual identity. */
-
-:root{
-  --hm-navy:#062d56;
-  --hm-blue:#0065cc;
-  --hm-ink:#17324d;
-  --hm-muted:#5f7387;
-  --hm-border:#d9e5ef;
-  --hm-soft:#f7fafc;
-  --hm-radius:14px;
-  --hm-shadow:0 14px 38px rgba(6,45,86,.07);
-}
-
-html{scroll-behavior:smooth;scroll-padding-top:108px}
-body.hmatias-type{
-  color:var(--hm-ink);
-  font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif);
-  font-size:16px;
-  line-height:1.65;
-  text-rendering:optimizeLegibility;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-
-body.hmatias-type :is(h1,h2,h3,h4){
-  color:var(--hm-navy);
-  font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif);
-  font-weight:750;
-  letter-spacing:-.03em;
-  text-wrap:balance;
-}
-body.hmatias-type h1{line-height:1.04}
-body.hmatias-type h2{line-height:1.13}
-body.hmatias-type h3{line-height:1.28}
-body.hmatias-type :is(p,li){font-weight:400}
-body.hmatias-type main p{color:var(--hm-muted)}
-body.hmatias-type strong{font-weight:720}
-body.hmatias-type .eyebrow{
-  font-size:.7rem;
-  font-weight:800;
-  letter-spacing:.13em;
-  line-height:1.45;
-}
-
-/* Preserve contrast in dark institutional sections. */
-body.hmatias-type :is(.hero,.unit-hero,.supply,.company-panel,.company-identity-card,.how-buy,.business-contact-copy,.visa-feature) :is(h1,h2,h3,h4){color:#fff}
-body.hmatias-type :is(.hero,.unit-hero,.supply,.company-panel,.company-identity-card,.how-buy,.business-contact-copy,.visa-feature) p{color:rgba(235,245,252,.86)}
-body.hmatias-type :is(.hero,.unit-hero,.supply,.company-panel,.company-identity-card,.how-buy,.business-contact-copy,.visa-feature) strong{color:inherit}
-
-/* Navigation and controls */
-body.hmatias-type :is(.btn,.btn-outline,.lang-switch,.nav-menu a){
-  font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif);
-}
-body.hmatias-type .btn{
-  min-height:44px;
-  border-radius:10px;
-  font-size:.86rem;
-  font-weight:700;
-  letter-spacing:-.005em;
-}
-body.hmatias-type .nav-menu a{font-weight:650}
-body.hmatias-type a:focus-visible,
-body.hmatias-type button:focus-visible,
-body.hmatias-type input:focus-visible,
-body.hmatias-type select:focus-visible,
-body.hmatias-type textarea:focus-visible{
-  outline:3px solid rgba(0,101,204,.24);
-  outline-offset:3px;
-}
-
-/* Core service pages */
-body.hmatias-type .unit-hero-grid{gap:48px}
-body.hmatias-type .unit-hero h1{max-width:17ch;color:#fff}
-body.hmatias-type .unit-hero p{max-width:64ch;color:rgba(255,255,255,.86)}
-body.hmatias-type .unit-hero-panel{
-  border-radius:18px;
-  border-color:rgba(255,255,255,.18);
-}
-body.hmatias-type .unit-heading{max-width:780px}
-body.hmatias-type .unit-heading>p{max-width:68ch;line-height:1.7}
-body.hmatias-type .unit-card,
-body.hmatias-type .unit-step,
-body.hmatias-type .business-process-card,
-body.hmatias-type .booking-panel,
-body.hmatias-type .booking-form-card{
-  border-color:var(--hm-border);
-  border-radius:var(--hm-radius);
-  box-shadow:0 10px 28px rgba(6,45,86,.045);
-}
-body.hmatias-type .unit-card h3,
-body.hmatias-type .unit-proof-copy h3{font-weight:730}
-body.hmatias-type .unit-card p,
-body.hmatias-type .unit-card li,
-body.hmatias-type .unit-step p{font-size:.92rem;line-height:1.65}
-body.hmatias-type .unit-proof{border-radius:18px;overflow:hidden}
-body.hmatias-type .unit-cta{border-top:1px solid rgba(6,45,86,.06)}
-
-/* Home, divisions and commercial cards */
-body.hmatias-type :is(.service-card,.project,.division-card,.sector-grid article){
-  border-color:var(--hm-border);
-}
-body.hmatias-type :is(.service-card,.project,.division-card){border-radius:16px}
-body.hmatias-type .section-heading>p{line-height:1.72}
-body.hmatias-type .project-caption p,
-body.hmatias-type .division-card p{line-height:1.65}
-body.hmatias-type .hero h1{color:#fff}
-body.hmatias-type .supply h2{color:#fff}
-
-/* Contact line icon system */
-body.hmatias-type .contact-list a,
-body.hmatias-type .contact-list>span{align-items:center}
-body.hmatias-type .contact-list-icon{
-  flex:none;
-  width:18px;
-  height:18px;
-  object-fit:contain;
-}
-body.hmatias-type .contact-list .contact-list-icon.email,
-body.hmatias-type .contact-list .contact-list-icon.phone{filter:none}
-
-/* Forms */
-body.hmatias-type :is(.contact-form,.business-contact-form,.clean-quote-form,.booking-form-card){
-  border-color:var(--hm-border);
-  box-shadow:var(--hm-shadow);
-}
-body.hmatias-type :is(input,select,textarea){
-  font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif);
-  font-size:1rem;
-}
-body.hmatias-type :is(input,select,textarea){
-  border-color:#cfdce7;
-  color:#17324d;
-}
-body.hmatias-type :is(input,select,textarea)::placeholder{color:#8998a7}
-body.hmatias-type :is(label,.form-field label,.booking-field label){color:#2c4964;font-weight:650}
-
-/* Business Services: restrained institutional tone */
-body.hmatias-type .catalog-page-head h1{max-width:19ch}
-body.hmatias-type .catalog-page-head>div>p{max-width:78ch;line-height:1.72}
-body.hmatias-type .service-row h3{font-weight:720;letter-spacing:-.018em}
-body.hmatias-type .service-row p{line-height:1.65}
-body.hmatias-type .service-price-value{white-space:nowrap}
-body.hmatias-type .visa-feature{border-radius:18px}
-body.hmatias-type .visa-disclaimer{line-height:1.65}
-body.hmatias-type .business-contact-copy h2{color:#fff}
-
-/* Legal pages also use the same locally hosted type system. */
-body.hmatias-type .content{font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif)}
-body.hmatias-type .content h1{font-size:clamp(2rem,1.6rem + 1.7vw,2.65rem)}
-body.hmatias-type .content h2{font-size:1.18rem;letter-spacing:-.018em}
-body.hmatias-type .content :is(p,li){font-size:.92rem;line-height:1.75}
-
-/* Footer */
-body.hmatias-type footer{background:#041f3c}
-body.hmatias-type .footer-grid{gap:34px}
-body.hmatias-type .footer-grid strong{
-  color:#fff;
-  font-size:.74rem;
-  font-weight:800;
-  letter-spacing:.075em;
-  text-transform:uppercase;
-}
-body.hmatias-type footer :is(p,a){font-size:.79rem;line-height:1.65}
-body.hmatias-type .copyright{font-size:.71rem;line-height:1.65;color:#8fa9bf}
-
-/* Mobile menu actions */
+/* HMATIAS — final site-wide professional review layer. */
+:root{--hm-navy:#062d56;--hm-blue:#0065cc;--hm-ink:#17324d;--hm-muted:#5f7387;--hm-border:#d9e5ef;--hm-soft:#f7fafc;--hm-radius:14px;--hm-shadow:0 14px 38px rgba(6,45,86,.07)}
+html{scroll-behavior:smooth;scroll-padding-top:108px;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden}
+body.hmatias-type{color:var(--hm-ink);font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif);font-size:16px;line-height:1.65;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;overflow-wrap:anywhere}
+body.hmatias-type :is(img,svg,video,canvas){max-width:100%}
+body.hmatias-type img{height:auto}
+body.hmatias-type :is(h1,h2,h3,h4){color:var(--hm-navy);font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif);font-weight:750;letter-spacing:-.03em;text-wrap:balance}
+body.hmatias-type h1{line-height:1.04}body.hmatias-type h2{line-height:1.13}body.hmatias-type h3{line-height:1.28}body.hmatias-type :is(p,li){font-weight:400}body.hmatias-type main p{color:var(--hm-muted)}body.hmatias-type strong{font-weight:720}body.hmatias-type .eyebrow{font-size:.7rem;font-weight:800;letter-spacing:.13em;line-height:1.45}
+body.hmatias-type :is(.hero,.unit-hero,.supply,.company-panel,.company-identity-card,.how-buy,.business-contact-copy,.visa-feature) :is(h1,h2,h3,h4){color:#fff}body.hmatias-type :is(.hero,.unit-hero,.supply,.company-panel,.company-identity-card,.how-buy,.business-contact-copy,.visa-feature) p{color:rgba(235,245,252,.86)}body.hmatias-type :is(.hero,.unit-hero,.supply,.company-panel,.company-identity-card,.how-buy,.business-contact-copy,.visa-feature) strong{color:inherit}
+body.hmatias-type :is(.btn,.btn-outline,.lang-switch,.nav-menu a){font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif)}body.hmatias-type .btn{min-height:44px;border-radius:10px;font-size:.86rem;font-weight:700;letter-spacing:-.005em}body.hmatias-type :is(button,a.btn,.btn-outline,.lang-switch){touch-action:manipulation;-webkit-tap-highlight-color:transparent}body.hmatias-type .nav-menu a{font-weight:650}body.hmatias-type a:focus-visible,body.hmatias-type button:focus-visible,body.hmatias-type input:focus-visible,body.hmatias-type select:focus-visible,body.hmatias-type textarea:focus-visible{outline:3px solid rgba(0,101,204,.24);outline-offset:3px}
+body.hmatias-type .unit-hero-grid{gap:48px}body.hmatias-type .unit-hero h1{max-width:17ch;color:#fff}body.hmatias-type .unit-hero p{max-width:64ch;color:rgba(255,255,255,.86)}body.hmatias-type .unit-hero-panel{border-radius:18px;border-color:rgba(255,255,255,.18)}body.hmatias-type .unit-heading{max-width:780px}body.hmatias-type .unit-heading>p{max-width:68ch;line-height:1.7}body.hmatias-type .unit-card,body.hmatias-type .unit-step,body.hmatias-type .business-process-card,body.hmatias-type .booking-panel,body.hmatias-type .booking-form-card{border-color:var(--hm-border);border-radius:var(--hm-radius);box-shadow:0 10px 28px rgba(6,45,86,.045)}body.hmatias-type .unit-card h3,body.hmatias-type .unit-proof-copy h3{font-weight:730}body.hmatias-type .unit-card p,body.hmatias-type .unit-card li,body.hmatias-type .unit-step p{font-size:.92rem;line-height:1.65}body.hmatias-type .unit-proof{border-radius:18px;overflow:hidden}body.hmatias-type .unit-cta{border-top:1px solid rgba(6,45,86,.06)}
+body.hmatias-type :is(.service-card,.project,.division-card,.sector-grid article){border-color:var(--hm-border)}body.hmatias-type :is(.service-card,.project,.division-card){border-radius:16px}body.hmatias-type .section-heading>p{line-height:1.72}body.hmatias-type .project-caption p,body.hmatias-type .division-card p{line-height:1.65}body.hmatias-type .hero h1,body.hmatias-type .supply h2{color:#fff}
+body.hmatias-type .contact-list a,body.hmatias-type .contact-list>span{align-items:center}body.hmatias-type .contact-list-icon{flex:none;width:18px;height:18px;object-fit:contain}body.hmatias-type .contact-list .contact-list-icon.email,body.hmatias-type .contact-list .contact-list-icon.phone{filter:none}
+body.hmatias-type :is(.contact-form,.business-contact-form,.clean-quote-form,.booking-form-card){border-color:var(--hm-border);box-shadow:var(--hm-shadow)}body.hmatias-type :is(input,select,textarea){font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif);font-size:16px;border-color:#cfdce7;color:#17324d;max-width:100%}body.hmatias-type :is(input,select,textarea)::placeholder{color:#8998a7}body.hmatias-type :is(label,.form-field label,.booking-field label){color:#2c4964;font-weight:650}
+body.hmatias-type .catalog-page-head h1{max-width:19ch}body.hmatias-type .catalog-page-head>div>p{max-width:78ch;line-height:1.72}body.hmatias-type .service-row h3{font-weight:720;letter-spacing:-.018em}body.hmatias-type .service-row p{line-height:1.65}body.hmatias-type .service-price-value{white-space:nowrap}body.hmatias-type .visa-feature{border-radius:18px}body.hmatias-type .visa-disclaimer{line-height:1.65}body.hmatias-type .business-contact-copy h2{color:#fff}
+body.hmatias-type .content{font-family:var(--font-site,'HMATIAS Inter',Arial,sans-serif)}body.hmatias-type .content h1{font-size:clamp(2rem,1.6rem + 1.7vw,2.65rem)}body.hmatias-type .content h2{font-size:1.18rem;letter-spacing:-.018em}body.hmatias-type .content :is(p,li){font-size:.92rem;line-height:1.75}
+body.hmatias-type footer{background:#041f3c}body.hmatias-type .footer-grid{gap:34px}body.hmatias-type .footer-grid strong{color:#fff;font-size:.74rem;font-weight:800;letter-spacing:.075em;text-transform:uppercase}body.hmatias-type footer :is(p,a){font-size:.79rem;line-height:1.65}body.hmatias-type .copyright{font-size:.71rem;line-height:1.65;color:#8fa9bf}
 .mobile-whatsapp-link{display:none!important}
-@media(max-width:850px){
-  html{scroll-padding-top:88px}
-  body.hmatias-type .hmatias-header .nav-menu{padding-bottom:12px}
-  body.hmatias-type .hmatias-header .nav-menu .mobile-quote-link,
-  body.hmatias-type .hmatias-header .nav-menu .mobile-whatsapp-link{
-    min-height:46px;
-    margin:8px 10px 0;
-    padding:12px 14px!important;
-    border-radius:10px;
-    justify-content:center;
-    text-align:center;
-  }
-  body.hmatias-type .hmatias-header .nav-menu .mobile-whatsapp-link{
-    display:flex!important;
-    border:1px solid #bfe8cf;
-    background:#eefaf2;
-    color:#117a3a;
-    font-weight:750;
-  }
-  body.hmatias-type .unit-hero-grid{gap:28px}
-  body.hmatias-type .unit-hero h1{max-width:18ch}
-}
-
-@media(max-width:620px){
-  body.hmatias-type{font-size:15px}
-  body.hmatias-type .eyebrow{font-size:.66rem;letter-spacing:.12em}
-  body.hmatias-type :is(.unit-main,.business-process,.business-contact){padding-top:62px;padding-bottom:62px}
-  body.hmatias-type .unit-card,
-  body.hmatias-type .business-process-card{padding:22px 19px}
-  body.hmatias-type .unit-card p,
-  body.hmatias-type .unit-card li,
-  body.hmatias-type .unit-step p{font-size:.9rem}
-  body.hmatias-type .footer-grid{gap:24px}
-}
-
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
-}
+@media(max-width:1024px){body.hmatias-type .container{max-width:100%}}
+@media(max-width:850px){html{scroll-padding-top:88px}body.hmatias-type .hmatias-header .nav-menu{padding-bottom:12px}body.hmatias-type .hmatias-header .nav-menu .mobile-quote-link,body.hmatias-type .hmatias-header .nav-menu .mobile-whatsapp-link{min-height:46px;margin:8px 10px 0;padding:12px 14px!important;border-radius:10px;justify-content:center;text-align:center}body.hmatias-type .hmatias-header .nav-menu .mobile-whatsapp-link{display:flex!important;border:1px solid #bfe8cf;background:#eefaf2;color:#117a3a;font-weight:750}body.hmatias-type .unit-hero-grid{gap:28px}body.hmatias-type .unit-hero h1{max-width:18ch}}
+@media(max-width:620px){body.hmatias-type{font-size:15px}body.hmatias-type .eyebrow{font-size:.66rem;letter-spacing:.12em}body.hmatias-type :is(.unit-main,.business-process,.business-contact){padding-top:62px;padding-bottom:62px}body.hmatias-type .unit-card,body.hmatias-type .business-process-card{padding:22px 19px}body.hmatias-type .unit-card p,body.hmatias-type .unit-card li,body.hmatias-type .unit-step p{font-size:.9rem}body.hmatias-type .footer-grid{gap:24px}}
+@supports(padding:max(0px)){@media(max-width:850px){body.hmatias-type .hmatias-header{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}body.hmatias-type footer{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
