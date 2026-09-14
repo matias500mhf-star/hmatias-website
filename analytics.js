@@ -3,10 +3,14 @@
   'use strict';
 
   const ensureReviewStyles = () => {
-    if (document.querySelector('link[data-hmatias-site-review]')) return;
+    const existing = document.querySelector('link[href*="site-review.css"]');
+    if (existing) {
+      existing.dataset.hmatiasSiteReview = 'true';
+      return;
+    }
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'site-review.css?v=20260913';
+    link.href = 'site-review.css?v=20260914-stable1';
     link.dataset.hmatiasSiteReview = 'true';
     document.head.appendChild(link);
   };
