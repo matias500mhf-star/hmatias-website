@@ -11,6 +11,15 @@
     document.head.appendChild(link);
   };
 
+  const loadSiteEnhancements = () => {
+    if (document.querySelector('script[data-hmatias-site-enhancements]')) return;
+    const script = document.createElement('script');
+    script.src = 'site-enhancements.js?v=20260914';
+    script.defer = true;
+    script.dataset.hmatiasSiteEnhancements = 'true';
+    document.head.appendChild(script);
+  };
+
   const addInstagramLink = () => {
     document.querySelectorAll('.header-social').forEach(group => {
       if (group.querySelector('[data-hmatias-instagram]')) return;
@@ -45,7 +54,6 @@
       }
     });
 
-    /* Keep English footers fully English without rewriting the source templates. */
     if (isEn) {
       document.querySelectorAll('.copyright').forEach(node => {
         node.innerHTML = node.innerHTML
@@ -68,12 +76,14 @@
 
   const bootstrapSharedUi = () => {
     ensureReviewStyles();
+    loadSiteEnhancements();
     addInstagramLink();
     normalizeLegacyCleanLinks();
     loadPortfolioLayer();
   };
 
   ensureReviewStyles();
+  loadSiteEnhancements();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', bootstrapSharedUi, { once: true });
   } else {
@@ -100,7 +110,7 @@
   document.head.appendChild(tag);
 
   const events = document.createElement('script');
-  events.src = 'analytics-events.js?v=20260914';
+  events.src = 'analytics-events.js?v=20260914b';
   events.defer = true;
   events.dataset.hmatiasAnalyticsEvents = 'true';
   document.head.appendChild(events);
