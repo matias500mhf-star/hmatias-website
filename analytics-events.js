@@ -69,9 +69,7 @@
     else {
       try {
         const url = new URL(anchor.href, window.location.href);
-        if (url.hostname === 'wa.me' || url.hostname === 'whatsapp.com' || url.hostname.endsWith('.whatsapp.com')) {
-          contactMethod = 'whatsapp';
-        }
+        if (url.hostname === 'wa.me' || url.hostname === 'whatsapp.com' || url.hostname.endsWith('.whatsapp.com')) contactMethod = 'whatsapp';
       } catch (_) {}
     }
 
@@ -80,8 +78,7 @@
       track(`${contactMethod}_click`, { contact_method: contactMethod });
     }
 
-    const quoteIntent = anchor.hasAttribute('data-quote-link') ||
-      /(orçamento|orcamento|cotação|cotacao|quotation|quote|proposal|proposta)/i.test(text);
+    const quoteIntent = anchor.hasAttribute('data-quote-link') || /(orçamento|orcamento|cotação|cotacao|quotation|quote|proposal|proposta)/i.test(text);
     if (quoteIntent) {
       track('quote_cta_click', {
         contact_method: contactMethod || 'website',
@@ -90,20 +87,15 @@
     }
 
     const targetService = serviceFromHref(anchor.href);
-    if (targetService && targetService !== serviceName) {
-      track('service_click', { service_name: targetService });
-    }
+    if (targetService && targetService !== serviceName) track('service_click', { service_name: targetService });
 
     const projectCard = anchor.closest('[data-project-id]');
-    if (projectCard && projectCard.dataset.projectId) {
-      track('project_engagement', { project_id: projectCard.dataset.projectId });
-    }
+    if (projectCard?.dataset.projectId) track('project_engagement', { project_id: projectCard.dataset.projectId });
   }, { passive: true });
 
   document.addEventListener('submit', event => {
     const form = event.target;
-    if (!(form instanceof HTMLFormElement)) return;
-    if (!form.checkValidity()) return;
+    if (!(form instanceof HTMLFormElement) || !form.checkValidity()) return;
 
     const formId = form.id || '';
     let leadType = leadForms[formId] || null;
@@ -118,11 +110,17 @@
       form_id: formId || 'unnamed_lead_form',
       lead_type: leadType
     });
-    track('generate_lead', {
-      method: 'website_form',
+
+    /* Current forms hand the visitor to WhatsApp. This is a handoff attempt, not a confirmed lead. */
+    track('lead_handoff', {
+      method: 'whatsapp',
       lead_type: leadType
     });
   }, true);
 
-  window.hmatiasAnalytics = Object.freeze({ track });
+  const confirmLead = (leadType = 'general_quote', method = 'website') => {
+    track('generate_lead', { method, lead_type: leadType });
+  };
+
+  window.hmatiasAnalytics = Object.freeze({ track, confirmLead });
 })();
