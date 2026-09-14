@@ -1,30 +1,63 @@
-/* Compact contact strip and clear navigation, based on the supplied reference. */
+/* HMATIAS shared header — stable desktop/mobile implementation. */
 .hmatias-topbar{height:auto;min-height:40px;background:#062d56}
-.hmatias-topbar .topbar-inner{min-height:40px;display:flex;justify-content:space-between;gap:16px}
-.header-contact{display:flex;align-items:center;gap:24px;font-size:0.75rem}
-.header-contact a{color:#fff}
-.header-social{display:flex;align-items:center;gap:6px;margin-left:auto}
-.header-social a{display:flex;align-items:center;justify-content:center;width:44px;height:40px;color:#fff;border-radius:4px}
+.hmatias-topbar .topbar-inner{min-height:40px;display:grid;grid-template-columns:94px minmax(0,1fr) 94px;gap:12px;align-items:center}
+.header-contact{grid-column:2;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 20px;padding:6px 0;text-align:center;font-size:.75rem}
+.header-contact a{color:#fff;white-space:nowrap}
+.header-social{grid-column:3;display:flex;align-items:center;justify-self:end;gap:6px}
+.header-social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;color:#fff;border-radius:4px}
 .header-social img{display:block;filter:brightness(0) invert(1)}
 .header-social a:hover{background:#0b477c}
+
+.hmatias-header{overflow:visible}
 .hmatias-header .nav{min-height:92px;gap:22px}
-.hmatias-header .brand,.hmatias-header .brand img{width:220px}
+/* The logo is intentionally boxed. Never allow intrinsic image height to expand the navigation. */
+.hmatias-header .brand{width:220px;height:78px;flex:0 0 220px;display:flex;align-items:center;overflow:hidden}
+.hmatias-header .brand img{display:block;width:220px;height:78px;max-width:100%;max-height:78px;object-fit:contain;object-position:left center}
 .hmatias-header .nav-menu{gap:22px}
-.hmatias-header .nav-menu a{font-size:0.875rem;letter-spacing:0;padding:31px 0 28px}
+.hmatias-header .nav-menu a{font-size:.875rem;letter-spacing:0;padding:31px 0 28px}
 .hmatias-header .nav-actions{gap:16px}
-.hmatias-header .nav-actions .btn{font-size:0.875rem;white-space:nowrap;padding:13px 17px}
-@media(max-width:1100px){.hmatias-header .nav{gap:14px}.hmatias-header .brand,.hmatias-header .brand img{width:175px}.hmatias-header .nav-menu{gap:14px}.hmatias-header .nav-menu a{font-size:0.875rem}.hmatias-header .nav-actions{gap:10px}}
-@media(max-width:850px){.hmatias-header .nav{min-height:78px}.hmatias-header .nav-menu{top:78px;gap:0}.hmatias-header .nav-menu a{padding:13px 15px;font-size:0.9375rem}.hmatias-topbar .topbar-inner{justify-content:space-between}.header-contact{gap:12px}.header-contact a{font-size:0.75rem}.hmatias-header .nav-actions{display:none}}
-@media(max-width:560px){.header-contact a[href^="mailto:"]{display:none}.header-social a{height:44px}.hmatias-topbar .topbar-inner{min-height:44px}.hmatias-header .brand,.hmatias-header .brand img{width:190px}}
+.hmatias-header .nav-actions .btn{font-size:.875rem;white-space:nowrap;padding:13px 17px}
+.mobile-quote-link{display:none!important}
 
-.mobile-quote-link{display:none!important}@media(max-width:850px){.hmatias-header .nav-menu .mobile-quote-link{display:flex!important;justify-content:center;margin:8px;color:#fff;background:#0065cc;border-radius:9px}}
+@media(max-width:1100px){
+  .hmatias-header .nav{gap:14px}
+  .hmatias-header .brand{width:175px;height:68px;flex-basis:175px}
+  .hmatias-header .brand img{width:175px;height:68px;max-height:68px}
+  .hmatias-header .nav-menu{gap:14px}
+  .hmatias-header .nav-menu a{font-size:.875rem}
+  .hmatias-header .nav-actions{gap:10px}
+}
 
-/* Centre the contact group independently of the social links. */
-.hmatias-topbar .topbar-inner{display:grid;grid-template-columns:94px minmax(0,1fr) 94px;gap:12px}
-.header-contact{grid-column:2;justify-content:center;flex-wrap:wrap;gap:8px 20px;padding:6px 0;text-align:center}
-.header-contact a{white-space:nowrap}
-.header-social{grid-column:3;justify-self:end;margin-left:0}
-@media(max-width:760px){.hmatias-topbar .topbar-inner{grid-template-columns:minmax(0,1fr) 94px;gap:8px}.header-contact{grid-column:1;gap:4px 14px}.header-social{grid-column:2}.header-contact a[href^="mailto:"]{display:inline}}
-@media(max-width:460px){.hmatias-topbar .topbar-inner{grid-template-columns:44px minmax(0,1fr) 44px;gap:8px}.header-contact{grid-column:2;flex-direction:column;justify-content:center}.header-social{grid-column:3;flex-direction:column;gap:0;justify-self:end}.header-contact a{font-size:0.75rem}}
+@media(max-width:850px){
+  .hmatias-topbar .topbar-inner{min-height:46px;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+  .header-contact{grid-column:1;justify-content:flex-start;flex-wrap:nowrap;gap:10px;padding:4px 0;text-align:left;min-width:0}
+  body.hmatias-type .hmatias-topbar .header-contact a[href^="mailto:"]{display:none!important}
+  .header-contact a[href^="tel:"]{font-size:.75rem;overflow:hidden;text-overflow:ellipsis}
+  .header-social{grid-column:2;display:flex;flex-direction:row;gap:2px;justify-self:end}
+  .header-social a{width:38px;height:42px}
 
-@media(max-width:850px){.hmatias-header .nav-menu{max-height:calc(100dvh - 90px);overflow-y:auto;overscroll-behavior:contain}}
+  .hmatias-header .nav{min-height:78px;gap:12px}
+  .hmatias-header .brand{width:180px;height:62px;flex-basis:180px}
+  .hmatias-header .brand img{width:180px;height:62px;max-height:62px}
+  .hmatias-header .nav-menu{top:78px;gap:0;max-height:calc(100dvh - 90px);overflow-y:auto;overscroll-behavior:contain}
+  .hmatias-header .nav-menu a{padding:13px 15px;font-size:.9375rem}
+  .hmatias-header .nav-actions{display:none}
+  .hmatias-header .nav-menu .mobile-quote-link{display:flex!important;justify-content:center;margin:8px;color:#fff;background:#0065cc;border-radius:9px}
+}
+
+@media(max-width:560px){
+  .hmatias-topbar .topbar-inner{grid-template-columns:minmax(0,1fr) auto}
+  .header-contact{gap:6px}
+  .header-contact a{font-size:.72rem}
+  .header-social a{width:36px;height:42px}
+  .hmatias-header .brand{width:168px;height:58px;flex-basis:168px}
+  .hmatias-header .brand img{width:168px;height:58px;max-height:58px}
+}
+
+@media(max-width:390px){
+  .hmatias-topbar .topbar-inner{gap:4px}
+  .header-contact a[href^="tel:"]{font-size:.7rem}
+  .header-social a{width:34px}
+  .hmatias-header .brand{width:150px;height:54px;flex-basis:150px}
+  .hmatias-header .brand img{width:150px;height:54px;max-height:54px}
+}
