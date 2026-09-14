@@ -81,7 +81,7 @@
     if (!document.body.classList.contains('hmatias-home')) return;
     if (document.querySelector('script[data-hmatias-portfolio]')) return;
     const script = document.createElement('script');
-    script.src = 'portfolio.js?v=20260914-2';
+    script.src = 'portfolio.js?v=20260914-3';
     script.defer = true;
     script.dataset.hmatiasPortfolio = 'true';
     document.body.appendChild(script);
