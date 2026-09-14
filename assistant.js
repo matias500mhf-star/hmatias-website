@@ -2,18 +2,33 @@
 (()=>{
 'use strict';
 const API=['https://api.comercialhmatiasps.com/api/ai','/api/ai'];
-const WA='https://wa.me/244948806673', KB_SRC='assistant-knowledge.js?v=20260914-1';
+const WA='https://wa.me/244948806673',KB_SRC='assistant-knowledge.js?v=final-20260914';
 const pageEn=(document.documentElement.lang||'').toLowerCase().startsWith('en');
-window.HMATIAS_ASSISTANT_VERSION='2026-09-14-kb1';
+window.HMATIAS_ASSISTANT_VERSION='2026-09-14-final';
 const getKB=()=>window.HMATIAS_KNOWLEDGE||null;
 const enFor=q=>pageEn||/\b(hello|hi|price|service|visa|appointment|cleaning|construction|facilities|supply|contact|document|quote|business|product|stock|catalogue|catalog)\b/i.test(q);
 
-function loadKB(){return new Promise(resolve=>{
- if(getKB())return resolve(getKB());
- let s=document.querySelector('script[data-hmatias-knowledge]');
- if(!s){s=document.createElement('script');s.src=KB_SRC;s.dataset.hmatiasKnowledge='true';document.head.appendChild(s)}
- const done=()=>resolve(getKB());s.addEventListener('load',done,{once:true});s.addEventListener('error',done,{once:true});setTimeout(done,3500);
-})}
+let kbPromise=null;
+function loadKB(){
+  if(getKB())return Promise.resolve(getKB());
+  if(kbPromise)return kbPromise;
+  kbPromise=new Promise(resolve=>{
+    let settled=false;
+    const done=()=>{if(settled)return;settled=true;resolve(getKB())};
+    let s=document.querySelector('script[data-hmatias-knowledge]');
+    if(!s){
+      s=document.createElement('script');
+      s.src=KB_SRC;
+      s.defer=true;
+      s.dataset.hmatiasKnowledge='true';
+      document.head.appendChild(s);
+    }
+    s.addEventListener('load',done,{once:true});
+    s.addEventListener('error',done,{once:true});
+    setTimeout(done,3500);
+  });
+  return kbPromise;
+}
 function add(box,text,kind){const e=document.createElement('div');e.className=`hmatias-assistant-msg ${kind}`;e.textContent=text;box.appendChild(e);box.scrollTop=box.scrollHeight;return e}
 function catalogItem(q){const d=getKB(),m=q.toLowerCase();return d?.clean?.cleanCatalog?.find(([c,n])=>m.includes(c.toLowerCase())||m.includes(n.toLowerCase()))||null}
 function pageContext(){const main=document.querySelector('main');const page=(main?.innerText||document.body.innerText||'').replace(/\s+/g,' ').trim();const official=getKB()?.toAssistantContext?.()||'Use only current page facts. Do not invent missing facts.';return `OFFICIAL_HMATIAS_KNOWLEDGE:\n${official}\nCURRENT_URL: ${location.href}\nCURRENT_TITLE: ${document.title}\nCURRENT_PAGE: ${page.slice(0,18000)}`}
@@ -37,13 +52,22 @@ function official(q){
  return null;
 }
 
-async function askAI(message,history){const body={message,history,pageContext:pageContext(),knowledgeVersion:getKB()?.version||null,pageUrl:location.href,pageTitle:document.title};for(const url of API){const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),8000);try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:ctl.signal});clearTimeout(timer);if(!r.ok)continue;const x=await r.json(),a=(x.answer||x.reply||x.response||'').trim();if(a)return a}catch(_){clearTimeout(timer)}}throw new Error('AI unavailable')}
+async function askAI(message,history){const body={message,history,pageContext:pageContext(),knowledgeVersion:getKB()?.version||null,pageUrl:location.href,pageTitle:document.title};for(const url of API){const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),7000);try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:ctl.signal});clearTimeout(timer);if(!r.ok)continue;const x=await r.json(),a=(x.answer||x.reply||x.response||'').trim();if(a)return a}catch(_){clearTimeout(timer)}}throw new Error('AI unavailable')}
 function fallback(q){return enFor(q)?'I can help with HMATIAS Construction, Facilities, Supply, HMATIAS Clean products/catalogue, Business Services, appointments, contacts and quotations. If a price or stock status is not officially published, I will say it requires commercial confirmation.':'Posso ajudar com Construção, Facilities, Supply, produtos/catálogo HMATIAS Clean, Business Services, agendamentos, contactos e cotações. Se preço ou stock não estiver oficialmente publicado, indicarei que precisa de confirmação comercial.'}
 
-function init(){if(document.querySelector('.hmatias-assistant'))return;const t=pageEn?{label:'HMATIAS Assistant',sub:'Official services, products, prices and quotations.',close:'Close assistant',msg:'Message',ph:'What do you need?',send:'Send',hello:'Hello. I can guide you using the current official HMATIAS service, product and commercial information.',wait:'Preparing response…'}:{label:'Assistente HMATIAS',sub:'Serviços, produtos, preços e cotações oficiais.',close:'Fechar assistente',msg:'Mensagem',ph:'O que precisa?',send:'Enviar',hello:'Olá. Posso orientar com base nas informações oficiais atuais da HMATIAS sobre serviços, produtos, preços e cotações.',wait:'A preparar resposta…'};
+function init(){
+ if(document.querySelector('.hmatias-assistant'))return;
+ const t=pageEn?{label:'HMATIAS Assistant',sub:'Official services, products, prices and quotations.',close:'Close assistant',msg:'Message',ph:'What do you need?',send:'Send',hello:'Hello. I can guide you using the current official HMATIAS service, product and commercial information.',wait:'Preparing response…'}:{label:'Assistente HMATIAS',sub:'Serviços, produtos, preços e cotações oficiais.',close:'Fechar assistente',msg:'Mensagem',ph:'O que precisa?',send:'Enviar',hello:'Olá. Posso orientar com base nas informações oficiais atuais da HMATIAS sobre serviços, produtos, preços e cotações.',wait:'A preparar resposta…'};
  const root=document.createElement('aside');root.className='hmatias-assistant';root.setAttribute('aria-label',t.label);root.innerHTML=`<div class="hmatias-assistant-panel"><div class="hmatias-assistant-head"><div><strong>${t.label}</strong><small>${t.sub}</small></div><button class="hmatias-assistant-close" type="button" aria-label="${t.close}">×</button></div><div class="hmatias-assistant-messages" aria-live="polite"></div><div class="hmatias-assistant-links"><a href="${WA}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:comercial@hmatiasps.ao">E-mail</a></div><form class="hmatias-assistant-form"><input aria-label="${t.msg}" maxlength="1000" autocomplete="off" placeholder="${t.ph}"><button type="submit">${t.send}</button></form></div><button class="hmatias-assistant-toggle" type="button" aria-expanded="false"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-1 2V11.5a8.5 8.5 0 0 1 17 0Z"/><path d="M7 9h9M7 13h6"/></svg><span>${pageEn?'Assistant':'Assistente'}</span></button>`;document.body.appendChild(root);
  const panel=root.querySelector('.hmatias-assistant-panel'),toggle=root.querySelector('.hmatias-assistant-toggle'),close=root.querySelector('.hmatias-assistant-close'),form=root.querySelector('form'),input=form.querySelector('input'),button=form.querySelector('button'),box=root.querySelector('.hmatias-assistant-messages'),history=[];
- const open=v=>{root.classList.toggle('is-open',v);panel.hidden=!v;toggle.setAttribute('aria-expanded',String(v));if(v)input.focus()};panel.hidden=true;toggle.onclick=()=>open(panel.hidden);close.onclick=()=>open(false);add(box,t.hello,'assistant');
- form.addEventListener('submit',async e=>{e.preventDefault();const q=input.value.trim();if(!q)return;input.value='';add(box,q,'user');history.push({role:'user',content:q});button.disabled=input.disabled=true;const wait=add(box,t.wait,'assistant');let a=official(q);if(!a){try{a=await askAI(q,history.slice(-8))}catch(_){a=fallback(q)}}wait.textContent=a;history.push({role:'assistant',content:a});if(history.length>12)history.splice(0,history.length-12);button.disabled=input.disabled=false;input.focus();box.scrollTop=box.scrollHeight})}
-(async()=>{await loadKB();if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();
+ const open=v=>{const state=Boolean(v);root.classList.toggle('is-open',state);root.classList.toggle('open',state);panel.hidden=!state;panel.setAttribute('aria-hidden',String(!state));toggle.setAttribute('aria-expanded',String(state));if(state&&matchMedia('(pointer:fine)').matches)input.focus()};
+ panel.hidden=true;panel.setAttribute('aria-hidden','true');
+ toggle.addEventListener('click',e=>{e.preventDefault();open(panel.hidden)});
+ close.addEventListener('click',e=>{e.preventDefault();open(false)});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){open(false);toggle.focus()}});
+ add(box,t.hello,'assistant');
+ form.addEventListener('submit',async e=>{e.preventDefault();const q=input.value.trim();if(!q)return;input.value='';add(box,q,'user');history.push({role:'user',content:q});button.disabled=input.disabled=true;const wait=add(box,t.wait,'assistant');if(!getKB())await loadKB();let a=official(q);if(!a){try{a=await askAI(q,history.slice(-8))}catch(_){a=fallback(q)}}wait.textContent=a;history.push({role:'assistant',content:a});if(history.length>12)history.splice(0,history.length-12);button.disabled=input.disabled=false;if(matchMedia('(pointer:fine)').matches)input.focus();box.scrollTop=box.scrollHeight})
+}
+const boot=()=>{init();loadKB()};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
