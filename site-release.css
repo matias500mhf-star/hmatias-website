@@ -2,15 +2,17 @@
    Purpose: keep the institutional homepage focused, preserve header media,
    separate KARTA as a digital product, and protect mobile floating controls. */
 
-/* Header: concise contact bar, with visible phone/social icons and no email text. */
-.hmatias-topbar .header-contact a[href^="mailto:"]{display:none!important}
-.hmatias-topbar .topbar-inner{display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important}
-.hmatias-topbar .header-contact,.hmatias-topbar .header-social{grid-column:auto!important;justify-self:auto!important}
-.hmatias-topbar .header-contact{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;min-width:0}
-.hmatias-topbar .header-social{display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important}
-.hmatias-topbar .header-contact a[href^="tel:"]{display:inline-flex!important;align-items:center!important;gap:7px!important;color:#fff!important}
-.hmatias-topbar .header-contact a[href^="tel:"] .contact-icon{display:none!important}
-.hmatias-topbar .header-contact a[href^="tel:"]::before{content:"";display:block;width:16px;height:16px;flex:0 0 16px;background:url('images/contact-phone.svg') center/16px 16px no-repeat;filter:brightness(0) invert(1);opacity:1!important}
+/* Header: restore the original desktop arrangement.
+   Phone + both e-mails stay centred; social links stay at the upper-right. */
+.hmatias-topbar .topbar-inner{display:grid!important;grid-template-columns:94px minmax(0,1fr) 94px!important;gap:12px!important;align-items:center!important;justify-content:normal!important}
+.hmatias-topbar .header-contact{grid-column:2!important;display:flex!important;align-items:center!important;justify-content:center!important;justify-self:stretch!important;flex-wrap:wrap!important;gap:8px 20px!important;min-width:0;padding:6px 0!important;text-align:center!important}
+.hmatias-topbar .header-contact a{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;color:#fff!important;white-space:nowrap!important}
+.hmatias-topbar .header-contact a[href^="mailto:"]{display:inline-flex!important}
+.hmatias-topbar .header-contact a .contact-icon{display:none!important}
+.hmatias-topbar .header-contact a[href^="tel:"]::before,.hmatias-topbar .header-contact a[href^="mailto:"]::before{content:"";display:block;width:16px;height:16px;flex:0 0 16px;background-position:center;background-repeat:no-repeat;background-size:16px 16px;filter:brightness(0) invert(1);opacity:1!important}
+.hmatias-topbar .header-contact a[href^="tel:"]::before{background-image:url('images/contact-phone.svg')}
+.hmatias-topbar .header-contact a[href^="mailto:"]::before{background-image:url('images/contact-email.svg')}
+.hmatias-topbar .header-social{grid-column:3!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;justify-self:end!important;gap:4px!important}
 .hmatias-topbar .header-social a{display:grid!important;place-items:center!important;width:38px!important;height:38px!important;padding:0!important;font-size:0!important;color:#fff!important;background-color:transparent;background-position:center;background-repeat:no-repeat;background-size:19px 19px;opacity:1!important;visibility:visible!important}
 .hmatias-topbar .header-social a img{display:none!important}
 .hmatias-topbar .header-social a[href*="linkedin"]{background-image:url('images/social-linkedin.svg')}
@@ -50,9 +52,11 @@ body.hmatias-assistant-open .whatsapp-float{opacity:0!important;visibility:hidde
 .whatsapp-float{transition:opacity .18s ease,visibility .18s ease,transform .2s ease}
 
 @media(max-width:850px){
-  .hmatias-topbar .topbar-inner{justify-content:center!important;gap:7px!important}
-  .hmatias-topbar .header-contact{justify-content:center!important;flex:0 1 auto!important}
-  .hmatias-topbar .header-social{flex:0 0 auto!important}
+  /* Preserve the former compact mobile topbar: phone left, social icons right. */
+  .hmatias-topbar .topbar-inner{grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important}
+  .hmatias-topbar .header-contact{grid-column:1!important;justify-content:flex-start!important;justify-self:stretch!important;flex-wrap:nowrap!important;gap:10px!important;padding:4px 0!important;text-align:left!important}
+  .hmatias-topbar .header-contact a[href^="mailto:"]{display:none!important}
+  .hmatias-topbar .header-social{grid-column:2!important;justify-self:end!important;justify-content:flex-end!important;gap:2px!important}
   .hmatias-header .nav-menu .mobile-karta-link{display:flex!important;align-items:center;gap:10px;color:#0b3358;background:#f2f7fb;border:1px solid #d8e6f1;border-radius:9px;margin:7px 0;padding:11px 13px!important;font-weight:800}
   .mobile-karta-mark{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:8px;background:linear-gradient(145deg,#062d56,#0b65a4);color:#fff;font-size:.75rem;font-weight:800}
 }
