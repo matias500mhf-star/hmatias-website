@@ -28,7 +28,7 @@
     if (document.querySelector('link[data-hmatias-site-release]')) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'site-release.css?v=20260914-4';
+    link.href = 'site-release.css?v=20260914-5';
     link.dataset.hmatiasSiteRelease = 'true';
     document.head.appendChild(link);
   };
