@@ -13,17 +13,24 @@ Commercial email: comercial@hmatiasps.ao
 ## Official service areas
 - Civil Construction & Infrastructure: https://comercialhmatiasps.com/construcao.html
 - Facilities & Maintenance: https://comercialhmatiasps.com/facilities.html
-- Procurement & Business Supply: https://comercialhmatiasps.com/supply.html
+- Supply & Procurement: https://comercialhmatiasps.com/supply.html
 - HMATIAS Clean: https://comercialhmatiasps.com/clean.html
 - Business Services: https://comercialhmatiasps.com/servicos-administrativos.html
 - Appointment requests: https://comercialhmatiasps.com/agendamento.html
+
+## Portfolio and digital products
+- Executed works catalogue: https://comercialhmatiasps.com/catalogo-obras.html
+- KARTA Wallet Mobile: https://comercialhmatiasps.com/karta.html
+KARTA is a HMATIAS digital product in Alpha development. Do not describe it as publicly available for download or claim roadmap capabilities as already active.
 
 ## English pages
 - Home: https://comercialhmatiasps.com/en.html
 - Construction: https://comercialhmatiasps.com/construction.html
 - Facilities: https://comercialhmatiasps.com/facilities-en.html
 - Supply: https://comercialhmatiasps.com/supply-en.html
+- Works catalogue: https://comercialhmatiasps.com/work-catalogue.html
 - HMATIAS Clean: https://comercialhmatiasps.com/clean-en.html
+- KARTA Wallet Mobile: https://comercialhmatiasps.com/karta-en.html
 - Business Services: https://comercialhmatiasps.com/business-services.html
 - Booking: https://comercialhmatiasps.com/booking.html
 
