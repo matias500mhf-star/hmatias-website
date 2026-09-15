@@ -36,6 +36,20 @@
     progress.forEach((item, index) => item.classList.toggle('active', index < step));
   };
 
+  const resetOutput = () => {
+    const placeholder = preview?.dataset.placeholder || '';
+    if (preview && placeholder) preview.textContent = placeholder;
+    if (emailLink) {
+      emailLink.href = 'mailto:comercial@hmatiasps.ao';
+      emailLink.setAttribute('aria-disabled', 'true');
+    }
+    if (whatsappLink) {
+      whatsappLink.href = 'https://wa.me/244948806673';
+      whatsappLink.setAttribute('aria-disabled', 'true');
+    }
+    if (copyStatus) copyStatus.textContent = '';
+  };
+
   const updateContext = () => {
     const selected = service?.value || '';
     document.querySelectorAll('.rfq-context').forEach(section => {
@@ -43,6 +57,7 @@
       section.classList.toggle('active', active);
       section.querySelectorAll('input, select, textarea').forEach(input => { input.disabled = !active; });
     });
+    resetOutput();
     setProgress(selected ? 2 : 1);
     if (selected && window.hmatiasAnalytics?.track) {
       window.hmatiasAnalytics.track('rfq_service_selected', { service_name: selected });
@@ -123,6 +138,15 @@
     preview?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 
+  form.addEventListener('input', event => {
+    if (event.target === service) return;
+    const placeholder = preview?.dataset.placeholder || '';
+    if (preview && preview.textContent.trim() !== placeholder.trim()) {
+      resetOutput();
+      setProgress(service?.value ? 2 : 1);
+    }
+  });
+
   emailLink?.addEventListener('click', event => {
     if (emailLink.getAttribute('aria-disabled') === 'true') event.preventDefault();
     else if (window.hmatiasAnalytics?.track) window.hmatiasAnalytics.track('rfq_handoff', { method: 'email', service_name: service?.value || 'general' });
@@ -137,15 +161,15 @@
     const summary = preview?.textContent?.trim() || '';
     const placeholder = preview?.dataset.placeholder || '';
     if (!summary || summary === placeholder) {
-      copyStatus.textContent = isEn ? 'Build the request first.' : 'Prepare primeiro o pedido.';
+      if (copyStatus) copyStatus.textContent = isEn ? 'Build the request first.' : 'Prepare primeiro o pedido.';
       return;
     }
     try {
       await navigator.clipboard.writeText(summary);
-      copyStatus.textContent = isEn ? 'Request copied.' : 'Pedido copiado.';
+      if (copyStatus) copyStatus.textContent = isEn ? 'Request copied.' : 'Pedido copiado.';
       if (window.hmatiasAnalytics?.track) window.hmatiasAnalytics.track('rfq_copy', { service_name: service?.value || 'general' });
     } catch (_) {
-      copyStatus.textContent = isEn ? 'Copy was not available in this browser.' : 'A cópia não ficou disponível neste navegador.';
+      if (copyStatus) copyStatus.textContent = isEn ? 'Copy was not available in this browser.' : 'A cópia não ficou disponível neste navegador.';
     }
   });
 
