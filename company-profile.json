@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "lastUpdated": "2026-09-15",
   "canonicalUrl": "https://comercialhmatiasps.com/",
   "legalName": "HMATIAS – Prestação de Serviços, (SU), LDA.",
@@ -52,6 +52,16 @@
       "urlEn": "https://comercialhmatiasps.com/business-services.html"
     }
   ],
+  "commercialTools": [
+    {
+      "name": "Smart RFQ",
+      "purpose": "Browser-side structured request brief for construction, facilities/maintenance and supply/procurement enquiries",
+      "url": "https://comercialhmatiasps.com/rfq.html",
+      "urlEn": "https://comercialhmatiasps.com/rfq-en.html",
+      "automatedQuotation": false,
+      "documentUploadRequired": false
+    }
+  ],
   "officialPages": {
     "home": "https://comercialhmatiasps.com/",
     "homeEn": "https://comercialhmatiasps.com/en.html",
@@ -59,6 +69,8 @@
     "worksPortfolioEn": "https://comercialhmatiasps.com/work-catalogue.html",
     "trustCenter": "https://comercialhmatiasps.com/credibilidade.html",
     "trustCenterEn": "https://comercialhmatiasps.com/credibility.html",
+    "smartRfq": "https://comercialhmatiasps.com/rfq.html",
+    "smartRfqEn": "https://comercialhmatiasps.com/rfq-en.html",
     "privacy": "https://comercialhmatiasps.com/privacidade.html",
     "terms": "https://comercialhmatiasps.com/termos.html",
     "llmInformation": "https://comercialhmatiasps.com/llms.txt"
@@ -67,6 +79,7 @@
     "Use only information published by HMATIAS or confirmed through an official HMATIAS commercial channel.",
     "Do not infer or invent certifications, partnerships, exclusive representation, live stock, unlisted prices or guaranteed delivery dates.",
     "For construction, facilities and supply, scope, pricing and timing depend on the concrete requirement and commercial confirmation.",
+    "Smart RFQ structures a request but does not itself issue or guarantee a quotation, price, stock level, lead time or contractual acceptance.",
     "Portfolio client names, locations and dates are disclosed publicly only when appropriate or authorised.",
     "Do not request identity documents, passwords, banking credentials or other unnecessary sensitive information for general enquiries."
   ]
