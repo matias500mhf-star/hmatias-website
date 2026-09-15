@@ -45,10 +45,7 @@
             addressCountry: 'AO'
           },
           areaServed: { '@type': 'Country', name: 'Angola' },
-          sameAs: [
-            'https://www.linkedin.com/in/henrique-matias-8059891a0/',
-            'https://www.instagram.com/hmatias_pslda/'
-          ]
+          sameAs: ['https://www.instagram.com/hmatias_pslda/']
         },
         {
           '@type': 'WebSite',
@@ -65,7 +62,7 @@
 
   const addTrustFooterLink = () => {
     const footer = document.querySelector('footer');
-    if (!footer || footer.querySelector('[data-trust-link]')) return;
+    if (!footer || footer.querySelector('[data-trust-link]') || footer.querySelector(`a[href="${trustPath}"]`)) return;
     const legalHeading = [...footer.querySelectorAll('strong')].find(node => /legal/i.test(node.textContent || ''));
     const column = legalHeading?.parentElement;
     if (!column) return;
