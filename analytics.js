@@ -24,6 +24,15 @@
     document.head.appendChild(script);
   };
 
+  const loadGrowthIntelligence = () => {
+    if (document.querySelector('script[data-hmatias-growth-intelligence]')) return;
+    const script = document.createElement('script');
+    script.src = 'growth-intelligence.js?v=20260915';
+    script.defer = true;
+    script.dataset.hmatiasGrowthIntelligence = 'true';
+    document.head.appendChild(script);
+  };
+
   const loadReleaseStyles = () => {
     if (document.querySelector('link[data-hmatias-site-release]')) return;
     const link = document.createElement('link');
@@ -90,6 +99,7 @@
   const bootstrapSharedUi = () => {
     ensureReviewStyles();
     loadSiteEnhancements();
+    loadGrowthIntelligence();
     loadReleaseStyles();
     addInstagramLink();
     normalizeLegacyCleanLinks();
@@ -98,6 +108,7 @@
 
   ensureReviewStyles();
   loadSiteEnhancements();
+  loadGrowthIntelligence();
   loadReleaseStyles();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', bootstrapSharedUi, { once: true });
@@ -125,7 +136,7 @@
   document.head.appendChild(tag);
 
   const events = document.createElement('script');
-  events.src = 'analytics-events.js?v=20260914b';
+  events.src = 'analytics-events.js?v=20260915';
   events.defer = true;
   events.dataset.hmatiasAnalyticsEvents = 'true';
   document.head.appendChild(events);

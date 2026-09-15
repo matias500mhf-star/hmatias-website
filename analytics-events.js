@@ -86,6 +86,18 @@
       });
     }
 
+    if (anchor.hasAttribute('data-trust-link')) {
+      track('trust_center_click', { trust_origin: anchor.dataset.trustLink || 'unknown' });
+    }
+
+    if (anchor.dataset.smartRoute) {
+      track('smart_route_click', { service_name: anchor.dataset.smartRoute });
+    }
+
+    if (anchor.hasAttribute('data-email-fallback')) {
+      track('lead_handoff', { method: 'email', lead_type: serviceName || 'general_quote' });
+    }
+
     const targetService = serviceFromHref(anchor.href);
     if (targetService && targetService !== serviceName) track('service_click', { service_name: targetService });
 
