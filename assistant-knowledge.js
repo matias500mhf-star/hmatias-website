@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: current public HMATIAS website content, 2026-09-14. */
+   Source of truth: current public HMATIAS website content, 2026-09-15. */
 (() => {
   'use strict';
 
@@ -14,19 +14,21 @@
   ];
 
   const kb = {
-    version: '2026-09-14.1',
-    updated: '2026-09-14',
+    version: '2026-09-15.1',
+    updated: '2026-09-15',
     company: {
-      name: 'HMATIAS – Prestação de Serviços SU, LDA',
-      shortName: 'HMATIAS',
+      name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
-      phone: '+244 948 806 673',
-      whatsapp: '+244 948 806 673',
-      emailGeneral: 'geral@hmatiasps.ao',
-      emailCommercial: 'comercial@hmatiasps.ao',
-      nif: '5001578065',
-      commercialRegistration: '24.094-23',
-      registrationNumber: '24094-23/230713'
+      phone: '+244 948 806 673', whatsapp: '+244 948 806 673',
+      emailGeneral: 'geral@hmatiasps.ao', emailCommercial: 'comercial@hmatiasps.ao',
+      nif: '5001578065', commercialRegistration: '24.094-23', registrationNumber: '24094-23/230713'
+    },
+    leadership: {
+      name: 'Henrique Matias',
+      titlePt: 'Sócio Único, CEO & Managing Director',
+      titleEn: 'Sole Shareholder, CEO & Managing Director',
+      summaryPt: 'Henrique Matias é o Sócio Único, CEO & Managing Director da HMATIAS – Prestação de Serviços, SU, LDA. Lidera a estratégia, o desenvolvimento comercial e a coordenação das operações da empresa, com foco em soluções práticas e eficientes para clientes e parceiros.',
+      summaryEn: 'Henrique Matias is the Sole Shareholder, CEO & Managing Director of HMATIAS – Prestação de Serviços, SU, LDA. He leads the company’s strategy, business development and operational coordination, with a focus on practical and efficient solutions for clients and partners.'
     },
     pages: {
       home: '/', construction: '/construcao.html', facilities: '/facilities.html', supply: '/supply.html', clean: '/clean.html', business: '/servicos-administrativos.html', booking: '/agendamento.html', privacy: '/privacidade.html', terms: '/termos.html',
@@ -59,42 +61,18 @@
         taurusPine: {code:'T563P',name:'Taurus Pine Gel',formats:{'500 g':'Sob consulta','1 kg':'8.500 Kz','5 kg':'26.500 Kz','20 kg':'94.000 Kz'},status:'Sob encomenda',descriptionPt:'Gel multiuso com ação germicida, indicado para remoção de sujidade, manchas, gordura e odores em diversas superfícies.',featuresPt:'Gel verde, odor a pinho, pH 7, completamente solúvel e biodegradável.',applicationsPt:['Cerâmica de banho','Sanitas','Lavatórios','Pias','Pisos','Carpetes','Estofos'],dilutionsPt:['Pisos e banheiras/lavatórios 1:25','Carpetes aproximadamente 1:10','Vinil aproximadamente 1:20'],warningPt:'O fabricante não aconselha a utilização em superfícies em contacto com alimentos.'}
       },
       catalogNotePt: 'O catálogo profissional inclui produtos por código e categoria. Para produtos sem preço publicado, o assistente nunca deve inventar preço, formato, stock, prazo ou condições de entrega; deve encaminhar para confirmação comercial.',
-      brandNotePt: 'A referência à Taurus identifica produtos do fabricante e não implica representação exclusiva, parceria ou exclusividade comercial.',
-      cleanCatalog
+      brandNotePt: 'A referência à Taurus identifica produtos do fabricante e não implica representação exclusiva, parceria ou exclusividade comercial.', cleanCatalog
     },
     businessServices: {
       summaryPt: 'Apoio administrativo, documental e empresarial para profissionais, empreendedores e empresas, presencial em Luanda e remoto quando aplicável.',
-      pricesPt: [
-        ['Expediente Administrativo & Redação Institucional','Desde 5.000 Kz'],
-        ['Estruturação de CV Profissional','Desde 10.000 Kz'],
-        ['Gestão & Organização Documental','Desde 10.000 Kz'],
-        ['Propostas Comerciais & Business Support','Desde 15.000 Kz'],
-        ['Apresentações Empresariais','Desde 20.000 Kz'],
-        ['Apoio Administrativo Recorrente para PME','Desde 75.000 Kz/mês'],
-        ['Apoio Administrativo a Processos de Visto & Agendamentos Consulares','Sob consulta']
-      ],
+      pricesPt: [['Expediente Administrativo & Redação Institucional','Desde 5.000 Kz'],['Estruturação de CV Profissional','Desde 10.000 Kz'],['Gestão & Organização Documental','Desde 10.000 Kz'],['Propostas Comerciais & Business Support','Desde 15.000 Kz'],['Apresentações Empresariais','Desde 20.000 Kz'],['Apoio Administrativo Recorrente para PME','Desde 75.000 Kz/mês'],['Apoio Administrativo a Processos de Visto & Agendamentos Consulares','Sob consulta']],
       pricingRulePt: 'Os valores são preços base. Volume, complexidade, urgência e prazo podem alterar o orçamento final, que é confirmado antes da execução.',
       visaPt: 'Inclui checklist e organização documental, conferência de completude do dossier, assistência administrativa no preenchimento de formulários, apoio na utilização de plataformas oficiais, preparação do dossier e acompanhamento administrativo.',
       visaLimitsPt: 'A HMATIAS presta apenas apoio administrativo e documental. Não comercializa vagas de agendamento, não garante disponibilidade de marcação ou concessão de visto e não possui acesso privilegiado a embaixadas, consulados, VFS Global ou outras plataformas oficiais. Taxas consulares/VFS e outros encargos oficiais não estão incluídos salvo indicação expressa. Serviços jurídicos e representação legal não fazem parte desta oferta.'
     },
-    booking: {
-      summaryPt: 'O agendamento do site é um pedido de atendimento HMATIAS. Pode ser presencial em Luanda ou remoto quando aplicável. O horário é sempre sujeito a confirmação da equipa.',
-      rulesPt: ['Não existe disponibilidade em tempo real','O formulário não confirma automaticamente data ou hora','Não processa pagamentos online','A marcação só fica confirmada após resposta expressa da HMATIAS','Uma marcação HMATIAS não é uma vaga consular, VFS ou embaixada e não garante visto ou agendamento oficial']
-    },
-    projects: {
-      publicExamplesPt: ['Betonagem & Pavimentação','Infraestrutura Avícola','Cobertura & Manutenção','Operação Avícola'],
-      disclosurePt: 'Cliente, data e localização de projetos são identificados publicamente apenas quando a divulgação é adequada ou autorizada.'
-    },
-    safetyAndTruth: {
-      rulesPt: [
-        'Nunca inventar preço, stock, disponibilidade, prazo, parceria, representação, garantia ou capacidade não publicada.',
-        'Quando um preço não está publicado, dizer “sob consulta” e indicar o contacto comercial.',
-        'Para obras, facilities e supply, explicar que escopo/preço dependem de levantamento, especificação e cotação.',
-        'Não pedir nem incentivar envio de passaporte, BI, palavras-passe, dados bancários ou outros documentos sensíveis no assistente.',
-        'Não afirmar que uma vaga consular, aprovação de visto, horário ou pagamento está confirmado sem resposta expressa da HMATIAS/entidade competente.',
-        'Responder no idioma do utilizador sempre que possível; PT e EN são suportados.'
-      ]
-    }
+    booking: {summaryPt:'O agendamento do site é um pedido de atendimento HMATIAS. Pode ser presencial em Luanda ou remoto quando aplicável. O horário é sempre sujeito a confirmação da equipa.',rulesPt:['Não existe disponibilidade em tempo real','O formulário não confirma automaticamente data ou hora','Não processa pagamentos online','A marcação só fica confirmada após resposta expressa da HMATIAS','Uma marcação HMATIAS não é uma vaga consular, VFS ou embaixada e não garante visto ou agendamento oficial']},
+    projects: {publicExamplesPt:['Betonagem & Pavimentação','Infraestrutura Avícola','Cobertura & Manutenção','Operação Avícola'],disclosurePt:'Cliente, data e localização de projetos são identificados publicamente apenas quando a divulgação é adequada ou autorizada.'},
+    safetyAndTruth: {rulesPt:['Nunca inventar preço, stock, disponibilidade, prazo, parceria, representação, garantia ou capacidade não publicada.','Quando um preço não está publicado, dizer “sob consulta” e indicar o contacto comercial.','Para obras, facilities e supply, explicar que escopo/preço dependem de levantamento, especificação e cotação.','Não pedir nem incentivar envio de passaporte, BI, palavras-passe, dados bancários ou outros documentos sensíveis no assistente.','Não afirmar que uma vaga consular, aprovação de visto, horário ou pagamento está confirmado sem resposta expressa da HMATIAS/entidade competente.','Responder no idioma do utilizador sempre que possível; PT e EN são suportados.']}
   };
 
   const compactContext = () => {
@@ -102,6 +80,7 @@
     return [
       `KNOWLEDGE_VERSION: ${kb.version}`,
       `EMPRESA: ${c.name}; sede ${c.location}; tel/WhatsApp ${c.phone}; emails ${c.emailGeneral}, ${c.emailCommercial}; NIF ${c.nif}; Registo Comercial ${c.commercialRegistration}; Matrícula ${c.registrationNumber}.`,
+      `LIDERANÇA / LEADERSHIP: ${kb.leadership.summaryPt} English: ${kb.leadership.summaryEn}`,
       `CONSTRUÇÃO: ${kb.construction.summaryPt} Capacidades: ${kb.construction.capabilitiesPt.join('; ')}. Processo: ${kb.construction.processPt.join('; ')}.`,
       `FACILITIES: ${kb.facilities.summaryPt} Capacidades: ${kb.facilities.capabilitiesPt.join('; ')}.`,
       `SUPPLY: ${kb.supply.summaryPt} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. ${kb.supply.rulePt}`,
@@ -117,5 +96,6 @@
 
   kb.toAssistantContext = compactContext;
   Object.freeze(kb.company);
+  Object.freeze(kb.leadership);
   window.HMATIAS_KNOWLEDGE = kb;
 })();
