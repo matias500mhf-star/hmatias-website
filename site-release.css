@@ -76,3 +76,13 @@ body.hmatias-assistant-open .whatsapp-float{opacity:0!important;visibility:hidde
 @media(prefers-reduced-motion:reduce){
   .karta-nav-mark,.whatsapp-float{transition:none!important}
 }
+
+/* KARTA live monogram: brief introduction, then interaction only. */
+.karta-nav-mark{position:relative;isolation:isolate;width:44px;height:44px;flex-basis:44px;border-color:#63b9f0;animation:karta-intro 1.6s ease-in-out 2}
+.karta-live-letter{position:relative;z-index:1;font-size:1.15rem}
+.karta-nav-mark::before{content:"";position:absolute;inset:4px;border:1px solid rgba(147,222,255,.45);border-radius:8px;transform:rotate(-8deg);transition:transform .25s ease}
+.karta-live-dot{position:absolute;right:5px;top:5px;width:5px;height:5px;border-radius:50%;background:#a4e4ff;box-shadow:0 0 8px #59caff}
+.karta-nav-mark:hover::before,.karta-nav-mark:focus-visible::before{transform:rotate(8deg)}
+.karta-nav-mark:active{transform:scale(.96)}
+@keyframes karta-intro{0%,100%{box-shadow:0 5px 18px rgba(6,45,86,.16)}50%{box-shadow:0 0 0 5px rgba(57,171,241,.12),0 0 22px rgba(57,171,241,.5)}}
+@media(prefers-reduced-motion:reduce){.karta-nav-mark{animation:none!important}.karta-nav-mark::before{transition:none;transform:none!important}.karta-nav-mark:hover,.karta-nav-mark:active{transform:none}}
