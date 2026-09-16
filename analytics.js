@@ -27,16 +27,32 @@
   const ensureSmartRfqAccess = () => {
     const path = window.location.pathname || '/';
     const isHome = path === '/' || path === '/index.html' || path === '/en.html';
-    if (!isHome) return;
+    const coreServicePages = new Set(['/construcao.html', '/construction.html', '/facilities.html', '/facilities-en.html', '/supply.html', '/supply-en.html']);
+    const isCoreService = coreServicePages.has(path);
+    if (!isHome && !isCoreService) return;
     const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
     const href = isEn ? 'rfq-en.html' : 'rfq.html';
-    const label = isEn ? 'Smart RFQ' : 'Smart RFQ';
+    const label = 'Smart RFQ';
     const actions = document.querySelector('.nav-actions');
     if (actions && !actions.querySelector('[data-rfq-nav]')) {
       const link = document.createElement('a');
       link.href = href; link.className = 'btn btn-secondary btn-small'; link.dataset.rfqNav = 'true'; link.textContent = label;
       const quote = actions.querySelector('[data-quote-link], .btn-primary');
       actions.insertBefore(link, quote || null);
+    }
+    if (isCoreService) {
+      const heroActions = document.querySelector('.unit-hero .hero-actions');
+      const isSupply = path === '/supply.html' || path === '/supply-en.html';
+      if (heroActions && !isSupply && !heroActions.querySelector('[data-rfq-service]')) {
+        const link = document.createElement('a');
+        link.href = href;
+        link.className = 'btn btn-light';
+        link.dataset.rfqService = 'true';
+        link.dataset.smartRoute = 'smart_rfq';
+        link.textContent = isEn ? 'Build Smart RFQ →' : 'Preparar Smart RFQ →';
+        heroActions.insertBefore(link, heroActions.firstElementChild || null);
+      }
+      return;
     }
     const contact = document.querySelector('#contacto, #contact, .contact');
     if (contact?.parentNode && !document.querySelector('[data-hmatias-smart-router]')) {
