@@ -102,9 +102,9 @@
     link.className = 'karta-nav-mark';
     link.href = kartaHref;
     link.dataset.kartaNav = 'true';
-    link.setAttribute('aria-label', 'KARTA Identity Wallet');
+    link.setAttribute('aria-label', isEn ? 'Discover KARTA Identity Wallet — Alpha' : 'Conhecer KARTA Identity Wallet — Alpha');
     link.title = 'KARTA Identity Wallet';
-    link.textContent = 'K';
+    link.innerHTML = '<span class="karta-live-letter" aria-hidden="true">K</span><span class="karta-live-dot" aria-hidden="true"></span>';
     const language = navActions.querySelector('[data-lang-switch],.lang-switch');
     navActions.insertBefore(link, language || navActions.firstChild);
   }
