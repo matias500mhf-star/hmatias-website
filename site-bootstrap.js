@@ -2,6 +2,8 @@
 (() => {
   'use strict';
 
+  const reviewStylesheet = 'site-review.css?v=20260917-stable2';
+
   const loadStylesheet = (selector, href, datasetName) => {
     if (document.querySelector(selector)) return;
     const link = document.createElement('link');
@@ -20,8 +22,18 @@
     target.appendChild(script);
   };
 
+  const ensureReviewStylesheet = () => {
+    const existing = document.querySelector('link[href*="site-review.css"]');
+    if (existing) {
+      if (!existing.getAttribute('href')?.includes('v=20260917-stable2')) existing.href = reviewStylesheet;
+      existing.dataset.hmatiasSiteReview = 'true';
+      return;
+    }
+    loadStylesheet('link[data-hmatias-site-review]', reviewStylesheet, 'hmatiasSiteReview');
+  };
+
   const ensureSharedAssets = () => {
-    loadStylesheet('link[href*="site-review.css"]', 'site-review.css?v=20260917-stable2', 'hmatiasSiteReview');
+    ensureReviewStylesheet();
     loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260917-stable1', 'hmatiasSiteEnhancements');
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260917-stable1', 'hmatiasGrowthIntelligence');
   };
