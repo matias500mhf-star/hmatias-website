@@ -1,0 +1,122 @@
+/* HMATIAS — KARTA product access component. Stable, isolated and position-configurable. */
+.karta-float{
+  --karta-edge:18px;
+  position:fixed;
+  z-index:58;
+  top:52%;
+  left:0;
+  width:58px;
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  overflow:hidden;
+  padding:8px 10px;
+  border:1px solid rgba(255,255,255,.2);
+  border-left:0;
+  border-radius:0 var(--karta-edge) var(--karta-edge) 0;
+  background:linear-gradient(145deg,#062d56 0%,#07477c 58%,#0b65a4 100%);
+  color:#fff!important;
+  text-decoration:none!important;
+  box-shadow:0 14px 36px rgba(6,45,86,.2);
+  transform:translateY(-50%);
+  transition:width .24s ease,transform .2s ease,box-shadow .24s ease;
+  isolation:isolate;
+}
+.karta-float::before{
+  content:"";
+  position:absolute;
+  width:38px;
+  height:38px;
+  left:10px;
+  top:50%;
+  border:1px solid rgba(112,205,255,.7);
+  border-radius:50%;
+  transform:translateY(-50%) scale(.9);
+  opacity:.3;
+  animation:kartaSignal 2.8s ease-out infinite;
+  pointer-events:none;
+  z-index:-1;
+}
+.karta-float-mark{
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:12px;
+  background:rgba(255,255,255,.1);
+  color:#fff;
+  font:800 .95rem/1 var(--font-site,'HMATIAS Inter',Arial,sans-serif);
+  letter-spacing:-.04em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
+}
+.karta-float-copy{
+  display:grid;
+  gap:1px;
+  min-width:104px;
+  opacity:0;
+  transform:translateX(-7px);
+  transition:opacity .18s ease,transform .22s ease;
+  white-space:nowrap;
+}
+.karta-float-copy strong{
+  color:#fff!important;
+  font-size:.74rem;
+  line-height:1.15;
+  letter-spacing:.055em;
+}
+.karta-float-copy small{
+  color:#cbe8f8;
+  font-size:.59rem;
+  line-height:1.2;
+  letter-spacing:.025em;
+}
+.karta-float:hover,.karta-float:focus-visible{
+  width:172px;
+  box-shadow:0 18px 44px rgba(6,45,86,.27);
+}
+.karta-float:hover .karta-float-copy,.karta-float:focus-visible .karta-float-copy{
+  opacity:1;
+  transform:none;
+}
+.karta-float:focus-visible{outline:3px solid rgba(72,186,245,.65);outline-offset:3px}
+
+/* The component can be moved without changing markup or JavaScript. */
+.karta-float[data-position="right-center"]{
+  left:auto;
+  right:0;
+  flex-direction:row-reverse;
+  border-left:1px solid rgba(255,255,255,.2);
+  border-right:0;
+  border-radius:var(--karta-edge) 0 0 var(--karta-edge);
+}
+.karta-float[data-position="right-center"]::before{left:auto;right:10px}
+.karta-float[data-position="right-center"] .karta-float-copy{transform:translateX(7px);text-align:right}
+.karta-float[data-position="right-center"]:hover .karta-float-copy,.karta-float[data-position="right-center"]:focus-visible .karta-float-copy{transform:none}
+.karta-float[data-position="bottom-left"],.karta-float[data-position="bottom-right"]{
+  top:auto;
+  bottom:22px;
+  transform:none;
+}
+.karta-float[data-position="bottom-right"]{
+  left:auto;
+  right:0;
+  flex-direction:row-reverse;
+  border-left:1px solid rgba(255,255,255,.2);
+  border-right:0;
+  border-radius:var(--karta-edge) 0 0 var(--karta-edge);
+}
+.karta-float[data-position="bottom-right"]::before{left:auto;right:10px}
+
+@keyframes kartaSignal{
+  0%{opacity:.34;transform:translateY(-50%) scale(.82)}
+  62%,100%{opacity:0;transform:translateY(-50%) scale(1.5)}
+}
+
+@media(max-width:850px){.karta-float{display:none!important}}
+@media(prefers-reduced-motion:reduce){
+  .karta-float,.karta-float-copy{transition:none!important}
+  .karta-float::before{animation:none!important;opacity:.22}
+}
