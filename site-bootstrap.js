@@ -21,8 +21,7 @@
   };
 
   const ensureSharedAssets = () => {
-    loadStylesheet('link[href*="site-review.css"]', 'site-review.css?v=20260917-stable1', 'hmatiasSiteReview');
-    loadStylesheet('link[data-hmatias-site-release], link[href*="site-release.css"]', 'site-release.css?v=20260917-stable1', 'hmatiasSiteRelease');
+    loadStylesheet('link[href*="site-review.css"]', 'site-review.css?v=20260917-stable2', 'hmatiasSiteReview');
     loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260917-stable1', 'hmatiasSiteEnhancements');
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260917-stable1', 'hmatiasGrowthIntelligence');
   };
