@@ -25,11 +25,11 @@
     if (!nav.id) nav.id = 'main-navigation';
     if (toggle) toggle.setAttribute('aria-controls', nav.id);
 
-    document.querySelectorAll('[data-lang-switch]').forEach(link => {
-      const text = (link.textContent || '').trim();
-      if (/^EN$/i.test(text)) link.textContent = 'EN · English';
-      if (/^PT$/i.test(text)) link.textContent = 'PT · Português';
-      link.title = isEn ? 'Change website language' : 'Alterar idioma do site';
+    // Keep the desktop control compact. Mobile keeps the explicit language name.
+    document.querySelectorAll('.nav-actions [data-lang-switch]').forEach(link => {
+      link.textContent = isEn ? 'PT' : 'EN';
+      link.title = isEn ? 'Mudar para Português' : 'Switch to English';
+      link.setAttribute('aria-label', isEn ? 'Mudar para Português' : 'Switch to English');
     });
 
     const mq = window.matchMedia('(max-width: 850px)');
