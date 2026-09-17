@@ -6,7 +6,6 @@
   if (!home) return;
   const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
   const contactHref = isEn ? '#contact' : '#contacto';
-  const kartaHref = isEn ? 'karta-en.html' : 'karta.html';
 
   // Load only the small stylesheet needed by the works catalogue block.
   if (!document.querySelector('link[data-hmatias-final-showcase]')) {
@@ -80,7 +79,7 @@
     projectsSection.insertAdjacentElement('afterend', catalogue);
   }
 
-  // Keep the homepage focused on the operating divisions. KARTA remains a separate digital product page.
+  // Keep the homepage focused on operating divisions. KARTA remains a separate digital product.
   const divisions = document.querySelector('#divisoes, #divisions');
   if (divisions) {
     const eyebrow = divisions.querySelector('.section-heading .eyebrow');
@@ -94,40 +93,4 @@
     divisions.querySelectorAll('[data-karta-card]').forEach(node => node.remove());
   }
   document.querySelectorAll('.karta-teaser').forEach(node => node.remove());
-
-  // Discreet KARTA entry point: monogram in the header, explicit link in mobile navigation and footer.
-  const navActions = document.querySelector('.hmatias-header .nav-actions');
-  if (navActions && !navActions.querySelector('[data-karta-nav]')) {
-    const link = document.createElement('a');
-    link.className = 'karta-nav-mark';
-    link.href = kartaHref;
-    link.dataset.kartaNav = 'true';
-    link.setAttribute('aria-label', 'KARTA Identity Wallet');
-    link.title = 'KARTA Identity Wallet';
-    link.textContent = 'K';
-    const language = navActions.querySelector('[data-lang-switch],.lang-switch');
-    navActions.insertBefore(link, language || navActions.firstChild);
-  }
-
-  const navMenu = document.querySelector('.hmatias-header .nav-menu');
-  if (navMenu && !navMenu.querySelector('[data-karta-mobile]')) {
-    const link = document.createElement('a');
-    link.className = 'mobile-karta-link';
-    link.href = kartaHref;
-    link.dataset.kartaMobile = 'true';
-    link.innerHTML = '<span class="mobile-karta-mark" aria-hidden="true">K</span><span>KARTA Identity Wallet</span>';
-    const quote = navMenu.querySelector('.mobile-quote-link');
-    navMenu.insertBefore(link, quote || null);
-  }
-
-  const footerBrand = document.querySelector('footer .footer-grid > div:first-child');
-  if (footerBrand && !footerBrand.querySelector('[data-karta-footer]')) {
-    const link = document.createElement('a');
-    link.className = 'footer-karta-link';
-    link.href = kartaHref;
-    link.dataset.kartaFooter = 'true';
-    link.setAttribute('aria-label', 'KARTA Identity Wallet');
-    link.innerHTML = '<span class="footer-karta-mark" aria-hidden="true">K</span><span class="footer-karta-copy"><small>' + (isEn ? 'HMATIAS digital product' : 'Produto digital HMATIAS') + '</small><strong>KARTA Identity Wallet</strong></span>';
-    footerBrand.appendChild(link);
-  }
 })();
