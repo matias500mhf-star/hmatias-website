@@ -1,0 +1,157 @@
+name: HMATIAS Site Integrity
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate indexing, multilingual signals and WhatsApp routing
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from urllib.parse import urlparse
+          import re
+          import sys
+          import xml.etree.ElementTree as ET
+
+          ROOT = Path('.')
+          DOMAIN = 'comercialhmatiasps.com'
+          BASE = f'https://{DOMAIN}'
+          WHATSAPP = '244948806673'
+          errors = []
+
+          def fail(message):
+              errors.append(message)
+
+          # robots.txt must allow public crawling and advertise the canonical sitemap.
+          robots_path = ROOT / 'robots.txt'
+          if not robots_path.exists():
+              fail('robots.txt is missing')
+              robots = ''
+          else:
+              robots = robots_path.read_text(encoding='utf-8')
+              if 'Sitemap: https://comercialhmatiasps.com/sitemap.xml' not in robots:
+                  fail('robots.txt does not advertise the canonical sitemap')
+              if re.search(r'(?im)^\s*Disallow:\s*/\s*$', robots):
+                  fail('robots.txt blocks the entire site')
+
+          # Parse sitemap and validate canonical URLs + multilingual alternates.
+          sitemap_path = ROOT / 'sitemap.xml'
+          if not sitemap_path.exists():
+              fail('sitemap.xml is missing')
+              sitemap_urls = []
+              alternate_map = {}
+          else:
+              try:
+                  tree = ET.parse(sitemap_path)
+                  root = tree.getroot()
+                  ns = {
+                      'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9',
+                      'xhtml': 'http://www.w3.org/1999/xhtml',
+                  }
+                  sitemap_urls = []
+                  alternate_map = {}
+                  for entry in root.findall('sm:url', ns):
+                      loc_node = entry.find('sm:loc', ns)
+                      if loc_node is None or not (loc_node.text or '').strip():
+                          fail('sitemap entry without <loc>')
+                          continue
+                      loc = loc_node.text.strip()
+                      sitemap_urls.append(loc)
+                      alts = {}
+                      for link in entry.findall('xhtml:link', ns):
+                          lang = link.attrib.get('hreflang', '').strip()
+                          href = link.attrib.get('href', '').strip()
+                          if lang:
+                              alts[lang] = href
+                      alternate_map[loc] = alts
+              except Exception as exc:
+                  fail(f'sitemap.xml cannot be parsed: {exc}')
+                  sitemap_urls = []
+                  alternate_map = {}
+
+          if len(sitemap_urls) != len(set(sitemap_urls)):
+              fail('sitemap.xml contains duplicate URLs')
+
+          canonical_set = set(sitemap_urls)
+          for url in sitemap_urls:
+              parsed = urlparse(url)
+              if parsed.scheme != 'https' or parsed.netloc != DOMAIN:
+                  fail(f'non-canonical sitemap URL: {url}')
+                  continue
+
+              rel = parsed.path.lstrip('/')
+              html_path = ROOT / ('index.html' if not rel else rel)
+              if not html_path.exists():
+                  fail(f'sitemap URL has no matching file: {url}')
+                  continue
+
+              html = html_path.read_text(encoding='utf-8')
+              canonical = re.search(r'<link\b[^>]*\brel=["\']canonical["\'][^>]*\bhref=["\']([^"\']+)', html, re.I)
+              if not canonical:
+                  canonical = re.search(r'<link\b[^>]*\bhref=["\']([^"\']+)["\'][^>]*\brel=["\']canonical["\']', html, re.I)
+              if not canonical:
+                  fail(f'missing canonical tag: {html_path}')
+              elif canonical.group(1).rstrip('/') != url.rstrip('/'):
+                  fail(f'canonical mismatch in {html_path}: {canonical.group(1)} != {url}')
+
+              robots_meta = re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*\bcontent=["\']([^"\']+)', html, re.I)
+              if robots_meta and 'noindex' in robots_meta.group(1).lower():
+                  fail(f'noindex page appears in sitemap: {html_path}')
+
+              alts = alternate_map.get(url, {})
+              for required in ('pt-AO', 'en', 'x-default'):
+                  if required not in alts:
+                      fail(f'{url} missing sitemap hreflang {required}')
+              if alts.get('x-default') and alts.get('pt-AO') and alts['x-default'] != alts['pt-AO']:
+                  fail(f'{url} x-default should match pt-AO canonical')
+              for lang, href in alts.items():
+                  if href not in canonical_set:
+                      fail(f'{url} hreflang {lang} points outside canonical sitemap: {href}')
+
+          # Reciprocal PT/EN sitemap relationship.
+          for url, alts in alternate_map.items():
+              pt = alts.get('pt-AO')
+              en = alts.get('en')
+              if not pt or not en:
+                  continue
+              for target in (pt, en):
+                  target_alts = alternate_map.get(target, {})
+                  if target_alts.get('pt-AO') != pt or target_alts.get('en') != en:
+                      fail(f'non-reciprocal hreflang pair: {url} -> {target}')
+
+          # Legacy aliases may remain for users, but must stay out of the sitemap and out of indexing.
+          for html_path in ROOT.glob('*.html'):
+              html = html_path.read_text(encoding='utf-8')
+              robots_meta = re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*\bcontent=["\']([^"\']+)', html, re.I)
+              is_noindex = bool(robots_meta and 'noindex' in robots_meta.group(1).lower())
+              page_url = BASE + ('/' if html_path.name == 'index.html' else '/' + html_path.name)
+              if is_noindex and page_url in canonical_set:
+                  fail(f'noindex alias incorrectly included in sitemap: {html_path}')
+
+          # All hard-coded WhatsApp links must use the single commercial number.
+          whatsapp_refs = 0
+          for path in list(ROOT.glob('*.html')) + list(ROOT.glob('*.js')):
+              text = path.read_text(encoding='utf-8')
+              for match in re.finditer(r'wa\.me/(\d+)', text, re.I):
+                  whatsapp_refs += 1
+                  if match.group(1) != WHATSAPP:
+                      fail(f'WhatsApp number mismatch in {path}: {match.group(1)}')
+          if whatsapp_refs == 0:
+              fail('no WhatsApp routes found in site source')
+
+          if errors:
+              print('HMATIAS site integrity FAILED:')
+              for item in errors:
+                  print(f' - {item}')
+              sys.exit(1)
+
+          print(f'HMATIAS site integrity OK: {len(sitemap_urls)} canonical URLs; {whatsapp_refs} WhatsApp routes checked.')
+          PY
