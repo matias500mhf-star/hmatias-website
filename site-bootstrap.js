@@ -3,6 +3,7 @@
   'use strict';
 
   const reviewStylesheet = 'site-review.css?v=20260917-stable2';
+  const kartaStylesheet = 'karta-access.css?v=20260917-stable1';
 
   const loadStylesheet = (selector, href, datasetName) => {
     if (document.querySelector(selector)) return;
@@ -34,7 +35,8 @@
 
   const ensureSharedAssets = () => {
     ensureReviewStylesheet();
-    loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260917-stable1', 'hmatiasSiteEnhancements');
+    loadStylesheet('link[data-hmatias-karta-access]', kartaStylesheet, 'hmatiasKartaAccess');
+    loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260917-stable2', 'hmatiasSiteEnhancements');
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260917-stable1', 'hmatiasGrowthIntelligence');
   };
 
@@ -82,15 +84,62 @@
     }
   };
 
+  const ensureKartaAccess = () => {
+    const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
+    const path = window.location.pathname || '/';
+    if (/\/karta(?:-en)?\.html$/.test(path)) return;
+
+    const kartaHref = isEn ? 'karta-en.html' : 'karta.html';
+    const allowedPositions = new Set(['left-center', 'right-center', 'bottom-left', 'bottom-right']);
+    const requestedPosition = document.body?.dataset.kartaPosition || 'left-center';
+    const position = allowedPositions.has(requestedPosition) ? requestedPosition : 'left-center';
+
+    if (!document.querySelector('[data-karta-float]')) {
+      const link = document.createElement('a');
+      link.className = 'karta-float';
+      link.href = kartaHref;
+      link.dataset.kartaFloat = 'true';
+      link.dataset.position = position;
+      link.setAttribute('aria-label', 'KARTA Identity Wallet');
+      link.title = isEn ? 'Open KARTA Identity Wallet' : 'Conhecer KARTA Identity Wallet';
+      link.innerHTML = '<span class="karta-float-mark" aria-hidden="true">K</span><span class="karta-float-copy"><strong>KARTA</strong><small>Identity Wallet</small></span>';
+      document.body.appendChild(link);
+    }
+
+    const navMenu = document.querySelector('.hmatias-header .nav-menu');
+    if (navMenu && !navMenu.querySelector('[data-karta-mobile]')) {
+      const link = document.createElement('a');
+      link.className = 'mobile-karta-link';
+      link.href = kartaHref;
+      link.dataset.kartaMobile = 'true';
+      link.innerHTML = '<span class="mobile-karta-mark" aria-hidden="true">K</span><span>KARTA Identity Wallet</span>';
+      const quote = navMenu.querySelector('.mobile-quote-link');
+      const language = navMenu.querySelector('.mobile-lang-switch');
+      navMenu.insertBefore(link, quote || language || null);
+    }
+
+    const footerBrand = document.querySelector('footer .footer-grid > div:first-child');
+    if (footerBrand && !footerBrand.querySelector('[data-karta-footer]')) {
+      const link = document.createElement('a');
+      link.className = 'footer-karta-link';
+      link.href = kartaHref;
+      link.dataset.kartaFooter = 'true';
+      link.setAttribute('aria-label', 'KARTA Identity Wallet');
+      link.innerHTML = '<span class="footer-karta-mark" aria-hidden="true">K</span><span class="footer-karta-copy"><small>' + (isEn ? 'HMATIAS digital product' : 'Produto digital HMATIAS') + '</small><strong>KARTA Identity Wallet</strong></span>';
+      footerBrand.appendChild(link);
+    }
+  };
+
   const loadPortfolioLayer = () => {
     if (!document.body.classList.contains('hmatias-home')) return;
-    loadScript('script[data-hmatias-portfolio]', 'portfolio.js?v=20260917-stable1', 'hmatiasPortfolio', document.body);
+    loadScript('script[data-hmatias-portfolio]', 'portfolio.js?v=20260917-stable2', 'hmatiasPortfolio', document.body);
   };
 
   const run = () => {
     ensureSharedAssets();
     addInstagramLink();
     normaliseSharedLinks();
+    ensureKartaAccess();
     loadPortfolioLayer();
   };
 
