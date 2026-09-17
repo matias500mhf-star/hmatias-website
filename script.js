@@ -1,6 +1,15 @@
 (()=>{
   'use strict';
 
+  // Shared UI/bootstrap must remain independent from analytics/ad-blocking rules.
+  if(!document.querySelector('script[data-hmatias-site-bootstrap]')){
+    const bootstrap=document.createElement('script');
+    bootstrap.src='site-bootstrap.js?v=20260917-stable1';
+    bootstrap.defer=true;
+    bootstrap.dataset.hmatiasSiteBootstrap='true';
+    document.head.appendChild(bootstrap);
+  }
+
   const pageEnglish=(document.documentElement.lang||'').toLowerCase().startsWith('en');
   const menuToggle=document.querySelector('.menu-toggle');
   const navMenu=document.querySelector('.nav-menu');
@@ -226,10 +235,6 @@
     });
   }
 
-  const utilityStyle=document.createElement('style');
-  utilityStyle.textContent='.btn-outline{border:1px solid #cbd8e5;background:#fff;color:#062d56;box-shadow:none}.btn-outline:hover{border-color:#0065cc;color:#0065cc;background:#f7fbff}.mobile-lang-switch{display:none!important}@media(max-width:850px){.nav-menu .mobile-lang-switch{display:flex!important;align-items:center;justify-content:flex-start;margin-top:8px;padding-top:14px!important;border-top:1px solid #dce6f0!important;color:#0065cc!important;font-weight:700!important}}@media(max-width:620px){.business-contact-form .btn-outline{width:100%;justify-content:center}}';
-  document.head.appendChild(utilityStyle);
-
   const navLinks=[...document.querySelectorAll('.nav-menu a[href^="#"]')];
   const sections=navLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
   if(sections.length&&'IntersectionObserver' in window){
@@ -271,7 +276,7 @@
   const canonical=document.querySelector('link[rel="canonical"]')?.href||location.href;
   if(/\/supply(?:-en)?\.html(?:$|[?#])/.test(canonical)&&!document.querySelector('script[data-hmatias-supply-request]')){
     const supplyScript=document.createElement('script');
-    supplyScript.src='supply-request.js?v=20260913';
+    supplyScript.src='supply-request.js?v=20260917-stable1';
     supplyScript.defer=true;
     supplyScript.dataset.hmatiasSupplyRequest='true';
     document.body.appendChild(supplyScript);
