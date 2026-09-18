@@ -1,5 +1,8 @@
 HMATIAS — PACOTE FINAL DE PUBLICAÇÃO
 
+Copyright © 2026 HMATIAS – Prestação de Serviços, (SU), LDA. Todos os direitos reservados.
+Este website e o código original deste repositório são proprietários. A disponibilização pública do repositório não constitui licença open source nem autorização para copiar, redistribuir ou explorar comercialmente o código, conteúdo, identidade visual ou ativos proprietários. Consultar LICENSE e OWNERSHIP.md.
+
 Checklist técnico concluído:
 - 4 projetos reais integrados e otimizados em WebP + JPG fallback.
 - Logo otimizado em WebP + PNG fallback.
