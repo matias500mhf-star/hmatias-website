@@ -7,6 +7,7 @@
   const pageLanguage = (document.documentElement.lang || 'pt-AO').toLowerCase();
   const pageName = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
   const pagePath = window.location.pathname || '/';
+  const smartRfqFormId = 'smartRfqForm';
 
   const servicePages = {
     'construcao.html': 'construction',
@@ -56,6 +57,10 @@
 
   document.addEventListener('click', event => {
     if (!(event.target instanceof Element)) return;
+
+    const rfqCopy = event.target.closest('#rfqCopy');
+    if (rfqCopy) track('rfq_copy', { lead_type: 'smart_rfq' });
+
     const anchor = event.target.closest('a[href]');
     if (!anchor) return;
 
@@ -98,6 +103,10 @@
       track('lead_handoff', { method: 'email', lead_type: serviceName || 'general_quote' });
     }
 
+    if ((anchor.id === 'rfqEmail' || anchor.id === 'rfqWhatsapp') && contactMethod) {
+      track('lead_handoff', { method: contactMethod, lead_type: 'smart_rfq' });
+    }
+
     const targetService = serviceFromHref(anchor.href);
     if (targetService && targetService !== serviceName) track('service_click', { service_name: targetService });
 
@@ -110,6 +119,20 @@
     if (!(form instanceof HTMLFormElement) || !form.checkValidity()) return;
 
     const formId = form.id || '';
+
+    if (formId === smartRfqFormId) {
+      if (form.dataset.hmatiasAnalyticsSubmitting === 'true') return;
+      form.dataset.hmatiasAnalyticsSubmitting = 'true';
+      window.setTimeout(() => delete form.dataset.hmatiasAnalyticsSubmitting, 1500);
+
+      track('form_submit', {
+        form_id: smartRfqFormId,
+        lead_type: 'smart_rfq'
+      });
+      track('rfq_generated', { lead_type: 'smart_rfq' });
+      return;
+    }
+
     let leadType = leadForms[formId] || null;
     if (!leadType && form.classList.contains('contact-form')) leadType = 'general_quote';
     if (!leadType) return;
@@ -123,7 +146,7 @@
       lead_type: leadType
     });
 
-    /* Current forms hand the visitor to WhatsApp. This is a handoff attempt, not a confirmed lead. */
+    /* These forms hand the visitor to WhatsApp. This is a handoff attempt, not a confirmed lead. */
     track('lead_handoff', {
       method: 'whatsapp',
       lead_type: leadType
