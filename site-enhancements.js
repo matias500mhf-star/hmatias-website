@@ -21,6 +21,14 @@
     document.head.appendChild(typography);
   }
 
+  if (isHome && !document.querySelector('link[data-hmatias-company-editorial]')) {
+    const company = document.createElement('link');
+    company.rel = 'stylesheet';
+    company.href = 'company-editorial.css?v=20260920-v1';
+    company.dataset.hmatiasCompanyEditorial = 'true';
+    document.head.appendChild(company);
+  }
+
   const setMetaDescription = () => {
     const descriptions = {
       '/': 'Construção civil, facilities, manutenção, procurement e fornecimento empresarial para empresas e instituições em Luanda e Angola.',
@@ -119,6 +127,64 @@
     });
   };
 
+  const premiumiseAboutLeadership = () => {
+    if (!isHome) return;
+    const section = document.getElementById('empresa');
+    const container = section?.querySelector('.company-impact-grid') || section?.querySelector('.container');
+    if (!section || !container || container.dataset.premiumCompany === 'true') return;
+    container.dataset.premiumCompany = 'true';
+
+    container.innerHTML = isEn ? `
+      <div class="company-editorial">
+        <div class="company-story">
+          <span class="eyebrow">ABOUT HMATIAS</span>
+          <h2>An Angolan company <span>built to execute.</span></h2>
+          <p class="company-intro">HMATIAS – Prestação de Serviços, SU, LDA operates across construction, facilities, procurement and business supply. Each engagement starts with the client’s real requirement — from assessment and sourcing to execution and follow-up.</p>
+          <p class="company-intro">Our approach combines practical field presence, specification-led sourcing and direct coordination. The objective is straightforward: turn operational requirements into executable solutions with clear scope and defined responsibility.</p>
+        </div>
+        <div class="company-facts" aria-label="HMATIAS institutional information">
+          <div class="company-fact"><small>Established</small><strong>2023</strong></div>
+          <div class="company-fact"><small>Commercial Registry</small><strong>24.094-23</strong></div>
+          <div class="company-fact"><small>Tax ID</small><strong>5001578065</strong></div>
+          <div class="company-fact"><small>Operational Base</small><strong>Viana · Luanda · Angola</strong></div>
+        </div>
+      </div>
+      <div class="leadership-editorial" aria-labelledby="leadership-title">
+        <div class="leadership-mark" aria-hidden="true"><span>HM</span></div>
+        <div class="leadership-copy">
+          <span class="eyebrow">LEADERSHIP</span>
+          <h3 id="leadership-title">Henrique Matias</h3>
+          <span class="leadership-role">Founder &amp; Managing Director</span>
+          <p>Responsible for the strategic and operational direction of HMATIAS, with a focus on business development, construction, facilities, procurement and supply. The company’s management model prioritises direct follow-up, practical decisions and long-term commercial relationships.</p>
+          <a class="leadership-link" href="https://www.linkedin.com/in/henrique-matias-8059891a0/" target="_blank" rel="noopener noreferrer">Professional profile →</a>
+        </div>
+      </div>` : `
+      <div class="company-editorial">
+        <div class="company-story">
+          <span class="eyebrow">SOBRE A HMATIAS</span>
+          <h2>Uma empresa angolana <span>construída para executar.</span></h2>
+          <p class="company-intro">A HMATIAS – Prestação de Serviços, SU, LDA atua entre construção, facilities, procurement e fornecimento empresarial. Cada trabalho parte da necessidade real do cliente — do levantamento e sourcing à execução e ao acompanhamento.</p>
+          <p class="company-intro">A nossa abordagem combina presença prática no terreno, pesquisa orientada por especificação e coordenação direta. O objetivo é simples: transformar necessidades operacionais em soluções executáveis, com escopo claro e responsabilidade definida.</p>
+        </div>
+        <div class="company-facts" aria-label="Informação institucional da HMATIAS">
+          <div class="company-fact"><small>Fundação</small><strong>2023</strong></div>
+          <div class="company-fact"><small>Registo Comercial</small><strong>24.094-23</strong></div>
+          <div class="company-fact"><small>NIF</small><strong>5001578065</strong></div>
+          <div class="company-fact"><small>Base Operacional</small><strong>Viana · Luanda · Angola</strong></div>
+        </div>
+      </div>
+      <div class="leadership-editorial" aria-labelledby="leadership-title">
+        <div class="leadership-mark" aria-hidden="true"><span>HM</span></div>
+        <div class="leadership-copy">
+          <span class="eyebrow">LIDERANÇA</span>
+          <h3 id="leadership-title">Henrique Matias</h3>
+          <span class="leadership-role">Fundador &amp; Gerente</span>
+          <p>Responsável pela direção estratégica e operacional da HMATIAS, com foco no desenvolvimento de negócios, construção, facilities, procurement e supply. A gestão privilegia acompanhamento direto, decisões práticas e relações comerciais de longo prazo.</p>
+          <a class="leadership-link" href="https://www.linkedin.com/in/henrique-matias-8059891a0/" target="_blank" rel="noopener noreferrer">Perfil profissional →</a>
+        </div>
+      </div>`;
+  };
+
   const improveCleanPage = () => {
     if (!['/clean.html', '/clean-en.html'].includes(path)) return;
 
@@ -179,6 +245,7 @@
     improveLinks();
     improveAssistantAccessibility();
     premiumiseHomepageIcons();
+    premiumiseAboutLeadership();
     improveCleanPage();
     normaliseImages();
   };
