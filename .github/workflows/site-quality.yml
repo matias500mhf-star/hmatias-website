@@ -56,6 +56,13 @@ jobs:
               'best-practices': 0.90,
               'seo': 0.90,
           }
+          perf_metrics = [
+              ('first-contentful-paint', 'FCP'),
+              ('largest-contentful-paint', 'LCP'),
+              ('speed-index', 'Speed Index'),
+              ('total-blocking-time', 'TBT'),
+              ('cumulative-layout-shift', 'CLS'),
+          ]
           failures = []
           for path in sorted(Path('.').glob('lighthouse-*.json')):
               data = json.loads(path.read_text())
@@ -63,6 +70,16 @@ jobs:
               scores = {key: cats[key]['score'] for key in floors}
               rendered = ' | '.join(f"{key}={round(value * 100)}" for key, value in scores.items())
               print(f"{path.name}: {rendered}")
+
+              metric_parts = []
+              for audit_id, label in perf_metrics:
+                  audit = data.get('audits', {}).get(audit_id, {})
+                  display = audit.get('displayValue')
+                  numeric = audit.get('numericValue')
+                  score = audit.get('score')
+                  value = display if display is not None else numeric
+                  metric_parts.append(f"{label}={value} (score={score})")
+              print('Performance metrics: ' + ' | '.join(metric_parts))
 
               print(f"Accessibility findings for {path.name}:")
               seen = set()
