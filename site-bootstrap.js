@@ -4,6 +4,8 @@
 
   const reviewStylesheet = 'site-review.css?v=20260917-stable2';
   const kartaStylesheet = 'karta-access.css?v=20260917-stable1';
+  const premiumTypographyStylesheet = 'premium-typography.css?v=20260920-final2';
+  const brandLockStylesheet = 'brand-lock.css?v=20260920-final1';
 
   const loadStylesheet = (selector, href, datasetName) => {
     if (document.querySelector(selector)) return;
@@ -36,8 +38,23 @@
   const ensureSharedAssets = () => {
     ensureReviewStylesheet();
     loadStylesheet('link[data-hmatias-karta-access]', kartaStylesheet, 'hmatiasKartaAccess');
-    loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260917-stable2', 'hmatiasSiteEnhancements');
+    if (document.body?.classList.contains('hmatias-home')) {
+      loadStylesheet('link[data-hmatias-premium-typography]', premiumTypographyStylesheet, 'hmatiasPremiumTypography');
+    }
+    loadStylesheet('link[data-hmatias-brand-lock]', brandLockStylesheet, 'hmatiasBrandLock');
+    loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260920-premium2', 'hmatiasSiteEnhancements');
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260917-stable1', 'hmatiasGrowthIntelligence');
+  };
+
+  const ensureCatalogueIdentity = () => {
+    const path = window.location.pathname || '/';
+    if (!/\/(?:catalogo-obras|work-catalogue)\.html$/.test(path)) return;
+    document.body?.classList.add('hmatias-catalogue');
+    loadStylesheet('link[data-hmatias-catalogue-typography]', premiumTypographyStylesheet, 'hmatiasCatalogueTypography');
+    const showcase = document.querySelector('link[href*="final-showcase.css"]');
+    if (showcase && !showcase.getAttribute('href')?.includes('v=20260920-final1')) {
+      showcase.href = 'final-showcase.css?v=20260920-final1';
+    }
   };
 
   const addInstagramLink = () => {
@@ -74,14 +91,17 @@
     });
 
     const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
-    if (isEn) {
-      document.querySelectorAll('.copyright').forEach(node => {
+    document.querySelectorAll('.copyright').forEach(node => {
+      node.innerHTML = node.innerHTML
+        .replace(/HMATIAS SU, LDA\./g, 'HMATIAS – Prestação de Serviços SU, LDA.')
+        .replace(/\s*·\s*Matrícula:\s*24094-23\/230713\.?/gi, '');
+      if (isEn) {
         node.innerHTML = node.innerHTML
           .replace(/NIF:/g, 'Tax ID:')
           .replace(/Registo Comercial:/g, 'Commercial Registration:')
           .replace(/Matrícula:/g, 'Registration No.:');
-      });
-    }
+      }
+    });
   };
 
   const ensureKartaAccess = () => {
@@ -130,15 +150,22 @@
     }
   };
 
+  const removeLegacyHomeLeadership = () => {
+    if (!document.body.classList.contains('hmatias-home')) return;
+    document.querySelectorAll('main > section.leadership').forEach(section => section.remove());
+  };
+
   const loadPortfolioLayer = () => {
     if (!document.body.classList.contains('hmatias-home')) return;
-    loadScript('script[data-hmatias-portfolio]', 'portfolio.js?v=20260917-stable2', 'hmatiasPortfolio', document.body);
+    loadScript('script[data-hmatias-portfolio]', 'portfolio.js?v=20260920-premium2', 'hmatiasPortfolio', document.body);
   };
 
   const run = () => {
     ensureSharedAssets();
+    ensureCatalogueIdentity();
     addInstagramLink();
     normaliseSharedLinks();
+    removeLegacyHomeLeadership();
     ensureKartaAccess();
     loadPortfolioLayer();
   };

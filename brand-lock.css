@@ -1,0 +1,123 @@
+/* HMATIAS brand lock — final premium colour system.
+   One dominant blue family across corporate pages, with tonal depth only. */
+:root{
+  --hm-brand:#062d56;
+  --hm-brand-deep:#052746;
+  --hm-brand-mid:#0b477c;
+  --hm-brand-accent:#0b5f9d;
+  --hm-brand-light:#dceaf5;
+  --hm-brand-soft:#f4f8fc;
+  --hm-brand-ink:#102d4d;
+  --hm-brand-muted:#607487;
+  --hm-brand-line:#d9e5ef;
+  --navy:var(--hm-brand);
+  --navy2:var(--hm-brand-mid);
+  --blue:var(--hm-brand-accent);
+  --sky:#78b9df;
+  --ink:var(--hm-brand-ink);
+  --muted:var(--hm-brand-muted);
+  --light:var(--hm-brand-soft);
+  --border:var(--hm-brand-line);
+  --unit-navy:var(--hm-brand);
+  --unit-blue:var(--hm-brand-accent);
+  --unit-sky:#78b9df;
+  --unit-ink:var(--hm-brand-ink);
+  --unit-muted:var(--hm-brand-muted);
+  --unit-line:var(--hm-brand-line);
+  --unit-soft:var(--hm-brand-soft);
+}
+
+/* Corporate colour hierarchy */
+.topbar,
+.hmatias-topbar{background:var(--hm-brand)!important}
+.hero,
+.unit-hero,
+.hmatias-home .supply,
+body.hmatias-catalogue .catalogue-hero{
+  background:linear-gradient(118deg,var(--hm-brand-deep) 0%,var(--hm-brand) 60%,var(--hm-brand-mid) 100%)!important;
+}
+body.hmatias-home #empresa.company{background:var(--hm-brand)!important}
+
+.btn-primary{
+  background:var(--hm-brand-accent)!important;
+  color:#fff!important;
+  box-shadow:0 10px 24px rgba(6,45,86,.18)!important;
+}
+.btn-primary:hover{background:var(--hm-brand-mid)!important}
+.eyebrow.blue,
+.service-card a,
+.project-caption a,
+.unit-card span,
+.catalog-summary-bar span,
+.form-consent a{color:var(--hm-brand-accent)!important}
+
+/* Supply uses the same institutional palette as the rest of HMATIAS. */
+.hmatias-home .supply-card,
+.unit-hero-panel{
+  border-color:rgba(255,255,255,.18)!important;
+  background:rgba(255,255,255,.065)!important;
+  box-shadow:none!important;
+}
+.hmatias-home .supply-card>span,
+.unit-hero .eyebrow{color:#a9d2ea!important}
+.unit-step b,
+.business-process-card b{
+  background:#eaf3f9!important;
+  color:var(--hm-brand-accent)!important;
+}
+.unit-cta,
+.cta{background:#edf4f9!important}
+
+/* Footer: restrained corporate close, same blue family, no competing colour block. */
+footer,
+.hmatias-home .footer-pro,
+body.hmatias-catalogue footer{
+  background:var(--hm-brand-deep)!important;
+  color:#bfd2e1!important;
+  border-top:1px solid rgba(255,255,255,.08)!important;
+}
+footer strong,
+.hmatias-home .footer-pro-col strong{color:#fff!important}
+footer a,
+footer p,
+.hmatias-home .footer-pro-col a,
+.hmatias-home .footer-pro-col span,
+.hmatias-home .footer-pro-brand p{color:#b8ccdc!important}
+footer a:hover,
+.hmatias-home .footer-pro-col a:hover{color:#fff!important}
+.copyright,
+.hmatias-home .footer-pro-bottom{
+  border-top-color:rgba(255,255,255,.12)!important;
+}
+.copyright,
+.hmatias-home .footer-pro-bottom p,
+.hmatias-home .footer-pro-legal a{color:#91aabd!important}
+
+/* Floating actions belong to HMATIAS visually; service names still identify the channel. */
+.whatsapp-float{
+  background:var(--hm-brand-accent)!important;
+  color:#fff!important;
+  box-shadow:0 12px 28px rgba(6,45,86,.2)!important;
+}
+.mobile-sticky-contact a:first-child{
+  background:var(--hm-brand-accent)!important;
+  color:#fff!important;
+}
+
+/* Premium catalogue and project treatment remain neutral so photography carries the colour. */
+body.hmatias-catalogue .work-card-copy small{color:#64798a!important}
+body.hmatias-catalogue .catalogue-grid-section{background:#fff!important}
+body.hmatias-catalogue .catalogue-note{border-top-color:var(--hm-brand-line)!important}
+
+/* Focus states use the same family and remain visible. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline-color:rgba(11,95,157,.48)!important;
+}
+
+@media(max-width:560px){
+  .mobile-sticky-contact{border-color:var(--hm-brand-line)!important}
+}

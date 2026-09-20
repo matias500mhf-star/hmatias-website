@@ -1,0 +1,404 @@
+/* HMATIAS premium About + Leadership — homepage only. */
+body.hmatias-home #empresa.company{
+  position:relative;
+  padding:122px 0 118px;
+  overflow:hidden;
+  background:#071d33;
+  color:#fff;
+}
+body.hmatias-home #empresa.company::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/96px 100%,
+    radial-gradient(circle at 82% 18%,rgba(72,186,245,.14),transparent 30%);
+}
+body.hmatias-home #empresa .company-impact-grid{
+  position:relative;
+  z-index:1;
+  display:block;
+}
+body.hmatias-home .company-editorial{
+  display:grid;
+  grid-template-columns:minmax(0,1.22fr) minmax(300px,.78fr);
+  gap:86px;
+  align-items:start;
+}
+body.hmatias-home .company-story .eyebrow,
+body.hmatias-home .leadership-copy .eyebrow{
+  color:#8fd0f3;
+}
+body.hmatias-home .company-story h2{
+  max-width:11ch;
+  margin:18px 0 30px;
+  font-family:var(--hm-editorial-display);
+  font-size:clamp(2.8rem,5.3vw,5.7rem);
+  line-height:.94;
+  letter-spacing:-.062em;
+  font-weight:600;
+  color:#fff;
+}
+body.hmatias-home .company-story h2 span{color:#77c5f0}
+body.hmatias-home .company-story .company-intro{
+  max-width:62ch;
+  margin:0;
+  color:rgba(232,242,249,.84);
+  font-size:1.03rem;
+  line-height:1.82;
+}
+body.hmatias-home .company-story .company-intro + .company-intro{
+  margin-top:18px;
+  color:rgba(215,229,239,.7);
+}
+body.hmatias-home .company-facts{
+  display:grid;
+  border-top:1px solid rgba(255,255,255,.18);
+}
+body.hmatias-home .company-fact{
+  display:grid;
+  grid-template-columns:116px 1fr;
+  gap:22px;
+  align-items:baseline;
+  padding:21px 0;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+body.hmatias-home .company-fact small{
+  font-family:var(--hm-editorial-mono);
+  color:#78b9df;
+  font-size:.61rem;
+  font-weight:600;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+body.hmatias-home .company-fact strong{
+  font-family:var(--hm-editorial-display);
+  color:#fff;
+  font-size:.92rem;
+  font-weight:600;
+  letter-spacing:-.015em;
+}
+body.hmatias-home .leadership-editorial{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:minmax(240px,.72fr) minmax(0,1.28fr);
+  gap:70px;
+  align-items:center;
+  margin-top:92px;
+  padding-top:64px;
+  border-top:1px solid rgba(255,255,255,.16);
+}
+body.hmatias-home .leadership-mark{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:min(100%,300px);
+  aspect-ratio:1/1;
+  border:1px solid rgba(255,255,255,.17);
+  background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
+}
+body.hmatias-home .leadership-mark::before,
+body.hmatias-home .leadership-mark::after{
+  content:"";
+  position:absolute;
+  background:rgba(255,255,255,.12);
+}
+body.hmatias-home .leadership-mark::before{left:24px;right:24px;top:50%;height:1px}
+body.hmatias-home .leadership-mark::after{top:24px;bottom:24px;left:50%;width:1px}
+body.hmatias-home .leadership-mark span{
+  position:relative;
+  z-index:1;
+  font-family:var(--hm-editorial-display);
+  color:#fff;
+  font-size:clamp(3.8rem,7vw,6.4rem);
+  font-weight:500;
+  letter-spacing:-.08em;
+}
+body.hmatias-home .leadership-copy h3{
+  margin:14px 0 4px;
+  font-family:var(--hm-editorial-display);
+  color:#fff;
+  font-size:clamp(2rem,3.2vw,3.55rem);
+  line-height:1;
+  letter-spacing:-.052em;
+  font-weight:600;
+}
+body.hmatias-home .leadership-role{
+  display:block;
+  margin-bottom:22px;
+  font-family:var(--hm-editorial-mono);
+  color:#82c8ee;
+  font-size:.67rem;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+body.hmatias-home .leadership-copy p{
+  max-width:62ch;
+  margin:0;
+  color:rgba(219,233,242,.76);
+  font-size:.94rem;
+  line-height:1.78;
+}
+body.hmatias-home .leadership-link{
+  display:inline-flex;
+  align-items:center;
+  margin-top:24px;
+  padding-bottom:5px;
+  border-bottom:1px solid rgba(130,200,238,.55);
+  color:#a9daf4;
+  font-family:var(--hm-editorial-body);
+  font-size:.78rem;
+  font-weight:700;
+  text-decoration:none;
+}
+body.hmatias-home .leadership-link:hover{color:#fff;border-color:#fff}
+@media(max-width:900px){
+  body.hmatias-home #empresa.company{padding:94px 0 90px}
+  body.hmatias-home .company-editorial{grid-template-columns:1fr;gap:48px}
+  body.hmatias-home .company-story h2{max-width:13ch}
+  body.hmatias-home .company-facts{grid-template-columns:repeat(2,minmax(0,1fr));border-top:0;gap:0 28px}
+  body.hmatias-home .leadership-editorial{grid-template-columns:220px 1fr;gap:42px;margin-top:72px;padding-top:52px}
+}
+@media(max-width:650px){
+  body.hmatias-home #empresa.company{padding:78px 0 76px}
+  body.hmatias-home .company-story h2{font-size:clamp(2.55rem,12vw,4rem);line-height:.96}
+  body.hmatias-home .company-facts{grid-template-columns:1fr}
+  body.hmatias-home .company-fact{grid-template-columns:104px 1fr}
+  body.hmatias-home .leadership-editorial{grid-template-columns:1fr;gap:30px;margin-top:58px;padding-top:44px}
+  body.hmatias-home .leadership-mark{width:160px}
+  body.hmatias-home .leadership-mark span{font-size:3.7rem}
+}
+
+/* Final premium polish — photography, mobile composition and restrained microinteractions. */
+body.hmatias-home{
+  --hm-focus:#8fd0f3;
+  --hm-motion:cubic-bezier(.2,.72,.25,1);
+}
+
+/* Accessibility hardening for small proof-strip copy. */
+body.hmatias-home .proof-grid span{color:#637585}
+
+/* Photography direction: real work remains dominant, with consistent editorial treatment. */
+body.hmatias-home .hero-photo,
+body.hmatias-home .project picture{
+  position:relative;
+  overflow:hidden;
+}
+body.hmatias-home .hero-photo img,
+body.hmatias-home .project-image{
+  filter:saturate(.9) contrast(1.035);
+  transform:translateZ(0);
+}
+body.hmatias-home .hero-photo img{
+  object-position:center 48%;
+  transition:transform .9s var(--hm-motion),filter .5s ease;
+}
+body.hmatias-home .visual-card:hover .hero-photo img{
+  transform:scale(1.018);
+  filter:saturate(.96) contrast(1.04);
+}
+body.hmatias-home .project picture::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,transparent 58%,rgba(4,27,49,.14));
+  opacity:.78;
+}
+body.hmatias-home .project:nth-child(1) .project-image{object-position:center 46%}
+body.hmatias-home .project:nth-child(2) .project-image{object-position:center 52%}
+body.hmatias-home .project:nth-child(3) .project-image{object-position:center 48%}
+body.hmatias-home .project-caption{transition:transform .35s var(--hm-motion)}
+body.hmatias-home .project:hover .project-caption{transform:translateY(-2px)}
+body.hmatias-home .project-caption a,
+body.hmatias-home .service-card a,
+body.hmatias-home .leadership-link{
+  transition:color .22s ease,border-color .22s ease,transform .22s var(--hm-motion);
+}
+body.hmatias-home .project-caption a:hover,
+body.hmatias-home .service-card a:hover,
+body.hmatias-home .leadership-link:hover{transform:translateX(3px)}
+
+/* About + leadership: make the monogram feel intentional until a real portrait is supplied. */
+body.hmatias-home .leadership-mark{
+  isolation:isolate;
+  overflow:hidden;
+}
+body.hmatias-home .leadership-mark::before{
+  left:-12%;right:-12%;top:50%;height:1px;
+  transform:rotate(-18deg);
+}
+body.hmatias-home .leadership-mark::after{
+  top:-12%;bottom:-12%;left:50%;width:1px;
+  transform:rotate(18deg);
+}
+body.hmatias-home .leadership-mark span{
+  text-shadow:0 18px 42px rgba(0,0,0,.18);
+}
+body.hmatias-home .company-fact strong{
+  overflow-wrap:anywhere;
+}
+
+/* Navigation + CTA details: refined interaction without app-like effects. */
+body.hmatias-home .hmatias-header .nav-menu a{
+  position:relative;
+}
+body.hmatias-home .hmatias-header .nav-menu a::after{
+  content:"";
+  position:absolute;
+  left:0;right:100%;bottom:-7px;
+  height:1px;
+  background:currentColor;
+  transition:right .28s var(--hm-motion);
+}
+body.hmatias-home .hmatias-header .nav-menu a:hover::after,
+body.hmatias-home .hmatias-header .nav-menu a:focus-visible::after{right:0}
+body.hmatias-home .btn{
+  transition:transform .22s var(--hm-motion),background-color .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+body.hmatias-home .btn:hover{transform:translateY(-1px)}
+body.hmatias-home .btn:active{transform:translateY(0)}
+body.hmatias-home :is(a,button,input,select,textarea):focus-visible{
+  outline:2px solid var(--hm-focus);
+  outline-offset:4px;
+}
+
+/* Initial composition motion: brief and restrained, never scroll-jacking. */
+@keyframes hm-editorial-enter{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes hm-editorial-image{
+  from{opacity:0;transform:translateY(18px) scale(.985)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+body.hmatias-home .hero-copy > *{
+  animation:hm-editorial-enter .66s var(--hm-motion) both;
+}
+body.hmatias-home .hero-copy > :nth-child(2){animation-delay:.05s}
+body.hmatias-home .hero-copy > :nth-child(3){animation-delay:.1s}
+body.hmatias-home .hero-copy > :nth-child(4){animation-delay:.15s}
+body.hmatias-home .hero-copy > :nth-child(5){animation-delay:.2s}
+body.hmatias-home .visual-card{
+  animation:hm-editorial-image .78s .08s var(--hm-motion) both;
+}
+
+/* Tablet composition */
+@media(max-width:980px){
+  body.hmatias-home .hero-grid{gap:34px}
+  body.hmatias-home .hero-copy{padding-right:12px}
+  body.hmatias-home .visual-card{max-width:430px}
+  body.hmatias-home .project-grid{gap:18px}
+}
+
+/* Mobile is deliberately composed, not merely stacked. */
+@media(max-width:850px){
+  body.hmatias-home .hero{min-height:auto}
+  body.hmatias-home .hero-copy{padding:64px 0 38px}
+  body.hmatias-home .hero-copy > .eyebrow{max-width:30ch}
+  body.hmatias-home .hero-copy > p{max-width:34rem}
+  body.hmatias-home .hero-visual{padding:12px 7% 62px 0}
+  body.hmatias-home .visual-card{
+    width:100%;
+    max-width:520px;
+    aspect-ratio:5/4;
+  }
+  body.hmatias-home .proof-grid > div{min-height:94px}
+  body.hmatias-home .services .section-heading{margin-bottom:44px}
+  body.hmatias-home .service-card,
+  body.hmatias-home .service-card.featured{
+    min-height:0;
+  }
+  body.hmatias-home .project-caption{padding-bottom:22px}
+  body.hmatias-home .project-caption p{max-width:58ch}
+  body.hmatias-home .company-editorial{gap:42px}
+  body.hmatias-home .leadership-copy p{max-width:56ch}
+}
+
+@media(max-width:560px){
+  body.hmatias-home .hero-copy{padding:52px 0 32px}
+  body.hmatias-home .hero h1{
+    max-width:10.8ch!important;
+    font-size:clamp(2.6rem,12.7vw,3.8rem);
+    line-height:.95;
+  }
+  body.hmatias-home .hero-copy > p{
+    max-width:31rem;
+    font-size:.93rem;
+    line-height:1.68;
+  }
+  body.hmatias-home .hero-actions{
+    display:grid;
+    grid-template-columns:1fr;
+    width:100%;
+    max-width:360px;
+  }
+  body.hmatias-home .hero-actions .btn{
+    width:100%;
+    justify-content:center;
+  }
+  body.hmatias-home .hero-values{
+    grid-template-columns:1fr;
+    margin-top:34px;
+    gap:12px;
+  }
+  body.hmatias-home .hero-visual{
+    padding:8px 10% 54px 0;
+  }
+  body.hmatias-home .visual-card{
+    aspect-ratio:4/3;
+    outline-offset:5px;
+  }
+  body.hmatias-home .visual-overlay{
+    padding:13px 14px 14px;
+  }
+  body.hmatias-home .proof-grid{grid-template-columns:1fr}
+  body.hmatias-home .proof-grid > div,
+  body.hmatias-home .proof-grid > div + div{
+    min-height:auto;
+    padding:18px 0;
+    border-right:0;
+    border-bottom:1px solid var(--hm-editorial-line);
+  }
+  body.hmatias-home .proof-grid > div:nth-last-child(-n+2){border-bottom:1px solid var(--hm-editorial-line)}
+  body.hmatias-home .proof-grid > div:last-child{border-bottom:0}
+  body.hmatias-home .services{padding:76px 0 72px}
+  body.hmatias-home .service-card,
+  body.hmatias-home .service-card.featured{
+    grid-template-columns:42px 1fr;
+    column-gap:14px;
+    padding:26px 0 24px;
+  }
+  body.hmatias-home .service-card::after{top:28px}
+  body.hmatias-home .service-card h3{font-size:1.22rem}
+  body.hmatias-home .project-grid{gap:26px}
+  body.hmatias-home .project:nth-child(1) picture,
+  body.hmatias-home .project:not(:nth-child(1)) picture{aspect-ratio:5/4}
+  body.hmatias-home .project-caption h3{font-size:1.35rem}
+  body.hmatias-home .company-story h2{max-width:10.5ch}
+  body.hmatias-home .company-fact{
+    grid-template-columns:92px 1fr;
+    gap:14px;
+  }
+  body.hmatias-home .leadership-mark{
+    width:136px;
+  }
+  body.hmatias-home .leadership-mark span{font-size:3.1rem}
+  body.hmatias-home .leadership-copy h3{font-size:2rem}
+  body.hmatias-home .leadership-role{line-height:1.55}
+  body.hmatias-home .leadership-link{min-height:44px;align-items:center}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.hmatias-home *,
+  body.hmatias-home *::before,
+  body.hmatias-home *::after{
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}

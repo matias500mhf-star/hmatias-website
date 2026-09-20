@@ -1,0 +1,117 @@
+/* Premium font faces use direct immutable WOFF2 assets to avoid a render-blocking CSS import chain. */
+@font-face{
+  font-family:"Instrument Sans";
+  font-style:normal;
+  font-display:swap;
+  font-weight:400 700;
+  src:url("https://cdn.jsdelivr.net/fontsource/fonts/instrument-sans:vf@5.3.0/latin-wght-normal.woff2") format("woff2-variations");
+}
+@font-face{
+  font-family:"Manrope";
+  font-style:normal;
+  font-display:swap;
+  font-weight:200 800;
+  src:url("https://cdn.jsdelivr.net/fontsource/fonts/manrope:vf@5.3.0/latin-wght-normal.woff2") format("woff2-variations");
+}
+@font-face{
+  font-family:"IBM Plex Mono";
+  font-style:normal;
+  font-display:swap;
+  font-weight:500 600;
+  src:url("https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@5.3.0/latin-600-normal.woff2") format("woff2");
+}
+
+/* HMATIAS premium type system — editorial homepage + works catalogue. */
+body.hmatias-home,
+body.hmatias-catalogue{
+  --hm-editorial-display:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --hm-editorial-body:"Manrope","Helvetica Neue",Arial,sans-serif;
+  --hm-editorial-mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+  font-family:var(--hm-editorial-body);
+  font-kerning:normal;
+  font-synthesis:none;
+  text-rendering:optimizeLegibility;
+}
+
+body.hmatias-home :is(button,input,select,textarea,.btn,.lang-switch,.nav-menu a),
+body.hmatias-catalogue :is(button,input,select,textarea,.btn,.lang-switch,.nav-menu a){
+  font-family:var(--hm-editorial-body);
+}
+
+body.hmatias-home :is(h1,h2,h3,h4),
+body.hmatias-catalogue :is(h1,h2,h3,h4){
+  font-family:var(--hm-editorial-display);
+  font-optical-sizing:auto;
+  font-synthesis:none;
+}
+
+body.hmatias-home .hero h1{
+  font-weight:600;
+  letter-spacing:-.072em;
+}
+
+body.hmatias-home .section-heading h2{
+  font-weight:600;
+  letter-spacing:-.058em;
+}
+
+body.hmatias-home .service-card h3,
+body.hmatias-home .project-caption h3{
+  font-weight:600;
+  letter-spacing:-.045em;
+}
+
+body.hmatias-home .hero-copy > p,
+body.hmatias-home .section-heading p,
+body.hmatias-home .service-card p,
+body.hmatias-home .project-caption p{
+  font-family:var(--hm-editorial-body);
+  font-weight:400;
+  letter-spacing:-.008em;
+}
+
+body.hmatias-home :is(
+  .eyebrow,
+  .project-caption small,
+  .visual-overlay strong,
+  .service-card::after,
+  .footer-pro-col strong
+),
+body.hmatias-catalogue :is(
+  .eyebrow,
+  .work-card-copy small,
+  footer strong
+){
+  font-family:var(--hm-editorial-mono);
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+
+body.hmatias-home .proof-grid strong{
+  font-family:var(--hm-editorial-display);
+  font-weight:600;
+}
+
+body.hmatias-home :is(.hero-actions .btn,.service-card a,.project-caption a){
+  font-family:var(--hm-editorial-body);
+  font-weight:700;
+}
+
+body.hmatias-catalogue .catalogue-hero h1{
+  font-weight:600;
+  letter-spacing:-.065em;
+}
+body.hmatias-catalogue .catalogue-intro h2,
+body.hmatias-catalogue .work-card-copy h3{
+  font-weight:600;
+  letter-spacing:-.045em;
+}
+body.hmatias-catalogue :is(.catalogue-hero p,.catalogue-intro p,.work-card-copy p,.catalogue-note,footer a,footer p){
+  font-family:var(--hm-editorial-body);
+}
+
+@media(max-width:560px){
+  body.hmatias-home .hero h1{letter-spacing:-.06em}
+  body.hmatias-home .section-heading h2{letter-spacing:-.048em}
+  body.hmatias-catalogue .catalogue-hero h1{letter-spacing:-.055em}
+}

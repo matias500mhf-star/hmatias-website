@@ -3,6 +3,31 @@
   'use strict';
   const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
   const path = window.location.pathname || '/';
+  const isHome = path === '/' || path === '/index.html' || path === '/en.html';
+
+  if (isHome && !document.querySelector('link[data-hmatias-premium-editorial]')) {
+    const premium = document.createElement('link');
+    premium.rel = 'stylesheet';
+    premium.href = 'premium-editorial.css?v=20260920-v1';
+    premium.dataset.hmatiasPremiumEditorial = 'true';
+    document.head.appendChild(premium);
+  }
+
+  if (isHome && !document.querySelector('link[data-hmatias-premium-typography]')) {
+    const typography = document.createElement('link');
+    typography.rel = 'stylesheet';
+    typography.href = 'premium-typography.css?v=20260920-v1';
+    typography.dataset.hmatiasPremiumTypography = 'true';
+    document.head.appendChild(typography);
+  }
+
+  if (isHome && !document.querySelector('link[data-hmatias-company-editorial]')) {
+    const company = document.createElement('link');
+    company.rel = 'stylesheet';
+    company.href = 'company-editorial.css?v=20260920-v1';
+    company.dataset.hmatiasCompanyEditorial = 'true';
+    document.head.appendChild(company);
+  }
 
   const setMetaDescription = () => {
     const descriptions = {
@@ -87,6 +112,79 @@
     observer.observe(document.body, { childList: true, subtree: true });
   };
 
+  const premiumiseHomepageIcons = () => {
+    if (!isHome) return;
+    const icons = [
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V7l8-3 8 3v13"/><path d="M8 20v-4h8v4M8 9h.01M12 9h.01M16 9h.01M8 13h.01M12 13h.01M16 13h.01"/></svg>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l7-7 3 3-7 7H4v-3Z"/><path d="M13 8l2-2 3 3-2 2M16 5l1-1 3 3-1 1"/></svg>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5 5L4 17v3h3l5.7-5.7a4 4 0 0 0 5-5l-2.3 2.3-3-3L14.7 6.3Z"/></svg>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5 12 4l8 3.5-8 3.5-8-3.5Z"/><path d="M4 7.5V16l8 4 8-4V7.5M12 11v9"/></svg>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 5 5M8 10.5h5M10.5 8v5"/></svg>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8l1 2h3v14H4V6h3l1-2Z"/><path d="M8 11h8M8 15h6"/></svg>'
+    ];
+    document.querySelectorAll('.service-grid .service-card .service-icon').forEach((icon, index) => {
+      if (icons[index]) icon.innerHTML = icons[index];
+    });
+  };
+
+  const premiumiseAboutLeadership = () => {
+    if (!isHome) return;
+    const section = document.getElementById('empresa');
+    const container = section?.querySelector('.company-impact-grid') || section?.querySelector('.container');
+    if (!section || !container || container.dataset.premiumCompany === 'true') return;
+    container.dataset.premiumCompany = 'true';
+
+    container.innerHTML = isEn ? `
+      <div class="company-editorial">
+        <div class="company-story">
+          <span class="eyebrow">ABOUT HMATIAS</span>
+          <h2>An Angolan company <span>built to execute.</span></h2>
+          <p class="company-intro">HMATIAS – Prestação de Serviços, SU, LDA operates across construction, facilities, procurement and business supply. Each engagement starts with the client’s real requirement — from assessment and sourcing to execution and follow-up.</p>
+          <p class="company-intro">Our approach combines practical field presence, specification-led sourcing and direct coordination. The objective is straightforward: turn operational requirements into executable solutions with clear scope and defined responsibility.</p>
+        </div>
+        <div class="company-facts" aria-label="HMATIAS institutional information">
+          <div class="company-fact"><small>Established</small><strong>2023</strong></div>
+          <div class="company-fact"><small>Commercial Registry</small><strong>24.094-23</strong></div>
+          <div class="company-fact"><small>Tax ID</small><strong>5001578065</strong></div>
+          <div class="company-fact"><small>Operational Base</small><strong>Viana · Luanda · Angola</strong></div>
+        </div>
+      </div>
+      <div class="leadership-editorial" aria-labelledby="leadership-title">
+        <div class="leadership-mark" aria-hidden="true"><span>HM</span></div>
+        <div class="leadership-copy">
+          <span class="eyebrow">LEADERSHIP</span>
+          <h3 id="leadership-title">Henrique Matias</h3>
+          <span class="leadership-role">Founder &amp; Managing Director</span>
+          <p>Responsible for the strategic and operational direction of HMATIAS, with a focus on business development, construction, facilities, procurement and supply. The company’s management model prioritises direct follow-up, practical decisions and long-term commercial relationships.</p>
+          <a class="leadership-link" href="https://www.linkedin.com/in/henrique-matias-8059891a0/" target="_blank" rel="noopener noreferrer">Professional profile →</a>
+        </div>
+      </div>` : `
+      <div class="company-editorial">
+        <div class="company-story">
+          <span class="eyebrow">SOBRE A HMATIAS</span>
+          <h2>Uma empresa angolana <span>construída para executar.</span></h2>
+          <p class="company-intro">A HMATIAS – Prestação de Serviços, SU, LDA atua entre construção, facilities, procurement e fornecimento empresarial. Cada trabalho parte da necessidade real do cliente — do levantamento e sourcing à execução e ao acompanhamento.</p>
+          <p class="company-intro">A nossa abordagem combina presença prática no terreno, pesquisa orientada por especificação e coordenação direta. O objetivo é simples: transformar necessidades operacionais em soluções executáveis, com escopo claro e responsabilidade definida.</p>
+        </div>
+        <div class="company-facts" aria-label="Informação institucional da HMATIAS">
+          <div class="company-fact"><small>Fundação</small><strong>2023</strong></div>
+          <div class="company-fact"><small>Registo Comercial</small><strong>24.094-23</strong></div>
+          <div class="company-fact"><small>NIF</small><strong>5001578065</strong></div>
+          <div class="company-fact"><small>Base Operacional</small><strong>Viana · Luanda · Angola</strong></div>
+        </div>
+      </div>
+      <div class="leadership-editorial" aria-labelledby="leadership-title">
+        <div class="leadership-mark" aria-hidden="true"><span>HM</span></div>
+        <div class="leadership-copy">
+          <span class="eyebrow">LIDERANÇA</span>
+          <h3 id="leadership-title">Henrique Matias</h3>
+          <span class="leadership-role">Fundador &amp; Gerente</span>
+          <p>Responsável pela direção estratégica e operacional da HMATIAS, com foco no desenvolvimento de negócios, construção, facilities, procurement e supply. A gestão privilegia acompanhamento direto, decisões práticas e relações comerciais de longo prazo.</p>
+          <a class="leadership-link" href="https://www.linkedin.com/in/henrique-matias-8059891a0/" target="_blank" rel="noopener noreferrer">Perfil profissional →</a>
+        </div>
+      </div>`;
+  };
+
   const improveCleanPage = () => {
     if (!['/clean.html', '/clean-en.html'].includes(path)) return;
 
@@ -146,6 +244,8 @@
     improveNavigation();
     improveLinks();
     improveAssistantAccessibility();
+    premiumiseHomepageIcons();
+    premiumiseAboutLeadership();
     improveCleanPage();
     normaliseImages();
   };
