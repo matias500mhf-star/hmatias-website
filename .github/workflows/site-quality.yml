@@ -78,6 +78,19 @@ jobs:
                       display = audit.get('displayValue', '')
                       detail = f" | {display}" if display else ''
                       print(f" - {audit_id}: score={score} | {title}{detail}")
+                      items = (audit.get('details') or {}).get('items') or []
+                      for item in items[:12]:
+                          node = item.get('node') if isinstance(item, dict) else None
+                          if isinstance(node, dict):
+                              selector = node.get('selector', '')
+                              snippet = node.get('snippet', '')
+                              explanation = node.get('explanation', '')
+                              print(f"   selector: {selector}")
+                              print(f"   snippet: {snippet}")
+                              if explanation:
+                                  print(f"   explanation: {explanation}")
+                          elif isinstance(item, dict):
+                              print('   item:', json.dumps(item, ensure_ascii=False)[:1200])
 
               for key, floor in floors.items():
                   if scores[key] < floor:
