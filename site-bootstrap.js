@@ -143,7 +143,6 @@
       link.className = 'footer-karta-link';
       link.href = kartaHref;
       link.dataset.kartaFooter = 'true';
-      link.setAttribute('aria-label', 'KARTA Identity Wallet');
       link.innerHTML = '<span class="footer-karta-mark" aria-hidden="true">K</span><span class="footer-karta-copy"><small>' + (isEn ? 'HMATIAS digital product' : 'Produto digital HMATIAS') + '</small><strong>KARTA Identity Wallet</strong></span>';
       footerBrand.appendChild(link);
     }

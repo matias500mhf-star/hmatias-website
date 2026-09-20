@@ -146,6 +146,8 @@ jobs:
                   if data and ',' in data:
                       ext = 'jpg' if 'image/jpeg' in data.split(',', 1)[0] else 'png'
                       Path(f'{path.stem}-{kind}.{ext}').write_bytes(base64.b64decode(data.split(',', 1)[1]))
+                      if path.stem in ('lighthouse-pt-mobile', 'lighthouse-pt-desktop', 'lighthouse-credibilidade-mobile', 'lighthouse-credibilidade-desktop') and kind == 'full':
+                          print(f'HMATIAS_VISUAL:{path.stem}:{data}')
           PY
       - uses: actions/upload-artifact@v4
         if: always()
