@@ -10,11 +10,7 @@
   const brandLockStylesheet = 'brand-lock.css?v=20260920-final1';
   const corporateCleanupStylesheet = 'corporate-cleanup.css?v=20260920-final1';
   const officialEmail = 'geral@comercialhmatiasps.com';
-  const inactiveEmails = new Set([
-    'geral@comercialhmatiasps.com',
-    'geral@comercialhmatiasps.com',
-    'geral@comercialhmatiasps.com'
-  ]);
+  const inactiveEmails = new Set([officialEmail]);
 
   const loadStylesheet = (selector, href, datasetName) => {
     if (document.querySelector(selector) || document.querySelector('link[href*="' + href.split('?')[0] + '"]')) return;
@@ -89,20 +85,19 @@
       const [address, suffix = ''] = raw.split(/(?=[?])/);
       if (!inactiveEmails.has(address.toLowerCase())) return;
       link.setAttribute('href', 'mailto:' + officialEmail + suffix);
-      if ((link.textContent || '').trim().toLowerCase() === address.toLowerCase()) {
-        link.textContent = officialEmail;
-      }
+      if ((link.textContent || '').trim().toLowerCase() === address.toLowerCase()) link.textContent = officialEmail;
     });
 
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    const textNodes = [];
-    while (walker.nextNode()) textNodes.push(walker.currentNode);
-    textNodes.forEach(node => {
-      let value = node.nodeValue || '';
-      inactiveEmails.forEach(email => {
-        value = value.replace(new RegExp(email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), officialEmail);
+    /* Earlier contact normalization can leave the same operational mailbox twice.
+       Keep one visible email per shared header/footer contact group without changing layout. */
+    document.querySelectorAll('.header-contact, footer .footer-contact, footer .footer-links, footer .footer-pro-contact, footer').forEach(group => {
+      const seen = new Set();
+      group.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+        const address = ((link.getAttribute('href') || '').slice(7).split('?')[0] || '').trim().toLowerCase();
+        if (!address) return;
+        if (seen.has(address)) link.remove();
+        else seen.add(address);
       });
-      if (value !== node.nodeValue) node.nodeValue = value;
     });
 
     document.querySelectorAll('script[type="application/ld+json"]').forEach(script => {
