@@ -3,6 +3,8 @@
 .hmatias-topbar .topbar-inner{min-height:40px;display:grid;grid-template-columns:94px minmax(0,1fr) 94px;gap:12px;align-items:center}
 .header-contact{grid-column:2;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 20px;padding:6px 0;text-align:center;font-size:.75rem}
 .header-contact a{display:inline-flex;align-items:center;min-height:24px;color:#fff;white-space:nowrap}
+/* Keep the single operational HMATIAS mailbox visible only once when legacy markup contains two identical links. */
+.header-contact a[href="mailto:geral@comercialhmatiasps.com"] + a[href="mailto:geral@comercialhmatiasps.com"]{display:none}
 .header-social{grid-column:3;display:flex;align-items:center;justify-self:end;gap:6px}
 .header-social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;color:#fff;border-radius:4px}
 .header-social img{display:block;filter:brightness(0) invert(1)}
