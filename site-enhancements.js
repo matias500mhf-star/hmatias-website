@@ -3,6 +3,15 @@
   'use strict';
   const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
   const path = window.location.pathname || '/';
+  const isHome = path === '/' || path === '/index.html' || path === '/en.html';
+
+  if (isHome && !document.querySelector('link[data-hmatias-premium-editorial]')) {
+    const premium = document.createElement('link');
+    premium.rel = 'stylesheet';
+    premium.href = 'premium-editorial.css?v=20260920-v1';
+    premium.dataset.hmatiasPremiumEditorial = 'true';
+    document.head.appendChild(premium);
+  }
 
   const setMetaDescription = () => {
     const descriptions = {
@@ -87,6 +96,21 @@
     observer.observe(document.body, { childList: true, subtree: true });
   };
 
+  const premiumiseHomepageIcons = () => {
+    if (!isHome) return;
+    const icons = [
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V7l8-3 8 3v13"/><path d="M8 20v-4h8v4M8 9h.01M12 9h.01M16 9h.01M8 13h.01M12 13h.01M16 13h.01"/></svg>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l7-7 3 3-7 7H4v-3Z"/><path d="M13 8l2-2 3 3-2 2M16 5l1-1 3 3-1 1"/></svg>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5 5L4 17v3h3l5.7-5.7a4 4 0 0 0 5-5l-2.3 2.3-3-3L14.7 6.3Z"/></svg>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5 12 4l8 3.5-8 3.5-8-3.5Z"/><path d="M4 7.5V16l8 4 8-4V7.5M12 11v9"/></svg>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 5 5M8 10.5h5M10.5 8v5"/></svg>',
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8l1 2h3v14H4V6h3l1-2Z"/><path d="M8 11h8M8 15h6"/></svg>'
+    ];
+    document.querySelectorAll('.service-grid .service-card .service-icon').forEach((icon, index) => {
+      if (icons[index]) icon.innerHTML = icons[index];
+    });
+  };
+
   const improveCleanPage = () => {
     if (!['/clean.html', '/clean-en.html'].includes(path)) return;
 
@@ -146,6 +170,7 @@
     improveNavigation();
     improveLinks();
     improveAssistantAccessibility();
+    premiumiseHomepageIcons();
     improveCleanPage();
     normaliseImages();
   };
