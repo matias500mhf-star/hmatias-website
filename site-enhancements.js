@@ -13,6 +13,14 @@
     document.head.appendChild(premium);
   }
 
+  if (isHome && !document.querySelector('link[data-hmatias-premium-typography]')) {
+    const typography = document.createElement('link');
+    typography.rel = 'stylesheet';
+    typography.href = 'premium-typography.css?v=20260920-v1';
+    typography.dataset.hmatiasPremiumTypography = 'true';
+    document.head.appendChild(typography);
+  }
+
   const setMetaDescription = () => {
     const descriptions = {
       '/': 'Construção civil, facilities, manutenção, procurement e fornecimento empresarial para empresas e instituições em Luanda e Angola.',
