@@ -25,11 +25,13 @@
     if (!nav.id) nav.id = 'main-navigation';
     if (toggle) toggle.setAttribute('aria-controls', nav.id);
 
-    // Keep the desktop control compact. Mobile keeps the explicit language name.
+    // Keep the desktop control compact while ensuring the visible label is part of the accessible name.
     document.querySelectorAll('.nav-actions [data-lang-switch]').forEach(link => {
-      link.textContent = isEn ? 'PT' : 'EN';
-      link.title = isEn ? 'Mudar para Português' : 'Switch to English';
-      link.setAttribute('aria-label', isEn ? 'Mudar para Português' : 'Switch to English');
+      const shortLabel = isEn ? 'PT' : 'EN';
+      const actionLabel = isEn ? 'Mudar para Português' : 'Switch to English';
+      link.textContent = shortLabel;
+      link.title = actionLabel;
+      link.setAttribute('aria-label', `${shortLabel} — ${actionLabel}`);
     });
 
     const mq = window.matchMedia('(max-width: 850px)');
@@ -67,6 +69,22 @@
     document.querySelectorAll('[data-clean-product][aria-label], .whatsapp-float[aria-label], .mobile-whatsapp-link[aria-label]').forEach(link => {
       if ((link.textContent || '').trim()) link.removeAttribute('aria-label');
     });
+  };
+
+  const improveAssistantAccessibility = () => {
+    const apply = () => {
+      const toggle = document.querySelector('.hmatias-assistant-toggle');
+      if (!toggle) return false;
+      if (!toggle.getAttribute('aria-label')) {
+        toggle.setAttribute('aria-label', isEn ? 'Open HMATIAS Assistant' : 'Abrir Assistente HMATIAS');
+      }
+      return true;
+    };
+    if (apply()) return;
+    const observer = new MutationObserver(() => {
+      if (apply()) observer.disconnect();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
   };
 
   const improveCleanPage = () => {
@@ -127,6 +145,7 @@
     setMetaDescription();
     improveNavigation();
     improveLinks();
+    improveAssistantAccessibility();
     improveCleanPage();
     normaliseImages();
   };
