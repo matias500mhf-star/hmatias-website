@@ -28,7 +28,6 @@
   const ensureReviewStylesheet = () => {
     const existing = document.querySelector('link[href*="site-review.css"]');
     if (existing) {
-      if (!existing.getAttribute('href')?.includes('v=20260917-stable2')) existing.href = reviewStylesheet;
       existing.dataset.hmatiasSiteReview = 'true';
       return;
     }
@@ -51,10 +50,6 @@
     if (!/\/(?:catalogo-obras|work-catalogue)\.html$/.test(path)) return;
     document.body?.classList.add('hmatias-catalogue');
     loadStylesheet('link[data-hmatias-catalogue-typography]', premiumTypographyStylesheet, 'hmatiasCatalogueTypography');
-    const showcase = document.querySelector('link[href*="final-showcase.css"]');
-    if (showcase && !showcase.getAttribute('href')?.includes('v=20260920-final1')) {
-      showcase.href = 'final-showcase.css?v=20260920-final1';
-    }
   };
 
   const addInstagramLink = () => {
@@ -161,7 +156,6 @@
   };
 
   const run = () => {
-    ensureSharedAssets();
     ensureCatalogueIdentity();
     addInstagramLink();
     normaliseSharedLinks();
