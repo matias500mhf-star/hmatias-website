@@ -4,7 +4,7 @@
 
   const reviewStylesheet = 'site-review.css?v=20260917-stable2';
   const kartaStylesheet = 'karta-access.css?v=20260917-stable1';
-  const premiumTypographyStylesheet = 'premium-typography.css?v=20260920-final1';
+  const premiumTypographyStylesheet = 'premium-typography.css?v=20260920-final2';
 
   const loadStylesheet = (selector, href, datasetName) => {
     if (document.querySelector(selector)) return;
@@ -37,6 +37,9 @@
   const ensureSharedAssets = () => {
     ensureReviewStylesheet();
     loadStylesheet('link[data-hmatias-karta-access]', kartaStylesheet, 'hmatiasKartaAccess');
+    if (document.body?.classList.contains('hmatias-home')) {
+      loadStylesheet('link[data-hmatias-premium-typography]', premiumTypographyStylesheet, 'hmatiasPremiumTypography');
+    }
     loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260920-premium2', 'hmatiasSiteEnhancements');
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260917-stable1', 'hmatiasGrowthIntelligence');
   };
