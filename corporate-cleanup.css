@@ -1,0 +1,37 @@
+/* HMATIAS — premium corporate cleanup: concise homepage, verification-led trust page. */
+
+/* Homepage: keep About focused on identity, not a second institutional dossier. */
+.hmatias-home #empresa.company{padding:88px 0!important}
+.hmatias-home #empresa .company-impact-grid{grid-template-columns:minmax(0,820px)!important;justify-content:center!important}
+.hmatias-home #empresa .company-impact-grid>div:first-child{max-width:820px!important}
+.hmatias-home #empresa .company-identity-card{display:none!important}
+.hmatias-home #empresa .company-copy{max-width:62ch!important}
+.hmatias-home #empresa .company-trust-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important;margin-top:30px!important}
+.hmatias-home #empresa .company-trust-card{min-height:auto!important;padding:18px 20px!important;border-radius:12px!important;background:rgba(255,255,255,.96)!important;box-shadow:none!important}
+.hmatias-home #empresa .company-trust-card small{font-size:.65rem!important;letter-spacing:.09em!important}
+.hmatias-home #empresa .company-trust-card strong{font-size:.88rem!important;line-height:1.45!important}
+
+/* The operating-method block repeats the service proposition and is removed from the premium homepage flow. */
+.hmatias-home .why-us{display:none!important}
+
+/* Trust page: present verification information with restraint rather than sales-page repetition. */
+body:not(.hmatias-home) .trust-hero{padding:82px 0 72px!important}
+body:not(.hmatias-home) .trust-hero-grid{align-items:center!important;gap:54px!important}
+body:not(.hmatias-home) .trust-hero h1{max-width:16ch!important}
+body:not(.hmatias-home) .trust-hero p{max-width:60ch!important}
+body:not(.hmatias-home) .trust-hero-card{border-radius:16px!important;box-shadow:none!important}
+body:not(.hmatias-home) .trust-section{padding:72px 0!important}
+body:not(.hmatias-home) .trust-heading{max-width:760px!important;margin-bottom:30px!important}
+body:not(.hmatias-home) .trust-table{border-radius:14px!important;overflow:hidden!important}
+body:not(.hmatias-home) .trust-note{max-width:78ch!important}
+
+/* The dedicated service pages already explain these areas in depth; avoid repeating a sales catalogue on Trust. */
+body:not(.hmatias-home) .trust-section:has(.trust-grid){display:none!important}
+
+@media(max-width:850px){
+  .hmatias-home #empresa.company{padding:64px 0!important}
+  .hmatias-home #empresa .company-trust-grid{grid-template-columns:1fr!important}
+  body:not(.hmatias-home) .trust-hero{padding:62px 0 54px!important}
+  body:not(.hmatias-home) .trust-hero-grid{gap:30px!important}
+  body:not(.hmatias-home) .trust-section{padding:54px 0!important}
+}
