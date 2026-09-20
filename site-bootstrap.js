@@ -145,11 +145,6 @@
     }
   };
 
-  const removeLegacyHomeLeadership = () => {
-    if (!document.body.classList.contains('hmatias-home')) return;
-    document.querySelectorAll('main > section.leadership').forEach(section => section.remove());
-  };
-
   const loadPortfolioLayer = () => {
     if (!document.body.classList.contains('hmatias-home')) return;
     loadScript('script[data-hmatias-portfolio]', 'portfolio.js?v=20260920-premium2', 'hmatiasPortfolio', document.body);
@@ -159,7 +154,6 @@
     ensureCatalogueIdentity();
     addInstagramLink();
     normaliseSharedLinks();
-    removeLegacyHomeLeadership();
     ensureKartaAccess();
     loadPortfolioLayer();
   };
