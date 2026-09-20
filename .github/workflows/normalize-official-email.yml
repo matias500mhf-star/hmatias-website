@@ -1,0 +1,66 @@
+name: Normalize official HMATIAS email
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  normalize-email:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Replace inactive public email addresses
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          replacements = {
+              'geral@hmatiasps.ao': 'geral@comercialhmatiasps.com',
+              'comercial@hmatiasps.ao': 'geral@comercialhmatiasps.com',
+              'Comercial@hmatiasps.ao': 'geral@comercialhmatiasps.com',
+              'info@comercialhmatiasps.com': 'geral@comercialhmatiasps.com',
+          }
+          changed = []
+          for path in Path('.').rglob('*'):
+              if not path.is_file() or '.git' in path.parts:
+                  continue
+              try:
+                  data = path.read_text(encoding='utf-8')
+              except (UnicodeDecodeError, OSError):
+                  continue
+              new = data
+              for old, target in replacements.items():
+                  new = new.replace(old, target)
+              if new != data:
+                  path.write_text(new, encoding='utf-8')
+                  changed.append(str(path))
+          print('Updated files:')
+          print('\n'.join(changed) if changed else 'none')
+          PY
+      - name: Verify inactive addresses are gone
+        shell: bash
+        run: |
+          if grep -RInE --exclude-dir=.git '(geral|comercial)@hmatiasps\.ao|info@comercialhmatiasps\.com' .; then
+            echo 'Inactive email reference remains.' >&2
+            exit 1
+          fi
+      - name: Commit normalized contact data
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo 'No changes required.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'fix: use operational email across HMATIAS site'
+          git push origin HEAD:main
