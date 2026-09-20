@@ -31,7 +31,7 @@
 @media(max-width:850px){
   .hmatias-topbar .topbar-inner{min-height:46px;grid-template-columns:minmax(0,1fr) auto;gap:8px}
   .header-contact{grid-column:1;justify-content:flex-start;flex-wrap:nowrap;gap:10px;padding:4px 0;text-align:left;min-width:0}
-  body.hmatias-type .hmatias-topbar .header-contact a[href^="mailto:"]{display:none!important}
+  .site-stable .header-contact{flex-direction:column;align-items:flex-start}
   .header-contact a[href^="tel:"]{font-size:.75rem;overflow:hidden;text-overflow:ellipsis}
   .header-social{grid-column:2;display:flex;flex-direction:row;gap:2px;justify-self:end}
   .header-social a{width:38px;height:42px}
