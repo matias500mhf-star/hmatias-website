@@ -50,6 +50,7 @@ body.hmatias-home #empresa.company{background:var(--hm-brand)!important}
 .unit-card span,
 .catalog-summary-bar span,
 .form-consent a{color:var(--hm-brand-accent)!important}
+.smart-route-box .eyebrow{color:var(--hm-brand-mid)!important}
 
 /* Supply uses the same institutional palette as the rest of HMATIAS. */
 .hmatias-home .supply-card,
