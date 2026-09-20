@@ -40,6 +40,11 @@
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260917-stable1', 'hmatiasGrowthIntelligence');
   };
 
+  const cleanupLegacyHomepageLeadership = () => {
+    if (!document.body?.classList.contains('hmatias-home')) return;
+    document.querySelectorAll('main > section.leadership').forEach(section => section.remove());
+  };
+
   const addInstagramLink = () => {
     document.querySelectorAll('.header-social').forEach(group => {
       if (group.querySelector('[data-hmatias-instagram], a[href*="instagram.com"]')) return;
@@ -137,6 +142,7 @@
 
   const run = () => {
     ensureSharedAssets();
+    cleanupLegacyHomepageLeadership();
     addInstagramLink();
     normaliseSharedLinks();
     ensureKartaAccess();
@@ -144,6 +150,7 @@
   };
 
   ensureSharedAssets();
+  cleanupLegacyHomepageLeadership();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once: true });
   else run();
 })();
