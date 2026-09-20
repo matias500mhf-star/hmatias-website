@@ -1,0 +1,104 @@
+name: HMATIAS Lighthouse Quality
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Start local site
+        shell: bash
+        run: |
+          python3 -m http.server 8080 --bind 127.0.0.1 >/tmp/hmatias-http.log 2>&1 &
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:8080/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/hmatias-http.log
+          exit 1
+      - name: Audit PT and EN homepages
+        shell: bash
+        run: |
+          npx --yes lighthouse@latest http://127.0.0.1:8080/ \
+            --quiet --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=./lighthouse-pt-mobile.json
+          npx --yes lighthouse@latest http://127.0.0.1:8080/en.html \
+            --quiet --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=./lighthouse-en-mobile.json
+          npx --yes lighthouse@latest http://127.0.0.1:8080/ \
+            --quiet --preset=desktop --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=./lighthouse-pt-desktop.json
+          npx --yes lighthouse@latest http://127.0.0.1:8080/en.html \
+            --quiet --preset=desktop --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=./lighthouse-en-desktop.json
+      - name: Report and enforce quality floor
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          floors = {
+              'performance': 0.70,
+              'accessibility': 0.90,
+              'best-practices': 0.90,
+              'seo': 0.90,
+          }
+          failures = []
+          for path in sorted(Path('.').glob('lighthouse-*.json')):
+              data = json.loads(path.read_text())
+              cats = data['categories']
+              scores = {key: cats[key]['score'] for key in floors}
+              rendered = ' | '.join(f"{key}={round(value * 100)}" for key, value in scores.items())
+              print(f"{path.name}: {rendered}")
+
+              print(f"Accessibility findings for {path.name}:")
+              seen = set()
+              for ref in cats['accessibility'].get('auditRefs', []):
+                  audit_id = ref.get('id')
+                  if not audit_id or audit_id in seen:
+                      continue
+                  seen.add(audit_id)
+                  audit = data.get('audits', {}).get(audit_id, {})
+                  score = audit.get('score')
+                  if score is not None and score < 1:
+                      title = audit.get('title', audit_id)
+                      display = audit.get('displayValue', '')
+                      detail = f" | {display}" if display else ''
+                      print(f" - {audit_id}: score={score} | {title}{detail}")
+                      items = (audit.get('details') or {}).get('items') or []
+                      for item in items[:12]:
+                          node = item.get('node') if isinstance(item, dict) else None
+                          if isinstance(node, dict):
+                              selector = node.get('selector', '')
+                              snippet = node.get('snippet', '')
+                              explanation = node.get('explanation', '')
+                              print(f"   selector: {selector}")
+                              print(f"   snippet: {snippet}")
+                              if explanation:
+                                  print(f"   explanation: {explanation}")
+                          elif isinstance(item, dict):
+                              print('   item:', json.dumps(item, ensure_ascii=False)[:1200])
+
+              for key, floor in floors.items():
+                  if scores[key] < floor:
+                      failures.append(f"{path.name}: {key} {scores[key]:.2f} < {floor:.2f}")
+          if failures:
+              print('Quality floor FAILED:')
+              for item in failures:
+                  print(' -', item)
+              raise SystemExit(1)
+          print('HMATIAS Lighthouse quality floor OK.')
+          PY
