@@ -4,6 +4,7 @@
 
   const reviewStylesheet = 'site-review.css?v=20260917-stable2';
   const kartaStylesheet = 'karta-access.css?v=20260917-stable1';
+  const premiumTypographyStylesheet = 'premium-typography.css?v=20260920-v2';
 
   const loadStylesheet = (selector, href, datasetName) => {
     if (document.querySelector(selector)) return;
@@ -40,9 +41,11 @@
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260917-stable1', 'hmatiasGrowthIntelligence');
   };
 
-  const cleanupLegacyHomepageLeadership = () => {
-    if (!document.body?.classList.contains('hmatias-home')) return;
-    document.querySelectorAll('main > section.leadership').forEach(section => section.remove());
+  const ensureCatalogueIdentity = () => {
+    const path = window.location.pathname || '/';
+    if (!/\/(?:catalogo-obras|work-catalogue)\.html$/.test(path)) return;
+    document.body?.classList.add('hmatias-catalogue');
+    loadStylesheet('link[data-hmatias-catalogue-typography]', premiumTypographyStylesheet, 'hmatiasCatalogueTypography');
   };
 
   const addInstagramLink = () => {
@@ -79,14 +82,17 @@
     });
 
     const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
-    if (isEn) {
-      document.querySelectorAll('.copyright').forEach(node => {
+    document.querySelectorAll('.copyright').forEach(node => {
+      node.innerHTML = node.innerHTML
+        .replace(/HMATIAS SU, LDA\./g, 'HMATIAS – Prestação de Serviços SU, LDA.')
+        .replace(/\s*·\s*Matrícula:\s*24094-23\/230713\.?/gi, '');
+      if (isEn) {
         node.innerHTML = node.innerHTML
           .replace(/NIF:/g, 'Tax ID:')
           .replace(/Registo Comercial:/g, 'Commercial Registration:')
           .replace(/Matrícula:/g, 'Registration No.:');
-      });
-    }
+      }
+    });
   };
 
   const ensureKartaAccess = () => {
@@ -142,7 +148,7 @@
 
   const run = () => {
     ensureSharedAssets();
-    cleanupLegacyHomepageLeadership();
+    ensureCatalogueIdentity();
     addInstagramLink();
     normaliseSharedLinks();
     ensureKartaAccess();
@@ -150,7 +156,6 @@
   };
 
   ensureSharedAssets();
-  cleanupLegacyHomepageLeadership();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once: true });
   else run();
 })();
