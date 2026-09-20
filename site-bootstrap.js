@@ -9,6 +9,12 @@
   const premiumTypographyStylesheet = 'premium-typography.css?v=20260920-final2';
   const brandLockStylesheet = 'brand-lock.css?v=20260920-final1';
   const corporateCleanupStylesheet = 'corporate-cleanup.css?v=20260920-final1';
+  const officialEmail = 'geral@comercialhmatiasps.com';
+  const inactiveEmails = new Set([
+    'geral@hmatiasps.ao',
+    'comercial@hmatiasps.ao',
+    'info@comercialhmatiasps.com'
+  ]);
 
   const loadStylesheet = (selector, href, datasetName) => {
     if (document.querySelector(selector) || document.querySelector('link[href*="' + href.split('?')[0] + '"]')) return;
@@ -73,6 +79,38 @@
       icon.setAttribute('aria-hidden', 'true');
       link.appendChild(icon);
       group.appendChild(link);
+    });
+  };
+
+  const normalizeOfficialEmail = () => {
+    document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+      const href = (link.getAttribute('href') || '').trim();
+      const raw = href.slice(7);
+      const [address, suffix = ''] = raw.split(/(?=[?])/);
+      if (!inactiveEmails.has(address.toLowerCase())) return;
+      link.setAttribute('href', 'mailto:' + officialEmail + suffix);
+      if ((link.textContent || '').trim().toLowerCase() === address.toLowerCase()) {
+        link.textContent = officialEmail;
+      }
+    });
+
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(node => {
+      let value = node.nodeValue || '';
+      inactiveEmails.forEach(email => {
+        value = value.replace(new RegExp(email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), officialEmail);
+      });
+      if (value !== node.nodeValue) node.nodeValue = value;
+    });
+
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(script => {
+      let value = script.textContent || '';
+      inactiveEmails.forEach(email => {
+        value = value.replace(new RegExp(email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), officialEmail);
+      });
+      script.textContent = value;
     });
   };
 
@@ -156,6 +194,7 @@
   const run = () => {
     ensureCatalogueIdentity();
     addInstagramLink();
+    normalizeOfficialEmail();
     normaliseSharedLinks();
     ensureKartaAccess();
     loadPortfolioLayer();
