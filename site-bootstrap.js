@@ -6,6 +6,7 @@
   const kartaStylesheet = 'karta-access.css?v=20260917-stable1';
   const premiumTypographyStylesheet = 'premium-typography.css?v=20260920-final2';
   const brandLockStylesheet = 'brand-lock.css?v=20260920-final1';
+  const corporateCleanupStylesheet = 'corporate-cleanup.css?v=20260920-final1';
 
   const loadStylesheet = (selector, href, datasetName) => {
     if (document.querySelector(selector)) return;
@@ -41,6 +42,7 @@
       loadStylesheet('link[data-hmatias-premium-typography]', premiumTypographyStylesheet, 'hmatiasPremiumTypography');
     }
     loadStylesheet('link[data-hmatias-brand-lock]', brandLockStylesheet, 'hmatiasBrandLock');
+    loadStylesheet('link[data-hmatias-corporate-cleanup]', corporateCleanupStylesheet, 'hmatiasCorporateCleanup');
     loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260920-premium2', 'hmatiasSiteEnhancements');
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260917-stable1', 'hmatiasGrowthIntelligence');
   };
