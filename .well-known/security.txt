@@ -1,5 +1,4 @@
-Contact: mailto:geral@hmatiasps.ao
-Contact: mailto:comercial@hmatiasps.ao
+Contact: mailto:geral@comercialhmatiasps.com
 Expires: 2027-09-15T23:59:59Z
 Preferred-Languages: pt, en
 Canonical: https://comercialhmatiasps.com/.well-known/security.txt
