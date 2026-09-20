@@ -24,7 +24,7 @@ jobs:
           done
           cat /tmp/hmatias-http.log
           exit 1
-      - name: Audit PT and EN homepages
+      - name: Audit homepages and credibility pages
         shell: bash
         run: |
           npx --yes lighthouse@latest http://127.0.0.1:8080/ \
@@ -43,6 +43,16 @@ jobs:
             --quiet --preset=desktop --chrome-flags="--headless --no-sandbox" \
             --only-categories=performance,accessibility,best-practices,seo \
             --output=json --output-path=./lighthouse-en-desktop.json
+          for page in credibilidade credibility; do
+            npx --yes lighthouse@latest "http://127.0.0.1:8080/$page.html" \
+              --quiet --chrome-flags="--headless --no-sandbox" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json --output-path="./lighthouse-$page-mobile.json"
+            npx --yes lighthouse@latest "http://127.0.0.1:8080/$page.html" \
+              --quiet --preset=desktop --chrome-flags="--headless --no-sandbox" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json --output-path="./lighthouse-$page-desktop.json"
+          done
       - name: Report and enforce quality floor
         shell: bash
         run: |
@@ -119,3 +129,32 @@ jobs:
               raise SystemExit(1)
           print('HMATIAS Lighthouse quality floor OK.')
           PY
+      - name: Extract visual evidence
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import base64
+          import json
+          from pathlib import Path
+          for path in Path('.').glob('lighthouse-*.json'):
+              report = json.loads(path.read_text())
+              shots = {
+                  'viewport': report.get('audits', {}).get('final-screenshot', {}).get('details', {}).get('data'),
+                  'full': report.get('fullPageScreenshot', {}).get('screenshot', {}).get('data'),
+              }
+              for kind, data in shots.items():
+                  if data and ',' in data:
+                      ext = 'jpg' if 'image/jpeg' in data.split(',', 1)[0] else 'png'
+                      Path(f'{path.stem}-{kind}.{ext}').write_bytes(base64.b64decode(data.split(',', 1)[1]))
+                      if path.stem in ('lighthouse-pt-mobile', 'lighthouse-pt-desktop', 'lighthouse-credibilidade-mobile', 'lighthouse-credibilidade-desktop') and kind == 'full':
+                          print(f'HMATIAS_VISUAL:{path.stem}:{data}')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visual-review-${{ github.sha }}
+          path: |
+            lighthouse-*.json
+            lighthouse-*.jpg
+            lighthouse-*.png
+          retention-days: 14
