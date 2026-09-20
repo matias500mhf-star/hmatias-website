@@ -42,6 +42,7 @@ jobs:
             ];
             for (const [name,url,viewport] of cases) {
               const page = await browser.newPage({viewport});
+              await page.emulateMedia({reducedMotion:'reduce'});
               await page.goto(url,{waitUntil:'networkidle'});
               await page.screenshot({path:path.join('preview-shots',name+'.png'),fullPage:true});
               await page.close();
