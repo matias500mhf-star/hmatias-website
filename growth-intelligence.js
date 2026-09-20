@@ -9,6 +9,8 @@
 
   const addSmartRfqAccess = () => {
     const isHome = path === '/' || path === '/index.html' || path === '/en.html';
+    // The stable homepage has a permanent RFQ link beside the contact form.
+    if (isHome && document.body.classList.contains('site-stable')) return;
     const coreServicePages = new Set([
       '/construcao.html', '/construction.html',
       '/facilities.html', '/facilities-en.html',

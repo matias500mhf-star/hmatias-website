@@ -51,7 +51,7 @@
   setMenuState(false);
 
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!reducedMotion&&'IntersectionObserver' in window){
+  if(!document.body.classList.contains('site-stable')&&!reducedMotion&&'IntersectionObserver' in window){
     const motionItems=[...document.querySelectorAll([
       '.section-heading',
       '.service-card',

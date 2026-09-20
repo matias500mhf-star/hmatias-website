@@ -15,7 +15,7 @@
     document.head.appendChild(link);
   };
 
-  if (isHome) {
+  if (isHome && !document.body.classList.contains('site-stable')) {
     loadStylesheet('link[data-hmatias-premium-editorial]', 'premium-editorial.css?v=20260920-v1', 'hmatiasPremiumEditorial');
   }
 

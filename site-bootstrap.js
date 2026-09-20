@@ -2,6 +2,8 @@
 (() => {
   'use strict';
 
+  const stablePresentation = document.body?.classList.contains('site-stable');
+
   const reviewStylesheet = 'site-review.css?v=20260917-stable2';
   const kartaStylesheet = 'karta-access.css?v=20260917-stable1';
   const premiumTypographyStylesheet = 'premium-typography.css?v=20260920-final2';
@@ -9,7 +11,7 @@
   const corporateCleanupStylesheet = 'corporate-cleanup.css?v=20260920-final1';
 
   const loadStylesheet = (selector, href, datasetName) => {
-    if (document.querySelector(selector)) return;
+    if (document.querySelector(selector) || document.querySelector('link[href*="' + href.split('?')[0] + '"]')) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = href;
@@ -36,15 +38,15 @@
   };
 
   const ensureSharedAssets = () => {
-    ensureReviewStylesheet();
+    if (!stablePresentation) ensureReviewStylesheet();
     loadStylesheet('link[data-hmatias-karta-access]', kartaStylesheet, 'hmatiasKartaAccess');
-    if (document.body?.classList.contains('hmatias-home')) {
+    if (!stablePresentation && document.body?.classList.contains('hmatias-home')) {
       loadStylesheet('link[data-hmatias-premium-typography]', premiumTypographyStylesheet, 'hmatiasPremiumTypography');
     }
     loadStylesheet('link[data-hmatias-brand-lock]', brandLockStylesheet, 'hmatiasBrandLock');
-    loadStylesheet('link[data-hmatias-corporate-cleanup]', corporateCleanupStylesheet, 'hmatiasCorporateCleanup');
-    loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260920-premium2', 'hmatiasSiteEnhancements');
-    loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260917-stable1', 'hmatiasGrowthIntelligence');
+    if (!stablePresentation) loadStylesheet('link[data-hmatias-corporate-cleanup]', corporateCleanupStylesheet, 'hmatiasCorporateCleanup');
+    loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260920-stable3', 'hmatiasSiteEnhancements');
+    loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260920-stable3', 'hmatiasGrowthIntelligence');
   };
 
   const ensureCatalogueIdentity = () => {
@@ -135,7 +137,7 @@
       navMenu.insertBefore(link, quote || language || null);
     }
 
-    const footerBrand = document.querySelector('footer .footer-grid > div:first-child');
+    const footerBrand = document.querySelector('footer .footer-grid > div:first-child, footer .footer-pro-brand');
     if (footerBrand && !footerBrand.querySelector('[data-karta-footer]')) {
       const link = document.createElement('a');
       link.className = 'footer-karta-link';
@@ -148,7 +150,7 @@
   };
 
   const loadPortfolioLayer = () => {
-    if (!document.body.classList.contains('hmatias-home')) return;
+    if (stablePresentation || !document.body.classList.contains('hmatias-home')) return;
     loadScript('script[data-hmatias-portfolio]', 'portfolio.js?v=20260920-premium2', 'hmatiasPortfolio', document.body);
   };
 
