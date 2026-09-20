@@ -5,7 +5,7 @@
 
   const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
   const path = window.location.pathname || '/';
-  const commercialEmail = 'comercial@hmatiasps.ao';
+  const commercialEmail = 'geral@comercialhmatiasps.com';
 
   const addSmartRfqAccess = () => {
     const isHome = path === '/' || path === '/index.html' || path === '/en.html';

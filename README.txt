@@ -14,8 +14,8 @@ Checklist técnico concluído:
 - Imagens de projetos lazy + async + dimensões explícitas.
 - Sem Google Fonts externo no código local.
 - WhatsApp: +244 948 806 673.
-- Email geral: geral@hmatiasps.ao.
-- Email comercial: Comercial@hmatiasps.ao.
+- Email geral: geral@comercialhmatiasps.com.
+- Email comercial: geral@comercialhmatiasps.com.
 - NIF: 5001578065.
 
 IMPORTANTE:

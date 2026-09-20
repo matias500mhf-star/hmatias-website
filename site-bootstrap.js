@@ -11,9 +11,9 @@
   const corporateCleanupStylesheet = 'corporate-cleanup.css?v=20260920-final1';
   const officialEmail = 'geral@comercialhmatiasps.com';
   const inactiveEmails = new Set([
-    'geral@hmatiasps.ao',
-    'comercial@hmatiasps.ao',
-    'info@comercialhmatiasps.com'
+    'geral@comercialhmatiasps.com',
+    'geral@comercialhmatiasps.com',
+    'geral@comercialhmatiasps.com'
   ]);
 
   const loadStylesheet = (selector, href, datasetName) => {

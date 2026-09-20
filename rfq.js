@@ -40,7 +40,7 @@
     const placeholder = preview?.dataset.placeholder || '';
     if (preview && placeholder) preview.textContent = placeholder;
     if (emailLink) {
-      emailLink.href = 'mailto:comercial@hmatiasps.ao';
+      emailLink.href = 'mailto:geral@comercialhmatiasps.com';
       emailLink.setAttribute('aria-disabled', 'true');
     }
     if (whatsappLink) {
@@ -116,7 +116,7 @@
   const updateChannels = summary => {
     const subject = isEn ? `${reference} — HMATIAS RFQ request` : `${reference} — Pedido de cotação HMATIAS`;
     if (emailLink) {
-      emailLink.href = `mailto:comercial@hmatiasps.ao?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(summary)}`;
+      emailLink.href = `mailto:geral@comercialhmatiasps.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(summary)}`;
       emailLink.removeAttribute('aria-disabled');
     }
     if (whatsappLink) {
