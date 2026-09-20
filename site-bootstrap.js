@@ -4,7 +4,7 @@
 
   const reviewStylesheet = 'site-review.css?v=20260917-stable2';
   const kartaStylesheet = 'karta-access.css?v=20260917-stable1';
-  const premiumTypographyStylesheet = 'premium-typography.css?v=20260920-v2';
+  const premiumTypographyStylesheet = 'premium-typography.css?v=20260920-final1';
 
   const loadStylesheet = (selector, href, datasetName) => {
     if (document.querySelector(selector)) return;
@@ -37,7 +37,7 @@
   const ensureSharedAssets = () => {
     ensureReviewStylesheet();
     loadStylesheet('link[data-hmatias-karta-access]', kartaStylesheet, 'hmatiasKartaAccess');
-    loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260917-stable2', 'hmatiasSiteEnhancements');
+    loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260920-premium2', 'hmatiasSiteEnhancements');
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20260917-stable1', 'hmatiasGrowthIntelligence');
   };
 
@@ -46,6 +46,10 @@
     if (!/\/(?:catalogo-obras|work-catalogue)\.html$/.test(path)) return;
     document.body?.classList.add('hmatias-catalogue');
     loadStylesheet('link[data-hmatias-catalogue-typography]', premiumTypographyStylesheet, 'hmatiasCatalogueTypography');
+    const showcase = document.querySelector('link[href*="final-showcase.css"]');
+    if (showcase && !showcase.getAttribute('href')?.includes('v=20260920-final1')) {
+      showcase.href = 'final-showcase.css?v=20260920-final1';
+    }
   };
 
   const addInstagramLink = () => {
@@ -141,9 +145,14 @@
     }
   };
 
+  const removeLegacyHomeLeadership = () => {
+    if (!document.body.classList.contains('hmatias-home')) return;
+    document.querySelectorAll('main > section.leadership').forEach(section => section.remove());
+  };
+
   const loadPortfolioLayer = () => {
     if (!document.body.classList.contains('hmatias-home')) return;
-    loadScript('script[data-hmatias-portfolio]', 'portfolio.js?v=20260917-stable2', 'hmatiasPortfolio', document.body);
+    loadScript('script[data-hmatias-portfolio]', 'portfolio.js?v=20260920-premium2', 'hmatiasPortfolio', document.body);
   };
 
   const run = () => {
@@ -151,6 +160,7 @@
     ensureCatalogueIdentity();
     addInstagramLink();
     normaliseSharedLinks();
+    removeLegacyHomeLeadership();
     ensureKartaAccess();
     loadPortfolioLayer();
   };
