@@ -63,6 +63,22 @@ jobs:
               scores = {key: cats[key]['score'] for key in floors}
               rendered = ' | '.join(f"{key}={round(value * 100)}" for key, value in scores.items())
               print(f"{path.name}: {rendered}")
+
+              print(f"Accessibility findings for {path.name}:")
+              seen = set()
+              for ref in cats['accessibility'].get('auditRefs', []):
+                  audit_id = ref.get('id')
+                  if not audit_id or audit_id in seen:
+                      continue
+                  seen.add(audit_id)
+                  audit = data.get('audits', {}).get(audit_id, {})
+                  score = audit.get('score')
+                  if score is not None and score < 1:
+                      title = audit.get('title', audit_id)
+                      display = audit.get('displayValue', '')
+                      detail = f" | {display}" if display else ''
+                      print(f" - {audit_id}: score={score} | {title}{detail}")
+
               for key, floor in floors.items():
                   if scores[key] < floor:
                       failures.append(f"{path.name}: {key} {scores[key]:.2f} < {floor:.2f}")
