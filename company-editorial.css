@@ -1,0 +1,173 @@
+/* HMATIAS premium About + Leadership — homepage only. */
+body.hmatias-home #empresa.company{
+  position:relative;
+  padding:122px 0 118px;
+  overflow:hidden;
+  background:#071d33;
+  color:#fff;
+}
+body.hmatias-home #empresa.company::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/96px 100%,
+    radial-gradient(circle at 82% 18%,rgba(72,186,245,.14),transparent 30%);
+}
+body.hmatias-home #empresa .company-impact-grid{
+  position:relative;
+  z-index:1;
+  display:block;
+}
+body.hmatias-home .company-editorial{
+  display:grid;
+  grid-template-columns:minmax(0,1.22fr) minmax(300px,.78fr);
+  gap:86px;
+  align-items:start;
+}
+body.hmatias-home .company-story .eyebrow,
+body.hmatias-home .leadership-copy .eyebrow{
+  color:#8fd0f3;
+}
+body.hmatias-home .company-story h2{
+  max-width:11ch;
+  margin:18px 0 30px;
+  font-family:var(--hm-editorial-display);
+  font-size:clamp(2.8rem,5.3vw,5.7rem);
+  line-height:.94;
+  letter-spacing:-.062em;
+  font-weight:600;
+  color:#fff;
+}
+body.hmatias-home .company-story h2 span{color:#77c5f0}
+body.hmatias-home .company-story .company-intro{
+  max-width:62ch;
+  margin:0;
+  color:rgba(232,242,249,.84);
+  font-size:1.03rem;
+  line-height:1.82;
+}
+body.hmatias-home .company-story .company-intro + .company-intro{
+  margin-top:18px;
+  color:rgba(215,229,239,.7);
+}
+body.hmatias-home .company-facts{
+  display:grid;
+  border-top:1px solid rgba(255,255,255,.18);
+}
+body.hmatias-home .company-fact{
+  display:grid;
+  grid-template-columns:116px 1fr;
+  gap:22px;
+  align-items:baseline;
+  padding:21px 0;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+body.hmatias-home .company-fact small{
+  font-family:var(--hm-editorial-mono);
+  color:#78b9df;
+  font-size:.61rem;
+  font-weight:600;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+body.hmatias-home .company-fact strong{
+  font-family:var(--hm-editorial-display);
+  color:#fff;
+  font-size:.92rem;
+  font-weight:600;
+  letter-spacing:-.015em;
+}
+body.hmatias-home .leadership-editorial{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:minmax(240px,.72fr) minmax(0,1.28fr);
+  gap:70px;
+  align-items:center;
+  margin-top:92px;
+  padding-top:64px;
+  border-top:1px solid rgba(255,255,255,.16);
+}
+body.hmatias-home .leadership-mark{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:min(100%,300px);
+  aspect-ratio:1/1;
+  border:1px solid rgba(255,255,255,.17);
+  background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
+}
+body.hmatias-home .leadership-mark::before,
+body.hmatias-home .leadership-mark::after{
+  content:"";
+  position:absolute;
+  background:rgba(255,255,255,.12);
+}
+body.hmatias-home .leadership-mark::before{left:24px;right:24px;top:50%;height:1px}
+body.hmatias-home .leadership-mark::after{top:24px;bottom:24px;left:50%;width:1px}
+body.hmatias-home .leadership-mark span{
+  position:relative;
+  z-index:1;
+  font-family:var(--hm-editorial-display);
+  color:#fff;
+  font-size:clamp(3.8rem,7vw,6.4rem);
+  font-weight:500;
+  letter-spacing:-.08em;
+}
+body.hmatias-home .leadership-copy h3{
+  margin:14px 0 4px;
+  font-family:var(--hm-editorial-display);
+  color:#fff;
+  font-size:clamp(2rem,3.2vw,3.55rem);
+  line-height:1;
+  letter-spacing:-.052em;
+  font-weight:600;
+}
+body.hmatias-home .leadership-role{
+  display:block;
+  margin-bottom:22px;
+  font-family:var(--hm-editorial-mono);
+  color:#82c8ee;
+  font-size:.67rem;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+body.hmatias-home .leadership-copy p{
+  max-width:62ch;
+  margin:0;
+  color:rgba(219,233,242,.76);
+  font-size:.94rem;
+  line-height:1.78;
+}
+body.hmatias-home .leadership-link{
+  display:inline-flex;
+  align-items:center;
+  margin-top:24px;
+  padding-bottom:5px;
+  border-bottom:1px solid rgba(130,200,238,.55);
+  color:#a9daf4;
+  font-family:var(--hm-editorial-body);
+  font-size:.78rem;
+  font-weight:700;
+  text-decoration:none;
+}
+body.hmatias-home .leadership-link:hover{color:#fff;border-color:#fff}
+@media(max-width:900px){
+  body.hmatias-home #empresa.company{padding:94px 0 90px}
+  body.hmatias-home .company-editorial{grid-template-columns:1fr;gap:48px}
+  body.hmatias-home .company-story h2{max-width:13ch}
+  body.hmatias-home .company-facts{grid-template-columns:repeat(2,minmax(0,1fr));border-top:0;gap:0 28px}
+  body.hmatias-home .leadership-editorial{grid-template-columns:220px 1fr;gap:42px;margin-top:72px;padding-top:52px}
+}
+@media(max-width:650px){
+  body.hmatias-home #empresa.company{padding:78px 0 76px}
+  body.hmatias-home .company-story h2{font-size:clamp(2.55rem,12vw,4rem);line-height:.96}
+  body.hmatias-home .company-facts{grid-template-columns:1fr}
+  body.hmatias-home .company-fact{grid-template-columns:104px 1fr}
+  body.hmatias-home .leadership-editorial{grid-template-columns:1fr;gap:30px;margin-top:58px;padding-top:44px}
+  body.hmatias-home .leadership-mark{width:160px}
+  body.hmatias-home .leadership-mark span{font-size:3.7rem}
+}
