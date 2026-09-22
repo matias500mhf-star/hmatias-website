@@ -2,6 +2,7 @@
   'use strict';
   const $=s=>document.querySelector(s);
   let dataReady=false;
+  let apiSequence=0;
 
   const isPt=()=>document.documentElement.lang.toLowerCase().startsWith('pt');
   const labels={
@@ -9,11 +10,39 @@
     pt:{discovered:'Requer verificação',recently_seen:'Informação recente',source_checked:'Fonte verificada',supplier_confirmed:'Fornecedor confirmou',in_stock_confirmed:'Stock confirmado',needs_reconfirmation:'Requer nova confirmação',unavailable:'Indisponível',none:'Sem resultado verificado na base',awaiting:'Aguardando fonte verificada',verified:'Resultado verificado na base'}
   };
   const L=key=>(isPt()?labels.pt:labels.en)[key]||key;
+  const rank={in_stock_confirmed:6,supplier_confirmed:5,source_checked:4,recently_seen:3,needs_reconfirmation:2,discovered:1,unavailable:0};
 
   const formatDate=value=>{
     if(!value) return '';
     try{return new Intl.DateTimeFormat(isPt()?'pt-AO':'en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));}catch{return value;}
   };
+
+  function loadScript(src){
+    return new Promise((resolve,reject)=>{
+      const existing=document.querySelector(`script[src="${src}"]`);
+      if(existing){
+        if(existing.dataset.loaded==='true') return resolve();
+        existing.addEventListener('load',()=>resolve(),{once:true});
+        existing.addEventListener('error',reject,{once:true});
+        return;
+      }
+      const script=document.createElement('script');
+      script.src=src;
+      script.dataset.loaded='false';
+      script.addEventListener('load',()=>{script.dataset.loaded='true';resolve();},{once:true});
+      script.addEventListener('error',reject,{once:true});
+      document.head.appendChild(script);
+    });
+  }
+
+  async function ensureRuntimeAPI(){
+    try{
+      if(!window.SOURCE_AO_RUNTIME) await loadScript('runtime-config.js');
+      if(!window.SourceAOAPI) await loadScript('api-client.js');
+    }catch(error){
+      console.warn('[Source AO API bootstrap]',error);
+    }
+  }
 
   function ensureList(){
     let list=$('#verifiedMatches');
@@ -44,7 +73,7 @@
 
   function renderMatches(result){
     const list=ensureList();
-    const visible=result.matches.filter(m=>m.status!=='discovered').slice(0,3);
+    const visible=(result.matches||[]).filter(m=>m.status!=='discovered').slice(0,3);
     list.innerHTML='';
     if(!visible.length){list.hidden=true;return;}
     list.hidden=false;
@@ -64,21 +93,13 @@
     });
   }
 
-  function refreshSearch(){
-    if(!dataReady||!window.SourceAOData?.isReady()) return;
-    const query=$('#searchInput')?.value.trim();
-    if(!query||$('#resultZone')?.hidden) return;
-    const location=$('#locationInput')?.value||'Luanda';
-    const result=window.SourceAOData.search(query,location);
-    const category=$('#categoryValue');
-    if(category) category.textContent=window.SourceAOData.classify(query,isPt()?'pt':'en');
-
+  function applyResult(result){
     const status=$('#resultStatus');
     const freshness=$('.result-meta>div:nth-child(3) strong');
     const confidence=$('.confidence-card strong');
     const dot=$('.confidence-dot');
     const best=result.best_status||'discovered';
-    const hasIndexed=result.matches.length>0;
+    const hasIndexed=(result.matches||[]).length>0;
 
     if(status){
       status.textContent=L(best);
@@ -89,6 +110,53 @@
     if(confidence) confidence.textContent=['supplier_confirmed','in_stock_confirmed','source_checked'].includes(best)?L('verified'):L('awaiting');
     if(dot) dot.dataset.state=best;
     renderMatches(result);
+  }
+
+  function refreshStaticSearch(){
+    if(!dataReady||!window.SourceAOData?.isReady()) return;
+    const query=$('#searchInput')?.value.trim();
+    if(!query||$('#resultZone')?.hidden) return;
+    const location=$('#locationInput')?.value||'Luanda';
+    const result=window.SourceAOData.search(query,location);
+    const category=$('#categoryValue');
+    if(category) category.textContent=window.SourceAOData.classify(query,isPt()?'pt':'en');
+    applyResult(result);
+  }
+
+  function fromApi(payload){
+    const matches=(payload?.results||[]).map(row=>{
+      if(row.type==='service'){
+        return {kind:'service',provider:{name:row.name,service_category:row.category,location:row.location,last_verified_at:row.verified_at},status:row.status||'discovered'};
+      }
+      return {
+        kind:'item',
+        item:{name:row.name,specification:row.specification||'',category:row.category},
+        supplier:row.supplier||null,
+        observation:{verified_at:row.verified_at||null,observed_at:row.verified_at||null,location:row.supplier?.location||null},
+        status:row.status||'discovered'
+      };
+    }).sort((a,b)=>(rank[b.status]||0)-(rank[a.status]||0));
+    return {matches,best_status:matches[0]?.status||'discovered'};
+  }
+
+  async function refreshApiSearch(){
+    if(!window.SourceAOAPI?.isConfigured?.()) return;
+    const query=$('#searchInput')?.value.trim();
+    if(!query||$('#resultZone')?.hidden) return;
+    const location=$('#locationInput')?.value||'Luanda';
+    const sequence=++apiSequence;
+    try{
+      const payload=await window.SourceAOAPI.search(query,location);
+      if(sequence!==apiSequence) return;
+      applyResult(fromApi(payload));
+    }catch(error){
+      console.warn('[Source AO API search fallback]',error);
+    }
+  }
+
+  function refreshSearch(){
+    refreshStaticSearch();
+    void refreshApiSearch();
   }
 
   function enrichRadar(){
@@ -105,14 +173,34 @@
     });
   }
 
-  function later(){setTimeout(()=>{refreshSearch();enrichRadar();},0);}
+  async function enrichRadarApi(){
+    if(!window.SourceAOAPI?.isConfigured?.()) return;
+    const rows=[...document.querySelectorAll('#radarList .radar-item')];
+    await Promise.all(rows.map(async row=>{
+      const q=row.querySelector('strong')?.textContent?.trim();
+      const small=row.querySelector('small');
+      if(!q||!small) return;
+      const loc=(small.textContent.split(' · ')[0]||'Luanda').trim();
+      try{
+        const result=fromApi(await window.SourceAOAPI.search(q,loc));
+        const best=result.best_status||'discovered';
+        small.textContent=loc+' · '+L(best==='discovered'?'awaiting':best);
+      }catch(error){
+        console.warn('[Source AO Radar API fallback]',error);
+      }
+    }));
+  }
+
+  function later(){setTimeout(()=>{refreshSearch();enrichRadar();void enrichRadarApi();},0);}
 
   document.addEventListener('DOMContentLoaded',async()=>{
     ensureList();
+    await ensureRuntimeAPI();
     await window.SourceAOData?.init();
     dataReady=true;
     refreshSearch();
     enrichRadar();
+    void enrichRadarApi();
 
     $('#searchForm')?.addEventListener('submit',later);
     document.querySelectorAll('[data-query]').forEach(btn=>btn.addEventListener('click',later));
@@ -122,6 +210,6 @@
     $('#addRadar')?.addEventListener('click',later);
 
     const list=$('#radarList');
-    if(list) new MutationObserver(()=>enrichRadar()).observe(list,{childList:true,subtree:true});
+    if(list) new MutationObserver(()=>{enrichRadar();void enrichRadarApi();}).observe(list,{childList:true,subtree:true});
   });
 })();
