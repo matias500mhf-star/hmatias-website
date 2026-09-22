@@ -50,6 +50,7 @@ jobs:
           node --check source-ao/api-client.js
           node --check source-ao/ops.js
           node --check source-ao/confirm.js
+          node --check source-ao/review.js
       - name: Validate Ops Desk security contract
         shell: bash
         run: |
@@ -59,6 +60,18 @@ jobs:
           grep -q "let adminToken=''" source-ao/ops.js
           grep -q 'confirmation_url:discardedConfirmationUrl' source-ao/ops.js
           ! grep -Eq 'localStorage\.(setItem|getItem)\([^)]*adminToken|sessionStorage\.(setItem|getItem)\([^)]*adminToken' source-ao/ops.js
+      - name: Validate Review Desk approval gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'noindex,nofollow,noarchive' source-ao/review.html
+          grep -q 'no-referrer' source-ao/review.html
+          grep -q 'truth-checkbox' source-ao/review.html
+          grep -q 'catalog-select' source-ao/review.html
+          grep -q "let adminToken=''" source-ao/review.js
+          grep -q 'const checked=card.querySelector' source-ao/review.js
+          grep -q 'if(!itemId||!checked)' source-ao/review.js
+          ! grep -Eq 'localStorage|sessionStorage' source-ao/review.js
       - name: Validate backend syntax
         run: node --check source-ao/backend/src/index.js
       - name: Validate staging scripts syntax
