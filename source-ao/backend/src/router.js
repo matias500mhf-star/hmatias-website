@@ -8,6 +8,7 @@ import {
 } from './sourcing.js';
 import {enforceRateLimit,hardenResponse,safeRequestLog} from './security.js';
 import {readinessResponse} from './health.js';
+import {runMaintenance} from './maintenance.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -82,5 +83,17 @@ export default {
       env
     }));
     return hardened;
+  },
+
+  async scheduled(_controller,env,ctx){
+    ctx.waitUntil((async()=>{
+      try{
+        const result=await runMaintenance(env);
+        console.log(JSON.stringify({type:'source_ao_maintenance',...result}));
+      }catch(error){
+        console.error(JSON.stringify({type:'source_ao_maintenance_error',message:error instanceof Error?error.message:'unknown_error'}));
+        throw error;
+      }
+    })());
   }
 };
