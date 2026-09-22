@@ -188,7 +188,7 @@
     if (!document.querySelector('style[data-procura-footer-style]')) {
       const style = document.createElement('style');
       style.dataset.procuraFooterStyle = 'true';
-      style.textContent = '.footer-procura-link{display:inline-flex;align-items:center;gap:10px;margin-top:12px;text-decoration:none;color:inherit;max-width:max-content}.footer-procura-mark{display:grid;place-items:center;width:34px;height:34px;border:1px solid rgba(255,255,255,.22);border-radius:10px;background:linear-gradient(145deg,#062d56,#0b65a4);color:#fff;font-size:12px;font-weight:900;box-shadow:0 8px 20px rgba(0,0,0,.12)}.footer-procura-copy{display:flex;flex-direction:column;line-height:1.15}.footer-procura-copy small{font-size:10px;opacity:.68;text-transform:uppercase;letter-spacing:.08em}.footer-procura-copy strong{font-size:13px;letter-spacing:-.01em}.footer-procura-link:hover .footer-procura-mark{transform:translateY(-1px)}';
+      style.textContent = '.footer-procura-link{display:inline-flex;align-items:center;gap:10px;margin-top:18px;text-decoration:none;color:inherit;max-width:max-content}.footer-procura-mark{display:grid;place-items:center;width:34px;height:34px;border:1px solid rgba(255,255,255,.22);border-radius:10px;background:linear-gradient(145deg,#062d56,#0b65a4);color:#fff;font-size:12px;font-weight:900;box-shadow:0 8px 20px rgba(0,0,0,.12)}.footer-procura-copy{display:flex;flex-direction:column;line-height:1.15}.footer-procura-copy small{font-size:10px;opacity:.68;text-transform:uppercase;letter-spacing:.08em}.footer-procura-copy strong{font-size:13px;letter-spacing:-.01em}.footer-procura-link:hover .footer-procura-mark{transform:translateY(-1px)}';
       document.head.appendChild(style);
     }
 
@@ -196,8 +196,8 @@
     link.className = 'footer-procura-link';
     link.href = 'procura.html';
     link.dataset.procuraFooter = 'true';
-    link.setAttribute('aria-label', 'Abrir Procura — pesquisa de materiais e fornecedores');
-    link.innerHTML = '<span class="footer-procura-mark" aria-hidden="true">P</span><span class="footer-procura-copy"><small>Pesquisa comercial</small><strong>Procura</strong></span>';
+    link.setAttribute('aria-label', 'Abrir Source AO — sourcing e pesquisa comercial');
+    link.innerHTML = '<span class="footer-procura-mark" aria-hidden="true">S</span><span class="footer-procura-copy"><small>by HMATIAS</small><strong>Source AO</strong></span>';
     footerBrand.appendChild(link);
   };
 
