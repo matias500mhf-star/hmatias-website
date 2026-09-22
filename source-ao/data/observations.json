@@ -1,0 +1,6 @@
+{
+  "version":"0.1",
+  "updated_at":"2026-09-22T14:27:00+01:00",
+  "observations":[],
+  "note":"Each observation is an immutable market fact captured at a point in time. Current availability is computed from verification status and freshness; it is never assumed."
+}
