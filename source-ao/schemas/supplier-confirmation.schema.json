@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sourceao.local/schemas/supplier-confirmation.schema.json",
+  "title": "Source AO Supplier Confirmation",
+  "type": "object",
+  "required": [
+    "confirmation_id",
+    "request_id",
+    "supplier_id",
+    "item_or_service",
+    "status",
+    "confirmed_at",
+    "confirmation_channel",
+    "evidence_reference"
+  ],
+  "properties": {
+    "confirmation_id": {"type":"string","minLength":8},
+    "request_id": {"type":"string","minLength":8},
+    "supplier_id": {"type":"string","minLength":3},
+    "item_id": {"type":["string","null"]},
+    "item_or_service": {"type":"string","minLength":2},
+    "specification": {"type":["string","null"]},
+    "quantity_requested": {"type":["number","string","null"]},
+    "unit": {"type":["string","null"]},
+    "location": {"type":["string","null"]},
+    "status": {
+      "enum": ["supplier_confirmed","in_stock_confirmed","unavailable"]
+    },
+    "quantity_confirmed": {"type":["number","string","null"]},
+    "price": {"type":["number","null"]},
+    "currency": {"type":["string","null"],"pattern":"^[A-Z]{3}$"},
+    "lead_time": {"type":["string","null"]},
+    "valid_until": {"type":["string","null"],"format":"date-time"},
+    "confirmed_at": {"type":"string","format":"date-time"},
+    "confirmation_channel": {
+      "enum": ["whatsapp","phone","email","supplier_portal","official_document","in_person"]
+    },
+    "confirmed_by_name": {"type":["string","null"]},
+    "confirmed_by_role": {"type":["string","null"]},
+    "evidence_reference": {"type":"string","minLength":3},
+    "reviewed_by": {"type":["string","null"]},
+    "reviewed_at": {"type":["string","null"],"format":"date-time"},
+    "notes": {"type":["string","null"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties":{"status":{"const":"in_stock_confirmed"}}},
+      "then": {
+        "required": ["quantity_confirmed","valid_until"],
+        "properties": {
+          "valid_until": {"type":"string","format":"date-time"}
+        }
+      }
+    },
+    {
+      "if": {"required":["price"],"properties":{"price":{"type":"number"}}},
+      "then": {"required":["currency"]}
+    }
+  ],
+  "additionalProperties": false
+}
