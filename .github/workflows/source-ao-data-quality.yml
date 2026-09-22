@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - 'source-ao/data/**'
+      - 'source-ao/schemas/**'
       - 'source-ao/data-contract.json'
       - 'source-ao/data-engine.js'
       - 'source-ao/validate-data.mjs'
@@ -13,6 +14,7 @@ on:
       - source-ao-v1
     paths:
       - 'source-ao/data/**'
+      - 'source-ao/schemas/**'
       - 'source-ao/data-contract.json'
       - 'source-ao/data-engine.js'
       - 'source-ao/validate-data.mjs'
