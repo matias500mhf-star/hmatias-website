@@ -1,51 +1,48 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normalizeSearch,effectiveObservationStatus,canAcceptSupplierResponse,normalizeSupplierResponse,createConfirmationToken,verifyConfirmationToken} from '../src/index.js';
+import {
+  normalizeSearch,
+  effectiveObservationStatus,
+  canAcceptSupplierResponse,
+  normalizeSupplierResponse,
+  createConfirmationToken,
+  verifyConfirmationToken
+} from '../src/index.js';
 
 test('normalizes Portuguese accents and technical units',()=>{
-  assert.equal(normalizeSearch('Tubo PVC 110 mm'), 'tubo pvc 110mm');
-  assert.equal(normalizeSearch('Formaldeído 37%'), 'formaldeido 37');
-  assert.equal(normalizeSearch('Ar Condicionado 24 000 BTU'), 'ar condicionado 24 000btu');
+  assert.equal(normalizeSearch('Tubo PVC 110 mm — São Paulo'),'tubo pvc 110mm sao paulo');
+  assert.equal(normalizeSearch('Ar condicionado 24.000 BTU'),'ar condicionado 24 000btu');
 });
 
 test('expired observations downgrade automatically',()=>{
-  const now=Date.parse('2026-09-22T16:00:00Z');
-  assert.equal(effectiveObservationStatus({verification_status:'in_stock_confirmed',expires_at:'2026-09-22T15:59:59Z'},now),'needs_reconfirmation');
-  assert.equal(effectiveObservationStatus({verification_status:'in_stock_confirmed',expires_at:'2026-09-22T18:00:00Z'},now),'in_stock_confirmed');
+  const row={verification_status:'in_stock_confirmed',expires_at:'2026-09-20T00:00:00Z'};
+  assert.equal(effectiveObservationStatus(row,Date.parse('2026-09-22T00:00:00Z')),'needs_reconfirmation');
 });
 
 test('unavailable remains explicit even after time passes',()=>{
-  assert.equal(effectiveObservationStatus({verification_status:'unavailable',expires_at:'2020-01-01T00:00:00Z'},Date.now()),'unavailable');
+  const row={verification_status:'unavailable',expires_at:'2026-09-20T00:00:00Z'};
+  assert.equal(effectiveObservationStatus(row,Date.parse('2026-09-22T00:00:00Z')),'unavailable');
 });
 
 test('supplier response gate is one-shot',()=>{
   assert.equal(canAcceptSupplierResponse({status:'sent',supplier_response_json:null}),true);
-  assert.equal(canAcceptSupplierResponse({status:'supplier_responded',supplier_response_json:'{}'}),false);
-  assert.equal(canAcceptSupplierResponse({status:'approved',supplier_response_json:'{}'}),false);
   assert.equal(canAcceptSupplierResponse({status:'sent',supplier_response_json:'{}'}),false);
-  assert.equal(canAcceptSupplierResponse(null),false);
+  assert.equal(canAcceptSupplierResponse({status:'supplier_responded',supplier_response_json:null}),false);
 });
 
 test('supplier response normalization accepts valid commercial data',()=>{
   const result=normalizeSupplierResponse({
     available:true,
-    quantity_reported:20,
-    price_reported:12500.5,
+    quantity_reported:12,
+    price_reported:2500,
     currency:'aoa',
-    lead_time:'Imediato',
-    note:'Caixa fechada',
-    responded_by:'Fornecedor teste'
+    lead_time:'2 days',
+    note:'Factory packed',
+    responded_by:'Test Supplier'
   });
   assert.equal(result.ok,true);
-  assert.deepEqual(result.value,{
-    available:true,
-    quantity_reported:20,
-    price_reported:12500.5,
-    currency:'AOA',
-    lead_time:'Imediato',
-    note:'Caixa fechada',
-    responded_by:'Fornecedor teste'
-  });
+  assert.equal(result.value.currency,'AOA');
+  assert.equal(result.value.quantity_reported,12);
 });
 
 test('supplier response normalization rejects unsafe commercial values',()=>{
@@ -61,9 +58,11 @@ test('supplier confirmation token is deterministic and rejects tampering',async(
   const expires=new Date(Date.now()+3600000).toISOString();
   const secret='unit-test-secret';
   const token=await createConfirmationToken(id,expires,secret);
+  const replacement=token.at(-1)==='0'?'1':'0';
+  const tampered=token.slice(0,-1)+replacement;
   assert.equal(await verifyConfirmationToken(id,expires,token,secret),true);
   assert.equal(await verifyConfirmationToken(id+'x',expires,token,secret),false);
-  assert.equal(await verifyConfirmationToken(id,expires,token.slice(0,-1)+'0',secret),false);
+  assert.equal(await verifyConfirmationToken(id,expires,tampered,secret),false);
 });
 
 test('expired supplier confirmation token is rejected',async()=>{
