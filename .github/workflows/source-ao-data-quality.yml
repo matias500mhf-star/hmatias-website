@@ -48,6 +48,17 @@ jobs:
           node --check source-ao/verified-results.js
           node --check source-ao/runtime-config.js
           node --check source-ao/api-client.js
+          node --check source-ao/ops.js
+          node --check source-ao/confirm.js
+      - name: Validate Ops Desk security contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'type="password"' source-ao/ops.html
+          grep -q 'runtime-config.js' source-ao/ops.html
+          grep -q "let adminToken=''" source-ao/ops.js
+          grep -q 'confirmation_url:discardedConfirmationUrl' source-ao/ops.js
+          ! grep -Eq 'localStorage\.(setItem|getItem)\([^)]*adminToken|sessionStorage\.(setItem|getItem)\([^)]*adminToken' source-ao/ops.js
       - name: Validate backend syntax
         run: node --check source-ao/backend/src/index.js
       - name: Validate staging scripts syntax
