@@ -19,9 +19,18 @@ function json(env,data,status=200){return new Response(JSON.stringify(data),{sta
 function fail(env,status,code,message){return json(env,{ok:false,error:{code,message}},status);}
 function iso(date=new Date()){return date.toISOString();}
 function id(prefix){return `${prefix}_${crypto.randomUUID()}`;}
+
+function secureEqual(a,b){
+  if(typeof a!=='string'||typeof b!=='string'||a.length!==b.length) return false;
+  let diff=0;
+  for(let i=0;i<a.length;i++) diff|=a.charCodeAt(i)^b.charCodeAt(i);
+  return diff===0;
+}
+
 function isAdmin(request,env){
   const expected=env.ADMIN_API_TOKEN;
-  return Boolean(expected && (request.headers.get('authorization')||'')===`Bearer ${expected}`);
+  if(!expected) return false;
+  return secureEqual(request.headers.get('authorization')||'',`Bearer ${expected}`);
 }
 
 async function bodyJson(request){
@@ -33,6 +42,43 @@ export function normalizeRequirement(value=''){
   return value.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
     .replace(/(\d)\s+(mm|cm|m|kg|g|l|kw|kva|btu)\b/g,'$1$2')
     .replace(/[^a-z0-9]+/g,' ').trim();
+}
+
+function strictText(value,max,{required=false,min=0,defaultValue=''}={}){
+  const source=value==null?defaultValue:value;
+  if(typeof source!=='string'&&typeof source!=='number') return {ok:false,value:''};
+  const clean=String(source).trim();
+  if(required&&clean.length<Math.max(1,min)) return {ok:false,value:clean};
+  if(clean.length>max) return {ok:false,value:clean};
+  return {ok:true,value:clean};
+}
+
+export function validateSourcingRequestInput(data={}){
+  const requirement=strictText(data.requirement_text??data.item,240,{required:true,min:2});
+  if(!requirement.ok) return {ok:false,code:'invalid_requirement'};
+  const location=strictText(data.location,100,{required:true,min:1,defaultValue:'Luanda'});
+  if(!location.ok) return {ok:false,code:'invalid_location'};
+  const contact=strictText(data.requester_contact??data.contact,180,{required:true,min:5});
+  if(!contact.ok) return {ok:false,code:'invalid_contact'};
+  const category=strictText(data.category,100);
+  const specification=strictText(data.specification,300);
+  const unit=strictText(data.unit,40);
+  const neededBy=strictText(data.needed_by,40);
+  const requestedChannel=strictText(data.contact_channel,20);
+  if(!category.ok||!specification.ok||!unit.ok||!neededBy.ok||!requestedChannel.ok) return {ok:false,code:'field_too_long'};
+  const quantity=data.quantity==null||data.quantity===''?null:Number(data.quantity);
+  if(quantity!=null&&(!Number.isFinite(quantity)||quantity<0)) return {ok:false,code:'invalid_quantity'};
+  return {ok:true,value:{
+    requirement:requirement.value,
+    location:location.value,
+    contact:contact.value,
+    category:category.value||null,
+    specification:specification.value||null,
+    unit:unit.value||null,
+    neededBy:neededBy.value||null,
+    requestedChannel:requestedChannel.value.toLowerCase(),
+    quantity
+  }};
 }
 
 function bytesToB64Url(bytes){
@@ -70,7 +116,7 @@ export async function decryptPrivateText(payload,secret){
   const [ivPart,cipherPart]=String(payload||'').split('.');
   if(!ivPart||!cipherPart) throw new Error('Invalid encrypted payload');
   const key=await piiKey(secret);
-  const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64UrlToBytes(ivPart)},key,b64UrlToBytes(cipherPart));
+  const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64UrlToBytes(ivPart)},b64UrlToBytes(cipherPart));
   return dec.decode(plain);
 }
 
@@ -97,31 +143,29 @@ function publicRef(){
   return `SAO-${stamp}-${suffix}`;
 }
 
-function sanitizeString(value,max=300){return String(value??'').trim().slice(0,max);}
-
 export async function createSourcingRequest(request,env){
   const data=await bodyJson(request);
-  const requirement=sanitizeString(data.requirement_text||data.item,240);
-  const location=sanitizeString(data.location||'Luanda',100);
-  const contact=sanitizeString(data.requester_contact||data.contact,180);
-  if(requirement.length<2) return fail(env,400,'invalid_requirement','Describe the material, equipment or service required.');
-  if(!location) return fail(env,400,'location_required','Location is required.');
-  if(contact.length<5) return fail(env,400,'contact_required','A valid WhatsApp, phone or email contact is required.');
+  const validated=validateSourcingRequestInput(data);
+  if(!validated.ok){
+    const messages={
+      invalid_requirement:'Describe the material, equipment or service required (max 240 characters).',
+      invalid_location:'Location is required and must be under 100 characters.',
+      invalid_contact:'A valid WhatsApp, phone or email contact is required (max 180 characters).',
+      field_too_long:'One or more optional fields exceed the allowed length.',
+      invalid_quantity:'Quantity must be zero or a positive number.'
+    };
+    return fail(env,400,validated.code,messages[validated.code]||'Invalid sourcing request.');
+  }
   if(!env.PII_ENCRYPTION_KEY) return fail(env,503,'privacy_key_unavailable','Secure request intake is not configured.');
 
+  const v=validated.value;
   const requestId=id('sr');
   const reference=publicRef();
   const accessToken=crypto.randomUUID().replace(/-/g,'')+crypto.randomUUID().replace(/-/g,'');
   const tokenHash=await sha256Hex(accessToken);
-  const encryptedContact=await encryptPrivateText(contact,env.PII_ENCRYPTION_KEY);
-  const channel=inferChannel(contact,sanitizeString(data.contact_channel,20).toLowerCase());
-  const category=sanitizeString(data.category,100)||null;
-  const specification=sanitizeString(data.specification,300)||null;
-  const unit=sanitizeString(data.unit,40)||null;
-  const neededBy=sanitizeString(data.needed_by,40)||null;
-  const quantity=data.quantity==null||data.quantity===''?null:Number(data.quantity);
-  if(quantity!=null && (!Number.isFinite(quantity)||quantity<0)) return fail(env,400,'invalid_quantity','Quantity must be a positive number.');
-  const normalized=normalizeRequirement([requirement,specification||''].join(' '));
+  const encryptedContact=await encryptPrivateText(v.contact,env.PII_ENCRYPTION_KEY);
+  const channel=inferChannel(v.contact,v.requestedChannel);
+  const normalized=normalizeRequirement([v.requirement,v.specification||''].join(' '));
   const now=iso();
 
   await env.SOURCE_AO_DB.prepare(`
@@ -130,12 +174,12 @@ export async function createSourcingRequest(request,env){
       quantity,unit,location,needed_by,contact_channel,contact_encrypted,contact_hint,status,created_at,updated_at
     ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
   `).bind(
-    requestId,reference,tokenHash,requirement,normalized,category,specification,quantity,unit,location,
-    neededBy,channel,encryptedContact,contactHint(contact),'received',now,now
+    requestId,reference,tokenHash,v.requirement,normalized,v.category,v.specification,v.quantity,v.unit,v.location,
+    v.neededBy,channel,encryptedContact,contactHint(v.contact),'received',now,now
   ).run();
 
   return json(env,{ok:true,request:{
-    id:requestId,reference,status:'received',location,category,created_at:now,
+    id:requestId,reference,status:'received',location:v.location,category:v.category,created_at:now,
     access_token:accessToken,status_path:`/api/sourcing-requests/${requestId}?token=${accessToken}`
   }},201);
 }
@@ -149,7 +193,8 @@ export async function getSourcingRequest(request,env,requestId){
     FROM sourcing_requests WHERE id=?
   `).bind(requestId).first();
   if(!row) return fail(env,404,'request_not_found','Sourcing request does not exist.');
-  if((await sha256Hex(token))!==row.access_token_hash) return fail(env,403,'invalid_access_token','Private request token is invalid.');
+  const suppliedHash=await sha256Hex(token);
+  if(!secureEqual(suppliedHash,row.access_token_hash)) return fail(env,403,'invalid_access_token','Private request token is invalid.');
   return json(env,{ok:true,request:{
     id:row.id,reference:row.public_ref,requirement_text:row.requirement_text,category:row.category,
     specification:row.specification,quantity:row.quantity,unit:row.unit,location:row.location,
@@ -160,8 +205,10 @@ export async function getSourcingRequest(request,env,requestId){
 export async function listSourcingRequests(request,env){
   if(!isAdmin(request,env)) return fail(env,401,'unauthorized','Admin authorization required.');
   const url=new URL(request.url);
-  const requestedStatus=sanitizeString(url.searchParams.get('status'),30);
-  const limit=Math.min(Math.max(Number(url.searchParams.get('limit')||50),1),100);
+  const requestedStatus=String(url.searchParams.get('status')||'').trim();
+  if(requestedStatus&&!ALLOWED_STATUSES.has(requestedStatus)) return fail(env,400,'invalid_status','Unsupported sourcing request status.');
+  const rawLimit=Number(url.searchParams.get('limit')||50);
+  const limit=Number.isFinite(rawLimit)?Math.min(Math.max(Math.trunc(rawLimit),1),100):50;
   const stmt=requestedStatus
     ? env.SOURCE_AO_DB.prepare(`SELECT * FROM sourcing_requests WHERE status=? ORDER BY created_at DESC LIMIT ?`).bind(requestedStatus,limit)
     : env.SOURCE_AO_DB.prepare(`SELECT * FROM sourcing_requests ORDER BY created_at DESC LIMIT ?`).bind(limit);
@@ -183,18 +230,20 @@ export async function listSourcingRequests(request,env){
 export async function updateSourcingRequestStatus(request,env,requestId){
   if(!isAdmin(request,env)) return fail(env,401,'unauthorized','Admin authorization required.');
   const data=await bodyJson(request);
-  const status=sanitizeString(data.status,30);
+  if(typeof data.status!=='string') return fail(env,400,'invalid_status','Unsupported sourcing request status.');
+  const status=data.status.trim();
   if(!ALLOWED_STATUSES.has(status)) return fail(env,400,'invalid_status','Unsupported sourcing request status.');
+  const assigned=strictText(data.assigned_to,100);
+  const notes=strictText(data.internal_notes,1000);
+  if(!assigned.ok||!notes.ok) return fail(env,400,'field_too_long','Assignment or notes exceed the allowed length.');
   const existing=await env.SOURCE_AO_DB.prepare('SELECT id FROM sourcing_requests WHERE id=?').bind(requestId).first();
   if(!existing) return fail(env,404,'request_not_found','Sourcing request does not exist.');
-  const assigned=sanitizeString(data.assigned_to,100)||null;
-  const notes=sanitizeString(data.internal_notes,1000)||null;
   const now=iso();
   await env.SOURCE_AO_DB.prepare(`
     UPDATE sourcing_requests
     SET status=?,assigned_to=COALESCE(?,assigned_to),internal_notes=COALESCE(?,internal_notes),updated_at=?
     WHERE id=?
-  `).bind(status,assigned,notes,now,requestId).run();
+  `).bind(status,assigned.value||null,notes.value||null,now,requestId).run();
   return json(env,{ok:true,request:{id:requestId,status,updated_at:now}});
 }
 
