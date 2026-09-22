@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Procura — pesquisa comercial de materiais, equipamentos e fornecedores com foco em Angola.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://comercialhmatiasps.com/procura.html">
+  <meta name="theme-color" content="#062d56">
+  <title>Procura | Pesquisa de materiais e fornecedores</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <style>
+    :root{--navy:#062d56;--blue:#0b65a4;--ink:#102235;--muted:#617386;--line:#d8e3ed;--soft:#f4f8fb;--white:#fff;--shadow:0 24px 70px rgba(6,45,86,.12)}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#f7fafc 0,#fff 38%,#f5f8fb 100%);min-height:100vh}a{color:inherit}.shell{width:min(1120px,calc(100% - 32px));margin:auto}.top{display:flex;align-items:center;justify-content:space-between;padding:24px 0}.brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;font-weight:800;color:var(--navy);letter-spacing:-.02em}.mark{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:linear-gradient(145deg,var(--navy),var(--blue));color:white;font-weight:900;box-shadow:0 10px 24px rgba(6,45,86,.16)}.back{font-size:14px;text-decoration:none;color:var(--muted)}.hero{padding:74px 0 40px;text-align:center}.eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.15em;color:var(--blue);text-transform:uppercase}.hero h1{font-size:clamp(38px,7vw,72px);line-height:.98;letter-spacing:-.055em;margin:18px auto 20px;max-width:850px}.hero p{font-size:18px;line-height:1.7;color:var(--muted);max-width:760px;margin:0 auto}.searchbox{margin:42px auto 0;max-width:900px;background:var(--white);padding:14px;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:10px}.searchbox input{border:0;outline:0;font-size:17px;padding:16px 18px;border-radius:14px;background:#f8fafc;color:var(--ink);min-width:0}.searchbox button{border:0;border-radius:14px;background:var(--navy);color:white;font-weight:800;padding:0 24px;cursor:pointer;min-height:54px}.hints{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0 0}.hint{border:1px solid var(--line);background:white;color:#42576b;border-radius:999px;padding:8px 12px;font-size:12px;cursor:pointer}.panel{margin:34px auto 78px;max-width:900px;display:none}.panel.show{display:block}.result-card{background:white;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 14px 40px rgba(6,45,86,.07)}.result-card h2{margin:0 0 10px;font-size:24px;letter-spacing:-.025em}.result-card p{color:var(--muted);line-height:1.65}.query{font-weight:800;color:var(--navy)}.actions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}.action{display:block;text-decoration:none;border:1px solid var(--line);border-radius:16px;padding:18px;transition:.2s ease}.action:hover{transform:translateY(-2px);border-color:#afc6d9}.action strong{display:block;margin-bottom:5px}.action small{color:var(--muted);line-height:1.5}.action.primary{background:var(--navy);color:white;border-color:var(--navy)}.action.primary small{color:#dce8f2}.notice{margin-top:20px;font-size:12px;color:#718294}.about{border-top:1px solid var(--line);padding:38px 0 50px}.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:start}.about h3{font-size:25px;margin:0 0 10px}.about p{color:var(--muted);line-height:1.7;margin:0}.mini{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}.mini strong{display:block;margin-bottom:8px}.footer{border-top:1px solid var(--line);padding:24px 0 34px;color:#718294;font-size:12px}.footer-inner{display:flex;justify-content:space-between;gap:20px;align-items:center}.footer-brand{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--navy)}.footer .mark{width:28px;height:28px;border-radius:8px;font-size:12px}
+    @media(max-width:720px){.hero{padding-top:48px}.searchbox{grid-template-columns:1fr}.searchbox button{width:100%}.actions,.about-grid{grid-template-columns:1fr}.footer-inner{align-items:flex-start;flex-direction:column}.back{font-size:13px}.top{padding-top:18px}.hero p{font-size:16px}}
+  </style>
+</head>
+<body>
+  <header class="shell top">
+    <a class="brand" href="procura.html" aria-label="Procura"><span class="mark" aria-hidden="true">P</span><span>Procura</span></a>
+    <a class="back" href="/">HMATIAS →</a>
+  </header>
+
+  <main>
+    <section class="shell hero">
+      <span class="eyebrow">Pesquisa comercial</span>
+      <h1>Encontre o que precisa para comprar, fornecer ou executar.</h1>
+      <p>Pesquise materiais, equipamentos e consumíveis. O Procura ajuda a iniciar a pesquisa e, quando necessário, encaminha o pedido para validação comercial da HMATIAS.</p>
+      <form class="searchbox" id="searchForm">
+        <input id="searchInput" type="search" autocomplete="off" placeholder="Ex.: cimento 42.5, formaldeído 37%, AC 24.000 BTU..." aria-label="Pesquisar material ou equipamento" required>
+        <button type="submit">Pesquisar</button>
+      </form>
+      <div class="hints" aria-label="Exemplos de pesquisa">
+        <button class="hint" type="button">cimento 42.5</button>
+        <button class="hint" type="button">formaldeído 37%</button>
+        <button class="hint" type="button">ar condicionado 24.000 BTU</button>
+        <button class="hint" type="button">tinta industrial</button>
+      </div>
+    </section>
+
+    <section class="shell panel" id="resultPanel" aria-live="polite">
+      <div class="result-card">
+        <span class="eyebrow">Pesquisa preparada</span>
+        <h2>Resultados para <span class="query" id="queryText"></span></h2>
+        <p>Nesta versão inicial, o Procura não apresenta disponibilidade ou preços como factos sem confirmação. Pode continuar numa pesquisa pública ou enviar o pedido à HMATIAS para sourcing e validação comercial.</p>
+        <div class="actions">
+          <a class="action" id="webSearch" href="#" target="_blank" rel="noopener noreferrer"><strong>Pesquisar na web</strong><small>Abrir uma pesquisa pública focada em Angola e fornecedores.</small></a>
+          <a class="action primary" id="hmatiasRequest" href="#" target="_blank" rel="noopener noreferrer"><strong>Solicitar sourcing à HMATIAS</strong><small>Enviar a necessidade pelo WhatsApp para pesquisa e cotação.</small></a>
+        </div>
+        <div class="notice">O Procura não confirma fornecedor, stock, preço, autenticidade ou prazo sem validação. As condições comerciais devem ser verificadas antes de qualquer compra.</div>
+      </div>
+    </section>
+
+    <section class="about">
+      <div class="shell about-grid">
+        <div><span class="eyebrow">Como funciona</span><h3>Pesquisa primeiro. Validação antes da decisão.</h3><p>O objetivo é reduzir o tempo gasto a localizar materiais e equipamentos. O motor começa pela pesquisa e pode evoluir para um índice próprio de fornecedores e produtos verificados em Angola.</p></div>
+        <div class="mini"><strong>Versão inicial</strong><p>Pesquisa assistida + encaminhamento para sourcing. Sem inventário fictício, sem preços automáticos e sem fornecedores apresentados como verificados quando ainda não foram validados.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="shell footer-inner"><div class="footer-brand"><span class="mark" aria-hidden="true">P</span><span>Procura</span></div><span>Pesquisa comercial · Angola · Ligado à HMATIAS Supply</span></div></footer>
+
+  <script>
+    (()=>{
+      const form=document.getElementById('searchForm');
+      const input=document.getElementById('searchInput');
+      const panel=document.getElementById('resultPanel');
+      const queryText=document.getElementById('queryText');
+      const webSearch=document.getElementById('webSearch');
+      const request=document.getElementById('hmatiasRequest');
+      const run=(value)=>{
+        const q=(value||'').trim(); if(!q) return;
+        input.value=q; queryText.textContent='“'+q+'”';
+        webSearch.href='https://www.google.com/search?q='+encodeURIComponent(q+' fornecedor Angola');
+        const message='Olá, HMATIAS. Vim pelo Procura e preciso de sourcing para: '+q+'. Gostaria de verificar fornecedor, disponibilidade e cotação.';
+        request.href='https://wa.me/244948806673?text='+encodeURIComponent(message);
+        panel.classList.add('show');
+        panel.scrollIntoView({behavior:'smooth',block:'center'});
+      };
+      form.addEventListener('submit',e=>{e.preventDefault();run(input.value)});
+      document.querySelectorAll('.hint').forEach(btn=>btn.addEventListener('click',()=>run(btn.textContent)));
+    })();
+  </script>
+</body>
+</html>
