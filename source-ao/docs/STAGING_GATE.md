@@ -19,8 +19,8 @@ Staging exists to prove the product before any public launch. It must remain iso
 2. `GET /ready` returns `ready: true` and confirms configuration, D1, rate-limit schema and contact-retention schema.
 3. Public search returns valid JSON for a known query.
 4. A discovered/source-checked record never appears as current stock.
-5. Confirmed stock must include a verification timestamp and traceable evidence.
-6. Expired observations are downgraded to `needs_reconfirmation`.
+5. Confirmed stock must include a verification timestamp and safe provenance: supplier + verification method + timestamp. Private evidence references must not be public.
+6. Expired approved observations remain traceable but are downgraded to `needs_reconfirmation`; they must not silently revert to `discovered`.
 7. Expired opportunities are not exposed as active.
 8. Admin write routes reject requests without the staging bearer token.
 9. Supplier confirmation links reject altered/expired signatures.
@@ -31,6 +31,7 @@ Staging exists to prove the product before any public launch. It must remain iso
 14. Daily maintenance deletes rate-limit windows older than 48 hours.
 15. A completed/closed staging sourcing request older than 30 days has its direct contact purged while non-identifying demand fields remain.
 16. Application request logs contain request ID, method, route, status and timing only — not query text, contacts, bodies or private tokens.
+17. A remote D1 export succeeds into a temporary runner-only SQL file, the file is non-empty, and it is deleted immediately. The workflow must not publish the backup as a GitHub artifact.
 
 Run external smoke test after deployment:
 
@@ -42,7 +43,7 @@ The smoke test must fail if `/ready` does not pass all required checks.
 
 ## First end-to-end pilot
 
-Use a controlled test record, not a public customer request.
+Use controlled test records, not a public customer request.
 
 1. Create one test item and one test supplier.
 2. Create a verification request.
@@ -50,10 +51,12 @@ Use a controlled test record, not a public customer request.
 4. Submit a test availability response.
 5. Confirm it remains private/pending review.
 6. Approve it in the HMATIAS internal route.
-7. Search publicly and confirm the verified state, timestamp and expiry.
-8. Change the test expiry into the past and confirm public search downgrades it.
+7. Search publicly and confirm the verified state, timestamp, safe provenance and expiry.
+8. Change the test expiry into the past and confirm public search returns `needs_reconfirmation` while retaining safe provenance.
 9. Create a synthetic sourcing request and confirm its private tracking link exposes no requester contact.
-10. Exercise retention on a synthetic closed request and confirm contact data is purged.
+10. Confirm the authenticated Sourcing Desk can decrypt that synthetic contact.
+11. Close the synthetic sourcing request.
+12. Exercise retention on an eligible synthetic closed request and confirm contact data is purged.
 
 ## Promotion gate
 
@@ -68,8 +71,8 @@ Do not move Source AO to public production unless all are true:
 - public copy contains no invented statistics or availability claims;
 - rate limiting / abuse controls are active;
 - provider log retention is configured;
-- private supplier-evidence retention is defined;
-- database backup/export path is tested;
+- private supplier-evidence retention is defined, or v1 explicitly rejects attachment storage;
+- private D1 export path succeeds without publishing the backup artifact;
 - rollback has been rehearsed;
 - Privacy and Terms are reviewed for launch and then made discoverable;
 - HMATIAS site integration is limited to an approved Source AO link/entry point.
