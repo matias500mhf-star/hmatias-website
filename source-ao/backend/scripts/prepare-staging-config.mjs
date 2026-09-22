@@ -23,6 +23,7 @@ const config={
   name:'source-ao-api-staging',
   main:'src/router.js',
   compatibility_date:'2026-09-22',
+  triggers:{crons:['17 2 * * *']},
   d1_databases:[{
     binding:'SOURCE_AO_DB',
     database_name:'source-ao-staging',
