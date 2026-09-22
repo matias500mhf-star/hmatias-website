@@ -1,0 +1,17 @@
+{
+  "version": "0.1",
+  "updated_at": "2026-09-22T14:25:00+01:00",
+  "providers": [],
+  "service_categories": [
+    "construction",
+    "remodelling",
+    "facilities",
+    "cleaning",
+    "electrical",
+    "hvac",
+    "plumbing",
+    "industrial-maintenance",
+    "transport-logistics",
+    "technical-services"
+  ]
+}
