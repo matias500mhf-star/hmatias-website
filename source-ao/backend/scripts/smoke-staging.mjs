@@ -12,6 +12,10 @@ const get=async path=>{
 const health=await get('/health');
 if(!health||health.ok!==true) fail('/health did not return ok=true');
 
+const ready=await get('/ready');
+if(!ready||ready.ready!==true||ready.ok!==true) fail('/ready did not confirm staging readiness');
+if(!ready.checks?.configuration||!ready.checks?.database||!ready.checks?.rate_limits) fail('/ready security/database checks did not all pass');
+
 const search=await get('/api/search?q='+encodeURIComponent('PVC pipe 110 mm')+'&location='+encodeURIComponent('Luanda'));
 if(!search||typeof search!=='object') fail('/api/search returned an invalid payload');
 
@@ -35,6 +39,7 @@ console.log(JSON.stringify({
   staging:'PASS',
   base,
   health:true,
+  ready:true,
   search_results:rows.length,
   opportunities:opps.length,
   checked_at:new Date().toISOString()
