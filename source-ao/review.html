@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#062d56">
+  <title>Source AO — Human Review Desk</title>
+  <link rel="stylesheet" href="sourceao.css">
+  <link rel="stylesheet" href="review.css">
+</head>
+<body class="review-body">
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>Human Review Desk</small></span></a>
+      <div class="nav-actions"><span class="review-private">Internal · noindex</span><a class="btn btn-outline btn-small" href="ops.html">Verification Desk</a></div>
+    </div>
+  </header>
+
+  <main class="shell review-main">
+    <section class="review-intro">
+      <p class="eyebrow">HUMAN APPROVAL GATE</p>
+      <h1>Review before verified.</h1>
+      <p>Supplier replies stay private until an HMATIAS reviewer checks the response, maps it to the correct catalog item and explicitly approves it.</p>
+    </section>
+
+    <section class="review-card session-card">
+      <div class="review-card-head"><div><small>00</small><h2>Backend session</h2></div><span id="apiStatus">Local mode</span></div>
+      <div class="session-grid">
+        <label>API endpoint<input id="apiEndpoint" type="text" readonly value="Not configured"></label>
+        <label>Admin API token<input id="adminToken" type="password" autocomplete="off" spellcheck="false" placeholder="Session only — never stored"></label>
+        <label>Reviewer<input id="reviewerName" type="text" maxlength="80" value="HMATIAS review"></label>
+        <button class="btn btn-primary" id="connectApi" type="button">Connect & load pending</button>
+      </div>
+      <p class="review-note">The token exists only in page memory. Closing or leaving this page clears it. Supplier responses are not public until approval succeeds.</p>
+    </section>
+
+    <section class="review-toolbar" aria-label="Review controls">
+      <div><strong>Pending supplier responses</strong><span id="pendingCount">0</span></div>
+      <button class="btn btn-outline btn-small" id="refreshPending" type="button" disabled>Refresh</button>
+    </section>
+
+    <section id="reviewList" class="review-list" aria-live="polite">
+      <div class="empty-state"><strong>No session connected.</strong><p>Connect to the staging API to load supplier responses awaiting review.</p></div>
+    </section>
+
+    <template id="reviewCardTemplate">
+      <article class="review-card response-card">
+        <div class="review-card-head response-head">
+          <div><small class="request-id">—</small><h2 class="requirement">—</h2></div>
+          <span class="response-status">supplier responded</span>
+        </div>
+
+        <div class="response-context">
+          <div><small>Supplier</small><strong class="supplier">—</strong></div>
+          <div><small>Requested</small><strong class="requested-qty">—</strong></div>
+          <div><small>Location</small><strong class="request-location">—</strong></div>
+          <div><small>Response time</small><strong class="responded-at">—</strong></div>
+        </div>
+
+        <section class="supplier-answer">
+          <div class="availability-line"><span class="availability-dot" aria-hidden="true"></span><strong class="availability">—</strong></div>
+          <dl>
+            <div><dt>Quantity reported</dt><dd class="answer-qty">—</dd></div>
+            <div><dt>Price reported</dt><dd class="answer-price">—</dd></div>
+            <div><dt>Lead time</dt><dd class="answer-lead">—</dd></div>
+            <div><dt>Responded by</dt><dd class="answer-by">—</dd></div>
+          </dl>
+          <p class="answer-note">—</p>
+        </section>
+
+        <section class="mapping-section">
+          <div class="mapping-head"><div><small>CATALOG MAPPING</small><h3>Select the normalized item</h3></div><span>Required before approval</span></div>
+          <div class="catalog-search">
+            <input class="catalog-query" type="search" autocomplete="off" placeholder="Search catalog by name or specification">
+            <button class="btn btn-outline catalog-search-button" type="button">Search</button>
+          </div>
+          <select class="catalog-select"><option value="">Select catalog item</option></select>
+          <details class="create-item-panel">
+            <summary>Item missing? Create normalized catalog item</summary>
+            <div class="create-item-grid">
+              <label>Name<input class="new-item-name" type="text" maxlength="160"></label>
+              <label>Category<input class="new-item-category" type="text" maxlength="100" placeholder="e.g. HVAC"></label>
+              <label>Specification<input class="new-item-spec" type="text" maxlength="240"></label>
+              <label>Unit<input class="new-item-unit" type="text" maxlength="40"></label>
+              <button class="btn btn-outline create-item-button" type="button">Create item</button>
+            </div>
+          </details>
+        </section>
+
+        <div class="approval-truth">
+          <label><input class="truth-checkbox" type="checkbox"> <span>I reviewed this supplier response and the selected catalog mapping. I understand approval creates a time-limited commercial observation.</span></label>
+        </div>
+
+        <div class="approval-actions">
+          <button class="btn btn-primary approve-button" type="button" disabled>Approve verified observation</button>
+          <span class="card-message" aria-live="polite"></span>
+        </div>
+      </article>
+    </template>
+  </main>
+
+  <script src="runtime-config.js"></script>
+  <script src="review.js" defer></script>
+</body>
+</html>
