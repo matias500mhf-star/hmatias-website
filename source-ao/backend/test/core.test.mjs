@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normalizeSearch,effectiveObservationStatus,createConfirmationToken,verifyConfirmationToken} from '../src/index.js';
+import {normalizeSearch,effectiveObservationStatus,canAcceptSupplierResponse,createConfirmationToken,verifyConfirmationToken} from '../src/index.js';
 
 test('normalizes Portuguese accents and technical units',()=>{
   assert.equal(normalizeSearch('Tubo PVC 110 mm'), 'tubo pvc 110mm');
@@ -16,6 +16,14 @@ test('expired observations downgrade automatically',()=>{
 
 test('unavailable remains explicit even after time passes',()=>{
   assert.equal(effectiveObservationStatus({verification_status:'unavailable',expires_at:'2020-01-01T00:00:00Z'},Date.now()),'unavailable');
+});
+
+test('supplier response gate is one-shot',()=>{
+  assert.equal(canAcceptSupplierResponse({status:'sent',supplier_response_json:null}),true);
+  assert.equal(canAcceptSupplierResponse({status:'supplier_responded',supplier_response_json:'{}'}),false);
+  assert.equal(canAcceptSupplierResponse({status:'approved',supplier_response_json:'{}'}),false);
+  assert.equal(canAcceptSupplierResponse({status:'sent',supplier_response_json:'{}'}),false);
+  assert.equal(canAcceptSupplierResponse(null),false);
 });
 
 test('supplier confirmation token is deterministic and rejects tampering',async()=>{
