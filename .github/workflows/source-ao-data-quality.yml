@@ -53,6 +53,7 @@ jobs:
           node --check source-ao/review.js
           node --check source-ao/sourcing-ui.js
           node --check source-ao/track.js
+          node --check source-ao/requests.js
       - name: Validate Ops Desk security contract
         shell: bash
         run: |
@@ -92,6 +93,15 @@ jobs:
           grep -q '/api/sourcing-requests/' source-ao/track.js
           ! grep -Eq 'localStorage|sessionStorage' source-ao/track.js
           ! grep -Eq 'requester_contact|contact_encrypted|contact_hint' source-ao/track.html source-ao/track.js
+      - name: Validate Sourcing Desk privacy contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'private contacts' source-ao/requests.html
+          grep -q "let adminToken=''" source-ao/requests.js
+          grep -q '/api/admin/demand-radar' source-ao/requests.js
+          ! grep -Eq 'localStorage|sessionStorage' source-ao/requests.js
+          ! grep -Eq 'JSON\.stringify\(requests\)|Blob\(' source-ao/requests.js
       - name: Validate backend syntax
         run: |
           node --check source-ao/backend/src/index.js
@@ -101,6 +111,15 @@ jobs:
         run: |
           node --check source-ao/backend/scripts/smoke-staging.mjs
           node --check source-ao/backend/scripts/pilot-staging.mjs
+          node --check source-ao/backend/scripts/prepare-staging-config.mjs
+      - name: Validate staging deploy remains manual-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'workflow_dispatch:' .github/workflows/source-ao-staging-deploy.yml
+          ! grep -Eq '^  (push|pull_request|schedule):' .github/workflows/source-ao-staging-deploy.yml
+          grep -q "inputs.confirm == 'DEPLOY-STAGING'" .github/workflows/source-ao-staging-deploy.yml
+          grep -q 'SOURCE_AO_STAGING_PII_ENCRYPTION_KEY' .github/workflows/source-ao-staging-deploy.yml
       - name: Validate backend package manifest
         run: |
           node -e "JSON.parse(require('fs').readFileSync('source-ao/backend/package.json','utf8')); console.log('package manifest PASS')"
