@@ -116,7 +116,7 @@ export async function decryptPrivateText(payload,secret){
   const [ivPart,cipherPart]=String(payload||'').split('.');
   if(!ivPart||!cipherPart) throw new Error('Invalid encrypted payload');
   const key=await piiKey(secret);
-  const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64UrlToBytes(ivPart)},b64UrlToBytes(cipherPart));
+  const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64UrlToBytes(ivPart)},key,b64UrlToBytes(cipherPart));
   return dec.decode(plain);
 }
 
