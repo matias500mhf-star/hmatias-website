@@ -24,7 +24,8 @@ for(const row of rows){
   const status=row.verification_status||row.status||'';
   if(['supplier_confirmed','in_stock_confirmed'].includes(status)){
     if(!row.verified_at&&!row.last_verified_at) fail('confirmed search result has no verification timestamp');
-    if(!row.source_url&&!row.source&&!row.evidence_reference) fail('confirmed search result has no traceable source/evidence');
+    if(!row.supplier?.id||!row.verification?.source_type||!row.verification?.verified_at) fail('confirmed search result has no safe supplier/source provenance');
+    if(Object.prototype.hasOwnProperty.call(row,'evidence_reference')) fail('public result exposed private evidence reference');
   }
 }
 
