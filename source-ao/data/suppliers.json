@@ -1,7 +1,15 @@
 {
-  "version": "0.1",
-  "updated_at": "2026-09-22T14:25:00+01:00",
-  "suppliers": [],
+  "version": "0.2",
+  "updated_at": "2026-09-22T14:30:00+01:00",
+  "suppliers": [
+    {"id":"sup-imbo-angola","name":"IMBO Angola","legal_name":"IMBO Angola - Comércio e Prestação de Serviços","category":["construction","industrial-supply"],"location":"Luanda, Angola","website":"https://www.imboangola.com/","source_urls":["https://www.imboangola.com/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:30:00+01:00"},
+    {"id":"sup-akeel","name":"Akeel Com & Ind Lda","category":["construction"],"location":"Luanda, Angola","website":"https://www.akeelferro.com/","source_urls":["https://www.akeelferro.com/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:30:00+01:00"},
+    {"id":"sup-o-index","name":"O-INDEX","category":["construction","hvac-electrical","tools-equipment","industrial-supply","cleaning-facilities"],"location":"Luanda, Angola","website":"https://www.o-index.com/","source_urls":["https://www.o-index.com/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:30:00+01:00"},
+    {"id":"sup-soletric","name":"Solétric - Soluções Eléctricas, Lda.","category":["hvac-electrical"],"location":"Viana, Luanda, Angola","website":"https://www.soletric.com/","source_urls":["https://www.soletric.com/sobrenos"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:30:00+01:00"},
+    {"id":"sup-siluz","name":"Siluz Angola","category":["hvac-electrical","tools-equipment"],"location":"Luanda, Angola","website":"https://siluzangola.com/","source_urls":["https://siluzangola.com/","https://siluzangola.com/siluz/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:30:00+01:00"},
+    {"id":"sup-bricomat","name":"Bricomat","category":["construction","tools-equipment"],"location":"Luanda, Angola","website":"https://www.bricomat.online/","source_urls":["https://www.bricomat.online/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:30:00+01:00"},
+    {"id":"sup-nayliclean","name":"NayliClean","legal_name":"NayliClean - Prestação de Serviços, Lda.","category":["construction","industrial-supply","services-contractors","cleaning-facilities"],"location":"Luanda, Angola","website":"https://nayliclen.com/","source_urls":["https://nayliclen.com/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:30:00+01:00"}
+  ],
   "rules": {
     "publish_only_if": ["name", "location", "source_urls", "verification_status", "last_verified_at"],
     "allowed_public_statuses": ["source_checked", "supplier_confirmed", "in_stock_confirmed", "needs_reconfirmation", "unavailable"],
