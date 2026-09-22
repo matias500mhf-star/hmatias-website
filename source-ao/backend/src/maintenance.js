@@ -23,11 +23,11 @@ export async function runMaintenance(env,now=Date.now()){
     env.SOURCE_AO_DB.prepare(`
       UPDATE verification_requests
       SET status='expired',updated_at=?
-      WHERE status='sent' AND expires_at<=?
+      WHERE status='sent' AND datetime(expires_at)<=datetime(?)
     `).bind(cutoffs.now,cutoffs.now),
     env.SOURCE_AO_DB.prepare(`
       DELETE FROM rate_limit_windows
-      WHERE updated_at<?
+      WHERE datetime(updated_at)<datetime(?)
     `).bind(cutoffs.rateLimitBefore)
   ];
 
@@ -37,7 +37,7 @@ export async function runMaintenance(env,now=Date.now()){
       SET contact_encrypted='PURGED',contact_hint='purged',contact_purged_at=?
       WHERE status IN ('completed','closed')
         AND contact_purged_at IS NULL
-        AND updated_at<?
+        AND datetime(updated_at)<datetime(?)
     `).bind(cutoffs.now,cutoffs.contactBefore));
   }
 
