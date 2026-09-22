@@ -1,0 +1,35 @@
+name: Source AO Data Quality
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'source-ao/data/**'
+      - 'source-ao/data-contract.json'
+      - 'source-ao/data-engine.js'
+      - 'source-ao/validate-data.mjs'
+  push:
+    branches:
+      - source-ao-v1
+    paths:
+      - 'source-ao/data/**'
+      - 'source-ao/data-contract.json'
+      - 'source-ao/data-engine.js'
+      - 'source-ao/validate-data.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Source AO data
+        run: node source-ao/validate-data.mjs
