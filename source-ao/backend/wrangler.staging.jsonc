@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "source-ao-api-staging",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-22",
+  "d1_databases": [
+    {
+      "binding": "SOURCE_AO_DB",
+      "database_name": "source-ao-staging",
+      "database_id": "REPLACE_WITH_STAGING_D1_ID",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "PUBLIC_ORIGIN": "https://staging-source-ao.example.invalid",
+    "SOURCE_AO_ENV": "staging",
+    "SOURCE_AO_RELEASE": "source-ao-v1"
+  }
+}
