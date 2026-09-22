@@ -68,7 +68,7 @@ Use controlled test records, not a public customer request.
 
 Do not move Source AO to public production unless all are true:
 
-- branch CI is green;
+- current branch CI is green;
 - staging API `/ready` and smoke test pass;
 - isolated staging frontend deploy + web smoke test pass;
 - full supplier-confirmation pilot passes;
@@ -85,9 +85,9 @@ Do not move Source AO to public production unless all are true:
 - Source AO branch is synchronized with the then-current `main` and all gates are rerun before merge;
 - HMATIAS site integration is limited to an approved Source AO link/entry point.
 
-## Current code freeze point
+## Code freeze rule
 
-The staging architecture is considered code-ready when the branch quality suite is green. From that point, further application changes should stop until provider-side staging is activated and the smoke/pilot sequence is executed. This prevents continuously moving the target while infrastructure acceptance testing is underway.
+Once the current branch quality suite is green, application code stays frozen until provider-side staging is activated and the smoke/pilot sequence is executed. Only a defect found by those acceptance tests should reopen the implementation phase.
 
 ## Rollback rule
 
