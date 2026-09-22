@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#062d56">
+  <title>Source AO — Sourcing Desk</title>
+  <link rel="stylesheet" href="sourceao.css">
+  <link rel="stylesheet" href="requests.css">
+</head>
+<body class="requests-body">
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>Sourcing Desk</small></span></a>
+      <div class="nav-actions"><span class="private-pill">Internal · private contacts</span><a class="btn btn-outline btn-small" href="ops.html">Verification Desk</a><a class="btn btn-outline btn-small" href="review.html">Review Desk</a></div>
+    </div>
+  </header>
+
+  <main class="shell requests-main">
+    <section class="requests-intro">
+      <p class="eyebrow">HMATIAS SOURCING OPERATIONS</p>
+      <h1>From demand to action.</h1>
+      <p>Manage customer sourcing requests without mixing private contact data with public search results. Demand Radar is aggregated and never exposes requester contacts.</p>
+    </section>
+
+    <section class="desk-card session-card">
+      <div class="desk-head"><div><small>00</small><h2>Backend session</h2></div><span id="apiStatus">Not connected</span></div>
+      <div class="session-grid">
+        <label>API endpoint<input id="apiEndpoint" type="text" readonly value="Not configured"></label>
+        <label>Admin API token<input id="adminToken" type="password" autocomplete="off" spellcheck="false" placeholder="Session only — never stored"></label>
+        <button class="btn btn-primary" id="connectApi" type="button">Connect & load</button>
+      </div>
+      <p class="desk-note">Private requester contacts are decrypted only by the authenticated backend response. This page never stores them in localStorage, sessionStorage or exports.</p>
+    </section>
+
+    <section class="metrics-grid">
+      <article><small>OPEN REQUESTS</small><strong id="openCount">—</strong><span>excluding closed</span></article>
+      <article><small>NEW / RECEIVED</small><strong id="receivedCount">—</strong><span>awaiting triage</span></article>
+      <article><small>IN SOURCING</small><strong id="sourcingCount">—</strong><span>sourcing or verifying</span></article>
+      <article><small>DEMAND SIGNALS</small><strong id="demandCount">—</strong><span>30-day aggregated groups</span></article>
+    </section>
+
+    <section class="workspace-grid">
+      <div>
+        <div class="section-toolbar">
+          <div><small>REQUEST QUEUE</small><h2>Customer sourcing requests</h2></div>
+          <div class="toolbar-actions">
+            <select id="statusFilter" aria-label="Status filter">
+              <option value="">All statuses</option>
+              <option value="received">Received</option>
+              <option value="triage">Triage</option>
+              <option value="sourcing">Sourcing</option>
+              <option value="verifying">Verifying</option>
+              <option value="verified">Verified</option>
+              <option value="quoted">Quoted</option>
+              <option value="completed">Completed</option>
+              <option value="closed">Closed</option>
+            </select>
+            <button class="btn btn-outline btn-small" id="refreshRequests" type="button" disabled>Refresh</button>
+          </div>
+        </div>
+        <div id="requestList" class="request-list"><div class="empty-state"><strong>No session connected.</strong><p>Connect to the staging API to load sourcing requests.</p></div></div>
+      </div>
+
+      <aside>
+        <div class="section-toolbar compact"><div><small>DEMAND RADAR</small><h2>30-day demand</h2></div><button class="btn btn-outline btn-small" id="refreshDemand" type="button" disabled>Refresh</button></div>
+        <div id="demandList" class="demand-list"><div class="empty-state"><strong>No demand data loaded.</strong><p>Aggregated search demand appears here after requests are registered.</p></div></div>
+      </aside>
+    </section>
+
+    <template id="requestTemplate">
+      <article class="desk-card request-card">
+        <div class="request-top">
+          <div><small class="reference">—</small><h3 class="requirement">—</h3></div>
+          <span class="request-status">—</span>
+        </div>
+        <div class="request-meta">
+          <div><small>Location</small><strong class="location">—</strong></div>
+          <div><small>Quantity</small><strong class="quantity">—</strong></div>
+          <div><small>Needed by</small><strong class="needed-by">—</strong></div>
+          <div><small>Created</small><strong class="created-at">—</strong></div>
+        </div>
+        <div class="specification-block"><small>SPECIFICATION</small><p class="specification">—</p></div>
+        <div class="private-contact"><div><small>PRIVATE REQUESTER CONTACT</small><strong class="contact">—</strong><span class="contact-channel">—</span></div><button class="btn btn-outline btn-small copy-contact" type="button">Copy</button></div>
+        <div class="management-grid">
+          <label>Status<select class="status-select"><option value="received">Received</option><option value="triage">Triage</option><option value="sourcing">Sourcing</option><option value="verifying">Verifying</option><option value="verified">Verified</option><option value="quoted">Quoted</option><option value="completed">Completed</option><option value="closed">Closed</option></select></label>
+          <label>Assigned to<input class="assigned-to" type="text" maxlength="100" placeholder="HMATIAS team/member"></label>
+          <label class="notes-label">Internal notes<textarea class="internal-notes" rows="3" maxlength="1000" placeholder="Private operational notes"></textarea></label>
+          <button class="btn btn-primary save-request" type="button">Save status</button>
+          <span class="request-message" aria-live="polite"></span>
+        </div>
+      </article>
+    </template>
+  </main>
+
+  <script src="runtime-config.js"></script>
+  <script src="requests.js" defer></script>
+</body>
+</html>
