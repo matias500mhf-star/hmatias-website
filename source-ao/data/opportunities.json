@@ -1,7 +1,10 @@
 {
-  "version": "0.1",
-  "updated_at": "2026-09-22T14:25:00+01:00",
-  "opportunities": [],
+  "version": "0.2",
+  "updated_at": "2026-09-22T14:44:00+01:00",
+  "opportunities": [
+    {"id":"opp-pdisa-boreholes-196w3-ucp-26","title":"Rehabilitation of boreholes FH05 & FH06 - Calumue","type":"rfq","sector":"water-infrastructure","location":"Lubango, Angola","issuer":"Ministry of Energy and Water (MINEA) / PDISA 2","reference":"196W3/UCP/26","published_at":"2026-09-14","deadline":"2026-10-09T10:00:00+01:00","status":"active","source_status":"source_checked","source_url":"https://world.zhaobiao.cn/view_0_0_7f3b2ac6656f5137d10eeb78b8487da0.html","source_checked_at":"2026-09-22T14:44:00+01:00","scope_summary":"Small works RFQ covering rehabilitation of existing boreholes, including supply and installation of necessary materials and equipment, connections, integration and testing.","source_fit":"Potential direct bid or partnership opportunity; qualification and RFQ documents must be reviewed before participation."},
+    {"id":"opp-caala-logistics-96bw2-minplan-26","title":"Design and Construction of the basic infrastructure of the Caala Logistics Platform","type":"tender","sector":"construction-logistics-infrastructure","location":"Caala, Angola","issuer":"Ministry of Planning / DIVERSIFICA MAIS","reference":"96BW2/MINPLAN/26","published_at":"2026-09-08","deadline":"2026-10-28T10:00:00+01:00","status":"active","source_status":"source_checked","source_url":"https://world.zhaobiao.cn/view_1_0_d3e67a830379a00176bab949382a9218.html","source_checked_at":"2026-09-22T14:44:00+01:00","scope_summary":"Design-and-build procurement for basic infrastructure covering civil, hydraulic, electrical and ICT disciplines.","source_fit":"Large opportunity more suitable for partnership, subcontracting or supply positioning unless full qualification requirements are met."}
+  ],
   "types": ["rfq","tender","small-contract","maintenance","supply-request","subcontracting"],
   "public_rule": "Only opportunities with a traceable public or partner source and a still-valid deadline may be shown as active."
 }
