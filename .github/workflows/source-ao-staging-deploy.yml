@@ -38,6 +38,7 @@ jobs:
       SOURCE_AO_STAGING_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_STAGING_ADMIN_API_TOKEN }}
       SOURCE_AO_STAGING_CONFIRMATION_SECRET: ${{ secrets.SOURCE_AO_STAGING_CONFIRMATION_SECRET }}
       SOURCE_AO_STAGING_PII_ENCRYPTION_KEY: ${{ secrets.SOURCE_AO_STAGING_PII_ENCRYPTION_KEY }}
+      SOURCE_AO_STAGING_RATE_LIMIT_SECRET: ${{ secrets.SOURCE_AO_STAGING_RATE_LIMIT_SECRET }}
 
     steps:
       - name: Checkout Source AO branch
@@ -61,6 +62,7 @@ jobs:
             SOURCE_AO_STAGING_ADMIN_API_TOKEN
             SOURCE_AO_STAGING_CONFIRMATION_SECRET
             SOURCE_AO_STAGING_PII_ENCRYPTION_KEY
+            SOURCE_AO_STAGING_RATE_LIMIT_SECRET
           )
           for key in "${required[@]}"; do
             if [ -z "${!key:-}" ]; then
@@ -90,6 +92,7 @@ jobs:
           printf '%s' "$SOURCE_AO_STAGING_ADMIN_API_TOKEN" | npx wrangler secret put ADMIN_API_TOKEN --config wrangler.staging.runtime.jsonc
           printf '%s' "$SOURCE_AO_STAGING_CONFIRMATION_SECRET" | npx wrangler secret put CONFIRMATION_SECRET --config wrangler.staging.runtime.jsonc
           printf '%s' "$SOURCE_AO_STAGING_PII_ENCRYPTION_KEY" | npx wrangler secret put PII_ENCRYPTION_KEY --config wrangler.staging.runtime.jsonc
+          printf '%s' "$SOURCE_AO_STAGING_RATE_LIMIT_SECRET" | npx wrangler secret put RATE_LIMIT_SECRET --config wrangler.staging.runtime.jsonc
 
       - name: Deploy staging Worker
         run: npx wrangler deploy --config wrangler.staging.runtime.jsonc
