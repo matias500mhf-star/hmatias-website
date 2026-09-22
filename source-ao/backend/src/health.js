@@ -9,7 +9,7 @@ export function missingReadinessConfig(env={}){
   const missing=[];
   if(!env.SOURCE_AO_DB) missing.push('SOURCE_AO_DB');
   for(const key of REQUIRED_SECURITY_KEYS){
-    if(typeof env[key]!=='string'||env[key].trim().length<16) missing.push(key);
+    if(typeof env[key]!=='string'||env[key].trim().length<32) missing.push(key);
   }
   if(typeof env.PUBLIC_ORIGIN!=='string'||!env.PUBLIC_ORIGIN.startsWith('https://')) missing.push('PUBLIC_ORIGIN');
   if(!validRetentionDays(env.CONTACT_RETENTION_DAYS)) missing.push('CONTACT_RETENTION_DAYS');
@@ -27,7 +27,8 @@ function headers(env){
 export async function readinessResponse(env){
   const missing=missingReadinessConfig(env);
   if(missing.length){
-    return new Response(JSON.stringify({ok:false,ready:false,checks:{configuration:false,database:false,rate_limits:false,contact_retention:false},missing}),{status:503,headers:headers(env)});
+    const detail=env.SOURCE_AO_ENV==='production'?{}:{missing};
+    return new Response(JSON.stringify({ok:false,ready:false,checks:{configuration:false,database:false,rate_limits:false,contact_retention:false},...detail}),{status:503,headers:headers(env)});
   }
 
   try{
