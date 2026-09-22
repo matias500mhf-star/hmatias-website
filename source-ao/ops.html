@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#0b2f4f">
   <title>Source AO Ops — Verification Desk</title>
   <link rel="stylesheet" href="sourceao.css">
@@ -21,7 +22,17 @@
     <section class="ops-intro">
       <p class="eyebrow">SUPPLIER CONFIRMATION NETWORK</p>
       <h1>Verification Desk</h1>
-      <p>Prepare supplier confirmation requests and keep discovery separate from confirmed availability.</p>
+      <p>Create traceable supplier requests, collect direct responses and keep discovery separate from confirmed availability.</p>
+    </section>
+
+    <section class="ops-card session-card">
+      <div class="ops-card-head"><div><small>00</small><h2>Backend session</h2></div><span id="apiStatus">Local mode</span></div>
+      <div class="session-grid">
+        <label>API endpoint<input id="apiEndpoint" type="text" readonly value="Not configured"></label>
+        <label>Admin API token<input id="adminToken" type="password" autocomplete="off" spellcheck="false" placeholder="Session only — never stored"></label>
+        <button class="btn btn-primary" type="button" id="connectApi">Use for this session</button>
+      </div>
+      <p class="ops-note">The admin token stays only in this page's memory. It is never written to localStorage, sessionStorage, exports or supplier messages.</p>
     </section>
 
     <section class="ops-grid">
@@ -31,18 +42,18 @@
           <label>Supplier<select id="supplierSelect" required><option value="">Select supplier</option></select></label>
           <label>Item or service<input id="verifyItem" type="text" placeholder="e.g. PVC pipe 110 mm" required></label>
           <label>Specification<input id="verifySpec" type="text" placeholder="Exact size, model, grade or service scope"></label>
-          <div class="ops-two"><label>Quantity<input id="verifyQty" type="text" placeholder="e.g. 20"></label><label>Unit<input id="verifyUnit" type="text" placeholder="units / m / kg / L"></label></div>
+          <div class="ops-two"><label>Quantity<input id="verifyQty" type="number" min="0" step="any" inputmode="decimal" placeholder="e.g. 20"></label><label>Unit<input id="verifyUnit" type="text" placeholder="units / m / kg / L"></label></div>
           <label>Location<input id="verifyLocation" type="text" value="Luanda"></label>
           <label>Language<select id="verifyLang"><option value="pt">Portuguese</option><option value="en">English</option></select></label>
-          <button class="btn btn-primary" type="submit">Prepare confirmation</button>
+          <button class="btn btn-primary" id="prepareRequest" type="submit">Prepare confirmation</button>
         </form>
       </article>
 
       <article class="ops-card output-card">
         <div class="ops-card-head"><div><small>02</small><h2>Supplier message</h2></div><span id="requestRef">No request</span></div>
         <textarea id="messageOutput" rows="16" readonly placeholder="A traceable supplier confirmation message will appear here."></textarea>
-        <div class="ops-actions"><button class="btn btn-outline" type="button" id="copyMessage">Copy message</button><button class="btn btn-primary" type="button" id="saveDraft" disabled>Save draft locally</button></div>
-        <p class="ops-note">Saving here does not confirm availability. The request remains a draft until a supplier reply is reviewed with evidence.</p>
+        <div class="ops-actions"><button class="btn btn-outline" type="button" id="copyMessage">Copy message</button><button class="btn btn-outline" type="button" id="copyLink" disabled>Copy confirmation link</button><button class="btn btn-primary" type="button" id="saveDraft" disabled>Save request locally</button></div>
+        <p class="ops-note">A created request is not a confirmation. Availability changes only after the supplier responds and HMATIAS reviews the response.</p>
       </article>
     </section>
 
@@ -58,6 +69,7 @@
     </section>
   </main>
 
+  <script src="runtime-config.js"></script>
   <script src="ops.js" defer></script>
 </body>
 </html>
