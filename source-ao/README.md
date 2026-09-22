@@ -1,103 +1,101 @@
-# Source AO — by HMATIAS
+# Source AO
 
-## Product position
-Source AO is not a generic marketplace and not a search-results directory. It is an Angola-focused commercial search and sourcing layer designed to answer a harder question:
+Source AO is an HMATIAS sourcing and commercial-verification product for Angola.
 
-> Who can actually supply or execute this requirement, where, and how recently was that information verified?
+**Positioning:** Search. Verify. Source.
 
-Public experience stays simple. The intelligence sits behind the interface.
+## Core rule
 
-## Core product
+Finding a supplier, catalogue page or social-media post is not the same as confirming availability. Source AO keeps discovery, supplier confirmation and current stock confirmation as separate states.
 
-### 1. Search
-One search box for materials, equipment and services.
-- understand aliases and common wording;
-- normalise specifications;
-- classify the request;
-- search by location;
-- never convert an unverified mention into an availability claim.
+## Public experience
 
-### 2. Radar
-A requirement can stay active when there is no verified answer yet.
-Radar is designed to monitor:
-- Materials Radar — products, sizes, specifications, parts and consumables;
-- Services Radar — companies, technicians and contractors;
-- Opportunities Radar — RFQs, small contracts, supply requests, maintenance and subcontracting opportunities.
+The public interface is intentionally simple:
+- search materials, equipment or services;
+- see a transparent verification state and freshness;
+- activate Radar when current evidence is weak;
+- submit a sourcing request;
+- track that request privately without exposing requester contact data.
 
-Radar states:
-1. Found
-2. Source checked
-3. Supplier confirmed
-4. In-stock confirmed
-5. Needs reconfirmation
-6. Unavailable
+## Verification lifecycle
 
-### 3. Verification layer
-Every current-market claim must carry:
-- source;
-- verification timestamp;
-- verification status;
-- freshness window;
-- evidence reference where appropriate.
+`Search → Radar → Supplier confirmation → HMATIAS human review → Verified observation → Expiry → Reconfirmation`
 
-AI may classify, deduplicate, translate and rank information. AI may NOT upgrade the verification state.
+Approved public verification exposes only safe provenance: supplier, verification method, timestamp and expiry. Private evidence references are not public.
 
-### 4. Sourcing request
-When no verified result exists, the user can send a structured request with:
-- item or service;
-- specification;
-- quantity;
-- delivery location;
-- urgency.
+## Operational layers
 
-HMATIAS can then perform commercial validation and quotation work.
+- Materials / Services search
+- Opportunity Radar
+- Supplier Confirmation Network
+- Verification Desk
+- Human Review Desk
+- Sourcing Desk
+- Demand Radar
+- private request tracking
 
-## Data strategy
-Source AO should build a first-party commercial index over time.
+Internal desks are not included in the public staging bundle.
 
-Priority sources:
-1. direct supplier confirmation;
-2. supplier official channels;
-3. documented partner feeds;
-4. structured marketplaces;
-5. business directories;
-6. social media posts;
-7. general web discovery.
+## Backend
 
-A public web result is discovery evidence, not stock evidence.
+Cloudflare Worker + D1, with:
+- requester contact encrypted using AES-GCM;
+- private access-token hashes stored instead of raw tracking tokens;
+- signed expiring supplier confirmation links;
+- one-shot supplier responses;
+- human approval before a response can become public;
+- route-specific rate limiting using HMAC-pseudonymized client identifiers;
+- `/health` and fail-closed `/ready` endpoints;
+- sanitized request logs without query text, contacts, bodies or private tokens;
+- daily maintenance for expired verification requests, old rate-limit windows and eligible requester-contact purging.
 
-## UX rule
-The public interface should remain short:
-- Search
-- Results
-- Radar
-- Request sourcing
+## Retention baseline
 
-No fake counters, fake supplier totals, invented prices or decorative dashboards.
+- rate-limit windows: 48 hours;
+- staging requester-contact retention: 30 days for lifecycle testing;
+- current production requester-contact baseline: 365 days, subject to final launch review;
+- Source AO v1 does not accept private evidence attachments.
 
-## Language
-Default: English.
-Toggle: Portuguese (Angola).
+See `docs/DATA_RETENTION.md`, `docs/EVIDENCE_POLICY.md`, and `docs/SECURITY_AND_TRUST.md`.
 
-## Brand relationship
-Display: `Source AO — by HMATIAS`
-HMATIAS main website remains independent and unchanged during Source AO development.
+## Staging
 
-## Current MVP status
-Implemented in branch `source-ao-v1`:
-- responsive premium landing/search UI;
-- English default + Portuguese toggle;
-- search interpretation and category classification;
-- public-source search handoff;
-- local Radar watch list;
-- structured HMATIAS sourcing request via WhatsApp;
-- verification/freshness data contract.
+Staging uses separate resources:
+- API Worker: `source-ao-api-staging`;
+- frontend Static Assets Worker: `source-ao-web-staging`;
+- D1 database: `source-ao-staging`.
 
-## Next implementation milestones
-1. Real supplier database and admin ingestion.
-2. Source connectors and evidence capture.
-3. Automated freshness expiry.
-4. Supplier confirmation workflow.
-5. Search ranking based on specification + location + verification.
-6. Opportunity Radar for HMATIAS commercial team.
-7. Only after validation: controlled public deployment on a Source AO subdomain/domain.
+The manual staging workflow requires exact `DEPLOY-STAGING` confirmation and provider-side protected values. It runs QA, migrations, a private temporary D1 export test, API deploy, API smoke test, allowlisted frontend build/deploy, web-isolation smoke test, and optionally the synthetic end-to-end pilot.
+
+The staging frontend is `noindex`, ships `robots.txt` with `Disallow: /`, and does not publish backend source, technical docs or internal desks.
+
+## Synthetic pilot
+
+The pilot covers:
+1. test item creation;
+2. verification request;
+3. signed supplier link;
+4. synthetic supplier response;
+5. HMATIAS approval simulation;
+6. verified public search state;
+7. synthetic sourcing request;
+8. private tracking without PII exposure;
+9. authenticated recovery of encrypted synthetic contact;
+10. request closure.
+
+No synthetic result is a real commercial claim.
+
+## Production gate
+
+Do not merge/publish Source AO v1 until:
+- current branch CI is green;
+- real staging `/ready`, API smoke and web smoke pass;
+- supplier-confirmation and sourcing pilots pass;
+- contact purge is exercised in staging;
+- provider log retention is configured;
+- D1 export/rollback path is rehearsed;
+- mobile and desktop acceptance review passes;
+- Privacy and Terms are finalized;
+- the branch is synchronized with then-current `main` and all gates are rerun.
+
+The HMATIAS production site must remain independently operational if Source AO is disabled.
