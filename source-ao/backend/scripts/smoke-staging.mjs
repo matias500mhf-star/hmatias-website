@@ -14,7 +14,7 @@ if(!health||health.ok!==true) fail('/health did not return ok=true');
 
 const ready=await get('/ready');
 if(!ready||ready.ready!==true||ready.ok!==true) fail('/ready did not confirm staging readiness');
-if(!ready.checks?.configuration||!ready.checks?.database||!ready.checks?.rate_limits) fail('/ready security/database checks did not all pass');
+if(!ready.checks?.configuration||!ready.checks?.database||!ready.checks?.rate_limits||!ready.checks?.contact_retention) fail('/ready security/database/retention checks did not all pass');
 
 const search=await get('/api/search?q='+encodeURIComponent('PVC pipe 110 mm')+'&location='+encodeURIComponent('Luanda'));
 if(!search||typeof search!=='object') fail('/api/search returned an invalid payload');
