@@ -10,8 +10,10 @@ on:
       - 'source-ao/docs/**'
       - 'source-ao/*.js'
       - 'source-ao/*.html'
+      - 'source-ao/*.css'
       - 'source-ao/data-contract.json'
       - 'source-ao/validate-data.mjs'
+      - '.github/workflows/source-ao-staging-deploy.yml'
   push:
     branches:
       - source-ao-v1
@@ -22,8 +24,10 @@ on:
       - 'source-ao/docs/**'
       - 'source-ao/*.js'
       - 'source-ao/*.html'
+      - 'source-ao/*.css'
       - 'source-ao/data-contract.json'
       - 'source-ao/validate-data.mjs'
+      - '.github/workflows/source-ao-staging-deploy.yml'
 
 permissions:
   contents: read
@@ -31,7 +35,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 6
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -102,16 +106,50 @@ jobs:
           grep -q '/api/admin/demand-radar' source-ao/requests.js
           ! grep -Eq 'localStorage|sessionStorage' source-ao/requests.js
           ! grep -Eq 'JSON\.stringify\(requests\)|Blob\(' source-ao/requests.js
+      - name: Validate legal and evidence baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'noindex,nofollow,noarchive' source-ao/privacy.html
+          grep -q 'noindex,nofollow,noarchive' source-ao/terms.html
+          grep -q 'does \*\*not\*\* accept or store private screenshots' source-ao/docs/EVIDENCE_POLICY.md
       - name: Validate backend syntax
         run: |
           node --check source-ao/backend/src/index.js
+          node --check source-ao/backend/src/public-search.js
           node --check source-ao/backend/src/router.js
           node --check source-ao/backend/src/sourcing.js
+          node --check source-ao/backend/src/security.js
+          node --check source-ao/backend/src/health.js
+          node --check source-ao/backend/src/maintenance.js
       - name: Validate staging scripts syntax
         run: |
           node --check source-ao/backend/scripts/smoke-staging.mjs
           node --check source-ao/backend/scripts/pilot-staging.mjs
           node --check source-ao/backend/scripts/prepare-staging-config.mjs
+          node --check source-ao/backend/scripts/build-staging-web.mjs
+          node --check source-ao/backend/scripts/smoke-staging-web.mjs
+      - name: Build staging public allowlist
+        working-directory: source-ao/backend
+        env:
+          SOURCE_AO_API_BASE: https://api-staging.example.test
+          SOURCE_AO_STAGING_PUBLIC_ORIGIN: https://staging.example.test
+        run: |
+          node scripts/build-staging-web.mjs
+          test -f .staging-web/index.html
+          test -f .staging-web/confirm.html
+          test -f .staging-web/track.html
+          test -f .staging-web/privacy.html
+          test -f .staging-web/terms.html
+          test -f .staging-web/data/catalog.json
+          test ! -e .staging-web/backend
+          test ! -e .staging-web/docs
+          test ! -e .staging-web/verification-desk.html
+          test ! -e .staging-web/review-desk.html
+          test ! -e .staging-web/sourcing-desk.html
+          grep -q 'api-staging.example.test' .staging-web/runtime-config.js
+          grep -q 'Disallow: /' .staging-web/robots.txt
+          rm -rf .staging-web wrangler.web.staging.runtime.jsonc
       - name: Validate staging deploy remains manual-only
         shell: bash
         run: |
@@ -120,6 +158,9 @@ jobs:
           ! grep -Eq '^  (push|pull_request|schedule):' .github/workflows/source-ao-staging-deploy.yml
           grep -q "inputs.confirm == 'DEPLOY-STAGING'" .github/workflows/source-ao-staging-deploy.yml
           grep -q 'SOURCE_AO_STAGING_PII_ENCRYPTION_KEY' .github/workflows/source-ao-staging-deploy.yml
+          grep -q 'SOURCE_AO_STAGING_RATE_LIMIT_SECRET' .github/workflows/source-ao-staging-deploy.yml
+          grep -q 'Prove private D1 export path' .github/workflows/source-ao-staging-deploy.yml
+          grep -q 'Deploy isolated staging frontend' .github/workflows/source-ao-staging-deploy.yml
       - name: Validate backend package manifest
         run: |
           node -e "JSON.parse(require('fs').readFileSync('source-ao/backend/package.json','utf8')); console.log('package manifest PASS')"
