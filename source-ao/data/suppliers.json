@@ -1,0 +1,10 @@
+{
+  "version": "0.1",
+  "updated_at": "2026-09-22T14:25:00+01:00",
+  "suppliers": [],
+  "rules": {
+    "publish_only_if": ["name", "location", "source_urls", "verification_status", "last_verified_at"],
+    "allowed_public_statuses": ["source_checked", "supplier_confirmed", "in_stock_confirmed", "needs_reconfirmation", "unavailable"],
+    "never_publish_private_notes": true
+  }
+}
