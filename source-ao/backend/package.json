@@ -7,7 +7,8 @@
     "test": "node --test test/*.test.mjs",
     "check": "node --check src/index.js && node --test test/*.test.mjs",
     "qa": "npm run check",
-    "smoke:staging": "node scripts/smoke-staging.mjs"
+    "smoke:staging": "node scripts/smoke-staging.mjs",
+    "pilot:staging": "node scripts/pilot-staging.mjs"
   },
   "engines": {
     "node": ">=22"
