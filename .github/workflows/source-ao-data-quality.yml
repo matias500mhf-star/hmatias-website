@@ -46,6 +46,7 @@ jobs:
           node --check source-ao/backend/scripts/smoke-staging.mjs
           node --check source-ao/backend/scripts/pilot-staging.mjs
       - name: Validate backend package manifest
-        run: node -e "JSON.parse(require('fs').readFileSync('source-ao/backend/package.json','utf8')); console.log('package.json: PASS')"
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('source-ao/backend/package.json','utf8')); console.log('package manifest PASS')"
       - name: Run backend trust tests
         run: node --test source-ao/backend/test/*.test.mjs
