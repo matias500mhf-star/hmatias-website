@@ -33,7 +33,7 @@ export async function createConfirmationToken(id, expiresAt, secret) {
 export async function verifyConfirmationToken(id, expiresAt, token, secret) {
   if (!id || !expiresAt || !token || !secret) return false;
   if (new Date(expiresAt).getTime() <= Date.now()) return false;
-  const expected = await createConfirmationToken(id, expiresAt, secret);
+  const expected = await createConfirmationToken(id,expiresAt,secret);
   if (expected.length !== token.length) return false;
   let diff = 0;
   for (let i=0;i<expected.length;i++) diff |= expected.charCodeAt(i) ^ token.charCodeAt(i);
@@ -164,6 +164,18 @@ async function listVerificationRequests(request, env) {
   return json(env,{ok:true,results:rows.results||[]});
 }
 
+async function listCatalogItems(request, env) {
+  if (!isAdmin(request,env)) return fail(env,401,'unauthorized','Admin authorization required.');
+  const url=new URL(request.url);
+  const raw=(url.searchParams.get('q')||'').trim();
+  const q=normalizeSearch(raw);
+  const stmt=q
+    ? env.SOURCE_AO_DB.prepare(`SELECT id,name,category,specification,unit FROM items WHERE search_text LIKE ? ORDER BY name ASC LIMIT 50`).bind(`%${q}%`)
+    : env.SOURCE_AO_DB.prepare(`SELECT id,name,category,specification,unit FROM items ORDER BY name ASC LIMIT 50`);
+  const rows=await stmt.all();
+  return json(env,{ok:true,results:rows.results||[]});
+}
+
 async function supplierConfirmation(request, env, requestId) {
   const url=new URL(request.url);
   const token=url.searchParams.get('token')||'';
@@ -243,6 +255,7 @@ export default {
       if (request.method==='GET' && url.pathname==='/api/opportunities') return publicOpportunities(request,env);
       if (url.pathname==='/api/admin/verification-requests' && request.method==='POST') return createVerificationRequest(request,env);
       if (url.pathname==='/api/admin/verification-requests' && request.method==='GET') return listVerificationRequests(request,env);
+      if (url.pathname==='/api/admin/items' && request.method==='GET') return listCatalogItems(request,env);
       if (url.pathname==='/api/admin/items' && request.method==='POST') return createCatalogItem(request,env);
       const confirm=url.pathname.match(/^\/api\/confirm\/([^/]+)$/);
       if (confirm && ['GET','POST'].includes(request.method)) return supplierConfirmation(request,env,confirm[1]);
