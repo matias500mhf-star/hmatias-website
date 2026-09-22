@@ -98,6 +98,20 @@ jobs:
       - name: Apply D1 migrations
         run: npx wrangler d1 migrations apply source-ao-staging --remote --config wrangler.staging.runtime.jsonc
 
+      - name: Prove private D1 export path
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .staging-backup
+          backup=.staging-backup/source-ao-staging.sql
+          npx wrangler d1 export source-ao-staging --remote --skip-confirmation --output="$backup" --config wrangler.staging.runtime.jsonc
+          test -s "$backup"
+          grep -q 'CREATE TABLE' "$backup"
+          bytes=$(wc -c < "$backup" | tr -d ' ')
+          echo "Private D1 export validated (${bytes} bytes); file will not be uploaded as an artifact."
+          rm -f "$backup"
+          rmdir .staging-backup
+
       - name: Configure Worker secrets
         shell: bash
         run: |
@@ -124,7 +138,9 @@ jobs:
           SOURCE_AO_TEST_SUPPLIER_ID: sup_test_staging
         run: npm run pilot:staging
 
-      - name: Remove generated runtime config
+      - name: Remove generated sensitive temporary files
         if: ${{ always() }}
         shell: bash
-        run: rm -f wrangler.staging.runtime.jsonc
+        run: |
+          rm -f wrangler.staging.runtime.jsonc
+          rm -rf .staging-backup
