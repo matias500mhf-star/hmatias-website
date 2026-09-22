@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "source-ao-api-staging",
-  "main": "src/index.js",
+  "main": "src/router.js",
   "compatibility_date": "2026-09-22",
   "d1_databases": [
     {
