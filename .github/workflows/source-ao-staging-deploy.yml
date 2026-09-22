@@ -70,6 +70,19 @@ jobs:
               exit 2
             fi
           done
+          strong=(
+            SOURCE_AO_STAGING_ADMIN_API_TOKEN
+            SOURCE_AO_STAGING_CONFIRMATION_SECRET
+            SOURCE_AO_STAGING_PII_ENCRYPTION_KEY
+            SOURCE_AO_STAGING_RATE_LIMIT_SECRET
+          )
+          for key in "${strong[@]}"; do
+            value="${!key}"
+            if [ "${#value}" -lt 32 ]; then
+              echo "Protected staging secret is too short: $key" >&2
+              exit 2
+            fi
+          done
           case "$SOURCE_AO_STAGING_PUBLIC_ORIGIN" in https://*) ;; *) echo 'Staging public origin must use HTTPS' >&2; exit 2;; esac
           case "$SOURCE_AO_API_BASE" in https://*) ;; *) echo 'Staging API base must use HTTPS' >&2; exit 2;; esac
 
