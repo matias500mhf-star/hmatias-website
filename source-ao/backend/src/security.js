@@ -1,7 +1,7 @@
 const enc = new TextEncoder();
 
 export function rateLimitPolicy(request, pathname='') {
-  if (request.method === 'OPTIONS' || pathname === '/health') return null;
+  if (request.method === 'OPTIONS' || pathname === '/health' || pathname === '/ready') return null;
 
   if (request.method === 'POST' && pathname === '/api/sourcing-requests') {
     return {bucket:'sourcing-create', limit:6, windowSeconds:600};
