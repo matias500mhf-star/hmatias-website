@@ -7,6 +7,7 @@ import {
   demandRadar
 } from './sourcing.js';
 import {enforceRateLimit,hardenResponse,safeRequestLog} from './security.js';
+import {readinessResponse} from './health.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -38,7 +39,9 @@ export default {
       }else{
         rateMeta=rateResult;
 
-        if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
+        if(request.method==='GET' && url.pathname==='/ready'){
+          response=await readinessResponse(env);
+        }else if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
           response=await createSourcingRequest(request,env);
         }else{
           const publicRequest=url.pathname.match(/^\/api\/sourcing-requests\/([^/]+)$/);
