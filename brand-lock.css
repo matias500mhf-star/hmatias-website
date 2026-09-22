@@ -94,6 +94,35 @@ footer a:hover,
 .hmatias-home .footer-pro-bottom p,
 .hmatias-home .footer-pro-legal a{color:#91aabd!important}
 
+/* Product shortcuts: compact enough for mobile presentations and clearly separated. */
+footer .footer-karta-link,
+footer .footer-procura-link{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  max-width:max-content!important;
+  margin-top:16px!important;
+  padding:8px 9px!important;
+  vertical-align:middle!important;
+}
+footer .footer-karta-link{margin-right:18px!important}
+footer .footer-karta-mark,
+footer .footer-procura-mark{
+  width:30px!important;
+  height:30px!important;
+  flex:0 0 30px!important;
+  border-radius:8px!important;
+}
+footer .footer-karta-copy small,
+footer .footer-procura-copy small{display:none!important}
+footer .footer-karta-copy strong,
+footer .footer-procura-copy strong{
+  font-size:.72rem!important;
+  line-height:1.15!important;
+  letter-spacing:.01em!important;
+  white-space:nowrap!important;
+}
+
 /* Floating actions belong to HMATIAS visually; service names still identify the channel. */
 .whatsapp-float{
   background:var(--hm-brand-accent)!important;
@@ -117,6 +146,29 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible{
   outline-color:rgba(11,95,157,.48)!important;
+}
+
+@media(max-width:600px){
+  footer .footer-karta-link,
+  footer .footer-procura-link{
+    gap:6px!important;
+    padding:6px 7px!important;
+    margin-top:14px!important;
+  }
+  footer .footer-karta-link{margin-right:16px!important}
+  footer .footer-karta-mark,
+  footer .footer-procura-mark{
+    width:24px!important;
+    height:24px!important;
+    flex:0 0 24px!important;
+    border-radius:7px!important;
+    font-size:10px!important;
+  }
+  footer .footer-karta-copy strong,
+  footer .footer-procura-copy strong{
+    font-size:.66rem!important;
+    line-height:1.1!important;
+  }
 }
 
 @media(max-width:560px){
