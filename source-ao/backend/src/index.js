@@ -17,6 +17,49 @@ export function canAcceptSupplierResponse(row) {
   return Boolean(row && row.status === 'sent' && !row.supplier_response_json);
 }
 
+function optionalText(value,max) {
+  if (value==null || value==='') return {ok:true,value:null};
+  if (typeof value!=='string') return {ok:false};
+  const clean=value.trim();
+  if (!clean) return {ok:true,value:null};
+  if (clean.length>max) return {ok:false};
+  return {ok:true,value:clean};
+}
+
+function optionalNonNegativeNumber(value) {
+  if (value==null) return {ok:true,value:null};
+  if (typeof value!=='number' || !Number.isFinite(value) || value<0) return {ok:false};
+  return {ok:true,value};
+}
+
+export function normalizeSupplierResponse(data={}) {
+  if (typeof data.available!=='boolean') return {ok:false,code:'missing_availability'};
+  const quantity=optionalNonNegativeNumber(data.quantity_reported);
+  if (!quantity.ok) return {ok:false,code:'invalid_quantity'};
+  const price=optionalNonNegativeNumber(data.price_reported);
+  if (!price.ok) return {ok:false,code:'invalid_price'};
+  const lead=optionalText(data.lead_time,120);
+  if (!lead.ok) return {ok:false,code:'invalid_lead_time'};
+  const note=optionalText(data.note,600);
+  if (!note.ok) return {ok:false,code:'invalid_note'};
+  const respondedBy=optionalText(data.responded_by,120);
+  if (!respondedBy.ok) return {ok:false,code:'invalid_responded_by'};
+  let currency=null;
+  if (price.value!=null) {
+    if (typeof data.currency!=='string' || !/^[A-Za-z]{3}$/.test(data.currency.trim())) return {ok:false,code:'currency_required'};
+    currency=data.currency.trim().toUpperCase();
+  }
+  return {ok:true,value:{
+    available:data.available,
+    quantity_reported:quantity.value,
+    price_reported:price.value,
+    currency,
+    lead_time:lead.value,
+    note:note.value,
+    responded_by:respondedBy.value
+  }};
+}
+
 const enc = new TextEncoder();
 
 async function hmacHex(secret, value) {
@@ -38,6 +81,13 @@ export async function verifyConfirmationToken(id, expiresAt, token, secret) {
   let diff = 0;
   for (let i=0;i<expected.length;i++) diff |= expected.charCodeAt(i) ^ token.charCodeAt(i);
   return diff === 0;
+}
+
+function secureEqual(a,b) {
+  if (typeof a!=='string' || typeof b!=='string' || a.length!==b.length) return false;
+  let diff=0;
+  for (let i=0;i<a.length;i++) diff|=a.charCodeAt(i)^b.charCodeAt(i);
+  return diff===0;
 }
 
 function responseHeaders(env) {
@@ -68,7 +118,7 @@ function isAdmin(request, env) {
   const expected = env.ADMIN_API_TOKEN;
   if (!expected) return false;
   const auth = request.headers.get('authorization') || '';
-  return auth === `Bearer ${expected}`;
+  return secureEqual(auth,`Bearer ${expected}`);
 }
 
 const id = prefix => `${prefix}_${crypto.randomUUID()}`;
@@ -79,7 +129,8 @@ async function publicSearch(request, env) {
   const url = new URL(request.url);
   const raw = (url.searchParams.get('q') || '').trim();
   const location = (url.searchParams.get('location') || 'Luanda').trim();
-  if (raw.length < 2) return fail(env,400,'invalid_query','Search query must contain at least 2 characters.');
+  if (raw.length < 2 || raw.length>180) return fail(env,400,'invalid_query','Search query must contain 2 to 180 characters.');
+  if (location.length>120) return fail(env,400,'invalid_location','Location is too long.');
   const q = normalizeSearch(raw);
   const like = `%${q}%`;
   const now = iso();
@@ -136,8 +187,16 @@ async function publicOpportunities(request, env) {
 async function createVerificationRequest(request, env) {
   if (!isAdmin(request,env)) return fail(env,401,'unauthorized','Admin authorization required.');
   const data = await bodyJson(request);
-  if (!data.supplier_id || !data.requirement_text || !data.location) return fail(env,400,'missing_fields','supplier_id, requirement_text and location are required.');
-  const supplier = await env.SOURCE_AO_DB.prepare('SELECT id,name FROM suppliers WHERE id=?').bind(data.supplier_id).first();
+  if (typeof data.supplier_id!=='string' || typeof data.requirement_text!=='string' || typeof data.location!=='string') return fail(env,400,'missing_fields','supplier_id, requirement_text and location are required.');
+  const supplierId=data.supplier_id.trim();
+  const requirement=data.requirement_text.trim();
+  const location=data.location.trim();
+  if (!supplierId || !requirement || !location || requirement.length>240 || location.length>120) return fail(env,400,'invalid_fields','Verification request fields are invalid or too long.');
+  const specification=optionalText(data.specification,500);
+  const unit=optionalText(data.unit,40);
+  const quantity=optionalNonNegativeNumber(data.quantity);
+  if (!specification.ok || !unit.ok || !quantity.ok) return fail(env,400,'invalid_fields','Specification, quantity or unit is invalid.');
+  const supplier = await env.SOURCE_AO_DB.prepare('SELECT id,name FROM suppliers WHERE id=?').bind(supplierId).first();
   if (!supplier) return fail(env,404,'supplier_not_found','Supplier does not exist.');
   if (data.item_id) {
     const item = await env.SOURCE_AO_DB.prepare('SELECT id FROM items WHERE id=?').bind(data.item_id).first();
@@ -148,7 +207,7 @@ async function createVerificationRequest(request, env) {
   await env.SOURCE_AO_DB.prepare(`
     INSERT INTO verification_requests(id,supplier_id,item_id,requirement_text,specification,quantity,unit,location,status,requested_at,expires_at)
     VALUES(?,?,?,?,?,?,?,?,?,?,?)
-  `).bind(requestId,data.supplier_id,data.item_id||null,data.requirement_text,data.specification||null,data.quantity??null,data.unit||null,data.location,'sent',iso(),expiresAt).run();
+  `).bind(requestId,supplierId,data.item_id||null,requirement,specification.value,quantity.value,unit.value,location,'sent',iso(),expiresAt).run();
   const token=await createConfirmationToken(requestId,expiresAt,env.CONFIRMATION_SECRET);
   return json(env,{ok:true,verification_request:{id:requestId,supplier_name:supplier.name,status:'sent',expires_at:expiresAt,confirmation_path:`/api/confirm/${requestId}?token=${token}`}},201);
 }
@@ -157,6 +216,8 @@ async function listVerificationRequests(request, env) {
   if (!isAdmin(request,env)) return fail(env,401,'unauthorized','Admin authorization required.');
   const url=new URL(request.url);
   const status=url.searchParams.get('status');
+  const allowed=new Set(['draft','sent','supplier_responded','approved','expired','rejected']);
+  if (status && !allowed.has(status)) return fail(env,400,'invalid_status','Unsupported verification status.');
   const stmt=status
     ? env.SOURCE_AO_DB.prepare(`SELECT vr.*,s.name supplier_name FROM verification_requests vr JOIN suppliers s ON s.id=vr.supplier_id WHERE vr.status=? ORDER BY vr.created_at DESC LIMIT 100`).bind(status)
     : env.SOURCE_AO_DB.prepare(`SELECT vr.*,s.name supplier_name FROM verification_requests vr JOIN suppliers s ON s.id=vr.supplier_id ORDER BY vr.created_at DESC LIMIT 100`);
@@ -168,6 +229,7 @@ async function listCatalogItems(request, env) {
   if (!isAdmin(request,env)) return fail(env,401,'unauthorized','Admin authorization required.');
   const url=new URL(request.url);
   const raw=(url.searchParams.get('q')||'').trim();
+  if (raw.length>180) return fail(env,400,'invalid_query','Catalog query is too long.');
   const q=normalizeSearch(raw);
   const stmt=q
     ? env.SOURCE_AO_DB.prepare(`SELECT id,name,category,specification,unit FROM items WHERE search_text LIKE ? ORDER BY name ASC LIMIT 50`).bind(`%${q}%`)
@@ -193,9 +255,9 @@ async function supplierConfirmation(request, env, requestId) {
 
   if (!canAcceptSupplierResponse(row)) return fail(env,409,'response_already_recorded','This verification request already has a supplier response or has been reviewed.');
   const data=await bodyJson(request);
-  if (typeof data.available!=='boolean') return fail(env,400,'missing_availability','available must be true or false.');
-  if (data.price_reported!=null && !data.currency) return fail(env,400,'currency_required','currency is required when price_reported is supplied.');
-  const response={available:data.available,quantity_reported:data.quantity_reported??null,price_reported:data.price_reported??null,currency:data.currency||null,lead_time:data.lead_time||null,note:data.note||null,responded_by:data.responded_by||null};
+  const normalized=normalizeSupplierResponse(data);
+  if (!normalized.ok) return fail(env,400,normalized.code,'Supplier response failed server-side validation.');
+  const response=normalized.value;
   const written=await env.SOURCE_AO_DB.prepare(`
     UPDATE verification_requests
     SET supplier_response_json=?,responded_at=?,status='supplier_responded',updated_at=?
@@ -213,7 +275,9 @@ async function approveVerification(request, env, requestId) {
   if (row.status==='approved') return fail(env,409,'already_approved','Verification request is already approved.');
   if (!row.supplier_response_json || row.status!=='supplier_responded') return fail(env,409,'no_supplier_response','A pending supplier response must exist before approval.');
   const itemId=data.item_id||row.item_id;
-  if (!itemId) return fail(env,400,'item_required','A normalized item_id is required before approval.');
+  if (!itemId || typeof itemId!=='string') return fail(env,400,'item_required','A normalized item_id is required before approval.');
+  const reviewer=typeof data.reviewer==='string'&&data.reviewer.trim()?data.reviewer.trim():'HMATIAS review';
+  if (reviewer.length>80) return fail(env,400,'invalid_reviewer','Reviewer name is too long.');
   const item=await env.SOURCE_AO_DB.prepare('SELECT id FROM items WHERE id=?').bind(itemId).first();
   if (!item) return fail(env,404,'item_not_found','Normalized item does not exist.');
   const sr=JSON.parse(row.supplier_response_json);
@@ -224,7 +288,6 @@ async function approveVerification(request, env, requestId) {
   const observationId=id('obs');
   const now=iso();
   const expires=plusHours(expiryHours);
-  const reviewer=data.reviewer||'HMATIAS review';
   await env.SOURCE_AO_DB.batch([
     env.SOURCE_AO_DB.prepare(`INSERT INTO observations(id,supplier_id,item_id,verification_request_id,observed_at,verified_at,source_type,verification_status,quantity_reported,price_reported,currency,location,evidence_reference,expires_at,approved_at,approved_by) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
       .bind(observationId,row.supplier_id,itemId,row.id,row.responded_at||now,now,'direct_supplier_confirmation',status,sr.quantity_reported,sr.price_reported,sr.currency,row.location,`verification_request:${row.id}`,expires,now,reviewer),
@@ -236,13 +299,20 @@ async function approveVerification(request, env, requestId) {
 async function createCatalogItem(request, env) {
   if (!isAdmin(request,env)) return fail(env,401,'unauthorized','Admin authorization required.');
   const data=await bodyJson(request);
-  if (!data.name || !data.category) return fail(env,400,'missing_fields','name and category are required.');
+  if (typeof data.name!=='string' || typeof data.category!=='string') return fail(env,400,'missing_fields','name and category are required.');
+  const name=data.name.trim();
+  const category=data.category.trim();
+  if (!name || !category || name.length>160 || category.length>100) return fail(env,400,'invalid_fields','Catalog name or category is invalid.');
+  const specification=optionalText(data.specification,240);
+  const unit=optionalText(data.unit,40);
+  if (!specification.ok || !unit.ok) return fail(env,400,'invalid_fields','Catalog specification or unit is invalid.');
+  const aliases=Array.isArray(data.aliases)?data.aliases.filter(x=>typeof x==='string').map(x=>x.trim()).filter(Boolean).slice(0,20):[];
+  if (aliases.some(x=>x.length>120)) return fail(env,400,'invalid_alias','Catalog alias is too long.');
   const itemId=data.id||id('item');
-  const aliases=Array.isArray(data.aliases)?data.aliases:[];
-  const searchText=normalizeSearch([data.name,data.specification||'',...aliases].join(' '));
+  const searchText=normalizeSearch([name,specification.value||'',...aliases].join(' '));
   await env.SOURCE_AO_DB.prepare(`INSERT INTO items(id,name,category,specification,unit,aliases_json,search_text) VALUES(?,?,?,?,?,?,?)`)
-    .bind(itemId,data.name,data.category,data.specification||null,data.unit||null,JSON.stringify(aliases),searchText).run();
-  return json(env,{ok:true,item:{id:itemId,name:data.name,category:data.category}},201);
+    .bind(itemId,name,category,specification.value,unit.value,JSON.stringify(aliases),searchText).run();
+  return json(env,{ok:true,item:{id:itemId,name,category}},201);
 }
 
 export default {
