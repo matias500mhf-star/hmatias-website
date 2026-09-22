@@ -51,6 +51,8 @@ jobs:
           node --check source-ao/ops.js
           node --check source-ao/confirm.js
           node --check source-ao/review.js
+          node --check source-ao/sourcing-ui.js
+          node --check source-ao/track.js
       - name: Validate Ops Desk security contract
         shell: bash
         run: |
@@ -72,8 +74,29 @@ jobs:
           grep -q 'const checked=card.querySelector' source-ao/review.js
           grep -q 'if(!itemId||!checked)' source-ao/review.js
           ! grep -Eq 'localStorage|sessionStorage' source-ao/review.js
+      - name: Validate public sourcing privacy contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q '/api/sourcing-requests' source-ao/sourcing-ui.js
+          grep -q 'requester_contact:contact' source-ao/sourcing-ui.js
+          grep -q 'track.html' source-ao/sourcing-ui.js
+          ! grep -Eq 'localStorage|sessionStorage' source-ao/sourcing-ui.js
+          ! grep -Eq 'console\.(log|info).*privateTrackingUrl|console\.(log|info).*requester_contact' source-ao/sourcing-ui.js
+      - name: Validate private tracking contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'noindex,nofollow,noarchive' source-ao/track.html
+          grep -q 'no-referrer' source-ao/track.html
+          grep -q '/api/sourcing-requests/' source-ao/track.js
+          ! grep -Eq 'localStorage|sessionStorage' source-ao/track.js
+          ! grep -Eq 'requester_contact|contact_encrypted|contact_hint' source-ao/track.html source-ao/track.js
       - name: Validate backend syntax
-        run: node --check source-ao/backend/src/index.js
+        run: |
+          node --check source-ao/backend/src/index.js
+          node --check source-ao/backend/src/router.js
+          node --check source-ao/backend/src/sourcing.js
       - name: Validate staging scripts syntax
         run: |
           node --check source-ao/backend/scripts/smoke-staging.mjs
