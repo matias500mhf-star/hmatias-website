@@ -5,7 +5,12 @@
   "type": "module",
   "scripts": {
     "test": "node --test test/*.test.mjs",
-    "check": "node --check src/index.js && node --test test/*.test.mjs"
+    "check": "node --check src/index.js && node --test test/*.test.mjs",
+    "qa": "npm run check",
+    "smoke:staging": "node scripts/smoke-staging.mjs"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"
