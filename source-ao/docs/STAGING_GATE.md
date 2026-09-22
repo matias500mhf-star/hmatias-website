@@ -85,6 +85,10 @@ Do not move Source AO to public production unless all are true:
 - Source AO branch is synchronized with the then-current `main` and all gates are rerun before merge;
 - HMATIAS site integration is limited to an approved Source AO link/entry point.
 
+## Current code freeze point
+
+The staging architecture is considered code-ready when the branch quality suite is green. From that point, further application changes should stop until provider-side staging is activated and the smoke/pilot sequence is executed. This prevents continuously moving the target while infrastructure acceptance testing is underway.
+
 ## Rollback rule
 
 If staging or production Source AO fails, disable its API/frontend endpoint. Do not modify core HMATIAS pages as an emergency workaround. The HMATIAS site must remain operational independently of Source AO.
