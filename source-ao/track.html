@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#062d56">
+  <title>Source AO — Acompanhar pedido</title>
+  <link rel="stylesheet" href="track.css">
+</head>
+<body>
+  <main class="track-shell">
+    <header class="track-header">
+      <a class="brand" href="index.html"><span class="mark">S·AO</span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a>
+      <span class="private-label">Private tracking</span>
+    </header>
+
+    <section class="track-intro">
+      <span class="eyebrow">PEDIDO DE SOURCING</span>
+      <h1>Acompanhe sem expor os seus dados.</h1>
+      <p>Este link privado mostra apenas o estado e os detalhes comerciais essenciais do seu pedido. O contacto enviado não é devolvido nesta página.</p>
+    </section>
+
+    <section id="loadingState" class="state-card" aria-live="polite"><span class="spinner"></span><div><strong>A carregar pedido…</strong><p>A validar a referência privada.</p></div></section>
+    <section id="errorState" class="state-card error" hidden aria-live="assertive"><span>!</span><div><strong id="errorTitle">Não foi possível abrir o pedido.</strong><p id="errorMessage">O link pode estar incorreto.</p></div></section>
+
+    <section id="requestPanel" hidden>
+      <article class="request-card">
+        <div class="request-top"><span>Referência</span><strong id="publicRef">—</strong></div>
+        <h2 id="requirement">—</h2>
+        <div class="status-row"><span id="statusBadge">—</span><small id="updatedAt">—</small></div>
+        <dl>
+          <div><dt>Categoria</dt><dd id="category">—</dd></div>
+          <div><dt>Especificação</dt><dd id="specification">—</dd></div>
+          <div><dt>Quantidade</dt><dd id="quantity">—</dd></div>
+          <div><dt>Local</dt><dd id="location">—</dd></div>
+          <div><dt>Necessário até</dt><dd id="neededBy">—</dd></div>
+          <div><dt>Criado</dt><dd id="createdAt">—</dd></div>
+        </dl>
+      </article>
+
+      <article class="timeline-card">
+        <h3>Estado do processo</h3>
+        <ol id="timeline">
+          <li data-stage="received"><span></span><div><strong>Recebido</strong><small>Pedido registado no Source AO.</small></div></li>
+          <li data-stage="triage"><span></span><div><strong>Triagem</strong><small>Necessidade organizada e preparada.</small></div></li>
+          <li data-stage="sourcing"><span></span><div><strong>Sourcing</strong><small>Pesquisa de opções e fornecedores.</small></div></li>
+          <li data-stage="verifying"><span></span><div><strong>Verificação</strong><small>Informação comercial em confirmação.</small></div></li>
+          <li data-stage="verified"><span></span><div><strong>Verificado</strong><small>Dados relevantes confirmados.</small></div></li>
+          <li data-stage="quoted"><span></span><div><strong>Cotação</strong><small>Condições comerciais preparadas.</small></div></li>
+          <li data-stage="completed"><span></span><div><strong>Concluído</strong><small>Processo finalizado.</small></div></li>
+        </ol>
+      </article>
+
+      <p class="privacy-note"><strong>Privacidade:</strong> este endereço contém uma chave privada. Não o publique nem o coloque em grupos públicos.</p>
+    </section>
+
+    <footer><span>Source AO · Search. Verify. Source.</span><span>HMATIAS</span></footer>
+  </main>
+  <script src="runtime-config.js"></script>
+  <script src="track.js" defer></script>
+</body>
+</html>
