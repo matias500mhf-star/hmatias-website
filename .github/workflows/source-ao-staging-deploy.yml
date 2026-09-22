@@ -24,7 +24,7 @@ jobs:
   deploy-staging:
     if: ${{ inputs.confirm == 'DEPLOY-STAGING' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 18
     environment: source-ao-staging
     defaults:
       run:
@@ -92,7 +92,7 @@ jobs:
       - name: Run backend QA before deployment
         run: npm run check
 
-      - name: Generate runtime staging config
+      - name: Generate runtime API staging config
         run: node scripts/prepare-staging-config.mjs
 
       - name: Apply D1 migrations
@@ -112,7 +112,7 @@ jobs:
           rm -f "$backup"
           rmdir .staging-backup
 
-      - name: Configure Worker secrets
+      - name: Configure API Worker secrets
         shell: bash
         run: |
           set -euo pipefail
@@ -121,11 +121,20 @@ jobs:
           printf '%s' "$SOURCE_AO_STAGING_PII_ENCRYPTION_KEY" | npx wrangler secret put PII_ENCRYPTION_KEY --config wrangler.staging.runtime.jsonc
           printf '%s' "$SOURCE_AO_STAGING_RATE_LIMIT_SECRET" | npx wrangler secret put RATE_LIMIT_SECRET --config wrangler.staging.runtime.jsonc
 
-      - name: Deploy staging Worker
+      - name: Deploy staging API Worker
         run: npx wrangler deploy --config wrangler.staging.runtime.jsonc
 
       - name: Smoke test deployed staging API
         run: npm run smoke:staging
+
+      - name: Build allowlisted staging frontend
+        run: npm run build:web:staging
+
+      - name: Deploy isolated staging frontend
+        run: npx wrangler deploy --config wrangler.web.staging.runtime.jsonc
+
+      - name: Smoke test staging frontend isolation
+        run: npm run smoke:web:staging
 
       - name: Seed synthetic supplier for optional pilot
         if: ${{ inputs.run_pilot }}
@@ -142,5 +151,5 @@ jobs:
         if: ${{ always() }}
         shell: bash
         run: |
-          rm -f wrangler.staging.runtime.jsonc
-          rm -rf .staging-backup
+          rm -f wrangler.staging.runtime.jsonc wrangler.web.staging.runtime.jsonc
+          rm -rf .staging-backup .staging-web
