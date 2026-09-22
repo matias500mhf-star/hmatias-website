@@ -13,6 +13,10 @@ export function effectiveObservationStatus(row, now=Date.now()) {
   return PUBLIC_STATUSES.has(row.verification_status) ? row.verification_status : 'discovered';
 }
 
+export function canAcceptSupplierResponse(row) {
+  return Boolean(row && row.status === 'sent' && !row.supplier_response_json);
+}
+
 const enc = new TextEncoder();
 
 async function hmacHex(secret, value) {
@@ -175,12 +179,17 @@ async function supplierConfirmation(request, env, requestId) {
     return json(env,{ok:true,verification_request:{id:row.id,supplier_name:row.supplier_name,item_name:row.item_name,requirement_text:row.requirement_text,specification:row.specification,quantity:row.quantity,unit:row.unit,location:row.location,expires_at:row.expires_at,status:row.status}});
   }
 
+  if (!canAcceptSupplierResponse(row)) return fail(env,409,'response_already_recorded','This verification request already has a supplier response or has been reviewed.');
   const data=await bodyJson(request);
   if (typeof data.available!=='boolean') return fail(env,400,'missing_availability','available must be true or false.');
   if (data.price_reported!=null && !data.currency) return fail(env,400,'currency_required','currency is required when price_reported is supplied.');
   const response={available:data.available,quantity_reported:data.quantity_reported??null,price_reported:data.price_reported??null,currency:data.currency||null,lead_time:data.lead_time||null,note:data.note||null,responded_by:data.responded_by||null};
-  await env.SOURCE_AO_DB.prepare(`UPDATE verification_requests SET supplier_response_json=?,responded_at=?,status='supplier_responded',updated_at=? WHERE id=?`)
-    .bind(JSON.stringify(response),iso(),iso(),requestId).run();
+  const written=await env.SOURCE_AO_DB.prepare(`
+    UPDATE verification_requests
+    SET supplier_response_json=?,responded_at=?,status='supplier_responded',updated_at=?
+    WHERE id=? AND status='sent' AND supplier_response_json IS NULL
+  `).bind(JSON.stringify(response),iso(),iso(),requestId).run();
+  if ((written.meta?.changes ?? 0) !== 1) return fail(env,409,'response_already_recorded','This verification request was already answered.');
   return json(env,{ok:true,status:'supplier_responded',message:'Response recorded for HMATIAS review.'});
 }
 
@@ -189,7 +198,8 @@ async function approveVerification(request, env, requestId) {
   const data=await bodyJson(request);
   const row=await env.SOURCE_AO_DB.prepare('SELECT * FROM verification_requests WHERE id=?').bind(requestId).first();
   if (!row) return fail(env,404,'request_not_found','Verification request does not exist.');
-  if (!row.supplier_response_json) return fail(env,409,'no_supplier_response','Supplier response must exist before approval.');
+  if (row.status==='approved') return fail(env,409,'already_approved','Verification request is already approved.');
+  if (!row.supplier_response_json || row.status!=='supplier_responded') return fail(env,409,'no_supplier_response','A pending supplier response must exist before approval.');
   const itemId=data.item_id||row.item_id;
   if (!itemId) return fail(env,400,'item_required','A normalized item_id is required before approval.');
   const item=await env.SOURCE_AO_DB.prepare('SELECT id FROM items WHERE id=?').bind(itemId).first();
@@ -206,7 +216,7 @@ async function approveVerification(request, env, requestId) {
   await env.SOURCE_AO_DB.batch([
     env.SOURCE_AO_DB.prepare(`INSERT INTO observations(id,supplier_id,item_id,verification_request_id,observed_at,verified_at,source_type,verification_status,quantity_reported,price_reported,currency,location,evidence_reference,expires_at,approved_at,approved_by) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
       .bind(observationId,row.supplier_id,itemId,row.id,row.responded_at||now,now,'direct_supplier_confirmation',status,sr.quantity_reported,sr.price_reported,sr.currency,row.location,`verification_request:${row.id}`,expires,now,reviewer),
-    env.SOURCE_AO_DB.prepare(`UPDATE verification_requests SET status='approved',reviewed_at=?,reviewed_by=?,updated_at=? WHERE id=?`).bind(now,reviewer,now,row.id)
+    env.SOURCE_AO_DB.prepare(`UPDATE verification_requests SET status='approved',reviewed_at=?,reviewed_by=?,updated_at=? WHERE id=? AND status='supplier_responded'`).bind(now,reviewer,now,row.id)
   ]);
   return json(env,{ok:true,observation:{id:observationId,verification_status:status,verified_at:now,expires_at:expires}});
 }
