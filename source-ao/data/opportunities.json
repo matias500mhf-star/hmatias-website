@@ -1,0 +1,7 @@
+{
+  "version": "0.1",
+  "updated_at": "2026-09-22T14:25:00+01:00",
+  "opportunities": [],
+  "types": ["rfq","tender","small-contract","maintenance","supply-request","subcontracting"],
+  "public_rule": "Only opportunities with a traceable public or partner source and a still-valid deadline may be shown as active."
+}
