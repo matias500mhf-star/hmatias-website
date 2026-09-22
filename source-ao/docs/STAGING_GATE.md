@@ -7,11 +7,13 @@ Staging exists to prove the product before any public launch. It must remain iso
 - Branch: `source-ao-v1`
 - Public production site: unchanged
 - Staging API: separate hostname
+- Staging frontend: separate Static Assets Worker
 - Staging database: separate from any future production database
 - Robots/search indexing: disabled for staging frontend and legal pages
 - Real secrets: provider secret store only; never source-controlled
 - Requester contact retention: 30 days in staging so purge can be exercised quickly
 - Daily maintenance cron: enabled
+- Internal Verification/Review/Sourcing desks are not bundled in the public staging frontend
 
 ## Required staging tests
 
@@ -32,14 +34,18 @@ Staging exists to prove the product before any public launch. It must remain iso
 15. A completed/closed staging sourcing request older than 30 days has its direct contact purged while non-identifying demand fields remain.
 16. Application request logs contain request ID, method, route, status and timing only — not query text, contacts, bodies or private tokens.
 17. A remote D1 export succeeds into a temporary runner-only SQL file, the file is non-empty, and it is deleted immediately. The workflow must not publish the backup as a GitHub artifact.
+18. The staging frontend runtime points only to the staging API.
+19. The staging frontend remains `noindex` and ships a `robots.txt` that disallows crawling.
+20. Backend source, technical docs and internal desks return non-200 from the public staging origin.
 
-Run external smoke test after deployment:
+Run external smoke tests after deployment:
 
 ```bash
 SOURCE_AO_API_BASE=https://<staging-api-host> npm run smoke:staging
+SOURCE_AO_API_BASE=https://<staging-api-host> SOURCE_AO_STAGING_PUBLIC_ORIGIN=https://<staging-web-host> npm run smoke:web:staging
 ```
 
-The smoke test must fail if `/ready` does not pass all required checks.
+The API smoke test must fail if `/ready` does not pass all required checks. The web smoke test must fail if internal/private files are publicly bundled.
 
 ## First end-to-end pilot
 
@@ -63,7 +69,8 @@ Use controlled test records, not a public customer request.
 Do not move Source AO to public production unless all are true:
 
 - branch CI is green;
-- staging `/ready` and smoke test pass;
+- staging API `/ready` and smoke test pass;
+- isolated staging frontend deploy + web smoke test pass;
 - full supplier-confirmation pilot passes;
 - synthetic sourcing + contact-purge pilot passes;
 - no secrets exist in repository history or frontend code;
@@ -71,10 +78,11 @@ Do not move Source AO to public production unless all are true:
 - public copy contains no invented statistics or availability claims;
 - rate limiting / abuse controls are active;
 - provider log retention is configured;
-- private supplier-evidence retention is defined, or v1 explicitly rejects attachment storage;
+- v1 continues to reject private evidence attachments unless a separate secure evidence store is approved;
 - private D1 export path succeeds without publishing the backup artifact;
 - rollback has been rehearsed;
 - Privacy and Terms are reviewed for launch and then made discoverable;
+- Source AO branch is synchronized with the then-current `main` and all gates are rerun before merge;
 - HMATIAS site integration is limited to an approved Source AO link/entry point.
 
 ## Rollback rule
