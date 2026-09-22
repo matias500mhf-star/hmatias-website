@@ -6,6 +6,7 @@ on:
     paths:
       - 'source-ao/data/**'
       - 'source-ao/schemas/**'
+      - 'source-ao/backend/**'
       - 'source-ao/data-contract.json'
       - 'source-ao/data-engine.js'
       - 'source-ao/validate-data.mjs'
@@ -15,6 +16,7 @@ on:
     paths:
       - 'source-ao/data/**'
       - 'source-ao/schemas/**'
+      - 'source-ao/backend/**'
       - 'source-ao/data-contract.json'
       - 'source-ao/data-engine.js'
       - 'source-ao/validate-data.mjs'
@@ -35,3 +37,7 @@ jobs:
           node-version: '22'
       - name: Validate Source AO data
         run: node source-ao/validate-data.mjs
+      - name: Validate backend syntax
+        run: node --check source-ao/backend/src/index.js
+      - name: Run backend trust tests
+        run: node --test source-ao/backend/test/*.test.mjs
