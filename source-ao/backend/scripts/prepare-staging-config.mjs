@@ -33,7 +33,8 @@ const config={
   vars:{
     PUBLIC_ORIGIN:origin,
     SOURCE_AO_ENV:'staging',
-    SOURCE_AO_RELEASE:process.env.GITHUB_SHA||'source-ao-v1'
+    SOURCE_AO_RELEASE:process.env.GITHUB_SHA||'source-ao-v1',
+    CONTACT_RETENTION_DAYS:'30'
   }
 };
 
