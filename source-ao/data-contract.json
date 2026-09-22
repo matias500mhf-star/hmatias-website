@@ -1,0 +1,59 @@
+{
+  "project": "Source AO",
+  "version": "0.1",
+  "principle": "No commercial claim without traceable source, timestamp and verification state.",
+  "entities": {
+    "supplier": {
+      "required": ["id", "name", "location", "verification_status", "last_verified_at"],
+      "fields": ["id", "name", "legal_name", "category", "location", "address", "phone", "whatsapp", "email", "website", "source_urls", "verification_status", "last_verified_at", "notes"]
+    },
+    "item": {
+      "required": ["id", "name", "category"],
+      "fields": ["id", "name", "aliases", "category", "subcategory", "brand", "model", "specification", "unit", "keywords"]
+    },
+    "availability_observation": {
+      "required": ["id", "supplier_id", "item_id", "observed_at", "source_type", "verification_status"],
+      "fields": ["id", "supplier_id", "item_id", "observed_at", "verified_at", "source_type", "source_url", "evidence_reference", "quantity_reported", "price_reported", "currency", "location", "verification_status", "expires_at"]
+    },
+    "service_provider": {
+      "required": ["id", "name", "service_category", "location", "verification_status", "last_verified_at"],
+      "fields": ["id", "name", "service_category", "specialties", "location", "phone", "whatsapp", "source_urls", "verification_status", "last_verified_at"]
+    },
+    "radar_watch": {
+      "required": ["id", "query", "location", "created_at", "status"],
+      "fields": ["id", "query", "normalized_query", "category", "specification", "quantity", "location", "created_at", "last_checked_at", "status", "matched_entity_ids"]
+    }
+  },
+  "verification_states": {
+    "discovered": "A source mentions the supplier, product or service. No availability claim is allowed.",
+    "recently_seen": "Information is recent but has not been commercially reconfirmed.",
+    "source_checked": "The source was checked and timestamped. Availability may still require supplier confirmation.",
+    "supplier_confirmed": "Supplier or provider directly confirmed the relevant information and verification time is stored.",
+    "in_stock_confirmed": "Supplier directly confirmed current stock for the specific item/specification. This state must expire quickly.",
+    "needs_reconfirmation": "The previous verification is outside its freshness window.",
+    "unavailable": "Supplier or provider directly confirmed unavailability at the stored timestamp."
+  },
+  "freshness_policy_hours": {
+    "in_stock_confirmed": 24,
+    "supplier_confirmed": 72,
+    "source_checked": 168,
+    "recently_seen": 72
+  },
+  "display_rules": [
+    "Never show 'available', 'in stock' or a current price from a discovered-only record.",
+    "Always show the last verification date/time when making a current-market claim.",
+    "Expired records automatically downgrade to needs_reconfirmation.",
+    "Price observations are historical unless reconfirmed inside the applicable freshness window.",
+    "Conflicting sources must be displayed as unverified until resolved.",
+    "AI inference may classify or normalize data but may not upgrade verification status."
+  ],
+  "source_priority": [
+    "direct_supplier_confirmation",
+    "supplier_official_channel",
+    "documented_partner_feed",
+    "structured_marketplace_listing",
+    "public_business_directory",
+    "social_media_post",
+    "general_web_result"
+  ]
+}
