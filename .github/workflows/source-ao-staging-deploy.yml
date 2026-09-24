@@ -1,0 +1,163 @@
+name: Source AO Staging Deploy
+
+# This launcher lives on main so GitHub exposes the manual Run workflow action.
+# Only the reviewed Source AO commit is checked out and deployed to staging.
+# Updating the release requires a separate review of this pinned commit.
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type DEPLOY-STAGING to continue'
+        required: true
+        type: string
+      run_pilot:
+        description: 'Run synthetic end-to-end pilot after deploy'
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-ao-staging-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy-staging:
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirm == 'DEPLOY-STAGING' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    environment: source-ao-staging
+    defaults:
+      run:
+        working-directory: source-ao/backend
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      SOURCE_AO_STAGING_D1_ID: ${{ secrets.SOURCE_AO_STAGING_D1_ID }}
+      SOURCE_AO_STAGING_PUBLIC_ORIGIN: ${{ vars.SOURCE_AO_STAGING_PUBLIC_ORIGIN }}
+      SOURCE_AO_API_BASE: ${{ vars.SOURCE_AO_STAGING_API_BASE }}
+      SOURCE_AO_STAGING_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_STAGING_ADMIN_API_TOKEN }}
+      SOURCE_AO_STAGING_CONFIRMATION_SECRET: ${{ secrets.SOURCE_AO_STAGING_CONFIRMATION_SECRET }}
+      SOURCE_AO_STAGING_PII_ENCRYPTION_KEY: ${{ secrets.SOURCE_AO_STAGING_PII_ENCRYPTION_KEY }}
+      SOURCE_AO_STAGING_RATE_LIMIT_SECRET: ${{ secrets.SOURCE_AO_STAGING_RATE_LIMIT_SECRET }}
+
+    steps:
+      - name: Checkout reviewed Source AO release
+        uses: actions/checkout@v4
+        with:
+          ref: 2c34ae52dd12beea044e3877118a36f6db5d8ce4
+          persist-credentials: false
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Preflight protected staging values
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(
+            CLOUDFLARE_API_TOKEN
+            CLOUDFLARE_ACCOUNT_ID
+            SOURCE_AO_STAGING_D1_ID
+            SOURCE_AO_STAGING_PUBLIC_ORIGIN
+            SOURCE_AO_API_BASE
+            SOURCE_AO_STAGING_ADMIN_API_TOKEN
+            SOURCE_AO_STAGING_CONFIRMATION_SECRET
+            SOURCE_AO_STAGING_PII_ENCRYPTION_KEY
+            SOURCE_AO_STAGING_RATE_LIMIT_SECRET
+          )
+          for key in "${required[@]}"; do
+            if [ -z "${!key:-}" ]; then
+              echo "Missing protected staging value: $key" >&2
+              exit 2
+            fi
+          done
+          strong=(
+            SOURCE_AO_STAGING_ADMIN_API_TOKEN
+            SOURCE_AO_STAGING_CONFIRMATION_SECRET
+            SOURCE_AO_STAGING_PII_ENCRYPTION_KEY
+            SOURCE_AO_STAGING_RATE_LIMIT_SECRET
+          )
+          for key in "${strong[@]}"; do
+            value="${!key}"
+            if [ "${#value}" -lt 32 ]; then
+              echo "Protected staging secret is too short: $key" >&2
+              exit 2
+            fi
+          done
+          case "$SOURCE_AO_STAGING_PUBLIC_ORIGIN" in https://*) ;; *) echo 'Staging public origin must use HTTPS' >&2; exit 2;; esac
+          case "$SOURCE_AO_API_BASE" in https://*) ;; *) echo 'Staging API base must use HTTPS' >&2; exit 2;; esac
+
+      - name: Install backend tooling
+        run: npm install --no-audit --no-fund
+
+      - name: Run backend QA before deployment
+        run: npm run check
+
+      - name: Generate runtime API staging config
+        # Report the application commit, not the launcher's main-branch commit.
+        run: GITHUB_SHA="$(git rev-parse HEAD)" node scripts/prepare-staging-config.mjs
+
+      - name: Apply D1 migrations
+        run: npx wrangler d1 migrations apply source-ao-staging --remote --config wrangler.staging.runtime.jsonc
+
+      - name: Prove private D1 export path
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .staging-backup
+          backup=.staging-backup/source-ao-staging.sql
+          npx wrangler d1 export source-ao-staging --remote --skip-confirmation --output="$backup" --config wrangler.staging.runtime.jsonc
+          test -s "$backup"
+          grep -q 'CREATE TABLE' "$backup"
+          bytes=$(wc -c < "$backup" | tr -d ' ')
+          echo "Private D1 export validated (${bytes} bytes); file will not be uploaded as an artifact."
+          rm -f "$backup"
+          rmdir .staging-backup
+
+      - name: Configure API Worker secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s' "$SOURCE_AO_STAGING_ADMIN_API_TOKEN" | npx wrangler secret put ADMIN_API_TOKEN --config wrangler.staging.runtime.jsonc
+          printf '%s' "$SOURCE_AO_STAGING_CONFIRMATION_SECRET" | npx wrangler secret put CONFIRMATION_SECRET --config wrangler.staging.runtime.jsonc
+          printf '%s' "$SOURCE_AO_STAGING_PII_ENCRYPTION_KEY" | npx wrangler secret put PII_ENCRYPTION_KEY --config wrangler.staging.runtime.jsonc
+          printf '%s' "$SOURCE_AO_STAGING_RATE_LIMIT_SECRET" | npx wrangler secret put RATE_LIMIT_SECRET --config wrangler.staging.runtime.jsonc
+
+      - name: Deploy staging API Worker
+        run: npx wrangler deploy --config wrangler.staging.runtime.jsonc
+
+      - name: Smoke test deployed staging API
+        run: npm run smoke:staging
+
+      - name: Build allowlisted staging frontend
+        run: npm run build:web:staging
+
+      - name: Deploy isolated staging frontend
+        run: npx wrangler deploy --config wrangler.web.staging.runtime.jsonc
+
+      - name: Smoke test staging frontend isolation
+        run: npm run smoke:web:staging
+
+      - name: Seed synthetic supplier for optional pilot
+        if: ${{ inputs.run_pilot }}
+        run: npx wrangler d1 execute source-ao-staging --remote --file=staging/seed.sql --config wrangler.staging.runtime.jsonc
+
+      - name: Run synthetic end-to-end pilot
+        if: ${{ inputs.run_pilot }}
+        env:
+          ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_STAGING_ADMIN_API_TOKEN }}
+          SOURCE_AO_TEST_SUPPLIER_ID: sup_test_staging
+        run: npm run pilot:staging
+
+      - name: Remove generated sensitive temporary files
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          rm -f wrangler.staging.runtime.jsonc wrangler.web.staging.runtime.jsonc
+          rm -rf .staging-backup .staging-web
