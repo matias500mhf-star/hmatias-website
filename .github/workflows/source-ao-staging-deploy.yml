@@ -39,10 +39,8 @@ jobs:
       SOURCE_AO_STAGING_D1_ID: ${{ secrets.SOURCE_AO_STAGING_D1_ID || vars.SOURCE_AO_STAGING_D1_ID }}
       SOURCE_AO_STAGING_PUBLIC_ORIGIN: ${{ vars.SOURCE_AO_STAGING_PUBLIC_ORIGIN || secrets.SOURCE_AO_STAGING_PUBLIC_ORIGIN }}
       SOURCE_AO_API_BASE: ${{ vars.SOURCE_AO_STAGING_API_BASE || secrets.SOURCE_AO_STAGING_API_BASE }}
+      SOURCE_AO_RUN_PILOT: ${{ inputs.run_pilot }}
       SOURCE_AO_STAGING_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_STAGING_ADMIN_API_TOKEN }}
-      SOURCE_AO_STAGING_CONFIRMATION_SECRET: ${{ secrets.SOURCE_AO_STAGING_CONFIRMATION_SECRET }}
-      SOURCE_AO_STAGING_PII_ENCRYPTION_KEY: ${{ secrets.SOURCE_AO_STAGING_PII_ENCRYPTION_KEY }}
-      SOURCE_AO_STAGING_RATE_LIMIT_SECRET: ${{ secrets.SOURCE_AO_STAGING_RATE_LIMIT_SECRET }}
 
     steps:
       - name: Checkout reviewed Source AO release
@@ -67,11 +65,10 @@ jobs:
             SOURCE_AO_STAGING_D1_ID
             SOURCE_AO_STAGING_PUBLIC_ORIGIN
             SOURCE_AO_API_BASE
-            SOURCE_AO_STAGING_ADMIN_API_TOKEN
-            SOURCE_AO_STAGING_CONFIRMATION_SECRET
-            SOURCE_AO_STAGING_PII_ENCRYPTION_KEY
-            SOURCE_AO_STAGING_RATE_LIMIT_SECRET
           )
+          if [ "${SOURCE_AO_RUN_PILOT:-false}" = true ]; then
+            required+=(SOURCE_AO_STAGING_ADMIN_API_TOKEN)
+          fi
           missing=()
           for key in "${required[@]}"; do
             if [ -z "${!key:-}" ]; then
@@ -85,19 +82,10 @@ jobs:
             echo 'Configure the missing names in GitHub Settings > Environments > source-ao-staging before starting a new run.' >&2
             exit 2
           fi
-          strong=(
-            SOURCE_AO_STAGING_ADMIN_API_TOKEN
-            SOURCE_AO_STAGING_CONFIRMATION_SECRET
-            SOURCE_AO_STAGING_PII_ENCRYPTION_KEY
-            SOURCE_AO_STAGING_RATE_LIMIT_SECRET
-          )
-          for key in "${strong[@]}"; do
-            value="${!key}"
-            if [ "${#value}" -lt 32 ]; then
-              echo "Protected staging secret is too short: $key" >&2
-              exit 2
-            fi
-          done
+          if [ "${SOURCE_AO_RUN_PILOT:-false}" = true ] && [ "${#SOURCE_AO_STAGING_ADMIN_API_TOKEN}" -lt 32 ]; then
+            echo 'Protected staging secret is too short: SOURCE_AO_STAGING_ADMIN_API_TOKEN' >&2
+            exit 2
+          fi
           case "$SOURCE_AO_STAGING_PUBLIC_ORIGIN" in https://*) ;; *) echo 'Staging public origin must use HTTPS' >&2; exit 2;; esac
           case "$SOURCE_AO_API_BASE" in https://*) ;; *) echo 'Staging API base must use HTTPS' >&2; exit 2;; esac
 
@@ -110,6 +98,26 @@ jobs:
       - name: Generate runtime API staging config
         # Report the application commit, not the launcher's main-branch commit.
         run: GITHUB_SHA="$(git rev-parse HEAD)" node scripts/prepare-staging-config.mjs
+
+      - name: Verify existing Cloudflare Worker secrets
+        # Values stay in Cloudflare. The API readiness test validates them after deploy.
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx wrangler secret list --format json --config wrangler.staging.runtime.jsonc > "$RUNNER_TEMP/source-ao-secret-names.json"
+          node --input-type=module - "$RUNNER_TEMP/source-ao-secret-names.json" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const records=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(!Array.isArray(records)) throw new Error('Invalid Worker secret metadata response');
+          const names=new Set(records.map(record=>record.name));
+          const required=['ADMIN_API_TOKEN','CONFIRMATION_SECRET','PII_ENCRYPTION_KEY','RATE_LIMIT_SECRET'];
+          const missing=required.filter(name=>!names.has(name));
+          if(missing.length){
+            for(const name of missing) console.error(`::error title=Cloudflare Worker secret missing::Configure ${name} on source-ao-api-staging before deployment.`);
+            process.exit(2);
+          }
+          console.log('All four Worker secret names are present. Existing values will be preserved.');
+          NODE
 
       - name: Apply D1 migrations
         run: npx wrangler d1 migrations apply source-ao-staging --remote --config wrangler.staging.runtime.jsonc
@@ -127,15 +135,6 @@ jobs:
           echo "Private D1 export validated (${bytes} bytes); file will not be uploaded as an artifact."
           rm -f "$backup"
           rmdir .staging-backup
-
-      - name: Configure API Worker secrets
-        shell: bash
-        run: |
-          set -euo pipefail
-          printf '%s' "$SOURCE_AO_STAGING_ADMIN_API_TOKEN" | npx wrangler secret put ADMIN_API_TOKEN --config wrangler.staging.runtime.jsonc
-          printf '%s' "$SOURCE_AO_STAGING_CONFIRMATION_SECRET" | npx wrangler secret put CONFIRMATION_SECRET --config wrangler.staging.runtime.jsonc
-          printf '%s' "$SOURCE_AO_STAGING_PII_ENCRYPTION_KEY" | npx wrangler secret put PII_ENCRYPTION_KEY --config wrangler.staging.runtime.jsonc
-          printf '%s' "$SOURCE_AO_STAGING_RATE_LIMIT_SECRET" | npx wrangler secret put RATE_LIMIT_SECRET --config wrangler.staging.runtime.jsonc
 
       - name: Deploy staging API Worker
         run: npx wrangler deploy --config wrangler.staging.runtime.jsonc
@@ -168,4 +167,5 @@ jobs:
         shell: bash
         run: |
           rm -f wrangler.staging.runtime.jsonc wrangler.web.staging.runtime.jsonc
+          rm -f "$RUNNER_TEMP/source-ao-secret-names.json"
           rm -rf .staging-backup .staging-web
