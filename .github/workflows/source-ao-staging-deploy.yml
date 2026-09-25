@@ -1,5 +1,9 @@
 name: Source AO Staging Deploy
 
+# This launcher lives on main so GitHub exposes the manual Run workflow action.
+# Only the reviewed Source AO commit is checked out and deployed to staging.
+# Updating the release requires a separate review of this pinned commit.
+
 on:
   workflow_dispatch:
     inputs:
@@ -12,6 +16,11 @@ on:
         required: true
         default: false
         type: boolean
+      rehearse_rollback:
+        description: 'Rehearse staging rollback to the recorded baseline and restore this release'
+        required: true
+        default: true
+        type: boolean
 
 permissions:
   contents: read
@@ -22,32 +31,34 @@ concurrency:
 
 jobs:
   deploy-staging:
-    if: ${{ inputs.confirm == 'DEPLOY-STAGING' }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 18
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirm == 'DEPLOY-STAGING' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
     environment: source-ao-staging
     defaults:
       run:
         working-directory: source-ao/backend
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      SOURCE_AO_STAGING_D1_ID: ${{ secrets.SOURCE_AO_STAGING_D1_ID }}
-      SOURCE_AO_STAGING_PUBLIC_ORIGIN: ${{ vars.SOURCE_AO_STAGING_PUBLIC_ORIGIN }}
-      SOURCE_AO_API_BASE: ${{ vars.SOURCE_AO_STAGING_API_BASE }}
-      SOURCE_AO_STAGING_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_STAGING_ADMIN_API_TOKEN }}
-      SOURCE_AO_STAGING_CONFIRMATION_SECRET: ${{ secrets.SOURCE_AO_STAGING_CONFIRMATION_SECRET }}
-      SOURCE_AO_STAGING_PII_ENCRYPTION_KEY: ${{ secrets.SOURCE_AO_STAGING_PII_ENCRYPTION_KEY }}
-      SOURCE_AO_STAGING_RATE_LIMIT_SECRET: ${{ secrets.SOURCE_AO_STAGING_RATE_LIMIT_SECRET }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+      SOURCE_AO_STAGING_D1_ID: ${{ secrets.SOURCE_AO_STAGING_D1_ID || vars.SOURCE_AO_STAGING_D1_ID }}
+      SOURCE_AO_STAGING_PUBLIC_ORIGIN: ${{ vars.SOURCE_AO_STAGING_PUBLIC_ORIGIN || secrets.SOURCE_AO_STAGING_PUBLIC_ORIGIN }}
+      SOURCE_AO_API_BASE: ${{ vars.SOURCE_AO_STAGING_API_BASE || secrets.SOURCE_AO_STAGING_API_BASE }}
+      SOURCE_AO_RUN_PILOT: ${{ inputs.run_pilot }}
+      SOURCE_AO_REHEARSE_ROLLBACK: ${{ inputs.rehearse_rollback }}
 
     steps:
-      - name: Checkout Source AO branch
-        uses: actions/checkout@v4
+      - name: Checkout reviewed Source AO release
+        uses: actions/checkout@v5
+        with:
+          ref: ae66bbbb1419e9094c2d467771d38a3127b240c4
+          persist-credentials: false
 
       - name: Setup Node 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
+          package-manager-cache: false
 
       - name: Preflight protected staging values
         shell: bash
@@ -59,30 +70,34 @@ jobs:
             SOURCE_AO_STAGING_D1_ID
             SOURCE_AO_STAGING_PUBLIC_ORIGIN
             SOURCE_AO_API_BASE
-            SOURCE_AO_STAGING_ADMIN_API_TOKEN
-            SOURCE_AO_STAGING_CONFIRMATION_SECRET
-            SOURCE_AO_STAGING_PII_ENCRYPTION_KEY
-            SOURCE_AO_STAGING_RATE_LIMIT_SECRET
           )
+          missing=()
           for key in "${required[@]}"; do
             if [ -z "${!key:-}" ]; then
-              echo "Missing protected staging value: $key" >&2
-              exit 2
+              missing+=("$key")
             fi
           done
-          strong=(
-            SOURCE_AO_STAGING_ADMIN_API_TOKEN
-            SOURCE_AO_STAGING_CONFIRMATION_SECRET
-            SOURCE_AO_STAGING_PII_ENCRYPTION_KEY
-            SOURCE_AO_STAGING_RATE_LIMIT_SECRET
-          )
-          for key in "${strong[@]}"; do
-            value="${!key}"
-            if [ "${#value}" -lt 32 ]; then
-              echo "Protected staging secret is too short: $key" >&2
+          if [ "${#missing[@]}" -gt 0 ]; then
+            for key in "${missing[@]}"; do
+              echo "::error title=Incomplete staging configuration::Missing protected staging value: $key" >&2
+            done
+            echo 'Configure the missing names in GitHub Settings > Environments > source-ao-staging before starting a new run.' >&2
+            exit 2
+          fi
+          case "$CLOUDFLARE_API_TOKEN" in
+            Bearer\ *|bearer\ *)
+              echo '::error title=Malformed Cloudflare API token::CLOUDFLARE_API_TOKEN must contain only the raw token value, without the Bearer prefix.' >&2
               exit 2
-            fi
-          done
+              ;;
+            \"*\"|\'*\')
+              echo '::error title=Malformed Cloudflare API token::CLOUDFLARE_API_TOKEN must not include surrounding quotes.' >&2
+              exit 2
+              ;;
+          esac
+          if [[ "$CLOUDFLARE_API_TOKEN" =~ [[:space:]] ]]; then
+            echo '::error title=Malformed Cloudflare API token::CLOUDFLARE_API_TOKEN contains whitespace. Paste only the raw Cloudflare API token.' >&2
+            exit 2
+          fi
           case "$SOURCE_AO_STAGING_PUBLIC_ORIGIN" in https://*) ;; *) echo 'Staging public origin must use HTTPS' >&2; exit 2;; esac
           case "$SOURCE_AO_API_BASE" in https://*) ;; *) echo 'Staging API base must use HTTPS' >&2; exit 2;; esac
 
@@ -93,10 +108,79 @@ jobs:
         run: npm run check
 
       - name: Generate runtime API staging config
-        run: node scripts/prepare-staging-config.mjs
+        # Report the application commit, not the launcher's main-branch commit.
+        run: GITHUB_SHA="$(git rev-parse HEAD)" node scripts/prepare-staging-config.mjs
+
+      - name: Record active staging Worker versions
+        if: ${{ inputs.rehearse_rollback }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          api_file="$RUNNER_TEMP/source-ao-api-deployments.json"
+          web_file="$RUNNER_TEMP/source-ao-web-deployments.json"
+          npx wrangler deployments list --json --config wrangler.staging.runtime.jsonc > "$api_file"
+          npx wrangler deployments list --json --name source-ao-web-staging > "$web_file"
+          node --input-type=module - "$api_file" "$web_file" "$GITHUB_ENV" <<'NODE'
+          import {readFileSync,appendFileSync} from 'node:fs';
+
+          function currentVersion(file){
+            const raw=JSON.parse(readFileSync(file,'utf8'));
+            const list=Array.isArray(raw)
+              ? raw
+              : Array.isArray(raw?.deployments)
+                ? raw.deployments
+                : Array.isArray(raw?.result?.deployments)
+                  ? raw.result.deployments
+                  : Array.isArray(raw?.result)
+                    ? raw.result
+                    : [];
+            const current=list[0];
+            const versions=current?.versions||[];
+            const selected=[...versions].sort((a,b)=>Number(b.percentage||0)-Number(a.percentage||0))[0];
+            const id=selected?.version_id||selected?.versionId||null;
+            if(!id) throw new Error('Unable to resolve active Worker version');
+            return id;
+          }
+
+          const api=currentVersion(process.argv[2]);
+          const web=currentVersion(process.argv[3]);
+          appendFileSync(process.argv[4],`SOURCE_AO_BASELINE_API_VERSION=${api}\nSOURCE_AO_BASELINE_WEB_VERSION=${web}\n`);
+          console.log('Recorded active staging API and web Worker versions for rollback rehearsal.');
+          NODE
+          rm -f "$api_file" "$web_file"
+
+      - name: Verify existing Cloudflare Worker secrets
+        # Values stay in Cloudflare. The API readiness test validates them after deploy.
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx wrangler secret list --format json --config wrangler.staging.runtime.jsonc > "$RUNNER_TEMP/source-ao-secret-names.json"
+          node --input-type=module - "$RUNNER_TEMP/source-ao-secret-names.json" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const records=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(!Array.isArray(records)) throw new Error('Invalid Worker secret metadata response');
+          const names=new Set(records.map(record=>record.name));
+          const required=['ADMIN_API_TOKEN','CONFIRMATION_SECRET','PII_ENCRYPTION_KEY','RATE_LIMIT_SECRET'];
+          const missing=required.filter(name=>!names.has(name));
+          if(missing.length){
+            for(const name of missing) console.error(`::error title=Cloudflare Worker secret missing::Configure ${name} on source-ao-api-staging before deployment.`);
+            process.exit(2);
+          }
+          console.log('All four Worker secret names are present. Existing values will be preserved.');
+          NODE
 
       - name: Apply D1 migrations
         run: npx wrangler d1 migrations apply source-ao-staging --remote --config wrangler.staging.runtime.jsonc
+
+      - name: Seed curated Source AO search index
+        shell: bash
+        run: |
+          set -euo pipefail
+          seed_file="$RUNNER_TEMP/source-ao-curated-seed.sql"
+          node scripts/export-seed-sql.mjs > "$seed_file"
+          test -s "$seed_file"
+          npx wrangler d1 execute source-ao-staging --remote --file="$seed_file" --config wrangler.staging.runtime.jsonc
+          rm -f "$seed_file"
 
       - name: Prove private D1 export path
         shell: bash
@@ -112,17 +196,40 @@ jobs:
           rm -f "$backup"
           rmdir .staging-backup
 
-      - name: Configure API Worker secrets
+      - name: Generate ephemeral staging validation credential
         shell: bash
         run: |
           set -euo pipefail
-          printf '%s' "$SOURCE_AO_STAGING_ADMIN_API_TOKEN" | npx wrangler secret put ADMIN_API_TOKEN --config wrangler.staging.runtime.jsonc
-          printf '%s' "$SOURCE_AO_STAGING_CONFIRMATION_SECRET" | npx wrangler secret put CONFIRMATION_SECRET --config wrangler.staging.runtime.jsonc
-          printf '%s' "$SOURCE_AO_STAGING_PII_ENCRYPTION_KEY" | npx wrangler secret put PII_ENCRYPTION_KEY --config wrangler.staging.runtime.jsonc
-          printf '%s' "$SOURCE_AO_STAGING_RATE_LIMIT_SECRET" | npx wrangler secret put RATE_LIMIT_SECRET --config wrangler.staging.runtime.jsonc
+          token="$(openssl rand -hex 32)"
+          echo "::add-mask::$token"
+          echo "SOURCE_AO_PILOT_TOKEN=$token" >> "$GITHUB_ENV"
+          VALIDATION_TOKEN="$token" node --input-type=module -e '
+            import {readFileSync,writeFileSync} from "node:fs";
+            const path="wrangler.staging.runtime.jsonc";
+            const config=JSON.parse(readFileSync(path,"utf8"));
+            config.vars={...(config.vars||{}),PILOT_ADMIN_API_TOKEN:process.env.VALIDATION_TOKEN};
+            writeFileSync(path,JSON.stringify(config,null,2)+"\n",{mode:0o600});
+          '
+
+      - name: Validate generated staging runtime config
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module -e '
+            import {readFileSync} from "node:fs";
+            const config=JSON.parse(readFileSync("wrangler.staging.runtime.jsonc","utf8"));
+            if(config?.vars?.PILOT_ADMIN_API_TOKEN!==process.env.SOURCE_AO_PILOT_TOKEN){
+              throw new Error("Temporary validation token missing from runtime config");
+            }
+            console.log("Generated staging runtime config is valid JSON and contains the masked validation binding.");
+          '
 
       - name: Deploy staging API Worker
-        run: npx wrangler deploy --config wrangler.staging.runtime.jsonc
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx wrangler deploy --config wrangler.staging.runtime.jsonc
+          echo "SOURCE_AO_VALIDATION_DEPLOYED=true" >> "$GITHUB_ENV"
 
       - name: Smoke test deployed staging API
         run: npm run smoke:staging
@@ -136,6 +243,30 @@ jobs:
       - name: Smoke test staging frontend isolation
         run: npm run smoke:web:staging
 
+      - name: Wait for staging validation credential
+        shell: bash
+        run: |
+          set -euo pipefail
+          response_file="$RUNNER_TEMP/source-ao-validation-probe.json"
+          authenticated=false
+          for attempt in $(seq 1 12); do
+            code="$(curl -sS -o "$response_file" -w '%{http_code}'               -H "accept: application/json"               -H "authorization: Bearer $SOURCE_AO_PILOT_TOKEN"               "$SOURCE_AO_API_BASE/api/admin/sourcing-requests?limit=1" || true)"
+            if [ "$code" = "200" ]; then
+              authenticated=true
+              echo "Ephemeral staging validation credential active after attempt $attempt."
+              break
+            fi
+            if [ "$code" != "401" ]; then
+              echo "::warning title=Validation credential probe::Unexpected HTTP $code while waiting for staging auth." >&2
+            fi
+            sleep 2
+          done
+          rm -f "$response_file"
+          if [ "$authenticated" != "true" ]; then
+            echo "::error title=Validation credential unavailable::Ephemeral staging credential did not become active within the retry window." >&2
+            exit 1
+          fi
+
       - name: Seed synthetic supplier for optional pilot
         if: ${{ inputs.run_pilot }}
         run: npx wrangler d1 execute source-ao-staging --remote --file=staging/seed.sql --config wrangler.staging.runtime.jsonc
@@ -143,13 +274,105 @@ jobs:
       - name: Run synthetic end-to-end pilot
         if: ${{ inputs.run_pilot }}
         env:
-          ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_STAGING_ADMIN_API_TOKEN }}
           SOURCE_AO_TEST_SUPPLIER_ID: sup_test_staging
-        run: npm run pilot:staging
+        run: ADMIN_API_TOKEN="$SOURCE_AO_PILOT_TOKEN" npm run pilot:staging
+
+      - name: Run real lost-client acceptance
+        run: ADMIN_API_TOKEN="$SOURCE_AO_PILOT_TOKEN" npm run acceptance:staging
+
+      - name: Run staging contact-retention drill
+        run: ADMIN_API_TOKEN="$SOURCE_AO_PILOT_TOKEN" npm run retention:staging
+
+      - name: Disable ephemeral staging validation credential
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f wrangler.staging.runtime.jsonc ] && [ "${SOURCE_AO_VALIDATION_DEPLOYED:-false}" = "true" ]; then
+            node --input-type=module -e '
+              import {readFileSync,writeFileSync} from "node:fs";
+              const path="wrangler.staging.runtime.jsonc";
+              const config=JSON.parse(readFileSync(path,"utf8"));
+              config.vars={...(config.vars||{}),PILOT_ADMIN_API_TOKEN:""};
+              writeFileSync(path,JSON.stringify(config,null,2)+"\n",{mode:0o600});
+            '
+            npx wrangler deploy --config wrangler.staging.runtime.jsonc
+            probe_file="$RUNNER_TEMP/source-ao-validation-cleanup-probe.json"
+            rejected=false
+            last_code=""
+            for attempt in $(seq 1 12); do
+              code="$(curl -sS -o "$probe_file" -w '%{http_code}' \
+                -H "accept: application/json" \
+                -H "authorization: Bearer $SOURCE_AO_PILOT_TOKEN" \
+                "$SOURCE_AO_API_BASE/api/admin/sourcing-requests?limit=1" || true)"
+              last_code="$code"
+              if [ "$code" = "401" ]; then
+                rejected=true
+                echo "Old staging validation token rejected after cleanup attempt $attempt."
+                break
+              fi
+              if [ "$code" != "200" ]; then
+                echo "::warning title=Validation credential cleanup probe::Unexpected HTTP $code while waiting for the old token to be rejected." >&2
+              fi
+              sleep 2
+            done
+            rm -f "$probe_file"
+            if [ "$rejected" != "true" ]; then
+              echo "::error title=Validation credential cleanup failed::Expected old staging validation token to be rejected with HTTP 401 after cleanup propagation, got $last_code." >&2
+              exit 1
+            fi
+            echo "Ephemeral staging validation credential disabled; old token rejected."
+          fi
+
+      - name: Rehearse staging rollback and restore reviewed release
+        if: ${{ inputs.rehearse_rollback && success() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SOURCE_AO_BASELINE_API_VERSION:-}" ] || [ -z "${SOURCE_AO_BASELINE_WEB_VERSION:-}" ]; then
+            echo "::error title=Rollback baseline unavailable::Active API/web versions were not captured before deployment." >&2
+            exit 1
+          fi
+
+          echo "Rolling staging API back to recorded baseline."
+          npx wrangler versions deploy "$SOURCE_AO_BASELINE_API_VERSION@100%" --yes             --name source-ao-api-staging             --config wrangler.staging.runtime.jsonc             --message "Source AO staging rollback rehearsal: baseline API"
+          npm run smoke:staging
+
+          echo "Rolling staging frontend back to recorded baseline."
+          npx wrangler versions deploy "$SOURCE_AO_BASELINE_WEB_VERSION@100%" --yes             --name source-ao-web-staging             --config wrangler.web.staging.runtime.jsonc             --message "Source AO staging rollback rehearsal: baseline web"
+          npm run smoke:web:staging
+
+          echo "Restoring reviewed Source AO candidate."
+          npx wrangler deploy --config wrangler.staging.runtime.jsonc
+          npx wrangler deploy --config wrangler.web.staging.runtime.jsonc
+          npm run smoke:staging
+          npm run smoke:web:staging
+
+          probe_file="$RUNNER_TEMP/source-ao-rollback-token-probe.json"
+          rejected=false
+          for attempt in $(seq 1 12); do
+            code="$(curl -sS -o "$probe_file" -w '%{http_code}'               -H "accept: application/json"               -H "authorization: Bearer $SOURCE_AO_PILOT_TOKEN"               "$SOURCE_AO_API_BASE/api/admin/sourcing-requests?limit=1" || true)"
+            if [ "$code" = "401" ]; then
+              rejected=true
+              break
+            fi
+            sleep 2
+          done
+          rm -f "$probe_file"
+          if [ "$rejected" != "true" ]; then
+            echo "::error title=Rollback restore security failed::Old staging validation token was not rejected after restoring the reviewed release." >&2
+            exit 1
+          fi
+          echo "ROLLBACK_REHEARSAL=PASS"
+          echo "Reviewed staging release restored; API/web smokes passed; temporary validation token remains rejected."
 
       - name: Remove generated sensitive temporary files
         if: ${{ always() }}
         shell: bash
         run: |
           rm -f wrangler.staging.runtime.jsonc wrangler.web.staging.runtime.jsonc
+          rm -f "$RUNNER_TEMP/source-ao-secret-names.json" "$RUNNER_TEMP/source-ao-curated-seed.sql"
+          rm -f "$RUNNER_TEMP/source-ao-pilot-secret.json" "$RUNNER_TEMP/source-ao-pilot-secret-delete.json"
+          rm -f "$RUNNER_TEMP/source-ao-validation-probe.json" "$RUNNER_TEMP/source-ao-validation-cleanup-probe.json"
+          rm -f "$RUNNER_TEMP/source-ao-api-deployments.json" "$RUNNER_TEMP/source-ao-web-deployments.json" "$RUNNER_TEMP/source-ao-rollback-token-probe.json"
           rm -rf .staging-backup .staging-web
