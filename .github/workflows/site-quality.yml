@@ -52,6 +52,16 @@ jobs:
               --only-categories=performance,accessibility,best-practices,seo \
               --output=json --output-path="./lighthouse-$page-desktop.json"
           done
+          if [ -f source-ao/index.html ]; then
+            npx --yes lighthouse@latest http://127.0.0.1:8080/source-ao/index.html \
+              --quiet --chrome-flags="--headless --no-sandbox" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json --output-path=./lighthouse-source-ao-mobile.json
+            npx --yes lighthouse@latest http://127.0.0.1:8080/source-ao/index.html \
+              --quiet --preset=desktop --chrome-flags="--headless --no-sandbox" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json --output-path=./lighthouse-source-ao-desktop.json
+          fi
       - name: Report and enforce quality floor
         shell: bash
         run: |
@@ -145,7 +155,7 @@ jobs:
                   if data and ',' in data:
                       ext = 'jpg' if 'image/jpeg' in data.split(',', 1)[0] else 'png'
                       Path(f'{path.stem}-{kind}.{ext}').write_bytes(base64.b64decode(data.split(',', 1)[1]))
-                      if path.stem in ('lighthouse-pt-mobile', 'lighthouse-pt-desktop', 'lighthouse-credibilidade-mobile', 'lighthouse-credibilidade-desktop') and kind == 'full':
+                      if path.stem in ('lighthouse-pt-mobile', 'lighthouse-pt-desktop', 'lighthouse-credibilidade-mobile', 'lighthouse-credibilidade-desktop', 'lighthouse-source-ao-mobile', 'lighthouse-source-ao-desktop') and kind == 'full':
                           print(f'HMATIAS_VISUAL:{path.stem}:{data}')
           PY
       - uses: actions/upload-artifact@v4
