@@ -1,4 +1,4 @@
-import {cp,copyFile,mkdir,rm,writeFile} from 'node:fs/promises';
+import {cp,copyFile,mkdir,readFile,rm,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 
@@ -27,6 +27,18 @@ await rm(out,{recursive:true,force:true});
 await mkdir(out,{recursive:true});
 for(const file of publicFiles){
   await copyFile(path.join(sourceRoot,file),path.join(out,file));
+}
+
+for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
+  const target=path.join(out,file);
+  let html=await readFile(target,'utf8');
+  const noindex='<meta name="robots" content="noindex,nofollow,noarchive">';
+  if(/<meta\s+name=["']robots["'][^>]*>/i.test(html)){
+    html=html.replace(/<meta\s+name=["']robots["'][^>]*>/i,noindex);
+  }else{
+    html=html.replace(/(<meta\s+name=["']viewport["'][^>]*>)/i,`$1\n  ${noindex}`);
+  }
+  await writeFile(target,html,{mode:0o644});
 }
 await cp(path.join(sourceRoot,'data'),path.join(out,'data'),{recursive:true});
 
