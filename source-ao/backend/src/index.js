@@ -114,11 +114,12 @@ async function bodyJson(request) {
   return request.json();
 }
 
-function isAdmin(request, env) {
-  const expected = env.ADMIN_API_TOKEN;
-  if (!expected) return false;
+export function isAdmin(request, env) {
   const auth = request.headers.get('authorization') || '';
-  return secureEqual(auth,`Bearer ${expected}`);
+  const expected = env.ADMIN_API_TOKEN;
+  if (expected && secureEqual(auth,`Bearer ${expected}`)) return true;
+  const pilot = env.SOURCE_AO_ENV === 'staging' ? env.PILOT_ADMIN_API_TOKEN : null;
+  return Boolean(pilot) && secureEqual(auth,`Bearer ${pilot}`);
 }
 
 const id = prefix => `${prefix}_${crypto.randomUUID()}`;
