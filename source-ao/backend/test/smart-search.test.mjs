@@ -15,6 +15,16 @@ test('expands Portuguese PP strapping query into bilingual supplier discovery te
   assert.equal(plan.claims.stock_confirmed,false);
 });
 
+test('maps formol and formaldehyde to the same chemical sourcing family',()=>{
+  const plan=buildSmartSearchPlan({query:'formol 37% 1L urgente',location:'Luanda'});
+  assert.equal(plan.interpretation.family_id,'formaldehyde-chemical');
+  assert.equal(plan.interpretation.category,'industrial-supply');
+  assert.equal(plan.urgency,'urgent');
+  assert.ok(plan.query_variants.some(q=>q.toLowerCase().includes('formaldehyde 37%')));
+  assert.ok(plan.query_variants.some(q=>q.toLowerCase().includes('produtos químicos laboratoriais')));
+  assert.equal(plan.claims.stock_confirmed,false);
+});
+
 test('keeps unknown product as general sourcing without fabricating availability',()=>{
   const plan=buildSmartSearchPlan({query:'peça especial modelo ZX-441',location:'Viana'});
   assert.equal(plan.interpretation.family_id,'general-sourcing');
