@@ -44,7 +44,10 @@ export default {
       }else{
         rateMeta=rateResult;
 
-        if(request.method==='GET' && url.pathname==='/ready'){
+        const collectorResponse=await collectorRoute(request,env,url.pathname);
+        if(collectorResponse){
+          response=collectorResponse;
+        }else if(request.method==='GET' && url.pathname==='/ready'){
           response=await readinessResponse(env);
         }else if(request.method==='GET' && url.pathname==='/api/search'){
           response=await publicSearch(request,env);
