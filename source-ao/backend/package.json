@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "test": "node --test test/*.test.mjs",
-    "check": "node --check src/index.js && node --check src/public-search.js && node --check src/smart-search.js && node --check src/procurement-mission.js && node --check src/collector.js && node --check src/collector-route.js && node --check src/collector-discovery.js && node --check src/sourcing.js && node --check src/security.js && node --check src/health.js && node --check src/maintenance.js && node --check src/router.js && node --check scripts/build-staging-web.mjs && node --check scripts/export-seed-sql.mjs && node --check scripts/smoke-staging-web.mjs && node --check scripts/pilot-staging.mjs && node --check scripts/acceptance-staging.mjs && node --test test/*.test.mjs",
+    "check": "node --check src/index.js && node --check src/public-search.js && node --check src/smart-search.js && node --check src/procurement-mission.js && node --check src/collector.js && node --check src/collector-route.js && node --check src/collector-discovery.js && node --check src/sourcing.js && node --check src/security.js && node --check src/health.js && node --check src/maintenance.js && node --check src/router.js && node --check scripts/build-staging-web.mjs && node --check scripts/export-seed-sql.mjs && node --check scripts/smoke-staging-web.mjs && node --check scripts/pilot-staging.mjs && node --check scripts/acceptance-staging.mjs && node --check scripts/retention-staging.mjs && node --test test/*.test.mjs",
     "qa": "npm run check",
     "build:web:staging": "node scripts/build-staging-web.mjs",
     "smoke:staging": "node scripts/smoke-staging.mjs",
     "smoke:web:staging": "node scripts/smoke-staging-web.mjs",
     "pilot:staging": "node scripts/pilot-staging.mjs",
-    "acceptance:staging": "node scripts/acceptance-staging.mjs"
+    "acceptance:staging": "node scripts/acceptance-staging.mjs",
+    "retention:staging": "node scripts/retention-staging.mjs"
   },
   "engines": {
     "node": ">=22"
