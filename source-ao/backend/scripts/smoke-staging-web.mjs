@@ -4,7 +4,7 @@ if(!origin||!apiBase){console.error('SOURCE_AO_STAGING_PUBLIC_ORIGIN and SOURCE_
 
 const fail=message=>{throw new Error(message)};
 const text=async(path,{expect=200}={})=>{
-  const res=await fetch(origin+path,{redirect:'manual',headers:{accept:'text/html,application/javascript,text/plain'}});
+  const res=await fetch(origin+path,{redirect:'follow',headers:{accept:'text/html,application/javascript,text/plain'}});
   if(res.status!==expect) fail(`${path}: expected HTTP ${expect}, got ${res.status}`);
   return res.text();
 };
