@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-09-25T20:05:00+01:00",
+  "cases": [
+    {
+      "id": "lost-client-formaldehyde",
+      "input": "formol 37% 1L urgente",
+      "location": "Luanda",
+      "expected_family": "formaldehyde-chemical",
+      "expected_item": "item-formaldehyde",
+      "must_not_claim": ["stock_confirmed", "price_confirmed", "delivery_confirmed"],
+      "success": "Returns exact public product evidence or clearly-labelled potential Angola suppliers and a direct verification path."
+    },
+    {
+      "id": "lost-client-pp-strapping",
+      "input": "cinta PP 9mm 1 rolo urgente",
+      "location": "Luanda",
+      "expected_family": "packaging-strapping",
+      "expected_item": "item-packaging-strapping",
+      "must_not_claim": ["stock_confirmed", "price_confirmed", "delivery_confirmed"],
+      "success": "Retains 9 mm and one roll, surfaces Angola packaging/industrial supplier candidates, and requests exact confirmation."
+    }
+  ]
+}
