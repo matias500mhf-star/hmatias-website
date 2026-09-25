@@ -9,6 +9,19 @@ const esc=value=>value==null?'NULL':`'${String(value).replaceAll("'","''")}'`;
 const json=value=>esc(JSON.stringify(value??[]));
 const normalize=value=>(value||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
 
+const sourceTypeForSupplierUrl=(supplier,url)=>{
+  try{
+    const source=new URL(url);
+    const website=supplier.website?new URL(supplier.website):null;
+    if(/\.pdf(?:$|[?#])/i.test(source.pathname)) return 'catalog';
+    if(website && source.hostname.replace(/^www\./,'')===website.hostname.replace(/^www\./,'')) return 'supplier_website';
+    if(/(?:waze|yellowmega|agroportal)/i.test(source.hostname)) return 'directory';
+    return 'other';
+  }catch{
+    return 'other';
+  }
+};
+
 const suppliers=read('suppliers.json').suppliers||[];
 const catalog=read('catalog.json').items||[];
 const observations=read('observations.json').observations||[];
@@ -20,6 +33,12 @@ sql.push('PRAGMA foreign_keys = ON;');
 
 for(const s of suppliers){
   sql.push(`INSERT OR REPLACE INTO suppliers(id,name,legal_name,location,website,public_status,last_verified_at,categories_json,capabilities_json,phone,whatsapp,email) VALUES(${esc(s.id)},${esc(s.name)},${esc(s.legal_name)},${esc(s.location)},${esc(s.website)},${esc(s.verification_status||'source_checked')},${esc(s.last_verified_at)},${json(s.category||[])},${json(s.capabilities||[])},${esc(s.phone)},${esc(s.whatsapp)},${esc(s.email)});`);
+  const sourceUrls=[...(s.source_urls||[])];
+  if(s.website && !sourceUrls.includes(s.website)) sourceUrls.unshift(s.website);
+  for(const sourceUrl of sourceUrls){
+    const sourceId=`seed-source-${normalize(s.id+' '+sourceUrl).replaceAll(' ','-').slice(0,110)}`;
+    sql.push(`INSERT OR REPLACE INTO supplier_sources(id,supplier_id,search_candidate_id,source_url,source_type,title,evidence_text,source_checked_at) VALUES(${esc(sourceId)},${esc(s.id)},NULL,${esc(sourceUrl)},${esc(sourceTypeForSupplierUrl(s,sourceUrl))},${esc(s.name)},NULL,${esc(s.last_verified_at)});`);
+  }
 }
 
 for(const item of catalog){
