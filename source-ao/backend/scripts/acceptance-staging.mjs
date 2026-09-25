@@ -8,15 +8,29 @@ if(!base||!token){
 const headers={accept:'application/json','content-type':'application/json'};
 const adminHeaders={...headers,authorization:`Bearer ${token}`};
 
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+
 const request=async(path,{method='GET',body,admin=false}={})=>{
-  const res=await fetch(base+path,{
-    method,
-    headers:admin?adminHeaders:headers,
-    body:body?JSON.stringify(body):undefined
-  });
-  const data=await res.json().catch(()=>({}));
-  if(!res.ok) throw new Error(`${method} ${path}: HTTP ${res.status} ${JSON.stringify(data)}`);
-  return data;
+  const attempts=admin?8:1;
+  let lastStatus=0;
+  let lastData={};
+  for(let attempt=1;attempt<=attempts;attempt++){
+    const res=await fetch(base+path,{
+      method,
+      headers:admin?adminHeaders:headers,
+      body:body?JSON.stringify(body):undefined
+    });
+    const data=await res.json().catch(()=>({}));
+    if(res.ok) return data;
+    lastStatus=res.status;
+    lastData=data;
+    if(!(admin&&res.status===401&&attempt<attempts)){
+      throw new Error(`${method} ${path}: HTTP ${res.status} ${JSON.stringify(data)}`);
+    }
+    console.warn(`Transient staging admin 401 on ${method} ${path}; retry ${attempt}/${attempts-1}`);
+    await sleep(2000);
+  }
+  throw new Error(`${method} ${path}: HTTP ${lastStatus} ${JSON.stringify(lastData)}`);
 };
 
 const ready=await request('/ready');
