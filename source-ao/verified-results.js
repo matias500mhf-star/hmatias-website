@@ -4,6 +4,7 @@
   let dataReady=false;
   let apiSequence=0;
   let smartSequence=0;
+  let missionSequence=0;
 
   const isPt=()=>document.documentElement.lang.toLowerCase().startsWith('pt');
   const labels={
@@ -97,6 +98,94 @@
       :'Search intelligence expands names and specifications. Stock, price and delivery still require traceable confirmation.';
 
     panel.append(head,summary,terms,note);
+  }
+
+  function ensureMissionPanel(){
+    let panel=$('#procurementMission');
+    if(panel) return panel;
+    panel=document.createElement('section');
+    panel.id='procurementMission';
+    panel.className='procurement-mission';
+    panel.hidden=true;
+    ensureSmartPanel().after(panel);
+    return panel;
+  }
+
+  function contactLink(supplier){
+    if(supplier.whatsapp){
+      const digits=String(supplier.whatsapp).replace(/\D/g,'');
+      return {label:'WhatsApp',href:'https://wa.me/'+digits};
+    }
+    if(supplier.phone) return {label:isPt()?'Ligar':'Call',href:'tel:'+String(supplier.phone).replace(/\s+/g,'')};
+    if(supplier.email) return {label:'Email',href:'mailto:'+supplier.email};
+    if(supplier.website) return {label:isPt()?'Website':'Website',href:supplier.website};
+    return null;
+  }
+
+  function renderMission(payload){
+    const mission=payload?.mission;
+    const panel=ensureMissionPanel();
+    if(!mission){panel.hidden=true;panel.replaceChildren();return;}
+    panel.hidden=false;
+    panel.replaceChildren();
+
+    const head=document.createElement('div');head.className='mission-head';
+    const title=document.createElement('div');
+    const eyebrow=document.createElement('small');eyebrow.textContent=isPt()?'MISSÃO DE PROCUREMENT':'PROCUREMENT MISSION';
+    const heading=document.createElement('strong');heading.textContent=isPt()?'Opções para agir agora':'Options to act now';
+    title.append(eyebrow,heading);
+    const status=document.createElement('span');status.className='data-badge data-source_checked';
+    status.textContent=mission.status==='commercial_confirmation_available'
+      ?(isPt()?'CONFIRMAÇÃO DISPONÍVEL':'CONFIRMATION AVAILABLE')
+      :(isPt()?'A CONFIRMAR':'TO CONFIRM');
+    head.append(title,status);
+
+    const grid=document.createElement('div');grid.className='mission-grid';
+    const exact=[...(mission.exact_matches||[])];
+    const candidates=[...(mission.supplier_candidates||[])];
+    const rows=[
+      ...exact.map(row=>({supplier:row.supplier,status:row.status,detail:isPt()?'Referência encontrada em fonte':'Reference found in source',exact:true})),
+      ...candidates.map(row=>({supplier:row,status:'supplier_candidate',detail:isPt()?'Fornecedor potencial; confirmar referência/stock':'Potential supplier; confirm reference/stock',exact:false}))
+    ].slice(0,5);
+
+    rows.forEach(entry=>{
+      const card=document.createElement('article');card.className='mission-supplier';
+      const copy=document.createElement('div');
+      const name=document.createElement('strong');name.textContent=entry.supplier.name;
+      const detail=document.createElement('small');detail.textContent=[entry.detail,entry.supplier.location].filter(Boolean).join(' · ');
+      copy.append(name,detail);
+      const actions=document.createElement('div');actions.className='mission-actions';
+      const badge=document.createElement('span');badge.className='data-badge data-'+entry.status;badge.textContent=L(entry.status);
+      actions.appendChild(badge);
+      const link=contactLink(entry.supplier);
+      if(link){
+        const a=document.createElement('a');a.href=link.href;a.textContent=link.label;a.target=link.href.startsWith('http')?'_blank':'';a.rel='noopener noreferrer';a.className='mission-contact';
+        actions.appendChild(a);
+      }
+      card.append(copy,actions);grid.appendChild(card);
+    });
+
+    const rfq=document.createElement('div');rfq.className='mission-rfq';
+    const rfqHead=document.createElement('div');
+    const rfqTitle=document.createElement('strong');rfqTitle.textContent=isPt()?'RFQ pronto para enviar':'RFQ ready to send';
+    const copyBtn=document.createElement('button');copyBtn.type='button';copyBtn.className='mission-copy';copyBtn.textContent=isPt()?'Copiar RFQ':'Copy RFQ';
+    rfqHead.append(rfqTitle,copyBtn);
+    const pre=document.createElement('pre');pre.textContent=isPt()?mission.rfq?.pt:mission.rfq?.en;
+    copyBtn.addEventListener('click',async()=>{
+      try{
+        await navigator.clipboard.writeText(pre.textContent||'');
+        copyBtn.textContent=isPt()?'Copiado':'Copied';
+        setTimeout(()=>{copyBtn.textContent=isPt()?'Copiar RFQ':'Copy RFQ';},1400);
+      }catch{}
+    });
+    rfq.append(rfqHead,pre);
+
+    const truth=document.createElement('small');truth.className='mission-truth';
+    truth.textContent=isPt()
+      ?'Fornecedor potencial não significa stock confirmado. O Source AO só confirma após evidência comercial atual.'
+      :'Potential supplier does not mean confirmed stock. Source AO confirms only with current commercial evidence.';
+
+    panel.append(head,grid,rfq,truth);
   }
 
   function matchCopy(match){
@@ -222,10 +311,26 @@
     }
   }
 
+  async function refreshProcurementMission(){
+    if(!window.SourceAOAPI?.isConfigured?.()||!window.SourceAOAPI.procurementMission) return;
+    const query=$('#searchInput')?.value.trim();
+    if(!query||$('#resultZone')?.hidden) return;
+    const location=$('#locationInput')?.value||'Luanda';
+    const sequence=++missionSequence;
+    try{
+      const payload=await window.SourceAOAPI.procurementMission(query,location);
+      if(sequence!==missionSequence) return;
+      renderMission(payload);
+    }catch(error){
+      console.warn('[Source AO Procurement Mission fallback]',error);
+    }
+  }
+
   function refreshSearch(){
     refreshStaticSearch();
     void refreshApiSearch();
     void refreshSmartSearch();
+    void refreshProcurementMission();
   }
 
   function enrichRadar(){
