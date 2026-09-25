@@ -1,6 +1,6 @@
 {
-  "version": "0.4",
-  "updated_at": "2026-09-25T20:25:00+01:00",
+  "version": "0.5",
+  "updated_at": "2026-09-25T20:40:00+01:00",
   "suppliers": [
     {
       "id": "sup-imbo-angola",
@@ -48,7 +48,9 @@
         "https://www.o-index.com/"
       ],
       "verification_status": "source_checked",
-      "last_verified_at": "2026-09-22T14:30:00+01:00"
+      "last_verified_at": "2026-09-25T20:40:00+01:00",
+      "phone": "+244 933 199 999",
+      "contact_source": "https://www.o-index.com/"
     },
     {
       "id": "sup-soletric",
@@ -178,12 +180,16 @@
         "https://soloviva.co.ao/"
       ],
       "verification_status": "source_checked",
-      "last_verified_at": "2026-09-25T19:50:00+01:00",
+      "last_verified_at": "2026-09-25T20:40:00+01:00",
       "capabilities": [
         "industrial chemicals",
         "cleaning chemicals",
         "chemical supply"
-      ]
+      ],
+      "phone": "+244 950 515 120",
+      "whatsapp": "+244 950 515 120",
+      "email": "geral@soloviva.co.ao",
+      "contact_source": "https://soloviva.co.ao/"
     },
     {
       "id": "sup-qualirafia",
@@ -252,6 +258,135 @@
       "whatsapp": null,
       "email": null,
       "contact_source": "https://www.waze.com/live-map/directions/ao/luanda/zeepack-angola-lda?to=place.ChIJI_y16E35URoRseU-XAz8WUc"
+    },
+    {
+      "id": "sup-construa-mais",
+      "name": "Construa Mais",
+      "category": [
+        "construction",
+        "hvac-electrical",
+        "tools-equipment",
+        "industrial-supply"
+      ],
+      "capabilities": [
+        "construction materials",
+        "electrical supplies",
+        "lighting",
+        "hydraulics",
+        "pumps",
+        "PPE",
+        "tools",
+        "equipment"
+      ],
+      "location": "Calemba 2, Luanda, Angola",
+      "website": "https://construamais.ao/",
+      "source_urls": [
+        "https://construamais.ao/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00"
+    },
+    {
+      "id": "sup-luz-kabir",
+      "name": "Luz Kabir",
+      "category": [
+        "construction"
+      ],
+      "capabilities": [
+        "construction materials",
+        "finishing materials",
+        "building supplies"
+      ],
+      "location": "Rua do Calemba 2, Viana, Luanda, Angola",
+      "website": "https://luzkabir.co.ao/",
+      "source_urls": [
+        "https://luzkabir.co.ao/quem-somos/",
+        "https://luzkabir.co.ao/faq-questoes-mais-frequentes/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00",
+      "phone": "+244 942 748 585",
+      "whatsapp": "+244 942 748 585",
+      "email": "atendimento@luzkabir.co.ao",
+      "contact_source": "https://luzkabir.co.ao/quem-somos/"
+    },
+    {
+      "id": "sup-dama",
+      "name": "D.AMA - Materiais de Construção",
+      "legal_name": "Dama – Materiais de Construção S.A.",
+      "category": [
+        "construction"
+      ],
+      "capabilities": [
+        "construction materials",
+        "bathroom fixtures",
+        "kitchens",
+        "finishes",
+        "appliances"
+      ],
+      "location": "Morro Bento, Samba, Luanda, Angola",
+      "website": "https://dama.ao/",
+      "source_urls": [
+        "https://dama.ao/",
+        "https://dama.ao/sobre-nos/",
+        "https://dama.ao/contacte-nos/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00",
+      "phone": "+244 926 646 036",
+      "whatsapp": "+244 926 646 036",
+      "email": "geral@dama.ao",
+      "contact_source": "https://dama.ao/contacte-nos/"
+    },
+    {
+      "id": "sup-construtecno",
+      "name": "Constru-Tecno, Lda",
+      "category": [
+        "construction",
+        "hvac-electrical",
+        "tools-equipment"
+      ],
+      "capabilities": [
+        "construction materials",
+        "civil engineering",
+        "electrical",
+        "refrigeration",
+        "tools",
+        "equipment"
+      ],
+      "location": "Morro dos Veados, Luanda, Angola",
+      "website": "https://construtecno.co.ao/",
+      "source_urls": [
+        "https://construtecno.co.ao/nossa-loja/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00",
+      "phone": "+244 974 507 060",
+      "email": "geral@construtecno.co.ao",
+      "contact_source": "https://construtecno.co.ao/nossa-loja/"
+    },
+    {
+      "id": "sup-mavunzuka",
+      "name": "Mavunzuka & Filhos LDA",
+      "category": [
+        "construction",
+        "tools-equipment",
+        "industrial-supply"
+      ],
+      "capabilities": [
+        "construction materials",
+        "tools",
+        "equipment",
+        "general supply",
+        "logistics"
+      ],
+      "location": "Angola",
+      "website": "https://www.mavunzuka.co.ao/",
+      "source_urls": [
+        "https://www.mavunzuka.co.ao/Servicos/FornecimentoGeral"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00"
     }
   ],
   "rules": {

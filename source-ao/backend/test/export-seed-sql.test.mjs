@@ -15,4 +15,5 @@ test('D1 seed export avoids unsupported explicit SQL transactions',()=>{
   assert.doesNotMatch(sql,/\bCOMMIT\s*;/i);
   assert.match(sql,/INSERT OR REPLACE INTO suppliers/);
   assert.match(sql,/INSERT OR REPLACE INTO items/);
+  assert.match(sql,/INSERT OR REPLACE INTO supplier_sources/);
 });
