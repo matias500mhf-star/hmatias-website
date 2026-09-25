@@ -110,9 +110,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          grep -q 'noindex,nofollow,noarchive' source-ao/privacy.html
-          grep -q 'noindex,nofollow,noarchive' source-ao/terms.html
+          grep -q 'name="robots" content="index,follow"' source-ao/index.html
+          grep -q 'name="robots" content="index,follow"' source-ao/privacy.html
+          grep -q 'name="robots" content="index,follow"' source-ao/terms.html
           grep -q 'does \*\*not\*\* accept or store private screenshots' source-ao/docs/EVIDENCE_POLICY.md
+          grep -q '"CONTACT_RETENTION_DAYS": "180"' source-ao/backend/wrangler.jsonc
+          grep -q '"head_sampling_rate": 0.1' source-ao/backend/wrangler.jsonc
       - name: Validate backend syntax
         run: |
           node --check source-ao/backend/src/index.js
@@ -149,6 +152,9 @@ jobs:
           test ! -e .staging-web/sourcing-desk.html
           grep -q 'api-staging.example.test' .staging-web/runtime-config.js
           grep -q 'Disallow: /' .staging-web/robots.txt
+          grep -q 'noindex,nofollow,noarchive' .staging-web/index.html
+          grep -q 'noindex,nofollow,noarchive' .staging-web/privacy.html
+          grep -q 'noindex,nofollow,noarchive' .staging-web/terms.html
           rm -rf .staging-web wrangler.web.staging.runtime.jsonc
       - name: Validate staging deploy remains manual-only
         shell: bash

@@ -24,6 +24,7 @@ const config={
   main:'src/router.js',
   compatibility_date:'2026-09-22',
   triggers:{crons:['*/15 * * * *','17 2 * * *']},
+  observability:{logs:{enabled:true,head_sampling_rate:0.1}},
   d1_databases:[{
     binding:'SOURCE_AO_DB',
     database_name:'source-ao-staging',

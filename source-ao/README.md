@@ -53,7 +53,7 @@ Cloudflare Worker + D1, with:
 
 - rate-limit windows: 48 hours;
 - staging requester-contact retention: 30 days for lifecycle testing;
-- current production requester-contact baseline: 365 days, subject to final launch review;
+- production requester-contact retention: 180 days after a request is completed or closed;
 - Source AO v1 does not accept private evidence attachments.
 
 See `docs/DATA_RETENTION.md`, `docs/EVIDENCE_POLICY.md`, and `docs/SECURITY_AND_TRUST.md`.
@@ -92,10 +92,10 @@ Do not merge/publish Source AO v1 until:
 - real staging `/ready`, API smoke and web smoke pass;
 - supplier-confirmation and sourcing pilots pass;
 - contact purge is exercised in staging;
-- provider log retention is configured;
+- Workers Logs are enabled with short provider-managed retention;
 - D1 export/rollback path is rehearsed;
 - mobile and desktop acceptance review passes;
-- Privacy and Terms are finalized;
+- Privacy and Terms are finalized and production-indexable while staging rewrites them to noindex;
 - the branch is synchronized with then-current `main` and all gates are rerun.
 
 The HMATIAS production site must remain independently operational if Source AO is disabled.
