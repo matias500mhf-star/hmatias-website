@@ -21,6 +21,13 @@
     return request('/api/search?q='+encodeURIComponent(query)+'&location='+encodeURIComponent(location));
   }
 
+  async function searchIntelligence(query,location='Luanda',options={}){
+    const params=new URLSearchParams({q:query,location});
+    if(options.neededBy) params.set('needed_by',options.neededBy);
+    if(options.quantity!=null&&options.quantity!=='') params.set('quantity',String(options.quantity));
+    return request('/api/search-intelligence?'+params.toString());
+  }
+
   async function opportunities(){
     return request('/api/opportunities');
   }
@@ -29,5 +36,5 @@
     return request('/health');
   }
 
-  window.SourceAOAPI=Object.freeze({isConfigured,search,opportunities,health});
+  window.SourceAOAPI=Object.freeze({isConfigured,search,searchIntelligence,opportunities,health});
 })();
