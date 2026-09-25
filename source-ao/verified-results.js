@@ -7,11 +7,11 @@
 
   const isPt=()=>document.documentElement.lang.toLowerCase().startsWith('pt');
   const labels={
-    en:{discovered:'Verification required',recently_seen:'Recently seen',source_checked:'Source checked',supplier_confirmed:'Supplier confirmed',in_stock_confirmed:'In stock — confirmed',needs_reconfirmation:'Needs reconfirmation',unavailable:'Unavailable',none:'No verified indexed match',awaiting:'Awaiting verified source',verified:'Verified indexed result'},
-    pt:{discovered:'Requer verificação',recently_seen:'Informação recente',source_checked:'Fonte verificada',supplier_confirmed:'Fornecedor confirmou',in_stock_confirmed:'Stock confirmado',needs_reconfirmation:'Requer nova confirmação',unavailable:'Indisponível',none:'Sem resultado verificado na base',awaiting:'Aguardando fonte verificada',verified:'Resultado verificado na base'}
+    en:{discovered:'Verification required',supplier_candidate:'Potential supplier — product unconfirmed',recently_seen:'Recently seen',source_checked:'Source checked',supplier_confirmed:'Supplier confirmed',in_stock_confirmed:'In stock — confirmed',needs_reconfirmation:'Needs reconfirmation',unavailable:'Unavailable',none:'No verified indexed match',awaiting:'Awaiting verified source',verified:'Verified indexed result'},
+    pt:{discovered:'Requer verificação',supplier_candidate:'Fornecedor potencial — produto não confirmado',recently_seen:'Informação recente',source_checked:'Fonte verificada',supplier_confirmed:'Fornecedor confirmou',in_stock_confirmed:'Stock confirmado',needs_reconfirmation:'Requer nova confirmação',unavailable:'Indisponível',none:'Sem resultado verificado na base',awaiting:'Aguardando fonte verificada',verified:'Resultado verificado na base'}
   };
   const L=key=>(isPt()?labels.pt:labels.en)[key]||key;
-  const rank={in_stock_confirmed:6,supplier_confirmed:5,source_checked:4,recently_seen:3,needs_reconfirmation:2,discovered:1,unavailable:0};
+  const rank={in_stock_confirmed:6,supplier_confirmed:5,source_checked:4,recently_seen:3,supplier_candidate:2.5,needs_reconfirmation:2,discovered:1,unavailable:0};
 
   const formatDate=value=>{
     if(!value) return '';
@@ -100,6 +100,13 @@
   }
 
   function matchCopy(match){
+    if(match.kind==='supplier_candidate'){
+      return {
+        title:match.supplier.name,
+        detail:[isPt()?'Fornecedor potencial; produto exato por confirmar':'Potential supplier; exact product unconfirmed',match.supplier.location].filter(Boolean).join(' · '),
+        time:match.supplier.last_verified_at
+      };
+    }
     if(match.kind==='service'){
       return {
         title:match.provider.name,
@@ -170,6 +177,9 @@
     const matches=(payload?.results||[]).map(row=>{
       if(row.type==='service'){
         return {kind:'service',provider:{name:row.name,service_category:row.category,location:row.location,last_verified_at:row.verified_at},status:row.status||'discovered'};
+      }
+      if(row.type==='supplier_candidate'){
+        return {kind:'supplier_candidate',supplier:{name:row.name,location:row.location,website:row.website,last_verified_at:row.verified_at},status:'supplier_candidate'};
       }
       return {
         kind:'item',

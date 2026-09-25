@@ -93,7 +93,7 @@
     return hoursBetween(verified,new Date())>maxHours?'needs_reconfirmation':status;
   }
 
-  const statusRank={in_stock_confirmed:6,supplier_confirmed:5,source_checked:4,recently_seen:3,needs_reconfirmation:2,discovered:1,unavailable:0};
+  const statusRank={in_stock_confirmed:6,supplier_confirmed:5,source_checked:4,recently_seen:3,supplier_candidate:2.5,needs_reconfirmation:2,discovered:1,unavailable:0};
 
   function itemMatches(query,location){
     const suppliers=new Map((db.suppliers.suppliers||[]).map(x=>[x.id,x]));
@@ -114,6 +114,27 @@
     return out;
   }
 
+  function supplierCandidateMatches(itemResults,location){
+    if(itemResults.some(row=>row.status!=='discovered')) return [];
+    const categories=new Set(itemResults.map(row=>row.item?.category).filter(Boolean));
+    if(!categories.size) return [];
+    const out=[];
+    for(const supplier of db.suppliers.suppliers||[]){
+      const caps=new Set(supplier.category||[]);
+      if(![...categories].some(category=>caps.has(category))) continue;
+      const loc=normalize(supplier.location||'');
+      if(location&&normalize(location)!=='angola'&&loc&&!loc.includes(normalize(location))) continue;
+      out.push({
+        kind:'supplier_candidate',
+        supplier,
+        score:25,
+        status:'supplier_candidate',
+        reason:'category_capability_match'
+      });
+    }
+    return out.slice(0,6);
+  }
+
   function serviceMatches(query,location){
     const out=[];
     for(const provider of db.services.providers||[]){
@@ -132,7 +153,8 @@
   }
 
   function search(query,location='Luanda'){
-    const matches=[...itemMatches(query,location),...serviceMatches(query,location)]
+    const items=itemMatches(query,location);
+    const matches=[...items,...supplierCandidateMatches(items,location),...serviceMatches(query,location)]
       .sort((a,b)=>(statusRank[b.status]||0)-(statusRank[a.status]||0)||b.score-a.score)
       .slice(0,8);
     const best=matches[0]||null;

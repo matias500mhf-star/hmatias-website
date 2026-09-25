@@ -93,6 +93,36 @@ export async function publicSearch(request,env){
   `).bind(like,normalizedLocation,locationLike).all();
 
   const items=(itemRows.results||[]).map(r=>mapPublicItemRow(r));
+  const candidateSuppliers=[];
+  if(!items.some(item=>item.status!=='discovered')){
+    const candidateCategories=[...new Set(items.map(item=>item.category).filter(Boolean))];
+    for(const category of candidateCategories.slice(0,3)){
+      const categoryLike=`%"${category}"%`;
+      const rows=await env.SOURCE_AO_DB.prepare(`
+        SELECT id,name,location,website,public_status,last_verified_at,categories_json
+        FROM suppliers
+        WHERE categories_json LIKE ?
+          AND (?='angola' OR lower(location) LIKE ?)
+        ORDER BY last_verified_at DESC
+        LIMIT 6
+      `).bind(categoryLike,normalizedLocation,locationLike).all();
+      for(const supplier of rows.results||[]){
+        if(candidateSuppliers.some(row=>row.id===supplier.id)) continue;
+        candidateSuppliers.push({
+          type:'supplier_candidate',
+          id:supplier.id,
+          name:supplier.name,
+          category,
+          location:supplier.location,
+          website:supplier.website,
+          status:'supplier_candidate',
+          verified_at:supplier.last_verified_at,
+          exact_product_confirmed:false,
+          reason:'Supplier has a source-checked capability in the matched category; exact product, stock and price are not confirmed.'
+        });
+      }
+    }
+  }
   const services=(serviceRows.results||[]).map(r=>{
     const checked=new Date(r.last_verified_at).getTime();
     const ageHours=Number.isFinite(checked)?(Date.now()-checked)/36e5:Infinity;
@@ -104,5 +134,5 @@ export async function publicSearch(request,env){
     };
   });
 
-  return json(env,{ok:true,query:raw,normalized_query:q,location,results:[...items,...services]});
+  return json(env,{ok:true,query:raw,normalized_query:q,location,results:[...items,...candidateSuppliers,...services]});
 }
