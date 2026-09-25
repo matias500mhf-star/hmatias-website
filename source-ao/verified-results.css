@@ -31,14 +31,14 @@
   display:inline-flex;padding:6px 8px;border:1px solid #d8e3ea;border-radius:999px;
   background:#fff;color:#365164;font-size:9px;line-height:1.2
 }
-.smart-search-plan>small{display:block;color:#758796;font-size:9px;line-height:1.5}
+.smart-search-plan>small{display:block;color:#607383;font-size:9px;line-height:1.5}
 
 .procurement-mission{
   margin:14px 0 2px;padding:17px;border:1px solid #d5e1e9;border-radius:15px;
   background:#fff;box-shadow:0 10px 28px rgba(7,31,52,.04)
 }
 .mission-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:13px}
-.mission-head small{display:block;color:#8193a2;font-size:8px;font-weight:900;letter-spacing:.11em}
+.mission-head small{display:block;color:#607383;font-size:8px;font-weight:900;letter-spacing:.11em}
 .mission-head strong{display:block;margin-top:4px;color:var(--navy);font-size:14px}
 .mission-grid{display:grid;gap:7px}
 .mission-supplier{
@@ -46,7 +46,7 @@
   padding:12px 13px;border:1px solid #e0e8ee;border-radius:11px;background:#fafcfd
 }
 .mission-supplier strong{display:block;color:var(--navy);font-size:12px}
-.mission-supplier small{display:block;margin-top:3px;color:#728492;font-size:9px;line-height:1.4}
+.mission-supplier small{display:block;margin-top:3px;color:#607383;font-size:9px;line-height:1.4}
 .mission-actions{display:flex;align-items:center;gap:6px}
 .mission-contact,.mission-copy{
   border:1px solid #cbd9e3;border-radius:8px;background:#fff;color:var(--navy);
@@ -60,7 +60,7 @@
   max-height:180px;overflow:auto;margin:9px 0 0;white-space:pre-wrap;
   font:inherit;font-size:9px;line-height:1.55;color:#405768
 }
-.mission-truth{display:block;margin-top:9px;color:#7b8c99;font-size:8px;line-height:1.5}
+.mission-truth{display:block;margin-top:9px;color:#607383;font-size:8px;line-height:1.5}
 
 @media(max-width:640px){
   .verified-match,.mission-supplier{grid-template-columns:1fr}
