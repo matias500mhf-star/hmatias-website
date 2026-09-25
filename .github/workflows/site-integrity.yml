@@ -150,7 +150,7 @@ jobs:
           for home_name, credibility_name in (('index.html', 'credibilidade.html'), ('en.html', 'credibility.html')):
               home_path = ROOT / home_name
               home = home_path.read_text(encoding='utf-8')
-              nav = home.split('<nav class="nav-menu"', 1)[1].split('</nav>', 1)[0] if '<nav class="nav-menu"' in home else ''
+              nav = home.partition('<nav class="nav-menu"')[2].partition('</nav>')[0]
               if nav and credibility_name in nav:
                   fail(f'credibility link must not appear in primary navigation: {home_name}')
               if credibility_name not in home:
@@ -159,7 +159,7 @@ jobs:
           # Institutional pages must stay concise and must not duplicate the official email in the content card.
           for page_name in ('credibilidade.html', 'credibility.html'):
               page = (ROOT / page_name).read_text(encoding='utf-8')
-              card = page.split('<aside class="institutional-card institutional-contact">', 1)[1].split('</aside>', 1)[0] if '<aside class="institutional-card institutional-contact">' in page else ''
+              card = page.partition('<aside class="institutional-card institutional-contact">')[2].partition('</aside>')[0]
               if not card:
                   fail(f'institutional contact card missing: {page_name}')
               elif card.count('mailto:geral@comercialhmatiasps.com') != 1:
