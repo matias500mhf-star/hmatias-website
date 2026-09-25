@@ -140,6 +140,7 @@ jobs:
         run: |
           node scripts/build-staging-web.mjs
           test -f .staging-web/index.html
+          test -f .staging-web/favicon.svg
           test -f .staging-web/confirm.html
           test -f .staging-web/track.html
           test -f .staging-web/privacy.html
