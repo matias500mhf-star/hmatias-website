@@ -1,6 +1,6 @@
 {
-  "version": "0.5",
-  "updated_at": "2026-09-25T20:40:00+01:00",
+  "version": "0.6",
+  "updated_at": "2026-09-25T21:00:00+01:00",
   "suppliers": [
     {
       "id": "sup-imbo-angola",
@@ -387,6 +387,31 @@
       ],
       "verification_status": "source_checked",
       "last_verified_at": "2026-09-25T20:40:00+01:00"
+    },
+    {
+      "id": "sup-angoayiti",
+      "name": "AngoAyiti, Lda.",
+      "category": [
+        "industrial-supply"
+      ],
+      "capabilities": [
+        "packaging consumables",
+        "PET strapping",
+        "stretch film",
+        "paper and label supplies",
+        "import and distribution"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://www.angoayiti.com/",
+      "source_urls": [
+        "https://www.angoayiti.com/pt/produtos",
+        "https://www.angoayiti.com/contact"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T21:00:00+01:00",
+      "phone": "+244 952 824 464",
+      "email": "Info@angoayiti.com",
+      "contact_source": "https://www.angoayiti.com/contact"
     }
   ],
   "rules": {
