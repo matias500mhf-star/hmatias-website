@@ -12,6 +12,7 @@ import {runMaintenance} from './maintenance.js';
 import {publicSearch} from './public-search.js';
 import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
+import {collectorRoute} from './collector-route.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
