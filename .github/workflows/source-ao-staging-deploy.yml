@@ -46,7 +46,7 @@ jobs:
       - name: Checkout reviewed Source AO release
         uses: actions/checkout@v5
         with:
-          ref: 2c34ae52dd12beea044e3877118a36f6db5d8ce4
+          ref: 68093b7f3760a778a6625d9d78b61efe02379286
           persist-credentials: false
 
       - name: Setup Node 22
@@ -122,6 +122,16 @@ jobs:
       - name: Apply D1 migrations
         run: npx wrangler d1 migrations apply source-ao-staging --remote --config wrangler.staging.runtime.jsonc
 
+      - name: Seed curated Source AO search index
+        shell: bash
+        run: |
+          set -euo pipefail
+          seed_file="$RUNNER_TEMP/source-ao-curated-seed.sql"
+          node scripts/export-seed-sql.mjs > "$seed_file"
+          test -s "$seed_file"
+          npx wrangler d1 execute source-ao-staging --remote --file="$seed_file" --config wrangler.staging.runtime.jsonc
+          rm -f "$seed_file"
+
       - name: Prove private D1 export path
         shell: bash
         run: |
@@ -167,5 +177,5 @@ jobs:
         shell: bash
         run: |
           rm -f wrangler.staging.runtime.jsonc wrangler.web.staging.runtime.jsonc
-          rm -f "$RUNNER_TEMP/source-ao-secret-names.json"
+          rm -f "$RUNNER_TEMP/source-ao-secret-names.json" "$RUNNER_TEMP/source-ao-curated-seed.sql"
           rm -rf .staging-backup .staging-web
