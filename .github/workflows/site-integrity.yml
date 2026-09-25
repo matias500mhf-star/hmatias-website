@@ -159,7 +159,7 @@ jobs:
           # Institutional pages must stay concise and must not duplicate the official email in the content card.
           for page_name in ('credibilidade.html', 'credibility.html'):
               page = (ROOT / page_name).read_text(encoding='utf-8')
-              card = page.split('institutional-contact', 1)[1].split('</aside>', 1)[0] if 'institutional-contact' in page else ''
+              card = page.split('<aside class="institutional-card institutional-contact">', 1)[1].split('</aside>', 1)[0] if '<aside class="institutional-card institutional-contact">' in page else ''
               if not card:
                   fail(f'institutional contact card missing: {page_name}')
               elif card.count('mailto:geral@comercialhmatiasps.com') != 1:
