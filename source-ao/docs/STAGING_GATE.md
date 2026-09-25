@@ -80,7 +80,7 @@ Do not move Source AO to public production unless all are true:
 - Workers Logs are enabled with sanitized application logging and short provider-managed retention;
 - v1 continues to reject private evidence attachments unless a separate secure evidence store is approved;
 - private D1 export path succeeds without publishing the backup artifact;
-- rollback has been rehearsed;
+- rollback has been rehearsed and the reviewed candidate restored with API/web smoke tests passing;
 - Privacy and Terms are reviewed for launch, indexable in production source, and rewritten to noindex in the staging bundle;
 - Source AO branch is synchronized with the then-current `main` and all gates are rerun before merge;
 - HMATIAS site integration is limited to an approved Source AO link/entry point.
