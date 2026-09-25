@@ -1,6 +1,6 @@
 {
-  "version": "0.3",
-  "updated_at": "2026-09-25T19:30:00+01:00",
+  "version": "0.4",
+  "updated_at": "2026-09-25T19:50:00+01:00",
   "items": [
     {
       "id": "item-construction-general",
@@ -187,6 +187,37 @@
         "arqueação",
         "arqueacao"
       ]
+    },
+    {
+      "id": "item-formaldehyde",
+      "name": "Formaldehyde / formalin solution",
+      "aliases": [
+        "formaldeído",
+        "formaldeido",
+        "formol",
+        "formalin",
+        "formaldehyde",
+        "formaldeído 30-35%",
+        "formaldeido 30-35%",
+        "formaldeído 37%",
+        "formol 37%",
+        "formaldehyde 37%",
+        "CAS 50-00-0"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "industrial-lab-chemicals",
+      "specification": "Formaldehyde/formalin solution. Concentration, grade, packaging, intended use, stock and regulatory documentation require confirmation.",
+      "keywords": [
+        "químico",
+        "quimico",
+        "chemical",
+        "reagente",
+        "reagent",
+        "laboratório",
+        "laboratorio",
+        "industrial",
+        "CAS 50-00-0"
+      ]
     }
   ],
   "taxonomy": [
@@ -342,7 +373,10 @@
         "pp strapping",
         "strapping",
         "packaging",
-        "embalagem"
+        "embalagem",
+        "formol",
+        "formalin",
+        "CAS 50-00-0"
       ]
     }
   ]
