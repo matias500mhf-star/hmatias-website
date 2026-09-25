@@ -163,10 +163,14 @@ jobs:
           grep -q 'workflow_dispatch:' .github/workflows/source-ao-staging-deploy.yml
           ! grep -Eq '^  (push|pull_request|schedule):' .github/workflows/source-ao-staging-deploy.yml
           grep -q "inputs.confirm == 'DEPLOY-STAGING'" .github/workflows/source-ao-staging-deploy.yml
-          grep -q 'SOURCE_AO_STAGING_PII_ENCRYPTION_KEY' .github/workflows/source-ao-staging-deploy.yml
-          grep -q 'SOURCE_AO_STAGING_RATE_LIMIT_SECRET' .github/workflows/source-ao-staging-deploy.yml
+          grep -q 'Verify existing Cloudflare Worker secrets' .github/workflows/source-ao-staging-deploy.yml
+          grep -q "PII_ENCRYPTION_KEY" .github/workflows/source-ao-staging-deploy.yml
+          grep -q "RATE_LIMIT_SECRET" .github/workflows/source-ao-staging-deploy.yml
           grep -q 'Prove private D1 export path' .github/workflows/source-ao-staging-deploy.yml
           grep -q 'Deploy isolated staging frontend' .github/workflows/source-ao-staging-deploy.yml
+          grep -q 'Record active staging Worker versions' .github/workflows/source-ao-staging-deploy.yml
+          grep -q 'Rehearse staging rollback and restore reviewed release' .github/workflows/source-ao-staging-deploy.yml
+          grep -q 'ROLLBACK_REHEARSAL=PASS' .github/workflows/source-ao-staging-deploy.yml
       - name: Validate backend package manifest
         run: |
           node -e "JSON.parse(require('fs').readFileSync('source-ao/backend/package.json','utf8')); console.log('package manifest PASS')"
