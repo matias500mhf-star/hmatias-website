@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test test/*.test.mjs",
-    "check": "node --check src/index.js && node --check src/public-search.js && node --check src/sourcing.js && node --check src/security.js && node --check src/health.js && node --check src/maintenance.js && node --check src/router.js && node --check scripts/build-staging-web.mjs && node --check scripts/smoke-staging-web.mjs && node --test test/*.test.mjs",
+    "check": "node --check src/index.js && node --check src/public-search.js && node --check src/smart-search.js && node --check src/sourcing.js && node --check src/security.js && node --check src/health.js && node --check src/maintenance.js && node --check src/router.js && node --check scripts/build-staging-web.mjs && node --check scripts/smoke-staging-web.mjs && node --test test/*.test.mjs",
     "qa": "npm run check",
     "build:web:staging": "node scripts/build-staging-web.mjs",
     "smoke:staging": "node scripts/smoke-staging.mjs",

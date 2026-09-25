@@ -15,7 +15,7 @@ for(const [name,value] of [['SOURCE_AO_API_BASE',apiBase],['SOURCE_AO_STAGING_PU
 }
 
 const publicFiles=[
-  'index.html','sourceao.css','sourceao.js','data-engine.js','verified-results.css','verified-results.js',
+  'index.html','sourceao.css','sourceao.js','data-engine.js','api-client.js','verified-results.css','verified-results.js',
   'sourcing-ui.css','sourcing-ui.js',
   'track.html','track.css','track.js',
   'confirm.html','confirm.css','confirm.js',

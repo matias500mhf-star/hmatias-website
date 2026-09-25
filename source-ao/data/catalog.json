@@ -1,20 +1,349 @@
 {
-  "version": "0.2",
-  "updated_at": "2026-09-22T14:34:00+01:00",
+  "version": "0.3",
+  "updated_at": "2026-09-25T19:30:00+01:00",
   "items": [
-    {"id":"item-construction-general","name":"Construction materials","aliases":["materiais de construção","construction supplies","cimento","cement","blocos","blocks","argamassa","mortar","tintas","paint"],"category":"construction","subcategory":"general","specification":"General product family. Exact brand, measure and stock require confirmation.","keywords":["obra","building","civil construction"]},
-    {"id":"item-pipes-profiles","name":"Pipes & metal profiles","aliases":["pipes","pipe","tubos","tubo","pvc pipe","tubo pvc","chapas","sheets","varões","varoes","rebar","cantoneira","angle bar","perfis","profiles"],"category":"construction","subcategory":"pipes-profiles","specification":"General product family. Material, diameter, thickness and stock require confirmation.","keywords":["steel","ferro","pvc","metal"]},
-    {"id":"item-electrical-materials","name":"Electrical materials","aliases":["material eléctrico","material eletrico","electrical material","cabo","cable","disjuntor","breaker","iluminação","lighting"],"category":"hvac-electrical","subcategory":"electrical","specification":"General electrical supply family. Exact reference and stock require confirmation.","keywords":["electrical","electricidade","automation","automação"]},
-    {"id":"item-hvac","name":"HVAC & air-conditioning equipment","aliases":["air conditioner","ar condicionado","ac","split","hvac","climatização","climatizacao","refrigeração","refrigeracao","btu"],"category":"hvac-electrical","subcategory":"hvac","specification":"General HVAC family. Capacity, model and stock require confirmation.","keywords":["cooling","ventilation","climate"]},
-    {"id":"item-tools-equipment","name":"Tools & equipment","aliases":["tools","tool","ferramentas","ferramenta","machines","máquinas","maquinas","equipment","equipamento","drill","berbequim"],"category":"tools-equipment","subcategory":"general","specification":"General tools and equipment family. Exact model and stock require confirmation.","keywords":["workshop","obra","industrial"]},
-    {"id":"item-industrial-supply","name":"Industrial equipment & supplies","aliases":["industrial equipment","equipamento industrial","industrial supplies","fornecimento industrial","pump","bomba","valve","válvula","valvula","filter","filtro","chemical","químico","quimico"],"category":"industrial-supply","subcategory":"general","specification":"General industrial supply family. Technical specification and stock require confirmation.","keywords":["industry","oil and gas","mining","maintenance"]}
+    {
+      "id": "item-construction-general",
+      "name": "Construction materials",
+      "aliases": [
+        "materiais de construção",
+        "construction supplies",
+        "cimento",
+        "cement",
+        "blocos",
+        "blocks",
+        "argamassa",
+        "mortar",
+        "tintas",
+        "paint"
+      ],
+      "category": "construction",
+      "subcategory": "general",
+      "specification": "General product family. Exact brand, measure and stock require confirmation.",
+      "keywords": [
+        "obra",
+        "building",
+        "civil construction"
+      ]
+    },
+    {
+      "id": "item-pipes-profiles",
+      "name": "Pipes & metal profiles",
+      "aliases": [
+        "pipes",
+        "pipe",
+        "tubos",
+        "tubo",
+        "pvc pipe",
+        "tubo pvc",
+        "chapas",
+        "sheets",
+        "varões",
+        "varoes",
+        "rebar",
+        "cantoneira",
+        "angle bar",
+        "perfis",
+        "profiles"
+      ],
+      "category": "construction",
+      "subcategory": "pipes-profiles",
+      "specification": "General product family. Material, diameter, thickness and stock require confirmation.",
+      "keywords": [
+        "steel",
+        "ferro",
+        "pvc",
+        "metal"
+      ]
+    },
+    {
+      "id": "item-electrical-materials",
+      "name": "Electrical materials",
+      "aliases": [
+        "material eléctrico",
+        "material eletrico",
+        "electrical material",
+        "cabo",
+        "cable",
+        "disjuntor",
+        "breaker",
+        "iluminação",
+        "lighting"
+      ],
+      "category": "hvac-electrical",
+      "subcategory": "electrical",
+      "specification": "General electrical supply family. Exact reference and stock require confirmation.",
+      "keywords": [
+        "electrical",
+        "electricidade",
+        "automation",
+        "automação"
+      ]
+    },
+    {
+      "id": "item-hvac",
+      "name": "HVAC & air-conditioning equipment",
+      "aliases": [
+        "air conditioner",
+        "ar condicionado",
+        "ac",
+        "split",
+        "hvac",
+        "climatização",
+        "climatizacao",
+        "refrigeração",
+        "refrigeracao",
+        "btu"
+      ],
+      "category": "hvac-electrical",
+      "subcategory": "hvac",
+      "specification": "General HVAC family. Capacity, model and stock require confirmation.",
+      "keywords": [
+        "cooling",
+        "ventilation",
+        "climate"
+      ]
+    },
+    {
+      "id": "item-tools-equipment",
+      "name": "Tools & equipment",
+      "aliases": [
+        "tools",
+        "tool",
+        "ferramentas",
+        "ferramenta",
+        "machines",
+        "máquinas",
+        "maquinas",
+        "equipment",
+        "equipamento",
+        "drill",
+        "berbequim"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "general",
+      "specification": "General tools and equipment family. Exact model and stock require confirmation.",
+      "keywords": [
+        "workshop",
+        "obra",
+        "industrial"
+      ]
+    },
+    {
+      "id": "item-industrial-supply",
+      "name": "Industrial equipment & supplies",
+      "aliases": [
+        "industrial equipment",
+        "equipamento industrial",
+        "industrial supplies",
+        "fornecimento industrial",
+        "pump",
+        "bomba",
+        "valve",
+        "válvula",
+        "valvula",
+        "filter",
+        "filtro",
+        "chemical",
+        "químico",
+        "quimico"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "general",
+      "specification": "General industrial supply family. Technical specification and stock require confirmation.",
+      "keywords": [
+        "industry",
+        "oil and gas",
+        "mining",
+        "maintenance"
+      ]
+    },
+    {
+      "id": "item-packaging-strapping",
+      "name": "Packaging strapping",
+      "aliases": [
+        "cinta de arquear",
+        "cinta de arqueação",
+        "cinta de arqueacao",
+        "cinta pp",
+        "fita de arquear",
+        "fita de arqueação",
+        "fita de arqueacao",
+        "fita pp",
+        "pp strap",
+        "pp strapping",
+        "polypropylene strap",
+        "polypropylene strapping"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "packaging-strapping",
+      "specification": "Packaging strapping family. Material, width, thickness, colour, roll length, stock and machine compatibility require confirmation.",
+      "keywords": [
+        "polipropileno",
+        "polypropylene",
+        "packaging",
+        "embalagem",
+        "strapping",
+        "arqueação",
+        "arqueacao"
+      ]
+    }
   ],
   "taxonomy": [
-    {"id":"construction","name_en":"Construction materials","name_pt":"Materiais de construção","aliases":["cement","cimento","concrete","betão","betao","blocks","blocos","brick","tijolo","sand","areia","steel","ferro","rebar","varão","varao","sheet","chapa","tile","telha","paint","tinta","mortar","argamassa","pvc","pipe","tubo"]},
-    {"id":"hvac-electrical","name_en":"HVAC & electrical","name_pt":"Climatização e elétrica","aliases":["air conditioner","ar condicionado","btu","hvac","split","compressor","refrigerant","r410","r32","cable","cabo","breaker","disjuntor","electrical","elétrica","eletrica","generator","gerador"]},
-    {"id":"tools-equipment","name_en":"Tools & equipment","name_pt":"Ferramentas e equipamentos","aliases":["tool","ferramenta","drill","berbequim","machine","máquina","maquina","equipment","equipamento","welding","solda","grinder","rebarbadora"]},
-    {"id":"cleaning-facilities","name_en":"Cleaning & facilities","name_pt":"Limpeza e facilities","aliases":["cleaning","limpeza","detergent","detergente","disinfectant","desinfetante","facility","facilities","hygiene","higiene"]},
-    {"id":"services-contractors","name_en":"Services & contractors","name_pt":"Serviços e empreiteiros","aliases":["service","serviço","servico","contractor","empreiteiro","maintenance","manutenção","manutencao","painting","pintura","installation","instalação","instalacao"]},
-    {"id":"industrial-supply","name_en":"Industrial supply","name_pt":"Fornecimento industrial","aliases":["industrial","valve","válvula","valvula","pump","bomba","bearing","rolamento","filter","filtro","chemical","químico","quimico","formaldehyde","formaldeído","formaldeido"]}
+    {
+      "id": "construction",
+      "name_en": "Construction materials",
+      "name_pt": "Materiais de construção",
+      "aliases": [
+        "cement",
+        "cimento",
+        "concrete",
+        "betão",
+        "betao",
+        "blocks",
+        "blocos",
+        "brick",
+        "tijolo",
+        "sand",
+        "areia",
+        "steel",
+        "ferro",
+        "rebar",
+        "varão",
+        "varao",
+        "sheet",
+        "chapa",
+        "tile",
+        "telha",
+        "paint",
+        "tinta",
+        "mortar",
+        "argamassa",
+        "pvc",
+        "pipe",
+        "tubo"
+      ]
+    },
+    {
+      "id": "hvac-electrical",
+      "name_en": "HVAC & electrical",
+      "name_pt": "Climatização e elétrica",
+      "aliases": [
+        "air conditioner",
+        "ar condicionado",
+        "btu",
+        "hvac",
+        "split",
+        "compressor",
+        "refrigerant",
+        "r410",
+        "r32",
+        "cable",
+        "cabo",
+        "breaker",
+        "disjuntor",
+        "electrical",
+        "elétrica",
+        "eletrica",
+        "generator",
+        "gerador"
+      ]
+    },
+    {
+      "id": "tools-equipment",
+      "name_en": "Tools & equipment",
+      "name_pt": "Ferramentas e equipamentos",
+      "aliases": [
+        "tool",
+        "ferramenta",
+        "drill",
+        "berbequim",
+        "machine",
+        "máquina",
+        "maquina",
+        "equipment",
+        "equipamento",
+        "welding",
+        "solda",
+        "grinder",
+        "rebarbadora"
+      ]
+    },
+    {
+      "id": "cleaning-facilities",
+      "name_en": "Cleaning & facilities",
+      "name_pt": "Limpeza e facilities",
+      "aliases": [
+        "cleaning",
+        "limpeza",
+        "detergent",
+        "detergente",
+        "disinfectant",
+        "desinfetante",
+        "facility",
+        "facilities",
+        "hygiene",
+        "higiene"
+      ]
+    },
+    {
+      "id": "services-contractors",
+      "name_en": "Services & contractors",
+      "name_pt": "Serviços e empreiteiros",
+      "aliases": [
+        "service",
+        "serviço",
+        "servico",
+        "contractor",
+        "empreiteiro",
+        "maintenance",
+        "manutenção",
+        "manutencao",
+        "painting",
+        "pintura",
+        "installation",
+        "instalação",
+        "instalacao"
+      ]
+    },
+    {
+      "id": "industrial-supply",
+      "name_en": "Industrial supply",
+      "name_pt": "Fornecimento industrial",
+      "aliases": [
+        "industrial",
+        "valve",
+        "válvula",
+        "valvula",
+        "pump",
+        "bomba",
+        "bearing",
+        "rolamento",
+        "filter",
+        "filtro",
+        "chemical",
+        "químico",
+        "quimico",
+        "formaldehyde",
+        "formaldeído",
+        "formaldeido",
+        "cinta",
+        "cinta pp",
+        "cinta de arquear",
+        "cinta de arqueação",
+        "cinta de arqueacao",
+        "fita de arquear",
+        "fita de arqueação",
+        "fita de arqueacao",
+        "fita pp",
+        "polipropileno",
+        "polypropylene",
+        "pp strap",
+        "pp strapping",
+        "strapping",
+        "packaging",
+        "embalagem"
+      ]
+    }
   ]
 }

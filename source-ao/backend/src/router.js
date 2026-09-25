@@ -10,6 +10,7 @@ import {enforceRateLimit,hardenResponse,safeRequestLog} from './security.js';
 import {readinessResponse} from './health.js';
 import {runMaintenance} from './maintenance.js';
 import {publicSearch} from './public-search.js';
+import {smartSearchPlan} from './smart-search.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -45,6 +46,8 @@ export default {
           response=await readinessResponse(env);
         }else if(request.method==='GET' && url.pathname==='/api/search'){
           response=await publicSearch(request,env);
+        }else if(request.method==='GET' && url.pathname==='/api/search-intelligence'){
+          response=await smartSearchPlan(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
           response=await createSourcingRequest(request,env);
         }else{

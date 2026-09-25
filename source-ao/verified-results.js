@@ -3,6 +3,7 @@
   const $=s=>document.querySelector(s);
   let dataReady=false;
   let apiSequence=0;
+  let smartSequence=0;
 
   const isPt=()=>document.documentElement.lang.toLowerCase().startsWith('pt');
   const labels={
@@ -54,6 +55,48 @@
     const note=$('.primary-result .result-note');
     note?.after(list);
     return list;
+  }
+
+  function ensureSmartPanel(){
+    let panel=$('#smartSearchPlan');
+    if(panel) return panel;
+    panel=document.createElement('section');
+    panel.id='smartSearchPlan';
+    panel.className='smart-search-plan';
+    panel.hidden=true;
+    const list=ensureList();
+    list.after(panel);
+    return panel;
+  }
+
+  function renderSmartPlan(payload){
+    const plan=payload?.plan;
+    const panel=ensureSmartPanel();
+    if(!plan){panel.hidden=true;panel.replaceChildren();return;}
+    panel.hidden=false;
+    panel.replaceChildren();
+
+    const head=document.createElement('div');head.className='smart-search-head';
+    const title=document.createElement('strong');title.textContent=isPt()?'Pesquisa inteligente':'Smart search';
+    const badge=document.createElement('span');badge.className='data-badge data-source_checked';badge.textContent=plan.urgency==='urgent'?(isPt()?'URGENTE':'URGENT'):(isPt()?'PLANO':'PLAN');
+    head.append(title,badge);
+
+    const summary=document.createElement('p');
+    const label=isPt()?plan.interpretation?.label_pt:plan.interpretation?.label_en;
+    const specs=(plan.interpretation?.specifications||[]).join(', ');
+    summary.textContent=[label,specs,plan.location].filter(Boolean).join(' · ');
+
+    const terms=document.createElement('div');terms.className='smart-search-terms';
+    (plan.query_variants||[]).slice(0,6).forEach(value=>{
+      const chip=document.createElement('span');chip.textContent=value;terms.appendChild(chip);
+    });
+
+    const note=document.createElement('small');
+    note.textContent=isPt()
+      ?'A IA de pesquisa expande nomes e especificações. Stock, preço e prazo continuam a exigir confirmação rastreável.'
+      :'Search intelligence expands names and specifications. Stock, price and delivery still require traceable confirmation.';
+
+    panel.append(head,summary,terms,note);
   }
 
   function matchCopy(match){
@@ -154,9 +197,25 @@
     }
   }
 
+  async function refreshSmartSearch(){
+    if(!window.SourceAOAPI?.isConfigured?.()||!window.SourceAOAPI.searchIntelligence) return;
+    const query=$('#searchInput')?.value.trim();
+    if(!query||$('#resultZone')?.hidden) return;
+    const location=$('#locationInput')?.value||'Luanda';
+    const sequence=++smartSequence;
+    try{
+      const payload=await window.SourceAOAPI.searchIntelligence(query,location);
+      if(sequence!==smartSequence) return;
+      renderSmartPlan(payload);
+    }catch(error){
+      console.warn('[Source AO Smart Search fallback]',error);
+    }
+  }
+
   function refreshSearch(){
     refreshStaticSearch();
     void refreshApiSearch();
+    void refreshSmartSearch();
   }
 
   function enrichRadar(){

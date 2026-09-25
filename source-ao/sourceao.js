@@ -20,7 +20,7 @@
     {name:'Tools & equipment',pt:'Ferramentas e equipamentos',terms:['tool','ferramenta','drill','berbequim','machine','máquina','maquina','equipment','equipamento','welding','solda','grinder','rebarbadora']},
     {name:'Cleaning & facilities',pt:'Limpeza e facilities',terms:['cleaning','limpeza','detergent','detergente','disinfectant','desinfetante','facility','facilities','hygiene','higiene']},
     {name:'Services & contractors',pt:'Serviços e empreiteiros',terms:['service','serviço','servico','contractor','empreiteiro','maintenance','manutenção','manutencao','painting','pintura','installation','instalação','instalacao']},
-    {name:'Industrial supply',pt:'Fornecimento industrial',terms:['industrial','valve','válvula','valvula','pump','bomba','bearing','rolamento','filter','filtro','chemical','químico','quimico','formaldehyde','formaldeído','formaldeido']}
+    {name:'Industrial supply',pt:'Fornecimento industrial',terms:['industrial','valve','válvula','valvula','pump','bomba','bearing','rolamento','filter','filtro','chemical','químico','quimico','formaldehyde','formaldeído','formaldeido','cinta','cinta pp','cinta de arquear','cinta de arqueação','cinta de arqueacao','fita de arquear','fita de arqueação','fita de arqueacao','fita pp','polipropileno','polypropylene','pp strap','pp strapping','strapping','packaging','embalagem']}
   ];
 
   const classify=q=>{
