@@ -1,4 +1,4 @@
-import core from './index.js';
+import core,{isAdmin} from './index.js';
 import {
   createSourcingRequest,
   getSourcingRequest,
@@ -68,6 +68,24 @@ export default {
             const adminStatus=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/status$/);
             if(adminStatus && request.method==='POST'){
               response=await updateSourcingRequestStatus(request,env,adminStatus[1]);
+            }else if(url.pathname==='/api/admin/maintenance/run' && request.method==='POST'){
+              if(env.SOURCE_AO_ENV!=='staging'){
+                response=new Response(JSON.stringify({ok:false,error:{code:'not_found',message:'Not found.'}}),{
+                  status:404,
+                  headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}
+                });
+              }else if(!isAdmin(request,env)){
+                response=new Response(JSON.stringify({ok:false,error:{code:'unauthorized',message:'Admin authorization required.'}}),{
+                  status:401,
+                  headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}
+                });
+              }else{
+                const result=await runMaintenance(env);
+                response=new Response(JSON.stringify(result),{
+                  status:200,
+                  headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}
+                });
+              }
             }else if(url.pathname==='/api/admin/demand-radar' && request.method==='GET'){
               response=await demandRadar(request,env);
             }else{
