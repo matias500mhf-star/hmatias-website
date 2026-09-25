@@ -45,7 +45,7 @@ jobs:
       - name: Checkout reviewed Source AO release
         uses: actions/checkout@v5
         with:
-          ref: 7ca8a3e379e3ee0c2507fcc0c7f7c6eddae3fd92
+          ref: 9b059c217c994beba5e5cdf7c20056f96e310a52
           persist-credentials: false
 
       - name: Setup Node 22
