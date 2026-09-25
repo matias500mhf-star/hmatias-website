@@ -11,6 +11,7 @@ import {readinessResponse} from './health.js';
 import {runMaintenance} from './maintenance.js';
 import {publicSearch} from './public-search.js';
 import {smartSearchPlan} from './smart-search.js';
+import {procurementMission} from './procurement-mission.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -48,6 +49,8 @@ export default {
           response=await publicSearch(request,env);
         }else if(request.method==='GET' && url.pathname==='/api/search-intelligence'){
           response=await smartSearchPlan(request,env);
+        }else if(request.method==='GET' && url.pathname==='/api/procurement-mission'){
+          response=await procurementMission(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
           response=await createSourcingRequest(request,env);
         }else{
