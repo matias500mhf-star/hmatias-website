@@ -13,6 +13,7 @@ import {publicSearch} from './public-search.js';
 import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
 import {collectorRoute} from './collector-route.js';
+import {processPendingDiscoveryJobs} from './collector-discovery.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -98,13 +99,22 @@ export default {
     return hardened;
   },
 
-  async scheduled(_controller,env,ctx){
+  async scheduled(controller,env,ctx){
     ctx.waitUntil((async()=>{
+      const cron=controller?.cron||'';
       try{
-        const result=await runMaintenance(env);
-        console.log(JSON.stringify({type:'source_ao_maintenance',...result}));
+        const discovery=await processPendingDiscoveryJobs(env,{limit:4});
+        console.log(JSON.stringify({type:'source_ao_discovery_tick',cron,...discovery}));
+        if(cron==='17 2 * * *'){
+          const result=await runMaintenance(env);
+          console.log(JSON.stringify({type:'source_ao_maintenance',...result}));
+        }
       }catch(error){
-        console.error(JSON.stringify({type:'source_ao_maintenance_error',message:error instanceof Error?error.message:'unknown_error'}));
+        console.error(JSON.stringify({
+          type:'source_ao_scheduled_error',
+          cron,
+          message:error instanceof Error?error.message:'unknown_error'
+        }));
         throw error;
       }
     })());
