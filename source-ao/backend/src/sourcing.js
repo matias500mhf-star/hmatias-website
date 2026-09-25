@@ -27,10 +27,12 @@ function secureEqual(a,b){
   return diff===0;
 }
 
-function isAdmin(request,env){
+export function isAdmin(request,env){
+  const auth=request.headers.get('authorization')||'';
   const expected=env.ADMIN_API_TOKEN;
-  if(!expected) return false;
-  return secureEqual(request.headers.get('authorization')||'',`Bearer ${expected}`);
+  if(expected&&secureEqual(auth,`Bearer ${expected}`)) return true;
+  const pilot=env.SOURCE_AO_ENV==='staging'?env.PILOT_ADMIN_API_TOKEN:null;
+  return Boolean(pilot)&&secureEqual(auth,`Bearer ${pilot}`);
 }
 
 async function bodyJson(request){

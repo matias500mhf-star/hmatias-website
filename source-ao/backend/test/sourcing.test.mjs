@@ -5,7 +5,8 @@ import {
   validateSourcingRequestInput,
   encryptPrivateText,
   decryptPrivateText,
-  sha256Hex
+  sha256Hex,
+  isAdmin
 } from '../src/sourcing.js';
 
 test('sourcing requirement normalization keeps technical meaning',()=>{
@@ -54,4 +55,23 @@ test('private access token hashing is deterministic',async()=>{
   assert.equal(a,b);
   assert.notEqual(a,c);
   assert.equal(a.length,64);
+});
+
+
+const adminReq=token=>new Request('https://example.test/api/admin/sourcing-requests',{headers:{authorization:`Bearer ${token}`}});
+
+test('sourcing admin accepts the temporary pilot token only in staging',()=>{
+  const staging={
+    SOURCE_AO_ENV:'staging',
+    ADMIN_API_TOKEN:'primary-secret',
+    PILOT_ADMIN_API_TOKEN:'pilot-secret'
+  };
+  assert.equal(isAdmin(adminReq('primary-secret'),staging),true);
+  assert.equal(isAdmin(adminReq('pilot-secret'),staging),true);
+  assert.equal(isAdmin(adminReq('wrong-secret'),staging),false);
+
+  assert.equal(isAdmin(adminReq('pilot-secret'),{
+    ...staging,
+    SOURCE_AO_ENV:'production'
+  }),false);
 });
