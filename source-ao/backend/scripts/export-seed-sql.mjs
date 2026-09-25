@@ -10,6 +10,8 @@ const json=value=>esc(JSON.stringify(value??[]));
 const normalize=value=>(value||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
 
 const suppliers=read('suppliers.json').suppliers||[];
+const catalog=read('catalog.json').items||[];
+const observations=read('observations.json').observations||[];
 const services=read('services.json').providers||[];
 const opportunities=read('opportunities.json').opportunities||[];
 
@@ -17,7 +19,18 @@ const sql=[];
 sql.push('PRAGMA foreign_keys = ON;','BEGIN TRANSACTION;');
 
 for(const s of suppliers){
-  sql.push(`INSERT OR REPLACE INTO suppliers(id,name,legal_name,location,website,public_status,last_verified_at) VALUES(${esc(s.id)},${esc(s.name)},${esc(s.legal_name)},${esc(s.location)},${esc(s.website)},${esc(s.verification_status||'source_checked')},${esc(s.last_verified_at)});`);
+  sql.push(`INSERT OR REPLACE INTO suppliers(id,name,legal_name,location,website,public_status,last_verified_at,categories_json) VALUES(${esc(s.id)},${esc(s.name)},${esc(s.legal_name)},${esc(s.location)},${esc(s.website)},${esc(s.verification_status||'source_checked')},${esc(s.last_verified_at)},${json(s.category||[])});`);
+}
+
+for(const item of catalog){
+  const searchText=normalize([item.name,item.specification,...(item.aliases||[]),...(item.keywords||[])].join(' '));
+  sql.push(`INSERT OR REPLACE INTO items(id,name,category,specification,unit,aliases_json,search_text) VALUES(${esc(item.id)},${esc(item.name)},${esc(item.category)},${esc(item.specification)},${esc(item.unit)},${json(item.aliases)},${esc(searchText)});`);
+}
+
+for(const o of observations){
+  const approvedAt=o.approved_at||o.verified_at||o.observed_at;
+  const approvedBy=o.approved_by||'source-ao-curated-seed';
+  sql.push(`INSERT OR REPLACE INTO observations(id,supplier_id,item_id,verification_request_id,observed_at,verified_at,source_type,verification_status,quantity_reported,price_reported,currency,location,evidence_reference,expires_at,approved_at,approved_by) VALUES(${esc(o.id)},${esc(o.supplier_id)},${esc(o.item_id)},${esc(o.verification_request_id)},${esc(o.observed_at)},${esc(o.verified_at||o.observed_at)},${esc(o.source_type)},${esc(o.verification_status)},${esc(o.quantity_reported)},${esc(o.price_reported)},${esc(o.currency)},${esc(o.location)},${esc(o.evidence_reference||o.source_url||'curated public source')},${esc(o.expires_at||o.verified_at||o.observed_at)},${esc(approvedAt)},${esc(approvedBy)});`);
 }
 
 for(const p of services){
