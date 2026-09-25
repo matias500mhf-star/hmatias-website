@@ -223,7 +223,8 @@ export async function listSourcingRequests(request,env){
       id:row.id,reference:row.public_ref,requirement_text:row.requirement_text,normalized_search:row.normalized_search,
       category:row.category,specification:row.specification,quantity:row.quantity,unit:row.unit,location:row.location,
       needed_by:row.needed_by,contact_channel:row.contact_channel,contact,contact_hint:row.contact_hint,status:row.status,
-      assigned_to:row.assigned_to,internal_notes:row.internal_notes,created_at:row.created_at,updated_at:row.updated_at
+      assigned_to:row.assigned_to,internal_notes:row.internal_notes,contact_purged_at:row.contact_purged_at||null,
+      created_at:row.created_at,updated_at:row.updated_at
     });
   }
   return json(env,{ok:true,results});
