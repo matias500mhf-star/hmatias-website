@@ -86,6 +86,20 @@ jobs:
             echo 'Protected staging secret is too short: SOURCE_AO_STAGING_ADMIN_API_TOKEN' >&2
             exit 2
           fi
+          case "$CLOUDFLARE_API_TOKEN" in
+            Bearer\ *|bearer\ *)
+              echo '::error title=Malformed Cloudflare API token::CLOUDFLARE_API_TOKEN must contain only the raw token value, without the Bearer prefix.' >&2
+              exit 2
+              ;;
+            \"*\"|\'*\')
+              echo '::error title=Malformed Cloudflare API token::CLOUDFLARE_API_TOKEN must not include surrounding quotes.' >&2
+              exit 2
+              ;;
+          esac
+          if [[ "$CLOUDFLARE_API_TOKEN" =~ [[:space:]] ]]; then
+            echo '::error title=Malformed Cloudflare API token::CLOUDFLARE_API_TOKEN contains whitespace. Paste only the raw Cloudflare API token.' >&2
+            exit 2
+          fi
           case "$SOURCE_AO_STAGING_PUBLIC_ORIGIN" in https://*) ;; *) echo 'Staging public origin must use HTTPS' >&2; exit 2;; esac
           case "$SOURCE_AO_API_BASE" in https://*) ;; *) echo 'Staging API base must use HTTPS' >&2; exit 2;; esac
 
