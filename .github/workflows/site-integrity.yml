@@ -146,6 +146,42 @@ jobs:
           if whatsapp_refs == 0:
               fail('no WhatsApp routes found in site source')
 
+          # Homepage credibility access belongs in the footer, not the primary navigation.
+          for home_name, credibility_name in (('index.html', 'credibilidade.html'), ('en.html', 'credibility.html')):
+              home_path = ROOT / home_name
+              home = home_path.read_text(encoding='utf-8')
+              nav = re.search(r'<nav\\b[^>]*class=["\\'][^"\\']*nav-menu[^"\\']*["\\'][^>]*>(.*?)</nav>', home, re.I | re.S)
+              if nav and credibility_name in nav.group(1):
+                  fail(f'credibility link must not appear in primary navigation: {home_name}')
+              if credibility_name not in home:
+                  fail(f'credibility footer link missing from homepage: {home_name}')
+
+          # Institutional pages must stay concise and must not duplicate the official email in the content card.
+          for page_name in ('credibilidade.html', 'credibility.html'):
+              page = (ROOT / page_name).read_text(encoding='utf-8')
+              card = re.search(r'<aside\\b[^>]*institutional-contact[^>]*>(.*?)</aside>', page, re.I | re.S)
+              if not card:
+                  fail(f'institutional contact card missing: {page_name}')
+              elif card.group(1).count('mailto:geral@comercialhmatiasps.com') != 1:
+                  fail(f'institutional contact card must contain the official email exactly once: {page_name}')
+
+          # Source AO must use its own lightweight sub-brand asset.
+          source_logo = ROOT / 'images' / 'source-ao-logo.svg'
+          source_page = ROOT / 'procura.html'
+          if not source_logo.exists():
+              fail('Source AO sub-logo is missing')
+          if not source_page.exists():
+              fail('Source AO page is missing')
+          elif 'images/source-ao-logo.svg' not in source_page.read_text(encoding='utf-8'):
+              fail('Source AO page does not use the Source AO sub-logo')
+
+          # GitHub Pages should have a custom lightweight 404 page.
+          not_found = ROOT / '404.html'
+          if not not_found.exists():
+              fail('404.html is missing')
+          elif 'noindex,follow' not in not_found.read_text(encoding='utf-8'):
+              fail('404.html must be noindex,follow')
+
           if errors:
               print('HMATIAS site integrity FAILED:')
               for item in errors:
