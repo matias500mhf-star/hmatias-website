@@ -26,6 +26,29 @@ const PRODUCT_FAMILIES = [
     ]
   },
   {
+    id:'formaldehyde-chemical',
+    category:'industrial-supply',
+    name_en:'Formaldehyde / formalin',
+    name_pt:'Formaldeído / formol',
+    triggers:[
+      'formaldehyde','formaldeido','formaldeído','formol','formalin','formaldehyde 37',
+      'formaldeido 37','formaldeído 37','formol 37','cas 50 00 0','50-00-0'
+    ],
+    variants:[
+      'formaldeído 30-35%',
+      'formaldeído 37%',
+      'formol 37%',
+      'formalin 37%',
+      'formaldehyde solution',
+      'formaldehyde 37%',
+      'CAS 50-00-0'
+    ],
+    supplier_terms:[
+      'produtos químicos laboratoriais','produtos quimicos laboratoriais','químicos industriais',
+      'quimicos industriais','reagentes laboratório','reagentes laboratorio','chemical supplier'
+    ]
+  },
+  {
     id:'construction-materials',
     category:'construction',
     name_en:'Construction materials',
