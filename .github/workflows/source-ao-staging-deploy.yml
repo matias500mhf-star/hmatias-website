@@ -167,8 +167,7 @@ jobs:
       - name: Smoke test staging frontend isolation
         run: npm run smoke:web:staging
 
-      - name: Install ephemeral staging pilot credential
-        if: ${{ inputs.run_pilot }}
+      - name: Install ephemeral staging validation credential
         shell: bash
         run: |
           set -euo pipefail
@@ -197,11 +196,10 @@ jobs:
         run: ADMIN_API_TOKEN="$SOURCE_AO_PILOT_TOKEN" npm run pilot:staging
 
       - name: Run real lost-client acceptance
-        if: ${{ inputs.run_pilot }}
         run: ADMIN_API_TOKEN="$SOURCE_AO_PILOT_TOKEN" npm run acceptance:staging
 
-      - name: Remove ephemeral staging pilot credential
-        if: ${{ always() && inputs.run_pilot }}
+      - name: Remove ephemeral staging validation credential
+        if: ${{ always() }}
         shell: bash
         run: |
           set +e
@@ -212,7 +210,7 @@ jobs:
             status=$?
             rm -f "$delete_file"
             if [ "$status" -ne 0 ]; then
-              echo "::warning title=Pilot credential cleanup::Could not remove PILOT_ADMIN_API_TOKEN automatically. Remove it from source-ao-api-staging before the next pilot."
+              echo "::warning title=Validation credential cleanup::Could not remove PILOT_ADMIN_API_TOKEN automatically. Remove it from source-ao-api-staging before the next staging run."
             fi
           fi
           exit 0
