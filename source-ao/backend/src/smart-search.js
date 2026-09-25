@@ -3,6 +3,7 @@ import {normalizeSearch} from './index.js';
 const PRODUCT_FAMILIES = [
   {
     id:'packaging-strapping',
+    item_id:'item-packaging-strapping',
     category:'industrial-supply',
     name_en:'Packaging strapping',
     name_pt:'Cintas e fitas de arqueação',
@@ -27,6 +28,7 @@ const PRODUCT_FAMILIES = [
   },
   {
     id:'formaldehyde-chemical',
+    item_id:'item-formaldehyde',
     category:'industrial-supply',
     name_en:'Formaldehyde / formalin',
     name_pt:'Formaldeído / formol',
@@ -50,6 +52,7 @@ const PRODUCT_FAMILIES = [
   },
   {
     id:'construction-materials',
+    item_id:'item-construction-general',
     category:'construction',
     name_en:'Construction materials',
     name_pt:'Materiais de construção',
@@ -59,6 +62,7 @@ const PRODUCT_FAMILIES = [
   },
   {
     id:'hvac-electrical',
+    item_id:null,
     category:'hvac-electrical',
     name_en:'HVAC & electrical',
     name_pt:'Climatização e elétrica',
@@ -68,6 +72,7 @@ const PRODUCT_FAMILIES = [
   },
   {
     id:'tools-equipment',
+    item_id:'item-tools-equipment',
     category:'tools-equipment',
     name_en:'Tools & equipment',
     name_pt:'Ferramentas e equipamentos',
@@ -100,11 +105,17 @@ function detectFamily(query){
 
 function extractSpecs(query){
   const source=String(query||'');
-  const dimensions=unique((source.match(/\b\d+(?:[.,]\d+)?\s?(?:mm|cm|m|ml|l|g|kg|kw|kva|btu)\b/gi)||[])
-    .map(v=>v.replace(/\s+/g,'').toLowerCase()));
+  const dimensions=(source.match(/\b\d+(?:[.,]\d+)?\s?(?:mm|cm|m|ml|l|g|kg|kw|kva|btu)\b/gi)||[])
+    .map(v=>v.replace(/\s+/g,'').toLowerCase());
+  const percentages=(source.match(/\b\d+(?:[.,]\d+)?\s?%/g)||[])
+    .map(v=>v.replace(/\s+/g,''));
+  const cas=(source.match(/\b(?:cas\s*)?\d{2,7}-\d{2}-\d\b/gi)||[])
+    .map(v=>v.toUpperCase().replace(/^CAS\s*/,'CAS '));
+  const specifications=unique([...dimensions,...percentages,...cas]);
   const quantityMatch=source.match(/\b(\d+(?:[.,]\d+)?)\s*(rolos?|rolls?|unidades?|units?|pcs?|peças?|pecas?)\b/i);
   return {
     dimensions,
+    specifications,
     quantity:quantityMatch?{
       value:Number(quantityMatch[1].replace(',','.')),
       unit:quantityMatch[2].toLowerCase()
@@ -120,7 +131,7 @@ function detectUrgency(query,neededBy=''){
 function buildVariants(query,location,family,specs){
   const clean=String(query||'').trim();
   const loc=String(location||'Luanda').trim()||'Luanda';
-  const specsText=specs.dimensions.join(' ');
+  const specsText=specs.specifications.join(' ');
   const base=[
     clean,
     `${clean} ${loc}`,
@@ -162,11 +173,12 @@ export function buildSmartSearchPlan({query,location='Luanda',neededBy='',quanti
     urgency,
     interpretation:{
       family_id:family?.id||'general-sourcing',
+      item_id:family?.item_id||null,
       category:family?.category||'general',
       label_en:family?.name_en||'General sourcing',
       label_pt:family?.name_pt||'Sourcing geral',
       semantic_match:family?(detected.score>=2?'high':'medium'):'general',
-      specifications:specs.dimensions,
+      specifications:specs.specifications,
       quantity:effectiveQuantity
     },
     query_variants:variants,
