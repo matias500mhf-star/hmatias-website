@@ -45,7 +45,7 @@ jobs:
       - name: Checkout reviewed Source AO release
         uses: actions/checkout@v5
         with:
-          ref: b7fc1bd6ef0eba7079b859e8e1032644325ef0c6
+          ref: caa05d4477f8bb05ac1bd9614b21485ca08c9b3c
           persist-credentials: false
 
       - name: Setup Node 22
@@ -235,6 +235,9 @@ jobs:
 
       - name: Run real lost-client acceptance
         run: ADMIN_API_TOKEN="$SOURCE_AO_PILOT_TOKEN" npm run acceptance:staging
+
+      - name: Run staging contact-retention drill
+        run: ADMIN_API_TOKEN="$SOURCE_AO_PILOT_TOKEN" npm run retention:staging
 
       - name: Remove ephemeral staging validation credential
         if: ${{ always() }}
