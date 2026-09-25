@@ -62,7 +62,7 @@ Use controlled test records, not a public customer request.
 9. Create a synthetic sourcing request and confirm its private tracking link exposes no requester contact.
 10. Confirm the authenticated Sourcing Desk can decrypt that synthetic contact.
 11. Close the synthetic sourcing request.
-12. Exercise retention on an eligible synthetic closed request and confirm contact data is purged.
+12. Exercise retention on an eligible synthetic closed request and confirm contact data is purged. The automated `npm run retention:staging` drill creates a synthetic request, closes it, backdates only that test row in staging D1, runs staging-only maintenance, verifies the contact is purged, and confirms private tracking still preserves non-identifying request state.
 
 ## Promotion gate
 
