@@ -152,8 +152,24 @@ jobs:
           rm -f "$backup"
           rmdir .staging-backup
 
+      - name: Generate ephemeral staging validation credential
+        shell: bash
+        run: |
+          set -euo pipefail
+          token="$(openssl rand -hex 32)"
+          echo "::add-mask::$token"
+          echo "SOURCE_AO_PILOT_TOKEN=$token" >> "$GITHUB_ENV"
+          secret_file="$RUNNER_TEMP/source-ao-validation-secret.json"
+          PILOT_TOKEN="$token" node --input-type=module - "$secret_file" <<'NODE'
+          import {writeFileSync} from 'node:fs';
+          const file=process.argv[2];
+          const token=process.env.PILOT_TOKEN;
+          if(!token||token.length<64) throw new Error('Failed to generate strong staging validation token');
+          writeFileSync(file,JSON.stringify({PILOT_ADMIN_API_TOKEN:token}));
+          NODE
+
       - name: Deploy staging API Worker
-        run: npx wrangler deploy --config wrangler.staging.runtime.jsonc
+        run: npx wrangler deploy --secrets-file "$RUNNER_TEMP/source-ao-validation-secret.json" --config wrangler.staging.runtime.jsonc
 
       - name: Smoke test deployed staging API
         run: npm run smoke:staging
@@ -166,24 +182,6 @@ jobs:
 
       - name: Smoke test staging frontend isolation
         run: npm run smoke:web:staging
-
-      - name: Install ephemeral staging validation credential
-        shell: bash
-        run: |
-          set -euo pipefail
-          token="$(openssl rand -hex 32)"
-          echo "::add-mask::$token"
-          echo "SOURCE_AO_PILOT_TOKEN=$token" >> "$GITHUB_ENV"
-          secret_file="$RUNNER_TEMP/source-ao-pilot-secret.json"
-          PILOT_TOKEN="$token" node --input-type=module - "$secret_file" <<'NODE'
-          import {writeFileSync} from 'node:fs';
-          const file=process.argv[2];
-          const token=process.env.PILOT_TOKEN;
-          if(!token||token.length<64) throw new Error('Failed to generate strong staging pilot token');
-          writeFileSync(file,JSON.stringify({PILOT_ADMIN_API_TOKEN:token}));
-          NODE
-          npx wrangler secret bulk "$secret_file" --config wrangler.staging.runtime.jsonc
-          rm -f "$secret_file"
 
       - name: Wait for staging validation credential
         shell: bash
@@ -226,18 +224,22 @@ jobs:
         if: ${{ always() }}
         shell: bash
         run: |
-          set +e
+          set -euo pipefail
           if [ -f wrangler.staging.runtime.jsonc ]; then
-            delete_file="$RUNNER_TEMP/source-ao-pilot-secret-delete.json"
+            delete_file="$RUNNER_TEMP/source-ao-validation-secret-delete.json"
             printf '%s\n' '{"PILOT_ADMIN_API_TOKEN":null}' > "$delete_file"
             npx wrangler secret bulk "$delete_file" --config wrangler.staging.runtime.jsonc
-            status=$?
             rm -f "$delete_file"
-            if [ "$status" -ne 0 ]; then
-              echo "::warning title=Validation credential cleanup::Could not remove PILOT_ADMIN_API_TOKEN automatically. Remove it from source-ao-api-staging before the next staging run."
-            fi
+            npx wrangler secret list --format json --config wrangler.staging.runtime.jsonc > "$RUNNER_TEMP/source-ao-secret-names-after-cleanup.json"
+            node --input-type=module - "$RUNNER_TEMP/source-ao-secret-names-after-cleanup.json" <<'NODE'
+            import {readFileSync} from 'node:fs';
+            const records=JSON.parse(readFileSync(process.argv[2],'utf8'));
+            if((records||[]).some(record=>record.name==='PILOT_ADMIN_API_TOKEN')){
+              throw new Error('PILOT_ADMIN_API_TOKEN still exists after cleanup');
+            }
+            console.log('Ephemeral staging validation credential removed.');
+            NODE
           fi
-          exit 0
 
       - name: Remove generated sensitive temporary files
         if: ${{ always() }}
@@ -246,4 +248,6 @@ jobs:
           rm -f wrangler.staging.runtime.jsonc wrangler.web.staging.runtime.jsonc
           rm -f "$RUNNER_TEMP/source-ao-secret-names.json" "$RUNNER_TEMP/source-ao-curated-seed.sql"
           rm -f "$RUNNER_TEMP/source-ao-pilot-secret.json" "$RUNNER_TEMP/source-ao-pilot-secret-delete.json"
+          rm -f "$RUNNER_TEMP/source-ao-validation-secret.json" "$RUNNER_TEMP/source-ao-validation-secret-delete.json"
+          rm -f "$RUNNER_TEMP/source-ao-validation-probe.json" "$RUNNER_TEMP/source-ao-secret-names-after-cleanup.json"
           rm -rf .staging-backup .staging-web
