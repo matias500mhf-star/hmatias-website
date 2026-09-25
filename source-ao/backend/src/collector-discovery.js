@@ -1,4 +1,4 @@
-import {normalizeSearch} from './index.js';
+import {isAdmin,normalizeSearch} from './index.js';
 import {scoreCollectorCandidate} from './collector.js';
 
 const parse=(v,f=[])=>{try{return JSON.parse(v||'[]')}catch{return f}};
@@ -278,4 +278,60 @@ export async function discoveryStatus(env,runId){
     ORDER BY match_score DESC,fetched_at DESC LIMIT 60
   `).bind(runId).all();
   return {jobs:jobs.results||[],evidence:evidence.results||[]};
+}
+
+
+function responseHeaders(env){
+  return {
+    'content-type':'application/json; charset=utf-8',
+    'cache-control':'no-store',
+    'access-control-allow-origin':env.PUBLIC_ORIGIN||'https://comercialhmatiasps.com'
+  };
+}
+
+function responseJson(env,data,status=200){
+  return new Response(JSON.stringify(data),{status,headers:responseHeaders(env)});
+}
+
+export async function discoverCollectorRun(request,env,runId){
+  if(!isAdmin(request,env)){
+    return responseJson(env,{ok:false,error:{code:'unauthorized',message:'Admin authorization required.'}},401);
+  }
+  let options={};
+  if((request.headers.get('content-type')||'').includes('application/json')){
+    options=await request.json().catch(()=>({}));
+  }
+  const run=await getRun(env,runId);
+  if(!run){
+    return responseJson(env,{ok:false,error:{code:'search_run_not_found',message:'Collector search run not found.'}},404);
+  }
+  const queued=await queueKnownSourceDiscovery(env,runId);
+  const shouldExecute=options.execute!==false;
+  const execution=shouldExecute
+    ?await processPendingDiscoveryJobs(env,{runId,limit:options.limit||4})
+    :{processed:0,results:[]};
+  const state=await discoveryStatus(env,runId);
+  return responseJson(env,{
+    ok:true,
+    collector:'source-ao-collector-v2',
+    run_id:runId,
+    queued:queued.queued,
+    processed:execution.processed,
+    results:execution.results,
+    jobs:state.jobs,
+    evidence:state.evidence,
+    truth_rule:'Web discovery creates supplier leads only. Stock, price and commercial availability still require direct confirmation.'
+  });
+}
+
+export async function getDiscoveryStatusResponse(request,env,runId){
+  if(!isAdmin(request,env)){
+    return responseJson(env,{ok:false,error:{code:'unauthorized',message:'Admin authorization required.'}},401);
+  }
+  const run=await getRun(env,runId);
+  if(!run){
+    return responseJson(env,{ok:false,error:{code:'search_run_not_found',message:'Collector search run not found.'}},404);
+  }
+  const state=await discoveryStatus(env,runId);
+  return responseJson(env,{ok:true,run_id:runId,...state});
 }
