@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-AO">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0b2f4f">
-  <meta name="description" content="Source AO by HMATIAS — intelligent sourcing, supplier discovery and verified market search for Angola.">
+  <meta name="theme-color" content="#071f34">
+  <meta name="description" content="Source AO by HMATIAS — sourcing inteligente, descoberta de fornecedores e verificação comercial para Angola.">
   <meta name="robots" content="noindex,nofollow">
-  <title>Source AO — Search. Verify. Source.</title>
+  <title>Source AO — Procurement intelligence for Angola</title>
   <link rel="stylesheet" href="sourceao.css">
   <link rel="stylesheet" href="verified-results.css">
   <link rel="stylesheet" href="sourcing-ui.css">
@@ -14,89 +14,147 @@
 <body>
   <header class="topbar">
     <div class="shell nav">
-      <a class="brand" href="#top" aria-label="Source AO home">
+      <a class="brand" href="#top" aria-label="Source AO">
         <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
         <span><strong>Source AO</strong><small>by HMATIAS</small></span>
       </a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#search">Search</a>
-        <a href="#radar">Radar</a>
-        <a href="#how">How it works</a>
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#search" data-i18n="navSearch">Pesquisa</a>
+        <a href="#radar" data-i18n="navRadar">Radar</a>
+        <a href="#how" data-i18n="navHow">Como funciona</a>
       </nav>
       <div class="nav-actions">
-        <button class="lang" type="button" id="langToggle">PT</button>
-        <a class="btn btn-primary btn-small" href="#request">Request sourcing</a>
+        <span class="environment-pill"><span></span><b data-i18n="angolaFirst">Angola-first</b></span>
+        <button class="lang" type="button" id="langToggle">EN</button>
+        <a class="btn btn-primary btn-small" href="#request" data-i18n="navRequest">Iniciar sourcing</a>
       </div>
     </div>
   </header>
 
   <main id="top">
     <section class="hero" id="search">
-      <div class="shell hero-grid">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="shell hero-layout">
         <div class="hero-copy">
-          <p class="eyebrow" data-i18n="eyebrow">ANGOLA SOURCING, MADE CLEAR</p>
-          <h1 data-i18n="heroTitle">Find what you need in Angola.</h1>
-          <p class="hero-lead" data-i18n="heroLead">Materials, equipment and services. Structured search, current data and commercial verification before you decide.</p>
+          <div class="hero-kicker"><span class="signal-dot"></span><span data-i18n="eyebrow">PROCUREMENT INTELLIGENCE PARA ANGOLA</span></div>
+          <h1 data-i18n="heroTitle">Procure. Verifique. Avance com evidência.</h1>
+          <p class="hero-lead" data-i18n="heroLead">Transforme uma necessidade de compra numa missão de procurement: interpretação técnica, fornecedores potenciais, evidência pública e confirmação comercial.</p>
 
-          <form class="searchbar" id="searchForm">
-            <span class="search-icon" aria-hidden="true"></span>
-            <input id="searchInput" type="search" autocomplete="off" data-i18n-placeholder="searchPlaceholder" placeholder="Search a material, equipment or service…" required>
-            <select id="locationInput" aria-label="Location">
-              <option value="Luanda">Luanda</option>
-              <option value="Angola">Angola</option>
-            </select>
-            <button type="submit" class="btn btn-primary" data-i18n="searchButton">Search</button>
-          </form>
+          <div class="mission-search-card">
+            <div class="search-card-head">
+              <div>
+                <small data-i18n="missionInputLabel">O QUE PRECISA?</small>
+                <strong data-i18n="missionInputTitle">Criar uma missão de sourcing</strong>
+              </div>
+              <span class="truth-chip" data-i18n="truthChip">Sem inventar stock ou preço</span>
+            </div>
 
-          <div class="suggestions" aria-label="Popular searches">
-            <span data-i18n="popular">Popular:</span>
-            <button type="button" data-query="PVC pipe 110 mm">PVC pipe 110 mm</button>
-            <button type="button" data-query="Air conditioner 24000 BTU">AC 24,000 BTU</button>
-            <button type="button" data-query="Industrial paint">Industrial paint</button>
-            <button type="button" data-query="Electrical maintenance">Electrical maintenance</button>
+            <form class="searchbar" id="searchForm">
+              <span class="search-icon" aria-hidden="true"></span>
+              <input id="searchInput" type="search" autocomplete="off" data-i18n-placeholder="searchPlaceholder" placeholder="Ex.: cinta PP 9 mm, 1 rolo, urgente…" required>
+              <button type="submit" class="btn btn-primary" data-i18n="searchButton">Pesquisar</button>
+            </form>
+
+            <div class="mission-context">
+              <label>
+                <span data-i18n="locationLabel">Local</span>
+                <select id="locationInput" aria-label="Localização">
+                  <option value="Luanda">Luanda</option>
+                  <option value="Angola">Angola</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="quantityLabel">Quantidade</span>
+                <input id="quantityInput" inputmode="decimal" type="number" min="0" step="any" placeholder="1">
+              </label>
+              <label>
+                <span data-i18n="urgencyLabel">Prioridade</span>
+                <select id="neededByInput" aria-label="Prioridade">
+                  <option value="" data-i18n="priorityNormal">Normal</option>
+                  <option value="urgent" data-i18n="priorityUrgent">Urgente</option>
+                  <option value="this week" data-i18n="priorityWeek">Esta semana</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="suggestions" aria-label="Pesquisas de exemplo">
+              <span data-i18n="tryLabel">Experimentar:</span>
+              <button type="button" data-query="cinta PP 9mm 1 rolo urgente">Cinta PP 9 mm</button>
+              <button type="button" data-query="formol 37% 1L urgente">Formol 37% 1 L</button>
+              <button type="button" data-query="ar condicionado 24000 BTU">AC 24.000 BTU</button>
+            </div>
           </div>
         </div>
 
-        <aside class="hero-aside" aria-label="Source AO positioning">
-          <p class="aside-label" data-i18n="asideLabel">SOURCE AO</p>
-          <p class="aside-line" data-i18n="asideLine1">SEARCH</p>
-          <p class="aside-line" data-i18n="asideLine2">VERIFY</p>
-          <p class="aside-line" data-i18n="asideLine3">SOURCE</p>
-          <div class="aside-rule"></div>
-          <small data-i18n="asideSmall">A service by HMATIAS</small>
+        <aside class="hero-command" aria-label="Regras do Source AO">
+          <div class="command-head">
+            <span class="command-icon" aria-hidden="true">S</span>
+            <div><small data-i18n="commandEyebrow">MODO OPERACIONAL</small><strong data-i18n="commandTitle">Procurement Mission</strong></div>
+          </div>
+          <div class="command-rule">
+            <span>01</span>
+            <div><strong data-i18n="cmd1t">Interpretar</strong><small data-i18n="cmd1s">Produto, aliases, especificação, quantidade e urgência.</small></div>
+          </div>
+          <div class="command-rule">
+            <span>02</span>
+            <div><strong data-i18n="cmd2t">Descobrir</strong><small data-i18n="cmd2s">Fontes públicas e fornecedores relevantes em Angola.</small></div>
+          </div>
+          <div class="command-rule">
+            <span>03</span>
+            <div><strong data-i18n="cmd3t">Verificar</strong><small data-i18n="cmd3s">Separar evidência, fornecedor potencial e confirmação comercial.</small></div>
+          </div>
+          <div class="command-rule">
+            <span>04</span>
+            <div><strong data-i18n="cmd4t">Agir</strong><small data-i18n="cmd4s">Contactar, enviar RFQ, acompanhar e preparar cotação.</small></div>
+          </div>
+          <div class="command-truth">
+            <span class="shield-mark" aria-hidden="true">✓</span>
+            <p data-i18n="commandTruth">Stock e preço só são apresentados como confirmados quando existe evidência comercial atual.</p>
+          </div>
         </aside>
+      </div>
+
+      <div class="shell capability-strip" aria-label="Capacidades">
+        <div><span>01</span><p><strong data-i18n="cap1t">Smart Search</strong><small data-i18n="cap1s">Termos PT/EN e especificações</small></p></div>
+        <div><span>02</span><p><strong data-i18n="cap2t">Supplier Discovery</strong><small data-i18n="cap2s">Angola e Luanda primeiro</small></p></div>
+        <div><span>03</span><p><strong data-i18n="cap3t">Evidence States</strong><small data-i18n="cap3s">Fonte ≠ stock confirmado</small></p></div>
+        <div><span>04</span><p><strong data-i18n="cap4t">Smart RFQ</strong><small data-i18n="cap4s">Pedido estruturado para contacto</small></p></div>
       </div>
     </section>
 
     <section class="result-zone shell" id="resultZone" hidden aria-live="polite">
+      <div class="workspace-label"><span></span><b data-i18n="workspaceLabel">PROCUREMENT WORKSPACE</b></div>
       <div class="result-head">
         <div>
-          <p class="eyebrow" data-i18n="searchRead">SEARCH INTERPRETATION</p>
+          <p class="eyebrow" data-i18n="searchRead">MISSÃO INTERPRETADA</p>
           <h2 id="queryHeading"></h2>
         </div>
-        <span class="status status-review" id="resultStatus">Verification required</span>
+        <span class="status status-review" id="resultStatus">A confirmar</span>
       </div>
 
       <div class="result-grid">
         <article class="result-card primary-result">
           <div class="result-meta">
-            <div><small data-i18n="category">Category</small><strong id="categoryValue">General sourcing</strong></div>
-            <div><small data-i18n="market">Market</small><strong id="marketValue">Luanda</strong></div>
-            <div><small data-i18n="freshness">Freshness</small><strong data-i18n="notVerified">Not yet verified</strong></div>
+            <div><small data-i18n="category">Categoria</small><strong id="categoryValue">Sourcing geral</strong></div>
+            <div><small data-i18n="market">Mercado</small><strong id="marketValue">Luanda</strong></div>
+            <div><small data-i18n="freshness">Estado da evidência</small><strong data-i18n="notVerified">Ainda não verificado</strong></div>
           </div>
-          <p class="result-note" data-i18n="truthNote">Source AO will never label stock, price or supplier availability as confirmed without a traceable source and verification timestamp.</p>
+          <p class="result-note" data-i18n="truthNote">O Source AO separa descoberta, evidência em fonte e confirmação comercial. Um fornecedor potencial não é apresentado como stock disponível.</p>
           <div class="result-actions">
-            <a class="btn btn-outline" id="publicSearch" target="_blank" rel="noopener noreferrer" data-i18n="publicSearch">Search public sources</a>
-            <button class="btn btn-primary" type="button" id="addRadar" data-i18n="addRadar">Add to Radar</button>
+            <a class="btn btn-outline" id="publicSearch" target="_blank" rel="noopener noreferrer" data-i18n="publicSearch">Ver pesquisa pública</a>
+            <button class="btn btn-outline" type="button" id="addRadar" data-i18n="addRadar">Adicionar ao Radar</button>
+            <button class="btn btn-primary" type="button" id="startSourcing" data-i18n="startSourcing">Abrir pedido de sourcing</button>
           </div>
         </article>
 
         <aside class="confidence-card">
-          <span class="confidence-dot"></span>
-          <div>
-            <small data-i18n="confidence">Data confidence</small>
-            <strong data-i18n="awaiting">Awaiting verified source</strong>
-            <p data-i18n="confidenceText">A result becomes verified only when Source AO stores the source, verification time and evidence.</p>
+          <div class="confidence-top"><span class="confidence-dot"></span><small data-i18n="confidence">Confiança dos dados</small></div>
+          <strong data-i18n="awaiting">Aguardando evidência atual</strong>
+          <p data-i18n="confidenceText">O estado sobe apenas quando existe fonte rastreável, data e nível de confirmação.</p>
+          <div class="truth-legend">
+            <div><i class="legend-found"></i><span data-i18n="legendFound">Fornecedor potencial</span></div>
+            <div><i class="legend-source"></i><span data-i18n="legendSource">Fonte verificada</span></div>
+            <div><i class="legend-confirmed"></i><span data-i18n="legendConfirmed">Confirmação comercial</span></div>
           </div>
         </aside>
       </div>
@@ -105,17 +163,18 @@
     <section class="categories shell">
       <div class="section-heading">
         <div>
-          <p class="eyebrow" data-i18n="browse">BROWSE BY NEED</p>
-          <h2 data-i18n="whatLooking">What are you looking for?</h2>
+          <p class="eyebrow" data-i18n="browse">ENTRADAS RÁPIDAS</p>
+          <h2 data-i18n="whatLooking">Comece pela necessidade.</h2>
         </div>
+        <p class="section-note" data-i18n="browseNote">O Source AO expande a pesquisa por categoria sem perder a especificação original.</p>
       </div>
       <div class="category-grid">
-        <button class="category" data-query="Construction materials"><span>01</span><strong data-i18n="cat1">Construction materials</strong><i>→</i></button>
-        <button class="category" data-query="HVAC and electrical"><span>02</span><strong data-i18n="cat2">HVAC & electrical</strong><i>→</i></button>
-        <button class="category" data-query="Tools and equipment"><span>03</span><strong data-i18n="cat3">Tools & equipment</strong><i>→</i></button>
-        <button class="category" data-query="Cleaning and facilities"><span>04</span><strong data-i18n="cat4">Cleaning & facilities</strong><i>→</i></button>
-        <button class="category" data-query="Services and contractors"><span>05</span><strong data-i18n="cat5">Services & contractors</strong><i>→</i></button>
-        <button class="category" data-query="Industrial supply"><span>06</span><strong data-i18n="cat6">Industrial supply</strong><i>→</i></button>
+        <button class="category" data-query="Construction materials"><span>01</span><strong data-i18n="cat1">Materiais de construção</strong><small data-i18n="cat1s">cimento · aço · PVC · tintas</small><i>↗</i></button>
+        <button class="category" data-query="HVAC and electrical"><span>02</span><strong data-i18n="cat2">Climatização e elétrica</strong><small data-i18n="cat2s">AC · cabos · proteção · peças</small><i>↗</i></button>
+        <button class="category" data-query="Tools and equipment"><span>03</span><strong data-i18n="cat3">Ferramentas e equipamentos</strong><small data-i18n="cat3s">máquinas · ferramentas · oficina</small><i>↗</i></button>
+        <button class="category" data-query="Cleaning and facilities"><span>04</span><strong data-i18n="cat4">Limpeza e facilities</strong><small data-i18n="cat4s">consumíveis · higiene · manutenção</small><i>↗</i></button>
+        <button class="category" data-query="Services and contractors"><span>05</span><strong data-i18n="cat5">Serviços e empreiteiros</strong><small data-i18n="cat5s">instalação · reparação · execução</small><i>↗</i></button>
+        <button class="category" data-query="Industrial supply"><span>06</span><strong data-i18n="cat6">Fornecimento industrial</strong><small data-i18n="cat6s">químicos · embalagem · componentes</small><i>↗</i></button>
       </div>
     </section>
 
@@ -123,32 +182,32 @@
       <div class="shell radar-grid">
         <div class="radar-copy">
           <p class="eyebrow light" data-i18n="radarEyebrow">SOURCE AO RADAR</p>
-          <h2 data-i18n="radarTitle">Don't find it once. Track it until it is verified.</h2>
-          <p data-i18n="radarLead">Radar keeps a requirement active and separates discovered information from confirmed market availability.</p>
+          <h2 data-i18n="radarTitle">Uma necessidade não desaparece porque a primeira pesquisa falhou.</h2>
+          <p data-i18n="radarLead">Mantenha requisitos organizados e acompanhe o estado da evidência. O Radar não transforma uma referência pública em disponibilidade confirmada.</p>
           <div class="radar-principles">
-            <div><span>01</span><p><strong data-i18n="r1t">Found</strong><small data-i18n="r1s">A possible match exists.</small></p></div>
-            <div><span>02</span><p><strong data-i18n="r2t">Checked</strong><small data-i18n="r2s">Source and date are recorded.</small></p></div>
-            <div><span>03</span><p><strong data-i18n="r3t">Verified</strong><small data-i18n="r3s">Availability is commercially confirmed.</small></p></div>
+            <div><span>01</span><p><strong data-i18n="r1t">Descoberto</strong><small data-i18n="r1s">Existe uma pista ou fornecedor compatível.</small></p></div>
+            <div><span>02</span><p><strong data-i18n="r2t">Fonte verificada</strong><small data-i18n="r2s">Existe evidência pública identificável e datada.</small></p></div>
+            <div><span>03</span><p><strong data-i18n="r3t">Confirmado</strong><small data-i18n="r3s">A disponibilidade foi confirmada comercialmente.</small></p></div>
           </div>
         </div>
 
         <div class="radar-panel">
           <div class="radar-panel-head">
-            <div><span class="live-dot"></span><strong data-i18n="myRadar">My Radar</strong></div>
-            <small id="radarCount">0 active</small>
+            <div><span class="live-dot"></span><strong data-i18n="myRadar">Fila de procura</strong></div>
+            <small id="radarCount">0 ativos</small>
           </div>
           <form id="radarForm" class="radar-form">
-            <input id="radarInput" type="text" data-i18n-placeholder="radarPlaceholder" placeholder="What should Radar watch for?" required>
-            <button class="btn btn-light" type="submit" data-i18n="watch">Watch</button>
+            <input id="radarInput" type="text" data-i18n-placeholder="radarPlaceholder" placeholder="Material, serviço ou especificação…" required>
+            <button class="btn btn-light" type="submit" data-i18n="watch">Adicionar</button>
           </form>
           <div class="radar-list" id="radarList">
             <div class="empty-state" id="radarEmpty">
               <span class="radar-symbol" aria-hidden="true"></span>
-              <strong data-i18n="emptyTitle">No active searches yet.</strong>
-              <p data-i18n="emptyText">Add a material, service or specification. Radar will keep it organised until verified data is connected.</p>
+              <strong data-i18n="emptyTitle">Nenhuma missão em acompanhamento.</strong>
+              <p data-i18n="emptyText">Adicione uma necessidade para manter a pesquisa organizada até existir evidência utilizável.</p>
             </div>
           </div>
-          <p class="radar-disclaimer" data-i18n="radarDisclaimer">Current MVP stores your watch list on this device. Automated market monitoring will only be enabled when verified data sources are connected.</p>
+          <p class="radar-disclaimer" data-i18n="radarDisclaimer">Nesta versão, a lista do Radar fica neste dispositivo. O Source AO não promete monitorização contínua sem uma fonte de dados ativa.</p>
         </div>
       </div>
     </section>
@@ -156,29 +215,32 @@
     <section class="how shell" id="how">
       <div class="section-heading compact">
         <div>
-          <p class="eyebrow" data-i18n="howEyebrow">HOW IT WORKS</p>
-          <h2 data-i18n="howTitle">From search to a usable answer.</h2>
+          <p class="eyebrow" data-i18n="howEyebrow">FLUXO OPERACIONAL</p>
+          <h2 data-i18n="howTitle">Da necessidade à decisão comercial.</h2>
         </div>
+        <p class="section-note" data-i18n="howNote">A tecnologia acelera a procura; a confirmação comercial continua explícita.</p>
       </div>
       <div class="steps">
-        <article><span>01</span><h3 data-i18n="step1t">Describe the need</h3><p data-i18n="step1p">Material, specification, quantity and location.</p></article>
-        <article><span>02</span><h3 data-i18n="step2t">Source AO verifies</h3><p data-i18n="step2p">Sources are separated by freshness and confidence.</p></article>
-        <article><span>03</span><h3 data-i18n="step3t">Act on real options</h3><p data-i18n="step3p">Contact, compare or request HMATIAS sourcing support.</p></article>
+        <article><span>01</span><h3 data-i18n="step1t">Descrever</h3><p data-i18n="step1p">Produto, especificação, quantidade, local e prioridade.</p></article>
+        <article><span>02</span><h3 data-i18n="step2t">Descobrir</h3><p data-i18n="step2p">Pesquisar fornecedores, catálogos e fontes relevantes.</p></article>
+        <article><span>03</span><h3 data-i18n="step3t">Verificar</h3><p data-i18n="step3p">Separar correspondência, evidência e confirmação atual.</p></article>
+        <article><span>04</span><h3 data-i18n="step4t">Executar</h3><p data-i18n="step4p">Contactar, enviar RFQ, comparar e preparar a cotação.</p></article>
       </div>
     </section>
 
     <section class="request-section" id="request">
       <div class="shell request-grid">
         <div>
-          <p class="eyebrow light" data-i18n="needSpecific">NEED SOMETHING SPECIFIC?</p>
-          <h2 data-i18n="requestTitle">Let our team source it for you.</h2>
-          <p data-i18n="requestLead">Send the exact requirement. No generic promise — the team validates the market before quoting.</p>
+          <p class="eyebrow light" data-i18n="needSpecific">PRECISA QUE A HMATIAS EXECUTE?</p>
+          <h2 data-i18n="requestTitle">Transforme a pesquisa num pedido operacional.</h2>
+          <p data-i18n="requestLead">Registe a necessidade e acompanhe o estado por ligação privada. A equipa valida o mercado antes de assumir disponibilidade, preço ou prazo.</p>
+          <div class="request-trust"><span>✓</span><small data-i18n="requestTrust">Contacto protegido · acompanhamento privado · sem publicação automática</small></div>
         </div>
         <form class="request-form" id="requestForm">
-          <input id="requestItem" type="text" data-i18n-placeholder="itemPlaceholder" placeholder="Material / service" required>
-          <input id="requestQty" type="text" data-i18n-placeholder="qtyPlaceholder" placeholder="Quantity / specification">
-          <input id="requestLocation" type="text" value="Luanda" aria-label="Delivery location">
-          <button class="btn btn-light" type="submit" data-i18n="prepareRequest">Prepare sourcing request</button>
+          <input id="requestItem" type="text" data-i18n-placeholder="itemPlaceholder" placeholder="Material / serviço" required>
+          <input id="requestQty" type="text" data-i18n-placeholder="qtyPlaceholder" placeholder="Quantidade / especificação">
+          <input id="requestLocation" type="text" value="Luanda" aria-label="Local de entrega">
+          <button class="btn btn-light" type="submit" data-i18n="prepareRequest">Registar pedido de sourcing</button>
         </form>
       </div>
     </section>
@@ -188,10 +250,10 @@
     <div class="shell footer-main">
       <a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a>
       <p data-i18n="footerLine">Search. Verify. Source.</p>
-      <div class="footer-links"><a href="#search">Search</a><a href="#radar">Radar</a><a href="#how">How it works</a></div>
-      <span class="service-by" data-i18n="serviceBy">A service by HMATIAS</span>
+      <div class="footer-links"><a href="#search" data-i18n="navSearch">Pesquisa</a><a href="#radar" data-i18n="navRadar">Radar</a><a href="#how" data-i18n="navHow">Como funciona</a><a href="privacy.html">Privacidade</a><a href="terms.html">Termos</a></div>
+      <span class="service-by" data-i18n="serviceBy">Um serviço da HMATIAS</span>
     </div>
-    <div class="shell footer-bottom"><small>© 2026 Source AO.</small><small data-i18n="footerTruth">Verified data before commercial claims.</small></div>
+    <div class="shell footer-bottom"><small>© 2026 Source AO.</small><small data-i18n="footerTruth">Evidência antes de afirmações comerciais.</small></div>
   </footer>
 
   <script src="runtime-config.js" defer></script>
