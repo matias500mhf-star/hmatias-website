@@ -51,7 +51,7 @@ jobs:
       - name: Checkout reviewed Source AO release
         uses: actions/checkout@v5
         with:
-          ref: ae66bbbb1419e9094c2d467771d38a3127b240c4
+          ref: 8dd3a523267a724f5b78be2263964b3f59336ea3
           persist-credentials: false
 
       - name: Setup Node 22
@@ -247,25 +247,43 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          response_file="$RUNNER_TEMP/source-ao-validation-probe.json"
-          authenticated=false
+          sourcing_probe="$RUNNER_TEMP/source-ao-validation-probe.json"
+          collector_probe="$RUNNER_TEMP/source-ao-validation-collector-probe.json"
+          stable=false
+          consecutive=0
+          last_sourcing=""
+          last_collector=""
           for attempt in $(seq 1 12); do
-            code="$(curl -sS -o "$response_file" -w '%{http_code}'               -H "accept: application/json"               -H "authorization: Bearer $SOURCE_AO_PILOT_TOKEN"               "$SOURCE_AO_API_BASE/api/admin/sourcing-requests?limit=1" || true)"
-            if [ "$code" = "200" ]; then
-              authenticated=true
-              echo "Ephemeral staging validation credential active after attempt $attempt."
-              break
-            fi
-            if [ "$code" != "401" ]; then
-              echo "::warning title=Validation credential probe::Unexpected HTTP $code while waiting for staging auth." >&2
+            sourcing_code="$(curl -sS -o "$sourcing_probe" -w '%{http_code}' \
+              -H "accept: application/json" \
+              -H "authorization: Bearer $SOURCE_AO_PILOT_TOKEN" \
+              "$SOURCE_AO_API_BASE/api/admin/sourcing-requests?limit=1" || true)"
+            collector_code="$(curl -sS -o "$collector_probe" -w '%{http_code}' \
+              -H "accept: application/json" \
+              -H "authorization: Bearer $SOURCE_AO_PILOT_TOKEN" \
+              "$SOURCE_AO_API_BASE/api/admin/collector/runs/source_ao_auth_probe" || true)"
+            last_sourcing="$sourcing_code"
+            last_collector="$collector_code"
+
+            if [ "$sourcing_code" = "200" ] && [ "$collector_code" = "404" ]; then
+              consecutive=$((consecutive+1))
+              echo "Staging admin auth propagation check $attempt: stable sample $consecutive/3."
+              if [ "$consecutive" -ge 3 ]; then
+                stable=true
+                break
+              fi
+            else
+              consecutive=0
+              echo "Staging admin auth propagation check $attempt: sourcing=$sourcing_code collector=$collector_code."
             fi
             sleep 2
           done
-          rm -f "$response_file"
-          if [ "$authenticated" != "true" ]; then
-            echo "::error title=Validation credential unavailable::Ephemeral staging credential did not become active within the retry window." >&2
+          rm -f "$sourcing_probe" "$collector_probe"
+          if [ "$stable" != "true" ]; then
+            echo "::error title=Validation credential unavailable::Staging admin auth did not stabilize across sourcing and collector routes. Last HTTP codes: sourcing=$last_sourcing collector=$last_collector." >&2
             exit 1
           fi
+          echo "Ephemeral staging validation credential stable across admin routes."
 
       - name: Seed synthetic supplier for optional pilot
         if: ${{ inputs.run_pilot }}
@@ -373,6 +391,6 @@ jobs:
           rm -f wrangler.staging.runtime.jsonc wrangler.web.staging.runtime.jsonc
           rm -f "$RUNNER_TEMP/source-ao-secret-names.json" "$RUNNER_TEMP/source-ao-curated-seed.sql"
           rm -f "$RUNNER_TEMP/source-ao-pilot-secret.json" "$RUNNER_TEMP/source-ao-pilot-secret-delete.json"
-          rm -f "$RUNNER_TEMP/source-ao-validation-probe.json" "$RUNNER_TEMP/source-ao-validation-cleanup-probe.json"
+          rm -f "$RUNNER_TEMP/source-ao-validation-probe.json" "$RUNNER_TEMP/source-ao-validation-collector-probe.json" "$RUNNER_TEMP/source-ao-validation-cleanup-probe.json"
           rm -f "$RUNNER_TEMP/source-ao-api-deployments.json" "$RUNNER_TEMP/source-ao-web-deployments.json" "$RUNNER_TEMP/source-ao-rollback-token-probe.json"
           rm -rf .staging-backup .staging-web

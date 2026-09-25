@@ -190,7 +190,7 @@
     if (!document.querySelector('style[data-procura-footer-style]')) {
       const style = document.createElement('style');
       style.dataset.procuraFooterStyle = 'true';
-      style.textContent = '.footer-procura-link{display:inline-flex;align-items:center;gap:10px;margin-top:18px;text-decoration:none;color:inherit;max-width:max-content}.footer-procura-mark{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border:1px solid rgba(255,255,255,.22);border-radius:10px;background:linear-gradient(145deg,#062d56,#0b65a4);color:#fff;font-size:12px;font-weight:900;box-shadow:0 8px 20px rgba(0,0,0,.12)}.footer-procura-copy{display:flex;flex-direction:column;line-height:1.15}.footer-procura-copy small{font-size:10px;opacity:.68;text-transform:uppercase;letter-spacing:.08em}.footer-procura-copy strong{font-size:13px;letter-spacing:-.01em}.footer-procura-link:hover .footer-procura-mark{transform:translateY(-1px)}.footer-karta-link{margin-right:14px!important}@media(max-width:600px){.footer-karta-link,.footer-procura-link{gap:7px!important;padding:8px 9px!important;margin-top:16px!important}.footer-karta-link{margin-right:12px!important}.footer-karta-mark,.footer-procura-mark{width:28px!important;height:28px!important;flex:0 0 28px!important;border-radius:8px!important}.footer-karta-copy small,.footer-procura-copy small{font-size:8px!important;letter-spacing:.06em!important}.footer-karta-copy strong,.footer-procura-copy strong{font-size:11px!important;line-height:1.2!important}}';
+      style.textContent = '.footer-procura-link{display:inline-flex;align-items:center;margin-top:16px;text-decoration:none;max-width:max-content}.footer-procura-logo{display:block;width:138px;height:auto;filter:brightness(0) invert(1);opacity:.92}.footer-procura-link:hover .footer-procura-logo{opacity:1}.footer-karta-link{margin-right:14px!important}@media(max-width:600px){.footer-procura-logo{width:122px}.footer-karta-link{margin-right:12px!important}}';
       document.head.appendChild(style);
     }
 
@@ -199,7 +199,7 @@
     link.href = 'procura.html';
     link.dataset.procuraFooter = 'true';
     link.setAttribute('aria-label', 'Abrir Source AO — sourcing e pesquisa comercial');
-    link.innerHTML = '<span class="footer-procura-mark" aria-hidden="true">S</span><span class="footer-procura-copy"><small>HMATIAS</small><strong>S·AO</strong></span>';
+    link.innerHTML = '<img class="footer-procura-logo" src="images/source-ao-logo.svg" alt="Source AO by HMATIAS" width="720" height="180">';
     footerBrand.appendChild(link);
   };
 
