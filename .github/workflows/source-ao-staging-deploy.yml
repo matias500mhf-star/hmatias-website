@@ -16,6 +16,11 @@ on:
         required: true
         default: false
         type: boolean
+      rehearse_rollback:
+        description: 'Rehearse staging rollback to the recorded baseline and restore this release'
+        required: true
+        default: true
+        type: boolean
 
 permissions:
   contents: read
@@ -28,7 +33,7 @@ jobs:
   deploy-staging:
     if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirm == 'DEPLOY-STAGING' }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 18
+    timeout-minutes: 24
     environment: source-ao-staging
     defaults:
       run:
@@ -40,12 +45,13 @@ jobs:
       SOURCE_AO_STAGING_PUBLIC_ORIGIN: ${{ vars.SOURCE_AO_STAGING_PUBLIC_ORIGIN || secrets.SOURCE_AO_STAGING_PUBLIC_ORIGIN }}
       SOURCE_AO_API_BASE: ${{ vars.SOURCE_AO_STAGING_API_BASE || secrets.SOURCE_AO_STAGING_API_BASE }}
       SOURCE_AO_RUN_PILOT: ${{ inputs.run_pilot }}
+      SOURCE_AO_REHEARSE_ROLLBACK: ${{ inputs.rehearse_rollback }}
 
     steps:
       - name: Checkout reviewed Source AO release
         uses: actions/checkout@v5
         with:
-          ref: 050625ef48056f2aad16960cba2030728494cf6c
+          ref: ae66bbbb1419e9094c2d467771d38a3127b240c4
           persist-credentials: false
 
       - name: Setup Node 22
@@ -104,6 +110,44 @@ jobs:
       - name: Generate runtime API staging config
         # Report the application commit, not the launcher's main-branch commit.
         run: GITHUB_SHA="$(git rev-parse HEAD)" node scripts/prepare-staging-config.mjs
+
+      - name: Record active staging Worker versions
+        if: ${{ inputs.rehearse_rollback }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          api_file="$RUNNER_TEMP/source-ao-api-deployments.json"
+          web_file="$RUNNER_TEMP/source-ao-web-deployments.json"
+          npx wrangler deployments list --json --config wrangler.staging.runtime.jsonc > "$api_file"
+          npx wrangler deployments list --json --name source-ao-web-staging > "$web_file"
+          node --input-type=module - "$api_file" "$web_file" "$GITHUB_ENV" <<'NODE'
+          import {readFileSync,appendFileSync} from 'node:fs';
+
+          function currentVersion(file){
+            const raw=JSON.parse(readFileSync(file,'utf8'));
+            const list=Array.isArray(raw)
+              ? raw
+              : Array.isArray(raw?.deployments)
+                ? raw.deployments
+                : Array.isArray(raw?.result?.deployments)
+                  ? raw.result.deployments
+                  : Array.isArray(raw?.result)
+                    ? raw.result
+                    : [];
+            const current=list[0];
+            const versions=current?.versions||[];
+            const selected=[...versions].sort((a,b)=>Number(b.percentage||0)-Number(a.percentage||0))[0];
+            const id=selected?.version_id||selected?.versionId||null;
+            if(!id) throw new Error('Unable to resolve active Worker version');
+            return id;
+          }
+
+          const api=currentVersion(process.argv[2]);
+          const web=currentVersion(process.argv[3]);
+          appendFileSync(process.argv[4],`SOURCE_AO_BASELINE_API_VERSION=${api}\nSOURCE_AO_BASELINE_WEB_VERSION=${web}\n`);
+          console.log('Recorded active staging API and web Worker versions for rollback rehearsal.');
+          NODE
+          rm -f "$api_file" "$web_file"
 
       - name: Verify existing Cloudflare Worker secrets
         # Values stay in Cloudflare. The API readiness test validates them after deploy.
@@ -280,6 +324,48 @@ jobs:
             echo "Ephemeral staging validation credential disabled; old token rejected."
           fi
 
+      - name: Rehearse staging rollback and restore reviewed release
+        if: ${{ inputs.rehearse_rollback && success() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SOURCE_AO_BASELINE_API_VERSION:-}" ] || [ -z "${SOURCE_AO_BASELINE_WEB_VERSION:-}" ]; then
+            echo "::error title=Rollback baseline unavailable::Active API/web versions were not captured before deployment." >&2
+            exit 1
+          fi
+
+          echo "Rolling staging API back to recorded baseline."
+          npx wrangler versions deploy "$SOURCE_AO_BASELINE_API_VERSION@100%" --yes             --name source-ao-api-staging             --config wrangler.staging.runtime.jsonc             --message "Source AO staging rollback rehearsal: baseline API"
+          npm run smoke:staging
+
+          echo "Rolling staging frontend back to recorded baseline."
+          npx wrangler versions deploy "$SOURCE_AO_BASELINE_WEB_VERSION@100%" --yes             --name source-ao-web-staging             --config wrangler.web.staging.runtime.jsonc             --message "Source AO staging rollback rehearsal: baseline web"
+          npm run smoke:web:staging
+
+          echo "Restoring reviewed Source AO candidate."
+          npx wrangler deploy --config wrangler.staging.runtime.jsonc
+          npx wrangler deploy --config wrangler.web.staging.runtime.jsonc
+          npm run smoke:staging
+          npm run smoke:web:staging
+
+          probe_file="$RUNNER_TEMP/source-ao-rollback-token-probe.json"
+          rejected=false
+          for attempt in $(seq 1 12); do
+            code="$(curl -sS -o "$probe_file" -w '%{http_code}'               -H "accept: application/json"               -H "authorization: Bearer $SOURCE_AO_PILOT_TOKEN"               "$SOURCE_AO_API_BASE/api/admin/sourcing-requests?limit=1" || true)"
+            if [ "$code" = "401" ]; then
+              rejected=true
+              break
+            fi
+            sleep 2
+          done
+          rm -f "$probe_file"
+          if [ "$rejected" != "true" ]; then
+            echo "::error title=Rollback restore security failed::Old staging validation token was not rejected after restoring the reviewed release." >&2
+            exit 1
+          fi
+          echo "ROLLBACK_REHEARSAL=PASS"
+          echo "Reviewed staging release restored; API/web smokes passed; temporary validation token remains rejected."
+
       - name: Remove generated sensitive temporary files
         if: ${{ always() }}
         shell: bash
@@ -288,4 +374,5 @@ jobs:
           rm -f "$RUNNER_TEMP/source-ao-secret-names.json" "$RUNNER_TEMP/source-ao-curated-seed.sql"
           rm -f "$RUNNER_TEMP/source-ao-pilot-secret.json" "$RUNNER_TEMP/source-ao-pilot-secret-delete.json"
           rm -f "$RUNNER_TEMP/source-ao-validation-probe.json" "$RUNNER_TEMP/source-ao-validation-cleanup-probe.json"
+          rm -f "$RUNNER_TEMP/source-ao-api-deployments.json" "$RUNNER_TEMP/source-ao-web-deployments.json" "$RUNNER_TEMP/source-ao-rollback-token-probe.json"
           rm -rf .staging-backup .staging-web
