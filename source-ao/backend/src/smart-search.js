@@ -114,7 +114,7 @@ function buildVariants(query,location,family,specs){
       base.push([term,loc].filter(Boolean).join(' '));
     }
   }
-  return unique(base).slice(0,18);
+  return unique(base).slice(0,24);
 }
 
 export function buildSmartSearchPlan({query,location='Luanda',neededBy='',quantity=null}={}){
