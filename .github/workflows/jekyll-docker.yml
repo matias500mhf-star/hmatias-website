@@ -97,7 +97,7 @@ jobs:
                   raise SystemExit(f'Credibility link leaked back into primary navigation: {path}')
 
           credibility = open('/tmp/credibilidade.html', encoding='utf-8').read()
-          card = credibility.split('institutional-contact', 1)[1].split('</aside>', 1)[0] if 'institutional-contact' in credibility else ''
+          card = credibility.split('<aside class="institutional-card institutional-contact">', 1)[1].split('</aside>', 1)[0] if '<aside class="institutional-card institutional-contact">' in credibility else ''
           if not card or card.count('mailto:geral@comercialhmatiasps.com') != 1:
               raise SystemExit('Production credibility contact block is duplicated or malformed')
 
