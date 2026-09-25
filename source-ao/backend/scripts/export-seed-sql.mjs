@@ -19,7 +19,7 @@ const sql=[];
 sql.push('PRAGMA foreign_keys = ON;','BEGIN TRANSACTION;');
 
 for(const s of suppliers){
-  sql.push(`INSERT OR REPLACE INTO suppliers(id,name,legal_name,location,website,public_status,last_verified_at,categories_json) VALUES(${esc(s.id)},${esc(s.name)},${esc(s.legal_name)},${esc(s.location)},${esc(s.website)},${esc(s.verification_status||'source_checked')},${esc(s.last_verified_at)},${json(s.category||[])});`);
+  sql.push(`INSERT OR REPLACE INTO suppliers(id,name,legal_name,location,website,public_status,last_verified_at,categories_json,capabilities_json,phone,whatsapp,email) VALUES(${esc(s.id)},${esc(s.name)},${esc(s.legal_name)},${esc(s.location)},${esc(s.website)},${esc(s.verification_status||'source_checked')},${esc(s.last_verified_at)},${json(s.category||[])},${json(s.capabilities||[])},${esc(s.phone)},${esc(s.whatsapp)},${esc(s.email)});`);
 }
 
 for(const item of catalog){
