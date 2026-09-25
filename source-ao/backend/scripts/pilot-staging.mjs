@@ -15,6 +15,11 @@ const request=async(path,{method='GET',body,admin=false}={})=>{
   return data;
 };
 
+const ready=await request('/ready');
+if(ready?.environment!=='staging'||ready?.ready!==true){
+  throw new Error('Pilot must run only against a ready Source AO staging API');
+}
+
 const stamp=new Date().toISOString().replace(/[-:.TZ]/g,'').slice(0,14);
 const itemId=`item_test_staging_${stamp}`;
 const itemName=`TEST STAGING PVC Pipe 110 mm ${stamp}`;
