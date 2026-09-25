@@ -301,9 +301,11 @@
     const query=$('#searchInput')?.value.trim();
     if(!query||$('#resultZone')?.hidden) return;
     const location=$('#locationInput')?.value||'Luanda';
+    const quantity=$('#quantityInput')?.value.trim()||'';
+    const neededBy=$('#neededByInput')?.value.trim()||'';
     const sequence=++smartSequence;
     try{
-      const payload=await window.SourceAOAPI.searchIntelligence(query,location);
+      const payload=await window.SourceAOAPI.searchIntelligence(query,location,{quantity,neededBy});
       if(sequence!==smartSequence) return;
       renderSmartPlan(payload);
     }catch(error){
@@ -316,9 +318,11 @@
     const query=$('#searchInput')?.value.trim();
     if(!query||$('#resultZone')?.hidden) return;
     const location=$('#locationInput')?.value||'Luanda';
+    const quantity=$('#quantityInput')?.value.trim()||'';
+    const neededBy=$('#neededByInput')?.value.trim()||'';
     const sequence=++missionSequence;
     try{
-      const payload=await window.SourceAOAPI.procurementMission(query,location);
+      const payload=await window.SourceAOAPI.procurementMission(query,location,{quantity,neededBy});
       if(sequence!==missionSequence) return;
       renderMission(payload);
     }catch(error){
@@ -380,6 +384,8 @@
     document.querySelectorAll('[data-query]').forEach(btn=>btn.addEventListener('click',later));
     $('#langToggle')?.addEventListener('click',later);
     $('#locationInput')?.addEventListener('change',later);
+    $('#quantityInput')?.addEventListener('change',later);
+    $('#neededByInput')?.addEventListener('change',later);
     $('#radarForm')?.addEventListener('submit',later);
     $('#addRadar')?.addEventListener('click',later);
 
