@@ -92,12 +92,12 @@ jobs:
 
           for path, credibility in (('/tmp/home.html', 'credibilidade.html'), ('/tmp/en.html', 'credibility.html')):
               html = open(path, encoding='utf-8').read()
-              nav = re.search(r'<nav\\b[^>]*class=["\\'][^"\\']*nav-menu[^"\\']*["\\'][^>]*>(.*?)</nav>', html, re.I | re.S)
+              nav = re.search(r"<nav\\b[^>]*class=['\"][^'\"]*nav-menu[^'\"]*['\"][^>]*>(.*?)</nav>", html, re.I | re.S)
               if nav and credibility in nav.group(1):
                   raise SystemExit(f'Credibility link leaked back into primary navigation: {path}')
 
           credibility = open('/tmp/credibilidade.html', encoding='utf-8').read()
-          card = re.search(r'<aside\\b[^>]*institutional-contact[^>]*>(.*?)</aside>', credibility, re.I | re.S)
+          card = re.search(r"<aside\\b[^>]*institutional-contact[^>]*>(.*?)</aside>", credibility, re.I | re.S)
           if not card or card.group(1).count('mailto:geral@comercialhmatiasps.com') != 1:
               raise SystemExit('Production credibility contact block is duplicated or malformed')
 
