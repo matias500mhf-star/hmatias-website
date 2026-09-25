@@ -1,6 +1,6 @@
 {
-  "version": "0.3",
-  "updated_at": "2026-09-25T19:50:00+01:00",
+  "version": "0.4",
+  "updated_at": "2026-09-25T20:25:00+01:00",
   "suppliers": [
     {
       "id": "sup-imbo-angola",
@@ -126,7 +126,18 @@
         "https://farwell.co.ao/a-nossa-equipa/"
       ],
       "verification_status": "source_checked",
-      "last_verified_at": "2026-09-25T19:50:00+01:00"
+      "last_verified_at": "2026-09-25T19:50:00+01:00",
+      "capabilities": [
+        "laboratory chemicals",
+        "reagents",
+        "formaldehyde",
+        "formalin",
+        "medical and laboratory supplies"
+      ],
+      "phone": "+244 938 865 358",
+      "whatsapp": "+244 949 585 661",
+      "email": "expresso.encomendas@farwell.co.ao",
+      "contact_source": "https://farwell.co.ao/wp-content/uploads/2024/03/Catalogo_Farwell_2024.pdf"
     },
     {
       "id": "sup-soluprafia",
@@ -141,7 +152,18 @@
         "https://soluprafia.com/pp.php"
       ],
       "verification_status": "source_checked",
-      "last_verified_at": "2026-09-25T19:50:00+01:00"
+      "last_verified_at": "2026-09-25T19:50:00+01:00",
+      "capabilities": [
+        "polypropylene packaging",
+        "PP woven bags",
+        "BOPP packaging",
+        "industrial packaging",
+        "raffia packaging"
+      ],
+      "phone": "+244 924 751 727",
+      "whatsapp": "+244 939 225 048",
+      "email": "comercial@soluprafia.com",
+      "contact_source": "https://www.soluprafia.com/contacto.php"
     },
     {
       "id": "sup-soloviva",
@@ -156,7 +178,12 @@
         "https://soloviva.co.ao/"
       ],
       "verification_status": "source_checked",
-      "last_verified_at": "2026-09-25T19:50:00+01:00"
+      "last_verified_at": "2026-09-25T19:50:00+01:00",
+      "capabilities": [
+        "industrial chemicals",
+        "cleaning chemicals",
+        "chemical supply"
+      ]
     },
     {
       "id": "sup-qualirafia",
@@ -170,7 +197,61 @@
         "https://www.yellowmega.com/AO/Luanda/184070958879208/QualiRafia"
       ],
       "verification_status": "source_checked",
-      "last_verified_at": "2026-09-25T19:50:00+01:00"
+      "last_verified_at": "2026-09-25T19:50:00+01:00",
+      "capabilities": [
+        "raffia packaging",
+        "industrial packaging",
+        "polypropylene packaging"
+      ]
+    },
+    {
+      "id": "sup-aopacks",
+      "name": "AOpacks",
+      "category": [
+        "industrial-supply"
+      ],
+      "capabilities": [
+        "plastic packaging",
+        "industrial packaging",
+        "plastic films",
+        "transformed plastics"
+      ],
+      "location": "Rua das Burgalheiras Km 14, Luanda, Angola",
+      "website": "https://www.aopacks.pt/",
+      "source_urls": [
+        "https://www.aopacks.pt/",
+        "https://aopacks.pt/contato/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:25:00+01:00",
+      "phone": "+244 930 115 386",
+      "whatsapp": null,
+      "email": "sac@aopacks.ao",
+      "contact_source": "https://aopacks.pt/contato/"
+    },
+    {
+      "id": "sup-zeepack-angola",
+      "name": "Zeepack Angola Lda",
+      "category": [
+        "industrial-supply"
+      ],
+      "capabilities": [
+        "industrial packaging",
+        "packaging",
+        "plastic packaging"
+      ],
+      "location": "Polo Industrial de Viana, Estrada de Catete, Luanda, Angola",
+      "website": "https://zeepackinternational.com/",
+      "source_urls": [
+        "https://agroportal.ao/component/mtree/business/employment/99-zeepack-international-ltd/print.html?Itemid=&tmpl=component",
+        "https://www.waze.com/live-map/directions/ao/luanda/zeepack-angola-lda?to=place.ChIJI_y16E35URoRseU-XAz8WUc"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:25:00+01:00",
+      "phone": "+244 929 812 450",
+      "whatsapp": null,
+      "email": null,
+      "contact_source": "https://www.waze.com/live-map/directions/ao/luanda/zeepack-angola-lda?to=place.ChIJI_y16E35URoRseU-XAz8WUc"
     }
   ],
   "rules": {
