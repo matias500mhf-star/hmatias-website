@@ -239,7 +239,7 @@ jobs:
       - name: Run staging contact-retention drill
         run: ADMIN_API_TOKEN="$SOURCE_AO_PILOT_TOKEN" npm run retention:staging
 
-      - name: Remove ephemeral staging validation credential
+      - name: Disable ephemeral staging validation credential
         if: ${{ always() }}
         shell: bash
         run: |
@@ -249,7 +249,7 @@ jobs:
               import {readFileSync,writeFileSync} from "node:fs";
               const path="wrangler.staging.runtime.jsonc";
               const config=JSON.parse(readFileSync(path,"utf8"));
-              if(config.vars) delete config.vars.PILOT_ADMIN_API_TOKEN;
+              config.vars={...(config.vars||{}),PILOT_ADMIN_API_TOKEN:""};
               writeFileSync(path,JSON.stringify(config,null,2)+"\n",{mode:0o600});
             '
             npx wrangler deploy --config wrangler.staging.runtime.jsonc
@@ -260,7 +260,7 @@ jobs:
               echo "::error title=Validation credential cleanup failed::Expected old staging validation token to be rejected with HTTP 401, got $code." >&2
               exit 1
             fi
-            echo "Ephemeral staging validation credential removed and rejected."
+            echo "Ephemeral staging validation credential disabled; old token rejected."
           fi
 
       - name: Remove generated sensitive temporary files
