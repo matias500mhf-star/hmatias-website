@@ -65,15 +65,23 @@ jobs:
           fetch "/sitemap.xml" /tmp/sitemap.xml
           fetch "/rfq.html" /tmp/rfq.html
           fetch "/karta.html" /tmp/karta.html
+          fetch "/credibilidade.html" /tmp/credibilidade.html
+          fetch "/procura.html" /tmp/procura.html
+          fetch "/images/source-ao-logo.svg" /tmp/source-ao-logo.svg
 
           grep -Fq "HMATIAS" /tmp/home.html
           grep -Fq "HMATIAS" /tmp/en.html
           grep -Fq "Sitemap: https://comercialhmatiasps.com/sitemap.xml" /tmp/robots.txt
           grep -Fq "SMART RFQ" /tmp/rfq.html
           grep -Fq "KARTA Wallet Mobile" /tmp/karta.html
+          grep -Fq "Informação básica e verificável da empresa." /tmp/credibilidade.html
+          grep -Fq "images/source-ao-logo.svg" /tmp/procura.html
+          grep -Fq "SOURCE" /tmp/source-ao-logo.svg
 
           python3 - <<'PY'
+          import re
           import xml.etree.ElementTree as ET
+
           root = ET.parse('/tmp/sitemap.xml').getroot()
           ns = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
           urls = [n.text.strip() for n in root.findall('sm:url/sm:loc', ns) if n.text]
@@ -81,8 +89,28 @@ jobs:
               raise SystemExit('Production sitemap is valid XML but contains no URLs')
           if 'https://comercialhmatiasps.com/' not in urls:
               raise SystemExit('Production sitemap does not contain the homepage')
+
+          for path, credibility in (('/tmp/home.html', 'credibilidade.html'), ('/tmp/en.html', 'credibility.html')):
+              html = open(path, encoding='utf-8').read()
+              nav = re.search(r'<nav\\b[^>]*class=["\\'][^"\\']*nav-menu[^"\\']*["\\'][^>]*>(.*?)</nav>', html, re.I | re.S)
+              if nav and credibility in nav.group(1):
+                  raise SystemExit(f'Credibility link leaked back into primary navigation: {path}')
+
+          credibility = open('/tmp/credibilidade.html', encoding='utf-8').read()
+          card = re.search(r'<aside\\b[^>]*institutional-contact[^>]*>(.*?)</aside>', credibility, re.I | re.S)
+          if not card or card.group(1).count('mailto:geral@comercialhmatiasps.com') != 1:
+              raise SystemExit('Production credibility contact block is duplicated or malformed')
+
           print(f'Production sitemap OK: {len(urls)} URLs')
           PY
+
+          status_404="$(curl --silent --output /tmp/404-live.html --write-out '%{http_code}' \
+            --location --connect-timeout 15 --max-time 30 "$base/__hmatias_missing_page_smoke__" || true)"
+          if [ "$status_404" != "404" ]; then
+            echo "ERROR: expected production 404 status, got $status_404"
+            exit 1
+          fi
+          grep -Fq "Página não encontrada." /tmp/404-live.html
 
           git_status="$(curl --silent --output /dev/null --write-out '%{http_code}' \
             --location --connect-timeout 15 --max-time 30 "$base/.git/config" || true)"
