@@ -16,7 +16,7 @@ const services=read('services.json').providers||[];
 const opportunities=read('opportunities.json').opportunities||[];
 
 const sql=[];
-sql.push('PRAGMA foreign_keys = ON;','BEGIN TRANSACTION;');
+sql.push('PRAGMA foreign_keys = ON;');
 
 for(const s of suppliers){
   sql.push(`INSERT OR REPLACE INTO suppliers(id,name,legal_name,location,website,public_status,last_verified_at,categories_json,capabilities_json,phone,whatsapp,email) VALUES(${esc(s.id)},${esc(s.name)},${esc(s.legal_name)},${esc(s.location)},${esc(s.website)},${esc(s.verification_status||'source_checked')},${esc(s.last_verified_at)},${json(s.category||[])},${json(s.capabilities||[])},${esc(s.phone)},${esc(s.whatsapp)},${esc(s.email)});`);
@@ -42,5 +42,4 @@ for(const o of opportunities){
   sql.push(`INSERT OR REPLACE INTO opportunities(id,title,type,sector,location,issuer,reference,published_at,deadline,status,source_url,source_checked_at,scope_summary,source_fit) VALUES(${esc(o.id)},${esc(o.title)},${esc(o.type)},${esc(o.sector)},${esc(o.location)},${esc(o.issuer)},${esc(o.reference)},${esc(o.published_at)},${esc(o.deadline)},${esc(o.status)},${esc(o.source_url)},${esc(o.source_checked_at)},${esc(o.scope_summary)},${esc(o.source_fit)});`);
 }
 
-sql.push('COMMIT;');
 process.stdout.write(sql.join('\n')+'\n');
