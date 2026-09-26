@@ -1,8 +1,7 @@
 (()=>{
   'use strict';
-  // Safe default. Staging/production deployment may override apiBase at deploy time.
   window.SOURCE_AO_RUNTIME=Object.freeze({
-    environment:'development',
-    apiBase:''
+    environment:'production',
+    apiBase:"https://source-ao-api.matias500-mhf.workers.dev"
   });
 })();
