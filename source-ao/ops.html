@@ -62,6 +62,24 @@
       <div id="queueList" class="ops-queue"><div class="empty-state"><strong>No local verification requests.</strong><p>Create a request above to test the operational flow.</p></div></div>
     </section>
 
+    <section class="ops-card queue-card opportunity-pipeline">
+      <div class="ops-card-head">
+        <div><small>04</small><h2>Opportunity pipeline</h2></div>
+        <div class="ops-actions compact">
+          <button class="btn btn-outline btn-small" type="button" id="refreshOpportunities">Refresh queue</button>
+          <button class="btn btn-primary btn-small" type="button" id="scanOpportunities">Scan sources</button>
+        </div>
+      </div>
+      <div id="opportunitySourceStatus" class="op-source-status">
+        <div class="empty-state"><strong>Admin session required.</strong><p>Load the API token above to inspect opportunity sources and review candidates.</p></div>
+      </div>
+      <div class="op-pipeline-head"><strong>Pending review</strong><span id="opportunityCandidateCount">—</span></div>
+      <div id="opportunityCandidateList" class="op-candidate-list">
+        <div class="empty-state"><strong>No queue loaded.</strong><p>The public Radar only receives candidates after HMATIAS review.</p></div>
+      </div>
+      <p class="ops-note">Automatic discovery can identify a possible procurement notice, but it does not publish it. Approval requires a traceable source and a future deadline; expired or unresolved candidates stay out of the public Radar.</p>
+    </section>
+
     <section class="ops-principles">
       <article><span>Discovery</span><strong>Found is not available.</strong><p>A public source can identify a supplier, but cannot prove current stock.</p></article>
       <article><span>Evidence</span><strong>Every confirmation is traceable.</strong><p>Channel, time and evidence reference must exist before status changes.</p></article>
