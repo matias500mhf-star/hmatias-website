@@ -196,15 +196,78 @@
 
       const actions=document.createElement('div');actions.className='ops-actions compact';
       const source=document.createElement('a');source.className='btn btn-outline btn-small';source.href=candidate.source_url;source.target='_blank';source.rel='noopener noreferrer';source.textContent='Open source';
+      const copilot=document.createElement('button');copilot.type='button';copilot.className='btn btn-outline btn-small';copilot.textContent='SOURCE Copilot';
+      copilot.addEventListener('click',()=>analyseWithCopilot(candidate,copilot,card));
       const reject=document.createElement('button');reject.type='button';reject.className='btn btn-outline btn-small';reject.textContent='Reject';
       reject.addEventListener('click',()=>reviewOpportunity(candidate,'reject'));
       const approve=document.createElement('button');approve.type='button';approve.className='btn btn-primary btn-small';approve.textContent='Review & approve';
       approve.title='Confirm contracting entity, location and deadline before public promotion';
       approve.addEventListener('click',()=>reviewOpportunity(candidate,'promote'));
-      actions.append(source,reject,approve);
+      actions.append(source,copilot,reject,approve);
 
       card.append(top,title,meta,tags,summary,actions);list.appendChild(card);
     });
+  }
+
+
+  function renderCopilotPanel(card,payload){
+    card.querySelector('.op-copilot-panel')?.remove();
+    const intelligence=payload?.intelligence||{};
+    const copilot=payload?.copilot||{};
+    const panel=document.createElement('section');panel.className='op-copilot-panel';
+
+    const head=document.createElement('div');head.className='op-copilot-head';
+    const brand=document.createElement('div');
+    const eyebrow=document.createElement('small');eyebrow.textContent='SOURCE COPILOT';
+    const action=document.createElement('strong');action.textContent=intelligence.recommended_action_label||'Opportunity intelligence';
+    brand.append(eyebrow,action);
+    const scores=document.createElement('div');scores.className='op-copilot-scores';
+    const fit=document.createElement('span');fit.textContent=`Fit ${intelligence.fit_score??'—'}/100`;
+    const confidence=document.createElement('span');confidence.textContent=`Confidence ${intelligence.confidence_score??'—'}/100`;
+    scores.append(fit,confidence);head.append(brand,scores);
+
+    const summary=document.createElement('p');summary.className='op-copilot-summary';summary.textContent=copilot.executive_summary||'Analysis unavailable.';
+
+    const metrics=document.createElement('div');metrics.className='op-copilot-metrics';
+    const labels={service_fit:'Service fit',location_fit:'Location',deadline_readiness:'Deadline',qualification_fit:'Qualification'};
+    Object.entries(intelligence.breakdown||{}).forEach(([key,value])=>{
+      const metric=document.createElement('div');
+      const label=document.createElement('small');label.textContent=labels[key]||key;
+      const number=document.createElement('strong');number.textContent=`${value}/100`;
+      metric.append(label,number);metrics.appendChild(metric);
+    });
+
+    const groups=document.createElement('div');groups.className='op-copilot-groups';
+    const addGroup=(title,items)=>{
+      if(!Array.isArray(items)||!items.length)return;
+      const group=document.createElement('div');const h=document.createElement('strong');h.textContent=title;
+      const ul=document.createElement('ul');
+      items.forEach(value=>{const li=document.createElement('li');li.textContent=value;ul.appendChild(li);});
+      group.append(h,ul);groups.appendChild(group);
+    };
+    addGroup('Riscos a validar',copilot.risks);
+    addGroup('Próximas ações',copilot.next_actions);
+
+    const commands=document.createElement('div');commands.className='op-copilot-commands';
+    (copilot.commands||[]).filter(command=>command.enabled).forEach(command=>{
+      const chip=document.createElement('span');chip.textContent=command.label;commands.appendChild(chip);
+    });
+
+    panel.append(head,summary,metrics,groups,commands);card.appendChild(panel);
+  }
+
+  async function analyseWithCopilot(candidate,button,card){
+    if(!adminToken)return alert('Load the admin API token for this session first.');
+    const original=button.textContent;button.disabled=true;button.textContent='Analysing…';
+    try{
+      const payload=await api(`/api/admin/copilot/candidates/${encodeURIComponent(candidate.id)}`);
+      renderCopilotPanel(card,payload);
+    }catch(error){
+      if(error.status===401){adminToken='';setApiStatus('Token rejected','error');}
+      alert('SOURCE Copilot analysis failed. Check the API session and try again.');
+    }finally{
+      button.disabled=false;button.textContent=original;
+    }
   }
 
   async function loadOpportunityPipeline(){
