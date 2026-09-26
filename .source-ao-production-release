@@ -1,4 +1,4 @@
 Source AO production activation
 release=source-ao-v1
 authorized=2026-09-26
-retry=frontend-smoke-fixed
+refresh=live-opportunities-20260926
