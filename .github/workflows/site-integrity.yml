@@ -165,15 +165,31 @@ jobs:
               elif card.count('mailto:geral@comercialhmatiasps.com') != 1:
                   fail(f'institutional contact card must contain the official email exactly once: {page_name}')
 
-          # Source AO must use its own lightweight sub-brand asset.
+          # SOURCE AO has one canonical public product entry. Legacy procura.html is redirect-only.
           source_logo = ROOT / 'images' / 'source-ao-logo.svg'
-          source_page = ROOT / 'procura.html'
+          source_page = ROOT / 'source-ao' / 'index.html'
+          source_alias = ROOT / 'procura.html'
+          source_canonical = 'https://comercialhmatiasps.com/source-ao/index.html'
           if not source_logo.exists():
-              fail('Source AO sub-logo is missing')
+              fail('SOURCE AO sub-logo is missing')
           if not source_page.exists():
-              fail('Source AO page is missing')
-          elif 'images/source-ao-logo.svg' not in source_page.read_text(encoding='utf-8'):
-              fail('Source AO page does not use the Source AO sub-logo')
+              fail('SOURCE AO canonical page is missing')
+          else:
+              source_html = source_page.read_text(encoding='utf-8')
+              if '../images/source-ao-logo.svg' not in source_html:
+                  fail('SOURCE AO canonical page does not use the SOURCE AO sub-logo')
+              if source_canonical not in source_html:
+                  fail('SOURCE AO canonical page does not declare the expected canonical URL')
+          if not source_alias.exists():
+              fail('SOURCE AO legacy alias procura.html is missing')
+          else:
+              alias_html = source_alias.read_text(encoding='utf-8')
+              if 'noindex,follow' not in alias_html:
+                  fail('SOURCE AO legacy alias must stay noindex,follow')
+              if source_canonical not in alias_html:
+                  fail('SOURCE AO legacy alias must canonicalize to the official SOURCE AO page')
+              if '/source-ao/index.html' not in alias_html:
+                  fail('SOURCE AO legacy alias must redirect to the official SOURCE AO page')
 
           # GitHub Pages should have a custom lightweight 404 page.
           not_found = ROOT / '404.html'
