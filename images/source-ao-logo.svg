@@ -1,22 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="176" viewBox="0 0 760 176" role="img" aria-labelledby="title desc">
-  <title id="title">SOURCE AO by HMATIAS</title>
-  <desc id="desc">Identidade visual SOURCE AO, plataforma de intelligence, sourcing e oportunidades da HMATIAS.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="180" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
+  <title id="title">Source AO by HMATIAS</title>
+  <desc id="desc">Submarca Source AO para sourcing e procurement da HMATIAS.</desc>
   <defs>
-    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#062d56"/>
-      <stop offset="1" stop-color="#0b6fba"/>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#041f3d"/>
+      <stop offset="1" stop-color="#0b5f9d"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d7a643"/>
+      <stop offset="1" stop-color="#f0c768"/>
     </linearGradient>
   </defs>
-  <g transform="translate(8 12)">
-    <rect x="0" y="0" width="152" height="152" fill="#071d33"/>
-    <path d="M31 42h58l28 18-28 18H59l-15 10 15 10h58v28H57l-30-19V82l30-18h30l12-8-12-8H31z" fill="#fff"/>
-    <path d="M101 42h20v20h-20zM31 110h20v20H31z" fill="#48baf5"/>
+  <g transform="translate(14 18)">
+    <path d="M18 34 76 0l48 28-24 14-24-14-34 20 58 34-58 34 34 20 24-14 24 14-48 28-58-34 24-14 34 20 34-20-58-34 58-34-34-20-34 20z" fill="url(#navy)"/>
+    <path d="M76 56 100 42l24 14-24 14zM18 102l24-14 24 14-24 14z" fill="url(#gold)"/>
   </g>
-  <g font-family="Inter,Arial,sans-serif">
-    <text x="190" y="77" font-size="56" font-weight="760" letter-spacing="-2.2" fill="#071d33">SOURCE</text>
-    <text x="420" y="77" font-size="56" font-weight="760" letter-spacing="-2.2" fill="#0b6fba">AO</text>
-    <line x1="191" y1="100" x2="675" y2="100" stroke="#d7e1e8"/>
-    <text x="191" y="125" font-size="13" font-weight="750" letter-spacing="2.8" fill="#536c80">INTELLIGENCE · SOURCING · OPPORTUNITIES</text>
-    <text x="191" y="151" font-size="12" font-weight="700" letter-spacing="2.2" fill="#8797a4">BY HMATIAS</text>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="178" y="83" font-size="54" font-weight="800" letter-spacing="-1.2" fill="#041f3d">SOURCE</text>
+    <text x="404" y="83" font-size="54" font-weight="800" letter-spacing="-1.2" fill="#d7a643">AO</text>
+    <text x="181" y="116" font-size="16" font-weight="700" letter-spacing="3.2" fill="#52677b">PROCUREMENT · SOURCING</text>
+    <text x="181" y="145" font-size="13" font-weight="700" letter-spacing="2.4" fill="#7a8998">BY HMATIAS</text>
   </g>
 </svg>
