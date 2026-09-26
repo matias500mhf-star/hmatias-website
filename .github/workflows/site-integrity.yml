@@ -191,6 +191,71 @@ jobs:
               if '/source-ao/index.html' not in alias_html:
                   fail('SOURCE AO legacy alias must redirect to the official SOURCE AO page')
 
+          # Keep the website assistant synchronized with the public site.
+          assistant_path = ROOT / 'assistant.js'
+          knowledge_path = ROOT / 'assistant-knowledge.js'
+          if not assistant_path.exists():
+              fail('assistant.js is missing')
+          if not knowledge_path.exists():
+              fail('assistant-knowledge.js is missing')
+          if assistant_path.exists() and knowledge_path.exists():
+              assistant_text = assistant_path.read_text(encoding='utf-8')
+              knowledge_text = knowledge_path.read_text(encoding='utf-8')
+
+              assistant_version_match = re.search(r"HMATIAS_ASSISTANT_VERSION=['\"]([^'\"]+)", assistant_text)
+              kb_src_match = re.search(r"KB_SRC=['\"]assistant-knowledge\.js\?v=([^'\"]+)", assistant_text)
+              knowledge_updated_match = re.search(r"updated:\s*['\"](\d{4}-\d{2}-\d{2})['\"]", knowledge_text)
+
+              if not assistant_version_match:
+                  fail('assistant.js does not declare HMATIAS_ASSISTANT_VERSION')
+                  assistant_version = ''
+              else:
+                  assistant_version = assistant_version_match.group(1)
+
+              if not kb_src_match:
+                  fail('assistant.js does not declare a versioned assistant-knowledge.js source')
+              elif assistant_version and kb_src_match.group(1) != assistant_version:
+                  fail(f'assistant/knowledge cache versions differ: {assistant_version} != {kb_src_match.group(1)}')
+
+              required_knowledge = {
+                  'SOURCE AO': 'sourceAO: {',
+                  'KARTA': 'karta: {',
+                  'Smart RFQ': 'smartRfq: {',
+              }
+              for label, needle in required_knowledge.items():
+                  if needle not in knowledge_text:
+                      fail(f'assistant knowledge is missing {label}')
+
+              if sitemap_path.exists() and knowledge_updated_match:
+                  try:
+                      site_tree = ET.parse(sitemap_path)
+                      site_root = site_tree.getroot()
+                      sm = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+                      lastmods = [
+                          (node.text or '').strip()
+                          for node in site_root.findall('sm:url/sm:lastmod', sm)
+                          if (node.text or '').strip()
+                      ]
+                      if lastmods and knowledge_updated_match.group(1) < max(lastmods):
+                          fail(
+                              'assistant knowledge is older than the newest sitemap update: '
+                              f"{knowledge_updated_match.group(1)} < {max(lastmods)}"
+                          )
+                  except Exception as exc:
+                      fail(f'cannot compare assistant freshness with sitemap: {exc}')
+              elif not knowledge_updated_match:
+                  fail('assistant-knowledge.js does not declare an updated YYYY-MM-DD date')
+
+              if assistant_version:
+                  for html_path in ROOT.glob('*.html'):
+                      html = html_path.read_text(encoding='utf-8')
+                      for match in re.finditer(r'assistant\.js\?v=([^"\'<>\s]+)', html):
+                          if match.group(1) != assistant_version:
+                              fail(
+                                  f'stale assistant cache version in {html_path}: '
+                                  f"{match.group(1)} != {assistant_version}"
+                              )
+
           # GitHub Pages should have a custom lightweight 404 page.
           not_found = ROOT / '404.html'
           if not not_found.exists():
