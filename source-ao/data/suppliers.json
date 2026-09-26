@@ -1,6 +1,6 @@
 {
-  "version": "0.6",
-  "updated_at": "2026-09-25T21:00:00+01:00",
+  "version": "0.7",
+  "updated_at": "2026-09-26T10:14:00+01:00",
   "suppliers": [
     {
       "id": "sup-imbo-angola",
@@ -412,6 +412,40 @@
       "phone": "+244 952 824 464",
       "email": "Info@angoayiti.com",
       "contact_source": "https://www.angoayiti.com/contact"
+    },
+    {
+      "id": "sup-miliart-angola",
+      "name": "Miliart, Lda.",
+      "legal_name": "Miliart, Lda.",
+      "category": [
+        "construction",
+        "industrial-supply",
+        "services-contractors",
+        "cleaning-facilities"
+      ],
+      "capabilities": [
+        "blinds and curtains",
+        "solar control",
+        "privacy solutions",
+        "integrated partitions",
+        "commercial and residential flooring",
+        "interior fit-out",
+        "office and hospitality furniture",
+        "smart home and office automation",
+        "cleaning and sanitization"
+      ],
+      "location": "Morro Bento, Luanda, Angola",
+      "website": "https://www.miliart-angola.com/",
+      "source_urls": [
+        "https://www.miliart-angola.com/",
+        "https://www.miliart-angola.com/limpart"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-26T10:14:00+01:00",
+      "phone": "+244 949 097 608",
+      "whatsapp": "+244 949 097 608",
+      "email": "geral@miliart-angola.com",
+      "contact_source": "https://www.miliart-angola.com/"
     }
   ],
   "rules": {
