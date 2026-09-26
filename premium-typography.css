@@ -115,3 +115,41 @@ body.hmatias-catalogue :is(.catalogue-hero p,.catalogue-intro p,.work-card-copy 
   body.hmatias-home .section-heading h2{letter-spacing:-.048em}
   body.hmatias-catalogue .catalogue-hero h1{letter-spacing:-.055em}
 }
+
+
+/* HMATIAS institutional pages — same editorial type DNA, adapted to commercial/service content. */
+body.hmatias-institutional{
+  --hm-editorial-display:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --hm-editorial-body:"Manrope","Helvetica Neue",Arial,sans-serif;
+  --hm-editorial-mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+  font-family:var(--hm-editorial-body);
+  font-kerning:normal;
+  font-synthesis:none;
+  text-rendering:optimizeLegibility;
+}
+body.hmatias-institutional :is(button,input,select,textarea,.btn,.btn-outline,.lang-switch,.nav-menu a){
+  font-family:var(--hm-editorial-body);
+}
+body.hmatias-institutional :is(h1,h2,h3,h4){
+  font-family:var(--hm-editorial-display);
+  font-optical-sizing:auto;
+  font-synthesis:none;
+  font-weight:600;
+}
+body.hmatias-institutional :is(
+  .eyebrow,
+  .unit-card>span,
+  .unit-step>b,
+  .business-process-card>b,
+  .commerce-badge,
+  .product-media-note,
+  .catalog-summary-bar,
+  footer strong
+){
+  font-family:var(--hm-editorial-mono);
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+body.hmatias-institutional :is(p,li,small,label,input,select,textarea){
+  font-family:var(--hm-editorial-body);
+}
