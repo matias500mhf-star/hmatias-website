@@ -1,24 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="180" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
-  <title id="title">Source AO by HMATIAS</title>
-  <desc id="desc">Submarca Source AO para sourcing e procurement da HMATIAS.</desc>
-  <defs>
-    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#041f3d"/>
-      <stop offset="1" stop-color="#0b5f9d"/>
-    </linearGradient>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#d7a643"/>
-      <stop offset="1" stop-color="#f0c768"/>
-    </linearGradient>
-  </defs>
-  <g transform="translate(14 18)">
-    <path d="M18 34 76 0l48 28-24 14-24-14-34 20 58 34-58 34 34 20 24-14 24 14-48 28-58-34 24-14 34 20 34-20-58-34 58-34-34-20-34 20z" fill="url(#navy)"/>
-    <path d="M76 56 100 42l24 14-24 14zM18 102l24-14 24 14-24 14z" fill="url(#gold)"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="360" viewBox="0 0 760 360" role="img" aria-labelledby="title desc">
+  <title id="title">SOURCE AO by HMATIAS</title>
+  <desc id="desc">SOURCE AO logo with a magnifying glass and a subtle H for HMATIAS, in navy and light blue.</desc>
+  <g transform="translate(0 2)">
+    <circle cx="380" cy="118" r="96" fill="#ffffff"/>
+    <circle cx="380" cy="118" r="105" fill="none" stroke="#082f5c" stroke-width="20"/>
+    <path d="M462 188 L506 232" fill="none" stroke="#082f5c" stroke-width="27" stroke-linecap="round"/>
+    <rect x="492" y="216" width="88" height="34" rx="17" fill="#082f5c" transform="rotate(45 492 216)"/>
+    <path d="M292 86 L324 67 L324 181 L292 162 Z" fill="#42a9ef"/>
+    <path d="M436 67 L468 86 L468 162 L436 181 Z" fill="#42a9ef"/>
+    <path d="M338 49 L375 29 L375 106 L338 126 Z" fill="#082f5c"/>
+    <path d="M375 29 L412 49 L412 106 L375 126 Z" fill="#42a9ef"/>
+    <path d="M338 111 H371 V145 H338 Z" fill="#082f5c"/>
+    <path d="M379 111 H412 V145 H379 Z" fill="#082f5c"/>
+    <rect x="338" y="121" width="74" height="24" fill="#ffffff"/>
+    <rect x="338" y="136" width="33" height="72" fill="#082f5c"/>
+    <rect x="379" y="136" width="33" height="72" fill="#082f5c"/>
   </g>
-  <g font-family="Inter, Arial, sans-serif">
-    <text x="178" y="83" font-size="54" font-weight="800" letter-spacing="-1.2" fill="#041f3d">SOURCE</text>
-    <text x="404" y="83" font-size="54" font-weight="800" letter-spacing="-1.2" fill="#d7a643">AO</text>
-    <text x="181" y="116" font-size="16" font-weight="700" letter-spacing="3.2" fill="#52677b">PROCUREMENT · SOURCING</text>
-    <text x="181" y="145" font-size="13" font-weight="700" letter-spacing="2.4" fill="#7a8998">BY HMATIAS</text>
+  <g font-family="Inter,Arial,sans-serif" font-weight="800" letter-spacing="-2">
+    <text x="178" y="330" font-size="76" fill="#082f5c">SOURCE</text>
+    <text x="498" y="330" font-size="76" fill="#42a9ef">AO</text>
   </g>
 </svg>
