@@ -42,6 +42,15 @@ function serviceScore(record,profile){
   return {score:clamp(score||35),matched:uniq(matched)};
 }
 
+function marketCode(record){
+  const explicit=String(record.country_code||'').toUpperCase();
+  if(['AO','NA','ZA'].includes(explicit))return explicit;
+  const value=norm(record.location);
+  if(value.includes('namibia'))return 'NA';
+  if(value.includes('south africa'))return 'ZA';
+  return 'AO';
+}
+
 function locationScore(record,profile){
   const value=norm(record.location);
   if(!value)return 55;
@@ -83,6 +92,7 @@ function qualificationScore(record,service,complex){
   if(type.includes('tender'))score-=4;
   if(complex.large)score-=22;
   if(complex.technical_disciplines>=3)score-=8;
+  if(marketCode(record)!=='AO')score-=12;
   return clamp(score);
 }
 
@@ -103,9 +113,10 @@ function confidenceScore(record,clock){
   return {score:clamp(score),signals};
 }
 
-function recommendation({fit,confidence,deadline,complex}){
+function recommendation({fit,confidence,deadline,complex,crossBorder}){
   if(deadline.days!=null&&deadline.days<0)return 'reject_expired';
   if(confidence.score<55)return 'verify_source';
+  if(crossBorder&&fit>=60)return 'cross_border_review';
   if(complex.large&&fit>=60)return 'partnership';
   if(fit>=80&&deadline.score>=45)return 'direct_bid';
   if(fit>=65)return 'assess_bid';
@@ -117,6 +128,7 @@ function actionLabel(action){
     reject_expired:'Não avançar — prazo expirado',
     verify_source:'Verificar a fonte antes de decidir',
     partnership:'Avaliar parceria / subcontratação',
+    cross_border_review:'Validar elegibilidade e parceiro local',
     direct_bid:'Preparar participação direta',
     assess_bid:'Fazer qualificação comercial antes de concorrer',
     monitor:'Monitorizar e recolher mais informação'
@@ -132,6 +144,7 @@ function risksFor(record,confidence,deadline,complex){
   if(deadline.days!=null&&deadline.days>=0&&deadline.days<=5)risks.push('Prazo curto para preparar documentação, preços e submissão.');
   if(complex.large)risks.push('Escopo indica projeto de maior dimensão; validar capacidade, consórcio ou subcontratação.');
   if(complex.technical_disciplines>=3)risks.push('Oportunidade multidisciplinar; confirmar especialistas e parceiros técnicos.');
+  if(marketCode(record)!=='AO')risks.push('Mercado externo: confirmar elegibilidade, registo de fornecedor, requisitos locais, fiscalidade, logística e regras de preferência antes de concorrer.');
   return uniq(risks);
 }
 
@@ -141,6 +154,7 @@ function nextActions(action,record){
     reject_expired:['Arquivar a oportunidade e procurar eventual republicação.'],
     verify_source:['Confirmar entidade, referência, prazo e peças do procedimento antes de qualquer abordagem.'],
     partnership:['Identificar parceiro principal ou especialista complementar.','Separar o escopo que a empresa pode executar ou fornecer.','Preparar abordagem de parceria antes do prazo.'],
+    cross_border_review:['Confirmar se empresa estrangeira pode participar e quais registos locais são exigidos.','Avaliar parceiro, representante ou fornecedor local.','Validar moeda, impostos, transporte, garantias e condições de pagamento.'],
     direct_bid:['Criar checklist de candidatura.','Levantar preços e fornecedores necessários.','Construir orçamento, margem e cronograma de submissão.'],
     assess_bid:['Rever peças do procedimento e mapa de quantidades.','Confirmar capacidade técnica, financeira e documental.','Decidir participação direta, parceria ou fornecimento.'],
     monitor:['Recolher informação adicional e aguardar um sinal comercial mais forte.']
@@ -160,7 +174,8 @@ export function buildOpportunityIntelligence(record,options={}){
   const qualification=qualificationScore(record,fitService,complex);
   const fit=clamp(fitService.score*.45+loc*.20+deadline.score*.20+qualification*.15);
   const confidence=confidenceScore(record,clock);
-  const action=recommendation({fit,confidence,deadline,complex});
+  const crossBorder=marketCode(record)!=='AO';
+  const action=recommendation({fit,confidence,deadline,complex,crossBorder});
   const risks=risksFor(record,confidence,deadline,complex);
   const actions=nextActions(action,record);
   return {
@@ -172,6 +187,7 @@ export function buildOpportunityIntelligence(record,options={}){
     recommended_action_label:actionLabel(action),
     deadline_days:deadline.days,
     complexity:complex,
+    market:{country_code:marketCode(record),cross_border:crossBorder},
     breakdown:{
       service_fit:fitService.score,
       location_fit:loc,
@@ -208,7 +224,7 @@ export function buildCopilotBrief(record,intelligence){
       {id:'prepare_bid',label:'Preparar candidatura',enabled:['direct_bid','assess_bid'].includes(intelligence.recommended_action)},
       {id:'find_suppliers',label:'Encontrar fornecedores',enabled:fit>=65},
       {id:'calculate_margin',label:'Calcular margem',enabled:fit>=65},
-      {id:'partner_search',label:'Procurar parceiro',enabled:intelligence.recommended_action==='partnership'},
+      {id:'partner_search',label:'Procurar parceiro',enabled:['partnership','cross_border_review'].includes(intelligence.recommended_action)},
       {id:'verify_source',label:'Verificar fonte',enabled:confidence<80}
     ],
     context:{
@@ -216,6 +232,8 @@ export function buildCopilotBrief(record,intelligence){
       title:record.title||null,
       issuer:record.issuer||null,
       location:record.location||null,
+      country_code:record.country_code||null,
+      currency_code:record.currency_code||null,
       deadline:record.deadline||null,
       source_url:record.source_url||null
     }
