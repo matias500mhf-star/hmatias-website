@@ -125,6 +125,7 @@ jobs:
           node --check source-ao/backend/src/security.js
           node --check source-ao/backend/src/health.js
           node --check source-ao/backend/src/maintenance.js
+          node --check source-ao/backend/src/opportunity-pipeline.js
       - name: Validate staging scripts syntax
         run: |
           node --check source-ao/backend/scripts/smoke-staging.mjs
