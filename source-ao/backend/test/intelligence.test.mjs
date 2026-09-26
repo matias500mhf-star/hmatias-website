@@ -72,3 +72,28 @@ test('copilot brief exposes operational commands without claiming eligibility',(
   assert.ok(brief.executive_summary.includes('/100'));
   assert.ok(brief.commands.some(x=>x.id==='find_suppliers'));
 });
+
+test('cross-border opportunity never becomes an automatic direct-bid recommendation',()=>{
+  const record={
+    id:'opp-na',
+    title:'Provision of landscaping and garden services',
+    sector:'facilities-maintenance',
+    opportunity_type:'maintenance',
+    location:'Windhoek, Namibia',
+    country_code:'NA',
+    currency_code:'NAD',
+    issuer:'University of Namibia',
+    reference:'NCS/OAB/CPBN-05/2026',
+    deadline:'2026-10-08T09:00:00Z',
+    source_url:'https://www.cpbn.com.na/index/bid/117',
+    source_checked_at:'2026-09-26T10:00:00Z',
+    scope_summary:'Landscaping, maintenance and garden services.',
+    fit_score:92,
+    fit_tags:['facilities'],
+    source_name:'CPBN'
+  };
+  const result=buildOpportunityIntelligence(record,{clock});
+  assert.equal(result.market.cross_border,true);
+  assert.equal(result.recommended_action,'cross_border_review');
+  assert.ok(result.risks.some(x=>x.includes('Mercado externo')));
+});
