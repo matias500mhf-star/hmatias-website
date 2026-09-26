@@ -1,12 +1,125 @@
 {
-  "version": "0.2",
-  "updated_at": "2026-09-22T14:40:00+01:00",
+  "version": "0.3",
+  "updated_at": "2026-09-26T10:14:00+01:00",
   "providers": [
-    {"id":"svc-ventilgeste","name":"Ventilgeste","service_category":"hvac","specialties":["climatização","AVAC industrial","ventilação","manutenção","assistência técnica"],"location":"Viana, Luanda, Angola","website":"https://www.ventilgeste.co.ao/","source_urls":["https://www.ventilgeste.co.ao/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:40:00+01:00"},
-    {"id":"svc-dayclima","name":"Dayclima","service_category":"hvac","specialties":["AVAC","instalação","reparação","manutenção preventiva","manutenção corretiva"],"location":"Luanda, Angola","website":"https://dayclima.co.ao/","source_urls":["https://dayclima.co.ao/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:40:00+01:00"},
-    {"id":"svc-greenclima","name":"GreenClima","service_category":"facilities","specialties":["AVAC","facility management","indústria","manutenção","condutas"],"location":"Luanda, Angola","website":"https://greenclima.co.ao/","source_urls":["https://greenclima.co.ao/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:40:00+01:00"},
-    {"id":"svc-sanel","name":"Sanel Angola","service_category":"technical-services","specialties":["climatização","HVAC","energia","telecomunicações","manutenção"],"location":"Luanda, Angola","website":"https://www.sanelangola.com/","source_urls":["https://www.sanelangola.com/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:40:00+01:00"},
-    {"id":"svc-weza","name":"Weza Soluções","service_category":"services-contractors","specialties":["AVAC-R","construção civil","jardinagem","limpeza","reformas","manutenção"],"location":"Luanda, Angola","website":"https://weza.ao/","source_urls":["https://weza.ao/"],"verification_status":"source_checked","last_verified_at":"2026-09-22T14:40:00+01:00"}
+    {
+      "id": "svc-ventilgeste",
+      "name": "Ventilgeste",
+      "service_category": "hvac",
+      "specialties": [
+        "climatização",
+        "AVAC industrial",
+        "ventilação",
+        "manutenção",
+        "assistência técnica"
+      ],
+      "location": "Viana, Luanda, Angola",
+      "website": "https://www.ventilgeste.co.ao/",
+      "source_urls": [
+        "https://www.ventilgeste.co.ao/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:40:00+01:00"
+    },
+    {
+      "id": "svc-dayclima",
+      "name": "Dayclima",
+      "service_category": "hvac",
+      "specialties": [
+        "AVAC",
+        "instalação",
+        "reparação",
+        "manutenção preventiva",
+        "manutenção corretiva"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://dayclima.co.ao/",
+      "source_urls": [
+        "https://dayclima.co.ao/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:40:00+01:00"
+    },
+    {
+      "id": "svc-greenclima",
+      "name": "GreenClima",
+      "service_category": "facilities",
+      "specialties": [
+        "AVAC",
+        "facility management",
+        "indústria",
+        "manutenção",
+        "condutas"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://greenclima.co.ao/",
+      "source_urls": [
+        "https://greenclima.co.ao/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:40:00+01:00"
+    },
+    {
+      "id": "svc-sanel",
+      "name": "Sanel Angola",
+      "service_category": "technical-services",
+      "specialties": [
+        "climatização",
+        "HVAC",
+        "energia",
+        "telecomunicações",
+        "manutenção"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://www.sanelangola.com/",
+      "source_urls": [
+        "https://www.sanelangola.com/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:40:00+01:00"
+    },
+    {
+      "id": "svc-weza",
+      "name": "Weza Soluções",
+      "service_category": "services-contractors",
+      "specialties": [
+        "AVAC-R",
+        "construção civil",
+        "jardinagem",
+        "limpeza",
+        "reformas",
+        "manutenção"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://weza.ao/",
+      "source_urls": [
+        "https://weza.ao/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:40:00+01:00"
+    },
+    {
+      "id": "svc-miliart",
+      "name": "Miliart, Lda.",
+      "service_category": "services-contractors",
+      "specialties": [
+        "estores e cortinas",
+        "controlo solar e privacidade",
+        "divisórias de sistema integrado",
+        "pavimentos e revestimentos",
+        "mobiliário e design de interiores",
+        "automação residencial e de escritórios",
+        "limpeza e higienização"
+      ],
+      "location": "Morro Bento, Luanda, Angola",
+      "website": "https://www.miliart-angola.com/",
+      "source_urls": [
+        "https://www.miliart-angola.com/",
+        "https://www.miliart-angola.com/limpart"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-26T10:14:00+01:00"
+    }
   ],
   "service_categories": [
     "construction",
