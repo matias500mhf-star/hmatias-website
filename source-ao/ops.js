@@ -36,16 +36,19 @@
     if(!/^https?:\/\//i.test(base)) throw new Error('api_not_configured');
     if(!adminToken) throw new Error('admin_token_required');
     const controller=new AbortController();
-    const timeout=setTimeout(()=>controller.abort(),8000);
+    const timeoutMs=Math.max(1000,Number(options.timeoutMs)||8000);
+    const {timeoutMs:discardedTimeout,...fetchOptions}=options;
+    void discardedTimeout;
+    const timeout=setTimeout(()=>controller.abort(),timeoutMs);
     try{
       const response=await fetch(base+path,{
-        ...options,
+        ...fetchOptions,
         cache:'no-store',
         signal:controller.signal,
         headers:{
           accept:'application/json',
           authorization:`Bearer ${adminToken}`,
-          ...(options.headers||{})
+          ...(fetchOptions.headers||{})
         }
       });
       let payload=null;
@@ -141,12 +144,133 @@
     };
   }
 
+  function sourceHealthText(source){
+    if(source.last_error) return `Error · ${source.last_error}`;
+    if(source.last_success_at) return `Last success · ${new Date(source.last_success_at).toLocaleString()}`;
+    return 'Awaiting first scan';
+  }
+
+  function renderOpportunitySources(sources=[]){
+    const box=$('#opportunitySourceStatus');
+    box.innerHTML='';
+    if(!sources.length){
+      box.innerHTML='<div class="empty-state"><strong>No opportunity sources configured.</strong><p>Add a source through the protected API before scanning.</p></div>';
+      return;
+    }
+    sources.forEach(source=>{
+      const row=document.createElement('div');row.className='op-source-row';
+      const main=document.createElement('div');
+      const title=document.createElement('strong');title.textContent=source.name;
+      const meta=document.createElement('small');meta.textContent=`${source.source_kind} · every ${source.scan_interval_minutes} min · ${source.active?'active':'paused'}`;
+      main.append(title,meta);
+      const state=document.createElement('span');state.textContent=sourceHealthText(source);state.className=source.last_error?'op-source-error':'';
+      row.append(main,state);box.appendChild(row);
+    });
+  }
+
+  function renderOpportunityCandidates(candidates=[]){
+    const list=$('#opportunityCandidateList');
+    $('#opportunityCandidateCount').textContent=`${candidates.length} candidate${candidates.length===1?'':'s'}`;
+    list.innerHTML='';
+    if(!candidates.length){
+      list.innerHTML='<div class="empty-state"><strong>No pending candidates.</strong><p>The queue is clear or the source scan has not found a reviewable opportunity yet.</p></div>';
+      return;
+    }
+    candidates.forEach(candidate=>{
+      const card=document.createElement('article');card.className='op-candidate';
+      const top=document.createElement('div');top.className='op-candidate-top';
+      const fit=document.createElement('span');fit.className='op-fit-score';fit.textContent=`Fit ${candidate.fit_score}/100`;
+      const type=document.createElement('span');type.className='queue-badge';type.textContent=candidate.opportunity_type||'tender';
+      top.append(fit,type);
+
+      const title=document.createElement('h3');title.textContent=candidate.title;
+      const meta=document.createElement('p');meta.className='op-candidate-meta';
+      const deadline=candidate.deadline?new Date(candidate.deadline).toLocaleString():'Deadline to confirm';
+      meta.textContent=`${candidate.issuer} · ${candidate.location} · ${deadline}`;
+
+      const tags=document.createElement('div');tags.className='op-fit-tags';
+      (candidate.fit_tags||[]).forEach(value=>{const tag=document.createElement('span');tag.textContent=value;tags.appendChild(tag);});
+
+      const summary=document.createElement('p');summary.className='op-candidate-summary';
+      summary.textContent=candidate.scope_summary||candidate.evidence_excerpt||'Source discovered; scope still requires review.';
+
+      const actions=document.createElement('div');actions.className='ops-actions compact';
+      const source=document.createElement('a');source.className='btn btn-outline btn-small';source.href=candidate.source_url;source.target='_blank';source.rel='noopener noreferrer';source.textContent='Open source';
+      const reject=document.createElement('button');reject.type='button';reject.className='btn btn-outline btn-small';reject.textContent='Reject';
+      reject.addEventListener('click',()=>reviewOpportunity(candidate,'reject'));
+      const approve=document.createElement('button');approve.type='button';approve.className='btn btn-primary btn-small';approve.textContent='Approve to Radar';
+      approve.disabled=!candidate.deadline;
+      approve.title=candidate.deadline?'Human review required before publication':'Confirm the deadline before promotion';
+      approve.addEventListener('click',()=>reviewOpportunity(candidate,'promote'));
+      actions.append(source,reject,approve);
+
+      card.append(top,title,meta,tags,summary,actions);list.appendChild(card);
+    });
+  }
+
+  async function loadOpportunityPipeline(){
+    if(!adminToken||!apiBase()) return;
+    $('#opportunityCandidateCount').textContent='Loading…';
+    try{
+      const [sources,candidates]=await Promise.all([
+        api('/api/admin/opportunity-pipeline/sources'),
+        api('/api/admin/opportunity-pipeline/candidates?status=pending&limit=50')
+      ]);
+      renderOpportunitySources(sources?.sources||[]);
+      renderOpportunityCandidates(candidates?.candidates||[]);
+    }catch(error){
+      if(error.status===401){adminToken='';setApiStatus('Token rejected','error');}
+      $('#opportunityCandidateList').innerHTML='<div class="empty-state"><strong>Opportunity queue unavailable.</strong><p>Check the API session and try again.</p></div>';
+    }
+  }
+
+  async function reviewOpportunity(candidate,action){
+    if(action==='promote'){
+      const deadline=candidate.deadline?new Date(candidate.deadline).toLocaleString():'missing';
+      const ok=confirm(`Publish this candidate to the public Radar?\n\n${candidate.title}\nDeadline: ${deadline}\nSource: ${candidate.source_url}\n\nThis confirms that HMATIAS reviewed the source and deadline.`);
+      if(!ok) return;
+    }else if(!confirm(`Reject this opportunity candidate?\n\n${candidate.title}`)) return;
+    try{
+      await api(`/api/admin/opportunity-pipeline/candidates/${encodeURIComponent(candidate.id)}/review`,{
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body:JSON.stringify({action,reviewed_by:'HMATIAS Verification Desk'})
+      });
+      await loadOpportunityPipeline();
+    }catch(error){
+      alert(error.message==='deadline_expired'?'The deadline has expired. The candidate was not published.':'Review action failed. Check the candidate data and API session.');
+    }
+  }
+
   $('#connectApi').addEventListener('click',()=>{
     const candidate=$('#adminToken').value.trim();
     if(!candidate){adminToken='';setApiStatus('API available · token required','ready');return;}
     adminToken=candidate;
     $('#adminToken').value='';
     setApiStatus('Session token loaded','connected');
+    loadOpportunityPipeline();
+  });
+
+  $('#refreshOpportunities').addEventListener('click',()=>loadOpportunityPipeline());
+
+  $('#scanOpportunities').addEventListener('click',async()=>{
+    if(!adminToken) return alert('Load the admin API token for this session first.');
+    const button=$('#scanOpportunities');
+    button.disabled=true;button.textContent='Scanning…';
+    try{
+      const result=await api('/api/admin/opportunity-pipeline/scan',{
+        method:'POST',timeoutMs:25000,
+        headers:{'content-type':'application/json'},
+        body:JSON.stringify({limit_sources:2})
+      });
+      const processed=result?.sources_processed||0;
+      setApiStatus(`Opportunity scan complete · ${processed} source${processed===1?'':'s'}`,'connected');
+      await loadOpportunityPipeline();
+    }catch(error){
+      setApiStatus('Opportunity scan failed','error');
+    }finally{
+      button.disabled=false;button.textContent='Scan sources';
+    }
   });
 
   $('#verifyForm').addEventListener('submit',async e=>{
