@@ -14,6 +14,14 @@ import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
 import {collectorRoute} from './collector-route.js';
 import {processPendingDiscoveryJobs} from './collector-discovery.js';
+import {
+  listOpportunitySources,
+  upsertOpportunitySource,
+  runOpportunityScanResponse,
+  listOpportunityCandidates,
+  reviewOpportunityCandidate,
+  scanOpportunitySources
+} from './opportunity-pipeline.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -88,8 +96,21 @@ export default {
               }
             }else if(url.pathname==='/api/admin/demand-radar' && request.method==='GET'){
               response=await demandRadar(request,env);
+            }else if(url.pathname==='/api/admin/opportunity-pipeline/sources' && request.method==='GET'){
+              response=await listOpportunitySources(request,env);
+            }else if(url.pathname==='/api/admin/opportunity-pipeline/sources' && request.method==='POST'){
+              response=await upsertOpportunitySource(request,env);
+            }else if(url.pathname==='/api/admin/opportunity-pipeline/scan' && request.method==='POST'){
+              response=await runOpportunityScanResponse(request,env);
+            }else if(url.pathname==='/api/admin/opportunity-pipeline/candidates' && request.method==='GET'){
+              response=await listOpportunityCandidates(request,env);
             }else{
-              response=await core.fetch(request,env);
+              const opportunityReview=url.pathname.match(/^\/api\/admin\/opportunity-pipeline\/candidates\/([^/]+)\/review$/);
+              if(opportunityReview && request.method==='POST'){
+                response=await reviewOpportunityCandidate(request,env,opportunityReview[1]);
+              }else{
+                response=await core.fetch(request,env);
+              }
             }
           }
         }
@@ -123,6 +144,8 @@ export default {
       try{
         const discovery=await processPendingDiscoveryJobs(env,{limit:4});
         console.log(JSON.stringify({type:'source_ao_discovery_tick',cron,...discovery}));
+        const opportunityScan=await scanOpportunitySources(env,{limitSources:2});
+        console.log(JSON.stringify({type:'source_ao_opportunity_scan',cron,...opportunityScan}));
         if(cron==='17 2 * * *'){
           const result=await runMaintenance(env);
           console.log(JSON.stringify({type:'source_ao_maintenance',...result}));
