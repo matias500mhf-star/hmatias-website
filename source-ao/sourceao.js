@@ -154,5 +154,18 @@
     window.open('https://wa.me/244948806673?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');
   });
 
+  function hydrateRequestFromUrl(){
+    const params=new URLSearchParams(location.search);
+    const request=params.get('request')?.trim()||'';
+    if(!request) return;
+    const ref=params.get('ref')?.trim()||'';
+    const targetLocation=params.get('location')?.trim()||'Luanda';
+    const item=$('#requestItem');
+    const loc=$('#requestLocation');
+    if(item) item.value=ref?request+' · Ref. '+ref:request;
+    if(loc) loc.value=targetLocation;
+  }
+
+  hydrateRequestFromUrl();
   applyLanguage();
 })();
