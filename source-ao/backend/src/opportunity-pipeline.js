@@ -246,6 +246,7 @@ export function buildSourceFetchUrl(source,clock=Date.now()){
   u.searchParams.set('dateFrom',ymd(clock-7*86400000));
   u.searchParams.set('dateTo',ymd(clock));
   u.searchParams.set('PageNumber','1');
+  u.searchParams.set('PageSize','100');
   return u.toString();
 }
 
