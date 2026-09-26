@@ -336,7 +336,7 @@
       const result=await api('/api/admin/opportunity-pipeline/scan',{
         method:'POST',timeoutMs:25000,
         headers:{'content-type':'application/json'},
-        body:JSON.stringify({limit_sources:2})
+        body:JSON.stringify({limit_sources:3})
       });
       const processed=result?.sources_processed||0;
       setApiStatus(`Opportunity scan complete · ${processed} source${processed===1?'':'s'}`,'connected');
