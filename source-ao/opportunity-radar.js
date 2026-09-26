@@ -135,7 +135,18 @@
 
   document.addEventListener('DOMContentLoaded',async()=>{
     await window.SourceAOData?.init();
-    opportunities=window.SourceAOData?.activeOpportunities?.()||[];
+    const local=window.SourceAOData?.activeOpportunities?.()||[];
+    const localById=new Map(local.map(row=>[row.id,row]));
+    opportunities=local;
+    if(window.SourceAOAPI?.isConfigured?.()){
+      try{
+        const payload=await window.SourceAOAPI.opportunities();
+        const live=Array.isArray(payload)?payload:(payload?.results||payload?.opportunities||[]);
+        if(Array.isArray(live)) opportunities=live.map(row=>({...localById.get(row.id),...row}));
+      }catch(error){
+        console.warn('[Source AO Radar] live API unavailable; using bundled opportunity data');
+      }
+    }
     applyLanguage();
     $$('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
       filter=btn.dataset.filter;
