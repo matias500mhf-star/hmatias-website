@@ -14,6 +14,7 @@ import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
 import {collectorRoute} from './collector-route.js';
 import {processPendingDiscoveryJobs} from './collector-discovery.js';
+import {copilotOpportunityResponse} from './intelligence-route.js';
 import {
   listOpportunitySources,
   upsertOpportunitySource,
@@ -105,11 +106,19 @@ export default {
             }else if(url.pathname==='/api/admin/opportunity-pipeline/candidates' && request.method==='GET'){
               response=await listOpportunityCandidates(request,env);
             }else{
+              const copilotCandidate=url.pathname.match(/^\/api\/admin\/copilot\/candidates\/([^/]+)$/);
+              const copilotOpportunity=url.pathname.match(/^\/api\/admin\/copilot\/opportunities\/([^/]+)$/);
+              if(copilotCandidate && request.method==='GET'){
+                response=await copilotOpportunityResponse(request,env,{kind:'candidate',id:copilotCandidate[1]});
+              }else if(copilotOpportunity && request.method==='GET'){
+                response=await copilotOpportunityResponse(request,env,{kind:'opportunity',id:copilotOpportunity[1]});
+              }else{
               const opportunityReview=url.pathname.match(/^\/api\/admin\/opportunity-pipeline\/candidates\/([^/]+)\/review$/);
               if(opportunityReview && request.method==='POST'){
                 response=await reviewOpportunityCandidate(request,env,opportunityReview[1]);
               }else{
                 response=await core.fetch(request,env);
+              }
               }
             }
           }
