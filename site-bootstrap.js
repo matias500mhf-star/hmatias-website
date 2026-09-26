@@ -183,23 +183,23 @@
     }
   };
 
-  const ensureProcuraAccess = () => {
+  const ensureSourceAOAccess = () => {
     const footerBrand = document.querySelector('footer .footer-grid > div:first-child, footer .footer-pro-brand');
-    if (!footerBrand || footerBrand.querySelector('[data-procura-footer]')) return;
+    if (!footerBrand || footerBrand.querySelector('[data-source-ao-footer]')) return;
 
-    if (!document.querySelector('style[data-procura-footer-style]')) {
+    if (!document.querySelector('style[data-source-ao-footer-style]')) {
       const style = document.createElement('style');
-      style.dataset.procuraFooterStyle = 'true';
-      style.textContent = '.footer-procura-link{display:inline-flex;align-items:center;margin-top:16px;text-decoration:none;max-width:max-content}.footer-procura-logo{display:block;width:138px;height:auto;filter:brightness(0) invert(1);opacity:.92}.footer-procura-link:hover .footer-procura-logo{opacity:1}.footer-karta-link{margin-right:14px!important}@media(max-width:600px){.footer-procura-logo{width:122px}.footer-karta-link{margin-right:12px!important}}';
+      style.dataset.sourceAoFooterStyle = 'true';
+      style.textContent = '.footer-source-ao-link{display:inline-flex;align-items:center;margin-top:16px;text-decoration:none;max-width:max-content}.footer-source-ao-logo{display:block;width:138px;height:auto;filter:brightness(0) invert(1);opacity:.92}.footer-source-ao-link:hover .footer-source-ao-logo{opacity:1}.footer-karta-link{margin-right:14px!important}@media(max-width:600px){.footer-source-ao-logo{width:122px}.footer-karta-link{margin-right:12px!important}}';
       document.head.appendChild(style);
     }
 
     const link = document.createElement('a');
-    link.className = 'footer-procura-link';
-    link.href = 'procura.html';
-    link.dataset.procuraFooter = 'true';
-    link.setAttribute('aria-label', 'Abrir Source AO — sourcing e pesquisa comercial');
-    link.innerHTML = '<img class="footer-procura-logo" src="images/source-ao-logo.svg" alt="Source AO by HMATIAS" width="720" height="180">';
+    link.className = 'footer-source-ao-link';
+    link.href = 'source-ao/';
+    link.dataset.sourceAoFooter = 'true';
+    link.setAttribute('aria-label', 'Abrir SOURCE AO — intelligence, sourcing e oportunidades');
+    link.innerHTML = '<img class="footer-source-ao-logo" src="images/source-ao-logo.svg" alt="Source AO by HMATIAS" width="720" height="180">';
     footerBrand.appendChild(link);
   };
 
@@ -214,7 +214,7 @@
     normalizeOfficialEmail();
     normaliseSharedLinks();
     ensureKartaAccess();
-    ensureProcuraAccess();
+    ensureSourceAOAccess();
     loadPortfolioLayer();
   };
 
