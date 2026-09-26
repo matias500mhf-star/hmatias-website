@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: current public HMATIAS website content, 2026-09-15. */
+   Source of truth: current public HMATIAS website content, sitemap and SOURCE AO public product state, 2026-09-27. */
 (() => {
   'use strict';
 
@@ -14,8 +14,8 @@
   ];
 
   const kb = {
-    version: '2026-09-15.1',
-    updated: '2026-09-15',
+    version: '2026-09-27.1',
+    updated: '2026-09-27',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
@@ -23,16 +23,16 @@
       emailGeneral: 'geral@comercialhmatiasps.com', emailCommercial: 'geral@comercialhmatiasps.com',
       nif: '5001578065', commercialRegistration: '24.094-23', registrationNumber: '24094-23/230713'
     },
-    leadership: {
-      name: 'Henrique Matias',
-      titlePt: 'Sócio Único, CEO & Managing Director',
-      titleEn: 'Sole Shareholder, CEO & Managing Director',
-      summaryPt: 'Henrique Matias é o Sócio Único, CEO & Managing Director da HMATIAS – Prestação de Serviços, SU, LDA. Lidera a estratégia, o desenvolvimento comercial e a coordenação das operações da empresa, com foco em soluções práticas e eficientes para clientes e parceiros.',
-      summaryEn: 'Henrique Matias is the Sole Shareholder, CEO & Managing Director of HMATIAS – Prestação de Serviços, SU, LDA. He leads the company’s strategy, business development and operational coordination, with a focus on practical and efficient solutions for clients and partners.'
+    siteState: {
+      homepagePt: 'Homepage principal simplificada e estável, centrada em Construção, Facilities e Supply, com portfólio real, divisões especializadas, Smart RFQ e contacto comercial.',
+      homepageEn: 'Stable, simplified main homepage centred on Construction, Facilities and Supply, with real portfolio evidence, specialised divisions, Smart RFQ and direct commercial contact.',
+      sourcePlacementPt: 'O SOURCE AO é um produto próprio da HMATIAS com identidade visual própria. No site HMATIAS principal permanece como acesso discreto no rodapé; a experiência completa vive em /source-ao/.',
+      sourcePlacementEn: 'SOURCE AO is a dedicated HMATIAS product with its own visual identity. On the main HMATIAS site it remains a discreet footer entry; the full experience lives under /source-ao/.',
+      commercialJourneyPt: 'A jornada comercial do site orienta o visitante da informação e prova para uma ação adequada: pedido de orçamento, Smart RFQ, WhatsApp, pedido de atendimento ou SOURCE AO, conforme a necessidade.'
     },
     pages: {
-      home: '/', construction: '/construcao.html', facilities: '/facilities.html', supply: '/supply.html', clean: '/clean.html', business: '/servicos-administrativos.html', booking: '/agendamento.html', privacy: '/privacidade.html', terms: '/termos.html',
-      homeEn: '/en.html', constructionEn: '/construction.html', facilitiesEn: '/facilities-en.html', supplyEn: '/supply-en.html', cleanEn: '/clean-en.html', businessEn: '/business-services.html', bookingEn: '/booking.html', privacyEn: '/privacy.html', termsEn: '/terms.html'
+      home: '/', construction: '/construcao.html', facilities: '/facilities.html', supply: '/supply.html', rfq: '/rfq.html', worksCatalogue: '/catalogo-obras.html', credibility: '/credibilidade.html', clean: '/clean.html', karta: '/karta.html', business: '/servicos-administrativos.html', booking: '/agendamento.html', sourceAO: '/source-ao/', sourceRadar: '/source-ao/opportunity-radar.html', privacy: '/privacidade.html', terms: '/termos.html',
+      homeEn: '/en.html', constructionEn: '/construction.html', facilitiesEn: '/facilities-en.html', supplyEn: '/supply-en.html', rfqEn: '/rfq-en.html', worksCatalogueEn: '/work-catalogue.html', credibilityEn: '/credibility.html', cleanEn: '/clean-en.html', kartaEn: '/karta-en.html', businessEn: '/business-services.html', bookingEn: '/booking.html', privacyEn: '/privacy.html', termsEn: '/terms.html'
     },
     construction: {
       summaryPt: 'Construção civil e infraestrutura para empresas, instituições e projetos, com escopo claro, organização no terreno e acompanhamento até à entrega.',
@@ -70,32 +70,66 @@
       visaPt: 'Inclui checklist e organização documental, conferência de completude do dossier, assistência administrativa no preenchimento de formulários, apoio na utilização de plataformas oficiais, preparação do dossier e acompanhamento administrativo.',
       visaLimitsPt: 'A HMATIAS presta apenas apoio administrativo e documental. Não comercializa vagas de agendamento, não garante disponibilidade de marcação ou concessão de visto e não possui acesso privilegiado a embaixadas, consulados, VFS Global ou outras plataformas oficiais. Taxas consulares/VFS e outros encargos oficiais não estão incluídos salvo indicação expressa. Serviços jurídicos e representação legal não fazem parte desta oferta.'
     },
+    smartRfq: {
+      summaryPt: 'O Smart RFQ organiza um briefing comercial para Construção & Remodelação, Facilities & Manutenção ou Supply & Procurement, sem criar conta e sem carregar documentos.',
+      summaryEn: 'Smart RFQ structures a commercial briefing for Construction & Remodelling, Facilities & Maintenance or Supply & Procurement, without creating an account or uploading documents.',
+      limitsPt: 'Não é uma cotação automática: não calcula preço ou prazo, não confirma stock ou disponibilidade e o envio só acontece quando o utilizador escolhe um canal. Preço, prazo, stock, logística e condições são confirmados pela equipa comercial.',
+      privacyPt: 'Não deve ser usado para enviar palavras-passe, dados bancários, passaporte, BI ou outros documentos de identidade.'
+    },
     booking: {summaryPt:'O agendamento do site é um pedido de atendimento HMATIAS. Pode ser presencial em Luanda ou remoto quando aplicável. O horário é sempre sujeito a confirmação da equipa.',rulesPt:['Não existe disponibilidade em tempo real','O formulário não confirma automaticamente data ou hora','Não processa pagamentos online','A marcação só fica confirmada após resposta expressa da HMATIAS','Uma marcação HMATIAS não é uma vaga consular, VFS ou embaixada e não garante visto ou agendamento oficial']},
-    projects: {publicExamplesPt:['Betonagem & Pavimentação','Infraestrutura Avícola','Cobertura & Manutenção','Operação Avícola'],disclosurePt:'Cliente, data e localização de projetos são identificados publicamente apenas quando a divulgação é adequada ou autorizada.'},
-    safetyAndTruth: {rulesPt:['Nunca inventar preço, stock, disponibilidade, prazo, parceria, representação, garantia ou capacidade não publicada.','Quando um preço não está publicado, dizer “sob consulta” e indicar o contacto comercial.','Para obras, facilities e supply, explicar que escopo/preço dependem de levantamento, especificação e cotação.','Não pedir nem incentivar envio de passaporte, BI, palavras-passe, dados bancários ou outros documentos sensíveis no assistente.','Não afirmar que uma vaga consular, aprovação de visto, horário ou pagamento está confirmado sem resposta expressa da HMATIAS/entidade competente.','Responder no idioma do utilizador sempre que possível; PT e EN são suportados.']}
+    karta: {
+      summaryPt: 'KARTA Identity Wallet é um produto digital HMATIAS em desenvolvimento, com experiência mobile-first e foco em proteção e gestão controlada de informação de identidade.',
+      summaryEn: 'KARTA Identity Wallet is an HMATIAS digital product in development, with a mobile-first experience focused on protected and controlled identity-information management.',
+      statusPt: 'Estado comercial: pré-lançamento / Alpha. Não é apresentada como aplicação disponível para download público.',
+      currentPt: ['Registo e autenticação de conta','Acesso seguro à carteira','Perfil de identidade','Arquitetura para metadados e armazenamento encriptado de documentos','Registo de atividade / audit trail','Experiência mobile-first'],
+      roadmapPt: ['OCR/MRZ para apoio à leitura de documentos','Partilha seletiva e verificação por QR','KARTA Verify e API para fases posteriores'],
+      rulePt: 'Itens de roadmap são objetivos futuros e não devem ser descritos como funcionalidades já disponíveis, certificadas ou lançadas.'
+    },
+    sourceAO: {
+      name: 'SOURCE AO',
+      positioningPt: 'Search. Verify. Source. Plataforma HMATIAS de intelligence, sourcing, verificação comercial e oportunidades, com Angola como mercado principal e cobertura regional controlada.',
+      positioningEn: 'Search. Verify. Source. HMATIAS platform for intelligence, sourcing, commercial verification and opportunities, with Angola as the primary market and controlled regional coverage.',
+      marketsPt: ['Angola (AO/AOA) — mercado principal','Namíbia (NA/NAD) — descoberta regional controlada','África do Sul (ZA/ZAR) — descoberta regional controlada'],
+      marketRulePt: 'Resultados regionais não significam participação automática. Elegibilidade, registo local, regras de preferência, fiscalidade, logística e necessidade de parceria devem ser revistos antes de avançar.',
+      coreRulePt: 'Encontrar um fornecedor, catálogo, anúncio ou fonte pública não equivale a confirmar disponibilidade. O SOURCE AO separa descoberta, fonte verificada e confirmação comercial atual.',
+      publicCapabilitiesPt: ['Smart Search para materiais, equipamentos e serviços','Supplier Discovery','Estados transparentes de evidência e freshness','Smart RFQ / pedido de sourcing','Radar de procura no dispositivo','Opportunity / Intelligence Radar','Intelligence Core para fit, confiança, urgência, localização e complexidade','SOURCE Copilot para próximos passos operacionais'],
+      lifecyclePt: 'Fluxo de verificação: Search → Radar → confirmação do fornecedor → revisão humana HMATIAS → observação verificada → expiração → reconfirmação.',
+      opportunityPt: 'O Intelligence Radar organiza RFQs, concursos e sinais comerciais, mantendo fonte, prazo, nível de confiança e contexto de decisão.',
+      privacyPt: 'Pedidos podem ser acompanhados por ligação privada. Dados de contacto, evidências privadas, tokens, rotas administrativas, prioridades internas e dados da rede privada de parceiros/fornecedores não devem ser expostos pelo assistente.',
+      architecturePt: 'O endereço canónico é /source-ao/. A antiga página /procura.html funciona apenas como alias/redirecionamento para a plataforma oficial.',
+      brandPt: 'A identidade visual final do SOURCE AO usa uma lupa com um H integrado; o logótipo aparece na plataforma e, de forma discreta, no rodapé do site HMATIAS.'
+    },
+    projects: {
+      publicExamplesPt:['Galpão com Estrutura Metálica','Preparação de Terreno','Substituição de Cobertura Metálica','Pavilhões Rurais Concluídos','Alvenaria, Vãos & Reforços','Reservatório Compartimentado','Alumínio & Vidro Fumado'],
+      conceptPt:'O Galpão Metálico Modular é identificado no catálogo como projeto protótipo conceptual desenvolvido pela HMATIAS; a representação é ilustrativa e não corresponde a uma obra executada.',
+      disclosurePt:'Cliente, data e localização de projetos são identificados publicamente apenas quando a divulgação é adequada ou autorizada.'
+    },
+    safetyAndTruth: {rulesPt:['Nunca inventar preço, stock, disponibilidade, prazo, parceria, representação, garantia ou capacidade não publicada.','Quando um preço não está publicado, dizer “sob consulta” e indicar o contacto comercial.','Para obras, facilities e supply, explicar que escopo/preço dependem de levantamento, especificação e cotação.','Não pedir nem incentivar envio de passaporte, BI, palavras-passe, dados bancários ou outros documentos sensíveis no assistente.','Não afirmar que uma vaga consular, aprovação de visto, horário ou pagamento está confirmado sem resposta expressa da HMATIAS/entidade competente.','No SOURCE AO, nunca transformar fornecedor potencial, fonte pública ou oportunidade descoberta em stock, preço, adjudicação, elegibilidade ou disponibilidade confirmados.','Nunca divulgar dados privados de parceiros, fornecedores, contactos de clientes, tokens, rotas administrativas, prioridades internas ou inteligência comercial não publicada.','Na KARTA, distinguir rigorosamente capacidades Alpha atuais de itens de roadmap.','Responder no idioma do utilizador sempre que possível; PT e EN são suportados.']}
   };
 
   const compactContext = () => {
     const c = kb.company, p = kb.clean.featured.taurusPine;
     return [
       `KNOWLEDGE_VERSION: ${kb.version}`,
-      `EMPRESA: ${c.name}; sede ${c.location}; tel/WhatsApp ${c.phone}; emails ${c.emailGeneral}, ${c.emailCommercial}; NIF ${c.nif}; Registo Comercial ${c.commercialRegistration}; Matrícula ${c.registrationNumber}.`,
-      `LIDERANÇA / LEADERSHIP: ${kb.leadership.summaryPt} English: ${kb.leadership.summaryEn}`,
+      `EMPRESA: ${c.name}; sede ${c.location}; tel/WhatsApp ${c.phone}; email oficial ${c.emailGeneral}; NIF ${c.nif}; Registo Comercial ${c.commercialRegistration}.`,
+      `ESTADO DO SITE: ${kb.siteState.homepagePt} ${kb.siteState.sourcePlacementPt} ${kb.siteState.commercialJourneyPt}`,
       `CONSTRUÇÃO: ${kb.construction.summaryPt} Capacidades: ${kb.construction.capabilitiesPt.join('; ')}. Processo: ${kb.construction.processPt.join('; ')}.`,
       `FACILITIES: ${kb.facilities.summaryPt} Capacidades: ${kb.facilities.capabilitiesPt.join('; ')}.`,
       `SUPPLY: ${kb.supply.summaryPt} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. ${kb.supply.rulePt}`,
       `CLEAN: ${kb.clean.summaryPt} 123 Pine Gel 500 ml: preço sob consulta. Taurus Pine Gel T563P: ${p.descriptionPt} ${p.featuresPt} Formatos/preços: 500 g sob consulta; 1 kg 8.500 Kz; 5 kg 26.500 Kz; 20 kg 94.000 Kz. Aplicações: ${p.applicationsPt.join(', ')}. Diluições: ${p.dilutionsPt.join('; ')}. Aviso: ${p.warningPt} ${kb.clean.brandNotePt}`,
       `CATÁLOGO CLEAN: ${cleanCatalog.map(x=>`${x[0]} ${x[1]} [${x[2]}]`).join('; ')}. Para estes itens, se não houver preço publicado, confirmar com equipa comercial.`,
       `BUSINESS SERVICES: ${kb.businessServices.pricesPt.map(x=>`${x[0]} — ${x[1]}`).join('; ')}. ${kb.businessServices.pricingRulePt} Vistos/agendamentos: ${kb.businessServices.visaLimitsPt}`,
+      `SMART RFQ: ${kb.smartRfq.summaryPt} ${kb.smartRfq.limitsPt} ${kb.smartRfq.privacyPt}`,
       `AGENDAMENTO HMATIAS: ${kb.booking.summaryPt} ${kb.booking.rulesPt.join('; ')}.`,
-      `PROJETOS PÚBLICOS: ${kb.projects.publicExamplesPt.join('; ')}. ${kb.projects.disclosurePt}`,
+      `KARTA: ${kb.karta.summaryPt} ${kb.karta.statusPt} Capacidades atuais: ${kb.karta.currentPt.join('; ')}. Roadmap: ${kb.karta.roadmapPt.join('; ')}. ${kb.karta.rulePt}`,
+      `SOURCE AO: ${kb.sourceAO.positioningPt} Mercados: ${kb.sourceAO.marketsPt.join('; ')}. ${kb.sourceAO.marketRulePt} ${kb.sourceAO.coreRulePt} Capacidades públicas: ${kb.sourceAO.publicCapabilitiesPt.join('; ')}. ${kb.sourceAO.lifecyclePt} ${kb.sourceAO.opportunityPt} ${kb.sourceAO.privacyPt} ${kb.sourceAO.architecturePt} ${kb.sourceAO.brandPt}`,
+      `PROJETOS PÚBLICOS: ${kb.projects.publicExamplesPt.join('; ')}. ${kb.projects.conceptPt} ${kb.projects.disclosurePt}`,
       `REGRAS DE VERDADE: ${kb.safetyAndTruth.rulesPt.join(' ')}.`,
-      `PÁGINAS: construção ${kb.pages.construction}; facilities ${kb.pages.facilities}; supply ${kb.pages.supply}; clean ${kb.pages.clean}; business ${kb.pages.business}; agendamento ${kb.pages.booking}.`
+      `PÁGINAS: construção ${kb.pages.construction}; facilities ${kb.pages.facilities}; supply ${kb.pages.supply}; Smart RFQ ${kb.pages.rfq}; catálogo ${kb.pages.worksCatalogue}; credibilidade ${kb.pages.credibility}; clean ${kb.pages.clean}; KARTA ${kb.pages.karta}; business ${kb.pages.business}; agendamento ${kb.pages.booking}; SOURCE AO ${kb.pages.sourceAO}; Intelligence Radar ${kb.pages.sourceRadar}.`
     ].join('\n');
   };
 
   kb.toAssistantContext = compactContext;
   Object.freeze(kb.company);
-  Object.freeze(kb.leadership);
   window.HMATIAS_KNOWLEDGE = kb;
 })();
