@@ -149,7 +149,7 @@ async function fetchText(url,limit=450000){
   let current=url;
   for(let i=0;i<=3;i++){
     if(!isSafeDiscoveryUrl(current))throw new Error('unsafe_source_url');
-    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),5000);
     let res;
     try{
       res=await fetch(current,{redirect:'manual',signal:controller.signal,headers:{accept:'text/html,application/json,text/plain;q=0.9,*/*;q=0.2'}});
@@ -225,7 +225,7 @@ async function scanHtml(env,source,raw){
   const sourceHost=new URL(raw.url).hostname.toLowerCase();
   const links=extractOpportunityLinks(raw.text,raw.url)
     .filter(link=>new URL(link.url).hostname.toLowerCase()===sourceHost)
-    .slice(0,10);
+    .slice(0,4);
   let seen=0;
   for(const link of links){
     try{
