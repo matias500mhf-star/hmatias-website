@@ -352,11 +352,11 @@ button{color:inherit}
 
 .intelligence-bridge{padding:54px 0 12px}.intelligence-bridge-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:20px}.intelligence-bridge-head h2{font-size:38px;letter-spacing:-.045em;margin:0;color:var(--navy)}.intelligence-bridge-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:22px;overflow:hidden;background:#fff;box-shadow:var(--shadow-soft)}.intelligence-bridge-grid article{padding:26px;min-height:190px;position:relative}.intelligence-bridge-grid article+article{border-left:1px solid var(--line)}.intelligence-bridge-grid article>span{position:absolute;right:20px;top:18px;font-size:42px;font-weight:700;letter-spacing:-.06em;color:#eef3f6}.intelligence-bridge-grid small{display:block;font-size:9px;letter-spacing:.16em;font-weight:850;color:var(--blue);margin-bottom:26px}.intelligence-bridge-grid strong{display:block;font-size:22px;letter-spacing:-.035em;color:var(--navy)}.intelligence-bridge-grid p{font-size:13px;line-height:1.6;color:var(--muted);margin:10px 0 0;max-width:310px}.intelligence-bridge-grid .intelligence-highlight{background:linear-gradient(145deg,#071f34,#0b3557)}.intelligence-bridge-grid .intelligence-highlight small{color:#7fc0ff}.intelligence-bridge-grid .intelligence-highlight strong{color:#fff}.intelligence-bridge-grid .intelligence-highlight p{color:#b8cad7}.intelligence-bridge-grid .intelligence-highlight>span{color:rgba(255,255,255,.07)}@media(max-width:820px){.intelligence-bridge-head{align-items:flex-start;flex-direction:column}.intelligence-bridge-grid{grid-template-columns:1fr}.intelligence-bridge-grid article+article{border-left:0;border-top:1px solid var(--line)}}
 /* HMATIAS editorial alignment — shared visual language with the works catalogue. */
-.source-brand{display:inline-flex;align-items:center;width:226px;flex:0 0 226px}
-.source-brand img{display:block;width:100%;height:auto}
-.source-brand-footer{width:206px}
+.source-brand{display:inline-flex;align-items:center;justify-content:center;width:188px;flex:0 0 188px;min-width:0}
+.source-brand img{display:block;width:100%;height:auto;max-height:92px;object-fit:contain}
+.source-brand-footer{width:178px}
 .topbar{background:rgba(255,255,255,.97);border-bottom:1px solid rgba(7,29,51,.12);box-shadow:0 5px 20px rgba(7,29,51,.04)}
-.nav{height:88px}
+.nav{height:104px}
 .nav-links a{font-size:12px;font-weight:700;color:#294a67}
 .btn{border-radius:2px}
 .hero{background:#071d33}
@@ -393,18 +393,18 @@ button{color:inherit}
 .request-section{background:#071d33}
 .footer{background:#031f3d}
 .footer .source-brand img{filter:brightness(0) invert(1);opacity:.96}
-@media(max-width:900px){.source-brand{width:196px;flex-basis:196px}.hero-layout{grid-template-columns:1fr;gap:36px;padding-top:76px}.hero-copy h1{max-width:12ch}.intelligence-bridge-grid article+article{padding-left:0;border-left:0}.intelligence-bridge-grid{grid-template-columns:1fr}.intelligence-bridge-grid article{border-bottom:1px solid rgba(7,29,51,.15)}}
-@media(max-width:640px){.source-brand{width:170px;flex-basis:170px}.nav{height:76px}.hero-layout{padding-top:64px}.hero-copy h1{font-size:clamp(2.8rem,12vw,4.2rem)}.intelligence-bridge{padding-top:76px}.steps article+article{padding-left:0;border-left:0}}
+@media(max-width:900px){.source-brand{width:166px;flex-basis:166px}.source-brand img{max-height:82px}.hero-layout{grid-template-columns:1fr;gap:36px;padding-top:76px}.hero-copy h1{max-width:12ch}.intelligence-bridge-grid article+article{padding-left:0;border-left:0}.intelligence-bridge-grid{grid-template-columns:1fr}.intelligence-bridge-grid article{border-bottom:1px solid rgba(7,29,51,.15)}}
+@media(max-width:640px){.source-brand{width:146px;flex-basis:146px}.source-brand img{max-height:72px}.nav{height:88px}.hero-layout{padding-top:64px}.hero-copy h1{font-size:clamp(2.8rem,12vw,4.2rem)}.intelligence-bridge{padding-top:76px}.steps article+article{padding-left:0;border-left:0}}
 
-/* Brand/contrast correction: preserve the established SOURCE AO arrow identity. */
+/* Final SOURCE AO identity: HMATIAS H inside the magnifying-glass mark. */
 .hmatias-return{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 10px;border-left:1px solid rgba(7,29,51,.14);color:#173b59;font-size:10px;font-weight:850;letter-spacing:.08em;white-space:nowrap}
 .hmatias-return:hover{color:#0b5f9d}
 .hero-copy h1{color:#fff!important;opacity:1!important;text-shadow:none!important;filter:none!important}
 .hero-copy .hero-lead{opacity:1!important}
 .source-brand img{opacity:1!important;filter:none!important}
-.footer .source-brand{padding:8px 10px;background:#fff;border:1px solid rgba(255,255,255,.16)}
+.footer .source-brand{padding:7px 10px;background:#fff;border:1px solid rgba(255,255,255,.18)}
 .footer .source-brand img{filter:none!important;opacity:1!important}
 .service-by-link{color:#dbeaf5!important;font-weight:700;white-space:nowrap}
 .service-by-link:hover{color:#fff!important}
 @media(max-width:760px){.hmatias-return{font-size:9px;padding:0 8px;border-left:0}}
-@media(max-width:620px){.hmatias-return{min-height:30px}.source-brand{width:158px;flex-basis:158px}}
+@media(max-width:620px){.hmatias-return{min-height:30px}.source-brand{width:138px;flex-basis:138px}.source-brand img{max-height:68px}.source-brand-footer{width:154px}}

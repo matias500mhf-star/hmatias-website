@@ -190,7 +190,7 @@
     if (!document.querySelector('style[data-source-ao-footer-style]')) {
       const style = document.createElement('style');
       style.dataset.sourceAoFooterStyle = 'true';
-      style.textContent = '.footer-source-ao-link{display:inline-flex;align-items:center;margin-top:16px;padding:7px 10px;background:#fff;border:1px solid rgba(255,255,255,.18);text-decoration:none;max-width:max-content}.footer-source-ao-logo{display:block;width:154px;height:auto;filter:none;opacity:1}.footer-source-ao-link:hover{border-color:rgba(255,255,255,.42)}.footer-karta-link{margin-right:14px!important}@media(max-width:600px){.footer-source-ao-logo{width:138px}.footer-karta-link{margin-right:12px!important}}';
+      style.textContent = '.footer-source-ao-link{display:inline-flex;align-items:center;justify-content:center;margin-top:16px;padding:8px 11px;background:#fff;border:1px solid rgba(255,255,255,.20);text-decoration:none;max-width:max-content}.footer-source-ao-logo{display:block;width:170px;height:auto;max-height:84px;object-fit:contain;filter:none;opacity:1}.footer-source-ao-link:hover{border-color:rgba(255,255,255,.46)}.footer-karta-link{margin-right:14px!important}@media(max-width:600px){.footer-source-ao-logo{width:150px;max-height:74px}.footer-karta-link{margin-right:12px!important}}';
       document.head.appendChild(style);
     }
 
@@ -199,7 +199,7 @@
     link.href = 'source-ao/';
     link.dataset.sourceAoFooter = 'true';
     link.setAttribute('aria-label', 'Abrir SOURCE AO — intelligence, sourcing e oportunidades');
-    link.innerHTML = '<img class="footer-source-ao-logo" src="images/source-ao-logo.svg" alt="Source AO by HMATIAS" width="720" height="180">';
+    link.innerHTML = '<img class="footer-source-ao-logo" src="images/source-ao-logo.svg" alt="SOURCE AO — intelligence, sourcing e oportunidades by HMATIAS" width="760" height="360">';
     footerBrand.appendChild(link);
   };
 
