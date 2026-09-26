@@ -222,7 +222,7 @@ body.hmatias-catalogue footer .copyright{
 .source-ao-showcase-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);gap:72px;align-items:end}
 .source-ao-showcase-copy{max-width:720px}
 .source-ao-showcase .eyebrow{color:#8fd0f3}
-.source-ao-showcase-logo{display:block;width:min(430px,82%);height:auto;margin:10px 0 30px;filter:brightness(0) invert(1)}
+.source-ao-showcase-logo{display:block;width:min(460px,90%);height:auto;margin:10px 0 30px;padding:10px 14px;background:#fff;border:1px solid rgba(255,255,255,.28)}
 .source-ao-showcase h2{max-width:13ch;margin:0;color:#fff;font-size:clamp(2.7rem,4.7vw,5rem);line-height:.96;letter-spacing:-.05em;font-weight:600}
 .source-ao-showcase-copy>p{max-width:62ch;margin:24px 0 0;color:rgba(232,242,249,.8);font-size:.96rem;line-height:1.78}
 .source-ao-showcase-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
