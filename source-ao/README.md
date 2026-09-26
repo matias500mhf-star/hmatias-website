@@ -1,8 +1,19 @@
 # Source AO
 
-Source AO is an HMATIAS sourcing and commercial-verification product for Angola.
+Source AO is an Angola-first HMATIAS sourcing and commercial-verification product with controlled Southern Africa market coverage.
 
 **Positioning:** Search. Verify. Source.
+
+## Market coverage
+
+Source AO keeps each market explicit rather than mixing regional results:
+- **Angola (`AO`, AOA)** — primary HMATIAS operating market;
+- **Namibia (`NA`, NAD)** — official CPBN open-bid discovery and future approved sources;
+- **South Africa (`ZA`, ZAR)** — National Treasury eTenders/OCDS discovery.
+
+Cross-border opportunities are not treated as automatic direct-bid opportunities. SOURCE Intelligence requires eligibility, local registration, preference rules, tax/logistics and partnership needs to be reviewed before a participation recommendation can advance.
+
+See `docs/MARKETS.md`.
 
 ## Core rule
 
