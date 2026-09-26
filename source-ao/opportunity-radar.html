@@ -3,19 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0b2f4f">
-  <meta name="description" content="Radar Source AO da HMATIAS: oportunidades públicas de fornecimento, manutenção, RFQs e concursos em Angola, Namíbia e África do Sul com fonte e prazo rastreáveis.">
+  <meta name="theme-color" content="#071f34">
+  <meta name="description" content="Source AO Intelligence Radar: oportunidades públicas de Angola, Namíbia e África do Sul com fit, confiança, urgência e fonte rastreável.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://comercialhmatiasps.com/source-ao/opportunity-radar.html">
-  <title>Radar de Oportunidades — Source AO</title>
+  <title>Intelligence Radar — Source AO</title>
   <link rel="stylesheet" href="sourceao.css">
   <link rel="stylesheet" href="opportunity-radar.css">
 </head>
-<body>
-  <header class="topbar">
+<body class="op-body">
+  <header class="topbar op-topbar">
     <div class="shell nav">
-      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a>
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>Intelligence Radar</small></span></a>
       <div class="nav-actions">
+        <span class="op-live-pill"><i></i><span data-i18n="live">Intelligence live</span></span>
         <button class="lang" type="button" id="langToggle" aria-label="Mudar idioma">EN</button>
         <a class="btn btn-outline btn-small" href="index.html" data-i18n="back">← Source AO</a>
       </div>
@@ -24,39 +25,79 @@
 
   <main>
     <section class="op-hero">
-      <div class="shell op-hero-grid">
-        <div>
-          <p class="eyebrow" data-i18n="eyebrow">SOURCE AO · RADAR DE OPORTUNIDADES</p>
-          <h1 data-i18n="title">Oportunidades públicas.<br>Prazos claros.</h1>
-          <p data-i18n="lead">RFQs, concursos e oportunidades comerciais de Angola, Namíbia e África do Sul encontradas em fontes rastreáveis. O Source AO mostra o que foi encontrado e quando a fonte foi verificada; a qualificação continua a exigir análise documental.</p>
+      <div class="shell">
+        <div class="op-hero-top">
+          <div class="op-hero-copy">
+            <p class="op-eyebrow" data-i18n="eyebrow">SOURCE AO · INTELLIGENCE RADAR</p>
+            <h1 data-i18n="title">Não veja apenas oportunidades.<br><span>Entenda quais merecem ação.</span></h1>
+            <p data-i18n="lead">O Radar cruza prazo, fonte, setor, localização e compatibilidade comercial para transformar anúncios dispersos em prioridades de negócio verificáveis.</p>
+          </div>
+          <div class="op-engine-badge" aria-label="Source Intelligence Core">
+            <span class="op-engine-icon">S</span>
+            <div><small>SOURCE INTELLIGENCE</small><strong>CORE v1</strong><em data-i18n="engineState">Motor ativo</em></div>
+          </div>
         </div>
-        <aside><strong id="activeCount">—</strong><small data-i18n="activeLabel">oportunidades ativas com fonte verificada</small></aside>
+
+        <div class="op-stat-grid" aria-label="Resumo do radar">
+          <article><small data-i18n="statActive">Oportunidades ativas</small><strong id="activeCount">—</strong><span data-i18n="statActiveNote">com prazo válido</span></article>
+          <article><small data-i18n="statHighFit">Fit elevado</small><strong id="highFitCount">—</strong><span data-i18n="statHighFitNote">score ≥ 80</span></article>
+          <article><small data-i18n="statUrgent">Ação urgente</small><strong id="urgentCount">—</strong><span data-i18n="statUrgentNote">≤ 5 dias</span></article>
+          <article><small data-i18n="statMarkets">Mercados</small><strong id="marketCount">—</strong><span data-i18n="statMarketsNote">África Austral</span></article>
+        </div>
       </div>
     </section>
 
-    <section class="shell op-section">
-      <div class="op-toolbar">
-        <div><h2 data-i18n="currentTitle">Radar atual</h2><p data-i18n="currentLead">Só aparecem oportunidades com fonte rastreável e prazo ainda válido.</p></div>
-        <div class="op-market-filters" aria-label="Mercados">
-          <button class="active" data-market="all" data-i18n="marketAll">África Austral</button>
-          <button data-market="AO">Angola</button>
-          <button data-market="NA">Namíbia</button>
-          <button data-market="ZA">África do Sul</button>
+    <section class="op-control shell">
+      <div class="op-control-copy">
+        <p class="op-eyebrow dark" data-i18n="currentEyebrow">PRIORIDADE COMERCIAL</p>
+        <h2 data-i18n="currentTitle">Opportunity Intelligence</h2>
+        <p data-i18n="currentLead">Ordenado por prazo e enriquecido com sinais de fit e confiança. A decisão final continua dependente da análise das peças do procedimento.</p>
+      </div>
+
+      <div class="op-filter-stack">
+        <div class="op-filter-group">
+          <small data-i18n="marketLabel">MERCADO</small>
+          <div class="op-market-filters" aria-label="Mercados">
+            <button class="active" data-market="all" data-i18n="marketAll">Todos</button>
+            <button data-market="AO">Angola</button>
+            <button data-market="NA">Namíbia</button>
+            <button data-market="ZA">África do Sul</button>
+          </div>
         </div>
-        <div class="op-filters" aria-label="Filtros de oportunidades">
-          <button class="active" data-filter="all" data-i18n="filterAll">Todas</button>
-          <button data-filter="supply" data-i18n="filterSupply">Fornecimento</button>
-          <button data-filter="maintenance" data-i18n="filterMaintenance">Manutenção</button>
-          <button data-filter="rfq">RFQ</button>
-          <button data-filter="tender" data-i18n="filterTender">Concurso</button>
+        <div class="op-filter-group">
+          <small data-i18n="typeLabel">TIPO</small>
+          <div class="op-filters" aria-label="Filtros de oportunidades">
+            <button class="active" data-filter="all" data-i18n="filterAll">Todas</button>
+            <button data-filter="supply" data-i18n="filterSupply">Supply</button>
+            <button data-filter="maintenance" data-i18n="filterMaintenance">Facilities</button>
+            <button data-filter="rfq">RFQ</button>
+            <button data-filter="tender" data-i18n="filterTender">Concurso</button>
+          </div>
         </div>
       </div>
-      <div class="op-list" id="opList"><p class="op-loading" data-i18n="loading">A carregar oportunidades verificadas…</p></div>
-      <p class="op-disclaimer" data-i18n="disclaimer">O Source AO não prevê adjudicações nem presume elegibilidade. Reveja sempre o anúncio original, as peças do procedimento e os requisitos de qualificação antes de participar.</p>
+    </section>
+
+    <section class="shell op-workspace">
+      <div class="op-workspace-head">
+        <div><span class="op-pulse"></span><strong data-i18n="workspaceTitle">Fila inteligente de oportunidades</strong></div>
+        <span id="visibleCount">—</span>
+      </div>
+      <div class="op-list" id="opList"><p class="op-loading" data-i18n="loading">A carregar inteligência de oportunidades…</p></div>
+      <div class="op-trust-note">
+        <span>i</span>
+        <p data-i18n="disclaimer">Fit e confiança são sinais de triagem, não garantias de elegibilidade ou adjudicação. Confirme sempre a fonte original, os documentos do procedimento e os requisitos de qualificação.</p>
+      </div>
     </section>
   </main>
 
-  <footer class="footer"><div class="shell footer-main"><a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a><p>Search. Verify. Source.</p><span></span><span class="service-by" data-i18n="serviceBy">Um serviço da HMATIAS</span></div></footer>
+  <footer class="footer">
+    <div class="shell footer-main">
+      <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a>
+      <p>Search. Verify. Decide. Act.</p>
+      <span></span>
+      <span class="service-by" data-i18n="serviceBy">Um serviço da HMATIAS</span>
+    </div>
+  </footer>
 
   <script src="runtime-config.js" defer></script>
   <script src="api-client.js" defer></script>
