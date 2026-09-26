@@ -214,3 +214,128 @@ body.hmatias-institutional footer{background:#031f3d}
 @media(prefers-reduced-motion:reduce){
   body.hmatias-institutional *{scroll-behavior:auto}
 }
+
+/* Final consolidation: neutralise legacy template effects and cover Business/Supply forms. */
+body.hmatias-institutional .unit-hero::after,
+body.hmatias-institutional .catalog-page-head::after,
+body.hmatias-institutional .unit-card::after{content:none!important;display:none!important}
+
+body.hmatias-institutional .unit-proof{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);
+  gap:0;align-items:stretch;overflow:hidden;border:0;border-radius:0;background:#071d33;box-shadow:none;
+}
+body.hmatias-institutional .unit-proof>div:first-child{min-width:0;min-height:440px}
+body.hmatias-institutional .unit-proof img{
+  width:100%;height:100%;min-height:440px;object-fit:cover;border:0;border-radius:0;filter:saturate(.93) contrast(1.03);
+}
+body.hmatias-institutional .unit-proof-copy{padding:54px 48px;border-radius:0;background:#071d33;box-shadow:none}
+body.hmatias-institutional .unit-proof-copy h3{font-size:clamp(2rem,3vw,3.15rem);font-weight:600;letter-spacing:-.04em}
+body.hmatias-institutional .unit-proof-copy .btn-light{align-self:flex-start;border-radius:3px}
+
+/* Business Services: same institution, different function. */
+body.hmatias-institutional .business-hero{
+  position:relative;overflow:hidden;padding:104px 0 94px;background:#071d33;color:#fff;
+}
+body.hmatias-institutional .business-hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/112px 100%,
+    radial-gradient(circle at 84% 22%,rgba(72,186,245,.14),transparent 29%);
+}
+body.hmatias-institutional .business-hero-grid{position:relative;z-index:1;gap:72px;align-items:end}
+body.hmatias-institutional .business-hero .eyebrow{color:#8fd0f3!important}
+body.hmatias-institutional .business-hero h1{
+  max-width:13ch;margin:14px 0 22px;color:#fff!important;
+  font-size:clamp(3rem,5.7vw,5.8rem);font-weight:600;line-height:.96;letter-spacing:-.058em;
+}
+body.hmatias-institutional .business-hero p{max-width:66ch;color:rgba(232,242,249,.82)!important;font-size:1rem;line-height:1.78}
+body.hmatias-institutional .business-hero-panel{
+  padding:26px 0 0;border:0;border-top:1px solid rgba(255,255,255,.24);
+  border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;
+}
+body.hmatias-institutional .business-hero-panel :is(strong,b){color:#fff}
+body.hmatias-institutional .business-hero-panel :is(p,span,li){color:#c9d9e6!important}
+body.hmatias-institutional .business-main{padding:100px 0;background:#fff}
+body.hmatias-institutional .catalog-summary-bar{gap:18px;margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,.18)}
+body.hmatias-institutional .catalog-summary-bar span{
+  padding:0;border-radius:0;background:transparent;color:#c9d9e6;
+  font-family:var(--hm-editorial-mono);font-size:.67rem;letter-spacing:.08em;text-transform:uppercase;
+}
+body.hmatias-institutional .service-table{gap:0;border-top:1px solid var(--hm-line)}
+body.hmatias-institutional .service-price{font-variant-numeric:tabular-nums}
+body.hmatias-institutional .visa-feature{
+  margin-top:46px;padding:42px;border:0;border-radius:0;background:#071d33;box-shadow:none;
+}
+body.hmatias-institutional .visa-price{padding:0;border:0;border-radius:0;background:transparent;color:#8fd0f3}
+body.hmatias-institutional .visa-price-card,
+body.hmatias-institutional .qr-card{border-radius:0;box-shadow:none}
+body.hmatias-institutional .visa-disclaimer{border-radius:0;background:transparent;border-color:rgba(255,255,255,.18)}
+body.hmatias-institutional .legal-note{
+  padding:20px 0;border:0;border-top:1px solid var(--hm-line);border-radius:0;background:transparent;
+}
+body.hmatias-institutional .business-contact-copy{
+  padding:38px;border-radius:0;background:#071d33;box-shadow:none;
+}
+body.hmatias-institutional .business-contact-form{
+  padding:30px;border-radius:0;border:1px solid var(--hm-line);box-shadow:none;
+}
+body.hmatias-institutional .form-field :is(input,select,textarea){border-radius:2px}
+body.hmatias-institutional .remote-note{background:transparent;border-left:2px solid var(--hm-blue)}
+
+/* Supply request builder */
+body.hmatias-institutional .supply-request-section{
+  padding:100px 0;background:var(--hm-soft);border-top:1px solid var(--hm-line);border-bottom:1px solid var(--hm-line);
+}
+body.hmatias-institutional .supply-request-layout{gap:64px}
+body.hmatias-institutional .supply-request-copy h2{
+  color:var(--hm-ink);font-size:clamp(2.35rem,4vw,4rem);line-height:1;letter-spacing:-.045em;font-weight:600;
+}
+body.hmatias-institutional .supply-request-copy p{color:var(--hm-muted);font-size:.98rem}
+body.hmatias-institutional .supply-request-points{border-top:1px solid var(--hm-line);padding-top:20px}
+body.hmatias-institutional .supply-request-points span{font-size:.84rem;color:var(--hm-muted)}
+body.hmatias-institutional .supply-request-form{
+  padding:30px;border:1px solid var(--hm-line);border-radius:0;background:#fff;box-shadow:none;
+}
+body.hmatias-institutional .supply-request-field :is(input,textarea),
+body.hmatias-institutional .supply-item input{border-radius:2px}
+body.hmatias-institutional .supply-add-item,
+body.hmatias-institutional .supply-remove-item{border-radius:2px}
+body.hmatias-institutional .supply-item{
+  padding:16px 0;border:0;border-top:1px solid var(--hm-line);border-radius:0;background:transparent;
+}
+
+/* Clean: make products feel like real catalogue references, not ecommerce mock-ups. */
+body.hmatias-clean .clean-feature-card::before,
+body.hmatias-clean .clean-feature-card::after{content:none!important;display:none!important}
+body.hmatias-clean .clean-feature-card{overflow:visible}
+body.hmatias-clean .clean-feature-card>p{font-size:.95rem;line-height:1.72}
+body.hmatias-clean .product-buy-actions{margin-top:22px}
+body.hmatias-clean .clean-status-line{padding:14px 0}
+body.hmatias-clean .clean-price-row{padding:12px 0}
+body.hmatias-clean .clean-details summary{padding:14px 0}
+body.hmatias-clean .clean-details>div{padding:0 0 16px}
+body.hmatias-clean .clean-quote-copy h2{font-size:clamp(2.2rem,4vw,3.8rem);line-height:1;letter-spacing:-.045em}
+body.hmatias-clean .clean-quote-points{border-top:1px solid var(--hm-line);padding-top:20px}
+
+@media(max-width:900px){
+  body.hmatias-institutional .unit-proof{grid-template-columns:1fr}
+  body.hmatias-institutional .unit-proof>div:first-child,
+  body.hmatias-institutional .unit-proof img{min-height:340px}
+  body.hmatias-institutional .business-hero{padding:76px 0 68px}
+  body.hmatias-institutional .business-hero-grid{grid-template-columns:1fr;gap:30px}
+  body.hmatias-institutional .business-hero h1{max-width:16ch;font-size:clamp(2.75rem,8vw,4.4rem)}
+  body.hmatias-institutional .business-main,
+  body.hmatias-institutional .supply-request-section{padding:72px 0}
+  body.hmatias-institutional .supply-request-copy{position:static}
+}
+@media(max-width:620px){
+  body.hmatias-institutional .unit-proof-copy{padding:34px 22px}
+  body.hmatias-institutional .business-hero{padding:64px 0 58px}
+  body.hmatias-institutional .business-hero h1{font-size:clamp(2.45rem,11vw,3.35rem)}
+  body.hmatias-institutional .business-main,
+  body.hmatias-institutional .supply-request-section{padding:58px 0}
+  body.hmatias-institutional .visa-feature{padding:28px 22px}
+  body.hmatias-institutional .business-contact-copy,
+  body.hmatias-institutional .business-contact-form,
+  body.hmatias-institutional .supply-request-form{padding:24px 20px}
+}
