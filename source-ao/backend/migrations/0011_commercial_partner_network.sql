@@ -61,7 +61,7 @@ INSERT OR IGNORE INTO commercial_partners(
  '["wooden-doors","wooden-windows","joinery","installation","finishes"]',
  '["construction","interiors","building-finishes"]',
  'Supply and installation capability presented to HMATIAS.'),
-('partner-redox-angola','Redox Angola','AO','supplier','active','whatsapp','Luanda','https://redoxangola.com',
+('partner-redox-angola','Redox Angola','AO','supplier','active','whatsapp','Luanda',NULL,
  '["chemical-supply","industrial-chemicals","formaldehyde","reagents","stock-supply"]',
  '["supply-procurement","industrial","healthcare-supply"]',
  'Supplier already used in an active HMATIAS sourcing process.');

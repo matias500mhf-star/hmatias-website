@@ -1,5 +1,6 @@
 import {isAdmin} from './index.js';
 import {buildOpportunityIntelligence,buildCopilotBrief} from './intelligence.js';
+import {matchCommercialPartners} from './partner-network.js';
 
 const json=(env,data,status=200)=>new Response(JSON.stringify(data),{status,headers:{
   'content-type':'application/json; charset=utf-8',
@@ -33,5 +34,6 @@ export async function copilotOpportunityResponse(request,env,{kind,id}){
   const record=hydrate(row);
   const intelligence=buildOpportunityIntelligence(record);
   const copilot=buildCopilotBrief(record,intelligence);
-  return json(env,{ok:true,kind,intelligence,copilot});
+  const partner_matches=await matchCommercialPartners(env,record,{limit:6});
+  return json(env,{ok:true,kind,intelligence,copilot,partner_matches});
 }
