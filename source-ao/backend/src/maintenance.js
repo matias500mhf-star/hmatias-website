@@ -28,7 +28,12 @@ export async function runMaintenance(env,now=Date.now()){
     env.SOURCE_AO_DB.prepare(`
       DELETE FROM rate_limit_windows
       WHERE datetime(updated_at)<datetime(?)
-    `).bind(cutoffs.rateLimitBefore)
+    `).bind(cutoffs.rateLimitBefore),
+    env.SOURCE_AO_DB.prepare(`
+      UPDATE opportunities
+      SET status='expired',updated_at=?
+      WHERE status='active' AND datetime(deadline)<=datetime(?)
+    `).bind(cutoffs.now,cutoffs.now)
   ];
 
   if(cutoffs.contactBefore){
@@ -46,7 +51,8 @@ export async function runMaintenance(env,now=Date.now()){
     ok:true,
     expired_verification_requests:Number(results?.[0]?.meta?.changes||0),
     deleted_rate_limit_windows:Number(results?.[1]?.meta?.changes||0),
-    purged_requester_contacts:Number(results?.[2]?.meta?.changes||0),
+    expired_opportunities:Number(results?.[2]?.meta?.changes||0),
+    purged_requester_contacts:Number(results?.[3]?.meta?.changes||0),
     contact_retention_days:cutoffs.contactRetentionDays,
     completed_at:cutoffs.now
   };
