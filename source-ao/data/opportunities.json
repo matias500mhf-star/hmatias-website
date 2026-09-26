@@ -17,7 +17,10 @@
       "source_url": "https://licitacoes.dgmarket.com/tenders/np-notice.do?keywords=&noticeId=115069972",
       "source_checked_at": "2026-09-26T15:17:00+01:00",
       "scope_summary": "Maintenance services covering the health center incinerator, kitchen and signage.",
-      "source_fit": "Direct Facilities opportunity with a short deadline. Confirm site requirements, qualification documents and submission channel immediately."
+      "source_fit": "Direct Facilities opportunity with a short deadline. Confirm site requirements, qualification documents and submission channel immediately.",
+      "title_pt": "Serviços de manutenção do incinerador, cozinha e sinalização do Centro de Saúde da Muinha",
+      "scope_summary_pt": "Serviços de manutenção abrangendo o incinerador, a cozinha e a sinalização do centro de saúde.",
+      "source_fit_pt": "Oportunidade diretamente alinhada com Facilities e com prazo curto. Confirmar imediatamente os requisitos do local, documentos de qualificação e canal de submissão."
     },
     {
       "id": "opp-u11-maintenance-materials-146719904",
@@ -34,7 +37,10 @@
       "source_url": "https://www.globaltenders.com/tender-detail/acquisition-of-materials-and-accessories-for-bN15SYCJoEITkMl5",
       "source_checked_at": "2026-09-26T15:17:00+01:00",
       "scope_summary": "Supply of materials and accessories intended for maintenance of Faculty of Law buildings.",
-      "source_fit": "Strong Supply / Facilities fit. Verify bill of quantities, required brands/specifications and procurement documents before submission."
+      "source_fit": "Strong Supply / Facilities fit. Verify bill of quantities, required brands/specifications and procurement documents before submission.",
+      "title_pt": "Aquisição de materiais e acessórios para manutenção dos edifícios da Faculdade de Direito",
+      "scope_summary_pt": "Fornecimento de materiais e acessórios destinados à manutenção dos edifícios da Faculdade de Direito.",
+      "source_fit_pt": "Forte alinhamento com Supply / Facilities. Verificar mapa de quantidades, marcas ou especificações exigidas e documentos do procedimento antes da submissão."
     },
     {
       "id": "opp-u11-cleaning-supplies-202623007",
@@ -51,7 +57,10 @@
       "source_url": "https://licitacoes.dgmarket.com/tenders/np-notice.do?keywords=&noticeId=115069880",
       "source_checked_at": "2026-09-26T15:17:00+01:00",
       "scope_summary": "Procurement notice for cleaning supplies for the Faculty of Law.",
-      "source_fit": "Strong HMATIAS Clean / Supply fit. Confirm exact product list, qualification requirements and submission instructions before bidding."
+      "source_fit": "Strong HMATIAS Clean / Supply fit. Confirm exact product list, qualification requirements and submission instructions before bidding.",
+      "title_pt": "Aquisição de produtos de limpeza para a Faculdade de Direito",
+      "scope_summary_pt": "Procedimento de aquisição de produtos de limpeza para a Faculdade de Direito.",
+      "source_fit_pt": "Forte alinhamento com HMATIAS Clean / Supply. Confirmar a lista exata de produtos, requisitos de qualificação e instruções de submissão antes de concorrer."
     },
     {
       "id": "opp-pdisa-boreholes-196w3-ucp-26",
@@ -68,7 +77,10 @@
       "source_url": "https://world.zhaobiao.cn/view_0_0_7f3b2ac6656f5137d10eeb78b8487da0.html",
       "source_checked_at": "2026-09-22T14:44:00+01:00",
       "scope_summary": "Small works RFQ covering rehabilitation of existing boreholes, including supply and installation of necessary materials and equipment, connections, integration and testing.",
-      "source_fit": "Potential direct bid or partnership opportunity; qualification and RFQ documents must be reviewed before participation."
+      "source_fit": "Potential direct bid or partnership opportunity; qualification and RFQ documents must be reviewed before participation.",
+      "title_pt": "Reabilitação dos furos FH05 e FH06 — Calumue",
+      "scope_summary_pt": "RFQ de pequena obra para reabilitação de furos existentes, incluindo fornecimento e instalação dos materiais e equipamentos necessários, ligações, integração e testes.",
+      "source_fit_pt": "Potencial oportunidade para participação direta ou em parceria. Os documentos do RFQ e os requisitos de qualificação devem ser analisados antes de avançar."
     },
     {
       "id": "opp-caala-logistics-96bw2-minplan-26",
@@ -85,7 +97,10 @@
       "source_url": "https://world.zhaobiao.cn/view_1_0_d3e67a830379a00176bab949382a9218.html",
       "source_checked_at": "2026-09-22T14:44:00+01:00",
       "scope_summary": "Design-and-build procurement for basic infrastructure covering civil, hydraulic, electrical and ICT disciplines.",
-      "source_fit": "Large opportunity more suitable for partnership, subcontracting or supply positioning unless full qualification requirements are met."
+      "source_fit": "Large opportunity more suitable for partnership, subcontracting or supply positioning unless full qualification requirements are met.",
+      "title_pt": "Projeto e construção das infraestruturas básicas da Plataforma Logística da Caála",
+      "scope_summary_pt": "Procedimento de conceção e construção das infraestruturas básicas, abrangendo especialidades civis, hidráulicas, elétricas e TIC.",
+      "source_fit_pt": "Oportunidade de maior dimensão, mais adequada a parceria, subcontratação ou posicionamento como fornecedor, salvo se todos os requisitos de qualificação para execução integral forem cumpridos."
     }
   ],
   "types": [
