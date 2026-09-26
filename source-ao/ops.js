@@ -198,9 +198,8 @@
       const source=document.createElement('a');source.className='btn btn-outline btn-small';source.href=candidate.source_url;source.target='_blank';source.rel='noopener noreferrer';source.textContent='Open source';
       const reject=document.createElement('button');reject.type='button';reject.className='btn btn-outline btn-small';reject.textContent='Reject';
       reject.addEventListener('click',()=>reviewOpportunity(candidate,'reject'));
-      const approve=document.createElement('button');approve.type='button';approve.className='btn btn-primary btn-small';approve.textContent='Approve to Radar';
-      approve.disabled=!candidate.deadline;
-      approve.title=candidate.deadline?'Human review required before publication':'Confirm the deadline before promotion';
+      const approve=document.createElement('button');approve.type='button';approve.className='btn btn-primary btn-small';approve.textContent='Review & approve';
+      approve.title='Confirm contracting entity, location and deadline before public promotion';
       approve.addEventListener('click',()=>reviewOpportunity(candidate,'promote'));
       actions.append(source,reject,approve);
 
@@ -225,16 +224,27 @@
   }
 
   async function reviewOpportunity(candidate,action){
+    let review={action,reviewed_by:'HMATIAS Verification Desk'};
     if(action==='promote'){
-      const deadline=candidate.deadline?new Date(candidate.deadline).toLocaleString():'missing';
-      const ok=confirm(`Publish this candidate to the public Radar?\n\n${candidate.title}\nDeadline: ${deadline}\nSource: ${candidate.source_url}\n\nThis confirms that HMATIAS reviewed the source and deadline.`);
+      const title=prompt('Confirm opportunity title:',candidate.title||'');
+      if(title===null||!title.trim()) return;
+      const issuerDefault=candidate.issuer===candidate.source_name?'':(candidate.issuer||'');
+      const issuer=prompt('Confirm contracting entity / issuer:',issuerDefault);
+      if(issuer===null||!issuer.trim()) return alert('Contracting entity is required before publication.');
+      const locationValue=prompt('Confirm location:',candidate.location||'Angola');
+      if(locationValue===null||!locationValue.trim()) return;
+      const deadlineDefault=candidate.deadline?candidate.deadline.slice(0,10):'';
+      const deadline=prompt('Confirm deadline (YYYY-MM-DD):',deadlineDefault);
+      if(deadline===null||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(deadline.trim())) return alert('A valid deadline is required before publication.');
+      const ok=confirm(`Publish to the public Radar?\n\n${title.trim()}\nIssuer: ${issuer.trim()}\nLocation: ${locationValue.trim()}\nDeadline: ${deadline.trim()}\nSource: ${candidate.source_url}`);
       if(!ok) return;
+      review={...review,title:title.trim(),issuer:issuer.trim(),location:locationValue.trim(),deadline:`${deadline.trim()}T23:59:59Z`};
     }else if(!confirm(`Reject this opportunity candidate?\n\n${candidate.title}`)) return;
     try{
       await api(`/api/admin/opportunity-pipeline/candidates/${encodeURIComponent(candidate.id)}/review`,{
         method:'POST',
         headers:{'content-type':'application/json'},
-        body:JSON.stringify({action,reviewed_by:'HMATIAS Verification Desk'})
+        body:JSON.stringify(review)
       });
       await loadOpportunityPipeline();
     }catch(error){
