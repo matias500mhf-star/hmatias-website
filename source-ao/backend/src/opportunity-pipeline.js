@@ -74,7 +74,8 @@ export function classifyOpportunityText(value=''){
 
 export function extractReference(text=''){
   for(const re of [
-    /(?:refer[eê]ncia|ref\.?|processo|procedimento|concurso|rfq)\s*(?:n[.ºo°]*|#|:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
+    /(?:procurement\s+)?reference\s+(?:number|no\.?)\s*(?:\||:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
+    /(?:refer[eê]ncia|ref\.?|processo|procedimento|concurso|rfq)\s*(?:n(?:umber|o|º|°)?\.?|#|:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
     /\b([0-9]{2,}[A-Z]{0,3}\/[A-Z0-9./_-]{2,})\b/i
   ]){
     const m=String(text).match(re);
