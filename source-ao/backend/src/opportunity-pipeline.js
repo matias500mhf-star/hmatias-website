@@ -1,5 +1,6 @@
 import {isAdmin,normalizeSearch} from './index.js';
 import {isSafeDiscoveryUrl,htmlToText} from './collector-discovery.js';
+import {buildOpportunityIntelligence} from './intelligence.js';
 
 const TYPES=new Set(['rfq','tender','small-contract','maintenance','supply-request','subcontracting']);
 const KINDS=new Set(['html_index','json_feed']);
@@ -353,7 +354,8 @@ export async function reviewOpportunityCandidate(request,env,id){
   const reference=clean(input?.reference,120)||c.reference,deadline=date(input?.deadline)||c.deadline;
   const published=date(input?.published_at)||c.published_at,type=TYPES.has(input?.type)?input.type:c.opportunity_type;
   const sector=clean(input?.sector,120)||c.sector,scope=clean(input?.scope_summary,1200)||c.scope_summary;
-  const sourceFit=clean(input?.source_fit,1200)||`HMATIAS fit ${c.fit_score}/100 · ${parse(c.fit_tags_json,[]).join(', ')||'general'}. Human review completed before public promotion.`;
+  const intelligence=buildOpportunityIntelligence({...c,title,issuer,location,reference,deadline,published_at:published,source_url:sourceUrl,sector,scope_summary:scope,type,opportunity_type:type,fit_tags:parse(c.fit_tags_json,[])});
+  const sourceFit=clean(input?.source_fit,1200)||`SOURCE Intelligence · Fit ${intelligence.fit_score}/100 · Confidence ${intelligence.confidence_score}/100 · ${intelligence.recommended_action_label}. Human review completed before public promotion.`;
   if(!title||!issuer||!location||!sourceUrl||!isSafeDiscoveryUrl(sourceUrl)||!deadline)return fail(env,400,'promotion_incomplete','Promotion requires title, issuer, location, source URL and deadline.');
   if(new Date(deadline).getTime()<=Date.now())return fail(env,400,'deadline_expired','Cannot promote an expired opportunity.');
   const opp=c.promoted_opportunity_id||'opp_auto_'+c.dedupe_key.slice(0,22);
@@ -370,9 +372,9 @@ export async function reviewOpportunityCandidate(request,env,id){
       fit_tags_json=excluded.fit_tags_json,discovery_source_id=excluded.discovery_source_id,
       updated_at=CURRENT_TIMESTAMP
   `).bind(opp,title,type||'tender',sector||'general',location,issuer,reference,published,deadline,
-    sourceUrl,c.source_checked_at||now(),scope,sourceFit,Number(c.fit_score)||0,c.fit_tags_json||'[]',c.source_id).run();
+    sourceUrl,c.source_checked_at||now(),scope,sourceFit,intelligence.fit_score,c.fit_tags_json||'[]',c.source_id).run();
   await env.SOURCE_AO_DB.prepare(
     "UPDATE opportunity_candidates SET status='promoted',reviewed_at=?,reviewed_by=?,promoted_opportunity_id=? WHERE id=?"
   ).bind(now(),reviewer,opp,id).run();
-  return json(env,{ok:true,status:'promoted',opportunity_id:opp});
+  return json(env,{ok:true,status:'promoted',opportunity_id:opp,intelligence});
 }
