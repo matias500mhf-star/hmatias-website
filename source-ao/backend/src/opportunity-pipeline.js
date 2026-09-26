@@ -86,7 +86,7 @@ export function extractDeadline(text='',clock=Date.now()){
   const key=/(prazo|data limite|limite de submiss[aã]o|deadline|submission deadline|encerramento|closing date)/ig;
   let k;
   while((k=key.exec(src)))windows.push(src.slice(k.index,k.index+180));
-  if(!windows.length)windows.push(src);
+  if(!windows.length)return null;
   const found=[];
   for(const window of windows){
     let m;
@@ -208,6 +208,10 @@ async function upsert(env,source,c){
       source_checked_at=excluded.source_checked_at,opportunity_type=excluded.opportunity_type,
       sector=excluded.sector,fit_score=max(opportunity_candidates.fit_score,excluded.fit_score),
       fit_tags_json=excluded.fit_tags_json,last_seen_at=excluded.last_seen_at,
+      status=CASE
+        WHEN opportunity_candidates.status='pending' AND excluded.status='duplicate' THEN 'duplicate'
+        ELSE opportunity_candidates.status
+      END,
       promoted_opportunity_id=coalesce(opportunity_candidates.promoted_opportunity_id,excluded.promoted_opportunity_id)
   `).bind(
     id,source.id,c.title,c.normalized_title,c.issuer,c.location,c.reference,c.published_at,c.deadline,c.source_url,
@@ -218,7 +222,10 @@ async function upsert(env,source,c){
 }
 
 async function scanHtml(env,source,raw){
-  const links=extractOpportunityLinks(raw.text,raw.url).slice(0,10);
+  const sourceHost=new URL(raw.url).hostname.toLowerCase();
+  const links=extractOpportunityLinks(raw.text,raw.url)
+    .filter(link=>new URL(link.url).hostname.toLowerCase()===sourceHost)
+    .slice(0,10);
   let seen=0;
   for(const link of links){
     try{
@@ -334,6 +341,7 @@ export async function reviewOpportunityCandidate(request,env,id){
   if(!c)return fail(env,404,'candidate_not_found','Opportunity candidate not found.');
   let input;try{input=await request.json()}catch{return fail(env,400,'invalid_json','A JSON body is required.')}
   const action=String(input?.action||'').trim(),reviewer=clean(input?.reviewed_by,120)||'HMATIAS review desk';
+  if(!['pending','reviewed'].includes(c.status))return fail(env,409,'candidate_not_reviewable','Candidate has already been resolved.');
   if(action==='reject'){
     await env.SOURCE_AO_DB.prepare("UPDATE opportunity_candidates SET status='rejected',reviewed_at=?,reviewed_by=? WHERE id=?")
       .bind(now(),reviewer,id).run();
