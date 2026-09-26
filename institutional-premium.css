@@ -259,3 +259,56 @@ body.hmatias-institutional footer p{font-size:.8rem;line-height:1.65}
 @media(prefers-reduced-motion:reduce){
   body.hmatias-institutional *{scroll-behavior:auto}
 }
+
+/* Smart RFQ: functional premium, same institutional DNA. */
+body.hmatias-institutional.hmatias-rfq .rfq-hero{position:relative;overflow:hidden;padding:100px 0 82px;background:var(--hm-navy)}
+body.hmatias-institutional.hmatias-rfq .rfq-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/112px 100%,radial-gradient(circle at 84% 22%,rgba(72,186,245,.15),transparent 30%);pointer-events:none}
+body.hmatias-institutional.hmatias-rfq .rfq-hero-grid{position:relative;z-index:1;gap:72px}
+body.hmatias-institutional.hmatias-rfq .rfq-hero h1{max-width:14ch;font-size:clamp(3rem,5.5vw,5.6rem);line-height:.96;letter-spacing:-.065em}
+body.hmatias-institutional.hmatias-rfq .rfq-hero p{font-size:1rem;line-height:1.78}
+body.hmatias-institutional.hmatias-rfq .rfq-hero-card{padding:0 0 0 24px;border:0;border-left:1px solid rgba(255,255,255,.28);border-radius:0;background:transparent;box-shadow:none}
+body.hmatias-institutional.hmatias-rfq .rfq-badge{border-radius:2px;font-family:var(--hm-mono);font-size:.61rem;letter-spacing:.06em}
+body.hmatias-institutional.hmatias-rfq .rfq-main{padding:96px 0}
+body.hmatias-institutional.hmatias-rfq .rfq-panel{border-radius:0;box-shadow:none}
+body.hmatias-institutional.hmatias-rfq .rfq-progress span{border-radius:2px}
+body.hmatias-institutional.hmatias-rfq :is(input,select,textarea,.rfq-primary,.rfq-secondary){border-radius:2px}
+body.hmatias-institutional.hmatias-rfq .rfq-proof{padding:92px 0;background:var(--hm-soft)}
+body.hmatias-institutional.hmatias-rfq .rfq-proof-grid{gap:0;border-top:1px solid var(--hm-line)}
+body.hmatias-institutional.hmatias-rfq .rfq-proof-grid article{padding:28px 28px 0 0;border:0;border-radius:0;background:transparent;box-shadow:none}
+body.hmatias-institutional.hmatias-rfq .rfq-proof-grid article:not(:first-child){padding-left:28px;border-left:1px solid var(--hm-line)}
+
+/* Booking: administrative, not app-like. */
+body.hmatias-institutional.hmatias-booking .booking-hero{position:relative;overflow:hidden;padding:100px 0 82px;background:var(--hm-navy)}
+body.hmatias-institutional.hmatias-booking .booking-hero h1{max-width:14ch;font-size:clamp(3rem,5.5vw,5.6rem);line-height:.96;letter-spacing:-.065em}
+body.hmatias-institutional.hmatias-booking .booking-hero p{font-size:1rem;line-height:1.78}
+body.hmatias-institutional.hmatias-booking .booking-trust{border-radius:0;background:transparent;border:0;border-left:1px solid rgba(255,255,255,.28);padding:0 0 0 24px}
+body.hmatias-institutional.hmatias-booking .booking-chips span{border-radius:2px;font-family:var(--hm-mono);font-size:.61rem;letter-spacing:.06em}
+body.hmatias-institutional.hmatias-booking .booking-main{padding:96px 0}
+body.hmatias-institutional.hmatias-booking :is(.booking-panel,.booking-notice,.booking-form-card){border-radius:0;box-shadow:none}
+body.hmatias-institutional.hmatias-booking :is(input,select,textarea){border-radius:2px}
+body.hmatias-institutional.hmatias-booking .booking-scope{padding:92px 0;background:var(--hm-soft)}
+body.hmatias-institutional.hmatias-booking .booking-scope-grid{gap:0;border-top:1px solid var(--hm-line)}
+body.hmatias-institutional.hmatias-booking .booking-scope-grid article{border:0;border-radius:0;background:transparent;box-shadow:none}
+
+/* Credibility: institutional record, not brochure cards. */
+body.hmatias-institutional.hmatias-credibility .institutional-hero{padding:104px 0 84px;background:var(--hm-navy);color:#fff}
+body.hmatias-institutional.hmatias-credibility .institutional-hero h1{max-width:14ch;margin:16px 0 22px;color:#fff;font-size:clamp(3rem,5.5vw,5.6rem);line-height:.96;letter-spacing:-.065em}
+body.hmatias-institutional.hmatias-credibility .institutional-hero p{max-width:68ch;color:#d7e6f0;font-size:1rem;line-height:1.78}
+body.hmatias-institutional.hmatias-credibility .institutional-main{padding:96px 0;background:#fff}
+body.hmatias-institutional.hmatias-credibility .institutional-card{border-radius:0;box-shadow:none;border-color:var(--hm-line)}
+body.hmatias-institutional.hmatias-credibility .institutional-card h2{font-size:clamp(1.7rem,2.5vw,2.5rem)}
+
+/* KARTA keeps its product identity but inherits HMATIAS premium typography. */
+body.hmatias-institutional.hmatias-karta .karta-page-hero{background:var(--hm-navy)}
+body.hmatias-institutional.hmatias-karta .karta-copy h1{letter-spacing:-.06em}
+body.hmatias-institutional.hmatias-karta :is(.karta-info-card,.karta-roadmap article){border-radius:2px;box-shadow:none}
+body.hmatias-institutional.hmatias-karta .karta-status{border-radius:2px;font-family:var(--hm-mono);letter-spacing:.06em}
+
+@media(max-width:850px){
+  body.hmatias-institutional.hmatias-rfq .rfq-hero,
+  body.hmatias-institutional.hmatias-booking .booking-hero,
+  body.hmatias-institutional.hmatias-credibility .institutional-hero{padding:72px 0 60px}
+  body.hmatias-institutional.hmatias-rfq .rfq-hero h1,
+  body.hmatias-institutional.hmatias-booking .booking-hero h1,
+  body.hmatias-institutional.hmatias-credibility .institutional-hero h1{font-size:clamp(2.7rem,10vw,4rem)}
+}
