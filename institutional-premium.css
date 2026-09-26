@@ -339,3 +339,52 @@ body.hmatias-clean .clean-quote-points{border-top:1px solid var(--hm-line);paddi
   body.hmatias-institutional .business-contact-form,
   body.hmatias-institutional .supply-request-form{padding:24px 20px}
 }
+
+
+/* Structural corrections for existing markup. */
+body.hmatias-institutional .unit-heading,
+body.hmatias-institutional .commerce-products .section-heading{
+  grid-template-areas:
+    "eyebrow copy"
+    "title copy";
+  align-items:start;
+}
+body.hmatias-institutional .unit-heading>.eyebrow,
+body.hmatias-institutional .commerce-products .section-heading>.eyebrow{grid-area:eyebrow}
+body.hmatias-institutional .unit-heading>h2,
+body.hmatias-institutional .commerce-products .section-heading>h2{grid-area:title}
+body.hmatias-institutional .unit-heading>p,
+body.hmatias-institutional .commerce-products .section-heading>p{grid-area:copy;align-self:end}
+body.hmatias-institutional .unit-process{padding:0;background:transparent}
+body.hmatias-institutional .unit-main.soft{background:var(--hm-soft)}
+
+/* Clean quotation cart follows the same restrained catalogue language. */
+body.hmatias-clean .clean-cart-section{padding:0 0 72px;background:#fff}
+body.hmatias-clean .clean-cart-card{
+  padding:28px 0;border:0;border-top:1px solid var(--hm-line);border-bottom:1px solid var(--hm-line);
+  border-radius:0;background:#fff;box-shadow:none;
+}
+body.hmatias-clean .clean-cart-count{
+  min-width:auto;height:auto;padding:0;border-radius:0;background:transparent;color:var(--hm-blue);
+  font-family:var(--hm-editorial-mono);font-size:.72rem;
+}
+body.hmatias-clean .clean-cart-list{gap:0}
+body.hmatias-clean .clean-cart-item{
+  padding:16px 0;border:0;border-top:1px solid var(--hm-line);border-radius:0;background:transparent;
+}
+body.hmatias-clean .clean-cart-item input,
+body.hmatias-clean .clean-cart-remove{border-radius:2px}
+body.hmatias-clean .clean-quote-form .clean-cart-summary{
+  padding:14px 0;border:0;border-top:1px solid var(--hm-line);border-bottom:1px solid var(--hm-line);
+  border-radius:0;background:transparent;
+}
+
+@media(max-width:900px){
+  body.hmatias-institutional .unit-heading,
+  body.hmatias-institutional .commerce-products .section-heading{
+    grid-template-columns:1fr;
+    grid-template-areas:"eyebrow" "title" "copy";
+  }
+  body.hmatias-institutional .unit-heading>p,
+  body.hmatias-institutional .commerce-products .section-heading>p{align-self:auto;margin-top:12px}
+}
