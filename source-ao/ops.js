@@ -247,6 +247,10 @@
     };
     addGroup('Riscos a validar',copilot.risks);
     addGroup('Próximas ações',copilot.next_actions);
+    addGroup('Rede HMATIAS compatível',(payload?.partner_matches||[]).map(match=>{
+      const caps=(match.matched_capabilities||[]).slice(0,3).join(', ');
+      return `${match.name} · match ${match.match_score}/100 · ${match.partner_type}${caps?' · '+caps:''}`;
+    }));
 
     const commands=document.createElement('div');commands.className='op-copilot-commands';
     (copilot.commands||[]).filter(command=>command.enabled).forEach(command=>{
@@ -267,6 +271,51 @@
       alert('SOURCE Copilot analysis failed. Check the API session and try again.');
     }finally{
       button.disabled=false;button.textContent=original;
+    }
+  }
+
+  function renderPartnerNetwork(partners=[]){
+    const list=$('#partnerNetworkList');
+    $('#partnerCount').textContent=`${partners.length} registo${partners.length===1?'':'s'}`;
+    list.innerHTML='';
+    if(!partners.length){
+      list.innerHTML='<div class="empty-state"><strong>No commercial partners registered.</strong><p>Add reviewed companies through the protected API.</p></div>';
+      return;
+    }
+    partners.forEach(partner=>{
+      const card=document.createElement('article');card.className='partner-card';
+      const head=document.createElement('div');head.className='partner-card-head';
+      const main=document.createElement('div');
+      const name=document.createElement('strong');name.textContent=partner.name;
+      const meta=document.createElement('small');
+      meta.textContent=`${partner.country_code||'AO'} · ${partner.partner_type.replaceAll('_',' ')} · ${partner.relationship_stage.replaceAll('_',' ')}${partner.locality?' · '+partner.locality:''}`;
+      main.append(name,meta);
+      const stage=document.createElement('span');stage.className='queue-badge';stage.textContent=partner.relationship_stage.replaceAll('_',' ');
+      head.append(main,stage);
+
+      const tags=document.createElement('div');tags.className='partner-tags';
+      (partner.capabilities||[]).slice(0,8).forEach(value=>{
+        const tag=document.createElement('span');tag.textContent=value.replaceAll('-',' ');tags.appendChild(tag);
+      });
+
+      const note=document.createElement('p');note.className='partner-note';note.textContent=partner.source_note||'Internal commercial record.';
+      card.append(head,tags,note);
+      if(partner.website){
+        const link=document.createElement('a');link.className='partner-link';link.href=partner.website;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Open public website →';card.appendChild(link);
+      }
+      list.appendChild(card);
+    });
+  }
+
+  async function loadPartnerNetwork(){
+    if(!adminToken||!apiBase())return;
+    $('#partnerCount').textContent='Loading…';
+    try{
+      const payload=await api('/api/admin/partner-network');
+      renderPartnerNetwork(payload?.partners||[]);
+    }catch(error){
+      if(error.status===401){adminToken='';setApiStatus('Token rejected','error');}
+      $('#partnerNetworkList').innerHTML='<div class="empty-state"><strong>Partner network unavailable.</strong><p>Check the API session and try again.</p></div>';
     }
   }
 
@@ -329,9 +378,11 @@
     $('#adminToken').value='';
     setApiStatus('Session token loaded','connected');
     loadOpportunityPipeline();
+    loadPartnerNetwork();
   });
 
   $('#refreshOpportunities').addEventListener('click',()=>loadOpportunityPipeline());
+  $('#refreshPartners').addEventListener('click',()=>loadPartnerNetwork());
 
   $('#scanOpportunities').addEventListener('click',async()=>{
     if(!adminToken) return alert('Load the admin API token for this session first.');

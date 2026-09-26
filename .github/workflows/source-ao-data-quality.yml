@@ -127,6 +127,16 @@ jobs:
           grep -q 'data-market="NA"' source-ao/opportunity-radar.html
           grep -q 'data-market="ZA"' source-ao/opportunity-radar.html
 
+      - name: Validate private commercial partner network
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "CREATE TABLE IF NOT EXISTS commercial_partners" source-ao/backend/migrations/0011_commercial_partner_network.sql
+          grep -q "/api/admin/partner-network" source-ao/backend/src/router.js
+          grep -q "matchCommercialPartners" source-ao/backend/src/intelligence-route.js
+          grep -q "HMATIAS commercial partner network" source-ao/ops.html
+          ! grep -Eq '@|\+244[0-9]' source-ao/backend/migrations/0011_commercial_partner_network.sql
+
       - name: Validate backend syntax
         run: |
           node --check source-ao/backend/src/index.js
@@ -137,6 +147,7 @@ jobs:
           node --check source-ao/backend/src/health.js
           node --check source-ao/backend/src/maintenance.js
           node --check source-ao/backend/src/opportunity-pipeline.js
+          node --check source-ao/backend/src/partner-network.js
           node --check source-ao/backend/src/intelligence.js
           node --check source-ao/backend/src/intelligence-route.js
       - name: Validate staging scripts syntax

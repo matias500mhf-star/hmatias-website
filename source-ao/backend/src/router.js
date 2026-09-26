@@ -23,6 +23,7 @@ import {
   reviewOpportunityCandidate,
   scanOpportunitySources
 } from './opportunity-pipeline.js';
+import {listCommercialPartners,upsertCommercialPartner} from './partner-network.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -105,6 +106,10 @@ export default {
               response=await runOpportunityScanResponse(request,env);
             }else if(url.pathname==='/api/admin/opportunity-pipeline/candidates' && request.method==='GET'){
               response=await listOpportunityCandidates(request,env);
+            }else if(url.pathname==='/api/admin/partner-network' && request.method==='GET'){
+              response=await listCommercialPartners(request,env);
+            }else if(url.pathname==='/api/admin/partner-network' && request.method==='POST'){
+              response=await upsertCommercialPartner(request,env);
             }else{
               const copilotCandidate=url.pathname.match(/^\/api\/admin\/copilot\/candidates\/([^/]+)$/);
               const copilotOpportunity=url.pathname.match(/^\/api\/admin\/copilot\/opportunities\/([^/]+)$/);

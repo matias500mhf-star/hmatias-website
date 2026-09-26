@@ -80,6 +80,20 @@
       <p class="ops-note">Automatic discovery can identify a possible procurement notice, but it does not publish it. Approval requires a traceable source and a future deadline; expired or unresolved candidates stay out of the public Radar.</p>
     </section>
 
+    <section class="ops-card queue-card partner-network">
+      <div class="ops-card-head">
+        <div><small>05</small><h2>HMATIAS commercial partner network</h2></div>
+        <div class="ops-actions compact">
+          <span id="partnerCount">—</span>
+          <button class="btn btn-outline btn-small" type="button" id="refreshPartners">Refresh network</button>
+        </div>
+      </div>
+      <div id="partnerNetworkList" class="partner-network-list">
+        <div class="empty-state"><strong>Admin session required.</strong><p>Load the API token above to inspect the private partner, supplier and subcontractor network.</p></div>
+      </div>
+      <p class="ops-note">This network is internal. Public opportunity pages never expose partner contacts or private conversation content. SOURCE Copilot uses capabilities only to suggest possible commercial matches for human review.</p>
+    </section>
+
     <section class="ops-principles">
       <article><span>Discovery</span><strong>Found is not available.</strong><p>A public source can identify a supplier, but cannot prove current stock.</p></article>
       <article><span>Evidence</span><strong>Every confirmation is traceable.</strong><p>Channel, time and evidence reference must exist before status changes.</p></article>

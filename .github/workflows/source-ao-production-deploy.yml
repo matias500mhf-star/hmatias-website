@@ -251,6 +251,25 @@ jobs:
           console.log('Production opportunity pipeline smoke passed.');
           NODE
           rm -f "$RUNNER_TEMP/source-ao-opportunity-sources.json" "$RUNNER_TEMP/source-ao-opportunity-scan.json" "$RUNNER_TEMP/source-ao-opportunity-candidates.json"
+          rm -f "$RUNNER_TEMP/source-ao-partner-network.json"
+
+      - name: Verify production commercial partner network
+        shell: bash
+        run: |
+          set -euo pipefail
+          auth="Authorization: Bearer $SOURCE_AO_ADMIN_API_TOKEN"
+          curl -fsS --max-time 15 "$SOURCE_AO_PRODUCTION_API_BASE/api/admin/partner-network"             -H "$auth" > "$RUNNER_TEMP/source-ao-partner-network.json"
+          node --input-type=module - "$RUNNER_TEMP/source-ao-partner-network.json" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const x=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(x?.ok!==true||!Array.isArray(x.partners)||x.partners.length<9) throw new Error('Commercial partner network is not ready');
+          const forbidden=['phone','email','message','conversation','whatsapp_number'];
+          for(const partner of x.partners){
+            for(const key of forbidden) if(Object.prototype.hasOwnProperty.call(partner,key)) throw new Error(`Private contact field exposed: ${key}`);
+          }
+          console.log('Production commercial partner network smoke passed.');
+          NODE
+          rm -f "$RUNNER_TEMP/source-ao-partner-network.json"
 
       - name: Connect public Source AO frontend to production API
         working-directory: .
