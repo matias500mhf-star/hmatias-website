@@ -179,7 +179,7 @@ async function publicSearch(request, env) {
 
 async function publicOpportunities(request, env) {
   const rows = await env.SOURCE_AO_DB.prepare(`
-    SELECT id,title,type,sector,location,issuer,reference,published_at,deadline,source_url,source_checked_at,scope_summary
+    SELECT id,title,type,sector,location,issuer,reference,published_at,deadline,source_url,source_checked_at,scope_summary,source_fit,fit_score,fit_tags_json
     FROM opportunities WHERE status='active' AND deadline>? ORDER BY deadline ASC LIMIT 30
   `).bind(iso()).all();
   return json(env,{ok:true,results:rows.results||[]});
