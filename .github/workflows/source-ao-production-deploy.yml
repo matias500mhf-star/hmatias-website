@@ -273,7 +273,10 @@ jobs:
             echo "::error title=Source AO frontend activation pending::GitHub Pages did not expose the production runtime within the validation window." >&2
             exit 1
           fi
-          curl -fsS "https://comercialhmatiasps.com/source-ao/" | grep -q "Procure. Verifique."
+          page_file="$RUNNER_TEMP/source-ao-public-page.html"
+          curl -fsS "https://comercialhmatiasps.com/source-ao/" -o "$page_file"
+          grep -Fq "Procure. Verifique." "$page_file"
+          rm -f "$page_file"
           echo "SOURCE_AO_PRODUCTION=PASS"
           echo "Public frontend is connected to the healthy production API."
 
