@@ -136,6 +136,9 @@ jobs:
           grep -q "matchCommercialPartners" source-ao/backend/src/intelligence-route.js
           grep -q "HMATIAS commercial partner network" source-ao/ops.html
           ! grep -Eq '@|\+244[0-9]' source-ao/backend/migrations/0011_commercial_partner_network.sql
+          grep -q "commercial_priority" source-ao/backend/migrations/0012_partner_followup_pipeline.sql
+          grep -q "partner-muxi-tracker" source-ao/backend/migrations/0012_partner_followup_pipeline.sql
+          ! grep -Eq '@|\+244[0-9]' source-ao/backend/migrations/0012_partner_followup_pipeline.sql
 
       - name: Validate backend syntax
         run: |

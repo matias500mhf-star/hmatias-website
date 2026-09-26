@@ -83,6 +83,9 @@ function hydrate(row){
     capabilities:parse(row.capabilities_json,[]),
     sectors:parse(row.sectors_json,[]),
     source_note:row.source_note,
+    commercial_priority:Number(row.commercial_priority)||3,
+    next_action:row.next_action,
+    next_action_due:row.next_action_due,
     last_interaction_at:row.last_interaction_at,
     updated_at:row.updated_at
   };
@@ -156,6 +159,9 @@ export async function matchCommercialPartners(env,record,{limit=6}={}){
       country_code:x.partner.country_code,
       locality:x.partner.locality,
       website:x.partner.website,
+      commercial_priority:x.partner.commercial_priority,
+      next_action:x.partner.next_action,
+      next_action_due:x.partner.next_action_due,
       match_score:x.score,
       matched_capabilities:x.matched_capabilities,
       reasons:x.reasons
@@ -177,7 +183,7 @@ export async function listCommercialPartners(request,env){
     if(!PARTNER_TYPES.has(type))return fail(env,400,'invalid_partner_type','Unsupported partner type.');
     where.push('partner_type=?');params.push(type);
   }
-  const sql='SELECT * FROM commercial_partners'+(where.length?' WHERE '+where.join(' AND '):'')+' ORDER BY relationship_stage,name ASC LIMIT 200';
+  const sql='SELECT * FROM commercial_partners'+(where.length?' WHERE '+where.join(' AND '):'')+' ORDER BY commercial_priority DESC,relationship_stage,name ASC LIMIT 200';
   const rows=await env.SOURCE_AO_DB.prepare(sql).bind(...params).all();
   return json(env,{ok:true,partners:(rows.results||[]).map(hydrate)});
 }
@@ -185,7 +191,7 @@ export async function listCommercialPartners(request,env){
 export async function upsertCommercialPartner(request,env){
   if(!isAdmin(request,env))return fail(env,401,'unauthorized','Admin authorization required.');
   let input;try{input=await request.json()}catch{return fail(env,400,'invalid_json','A JSON body is required.')}
-  let id,name,type,stage,channel,country,locality,website,sourceNote;
+  let id,name,type,stage,channel,country,locality,website,sourceNote,nextAction,nextActionDue,priority;
   try{
     id=clean(input?.id,120);
     name=clean(input?.name,220);
@@ -196,6 +202,9 @@ export async function upsertCommercialPartner(request,env){
     locality=clean(input?.locality,180);
     website=clean(input?.website,600);
     sourceNote=clean(input?.source_note,800);
+    nextAction=clean(input?.next_action,1000);
+    nextActionDue=clean(input?.next_action_due,80);
+    priority=Math.max(1,Math.min(5,Number(input?.commercial_priority)||3));
   }catch{return fail(env,400,'invalid_fields','Partner fields are invalid.')}
   if(!name||!type||!PARTNER_TYPES.has(type)||!STAGES.has(stage)||!CHANNELS.has(channel)||!COUNTRIES.has(country)){
     return fail(env,400,'invalid_fields','name, partner_type, stage, channel and country are required.');
@@ -206,19 +215,20 @@ export async function upsertCommercialPartner(request,env){
   await env.SOURCE_AO_DB.prepare(`
     INSERT INTO commercial_partners(
       id,name,country_code,partner_type,relationship_stage,source_channel,locality,website,
-      capabilities_json,sectors_json,source_note,last_interaction_at
-    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)
+      capabilities_json,sectors_json,source_note,last_interaction_at,commercial_priority,next_action,next_action_due
+    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     ON CONFLICT(name) DO UPDATE SET
       country_code=excluded.country_code,partner_type=excluded.partner_type,
       relationship_stage=excluded.relationship_stage,source_channel=excluded.source_channel,
       locality=excluded.locality,website=excluded.website,
       capabilities_json=excluded.capabilities_json,sectors_json=excluded.sectors_json,
       source_note=excluded.source_note,last_interaction_at=excluded.last_interaction_at,
+      commercial_priority=excluded.commercial_priority,next_action=excluded.next_action,next_action_due=excluded.next_action_due,
       updated_at=CURRENT_TIMESTAMP
   `).bind(
     id,name,country,type,stage,channel,locality,safeUrl(website),
     JSON.stringify(capabilities),JSON.stringify(sectors),sourceNote,
-    clean(input?.last_interaction_at,80)
+    clean(input?.last_interaction_at,80),priority,nextAction,nextActionDue
   ).run();
   const row=await env.SOURCE_AO_DB.prepare('SELECT * FROM commercial_partners WHERE name=?').bind(name).first();
   return json(env,{ok:true,partner:hydrate(row)},201);
