@@ -1,11 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-AO">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
   <meta name="theme-color" content="#0b2f4f">
-  <title>Opportunity Radar — Source AO</title>
+  <meta name="description" content="Radar Source AO da HMATIAS: oportunidades públicas de fornecimento, manutenção, RFQs e concursos em Angola com fonte e prazo verificados.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://comercialhmatiasps.com/source-ao/opportunity-radar.html">
+  <title>Radar de Oportunidades — Source AO</title>
   <link rel="stylesheet" href="sourceao.css">
   <link rel="stylesheet" href="opportunity-radar.css">
 </head>
@@ -13,26 +15,42 @@
   <header class="topbar">
     <div class="shell nav">
       <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a>
-      <div class="nav-actions"><a class="btn btn-outline btn-small" href="index.html">← Source AO</a></div>
+      <div class="nav-actions">
+        <button class="lang" type="button" id="langToggle" aria-label="Mudar idioma">EN</button>
+        <a class="btn btn-outline btn-small" href="index.html" data-i18n="back">← Source AO</a>
+      </div>
     </div>
   </header>
 
   <main>
     <section class="op-hero">
       <div class="shell op-hero-grid">
-        <div><p class="eyebrow">SOURCE AO · OPPORTUNITY RADAR</p><h1>Public opportunities.<br>Clear deadlines.</h1><p>RFQs, tenders and commercial opportunities discovered from traceable sources. Source AO shows what was found and when it was checked — qualification still requires document review.</p></div>
-        <aside><strong id="activeCount">—</strong><small>active source-checked opportunities</small></aside>
+        <div>
+          <p class="eyebrow" data-i18n="eyebrow">SOURCE AO · RADAR DE OPORTUNIDADES</p>
+          <h1 data-i18n="title">Oportunidades públicas.<br>Prazos claros.</h1>
+          <p data-i18n="lead">RFQs, concursos e oportunidades comerciais encontradas em fontes rastreáveis. O Source AO mostra o que foi encontrado e quando a fonte foi verificada; a qualificação continua a exigir análise documental.</p>
+        </div>
+        <aside><strong id="activeCount">—</strong><small data-i18n="activeLabel">oportunidades ativas com fonte verificada</small></aside>
       </div>
     </section>
 
     <section class="shell op-section">
-      <div class="op-toolbar"><div><h2>Current radar</h2><p>Only opportunities with a source and a future deadline appear here.</p></div><div class="op-filters"><button class="active" data-filter="all">All</button><button data-filter="rfq">RFQ</button><button data-filter="tender">Tender</button></div></div>
-      <div class="op-list" id="opList"><p class="op-loading">Loading verified opportunity data…</p></div>
-      <p class="op-disclaimer">Source AO does not predict awards or assess bidder eligibility. Always review the original notice, tender documents and qualification requirements before participating.</p>
+      <div class="op-toolbar">
+        <div><h2 data-i18n="currentTitle">Radar atual</h2><p data-i18n="currentLead">Só aparecem oportunidades com fonte rastreável e prazo ainda válido.</p></div>
+        <div class="op-filters" aria-label="Filtros de oportunidades">
+          <button class="active" data-filter="all" data-i18n="filterAll">Todas</button>
+          <button data-filter="supply" data-i18n="filterSupply">Fornecimento</button>
+          <button data-filter="maintenance" data-i18n="filterMaintenance">Manutenção</button>
+          <button data-filter="rfq">RFQ</button>
+          <button data-filter="tender" data-i18n="filterTender">Concurso</button>
+        </div>
+      </div>
+      <div class="op-list" id="opList"><p class="op-loading" data-i18n="loading">A carregar oportunidades verificadas…</p></div>
+      <p class="op-disclaimer" data-i18n="disclaimer">O Source AO não prevê adjudicações nem presume elegibilidade. Reveja sempre o anúncio original, as peças do procedimento e os requisitos de qualificação antes de participar.</p>
     </section>
   </main>
 
-  <footer class="footer"><div class="shell footer-main"><a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a><p>Search. Verify. Source.</p><span></span><span class="service-by">A service by HMATIAS</span></div></footer>
+  <footer class="footer"><div class="shell footer-main"><a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a><p>Search. Verify. Source.</p><span></span><span class="service-by" data-i18n="serviceBy">Um serviço da HMATIAS</span></div></footer>
 
   <script src="data-engine.js" defer></script>
   <script src="opportunity-radar.js" defer></script>
