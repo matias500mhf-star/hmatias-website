@@ -301,9 +301,14 @@
       if(deadline===null||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(deadline.trim())) return alert('A valid deadline is required before publication.');
       const ok=confirm(`Publish to the public Radar?\n\n${title.trim()}\nIssuer: ${issuer.trim()}\nLocation: ${locationValue.trim()}\nDeadline: ${deadline.trim()}\nSource: ${candidate.source_url}`);
       if(!ok) return;
+      const country=candidate.country_code||'AO';
+      const offset={AO:'+01:00',NA:'+02:00',ZA:'+02:00'}[country]||'+00:00';
+      const originalDate=candidate.deadline?new Date(candidate.deadline).toISOString().slice(0,10):'';
+      const deadlineIso=candidate.deadline&&deadline.trim()===originalDate
+        ?candidate.deadline
+        :`${deadline.trim()}T23:59:59${offset}`;
       review={...review,title:title.trim(),issuer:issuer.trim(),location:locationValue.trim(),
-        country_code:candidate.country_code||'AO',currency_code:candidate.currency_code||'AOA',
-        deadline:`${deadline.trim()}T23:59:59Z`};
+        country_code:country,currency_code:candidate.currency_code||'AOA',deadline:deadlineIso};
     }else if(!confirm(`Reject this opportunity candidate?\n\n${candidate.title}`)) return;
     try{
       await api(`/api/admin/opportunity-pipeline/candidates/${encodeURIComponent(candidate.id)}/review`,{
