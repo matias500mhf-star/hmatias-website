@@ -4,6 +4,13 @@ import {buildOpportunityIntelligence} from './intelligence.js';
 
 const TYPES=new Set(['rfq','tender','small-contract','maintenance','supply-request','subcontracting']);
 const KINDS=new Set(['html_index','json_feed']);
+const COUNTRIES=new Set(['AO','NA','ZA']);
+const ADAPTERS=new Set(['generic','sncp_angola','cpbn_namibia','ocds_etenders_za']);
+const MARKET_DEFAULTS={
+  AO:{location:'Angola',currency:'AOA',offset:'+01:00'},
+  NA:{location:'Namibia',currency:'NAD',offset:'+02:00'},
+  ZA:{location:'South Africa',currency:'ZAR',offset:'+02:00'}
+};
 const now=()=>new Date().toISOString();
 const parse=(v,f=[])=>{try{return JSON.parse(v||'[]')}catch{return f}};
 const clean=(v,n=800)=>{
@@ -23,6 +30,9 @@ const date=v=>{
   const d=new Date(v);
   return Number.isNaN(d.getTime())?null:d.toISOString();
 };
+const countryCode=v=>COUNTRIES.has(String(v||'').toUpperCase())?String(v).toUpperCase():'AO';
+const marketDefaults=source=>MARKET_DEFAULTS[countryCode(source?.country_code)]||MARKET_DEFAULTS.AO;
+const ymd=value=>new Date(value).toISOString().slice(0,10);
 
 export function normalizeOpportunityTitle(value=''){
   return normalizeSearch(value)
@@ -64,7 +74,8 @@ export function classifyOpportunityText(value=''){
 
 export function extractReference(text=''){
   for(const re of [
-    /(?:refer[eê]ncia|ref\.?|processo|procedimento|concurso|rfq)\s*(?:n[.ºo°]*|#|:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
+    /(?:procurement\s+)?reference\s+(?:number|no\.?)\s*(?:\||:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
+    /(?:refer[eê]ncia|ref\.?|processo|procedimento|concurso|rfq)\s*(?:n(?:umber|o|º|°)?\.?|#|:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
     /\b([0-9]{2,}[A-Z]{0,3}\/[A-Z0-9./_-]{2,})\b/i
   ]){
     const m=String(text).match(re);
@@ -73,32 +84,41 @@ export function extractReference(text=''){
   return null;
 }
 
-const dmy=(d,m,y)=>{
-  d=Number(d);m=Number(m);y=Number(y);
-  if(!d||!m||!y||d>31||m>12)return null;
+const monthNumber=name=>{
+  const names=['january','february','march','april','may','june','july','august','september','october','november','december'];
+  const i=names.indexOf(String(name||'').toLowerCase());
+  return i>=0?i+1:null;
+};
+const isoAt=(d,m,y,h=23,min=59,offset='+00:00')=>{
+  d=Number(d);m=Number(m);y=Number(y);h=Number(h);min=Number(min);
+  if(!d||!m||!y||d>31||m>12||h>23||min>59)return null;
   if(y<100)y+=2000;
-  const x=new Date(Date.UTC(y,m-1,d,23,59,59));
+  const value=`${String(y).padStart(4,'0')}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}T${String(h).padStart(2,'0')}:${String(min).padStart(2,'0')}:00${offset}`;
+  const x=new Date(value);
   return Number.isNaN(x.getTime())?null:x.toISOString();
 };
 
-export function extractDeadline(text='',clock=Date.now()){
+export function extractDeadline(text='',clock=Date.now(),offset='+00:00'){
   const src=String(text).replace(/\s+/g,' ');
   const windows=[];
-  const key=/(prazo|data limite|limite de submiss[aã]o|deadline|submission deadline|encerramento|closing date)/ig;
+  const key=/(prazo|data limite|limite de submiss[aã]o|deadline|submission deadline|encerramento|closing date|closing date and time)/ig;
   let k;
-  while((k=key.exec(src)))windows.push(src.slice(k.index,k.index+180));
+  while((k=key.exec(src)))windows.push(src.slice(k.index,k.index+200));
   if(!windows.length)return null;
   const found=[];
   for(const window of windows){
     let m;
-    const iso=/\b(20\d{2})[-/.](0?[1-9]|1[0-2])[-/.]([0-2]?\d|3[01])\b/g;
+    const iso=/\b(20\d{2})[-/.](0?[1-9]|1[0-2])[-/.]([0-2]?\d|3[01])(?:[ T](\d{1,2}):(\d{2}))?\b/g;
     while((m=iso.exec(window))){
-      const x=new Date(`${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}T23:59:59Z`);
-      if(!Number.isNaN(x.getTime()))found.push(x.toISOString());
+      const x=isoAt(m[3],m[2],m[1],m[4]??23,m[5]??59,offset);if(x)found.push(x);
     }
-    const eu=/\b([0-2]?\d|3[01])[-/.](0?[1-9]|1[0-2])[-/.](20\d{2}|\d{2})\b/g;
+    const eu=/\b([0-2]?\d|3[01])[-/.](0?[1-9]|1[0-2])[-/.](20\d{2}|\d{2})(?:\s+(\d{1,2}):(\d{2}))?\b/g;
     while((m=eu.exec(window))){
-      const x=dmy(m[1],m[2],m[3]);if(x)found.push(x);
+      const x=isoAt(m[1],m[2],m[3],m[4]??23,m[5]??59,offset);if(x)found.push(x);
+    }
+    const words=/\b([0-2]?\d|3[01])(?:st|nd|rd|th)?\s+(January|February|March|April|May|June|July|August|September|October|November|December),?\s+(20\d{2})(?:\s+(\d{1,2}):(\d{2}))?\b/gi;
+    while((m=words.exec(window))){
+      const x=isoAt(m[1],monthNumber(m[2]),m[3],m[4]??23,m[5]??59,offset);if(x)found.push(x);
     }
   }
   return found.filter(x=>new Date(x).getTime()>=clock-86400000).sort()[0]||null;
@@ -171,13 +191,19 @@ function normalizeCandidate(input,source){
   const sourceUrl=clean(input.source_url||input.url,1200);
   if(!title)throw new Error('title_required');
   if(!sourceUrl||!isSafeDiscoveryUrl(sourceUrl))throw new Error('source_url_invalid');
+  const market=marketDefaults(source);
+  const country=countryCode(input.country_code||source.country_code);
   const combined=[title,input.scope_summary,input.description,input.sector].filter(Boolean).join(' ');
   const fit=classifyOpportunityText(combined);
   return {
     title,normalized_title:normalizeOpportunityTitle(title),
-    issuer:clean(input.issuer,220)||source.name,location:clean(input.location,180)||'Angola',
+    issuer:clean(input.issuer,220)||source.name,
+    location:clean(input.location,180)||MARKET_DEFAULTS[country]?.location||market.location,
+    country_code:country,
+    currency_code:clean(input.currency_code,3)||source.currency_code||MARKET_DEFAULTS[country]?.currency||market.currency,
     reference:clean(input.reference,120)||extractReference(combined),
-    published_at:date(input.published_at),deadline:date(input.deadline)||extractDeadline(combined),
+    published_at:date(input.published_at),
+    deadline:date(input.deadline)||extractDeadline(combined,Date.now(),MARKET_DEFAULTS[country]?.offset||market.offset),
     source_url:sourceUrl,scope_summary:clean(input.scope_summary||input.description,1200),
     evidence_excerpt:clean(input.evidence_excerpt||input.description,1800),
     opportunity_type:TYPES.has(input.type)?input.type:fit.type,sector:clean(input.sector,120)||fit.sector,
@@ -186,21 +212,60 @@ function normalizeCandidate(input,source){
   };
 }
 
+export function normalizeOcdsRelease(release,source,clock=Date.now()){
+  const tender=release?.tender||{};
+  const status=normalizeSearch(tender.status||'');
+  if(['cancelled','complete','unsuccessful'].includes(status))return null;
+  const deadline=date(tender?.tenderPeriod?.endDate);
+  if(deadline&&new Date(deadline).getTime()<clock-86400000)return null;
+  const items=Array.isArray(tender.items)?tender.items:[];
+  const itemText=items.map(x=>x?.description||x?.classification?.description||'').filter(Boolean).join('; ');
+  const details=[tender.title,tender.description,tender.procurementMethodDetails,itemText].filter(Boolean).join(' ');
+  const ocid=clean(release?.ocid,180);
+  const sourceUrl=ocid
+    ?`https://ocds-api.etenders.gov.za/api/OCDSReleases/release/${encodeURIComponent(ocid)}`
+    :source.source_url;
+  return normalizeCandidate({
+    title:tender.title||tender.description||tender.id||ocid||'South Africa public procurement opportunity',
+    issuer:release?.buyer?.name||source.name,
+    location:'South Africa',
+    country_code:'ZA',
+    currency_code:'ZAR',
+    reference:tender.id||ocid,
+    published_at:release?.date,
+    deadline,
+    source_url:sourceUrl,
+    description:details,
+    evidence_excerpt:details
+  },source);
+}
+
+export function buildSourceFetchUrl(source,clock=Date.now()){
+  if(source?.adapter!=='ocds_etenders_za')return source.source_url;
+  const u=new URL(source.source_url);
+  u.searchParams.set('dateFrom',ymd(clock-7*86400000));
+  u.searchParams.set('dateTo',ymd(clock));
+  u.searchParams.set('PageNumber','1');
+  u.searchParams.set('PageSize','100');
+  return u.toString();
+}
+
 async function upsert(env,source,c){
   const host=new URL(c.source_url).hostname.toLowerCase();
-  const key=await sha([normalizeSearch(c.reference||''),c.normalized_title,c.deadline?.slice(0,10)||'',host].join('|'));
+  const key=await sha([c.country_code,normalizeSearch(c.reference||''),c.normalized_title,c.deadline?.slice(0,10)||'',host].join('|'));
   const existing=await env.SOURCE_AO_DB.prepare(
-    'SELECT id FROM opportunities WHERE source_url=? OR (? IS NOT NULL AND reference=?) LIMIT 1'
-  ).bind(c.source_url,c.reference,c.reference).first();
+    'SELECT id FROM opportunities WHERE source_url=? OR (? IS NOT NULL AND reference=? AND country_code=?) LIMIT 1'
+  ).bind(c.source_url,c.reference,c.reference,c.country_code).first();
   const id='opp_candidate_'+key.slice(0,24),status=existing?'duplicate':'pending';
   await env.SOURCE_AO_DB.prepare(`
     INSERT INTO opportunity_candidates(
-      id,source_id,title,normalized_title,issuer,location,reference,published_at,deadline,source_url,
+      id,source_id,title,normalized_title,issuer,location,country_code,currency_code,reference,published_at,deadline,source_url,
       scope_summary,evidence_excerpt,source_checked_at,opportunity_type,sector,fit_score,fit_tags_json,
       dedupe_key,status,promoted_opportunity_id,last_seen_at
-    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     ON CONFLICT(dedupe_key) DO UPDATE SET
       title=excluded.title,issuer=excluded.issuer,location=excluded.location,
+      country_code=excluded.country_code,currency_code=excluded.currency_code,
       reference=coalesce(excluded.reference,opportunity_candidates.reference),
       published_at=coalesce(excluded.published_at,opportunity_candidates.published_at),
       deadline=coalesce(excluded.deadline,opportunity_candidates.deadline),
@@ -215,7 +280,7 @@ async function upsert(env,source,c){
       END,
       promoted_opportunity_id=coalesce(opportunity_candidates.promoted_opportunity_id,excluded.promoted_opportunity_id)
   `).bind(
-    id,source.id,c.title,c.normalized_title,c.issuer,c.location,c.reference,c.published_at,c.deadline,c.source_url,
+    id,source.id,c.title,c.normalized_title,c.issuer,c.location,c.country_code,c.currency_code,c.reference,c.published_at,c.deadline,c.source_url,
     c.scope_summary,c.evidence_excerpt,c.source_checked_at,c.opportunity_type,c.sector,c.fit_score,JSON.stringify(c.fit_tags),
     key,status,existing?.id||null,now()
   ).run();
@@ -234,8 +299,10 @@ async function scanHtml(env,source,raw){
       if(!page.type.includes('text/html')&&!page.type.includes('text/plain'))continue;
       const text=htmlToText(page.text).slice(0,12000),title=pageTitle(page.text)||link.label||'Oportunidade pública';
       const summary=text.slice(0,1200);
-      const c=normalizeCandidate({title,issuer:source.name,location:'Angola',reference:extractReference(text),
-        deadline:extractDeadline(text),source_url:page.url,description:summary,evidence_excerpt:summary},source);
+      const market=marketDefaults(source);
+      const c=normalizeCandidate({title,issuer:source.name,location:market.location,country_code:source.country_code,
+        currency_code:source.currency_code,reference:extractReference(text),
+        deadline:extractDeadline(text,Date.now(),market.offset),source_url:page.url,description:summary,evidence_excerpt:summary},source);
       await upsert(env,source,c);seen++;
     }catch{}
   }
@@ -244,13 +311,18 @@ async function scanHtml(env,source,raw){
 
 async function scanJson(env,source,raw){
   const data=JSON.parse(raw.text);
-  const rows=Array.isArray(data)?data:(data?.results||data?.opportunities||data?.items||[]);
+  const ocds=Array.isArray(data?.releases);
+  const rows=ocds?data.releases:(Array.isArray(data)?data:(data?.results||data?.opportunities||data?.items||[]));
   if(!Array.isArray(rows))throw new Error('json_feed_shape_invalid');
   let seen=0;
   for(const row of rows.slice(0,50)){
-    try{await upsert(env,source,normalizeCandidate(row,source));seen++}catch{}
+    try{
+      const candidate=ocds?normalizeOcdsRelease(row,source):normalizeCandidate(row,source);
+      if(!candidate)continue;
+      await upsert(env,source,candidate);seen++;
+    }catch{}
   }
-  return {links_found:0,candidates_seen:seen};
+  return {links_found:0,candidates_seen:seen,format:ocds?'ocds':'json'};
 }
 
 async function dueSources(env,limit){
@@ -268,7 +340,7 @@ export async function scanOpportunitySources(env,{limitSources=2}={}){
   for(const source of sources){
     const stamp=now();
     try{
-      const raw=await fetchText(source.source_url);
+      const raw=await fetchText(buildSourceFetchUrl(source));
       const result=source.source_kind==='json_feed'?await scanJson(env,source,raw):await scanHtml(env,source,raw);
       await env.SOURCE_AO_DB.prepare(
         'UPDATE opportunity_sources SET last_checked_at=?,last_success_at=?,last_error=NULL,updated_at=? WHERE id=?'
@@ -288,7 +360,7 @@ export async function scanOpportunitySources(env,{limitSources=2}={}){
 export async function listOpportunitySources(request,env){
   if(!isAdmin(request,env))return fail(env,401,'unauthorized','Admin authorization required.');
   const rows=await env.SOURCE_AO_DB.prepare(
-    'SELECT id,name,source_url,source_kind,active,priority,scan_interval_minutes,last_checked_at,last_success_at,last_error FROM opportunity_sources ORDER BY priority ASC,name ASC'
+    'SELECT id,name,source_url,source_kind,country_code,currency_code,adapter,active,priority,scan_interval_minutes,last_checked_at,last_success_at,last_error FROM opportunity_sources ORDER BY country_code,priority ASC,name ASC'
   ).all();
   return json(env,{ok:true,sources:rows.results||[]});
 }
@@ -296,20 +368,24 @@ export async function listOpportunitySources(request,env){
 export async function upsertOpportunitySource(request,env){
   if(!isAdmin(request,env))return fail(env,401,'unauthorized','Admin authorization required.');
   let input;try{input=await request.json()}catch{return fail(env,400,'invalid_json','A JSON body is required.')}
-  let name,url,kind;
-  try{name=clean(input?.name,220);url=clean(input?.source_url,1200);kind=clean(input?.source_kind,40)||'html_index'}
-  catch{return fail(env,400,'invalid_fields','Source fields are invalid.')}
-  if(!name||!url||!isSafeDiscoveryUrl(url)||!KINDS.has(kind))return fail(env,400,'invalid_fields','name, source_url and a supported source_kind are required.');
+  let name,url,kind,adapter,country,currency;
+  try{
+    name=clean(input?.name,220);url=clean(input?.source_url,1200);kind=clean(input?.source_kind,40)||'html_index';
+    adapter=clean(input?.adapter,40)||'generic';country=countryCode(input?.country_code);
+    currency=clean(input?.currency_code,3)||MARKET_DEFAULTS[country]?.currency||'AOA';
+  }catch{return fail(env,400,'invalid_fields','Source fields are invalid.')}
+  if(!name||!url||!isSafeDiscoveryUrl(url)||!KINDS.has(kind)||!ADAPTERS.has(adapter))return fail(env,400,'invalid_fields','name, source_url, source_kind and adapter are invalid.');
   const id=clean(input?.id,120)||'opp_source_'+(await sha(url)).slice(0,18);
   const active=input?.active===false?0:1,priority=Math.max(1,Math.min(100,Number(input?.priority)||50));
   const interval=Math.max(15,Math.min(1440,Number(input?.scan_interval_minutes)||60));
   await env.SOURCE_AO_DB.prepare(`
-    INSERT INTO opportunity_sources(id,name,source_url,source_kind,active,priority,scan_interval_minutes)
-    VALUES(?,?,?,?,?,?,?)
+    INSERT INTO opportunity_sources(id,name,source_url,source_kind,country_code,currency_code,adapter,active,priority,scan_interval_minutes)
+    VALUES(?,?,?,?,?,?,?,?,?,?)
     ON CONFLICT(source_url) DO UPDATE SET name=excluded.name,source_kind=excluded.source_kind,
+      country_code=excluded.country_code,currency_code=excluded.currency_code,adapter=excluded.adapter,
       active=excluded.active,priority=excluded.priority,scan_interval_minutes=excluded.scan_interval_minutes,
       updated_at=CURRENT_TIMESTAMP
-  `).bind(id,name,url,kind,active,priority,interval).run();
+  `).bind(id,name,url,kind,country,currency,adapter,active,priority,interval).run();
   return json(env,{ok:true,id},201);
 }
 
@@ -350,7 +426,8 @@ export async function reviewOpportunityCandidate(request,env,id){
   }
   if(action!=='promote')return fail(env,400,'invalid_action','Use promote or reject.');
   const title=clean(input?.title,260)||c.title,issuer=clean(input?.issuer,220)||c.issuer;
-  const location=clean(input?.location,180)||c.location||'Angola',sourceUrl=clean(input?.source_url,1200)||c.source_url;
+  const location=clean(input?.location,180)||c.location||MARKET_DEFAULTS[countryCode(c.country_code)]?.location||'Angola',sourceUrl=clean(input?.source_url,1200)||c.source_url;
+  const country=countryCode(input?.country_code||c.country_code),currency=clean(input?.currency_code,3)||c.currency_code||MARKET_DEFAULTS[country]?.currency||'AOA';
   const reference=clean(input?.reference,120)||c.reference,deadline=date(input?.deadline)||c.deadline;
   const published=date(input?.published_at)||c.published_at,type=TYPES.has(input?.type)?input.type:c.opportunity_type;
   const sector=clean(input?.sector,120)||c.sector,scope=clean(input?.scope_summary,1200)||c.scope_summary;
@@ -361,17 +438,18 @@ export async function reviewOpportunityCandidate(request,env,id){
   const opp=c.promoted_opportunity_id||'opp_auto_'+c.dedupe_key.slice(0,22);
   await env.SOURCE_AO_DB.prepare(`
     INSERT INTO opportunities(
-      id,title,type,sector,location,issuer,reference,published_at,deadline,status,source_url,
+      id,title,type,sector,location,country_code,currency_code,issuer,reference,published_at,deadline,status,source_url,
       source_checked_at,scope_summary,source_fit,fit_score,fit_tags_json,discovery_source_id
-    ) VALUES(?,?,?,?,?,?,?,?,?,'active',?,?,?,?,?,?,?)
+    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,'active',?,?,?,?,?,?,?)
     ON CONFLICT(id) DO UPDATE SET title=excluded.title,type=excluded.type,sector=excluded.sector,
-      location=excluded.location,issuer=excluded.issuer,reference=excluded.reference,
+      location=excluded.location,country_code=excluded.country_code,currency_code=excluded.currency_code,
+      issuer=excluded.issuer,reference=excluded.reference,
       published_at=excluded.published_at,deadline=excluded.deadline,status='active',
       source_url=excluded.source_url,source_checked_at=excluded.source_checked_at,
       scope_summary=excluded.scope_summary,source_fit=excluded.source_fit,fit_score=excluded.fit_score,
       fit_tags_json=excluded.fit_tags_json,discovery_source_id=excluded.discovery_source_id,
       updated_at=CURRENT_TIMESTAMP
-  `).bind(opp,title,type||'tender',sector||'general',location,issuer,reference,published,deadline,
+  `).bind(opp,title,type||'tender',sector||'general',location,country,currency,issuer,reference,published,deadline,
     sourceUrl,c.source_checked_at||now(),scope,sourceFit,intelligence.fit_score,c.fit_tags_json||'[]',c.source_id).run();
   await env.SOURCE_AO_DB.prepare(
     "UPDATE opportunity_candidates SET status='promoted',reviewed_at=?,reviewed_by=?,promoted_opportunity_id=? WHERE id=?"

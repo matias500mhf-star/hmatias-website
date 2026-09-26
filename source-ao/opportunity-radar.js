@@ -3,6 +3,7 @@
   const $=s=>document.querySelector(s);
   const $$=s=>[...document.querySelectorAll(s)];
   let filter='all';
+  let market='all';
   let opportunities=[];
   let lang='pt';
 
@@ -11,7 +12,8 @@
       back:'← Source AO',
       eyebrow:'SOURCE AO · RADAR DE OPORTUNIDADES',
       title:'Oportunidades públicas.\nPrazos claros.',
-      lead:'RFQs, concursos e oportunidades comerciais encontradas em fontes rastreáveis. O Source AO mostra o que foi encontrado e quando a fonte foi verificada; a qualificação continua a exigir análise documental.',
+      lead:'RFQs, concursos e oportunidades comerciais de Angola, Namíbia e África do Sul encontradas em fontes rastreáveis. O Source AO mostra o que foi encontrado e quando a fonte foi verificada; a qualificação continua a exigir análise documental.',
+      marketAll:'África Austral',
       activeLabel:'oportunidades ativas com fonte verificada',
       currentTitle:'Radar atual',
       currentLead:'Só aparecem oportunidades com fonte rastreável e prazo ainda válido.',
@@ -32,7 +34,8 @@
       back:'← Source AO',
       eyebrow:'SOURCE AO · OPPORTUNITY RADAR',
       title:'Public opportunities.\nClear deadlines.',
-      lead:'RFQs, tenders and commercial opportunities discovered from traceable sources. Source AO shows what was found and when the source was checked; qualification still requires document review.',
+      lead:'RFQs, tenders and commercial opportunities from Angola, Namibia and South Africa discovered from traceable sources. Source AO shows what was found and when the source was checked; qualification still requires document review.',
+      marketAll:'Southern Africa',
       activeLabel:'active source-checked opportunities',
       currentTitle:'Current radar',
       currentLead:'Only opportunities with a traceable source and a still-valid deadline appear here.',
@@ -54,11 +57,26 @@
   const t=key=>copy[lang][key]||key;
   const fmt=value=>new Intl.DateTimeFormat(lang==='pt'?'pt-PT':'en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
 
+  function inferredCountry(o){
+    if(o.country_code) return o.country_code;
+    const location=String(o.location||'').toLowerCase();
+    if(location.includes('namibia')) return 'NA';
+    if(location.includes('south africa')) return 'ZA';
+    return 'AO';
+  }
+
   function matchesFilter(o){
+    if(market!=='all'&&inferredCountry(o)!==market) return false;
     if(filter==='all') return true;
     if(filter==='supply') return o.type==='supply-request';
     if(filter==='maintenance') return ['maintenance','small-contract','subcontracting'].includes(o.type);
     return o.type===filter;
+  }
+
+  function marketLabel(o){
+    const code=inferredCountry(o);
+    const labels=lang==='pt'?{AO:'Angola',NA:'Namíbia',ZA:'África do Sul'}:{AO:'Angola',NA:'Namibia',ZA:'South Africa'};
+    return labels[code]||code;
   }
 
   function typeLabel(type){
@@ -104,7 +122,7 @@
   function render(){
     const list=$('#opList');
     const visible=opportunities.filter(matchesFilter).sort((a,b)=>new Date(a.deadline)-new Date(b.deadline));
-    $('#activeCount').textContent=opportunities.length;
+    $('#activeCount').textContent=visible.length;
     list.innerHTML='';
     if(!visible.length){
       const p=document.createElement('p');p.className='op-loading';p.textContent=t('empty');list.appendChild(p);return;
@@ -112,10 +130,10 @@
     visible.forEach(o=>{
       const card=document.createElement('article');card.className='op-card';
       const main=document.createElement('div');
-      const kicker=document.createElement('span');kicker.className='op-kicker';kicker.textContent=typeLabel(o.type)+' · '+(o.reference||'');
+      const kicker=document.createElement('span');kicker.className='op-kicker';kicker.textContent=marketLabel(o)+' · '+typeLabel(o.type)+' · '+(o.reference||'');
       const title=document.createElement('h3');title.textContent=lang==='pt'?(o.title_pt||o.title):o.title;
       const meta=document.createElement('div');meta.className='op-meta';
-      [o.issuer,o.location,o.sector].filter(Boolean).forEach(v=>{const s=document.createElement('span');s.textContent=v;meta.appendChild(s);});
+      [o.issuer,o.location,o.currency_code,o.sector].filter(Boolean).forEach(v=>{const s=document.createElement('span');s.textContent=v;meta.appendChild(s);});
       const fit=document.createElement('p');fit.className='op-fit';fit.textContent=lang==='pt'?(o.source_fit_pt||o.scope_summary_pt||o.source_fit||o.scope_summary||''):(o.source_fit||o.scope_summary||'');
       main.append(kicker,title,meta,fit);
 
@@ -148,9 +166,14 @@
       }
     }
     applyLanguage();
-    $$('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
+    $('[data-market]').forEach(btn=>btn.addEventListener('click',()=>{
+      market=btn.dataset.market;
+      $('[data-market]').forEach(b=>b.classList.toggle('active',b===btn));
+      render();
+    }));
+    $('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
       filter=btn.dataset.filter;
-      $$('[data-filter]').forEach(b=>b.classList.toggle('active',b===btn));
+      $('[data-filter]').forEach(b=>b.classList.toggle('active',b===btn));
       render();
     }));
     $('#langToggle')?.addEventListener('click',()=>{lang=lang==='pt'?'en':'pt';applyLanguage();});

@@ -161,7 +161,7 @@
       const row=document.createElement('div');row.className='op-source-row';
       const main=document.createElement('div');
       const title=document.createElement('strong');title.textContent=source.name;
-      const meta=document.createElement('small');meta.textContent=`${source.source_kind} · every ${source.scan_interval_minutes} min · ${source.active?'active':'paused'}`;
+      const meta=document.createElement('small');meta.textContent=`${source.country_code||'AO'} · ${source.source_kind} · ${source.currency_code||''} · every ${source.scan_interval_minutes} min · ${source.active?'active':'paused'}`;
       main.append(title,meta);
       const state=document.createElement('span');state.textContent=sourceHealthText(source);state.className=source.last_error?'op-source-error':'';
       row.append(main,state);box.appendChild(row);
@@ -186,7 +186,7 @@
       const title=document.createElement('h3');title.textContent=candidate.title;
       const meta=document.createElement('p');meta.className='op-candidate-meta';
       const deadline=candidate.deadline?new Date(candidate.deadline).toLocaleString():'Deadline to confirm';
-      meta.textContent=`${candidate.issuer} · ${candidate.location} · ${deadline}`;
+      meta.textContent=`${candidate.country_code||'AO'} · ${candidate.issuer} · ${candidate.location} · ${candidate.currency_code||''} · ${deadline}`;
 
       const tags=document.createElement('div');tags.className='op-fit-tags';
       (candidate.fit_tags||[]).forEach(value=>{const tag=document.createElement('span');tag.textContent=value;tags.appendChild(tag);});
@@ -301,7 +301,14 @@
       if(deadline===null||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(deadline.trim())) return alert('A valid deadline is required before publication.');
       const ok=confirm(`Publish to the public Radar?\n\n${title.trim()}\nIssuer: ${issuer.trim()}\nLocation: ${locationValue.trim()}\nDeadline: ${deadline.trim()}\nSource: ${candidate.source_url}`);
       if(!ok) return;
-      review={...review,title:title.trim(),issuer:issuer.trim(),location:locationValue.trim(),deadline:`${deadline.trim()}T23:59:59Z`};
+      const country=candidate.country_code||'AO';
+      const offset={AO:'+01:00',NA:'+02:00',ZA:'+02:00'}[country]||'+00:00';
+      const originalDate=candidate.deadline?new Date(candidate.deadline).toISOString().slice(0,10):'';
+      const deadlineIso=candidate.deadline&&deadline.trim()===originalDate
+        ?candidate.deadline
+        :`${deadline.trim()}T23:59:59${offset}`;
+      review={...review,title:title.trim(),issuer:issuer.trim(),location:locationValue.trim(),
+        country_code:country,currency_code:candidate.currency_code||'AOA',deadline:deadlineIso};
     }else if(!confirm(`Reject this opportunity candidate?\n\n${candidate.title}`)) return;
     try{
       await api(`/api/admin/opportunity-pipeline/candidates/${encodeURIComponent(candidate.id)}/review`,{
@@ -334,7 +341,7 @@
       const result=await api('/api/admin/opportunity-pipeline/scan',{
         method:'POST',timeoutMs:25000,
         headers:{'content-type':'application/json'},
-        body:JSON.stringify({limit_sources:2})
+        body:JSON.stringify({limit_sources:3})
       });
       const processed=result?.sources_processed||0;
       setApiStatus(`Opportunity scan complete · ${processed} source${processed===1?'':'s'}`,'connected');

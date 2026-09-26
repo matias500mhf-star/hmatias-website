@@ -53,6 +53,7 @@ jobs:
           node --check source-ao/runtime-config.js
           node --check source-ao/api-client.js
           node --check source-ao/ops.js
+          node --check source-ao/opportunity-radar.js
           node --check source-ao/confirm.js
           node --check source-ao/review.js
           node --check source-ao/sourcing-ui.js
@@ -116,6 +117,16 @@ jobs:
           grep -q 'does \*\*not\*\* accept or store private screenshots' source-ao/docs/EVIDENCE_POLICY.md
           grep -q '"CONTACT_RETENTION_DAYS": "180"' source-ao/backend/wrangler.jsonc
           grep -q '"head_sampling_rate": 0.1' source-ao/backend/wrangler.jsonc
+      - name: Validate Southern Africa market contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "cpbn-namibia-open-bids" source-ao/backend/migrations/0010_regional_markets.sql
+          grep -q "etenders-south-africa-ocds" source-ao/backend/migrations/0010_regional_markets.sql
+          grep -q "country_code" source-ao/backend/src/opportunity-pipeline.js
+          grep -q 'data-market="NA"' source-ao/opportunity-radar.html
+          grep -q 'data-market="ZA"' source-ao/opportunity-radar.html
+
       - name: Validate backend syntax
         run: |
           node --check source-ao/backend/src/index.js
