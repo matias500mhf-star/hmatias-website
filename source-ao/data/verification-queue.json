@@ -1,0 +1,15 @@
+{
+  "version": "0.1",
+  "updated_at": "2026-09-22T17:58:00+01:00",
+  "requests": [],
+  "statuses": [
+    "draft",
+    "ready_to_contact",
+    "sent",
+    "supplier_replied",
+    "verified",
+    "rejected",
+    "expired"
+  ],
+  "rule": "A verification request may create a confirmed availability observation only after a traceable supplier response has been reviewed and timestamped."
+}

@@ -1,0 +1,42 @@
+name: Source AO Confirmation Quality
+
+on:
+  pull_request:
+    paths:
+      - 'source-ao/confirm.html'
+      - 'source-ao/confirm.css'
+      - 'source-ao/confirm.js'
+      - 'source-ao/runtime-config.js'
+      - '.github/workflows/source-ao-confirm-quality.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  confirm-portal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: JavaScript syntax
+        run: node --check source-ao/confirm.js
+
+      - name: Privacy and indexing guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'noindex,nofollow,noarchive' source-ao/confirm.html
+          grep -q 'no-referrer' source-ao/confirm.html
+          grep -q 'history.replaceState' source-ao/confirm.js
+          ! grep -Eq 'localStorage|sessionStorage' source-ao/confirm.js
+          ! grep -Eq 'console\.(log|info).*token' source-ao/confirm.js
+
+      - name: Submission truth guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'name="available" value="true" required' source-ao/confirm.html
+          grep -q 'name="available" value="false" required' source-ao/confirm.html
+          grep -q "price!=null&&!/\^\[A-Z\]{3}\$/" source-ao/confirm.js
+          grep -q "available:selected.value==='true'" source-ao/confirm.js

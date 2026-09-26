@@ -1,0 +1,70 @@
+.verified-matches{display:grid;gap:8px;margin:16px 0 2px}
+.verified-match{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;
+  padding:13px 14px;border:1px solid #e1e9ef;border-radius:12px;background:#fbfdfe
+}
+.verified-match strong{display:block;font-size:12px;color:var(--navy)}
+.verified-match small{display:block;margin-top:4px;color:var(--muted);font-size:9px;line-height:1.45}
+.verified-match-meta{display:flex;align-items:flex-end;flex-direction:column;gap:4px;text-align:right}
+.data-badge{
+  display:inline-flex;align-items:center;border-radius:999px;padding:5px 8px;
+  font-size:8px;font-weight:900;letter-spacing:.055em;text-transform:uppercase;
+  border:1px solid #dce5ec;background:#f6f8fa;color:#607383
+}
+.data-supplier_confirmed,.data-in_stock_confirmed{background:#eaf7f0;border-color:#c8e9d6;color:#19734a}
+.data-source_checked,.data-recently_seen{background:#edf5fb;border-color:#d1e4f2;color:#35698e}
+.data-supplier_candidate{background:#f3f1ff;border-color:#ddd7ff;color:#5a4a9c}
+.data-needs_reconfirmation{background:#fff6e5;border-color:#f2ddb3;color:#8d630d}
+.data-unavailable{background:#fdf0f0;border-color:#efd1d1;color:#9b4040}
+.confidence-dot[data-state="supplier_confirmed"],.confidence-dot[data-state="in_stock_confirmed"]{background:var(--good);box-shadow:0 0 0 5px rgba(25,135,84,.12)}
+.confidence-dot[data-state="source_checked"],.confidence-dot[data-state="recently_seen"]{background:var(--blue);box-shadow:0 0 0 5px rgba(47,126,216,.11)}
+
+.smart-search-plan{
+  margin:14px 0 2px;padding:16px;border:1px solid #dce6ed;border-radius:14px;
+  background:linear-gradient(180deg,#f9fcfe,#f5f9fc)
+}
+.smart-search-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.smart-search-head strong{font-size:12px;color:var(--navy)}
+.smart-search-plan>p{margin:9px 0 10px;color:#536b7e;font-size:11px;line-height:1.5}
+.smart-search-terms{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.smart-search-terms span{
+  display:inline-flex;padding:6px 8px;border:1px solid #d8e3ea;border-radius:999px;
+  background:#fff;color:#365164;font-size:9px;line-height:1.2
+}
+.smart-search-plan>small{display:block;color:#607383;font-size:9px;line-height:1.5}
+
+.procurement-mission{
+  margin:14px 0 2px;padding:17px;border:1px solid #d5e1e9;border-radius:15px;
+  background:#fff;box-shadow:0 10px 28px rgba(7,31,52,.04)
+}
+.mission-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:13px}
+.mission-head small{display:block;color:#607383;font-size:8px;font-weight:900;letter-spacing:.11em}
+.mission-head strong{display:block;margin-top:4px;color:var(--navy);font-size:14px}
+.mission-grid{display:grid;gap:7px}
+.mission-supplier{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;
+  padding:12px 13px;border:1px solid #e0e8ee;border-radius:11px;background:#fafcfd
+}
+.mission-supplier strong{display:block;color:var(--navy);font-size:12px}
+.mission-supplier small{display:block;margin-top:3px;color:#607383;font-size:9px;line-height:1.4}
+.mission-actions{display:flex;align-items:center;gap:6px}
+.mission-contact,.mission-copy{
+  border:1px solid #cbd9e3;border-radius:8px;background:#fff;color:var(--navy);
+  padding:6px 8px;font:inherit;font-size:9px;font-weight:800;text-decoration:none;cursor:pointer
+}
+.mission-contact:hover,.mission-copy:hover{border-color:#9fc3dd;background:#f7fbfe}
+.mission-rfq{margin-top:12px;padding:12px;border-radius:11px;background:#f5f8fa;border:1px solid #dce5eb}
+.mission-rfq>div{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.mission-rfq strong{font-size:11px;color:var(--navy)}
+.mission-rfq pre{
+  max-height:180px;overflow:auto;margin:9px 0 0;white-space:pre-wrap;
+  font:inherit;font-size:9px;line-height:1.55;color:#405768
+}
+.mission-truth{display:block;margin-top:9px;color:#607383;font-size:8px;line-height:1.5}
+
+@media(max-width:640px){
+  .verified-match,.mission-supplier{grid-template-columns:1fr}
+  .verified-match-meta{align-items:flex-start;text-align:left}
+  .mission-actions{justify-content:flex-start;flex-wrap:wrap}
+  .mission-rfq>div{align-items:flex-start}
+}

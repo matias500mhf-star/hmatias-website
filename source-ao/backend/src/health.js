@@ -1,0 +1,56 @@
+const REQUIRED_SECURITY_KEYS=['ADMIN_API_TOKEN','CONFIRMATION_SECRET','PII_ENCRYPTION_KEY','RATE_LIMIT_SECRET'];
+
+function validRetentionDays(value){
+  const days=Number(value);
+  return Number.isFinite(days)&&days>=30&&days<=1095;
+}
+
+export function missingReadinessConfig(env={}){
+  const missing=[];
+  if(!env.SOURCE_AO_DB) missing.push('SOURCE_AO_DB');
+  for(const key of REQUIRED_SECURITY_KEYS){
+    if(typeof env[key]!=='string'||env[key].trim().length<32) missing.push(key);
+  }
+  if(typeof env.PUBLIC_ORIGIN!=='string'||!env.PUBLIC_ORIGIN.startsWith('https://')) missing.push('PUBLIC_ORIGIN');
+  if(!validRetentionDays(env.CONTACT_RETENTION_DAYS)) missing.push('CONTACT_RETENTION_DAYS');
+  return missing;
+}
+
+function headers(env){
+  return {
+    'content-type':'application/json; charset=utf-8',
+    'cache-control':'no-store',
+    'access-control-allow-origin':env.PUBLIC_ORIGIN||'https://comercialhmatiasps.com'
+  };
+}
+
+export async function readinessResponse(env){
+  const missing=missingReadinessConfig(env);
+  if(missing.length){
+    const detail=env.SOURCE_AO_ENV==='production'?{}:{missing};
+    return new Response(JSON.stringify({ok:false,ready:false,checks:{configuration:false,database:false,rate_limits:false,contact_retention:false},...detail}),{status:503,headers:headers(env)});
+  }
+
+  try{
+    const db=await env.SOURCE_AO_DB.prepare('SELECT 1 AS ok').first();
+    const rateTable=await env.SOURCE_AO_DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='rate_limit_windows'").first();
+    await env.SOURCE_AO_DB.prepare('SELECT contact_purged_at FROM sourcing_requests LIMIT 0').all();
+    const checks={
+      configuration:true,
+      database:Number(db?.ok)===1,
+      rate_limits:rateTable?.name==='rate_limit_windows',
+      contact_retention:true
+    };
+    const ready=Object.values(checks).every(Boolean);
+    return new Response(JSON.stringify({
+      ok:ready,
+      ready,
+      service:'source-ao-api',
+      environment:env.SOURCE_AO_ENV||'unknown',
+      release:env.SOURCE_AO_RELEASE||null,
+      checks
+    }),{status:ready?200:503,headers:headers(env)});
+  }catch{
+    return new Response(JSON.stringify({ok:false,ready:false,service:'source-ao-api',checks:{configuration:true,database:false,rate_limits:false,contact_retention:false}}),{status:503,headers:headers(env)});
+  }
+}

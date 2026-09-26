@@ -1,0 +1,434 @@
+{
+  "version": "0.6",
+  "updated_at": "2026-09-25T21:00:00+01:00",
+  "suppliers": [
+    {
+      "id": "sup-imbo-angola",
+      "name": "IMBO Angola",
+      "legal_name": "IMBO Angola - Comércio e Prestação de Serviços",
+      "category": [
+        "construction",
+        "industrial-supply"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://www.imboangola.com/",
+      "source_urls": [
+        "https://www.imboangola.com/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:30:00+01:00"
+    },
+    {
+      "id": "sup-akeel",
+      "name": "Akeel Com & Ind Lda",
+      "category": [
+        "construction"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://www.akeelferro.com/",
+      "source_urls": [
+        "https://www.akeelferro.com/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:30:00+01:00"
+    },
+    {
+      "id": "sup-o-index",
+      "name": "O-INDEX",
+      "category": [
+        "construction",
+        "hvac-electrical",
+        "tools-equipment",
+        "industrial-supply",
+        "cleaning-facilities"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://www.o-index.com/",
+      "source_urls": [
+        "https://www.o-index.com/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00",
+      "phone": "+244 933 199 999",
+      "contact_source": "https://www.o-index.com/"
+    },
+    {
+      "id": "sup-soletric",
+      "name": "Solétric - Soluções Eléctricas, Lda.",
+      "category": [
+        "hvac-electrical"
+      ],
+      "location": "Viana, Luanda, Angola",
+      "website": "https://www.soletric.com/",
+      "source_urls": [
+        "https://www.soletric.com/sobrenos"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:30:00+01:00"
+    },
+    {
+      "id": "sup-siluz",
+      "name": "Siluz Angola",
+      "category": [
+        "hvac-electrical",
+        "tools-equipment"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://siluzangola.com/",
+      "source_urls": [
+        "https://siluzangola.com/",
+        "https://siluzangola.com/siluz/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:30:00+01:00"
+    },
+    {
+      "id": "sup-bricomat",
+      "name": "Bricomat",
+      "category": [
+        "construction",
+        "tools-equipment"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://www.bricomat.online/",
+      "source_urls": [
+        "https://www.bricomat.online/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:30:00+01:00"
+    },
+    {
+      "id": "sup-nayliclean",
+      "name": "NayliClean",
+      "legal_name": "NayliClean - Prestação de Serviços, Lda.",
+      "category": [
+        "construction",
+        "industrial-supply",
+        "services-contractors",
+        "cleaning-facilities"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://nayliclen.com/",
+      "source_urls": [
+        "https://nayliclen.com/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-22T14:30:00+01:00"
+    },
+    {
+      "id": "sup-farwell-angola",
+      "name": "Farwell",
+      "category": [
+        "industrial-supply"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://farwell.co.ao/",
+      "source_urls": [
+        "https://farwell.co.ao/wp-content/uploads/2024/03/Catalogo_Farwell_2024.pdf",
+        "https://farwell.co.ao/a-nossa-equipa/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T19:50:00+01:00",
+      "capabilities": [
+        "laboratory chemicals",
+        "reagents",
+        "formaldehyde",
+        "formalin",
+        "medical and laboratory supplies"
+      ],
+      "phone": "+244 938 865 358",
+      "whatsapp": "+244 949 585 661",
+      "email": "expresso.encomendas@farwell.co.ao",
+      "contact_source": "https://farwell.co.ao/wp-content/uploads/2024/03/Catalogo_Farwell_2024.pdf"
+    },
+    {
+      "id": "sup-soluprafia",
+      "name": "BD-SOLUPRAFIA INDUSTRIA, LDA",
+      "category": [
+        "industrial-supply"
+      ],
+      "location": "ZEE Luanda-Bengo, Luanda, Angola",
+      "website": "https://www.soluprafia.com/",
+      "source_urls": [
+        "https://www.soluprafia.com/",
+        "https://soluprafia.com/pp.php"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T19:50:00+01:00",
+      "capabilities": [
+        "polypropylene packaging",
+        "PP woven bags",
+        "BOPP packaging",
+        "industrial packaging",
+        "raffia packaging"
+      ],
+      "phone": "+244 924 751 727",
+      "whatsapp": "+244 939 225 048",
+      "email": "comercial@soluprafia.com",
+      "contact_source": "https://www.soluprafia.com/contacto.php"
+    },
+    {
+      "id": "sup-soloviva",
+      "name": "Soloviva Lda",
+      "category": [
+        "industrial-supply",
+        "cleaning-facilities"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://soloviva.co.ao/",
+      "source_urls": [
+        "https://soloviva.co.ao/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00",
+      "capabilities": [
+        "industrial chemicals",
+        "cleaning chemicals",
+        "chemical supply"
+      ],
+      "phone": "+244 950 515 120",
+      "whatsapp": "+244 950 515 120",
+      "email": "geral@soloviva.co.ao",
+      "contact_source": "https://soloviva.co.ao/"
+    },
+    {
+      "id": "sup-qualirafia",
+      "name": "QualiRafia",
+      "category": [
+        "industrial-supply"
+      ],
+      "location": "Estrada de Catete Km 38, Luanda, Angola",
+      "website": "https://www.imex.co.ao/",
+      "source_urls": [
+        "https://www.yellowmega.com/AO/Luanda/184070958879208/QualiRafia"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T19:50:00+01:00",
+      "capabilities": [
+        "raffia packaging",
+        "industrial packaging",
+        "polypropylene packaging"
+      ]
+    },
+    {
+      "id": "sup-aopacks",
+      "name": "AOpacks",
+      "category": [
+        "industrial-supply"
+      ],
+      "capabilities": [
+        "plastic packaging",
+        "industrial packaging",
+        "plastic films",
+        "transformed plastics"
+      ],
+      "location": "Rua das Burgalheiras Km 14, Luanda, Angola",
+      "website": "https://www.aopacks.pt/",
+      "source_urls": [
+        "https://www.aopacks.pt/",
+        "https://aopacks.pt/contato/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:25:00+01:00",
+      "phone": "+244 930 115 386",
+      "whatsapp": null,
+      "email": "sac@aopacks.ao",
+      "contact_source": "https://aopacks.pt/contato/"
+    },
+    {
+      "id": "sup-zeepack-angola",
+      "name": "Zeepack Angola Lda",
+      "category": [
+        "industrial-supply"
+      ],
+      "capabilities": [
+        "industrial packaging",
+        "packaging",
+        "plastic packaging"
+      ],
+      "location": "Polo Industrial de Viana, Estrada de Catete, Luanda, Angola",
+      "website": "https://zeepackinternational.com/",
+      "source_urls": [
+        "https://agroportal.ao/component/mtree/business/employment/99-zeepack-international-ltd/print.html?Itemid=&tmpl=component",
+        "https://www.waze.com/live-map/directions/ao/luanda/zeepack-angola-lda?to=place.ChIJI_y16E35URoRseU-XAz8WUc"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:25:00+01:00",
+      "phone": "+244 929 812 450",
+      "whatsapp": null,
+      "email": null,
+      "contact_source": "https://www.waze.com/live-map/directions/ao/luanda/zeepack-angola-lda?to=place.ChIJI_y16E35URoRseU-XAz8WUc"
+    },
+    {
+      "id": "sup-construa-mais",
+      "name": "Construa Mais",
+      "category": [
+        "construction",
+        "hvac-electrical",
+        "tools-equipment",
+        "industrial-supply"
+      ],
+      "capabilities": [
+        "construction materials",
+        "electrical supplies",
+        "lighting",
+        "hydraulics",
+        "pumps",
+        "PPE",
+        "tools",
+        "equipment"
+      ],
+      "location": "Calemba 2, Luanda, Angola",
+      "website": "https://construamais.ao/",
+      "source_urls": [
+        "https://construamais.ao/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00"
+    },
+    {
+      "id": "sup-luz-kabir",
+      "name": "Luz Kabir",
+      "category": [
+        "construction"
+      ],
+      "capabilities": [
+        "construction materials",
+        "finishing materials",
+        "building supplies"
+      ],
+      "location": "Rua do Calemba 2, Viana, Luanda, Angola",
+      "website": "https://luzkabir.co.ao/",
+      "source_urls": [
+        "https://luzkabir.co.ao/quem-somos/",
+        "https://luzkabir.co.ao/faq-questoes-mais-frequentes/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00",
+      "phone": "+244 942 748 585",
+      "whatsapp": "+244 942 748 585",
+      "email": "atendimento@luzkabir.co.ao",
+      "contact_source": "https://luzkabir.co.ao/quem-somos/"
+    },
+    {
+      "id": "sup-dama",
+      "name": "D.AMA - Materiais de Construção",
+      "legal_name": "Dama – Materiais de Construção S.A.",
+      "category": [
+        "construction"
+      ],
+      "capabilities": [
+        "construction materials",
+        "bathroom fixtures",
+        "kitchens",
+        "finishes",
+        "appliances"
+      ],
+      "location": "Morro Bento, Samba, Luanda, Angola",
+      "website": "https://dama.ao/",
+      "source_urls": [
+        "https://dama.ao/",
+        "https://dama.ao/sobre-nos/",
+        "https://dama.ao/contacte-nos/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00",
+      "phone": "+244 926 646 036",
+      "whatsapp": "+244 926 646 036",
+      "email": "geral@dama.ao",
+      "contact_source": "https://dama.ao/contacte-nos/"
+    },
+    {
+      "id": "sup-construtecno",
+      "name": "Constru-Tecno, Lda",
+      "category": [
+        "construction",
+        "hvac-electrical",
+        "tools-equipment"
+      ],
+      "capabilities": [
+        "construction materials",
+        "civil engineering",
+        "electrical",
+        "refrigeration",
+        "tools",
+        "equipment"
+      ],
+      "location": "Morro dos Veados, Luanda, Angola",
+      "website": "https://construtecno.co.ao/",
+      "source_urls": [
+        "https://construtecno.co.ao/nossa-loja/"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00",
+      "phone": "+244 974 507 060",
+      "email": "geral@construtecno.co.ao",
+      "contact_source": "https://construtecno.co.ao/nossa-loja/"
+    },
+    {
+      "id": "sup-mavunzuka",
+      "name": "Mavunzuka & Filhos LDA",
+      "category": [
+        "construction",
+        "tools-equipment",
+        "industrial-supply"
+      ],
+      "capabilities": [
+        "construction materials",
+        "tools",
+        "equipment",
+        "general supply",
+        "logistics"
+      ],
+      "location": "Angola",
+      "website": "https://www.mavunzuka.co.ao/",
+      "source_urls": [
+        "https://www.mavunzuka.co.ao/Servicos/FornecimentoGeral"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T20:40:00+01:00"
+    },
+    {
+      "id": "sup-angoayiti",
+      "name": "AngoAyiti, Lda.",
+      "category": [
+        "industrial-supply"
+      ],
+      "capabilities": [
+        "packaging consumables",
+        "PET strapping",
+        "stretch film",
+        "paper and label supplies",
+        "import and distribution"
+      ],
+      "location": "Luanda, Angola",
+      "website": "https://www.angoayiti.com/",
+      "source_urls": [
+        "https://www.angoayiti.com/pt/produtos",
+        "https://www.angoayiti.com/contact"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-09-25T21:00:00+01:00",
+      "phone": "+244 952 824 464",
+      "email": "Info@angoayiti.com",
+      "contact_source": "https://www.angoayiti.com/contact"
+    }
+  ],
+  "rules": {
+    "publish_only_if": [
+      "name",
+      "location",
+      "source_urls",
+      "verification_status",
+      "last_verified_at"
+    ],
+    "allowed_public_statuses": [
+      "source_checked",
+      "supplier_confirmed",
+      "in_stock_confirmed",
+      "needs_reconfirmation",
+      "unavailable"
+    ],
+    "never_publish_private_notes": true
+  }
+}

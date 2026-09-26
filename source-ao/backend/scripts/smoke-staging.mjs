@@ -1,0 +1,60 @@
+const base=(process.env.SOURCE_AO_API_BASE||'').replace(/\/$/,'');
+if(!base){console.error('SOURCE_AO_API_BASE is required');process.exit(2)}
+
+const fail=message=>{throw new Error(message)};
+const get=async path=>{
+  const res=await fetch(base+path,{headers:{accept:'application/json'}});
+  if(!res.ok) fail(`${path}: HTTP ${res.status}`);
+  const data=await res.json().catch(()=>fail(`${path}: invalid JSON`));
+  return data;
+};
+
+const health=await get('/health');
+if(!health||health.ok!==true) fail('/health did not return ok=true');
+
+const ready=await get('/ready');
+if(!ready||ready.ready!==true||ready.ok!==true) fail('/ready did not confirm staging readiness');
+if(!ready.checks?.configuration||!ready.checks?.database||!ready.checks?.rate_limits||!ready.checks?.contact_retention) fail('/ready security/database/retention checks did not all pass');
+
+const search=await get('/api/search?q='+encodeURIComponent('PVC pipe 110 mm')+'&location='+encodeURIComponent('Luanda'));
+if(!search||typeof search!=='object') fail('/api/search returned an invalid payload');
+
+const rows=Array.isArray(search.results)?search.results:Array.isArray(search.matches)?search.matches:[];
+for(const row of rows){
+  const status=row.verification_status||row.status||'';
+  if(['supplier_confirmed','in_stock_confirmed'].includes(status)){
+    if(!row.verified_at&&!row.last_verified_at) fail('confirmed search result has no verification timestamp');
+    if(!row.supplier?.id||!row.verification?.source_type||!row.verification?.verified_at) fail('confirmed search result has no safe supplier/source provenance');
+    if(Object.prototype.hasOwnProperty.call(row,'evidence_reference')) fail('public result exposed private evidence reference');
+  }
+}
+
+const formolMission=await get('/api/procurement-mission?q='+encodeURIComponent('formol 37% 1L urgente')+'&location='+encodeURIComponent('Luanda'));
+if(formolMission?.mission?.interpretation?.item_id!=='item-formaldehyde') fail('formaldehyde acceptance case was not interpreted correctly');
+if(!(formolMission.mission.exact_matches||[]).length) fail('formaldehyde acceptance case returned no exact source-checked match');
+if((formolMission.mission.exact_matches||[]).some(row=>row.status==='in_stock_confirmed'&&!row.verified_at)) fail('formaldehyde mission exposed untraceable stock confirmation');
+
+const strapMission=await get('/api/procurement-mission?q='+encodeURIComponent('cinta PP 9mm 1 rolo urgente')+'&location='+encodeURIComponent('Luanda'));
+if(strapMission?.mission?.interpretation?.item_id!=='item-packaging-strapping') fail('PP strapping acceptance case was not interpreted correctly');
+if(!(strapMission.mission.requirement?.specifications||[]).includes('9mm')) fail('PP strapping acceptance case lost the 9 mm specification');
+if(!(strapMission.mission.supplier_candidates||[]).length) fail('PP strapping acceptance case returned no Angola supplier candidates');
+if(!(strapMission.mission.supplier_candidates||[]).some(row=>row.whatsapp||row.phone||row.email||row.website)) fail('PP strapping acceptance case returned no contactable supplier candidate');
+
+const opportunities=await get('/api/opportunities');
+const opps=Array.isArray(opportunities)?opportunities:(opportunities.results||opportunities.opportunities||[]);
+for(const opp of opps){
+  if(opp.status==='active'&&opp.deadline&&new Date(opp.deadline).getTime()<Date.now()) fail(`expired opportunity exposed as active: ${opp.id||opp.title}`);
+  if(!opp.source_url) fail(`opportunity has no traceable source: ${opp.id||opp.title}`);
+}
+
+console.log(JSON.stringify({
+  staging:'PASS',
+  base,
+  health:true,
+  ready:true,
+  search_results:rows.length,
+  formaldehyde_exact_matches:formolMission.mission.exact_matches.length,
+  pp_strapping_candidates:strapMission.mission.supplier_candidates.length,
+  opportunities:opps.length,
+  checked_at:new Date().toISOString()
+},null,2));

@@ -1,0 +1,18 @@
+{
+  "version":"0.1",
+  "updated_at":"2026-09-22T14:25:00+01:00",
+  "source_types":[
+    {"id":"direct_supplier_confirmation","priority":1,"can_confirm_availability":true,"default_freshness_hours":24},
+    {"id":"supplier_official_channel","priority":2,"can_confirm_availability":false,"default_freshness_hours":72},
+    {"id":"documented_partner_feed","priority":3,"can_confirm_availability":true,"default_freshness_hours":24},
+    {"id":"structured_marketplace_listing","priority":4,"can_confirm_availability":false,"default_freshness_hours":24},
+    {"id":"public_business_directory","priority":5,"can_confirm_availability":false,"default_freshness_hours":168},
+    {"id":"social_media_post","priority":6,"can_confirm_availability":false,"default_freshness_hours":72},
+    {"id":"general_web_result","priority":7,"can_confirm_availability":false,"default_freshness_hours":24}
+  ],
+  "verification_rules":{
+    "in_stock_confirmed":{"requires":["supplier_id","item_id","verified_at","source_type","evidence_reference"],"expires_hours":24},
+    "supplier_confirmed":{"requires":["supplier_id","verified_at","source_type"],"expires_hours":72},
+    "source_checked":{"requires":["source_url","verified_at"],"expires_hours":168}
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "source-ao-api",
+  "main": "src/router.js",
+  "compatibility_date": "2026-09-22",
+  "triggers": {
+    "crons": [
+      "*/15 * * * *",
+      "17 2 * * *"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "SOURCE_AO_DB",
+      "database_name": "source-ao",
+      "database_id": "REPLACE_AT_DEPLOY_TIME",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "PUBLIC_ORIGIN": "https://comercialhmatiasps.com",
+    "SOURCE_AO_ENV": "production",
+    "SOURCE_AO_RELEASE": "source-ao-v1",
+    "CONTACT_RETENTION_DAYS": "180"
+  },
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 0.1
+    }
+  }
+}

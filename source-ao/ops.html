@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0b2f4f">
+  <title>Source AO Ops — Verification Desk</title>
+  <link rel="stylesheet" href="sourceao.css">
+  <link rel="stylesheet" href="ops.css">
+</head>
+<body class="ops-body">
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>Verification Desk</small></span></a>
+      <div class="nav-actions"><span class="ops-private">Internal · noindex</span><a class="btn btn-outline btn-small" href="review.html">Review Desk</a><a class="btn btn-outline btn-small" href="index.html">Public preview</a></div>
+    </div>
+  </header>
+
+  <main class="shell ops-main">
+    <section class="ops-intro">
+      <p class="eyebrow">SUPPLIER CONFIRMATION NETWORK</p>
+      <h1>Verification Desk</h1>
+      <p>Create traceable supplier requests, collect direct responses and keep discovery separate from confirmed availability.</p>
+    </section>
+
+    <section class="ops-card session-card">
+      <div class="ops-card-head"><div><small>00</small><h2>Backend session</h2></div><span id="apiStatus">Local mode</span></div>
+      <div class="session-grid">
+        <label>API endpoint<input id="apiEndpoint" type="text" readonly value="Not configured"></label>
+        <label>Admin API token<input id="adminToken" type="password" autocomplete="off" spellcheck="false" placeholder="Session only — never stored"></label>
+        <button class="btn btn-primary" type="button" id="connectApi">Use for this session</button>
+      </div>
+      <p class="ops-note">The admin token stays only in this page's memory. It is never written to localStorage, sessionStorage, exports or supplier messages.</p>
+    </section>
+
+    <section class="ops-grid">
+      <article class="ops-card">
+        <div class="ops-card-head"><div><small>01</small><h2>Create verification request</h2></div><span id="supplierCount">0 suppliers</span></div>
+        <form id="verifyForm" class="ops-form">
+          <label>Supplier<select id="supplierSelect" required><option value="">Select supplier</option></select></label>
+          <label>Item or service<input id="verifyItem" type="text" placeholder="e.g. PVC pipe 110 mm" required></label>
+          <label>Specification<input id="verifySpec" type="text" placeholder="Exact size, model, grade or service scope"></label>
+          <div class="ops-two"><label>Quantity<input id="verifyQty" type="number" min="0" step="any" inputmode="decimal" placeholder="e.g. 20"></label><label>Unit<input id="verifyUnit" type="text" placeholder="units / m / kg / L"></label></div>
+          <label>Location<input id="verifyLocation" type="text" value="Luanda"></label>
+          <label>Language<select id="verifyLang"><option value="pt">Portuguese</option><option value="en">English</option></select></label>
+          <button class="btn btn-primary" id="prepareRequest" type="submit">Prepare confirmation</button>
+        </form>
+      </article>
+
+      <article class="ops-card output-card">
+        <div class="ops-card-head"><div><small>02</small><h2>Supplier message</h2></div><span id="requestRef">No request</span></div>
+        <textarea id="messageOutput" rows="16" readonly placeholder="A traceable supplier confirmation message will appear here."></textarea>
+        <div class="ops-actions"><button class="btn btn-outline" type="button" id="copyMessage">Copy message</button><button class="btn btn-outline" type="button" id="copyLink" disabled>Copy confirmation link</button><button class="btn btn-primary" type="button" id="saveDraft" disabled>Save request locally</button></div>
+        <p class="ops-note">A created request is not a confirmation. Availability changes only after the supplier responds and HMATIAS reviews the response.</p>
+      </article>
+    </section>
+
+    <section class="ops-card queue-card">
+      <div class="ops-card-head"><div><small>03</small><h2>Local verification queue</h2></div><div class="ops-actions compact"><a class="btn btn-primary btn-small" href="review.html">Open Human Review Desk</a><button class="btn btn-outline btn-small" type="button" id="exportQueue">Export JSON</button><button class="btn btn-outline btn-small" type="button" id="clearQueue">Clear local queue</button></div></div>
+      <div id="queueList" class="ops-queue"><div class="empty-state"><strong>No local verification requests.</strong><p>Create a request above to test the operational flow.</p></div></div>
+    </section>
+
+    <section class="ops-principles">
+      <article><span>Discovery</span><strong>Found is not available.</strong><p>A public source can identify a supplier, but cannot prove current stock.</p></article>
+      <article><span>Evidence</span><strong>Every confirmation is traceable.</strong><p>Channel, time and evidence reference must exist before status changes.</p></article>
+      <article><span>Expiry</span><strong>Freshness is temporary.</strong><p>Confirmed stock expires quickly and returns to reconfirmation.</p></article>
+    </section>
+  </main>
+
+  <script src="runtime-config.js"></script>
+  <script src="ops.js" defer></script>
+</body>
+</html>
