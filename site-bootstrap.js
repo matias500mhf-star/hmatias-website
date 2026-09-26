@@ -164,7 +164,7 @@
       link.className = 'mobile-karta-link';
       link.href = kartaHref;
       link.dataset.kartaMobile = 'true';
-      link.setAttribute('aria-label', 'KARTA Identity Wallet');
+      link.setAttribute('aria-label', 'KARTA');
       link.innerHTML = '<span class="mobile-karta-mark" aria-hidden="true">K</span><span>KARTA</span>';
       const quote = navMenu.querySelector('.mobile-quote-link');
       const language = navMenu.querySelector('.mobile-lang-switch');
@@ -177,7 +177,7 @@
       link.className = 'footer-karta-link';
       link.href = kartaHref;
       link.dataset.kartaFooter = 'true';
-      link.setAttribute('aria-label', 'KARTA Identity Wallet');
+      link.setAttribute('aria-label', 'HMATIAS KARTA');
       link.innerHTML = '<span class="footer-karta-mark" aria-hidden="true">K</span><span class="footer-karta-copy"><small>HMATIAS</small><strong>KARTA</strong></span>';
       footerBrand.appendChild(link);
     }
