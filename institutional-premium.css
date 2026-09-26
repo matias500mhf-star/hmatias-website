@@ -336,3 +336,15 @@ body.hmatias-institutional.hmatias-legal .foot{color:#718494}
   body.hmatias-institutional.hmatias-legal .content{margin:32px auto 54px;padding:34px 24px}
   body.hmatias-institutional.hmatias-legal .content h1{font-size:2.55rem}
 }
+
+
+/* HMATIAS Clean dynamic quotation cart — loaded after page CSS, so use scoped specificity. */
+body.hmatias-institutional.hmatias-clean .clean-cart-section{padding:10px 0 76px;background:#fff}
+body.hmatias-institutional.hmatias-clean .clean-cart-card{padding:28px 0;border:0;border-top:1px solid var(--hm-line);border-bottom:1px solid var(--hm-line);border-radius:0;background:#fff;box-shadow:none}
+body.hmatias-institutional.hmatias-clean .clean-cart-head h3{font-family:var(--hm-display);font-size:1.55rem;font-weight:600;letter-spacing:-.04em}
+body.hmatias-institutional.hmatias-clean .clean-cart-count{border-radius:2px;background:var(--hm-navy);font-family:var(--hm-mono);font-weight:600}
+body.hmatias-institutional.hmatias-clean .clean-cart-list{gap:0;border-top:1px solid var(--hm-line)}
+body.hmatias-institutional.hmatias-clean .clean-cart-item{padding:18px 0;border:0;border-bottom:1px solid var(--hm-line);border-radius:0;background:#fff}
+body.hmatias-institutional.hmatias-clean .clean-cart-item input{border-radius:2px}
+body.hmatias-institutional.hmatias-clean .clean-cart-remove{border-radius:2px}
+body.hmatias-institutional.hmatias-clean .clean-quote-form .clean-cart-summary{border-radius:0;background:#f6f8fa}
