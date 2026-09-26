@@ -1,0 +1,216 @@
+/* HMATIAS institutional premium system — 2026-09-26
+   Extends the editorial discipline of the Works Catalogue to commercial pages
+   without turning them into portfolio clones. */
+body.hmatias-institutional{
+  --hm-ink:#071d33;
+  --hm-blue:#0b5f9d;
+  --hm-muted:#5d7182;
+  --hm-line:rgba(7,29,51,.15);
+  --hm-soft:#f5f7f8;
+  --hm-soft-blue:#edf4f8;
+  background:#fff;
+  color:var(--hm-ink);
+}
+body.hmatias-institutional :is(h1,h2,h3,h4){color:var(--hm-ink)}
+body.hmatias-institutional :is(p,li){color:var(--hm-muted)}
+body.hmatias-institutional .btn{border-radius:3px;box-shadow:none}
+body.hmatias-institutional .btn:hover{transform:none}
+body.hmatias-institutional .btn-outline{
+  border:1px solid currentColor;border-radius:3px;background:transparent;box-shadow:none
+}
+
+/* Service heroes */
+body.hmatias-institutional .unit-hero,
+body.hmatias-institutional .catalog-page-head{
+  position:relative;overflow:hidden;padding:104px 0 94px;
+  background:#071d33;color:#fff;
+}
+body.hmatias-institutional .unit-hero::before,
+body.hmatias-institutional .catalog-page-head::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/112px 100%,
+    radial-gradient(circle at 84% 22%,rgba(72,186,245,.14),transparent 29%);
+}
+body.hmatias-institutional :is(.unit-hero .container,.catalog-page-head .container){position:relative;z-index:1}
+body.hmatias-institutional :is(.unit-hero .eyebrow,.catalog-page-head .eyebrow){color:#8fd0f3!important}
+body.hmatias-institutional :is(.unit-hero h1,.catalog-page-head h1){
+  max-width:13ch;margin:14px 0 22px;color:#fff!important;
+  font-size:clamp(3rem,5.7vw,5.8rem);font-weight:600;line-height:.96;letter-spacing:-.058em;
+}
+body.hmatias-institutional :is(.unit-hero p,.catalog-page-head p){
+  max-width:66ch;color:rgba(232,242,249,.82)!important;font-size:1rem;line-height:1.78;
+}
+body.hmatias-institutional .unit-hero-grid{gap:72px;align-items:end}
+body.hmatias-institutional .unit-hero-panel{
+  padding:26px 0 0;border:0;border-top:1px solid rgba(255,255,255,.24);
+  border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;
+}
+body.hmatias-institutional .unit-hero-panel :is(strong,b){color:#fff}
+body.hmatias-institutional .unit-hero-panel :is(p,span,li){color:#c9d9e6!important}
+
+/* Section rhythm */
+body.hmatias-institutional :is(.unit-main,.unit-process,.business-process,.business-contact,.commerce-products,.clean-pdf-section,.clean-buy-compact,.clean-quote-section){
+  padding:100px 0;background:#fff;
+}
+body.hmatias-institutional :is(.unit-process,.business-process,.clean-scope,.clean-buy-compact){background:var(--hm-soft)}
+body.hmatias-institutional .unit-heading,
+body.hmatias-institutional .section-heading{
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);
+  gap:64px;align-items:end;max-width:none;margin:0 0 48px;padding-bottom:28px;
+  border-bottom:1px solid var(--hm-line);text-align:left;
+}
+body.hmatias-institutional :is(.unit-heading h2,.section-heading h2){
+  max-width:14ch;margin:8px 0 0;font-size:clamp(2.35rem,4vw,4.3rem);
+  line-height:.99;font-weight:600;letter-spacing:-.045em;
+}
+body.hmatias-institutional :is(.unit-heading p,.section-heading p){
+  max-width:62ch;margin:0;font-size:.98rem;line-height:1.76;
+}
+body.hmatias-institutional .section-heading.center{max-width:none;text-align:left}
+
+/* Capability blocks: information first, decoration last */
+body.hmatias-institutional :is(.unit-grid,.business-process-grid){
+  gap:26px;
+}
+body.hmatias-institutional :is(.unit-card,.business-process-card){
+  position:relative;padding:24px 0 0;border:0;border-top:2px solid var(--hm-line);
+  border-radius:0;background:transparent;box-shadow:none;
+}
+body.hmatias-institutional :is(.unit-card,.business-process-card):hover{
+  transform:none;box-shadow:none;border-top-color:var(--hm-blue);
+}
+body.hmatias-institutional :is(.unit-card>span,.business-process-card>b,.unit-step>b){
+  display:block;margin-bottom:22px;color:var(--hm-blue);font-size:.72rem;
+  letter-spacing:.11em;font-weight:600;
+}
+body.hmatias-institutional :is(.unit-card h3,.business-process-card strong){
+  display:block;margin-bottom:10px;font-size:1.35rem;line-height:1.25;font-weight:600;
+}
+body.hmatias-institutional :is(.unit-card p,.business-process-card p,.unit-card li){font-size:.95rem;line-height:1.72}
+
+/* Evidence / real work */
+body.hmatias-institutional .unit-proof,
+body.hmatias-institutional .institutional-evidence{
+  overflow:hidden;border:0;border-radius:0;background:#071d33;box-shadow:none;
+}
+body.hmatias-institutional .unit-proof-grid,
+body.hmatias-institutional .institutional-evidence-grid{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);align-items:stretch;
+}
+body.hmatias-institutional :is(.unit-proof-media,.institutional-evidence-media){min-height:440px}
+body.hmatias-institutional :is(.unit-proof-media img,.institutional-evidence-media img){
+  width:100%;height:100%;min-height:440px;object-fit:cover;display:block;filter:saturate(.93) contrast(1.03);
+}
+body.hmatias-institutional :is(.unit-proof-copy,.institutional-evidence-copy){
+  display:flex;flex-direction:column;justify-content:center;padding:54px 48px;color:#fff;
+}
+body.hmatias-institutional :is(.unit-proof-copy h2,.unit-proof-copy h3,.institutional-evidence-copy h2,.institutional-evidence-copy h3){color:#fff}
+body.hmatias-institutional :is(.unit-proof-copy p,.institutional-evidence-copy p){color:#c7d7e4!important;line-height:1.75}
+body.hmatias-institutional :is(.unit-proof-copy .eyebrow,.institutional-evidence-copy .eyebrow){color:#8fd0f3!important}
+
+/* Processes */
+body.hmatias-institutional .unit-process-grid{gap:28px}
+body.hmatias-institutional .unit-step{
+  padding:24px 0 0;border:0;border-top:1px solid var(--hm-line);border-radius:0;background:transparent;box-shadow:none;
+}
+body.hmatias-institutional .unit-step h3{font-size:1.25rem;margin-bottom:9px}
+body.hmatias-institutional .unit-step p{font-size:.93rem;line-height:1.7}
+
+/* CTA */
+body.hmatias-institutional .unit-cta{padding:64px 0;background:#edf4f8;color:var(--hm-ink)}
+body.hmatias-institutional .unit-cta h2{color:var(--hm-ink);font-size:clamp(2rem,3vw,3rem);letter-spacing:-.04em}
+body.hmatias-institutional .unit-cta p{color:var(--hm-muted)!important}
+
+/* Business Services */
+body.hmatias-institutional .business-services-grid{gap:0;border-top:1px solid var(--hm-line)}
+body.hmatias-institutional .service-row{
+  padding:24px 0;border:0;border-bottom:1px solid var(--hm-line);border-radius:0;background:transparent;box-shadow:none;
+}
+body.hmatias-institutional .service-row:hover{transform:none;box-shadow:none;background:transparent}
+body.hmatias-institutional .service-row h3{font-size:1.25rem}
+body.hmatias-institutional .visa-feature-card,
+body.hmatias-institutional .business-process-card{
+  border-radius:0;box-shadow:none;
+}
+
+/* HMATIAS Clean */
+body.hmatias-clean .clean-intro{
+  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);gap:72px;align-items:center;
+}
+body.hmatias-clean .clean-intro-image{
+  padding:22px;background:#fff;border:1px solid rgba(255,255,255,.18);border-radius:0;box-shadow:none;
+}
+body.hmatias-clean .clean-intro-image img{width:100%;aspect-ratio:1;object-fit:contain;filter:none}
+body.hmatias-clean .clean-feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px}
+body.hmatias-clean .clean-feature-card{
+  padding:0 0 30px;border:0;border-top:1px solid var(--hm-line);border-radius:0;background:#fff;box-shadow:none;
+}
+body.hmatias-clean .clean-feature-card:hover{transform:none;box-shadow:none}
+body.hmatias-clean .product-media{
+  margin:0 0 25px;padding:28px 10px 18px;min-height:420px;background:#fff;border:0;border-bottom:1px solid var(--hm-line);
+}
+body.hmatias-clean .product-media img{width:100%;height:360px;object-fit:contain;filter:none}
+body.hmatias-clean .clean-product-gallery{
+  display:grid;grid-template-columns:minmax(0,1fr) 118px;gap:14px;align-items:stretch;width:100%;
+}
+body.hmatias-clean .clean-product-gallery img{height:360px}
+body.hmatias-clean .clean-product-gallery .clean-product-alt{height:118px;align-self:end;border:1px solid var(--hm-line);padding:8px}
+body.hmatias-clean .product-media-note{font-size:.7rem;color:var(--hm-muted)}
+body.hmatias-clean .commerce-badges{gap:8px}
+body.hmatias-clean .commerce-badge{
+  padding:0;background:transparent;border:0;border-radius:0;color:var(--hm-blue);
+  font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+}
+body.hmatias-clean .commerce-badge.secondary{color:var(--hm-muted)}
+body.hmatias-clean .clean-feature-card h3{font-size:clamp(1.65rem,2.4vw,2.35rem);letter-spacing:-.035em}
+body.hmatias-clean .clean-status-line{border-top:1px solid var(--hm-line);border-bottom:1px solid var(--hm-line);border-radius:0;background:transparent}
+body.hmatias-clean .clean-price-table{border:0;border-radius:0;background:transparent}
+body.hmatias-clean .clean-price-row{border-bottom:1px solid var(--hm-line)}
+body.hmatias-clean .clean-price-row:last-child{border-bottom:0}
+body.hmatias-clean .clean-details{border:0;border-top:1px solid var(--hm-line);border-radius:0}
+body.hmatias-clean .clean-pdf-card,
+body.hmatias-clean .how-buy,
+body.hmatias-clean .clean-quote-form{
+  border-radius:0;box-shadow:none;border:1px solid var(--hm-line);background:#fff;
+}
+body.hmatias-clean .clean-pdf-card{display:flex;align-items:center;justify-content:space-between;gap:50px;padding:38px}
+body.hmatias-clean .buy-step{border-radius:0;border:0;border-top:1px solid var(--hm-line);background:transparent}
+body.hmatias-clean .clean-quote-wrap{gap:64px}
+body.hmatias-clean .clean-quote-form :is(input,select,textarea){border-radius:2px}
+
+/* Supply evidence block */
+body.hmatias-institutional .institutional-evidence{margin:0;background:#071d33}
+body.hmatias-institutional .institutional-evidence + .unit-main{border-top:0}
+
+/* Footer stays restrained */
+body.hmatias-institutional footer{background:#031f3d}
+
+/* Responsive */
+@media(max-width:900px){
+  body.hmatias-institutional :is(.unit-hero-grid,.unit-heading,.section-heading,.unit-proof-grid,.institutional-evidence-grid),
+  body.hmatias-clean .clean-intro{grid-template-columns:1fr;gap:30px}
+  body.hmatias-institutional :is(.unit-hero,.catalog-page-head){padding:76px 0 68px}
+  body.hmatias-institutional :is(.unit-hero h1,.catalog-page-head h1){max-width:16ch;font-size:clamp(2.75rem,8vw,4.4rem)}
+  body.hmatias-institutional :is(.unit-main,.unit-process,.business-process,.business-contact,.commerce-products,.clean-pdf-section,.clean-buy-compact,.clean-quote-section){padding:72px 0}
+  body.hmatias-institutional :is(.unit-heading,.section-heading){gap:22px;margin-bottom:38px}
+  body.hmatias-institutional :is(.unit-proof-media,.institutional-evidence-media),
+  body.hmatias-institutional :is(.unit-proof-media img,.institutional-evidence-media img){min-height:340px}
+  body.hmatias-institutional :is(.unit-proof-copy,.institutional-evidence-copy){padding:38px 28px}
+  body.hmatias-clean .clean-feature-grid{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  body.hmatias-institutional :is(.unit-hero,.catalog-page-head){padding:64px 0 58px}
+  body.hmatias-institutional :is(.unit-hero h1,.catalog-page-head h1){font-size:clamp(2.45rem,11vw,3.35rem);line-height:1}
+  body.hmatias-institutional :is(.unit-heading h2,.section-heading h2){font-size:clamp(2.05rem,9vw,2.85rem)}
+  body.hmatias-institutional :is(.unit-main,.unit-process,.business-process,.business-contact,.commerce-products,.clean-pdf-section,.clean-buy-compact,.clean-quote-section){padding:58px 0}
+  body.hmatias-clean .product-media{min-height:0;padding:18px 0}
+  body.hmatias-clean .product-media img{height:290px}
+  body.hmatias-clean .clean-product-gallery{grid-template-columns:1fr 88px}
+  body.hmatias-clean .clean-product-gallery img{height:290px}
+  body.hmatias-clean .clean-product-gallery .clean-product-alt{height:88px;padding:5px}
+  body.hmatias-clean .clean-pdf-card{align-items:flex-start;flex-direction:column;padding:26px 22px}
+}
+@media(prefers-reduced-motion:reduce){
+  body.hmatias-institutional *{scroll-behavior:auto}
+}
