@@ -27,7 +27,7 @@
       loading:'A carregar inteligência de oportunidades…',empty:'Nenhuma oportunidade ativa neste filtro.',
       fit:'Fit',confidence:'Confiança',sourceChecked:'Fonte verificada',deadline:'Prazo',
       priorityHigh:'Prioridade alta',priorityMedium:'Avaliar',priorityLow:'Monitorizar',
-      openSource:'Abrir fonte →',analyse:'Analisar oportunidade',
+      openSource:'Abrir fonte →',analyse:'Analisar oportunidade',map:'Ver no Google Maps ↗',
       signalFresh:'Fonte recente',signalRef:'Referência',signalDeadline:'Prazo confirmado',
       serviceBy:'Um serviço da HMATIAS',
       disclaimer:'Fit e confiança são sinais de triagem, não garantias de elegibilidade ou adjudicação. Confirme sempre a fonte original, os documentos do procedimento e os requisitos de qualificação.'
@@ -51,7 +51,7 @@
       loading:'Loading opportunity intelligence…',empty:'No active opportunity in this filter.',
       fit:'Fit',confidence:'Confidence',sourceChecked:'Source checked',deadline:'Deadline',
       priorityHigh:'High priority',priorityMedium:'Assess',priorityLow:'Monitor',
-      openSource:'Open source →',analyse:'Analyse opportunity',
+      openSource:'Open source →',analyse:'Analyse opportunity',map:'Open in Google Maps ↗',
       signalFresh:'Recent source',signalRef:'Reference',signalDeadline:'Deadline confirmed',
       serviceBy:'A service by HMATIAS',
       disclaimer:'Fit and confidence are triage signals, not guarantees of eligibility or award. Always verify the original source, procurement documents and qualification requirements.'
@@ -122,6 +122,11 @@
     if(days===0)return 'Closes today';
     if(days===1)return '1 day left';
     return days+' days left';
+  }
+
+  function mapHref(o){
+    const query=[o.location,o.issuer].filter(Boolean).join(', ')||marketLabel(o);
+    return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(query);
   }
 
   function requestHref(o){
@@ -205,7 +210,8 @@
       const actions=document.createElement('div');actions.className='op-actions';
       const analyse=document.createElement('a');analyse.className='btn btn-primary btn-small op-analyse';analyse.href=requestHref(o);analyse.textContent=t('analyse');
       const source=document.createElement('a');source.className='op-source';source.href=o.source_url;source.target='_blank';source.rel='noopener noreferrer';source.textContent=t('openSource');
-      actions.append(analyse,source);
+      const map=document.createElement('a');map.className='op-map';map.href=mapHref(o);map.target='_blank';map.rel='noopener noreferrer';map.textContent=t('map');
+      actions.append(analyse,source,map);
       side.append(priorityEl,deadline,actions);
 
       card.append(scoreCol,main,side);
