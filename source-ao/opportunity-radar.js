@@ -122,7 +122,7 @@
   function render(){
     const list=$('#opList');
     const visible=opportunities.filter(matchesFilter).sort((a,b)=>new Date(a.deadline)-new Date(b.deadline));
-    $('#activeCount').textContent=opportunities.length;
+    $('#activeCount').textContent=visible.length;
     list.innerHTML='';
     if(!visible.length){
       const p=document.createElement('p');p.className='op-loading';p.textContent=t('empty');list.appendChild(p);return;
