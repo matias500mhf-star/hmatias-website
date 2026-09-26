@@ -190,7 +190,7 @@
     if (!document.querySelector('style[data-source-ao-footer-style]')) {
       const style = document.createElement('style');
       style.dataset.sourceAoFooterStyle = 'true';
-      style.textContent = '.footer-source-ao-link{display:inline-flex;align-items:center;margin-top:16px;text-decoration:none;max-width:max-content}.footer-source-ao-logo{display:block;width:138px;height:auto;filter:brightness(0) invert(1);opacity:.92}.footer-source-ao-link:hover .footer-source-ao-logo{opacity:1}.footer-karta-link{margin-right:14px!important}@media(max-width:600px){.footer-source-ao-logo{width:122px}.footer-karta-link{margin-right:12px!important}}';
+      style.textContent = '.footer-source-ao-link{display:inline-flex;align-items:center;margin-top:16px;padding:7px 10px;background:#fff;border:1px solid rgba(255,255,255,.18);text-decoration:none;max-width:max-content}.footer-source-ao-logo{display:block;width:154px;height:auto;filter:none;opacity:1}.footer-source-ao-link:hover{border-color:rgba(255,255,255,.42)}.footer-karta-link{margin-right:14px!important}@media(max-width:600px){.footer-source-ao-logo{width:138px}.footer-karta-link{margin-right:12px!important}}';
       document.head.appendChild(style);
     }
 

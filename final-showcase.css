@@ -216,21 +216,3 @@ body.hmatias-catalogue footer .copyright{
   body.hmatias-catalogue .work-card:hover img{transform:none}
 }
 
-/* SOURCE AO — prominent HMATIAS product showcase. */
-.source-ao-showcase{position:relative;overflow:hidden;padding:102px 0;background:#071d33;color:#fff}
-.source-ao-showcase:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/112px 100%,radial-gradient(circle at 86% 18%,rgba(72,186,245,.16),transparent 28%)}
-.source-ao-showcase-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);gap:72px;align-items:end}
-.source-ao-showcase-copy{max-width:720px}
-.source-ao-showcase .eyebrow{color:#8fd0f3}
-.source-ao-showcase-logo{display:block;width:min(460px,90%);height:auto;margin:10px 0 30px;padding:10px 14px;background:#fff;border:1px solid rgba(255,255,255,.28)}
-.source-ao-showcase h2{max-width:13ch;margin:0;color:#fff;font-size:clamp(2.7rem,4.7vw,5rem);line-height:.96;letter-spacing:-.05em;font-weight:600}
-.source-ao-showcase-copy>p{max-width:62ch;margin:24px 0 0;color:rgba(232,242,249,.8);font-size:.96rem;line-height:1.78}
-.source-ao-showcase-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
-.source-ao-showcase .btn{border-radius:2px}
-.source-ao-showcase-flow{border-top:1px solid rgba(255,255,255,.16)}
-.source-ao-showcase-flow article{display:grid;grid-template-columns:90px minmax(0,1fr);gap:4px 18px;padding:24px 0;border-bottom:1px solid rgba(255,255,255,.16)}
-.source-ao-showcase-flow small{grid-row:1/3;color:#8fd0f3;font-size:.65rem;font-weight:800;letter-spacing:.12em}
-.source-ao-showcase-flow strong{color:#fff;font-size:1.08rem}
-.source-ao-showcase-flow span{color:#aabfce;font-size:.78rem;line-height:1.55}
-@media(max-width:900px){.source-ao-showcase-grid{grid-template-columns:1fr;gap:44px}.source-ao-showcase-logo{width:min(390px,86%)}}
-@media(max-width:640px){.source-ao-showcase{padding:76px 0}.source-ao-showcase h2{font-size:clamp(2.35rem,10vw,3.5rem)}.source-ao-showcase-flow article{grid-template-columns:1fr}.source-ao-showcase-flow small{grid-row:auto}}
