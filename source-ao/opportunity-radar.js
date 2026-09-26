@@ -113,10 +113,10 @@
       const card=document.createElement('article');card.className='op-card';
       const main=document.createElement('div');
       const kicker=document.createElement('span');kicker.className='op-kicker';kicker.textContent=typeLabel(o.type)+' · '+(o.reference||'');
-      const title=document.createElement('h3');title.textContent=o.title;
+      const title=document.createElement('h3');title.textContent=lang==='pt'?(o.title_pt||o.title):o.title;
       const meta=document.createElement('div');meta.className='op-meta';
       [o.issuer,o.location,o.sector].filter(Boolean).forEach(v=>{const s=document.createElement('span');s.textContent=v;meta.appendChild(s);});
-      const fit=document.createElement('p');fit.className='op-fit';fit.textContent=o.source_fit||o.scope_summary||'';
+      const fit=document.createElement('p');fit.className='op-fit';fit.textContent=lang==='pt'?(o.source_fit_pt||o.scope_summary_pt||o.source_fit||o.scope_summary||''):(o.source_fit||o.scope_summary||'');
       main.append(kicker,title,meta,fit);
 
       const side=document.createElement('div');side.className='op-side';
