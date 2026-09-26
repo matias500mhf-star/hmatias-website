@@ -96,7 +96,7 @@ footer a:hover,
 
 /* Product shortcuts: compact enough for mobile presentations and clearly separated. */
 footer .footer-karta-link,
-footer .footer-procura-link{
+footer .footer-source-ao-link{
   display:inline-flex!important;
   align-items:center!important;
   gap:7px!important;
@@ -107,16 +107,16 @@ footer .footer-procura-link{
 }
 footer .footer-karta-link{margin-right:18px!important}
 footer .footer-karta-mark,
-footer .footer-procura-mark{
+footer .footer-source-ao-mark{
   width:30px!important;
   height:30px!important;
   flex:0 0 30px!important;
   border-radius:8px!important;
 }
 footer .footer-karta-copy small,
-footer .footer-procura-copy small{display:none!important}
+footer .footer-source-ao-copy small{display:none!important}
 footer .footer-karta-copy strong,
-footer .footer-procura-copy strong{
+footer .footer-source-ao-copy strong{
   font-size:.72rem!important;
   line-height:1.15!important;
   letter-spacing:.01em!important;
@@ -150,14 +150,14 @@ textarea:focus-visible{
 
 @media(max-width:600px){
   footer .footer-karta-link,
-  footer .footer-procura-link{
+  footer .footer-source-ao-link{
     gap:6px!important;
     padding:6px 7px!important;
     margin-top:14px!important;
   }
   footer .footer-karta-link{margin-right:16px!important}
   footer .footer-karta-mark,
-  footer .footer-procura-mark{
+  footer .footer-source-ao-mark{
     width:24px!important;
     height:24px!important;
     flex:0 0 24px!important;
@@ -165,7 +165,7 @@ textarea:focus-visible{
     font-size:10px!important;
   }
   footer .footer-karta-copy strong,
-  footer .footer-procura-copy strong{
+  footer .footer-source-ao-copy strong{
     font-size:.66rem!important;
     line-height:1.1!important;
   }

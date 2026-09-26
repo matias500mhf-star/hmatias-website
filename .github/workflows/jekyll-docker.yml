@@ -66,7 +66,8 @@ jobs:
           fetch "/rfq.html" /tmp/rfq.html
           fetch "/karta.html" /tmp/karta.html
           fetch "/credibilidade.html" /tmp/credibilidade.html
-          fetch "/procura.html" /tmp/procura.html
+          fetch "/source-ao/index.html" /tmp/source-ao.html
+          fetch "/procura.html" /tmp/procura-alias.html
           fetch "/images/source-ao-logo.svg" /tmp/source-ao-logo.svg
 
           grep -Fq "HMATIAS" /tmp/home.html
@@ -75,7 +76,9 @@ jobs:
           grep -Fq "SMART RFQ" /tmp/rfq.html
           grep -Fq "KARTA Wallet Mobile" /tmp/karta.html
           grep -Fq "Informação básica e verificável da empresa." /tmp/credibilidade.html
-          grep -Fq "images/source-ao-logo.svg" /tmp/procura.html
+          grep -Fq "../images/source-ao-logo.svg" /tmp/source-ao.html
+          grep -Fq "https://comercialhmatiasps.com/source-ao/index.html" /tmp/procura-alias.html
+          grep -Fq "/source-ao/index.html" /tmp/procura-alias.html
           grep -Fq "SOURCE" /tmp/source-ao-logo.svg
 
           python3 - <<'PY'
