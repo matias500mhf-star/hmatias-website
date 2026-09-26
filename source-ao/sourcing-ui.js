@@ -51,7 +51,14 @@
     return url.toString();
   }
 
-  function showRegistered(reference,url){
+  function commercialWhatsappUrl(reference,item,detail,locationValue){
+    const message=isPt()
+      ?`Olá, HMATIAS. Registei um pedido no Source AO.\nReferência: ${reference}\nItem/serviço: ${item}\nQuantidade/especificação: ${detail||'A confirmar'}\nLocal: ${locationValue}\nPretendo seguimento comercial e cotação.`
+      :`Hello, HMATIAS. I registered a request through Source AO.\nReference: ${reference}\nItem/service: ${item}\nQuantity/specification: ${detail||'To confirm'}\nLocation: ${locationValue}\nI would like commercial follow-up and a quotation.`;
+    return 'https://wa.me/244948806673?text='+encodeURIComponent(message);
+  }
+
+  function showRegistered(reference,url,item,detail,locationValue){
     const box=$('#requestFeedback');
     box.hidden=false;
     box.innerHTML='';
@@ -75,7 +82,13 @@
     open.className='btn btn-light btn-small';
     open.href=url;
     open.textContent=isPt()?'Acompanhar pedido':'Track request';
-    actions.append(copy,open);
+    const notify=document.createElement('a');
+    notify.className='btn btn-primary btn-small';
+    notify.href=commercialWhatsappUrl(reference,item,detail,locationValue);
+    notify.target='_blank';
+    notify.rel='noopener noreferrer';
+    notify.textContent=isPt()?'Avisar HMATIAS no WhatsApp':'Notify HMATIAS on WhatsApp';
+    actions.append(copy,open,notify);
     box.append(strong,text,actions);
   }
 
@@ -126,7 +139,7 @@
         if(!response.ok||!payload?.request?.reference) throw new Error(payload?.error?.code||`http_${response.status}`);
         privateTrackingUrl=trackingUrl(payload.request.status_path);
         if(!privateTrackingUrl) throw new Error('invalid_tracking_path');
-        showRegistered(payload.request.reference,privateTrackingUrl);
+        showRegistered(payload.request.reference,privateTrackingUrl,item,detail,locationValue);
         $('#requestForm').reset();
         $('#requestLocation').value=locationValue;
         clearTimeout(timeout);

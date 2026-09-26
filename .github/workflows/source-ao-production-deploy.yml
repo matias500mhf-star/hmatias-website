@@ -1,0 +1,285 @@
+name: Source AO Production Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type DEPLOY-PRODUCTION to continue'
+        required: true
+        type: string
+  push:
+    branches: [main]
+    paths:
+      - '.source-ao-production-release'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: source-ao-production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy-production:
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.confirm == 'DEPLOY-PRODUCTION') }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    defaults:
+      run:
+        working-directory: source-ao/backend
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+      SOURCE_AO_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_ADMIN_API_TOKEN }}
+
+    steps:
+      - name: Checkout production release
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          package-manager-cache: false
+
+      - name: Preflight production credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID SOURCE_AO_ADMIN_API_TOKEN)
+          missing=()
+          for key in "${required[@]}"; do
+            if [ -z "${!key:-}" ]; then missing+=("$key"); fi
+          done
+          if [ "${#missing[@]}" -gt 0 ]; then
+            for key in "${missing[@]}"; do
+              echo "::error title=Incomplete Source AO production configuration::Missing repository secret or variable: $key" >&2
+            done
+            exit 2
+          fi
+          if [ "${#SOURCE_AO_ADMIN_API_TOKEN}" -lt 32 ]; then
+            echo "::error title=Weak production admin token::SOURCE_AO_ADMIN_API_TOKEN must contain at least 32 characters." >&2
+            exit 2
+          fi
+          case "$CLOUDFLARE_API_TOKEN" in Bearer\ *|bearer\ *) echo "Cloudflare token must be the raw token value." >&2; exit 2;; esac
+          if [[ "$CLOUDFLARE_API_TOKEN" =~ [[:space:]] ]]; then
+            echo "Cloudflare token contains whitespace." >&2
+            exit 2
+          fi
+
+      - name: Install backend tooling
+        run: npm install --no-audit --no-fund
+
+      - name: Run Source AO backend QA
+        run: npm run check
+
+      - name: Resolve or create production D1
+        shell: bash
+        run: |
+          set -euo pipefail
+          list_file="$RUNNER_TEMP/source-ao-d1-list.json"
+          npx wrangler d1 list --json > "$list_file"
+          id="$(node --input-type=module - "$list_file" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const raw=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          const list=Array.isArray(raw)?raw:(raw?.result||[]);
+          const db=list.find(x=>x.name==='source-ao');
+          process.stdout.write(db?.uuid||db?.id||'');
+          NODE
+          )"
+          if [ -z "$id" ]; then
+            echo "Creating production D1 database source-ao."
+            npx wrangler d1 create source-ao --location weur
+            npx wrangler d1 list --json > "$list_file"
+            id="$(node --input-type=module - "$list_file" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const raw=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          const list=Array.isArray(raw)?raw:(raw?.result||[]);
+          const db=list.find(x=>x.name==='source-ao');
+          process.stdout.write(db?.uuid||db?.id||'');
+          NODE
+            )"
+          fi
+          rm -f "$list_file"
+          if ! [[ "$id" =~ ^[0-9a-fA-F-]{32,40}$ ]]; then
+            echo "::error title=D1 bootstrap failed::Unable to resolve production source-ao D1 database ID." >&2
+            exit 1
+          fi
+          echo "SOURCE_AO_PRODUCTION_D1_ID=$id" >> "$GITHUB_ENV"
+          echo "Production D1 database resolved."
+
+      - name: Generate production Worker config
+        run: node scripts/prepare-production-config.mjs
+
+      - name: Apply production D1 migrations
+        run: npx wrangler d1 migrations apply source-ao --remote --config wrangler.production.runtime.jsonc
+
+      - name: Seed curated production search index
+        shell: bash
+        run: |
+          set -euo pipefail
+          seed_file="$RUNNER_TEMP/source-ao-production-seed.sql"
+          node scripts/export-seed-sql.mjs > "$seed_file"
+          test -s "$seed_file"
+          npx wrangler d1 execute source-ao --remote --file="$seed_file" --config wrangler.production.runtime.jsonc
+          rm -f "$seed_file"
+
+      - name: Deploy production API bootstrap
+        run: npx wrangler deploy --config wrangler.production.runtime.jsonc
+
+      - name: Configure persistent production Worker secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          secret_file="$RUNNER_TEMP/source-ao-production-secret-names.json"
+          npx wrangler secret list --format json --config wrangler.production.runtime.jsonc > "$secret_file"
+
+          has_secret() {
+            node --input-type=module - "$secret_file" "$1" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const records=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          const name=process.argv[3];
+          process.exit(Array.isArray(records)&&records.some(x=>x.name===name)?0:1);
+          NODE
+          }
+
+          put_generated_if_missing() {
+            local name="$1"
+            if has_secret "$name"; then
+              echo "$name already configured; preserving existing production value."
+              return
+            fi
+            local value
+            value="$(openssl rand -hex 48)"
+            echo "::add-mask::$value"
+            printf '%s' "$value" | npx wrangler secret put "$name" --config wrangler.production.runtime.jsonc
+            unset value
+            echo "$name created in Cloudflare."
+          }
+
+          put_generated_if_missing CONFIRMATION_SECRET
+          put_generated_if_missing PII_ENCRYPTION_KEY
+          put_generated_if_missing RATE_LIMIT_SECRET
+
+          echo "::add-mask::$SOURCE_AO_ADMIN_API_TOKEN"
+          printf '%s' "$SOURCE_AO_ADMIN_API_TOKEN" | npx wrangler secret put ADMIN_API_TOKEN --config wrangler.production.runtime.jsonc
+          rm -f "$secret_file"
+
+      - name: Redeploy production API with final bindings
+        run: npx wrangler deploy --config wrangler.production.runtime.jsonc
+
+      - name: Resolve production API URL
+        shell: bash
+        run: |
+          set -euo pipefail
+          meta="$RUNNER_TEMP/source-ao-workers-subdomain.json"
+          curl -fsS "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain"             -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" > "$meta"
+          subdomain="$(node --input-type=module - "$meta" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const data=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(data?.success!==true||!data?.result?.subdomain) process.exit(2);
+          process.stdout.write(data.result.subdomain);
+          NODE
+          )"
+          rm -f "$meta"
+          api_base="https://source-ao-api.$subdomain.workers.dev"
+          echo "SOURCE_AO_PRODUCTION_API_BASE=$api_base" >> "$GITHUB_ENV"
+          echo "Production API endpoint resolved."
+
+      - name: Production readiness and public API smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          ready=false
+          for attempt in $(seq 1 18); do
+            code="$(curl -sS -o "$RUNNER_TEMP/source-ao-ready.json" -w '%{http_code}' "$SOURCE_AO_PRODUCTION_API_BASE/ready" || true)"
+            if [ "$code" = "200" ] && node --input-type=module - "$RUNNER_TEMP/source-ao-ready.json" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const x=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          process.exit(x?.ready===true&&x?.environment==='production'?0:1);
+          NODE
+            then
+              ready=true
+              break
+            fi
+            sleep 3
+          done
+          if [ "$ready" != "true" ]; then
+            cat "$RUNNER_TEMP/source-ao-ready.json" || true
+            echo "::error title=Source AO production not ready::Production /ready did not become healthy." >&2
+            exit 1
+          fi
+          curl -fsS "$SOURCE_AO_PRODUCTION_API_BASE/api/search?q=cinta%20PP%209mm&location=Luanda" > "$RUNNER_TEMP/source-ao-search.json"
+          node --input-type=module - "$RUNNER_TEMP/source-ao-search.json" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const x=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(x?.ok!==true) throw new Error('Production search smoke failed');
+          console.log('Production API ready and public search smoke passed.');
+          NODE
+          rm -f "$RUNNER_TEMP/source-ao-ready.json" "$RUNNER_TEMP/source-ao-search.json"
+
+      - name: Connect public Source AO frontend to production API
+        working-directory: .
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import {writeFileSync} from 'node:fs';
+          const apiBase=process.env.SOURCE_AO_PRODUCTION_API_BASE;
+          if(!/^https:\/\//.test(apiBase)) throw new Error('Invalid production API base');
+          const runtime=`(()=>{
+            'use strict';
+            window.SOURCE_AO_RUNTIME=Object.freeze({
+              environment:'production',
+              apiBase:${JSON.stringify(apiBase)}
+            });
+          })();
+          `;
+          writeFileSync('source-ao/runtime-config.js',runtime);
+          NODE
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add source-ao/runtime-config.js
+          if git diff --cached --quiet; then
+            echo "Public runtime already points to production API."
+          else
+            git commit -m "Source AO: connect production API"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Verify public frontend receives production runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          live=false
+          for attempt in $(seq 1 24); do
+            runtime="$(curl -fsS --max-time 10 "https://comercialhmatiasps.com/source-ao/runtime-config.js?check=$GITHUB_RUN_ID" || true)"
+            if printf '%s' "$runtime" | grep -Fq "$SOURCE_AO_PRODUCTION_API_BASE" && printf '%s' "$runtime" | grep -Fq "environment:'production'"; then
+              live=true
+              break
+            fi
+            sleep 5
+          done
+          if [ "$live" != "true" ]; then
+            echo "::error title=Source AO frontend activation pending::GitHub Pages did not expose the production runtime within the validation window." >&2
+            exit 1
+          fi
+          curl -fsS "https://comercialhmatiasps.com/source-ao/" | grep -q "Procure. Verifique."
+          echo "SOURCE_AO_PRODUCTION=PASS"
+          echo "Public frontend is connected to the healthy production API."
+
+      - name: Remove generated temporary files
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          rm -f wrangler.production.runtime.jsonc
+          rm -f "$RUNNER_TEMP/source-ao-production-secret-names.json"
+          rm -f "$RUNNER_TEMP/source-ao-workers-subdomain.json"
+          rm -f "$RUNNER_TEMP/source-ao-ready.json" "$RUNNER_TEMP/source-ao-search.json"
+          rm -f "$RUNNER_TEMP/source-ao-production-seed.sql"
