@@ -24,6 +24,9 @@ jobs:
     if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.confirm == 'DEPLOY-PRODUCTION') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 24
+    # Reuse the already-validated Cloudflare credential scope from staging.
+    # Production D1/Worker resources remain separate and are created by this workflow.
+    environment: source-ao-staging
     defaults:
       run:
         working-directory: source-ao/backend
