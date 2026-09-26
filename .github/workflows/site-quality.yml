@@ -26,31 +26,49 @@ jobs:
       - name: Audit homepages and credibility pages
         shell: bash
         run: |
-          npx --yes lighthouse@latest http://127.0.0.1:8080/ \
-            --quiet --chrome-flags="--headless --no-sandbox" \
-            --only-categories=performance,accessibility,best-practices,seo \
-            --output=json --output-path=./lighthouse-pt-mobile.json
-          npx --yes lighthouse@latest http://127.0.0.1:8080/en.html \
-            --quiet --chrome-flags="--headless --no-sandbox" \
-            --only-categories=performance,accessibility,best-practices,seo \
-            --output=json --output-path=./lighthouse-en-mobile.json
-          npx --yes lighthouse@latest http://127.0.0.1:8080/ \
-            --quiet --preset=desktop --chrome-flags="--headless --no-sandbox" \
-            --only-categories=performance,accessibility,best-practices,seo \
-            --output=json --output-path=./lighthouse-pt-desktop.json
-          npx --yes lighthouse@latest http://127.0.0.1:8080/en.html \
-            --quiet --preset=desktop --chrome-flags="--headless --no-sandbox" \
-            --only-categories=performance,accessibility,best-practices,seo \
-            --output=json --output-path=./lighthouse-en-desktop.json
+          set -euo pipefail
+          chrome_flags="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu"
+
+          run_lighthouse() {
+            local url="$1"
+            local output="$2"
+            local preset="${3:-}"
+            local attempt
+            rm -f "$output"
+            for attempt in 1 2 3; do
+              echo "Lighthouse attempt $attempt/3: $url"
+              if [ "$preset" = "desktop" ]; then
+                if npx --yes lighthouse@latest "$url" \
+                  --quiet --preset=desktop --chrome-flags="$chrome_flags" \
+                  --only-categories=performance,accessibility,best-practices,seo \
+                  --output=json --output-path="$output"; then
+                  test -s "$output"
+                  return 0
+                fi
+              else
+                if npx --yes lighthouse@latest "$url" \
+                  --quiet --chrome-flags="$chrome_flags" \
+                  --only-categories=performance,accessibility,best-practices,seo \
+                  --output=json --output-path="$output"; then
+                  test -s "$output"
+                  return 0
+                fi
+              fi
+              rm -f "$output"
+              pkill -f 'chrome|chromium' 2>/dev/null || true
+              sleep $((attempt * 2))
+            done
+            echo "::error title=Lighthouse launch failed::Unable to complete Lighthouse audit for $url after 3 attempts." >&2
+            return 1
+          }
+
+          run_lighthouse http://127.0.0.1:8080/ ./lighthouse-pt-mobile.json
+          run_lighthouse http://127.0.0.1:8080/en.html ./lighthouse-en-mobile.json
+          run_lighthouse http://127.0.0.1:8080/ ./lighthouse-pt-desktop.json desktop
+          run_lighthouse http://127.0.0.1:8080/en.html ./lighthouse-en-desktop.json desktop
           for page in credibilidade credibility; do
-            npx --yes lighthouse@latest "http://127.0.0.1:8080/$page.html" \
-              --quiet --chrome-flags="--headless --no-sandbox" \
-              --only-categories=performance,accessibility,best-practices,seo \
-              --output=json --output-path="./lighthouse-$page-mobile.json"
-            npx --yes lighthouse@latest "http://127.0.0.1:8080/$page.html" \
-              --quiet --preset=desktop --chrome-flags="--headless --no-sandbox" \
-              --only-categories=performance,accessibility,best-practices,seo \
-              --output=json --output-path="./lighthouse-$page-desktop.json"
+            run_lighthouse "http://127.0.0.1:8080/$page.html" "./lighthouse-$page-mobile.json"
+            run_lighthouse "http://127.0.0.1:8080/$page.html" "./lighthouse-$page-desktop.json" desktop
           done
       - name: Report and enforce quality floor
         shell: bash
