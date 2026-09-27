@@ -3,7 +3,7 @@
   const $=s=>document.querySelector(s);
   const $$=s=>[...document.querySelectorAll(s)];
   let filter='all';
-  let market='all';
+  let market='AO';
   let opportunities=[];
   let lang='pt';
   let localById=new Map();
@@ -25,7 +25,7 @@
       statActive:'Oportunidades ativas',statActiveNote:'com prazo válido',
       statHighFit:'Fit elevado',statHighFitNote:'score ≥ 80',
       statUrgent:'Ação urgente',statUrgentNote:'≤ 5 dias',
-      statMarkets:'Mercados',statMarketsNote:'África Austral',
+      statMarkets:'Mercado',statMarketsNote:'Angola',
       currentEyebrow:'PRIORIDADE COMERCIAL',currentTitle:'Opportunity Intelligence',
       currentLead:'Ordenado por prazo e enriquecido com sinais de fit e confiança. A decisão final continua dependente da análise das peças do procedimento.',
       marketLabel:'MERCADO',typeLabel:'TIPO',marketAll:'Todos',
@@ -58,7 +58,7 @@
       statActive:'Active opportunities',statActiveNote:'valid deadline',
       statHighFit:'High fit',statHighFitNote:'score ≥ 80',
       statUrgent:'Urgent action',statUrgentNote:'≤ 5 days',
-      statMarkets:'Markets',statMarketsNote:'Southern Africa',
+      statMarkets:'Market',statMarketsNote:'Angola',
       currentEyebrow:'COMMERCIAL PRIORITY',currentTitle:'Opportunity Intelligence',
       currentLead:'Sorted by deadline and enriched with fit and confidence signals. Final decisions still require review of the procurement documents.',
       marketLabel:'MARKET',typeLabel:'TYPE',marketAll:'All',
@@ -141,12 +141,12 @@
       const payload=await window.SourceAOAPI.opportunities();
       const live=Array.isArray(payload)?payload:(payload?.results||payload?.opportunities||[]);
       if(!Array.isArray(live))throw new Error('invalid_opportunity_payload');
-      opportunities=live.map(row=>({...localById.get(row.id),...row}));
+      opportunities=live.filter(row=>inferredCountry(row)==='AO').map(row=>({...localById.get(row.id),...row}));
       lastSyncAt=new Date();
       syncState='live';
     }catch(error){
       syncState='fallback';
-      if(!opportunities.length)opportunities=[...localById.values()];
+      if(!opportunities.length)opportunities=[...localById.values()].filter(row=>inferredCountry(row)==='AO');
       console.warn('[Source AO Radar] live refresh unavailable; keeping latest available data',error);
     }finally{
       refreshing=false;
@@ -232,7 +232,7 @@
     $('#activeCount').textContent=active.length;
     $('#highFitCount').textContent=active.filter(o=>(Number(o.fit_score)||0)>=80).length;
     $('#urgentCount').textContent=active.filter(o=>{const d=daysLeft(o.deadline);return d>=0&&d<=5;}).length;
-    $('#marketCount').textContent=new Set(active.map(inferredCountry)).size;
+    $('#marketCount').textContent='AO';
   }
 
   function applyLanguage(){
@@ -317,7 +317,7 @@
     await window.SourceAOData?.init();
     const local=window.SourceAOData?.activeOpportunities?.()||[];
     localById=new Map(local.map(row=>[row.id,row]));
-    opportunities=local;
+    opportunities=local.filter(row=>inferredCountry(row)==='AO');
     syncState='syncing';
     applyLanguage();
     await refreshLiveData();

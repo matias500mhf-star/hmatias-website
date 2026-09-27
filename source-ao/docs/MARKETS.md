@@ -1,42 +1,46 @@
-# Source AO — Market Coverage
+# Source AO — Market Scope
 
-Source AO is an Angola-first procurement intelligence product. Regional coverage is deliberately separated by market so source provenance, currency, eligibility and operational risk are not blended.
+Source AO separates two different jobs so the product does not confuse procurement opportunities with material sourcing.
 
-## Angola
+## 1. Opportunity Radar — Angola only
 
 - Country code: `AO`
 - Currency: `AOA`
-- Role: primary HMATIAS market
-- Initial official source: Portal da Contratação Pública / SNCP
-- Public rule: a source and future deadline are required before an opportunity can be promoted to the public Radar.
+- Role: identify tenders, RFQs, maintenance, facilities, construction, supply requests and subcontracting opportunities relevant to HMATIAS in Angola.
+- Automated opportunity sources must have `country_code='AO'`.
+- A traceable source and future deadline are required before an opportunity can be promoted.
+- Human review remains mandatory.
 
-## Namibia
+The public Opportunity Radar must not publish Namibian or South African tenders as HMATIAS opportunities.
 
+## 2. Material sourcing — Angola, Namibia and South Africa
+
+### Angola
+Primary sourcing market. Source AO should search local suppliers first whenever the requested material can be sourced competitively and within the required time.
+
+### Namibia
 - Country code: `NA`
 - Currency: `NAD`
-- Initial official source: Central Procurement Board of Namibia (CPBN) — Open Bids
-- Source: https://www.cpbn.com.na/index/external/2
-- Discovery adapter: HTML index + traceable bid detail page
-- Important review: foreign-bidder eligibility, local participation/preference requirements, document fees, site meetings, tax/logistics and possible Namibian partner requirements.
+- Role: alternative sourcing market for materials and equipment when Angola has scarcity, unavailable specifications, excessive lead time or an unattractive local supply option.
+- This market is for supplier/product discovery, not tender discovery.
 
-## South Africa
-
+### South Africa
 - Country code: `ZA`
 - Currency: `ZAR`
-- Initial official source: National Treasury eTenders OCDS API
-- API: https://ocds-api.etenders.gov.za/api/OCDSReleases
-- Documentation: https://ocds-api.etenders.gov.za/swagger/index.html
-- Discovery adapter: OCDS release package with a rolling date query and bounded page size.
-- Important review: supplier eligibility, tender-specific registration, preferential procurement requirements, tax status, local execution and logistics.
+- Role: alternative sourcing market for materials and equipment when the Angolan market cannot satisfy the requirement efficiently.
+- This market is for supplier/product discovery, not tender discovery.
 
-National Treasury states that its transparency data reflects procurement information shared with it and is not necessarily a complete record of every South African procurement process. Source AO therefore treats the feed as a discovery source, not a completeness guarantee.
+## Cross-border sourcing workflow
 
-## Regional trust rules
+`Angola search → scarcity/availability check → Namibia/South Africa alternatives → exact specification check → supplier confirmation → price/MOQ → lead time → transport/customs/tax → landed cost → HMATIAS review → quotation`
 
-1. Country and currency are stored on the source, candidate and promoted opportunity.
-2. Deduplication includes country so identical references in different jurisdictions do not collide.
-3. Automated discovery never publishes directly.
-4. Human review confirms contracting entity, location, deadline and source before promotion.
-5. A foreign-market opportunity triggers a cross-border review recommendation instead of automatic direct bid.
-6. Public users are always directed back to the original source and procurement documents.
-7. Expired opportunities are removed from active public results by maintenance.
+## Trust rules
+
+1. Discovery never means current stock is confirmed.
+2. Country and currency must remain explicit on supplier/material results.
+3. Namibia and South Africa must not feed the public Opportunity Radar.
+4. Cross-border suppliers require verification of the exact specification, quantity, availability and commercial terms.
+5. Source AO must distinguish supplier price from estimated landed cost in Angola.
+6. Transport, customs, duties/taxes, insurance and payment terms must be reviewed before HMATIAS treats a foreign option as commercially usable.
+7. Supplier contact data and private commercial conversations remain internal.
+8. Human confirmation is required before a foreign supplier is presented as verified.

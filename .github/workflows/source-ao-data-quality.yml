@@ -117,15 +117,16 @@ jobs:
           grep -q 'does \*\*not\*\* accept or store private screenshots' source-ao/docs/EVIDENCE_POLICY.md
           grep -q '"CONTACT_RETENTION_DAYS": "180"' source-ao/backend/wrangler.jsonc
           grep -q '"head_sampling_rate": 0.1' source-ao/backend/wrangler.jsonc
-      - name: Validate Southern Africa market contract
+      - name: Validate opportunity vs material-sourcing market scope
         shell: bash
         run: |
           set -euo pipefail
-          grep -q "cpbn-namibia-open-bids" source-ao/backend/migrations/0010_regional_markets.sql
-          grep -q "etenders-south-africa-ocds" source-ao/backend/migrations/0010_regional_markets.sql
-          grep -q "country_code" source-ao/backend/src/opportunity-pipeline.js
-          grep -q 'data-market="NA"' source-ao/opportunity-radar.html
-          grep -q 'data-market="ZA"' source-ao/opportunity-radar.html
+          grep -q "regional material sourcing only" source-ao/backend/migrations/0013_material_sourcing_scope.sql
+          grep -q "country_code='AO'" source-ao/backend/src/index.js
+          grep -q "active=1 AND country_code='AO'" source-ao/backend/src/opportunity-pipeline.js
+          ! grep -q 'data-market="NA"' source-ao/opportunity-radar.html
+          ! grep -q 'data-market="ZA"' source-ao/opportunity-radar.html
+          grep -q "material and equipment sourcing market" source-ao/README.md
 
       - name: Validate private commercial partner network
         shell: bash

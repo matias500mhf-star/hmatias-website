@@ -6,12 +6,13 @@ Source AO is an Angola-first HMATIAS sourcing and commercial-verification produc
 
 ## Market coverage
 
-Source AO keeps each market explicit rather than mixing regional results:
-- **Angola (`AO`, AOA)** — primary HMATIAS operating market;
-- **Namibia (`NA`, NAD)** — official CPBN open-bid discovery and future approved sources;
-- **South Africa (`ZA`, ZAR)** — National Treasury eTenders/OCDS discovery.
+Source AO separates **commercial opportunity intelligence** from **material sourcing**:
 
-Cross-border opportunities are not treated as automatic direct-bid opportunities. SOURCE Intelligence requires eligibility, local registration, preference rules, tax/logistics and partnership needs to be reviewed before a participation recommendation can advance.
+- **Angola (`AO`, AOA)** — the only market used by the Opportunity Radar for tenders, RFQs, facilities, construction and commercial opportunities;
+- **Namibia (`NA`, NAD)** — material and equipment sourcing market used when the Angolan market has scarcity, weak availability or an unattractive supply option;
+- **South Africa (`ZA`, ZAR)** — material and equipment sourcing market used for the same cross-border supply purpose.
+
+Namibia and South Africa are **not foreign tender/opportunity markets for HMATIAS** in the current product scope. Foreign-market records must be treated as supplier/material discovery only, followed by stock, specification, price, lead-time, logistics, customs and landed-cost verification.
 
 See `docs/MARKETS.md`.
 
