@@ -171,3 +171,25 @@
   .unit-proof{border-radius:18px}
   .unit-proof img{aspect-ratio:4/3;max-height:none}
 }
+
+
+/* 2026-09-27 — consistent project photography across division pages.
+   Keep one editorial frame while preserving useful subject matter on narrow screens. */
+.unit-proof{min-width:0}
+.unit-proof img{
+  display:block;
+  width:100%;
+  aspect-ratio:4/3;
+  height:auto;
+  min-height:0;
+  object-fit:cover;
+  object-position:center;
+  background:#eef4f8
+}
+@media(min-width:1001px){
+  .unit-proof img{height:100%;aspect-ratio:auto;min-height:360px}
+}
+@media(max-width:620px){
+  .unit-proof{border-radius:18px}
+  .unit-proof img{aspect-ratio:4/3}
+}
