@@ -32,10 +32,35 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
+      - name: Build public-only site artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          out=".public-site"
+          rm -rf "$out"
+          mkdir -p "$out"
+          rsync -a ./ "$out"/ \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude '.public-site/' \
+            --exclude '.source-ao-production-release' \
+            --exclude 'SECURITY.md' \
+            --exclude 'source-ao/backend/' \
+            --exclude 'source-ao/docs/' \
+            --exclude 'source-ao/schemas/' \
+            --exclude 'source-ao/data-contract.json' \
+            --exclude 'source-ao/validate-data.mjs'
+          test -f "$out/index.html"
+          test -f "$out/source-ao/index.html"
+          test ! -e "$out/source-ao/backend"
+          test ! -e "$out/source-ao/docs"
+          test ! -e "$out/.github"
+          echo "Public-only deployment artifact prepared."
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: .public-site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
@@ -89,6 +114,14 @@ jobs:
           grep -Fq "Disallow: /source-ao/review.html" /tmp/robots.txt
           grep -Fq "Disallow: /source-ao/requests.html" /tmp/robots.txt
           grep -Fq "Disallow: /source-ao/backend/" /tmp/robots.txt
+
+          for hidden_path in             "/source-ao/backend/src/router.js"             "/source-ao/backend/.env.staging.example"             "/source-ao/docs/MARKETS.md"             "/source-ao/data-contract.json"; do
+            hidden_status="$(curl --silent --output /dev/null --write-out '%{http_code}'               --location --connect-timeout 15 --max-time 30 "$base$hidden_path" || true)"
+            if [ "$hidden_status" = "200" ]; then
+              echo "ERROR: private Source AO build material is publicly accessible: $hidden_path"
+              exit 1
+            fi
+          done
           grep -Fq "Disallow: /source-ao/docs/" /tmp/robots.txt
 
           for private_page in /tmp/source-ao-ops.html /tmp/source-ao-review.html /tmp/source-ao-requests.html; do
