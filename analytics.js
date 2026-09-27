@@ -1,4 +1,4 @@
-/* HMATIAS Google Analytics 4 loader only. Site UI is intentionally handled elsewhere. */
+/* HMATIAS Google Analytics 4 loader — consent-gated by Cookiebot CMP. */
 (() => {
   'use strict';
 
@@ -6,27 +6,71 @@
   const productionHosts = ['comercialhmatiasps.com', 'www.comercialhmatiasps.com'];
 
   if (!productionHosts.includes(window.location.hostname)) return;
-  if (document.querySelector('script[data-hmatias-analytics]')) return;
 
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
-  window.gtag('js', new Date());
-  window.gtag('config', measurementId, {
-    allow_google_signals: false,
-    allow_ad_personalization_signals: false
+
+  // Privacy-first defaults. HMATIAS does not use Google advertising storage/signals.
+  window.gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    wait_for_update: 500
   });
 
-  const tag = document.createElement('script');
-  tag.async = true;
-  tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
-  tag.dataset.hmatiasAnalytics = measurementId;
-  document.head.appendChild(tag);
+  let loaded = false;
 
-  if (!document.querySelector('script[data-hmatias-analytics-events]')) {
-    const events = document.createElement('script');
-    events.src = 'analytics-events.js?v=20260917-stable1';
-    events.defer = true;
-    events.dataset.hmatiasAnalyticsEvents = 'true';
-    document.head.appendChild(events);
+  function statisticsAllowed() {
+    return Boolean(window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.statistics);
   }
+
+  function setConsent(granted) {
+    window.gtag('consent', 'update', {
+      analytics_storage: granted ? 'granted' : 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+  }
+
+  function loadAnalytics() {
+    const allowed = statisticsAllowed();
+    setConsent(allowed);
+    if (!allowed || loaded || document.querySelector('script[data-hmatias-analytics]')) return;
+
+    loaded = true;
+    window.gtag('js', new Date());
+    window.gtag('config', measurementId, {
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false
+    });
+
+    const tag = document.createElement('script');
+    tag.async = true;
+    tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
+    tag.dataset.hmatiasAnalytics = measurementId;
+    document.head.appendChild(tag);
+
+    if (!document.querySelector('script[data-hmatias-analytics-events]')) {
+      const events = document.createElement('script');
+      events.src = 'analytics-events.js?v=20260917-stable1';
+      events.defer = true;
+      events.dataset.hmatiasAnalyticsEvents = 'true';
+      document.head.appendChild(events);
+    }
+  }
+
+  function syncConsent() {
+    const allowed = statisticsAllowed();
+    setConsent(allowed);
+    if (allowed) loadAnalytics();
+  }
+
+  window.addEventListener('CookiebotOnConsentReady', syncConsent);
+  window.addEventListener('CookiebotOnAccept', syncConsent);
+  window.addEventListener('CookiebotOnDecline', syncConsent);
+
+  // Covers returning visitors when consent is already available by the time this file runs.
+  syncConsent();
 })();
