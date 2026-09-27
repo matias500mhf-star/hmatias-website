@@ -130,3 +130,12 @@ Authenticated sourcing operations can attach a private commercial case to a cust
 Supplier cost options are stored separately from the public request. Material cost, transport, customs, taxes/fees, other costs, contingency and FX-to-AOA are entered by an authenticated operator; the system does not invent missing prices, FX, duties or logistics. Foreign-currency options can remain drafts without an FX rate, but cannot become verified/selected until the FX rate is supplied.
 
 Gross profit and gross margin are calculated only when a selected verified cost and an explicit AOA sale price exist. A proposal cannot move to ready/sent/revised/accepted until the request is qualified and those inputs are complete. All commercial-case endpoints are admin-only and are never exposed through public request tracking.
+
+
+## Proposal Builder v1
+
+The authenticated Sourcing Desk can generate a customer-facing proposal draft only after the commercial case is ready: qualification completed, a verified/selected supplier cost chosen and an explicit HMATIAS sale price entered.
+
+The proposal draft is intentionally separated from internal commercial intelligence. It can include the customer/request reference, confirmed RFQ items, confirmed quantities/specifications, requested location/date and the explicit total sale price. It never exposes the private supplier, landed cost, supplier quote values, gross profit or gross margin.
+
+Commercial terms that Source AO does not know — such as HMATIAS delivery commitment, proposal validity and payment terms — remain visibly marked as **A confirmar** instead of being fabricated. The proposal endpoint is admin-only and the browser keeps the admin token in session memory only.
