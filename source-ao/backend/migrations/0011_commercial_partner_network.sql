@@ -1,5 +1,8 @@
 PRAGMA foreign_keys = ON;
 
+-- Schema only. Commercial partner identities, relationship states and follow-up
+-- data are operational records and must be created through the authenticated
+-- admin API / private database, never seeded from the public source tree.
 CREATE TABLE IF NOT EXISTS commercial_partners (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
@@ -25,43 +28,3 @@ CREATE INDEX IF NOT EXISTS idx_commercial_partners_stage
 
 CREATE INDEX IF NOT EXISTS idx_commercial_partners_country
   ON commercial_partners(country_code,relationship_stage);
-
-INSERT OR IGNORE INTO commercial_partners(
-  id,name,country_code,partner_type,relationship_stage,source_channel,locality,website,capabilities_json,sectors_json,source_note
-) VALUES
-('partner-miliart','MILIART','AO','strategic_partner','under_review','document','Luanda','https://www.miliart-angola.com',
- '["interiors","furniture","office-furniture","partitions","vinyl-flooring","technical-flooring","metal-ceilings","acoustic-solutions","smart-home","decorative-surfaces","custom-kitchens","blinds-curtains"]',
- '["construction","interiors","facilities","hospitality","corporate-spaces"]',
- 'Company presentation and meeting request received by HMATIAS.'),
-('partner-mateana','MATEANA','AO','supplier','under_review','document','Luanda',NULL,
- '["uniforms","workwear","corporate-uniforms","construction-workwear","security-uniforms","hospitality-uniforms","healthcare-uniforms","sportswear"]',
- '["supply-procurement","construction","industry","security","hospitality","healthcare"]',
- 'Company presentation received by HMATIAS.'),
-('partner-premier-yangue','Premier Yangue','AO','strategic_partner','under_review','email','Luanda',NULL,
- '["recruitment","manpower","hr-outsourcing","payroll","immigration","work-permits","expatriate-mobilization","local-content","business-representation"]',
- '["human-resources","operations","construction-support","corporate-services"]',
- 'Two-way cooperation proposal received by HMATIAS.'),
-('partner-ady-ferraz','ADY-FERRAZ','AO','supplier','under_review','email','Luanda',NULL,
- '["ppe","epi","consumables","materials","equipment","sourcing","rfq-response"]',
- '["supply-procurement","construction","facilities","industrial"]',
- 'Supplier cooperation and RFQ test proposal received by HMATIAS.'),
-('partner-nova-forma','Nova Forma','AO','subcontractor','under_review','email','Luanda',NULL,
- '["construction","finishes","painting","remodelling","site-labour"]',
- '["construction","interiors","facilities"]',
- 'Construction and finishes subcontracting proposal received by HMATIAS.'),
-('partner-good-service','GOOD SERVICE','AO','subcontractor','introduced','whatsapp','Luanda',NULL,
- '["drywall","plasterboard","false-ceilings","painting","plastering","boiserie","wallpaper","interior-finishes","remodelling"]',
- '["construction","interiors","facilities"]',
- 'Portfolio and immediate subcontracting availability presented to HMATIAS.'),
-('partner-mendes-one','MENDES ONE','AO','service_provider','introduced','whatsapp','Luanda',NULL,
- '["cleaning","hygiene","sanitation","facility-cleaning","maintenance-support"]',
- '["cleaning-supplies","facilities","commercial-services","institutional-services"]',
- 'Cleaning and hygiene partnership proposal received by HMATIAS.'),
-('partner-construindo-futuro','Construindo O Futuro','AO','subcontractor','introduced','whatsapp','Luanda',NULL,
- '["wooden-doors","wooden-windows","joinery","installation","finishes"]',
- '["construction","interiors","building-finishes"]',
- 'Supply and installation capability presented to HMATIAS.'),
-('partner-redox-angola','Redox Angola','AO','supplier','active','whatsapp','Luanda',NULL,
- '["chemical-supply","industrial-chemicals","formaldehyde","reagents","stock-supply"]',
- '["supply-procurement","industrial","healthcare-supply"]',
- 'Supplier already used in an active HMATIAS sourcing process.');
