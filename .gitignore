@@ -1,5 +1,51 @@
-
+# Dependencies and generated outputs
 node_modules/
 .sites-runtime/
 .qa/
+dist/
+build/
+coverage/
+
+# Environment files and local deployment state
+.env
+.env.*
+!.env.example
+!.env.*.example
+.dev.vars
+.dev.vars.*
 source-ao/backend/wrangler.staging.runtime.jsonc
+source-ao/backend/wrangler.production.runtime.jsonc
+.wrangler/
+.devcontainer/
+
+# Secrets, signing material and credentials
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.mobileprovision
+*.ovpn
+credentials/
+secrets/
+private/
+
+# Databases, exports, backups and private runtime data
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.bak
+*.backup
+*.sql.gz
+backups/
+exports/
+uploads/
+
+# Local tooling / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
