@@ -30,6 +30,7 @@ import {
   getPrivateSourcingSupplierContact
 } from './private-sourcing-suppliers.js';
 import {getCommercialCase,upsertCostOption,updateCommercialCase,getProposalDraft} from './commercial-case.js';
+import {getFulfillmentCase,updateFulfillmentCase} from './fulfillment.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -85,6 +86,7 @@ export default {
             const commercialCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/commercial-case$/);
             const costOptions=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/cost-options$/);
             const proposalDraft=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/proposal-draft$/);
+            const fulfillmentCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/fulfillment$/);
             if(adminStatus && request.method==='POST'){
               response=await updateSourcingRequestStatus(request,env,adminStatus[1]);
             }else if(commercialCase && request.method==='GET'){
@@ -95,6 +97,10 @@ export default {
               response=await upsertCostOption(request,env,costOptions[1]);
             }else if(proposalDraft && request.method==='GET'){
               response=await getProposalDraft(request,env,proposalDraft[1]);
+            }else if(fulfillmentCase && request.method==='GET'){
+              response=await getFulfillmentCase(request,env,fulfillmentCase[1]);
+            }else if(fulfillmentCase && request.method==='POST'){
+              response=await updateFulfillmentCase(request,env,fulfillmentCase[1]);
             }else if(url.pathname==='/api/admin/maintenance/run' && request.method==='POST'){
               if(env.SOURCE_AO_ENV!=='staging'){
                 response=new Response(JSON.stringify({ok:false,error:{code:'not_found',message:'Not found.'}}),{

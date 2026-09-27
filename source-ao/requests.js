@@ -119,6 +119,17 @@
         <span class="commercial-message"></span>
       </div>
       <section class="proposal-preview" hidden></section>
+      <section class="fulfillment-block">
+        <div class="fulfillment-head">
+          <div>
+            <small>EXECUÇÃO COMERCIAL</small>
+            <h4>Adjudicação → compra → entrega → lucro realizado</h4>
+            <p>Registe apenas valores reais confirmados. Um campo de custo vazio significa desconhecido; introduza 0 quando o custo real não existir.</p>
+          </div>
+          <button class="btn btn-outline btn-small open-fulfillment" type="button">Abrir execução</button>
+        </div>
+        <section class="fulfillment-panel" hidden aria-live="polite"></section>
+      </section>
       <div class="cost-divider"></div>
       <div class="cost-head"><div><small>CUSTOS DE FORNECEDOR</small><h4>Opções privadas de custo</h4></div><button class="btn btn-outline btn-small new-cost-option" type="button">Novo custo</button></div>
       <form class="cost-form">
@@ -271,6 +282,8 @@
       }finally{button.disabled=false;}
     });
 
+    panel.querySelector('.open-fulfillment').addEventListener('click',()=>loadFulfillment(card,row,panel));
+
     panel.querySelector('.generate-proposal-draft').addEventListener('click',async()=>{
       const button=panel.querySelector('.generate-proposal-draft');
       const preview=panel.querySelector('.proposal-preview');
@@ -362,6 +375,147 @@
         message.className='commercial-message error';
       }finally{button.disabled=false;}
     });
+  }
+
+
+  function toLocalDateTime(value){
+    if(!value)return '';
+    const date=new Date(value);
+    if(Number.isNaN(date.getTime()))return '';
+    const pad=n=>String(n).padStart(2,'0');
+    return date.getFullYear()+'-'+pad(date.getMonth()+1)+'-'+pad(date.getDate())+'T'+pad(date.getHours())+':'+pad(date.getMinutes());
+  }
+
+  function fulfillmentDate(value){
+    if(!value)return null;
+    const date=new Date(value);
+    return Number.isNaN(date.getTime())?null:date.toISOString();
+  }
+
+  function renderFulfillment(card,row,commercialPanel,payload){
+    const panel=commercialPanel.querySelector('.fulfillment-panel');
+    panel.hidden=false;
+    const f=payload?.fulfillment||{};
+    const s=payload?.summary||{};
+    panel.innerHTML=`
+      <div class="fulfillment-statusbar">
+        <span>Proposta: <strong class="fulfillment-proposal-state"></strong></span>
+        <span>Execução: <strong class="fulfillment-stage-state"></strong></span>
+      </div>
+      <div class="fulfillment-summary">
+        <article><small>CUSTO REAL TOTAL</small><strong class="fulfillment-total-cost">—</strong></article>
+        <article><small>RECEITA FINAL</small><strong class="fulfillment-revenue">—</strong></article>
+        <article><small>LUCRO REALIZADO</small><strong class="fulfillment-profit">—</strong></article>
+        <article><small>MARGEM REALIZADA</small><strong class="fulfillment-margin">—</strong></article>
+      </div>
+      <div class="fulfillment-grid">
+        <label>Etapa<select class="fulfillment-stage"><option value="pending">Pendente</option><option value="awarded">Adjudicado</option><option value="purchased">Comprado</option><option value="delivered">Entregue</option><option value="completed">Concluído</option></select></label>
+        <label>Ref. adjudicação<input class="fulfillment-award-ref" maxlength="160" placeholder="Contrato / PO cliente / adjudicação"></label>
+        <label>Data adjudicação<input class="fulfillment-awarded-at" type="datetime-local"></label>
+        <label>Ref. compra<input class="fulfillment-purchase-ref" maxlength="160" placeholder="PO fornecedor / compra"></label>
+        <label>Data compra<input class="fulfillment-purchased-at" type="datetime-local"></label>
+        <label>Custo real material (AOA)<input class="fulfillment-material" type="number" min="0" step="0.01" placeholder="0 ou valor real"></label>
+        <label>Transporte real (AOA)<input class="fulfillment-transport" type="number" min="0" step="0.01" placeholder="0 ou valor real"></label>
+        <label>Alfândega real (AOA)<input class="fulfillment-customs" type="number" min="0" step="0.01" placeholder="0 ou valor real"></label>
+        <label>Impostos/taxas reais (AOA)<input class="fulfillment-tax" type="number" min="0" step="0.01" placeholder="0 ou valor real"></label>
+        <label>Outros custos reais (AOA)<input class="fulfillment-other" type="number" min="0" step="0.01" placeholder="0 ou valor real"></label>
+        <label>Ref. entrega<input class="fulfillment-delivery-ref" maxlength="160" placeholder="Guia / receção / entrega"></label>
+        <label>Data entrega<input class="fulfillment-delivered-at" type="datetime-local"></label>
+        <label>Receita final (AOA)<input class="fulfillment-final-revenue" type="number" min="0" step="0.01" placeholder="Valor final faturado/aceite"></label>
+        <label class="commercial-notes">Notas internas<textarea class="fulfillment-notes" rows="2" maxlength="1600" placeholder="Ocorrências, confirmação de entrega, desvios e fecho"></textarea></label>
+      </div>
+      <div class="fulfillment-actions">
+        <button class="btn btn-primary btn-small save-fulfillment" type="button">Guardar execução</button>
+        <span class="fulfillment-message"></span>
+      </div>
+      <p class="fulfillment-truth-note">O lucro realizado não usa estimativas. Só é calculado após custos reais completos, receita final explícita e entrega registada.</p>
+    `;
+
+    panel.querySelector('.fulfillment-proposal-state').textContent=(payload?.proposal_status||'not_ready').replaceAll('_',' ');
+    panel.querySelector('.fulfillment-stage-state').textContent=f.stage||'pending';
+    panel.querySelector('.fulfillment-total-cost').textContent=fmtMoney(s.actual_total_cost_aoa);
+    panel.querySelector('.fulfillment-revenue').textContent=fmtMoney(s.final_revenue_aoa);
+    panel.querySelector('.fulfillment-profit').textContent=fmtMoney(s.realized_gross_profit_aoa);
+    panel.querySelector('.fulfillment-margin').textContent=s.realized_gross_margin_pct==null?'—':s.realized_gross_margin_pct.toLocaleString('pt-AO',{maximumFractionDigits:2})+'%';
+    if(s.profit_alert==='negative_realized_profit')panel.querySelector('.fulfillment-profit').classList.add('negative');
+
+    panel.querySelector('.fulfillment-stage').value=f.stage||'pending';
+    panel.querySelector('.fulfillment-award-ref').value=f.award_ref||'';
+    panel.querySelector('.fulfillment-awarded-at').value=toLocalDateTime(f.awarded_at);
+    panel.querySelector('.fulfillment-purchase-ref').value=f.purchase_ref||'';
+    panel.querySelector('.fulfillment-purchased-at').value=toLocalDateTime(f.purchased_at);
+    panel.querySelector('.fulfillment-material').value=f.actual_material_cost_aoa??'';
+    panel.querySelector('.fulfillment-transport').value=f.actual_transport_cost_aoa??'';
+    panel.querySelector('.fulfillment-customs').value=f.actual_customs_cost_aoa??'';
+    panel.querySelector('.fulfillment-tax').value=f.actual_tax_cost_aoa??'';
+    panel.querySelector('.fulfillment-other').value=f.actual_other_cost_aoa??'';
+    panel.querySelector('.fulfillment-delivery-ref').value=f.delivery_ref||'';
+    panel.querySelector('.fulfillment-delivered-at').value=toLocalDateTime(f.delivered_at);
+    panel.querySelector('.fulfillment-final-revenue').value=f.final_revenue_aoa??'';
+    panel.querySelector('.fulfillment-notes').value=f.internal_notes||'';
+
+    panel.querySelector('.save-fulfillment').addEventListener('click',async()=>{
+      const button=panel.querySelector('.save-fulfillment');
+      const message=panel.querySelector('.fulfillment-message');
+      const numberOrNull=selector=>{
+        const value=panel.querySelector(selector).value;
+        return value===''?null:Number(value);
+      };
+      button.disabled=true;message.textContent='A guardar…';message.className='fulfillment-message';
+      try{
+        const saved=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/fulfillment',{
+          method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
+            stage:panel.querySelector('.fulfillment-stage').value,
+            award_ref:panel.querySelector('.fulfillment-award-ref').value.trim()||null,
+            awarded_at:fulfillmentDate(panel.querySelector('.fulfillment-awarded-at').value),
+            purchase_ref:panel.querySelector('.fulfillment-purchase-ref').value.trim()||null,
+            purchased_at:fulfillmentDate(panel.querySelector('.fulfillment-purchased-at').value),
+            actual_material_cost_aoa:numberOrNull('.fulfillment-material'),
+            actual_transport_cost_aoa:numberOrNull('.fulfillment-transport'),
+            actual_customs_cost_aoa:numberOrNull('.fulfillment-customs'),
+            actual_tax_cost_aoa:numberOrNull('.fulfillment-tax'),
+            actual_other_cost_aoa:numberOrNull('.fulfillment-other'),
+            delivery_ref:panel.querySelector('.fulfillment-delivery-ref').value.trim()||null,
+            delivered_at:fulfillmentDate(panel.querySelector('.fulfillment-delivered-at').value),
+            final_revenue_aoa:numberOrNull('.fulfillment-final-revenue'),
+            internal_notes:panel.querySelector('.fulfillment-notes').value.trim()||null
+          })
+        });
+        if(saved?.request?.status){
+          row.status=saved.request.status;
+          card.querySelector('.request-status').textContent=row.status.replaceAll('_',' ');
+          card.querySelector('.status-select').value=row.status;
+        }
+        renderFulfillment(card,row,commercialPanel,saved);
+      }catch(error){
+        const labels={
+          accepted_proposal_required:'A proposta precisa estar marcada como aceite antes de iniciar a adjudicação.',
+          award_required:'Registe a referência e a data de adjudicação.',
+          purchase_required:'Registe a referência e a data da compra.',
+          actual_costs_required:'Preencha todos os custos reais. Use 0 quando um custo não existir.',
+          delivery_required:'Registe a referência e a data da entrega.',
+          realized_profit_required:'Para concluir, confirme todos os custos reais, a entrega e a receita final.'
+        };
+        message.textContent=labels[error.message]||'Não foi possível guardar a execução comercial.';
+        message.className='fulfillment-message error';
+      }finally{button.disabled=false;}
+    });
+  }
+
+  async function loadFulfillment(card,row,commercialPanel){
+    const button=commercialPanel.querySelector('.open-fulfillment');
+    const panel=commercialPanel.querySelector('.fulfillment-panel');
+    button.disabled=true;button.textContent='A carregar…';
+    try{
+      const payload=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/fulfillment');
+      renderFulfillment(card,row,commercialPanel,payload);
+      button.textContent='Atualizar execução';
+    }catch(error){
+      panel.hidden=false;
+      panel.innerHTML='<div class="empty-state compact"><strong>Não foi possível carregar a execução.</strong><p>Confirme a sessão privada e tente novamente.</p></div>';
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
+      button.textContent='Tentar novamente';
+    }finally{button.disabled=false;}
   }
 
   async function loadCommercialCase(card,row){

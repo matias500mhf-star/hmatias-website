@@ -137,3 +137,14 @@ Gross profit and gross margin are calculated only when a selected verified cost 
 A qualified commercial case can prepare an internal customer-facing proposal summary only after the operator explicitly records a proposal reference, validity period, payment terms, delivery terms and tax treatment. The proposal pack reuses the encrypted RFQ line items but deliberately excludes the selected supplier, supplier quote, landed cost, internal profit and gross margin.
 
 The proposal preview is still an operational draft: SOURCE AO does not send it automatically, create invoices, award purchases or claim stock/lead time that has not been confirmed. Operators must review the scope and commercial conditions before issuing any proposal to a customer.
+
+
+## Fulfillment and realized profit
+
+After a proposal is explicitly marked **accepted**, authenticated HMATIAS operations can progress the same sourcing request through:
+
+`accepted proposal → award → purchase → delivery → completion`
+
+The fulfillment case stores award and purchase references, confirmed actual AOA cost components, delivery evidence, and explicit final revenue. Estimated supplier cost, landed cost, proposal price, or margin are **never copied into realized values automatically**.
+
+Realized gross profit and realized gross margin are calculated only after all actual cost components have been explicitly entered (use `0` when a real cost does not exist), final revenue is explicit, and delivery has been recorded. Blank cost fields mean **unknown**, not zero. Fulfillment stages cannot move backwards, and advancing stages is blocked when required evidence is missing.

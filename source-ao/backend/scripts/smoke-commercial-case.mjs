@@ -54,4 +54,14 @@ const proposalSerialized=JSON.stringify(proposal);
 for(const forbidden of ['supplier_id','supplier_name','landed_cost_aoa','gross_profit_aoa','gross_margin_pct','contact_encrypted','private_contact_encrypted']){
   assert.equal(proposalSerialized.includes(forbidden),false);
 }
-console.log('Commercial-case and proposal-pack production smoke passed without creating commercial values.');
+
+const fulfillment=await call(`/api/admin/sourcing-requests/${encodeURIComponent(synthetic.id)}/fulfillment`);
+assert.equal(fulfillment?.ok,true);
+assert.equal(fulfillment?.confidential,true);
+assert.equal(fulfillment?.summary?.realized_profit_ready,false);
+assert.equal(fulfillment?.summary?.realized_gross_profit_aoa,null);
+const fulfillmentSerialized=JSON.stringify(fulfillment);
+for(const forbidden of ['contact_encrypted','private_contact_encrypted','access_token_hash']){
+  assert.equal(fulfillmentSerialized.includes(forbidden),false);
+}
+console.log('Commercial-case, proposal-pack and fulfillment production smoke passed without creating commercial values.');

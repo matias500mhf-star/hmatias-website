@@ -135,6 +135,7 @@ jobs:
           grep -q '/commercial-case' source-ao/requests.js
           grep -q '/cost-options' source-ao/requests.js
           grep -q '/proposal-draft' source-ao/requests.js
+          grep -q '/fulfillment' source-ao/requests.js
           ! grep -Eq 'localStorage|sessionStorage' source-ao/requests.js
       - name: Validate commercial case privacy and truth contract
         shell: bash
@@ -148,6 +149,16 @@ jobs:
           grep -q "buildProposalDraft" source-ao/backend/src/commercial-case.js
           grep -q "/proposal-draft" source-ao/backend/src/router.js
           ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0016_commercial_case.sql source-ao/backend/migrations/0017_proposal_pack.sql
+      - name: Validate fulfillment and realized-profit truth contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "CREATE TABLE IF NOT EXISTS sourcing_fulfillment_cases" source-ao/backend/migrations/0018_fulfillment_profit.sql
+          grep -q "realized_profit_ready" source-ao/backend/src/fulfillment.js
+          grep -q "accepted_proposal_required" source-ao/backend/src/fulfillment.js
+          grep -q "stage_regression_not_allowed" source-ao/backend/src/fulfillment.js
+          grep -q "/fulfillment" source-ao/backend/src/router.js
+          ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0018_fulfillment_profit.sql
       - name: Validate legal and evidence baseline
         shell: bash
         run: |
@@ -205,6 +216,7 @@ jobs:
           node --check source-ao/backend/src/partner-network.js
           node --check source-ao/backend/src/private-sourcing-suppliers.js
           node --check source-ao/backend/src/commercial-case.js
+          node --check source-ao/backend/src/fulfillment.js
           node --check source-ao/backend/src/intelligence.js
           node --check source-ao/backend/src/intelligence-route.js
       - name: Validate staging scripts syntax
