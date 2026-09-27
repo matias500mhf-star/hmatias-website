@@ -1,6 +1,7 @@
 import {isAdmin} from './sourcing.js';
 
 const STAGES=new Set(['pending','awarded','purchased','delivered','completed']);
+const STAGE_RANK={pending:0,awarded:1,purchased:2,delivered:3,completed:4};
 const COST_FIELDS=[
   'actual_material_cost_aoa',
   'actual_transport_cost_aoa',
@@ -36,6 +37,14 @@ function nullableMoney(value){
   const n=Number(value);
   if(!Number.isFinite(n)||n<0||n>1e15)throw new Error('invalid_money');
   return roundMoney(n);
+}
+
+function nullableIso(value){
+  if(value==null||value==='')return null;
+  const raw=clean(value,80);
+  const date=new Date(raw);
+  if(!raw||Number.isNaN(date.getTime()))throw new Error('invalid_date');
+  return date.toISOString();
 }
 
 function hydrate(row){
@@ -99,11 +108,11 @@ export function validateFulfillmentInput(data={},existing={}){
   try{
     stage=data.stage===undefined?(existing.stage||'pending'):clean(data.stage,30);
     awardRef=data.award_ref===undefined?existing.award_ref:clean(data.award_ref,160);
-    awardedAt=data.awarded_at===undefined?existing.awarded_at:clean(data.awarded_at,80);
+    awardedAt=data.awarded_at===undefined?existing.awarded_at:nullableIso(data.awarded_at);
     purchaseRef=data.purchase_ref===undefined?existing.purchase_ref:clean(data.purchase_ref,160);
-    purchasedAt=data.purchased_at===undefined?existing.purchased_at:clean(data.purchased_at,80);
+    purchasedAt=data.purchased_at===undefined?existing.purchased_at:nullableIso(data.purchased_at);
     deliveryRef=data.delivery_ref===undefined?existing.delivery_ref:clean(data.delivery_ref,160);
-    deliveredAt=data.delivered_at===undefined?existing.delivered_at:clean(data.delivered_at,80);
+    deliveredAt=data.delivered_at===undefined?existing.delivered_at:nullableIso(data.delivered_at);
     notes=data.internal_notes===undefined?existing.internal_notes:clean(data.internal_notes,1600);
     for(const field of COST_FIELDS){
       costs[field]=data[field]===undefined?existing[field]:nullableMoney(data[field]);
@@ -173,6 +182,10 @@ export async function updateFulfillmentCase(request,env,requestId){
   const validated=validateFulfillmentInput(data,current.fulfillment);
   if(!validated.ok)return fail(env,400,validated.code,'Check fulfillment stage, references, dates and actual values.');
   const value=validated.value;
+  const currentStage=current.fulfillment?.stage||'pending';
+  if(STAGE_RANK[value.stage]<STAGE_RANK[currentStage]){
+    return fail(env,409,'stage_regression_not_allowed','Fulfillment stages cannot move backwards. Correct fields without regressing the stage.');
+  }
   const gate=gateStage(value.stage,value,current.proposal_status);
   if(gate)return fail(env,409,gate,'The requested commercial stage is missing required confirmed evidence.');
 
