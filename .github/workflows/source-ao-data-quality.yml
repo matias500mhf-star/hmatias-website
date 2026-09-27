@@ -137,6 +137,7 @@ jobs:
           grep -q '/proposal-draft' source-ao/requests.js
           grep -q '/fulfillment' source-ao/requests.js
           grep -q '/api/admin/commercial-dashboard' source-ao/requests.js
+          grep -q '/api/admin/commercial-actions' source-ao/requests.js
           grep -q '/collections' source-ao/requests.js
           grep -q '/payments' source-ao/requests.js
           ! grep -Eq 'localStorage|sessionStorage' source-ao/requests.js
@@ -175,6 +176,9 @@ jobs:
           grep -q "delivery_required" source-ao/backend/src/collections.js
           grep -q "/collections" source-ao/backend/src/router.js
           grep -q "/payments" source-ao/backend/src/router.js
+          grep -q "identity_minimized" source-ao/backend/src/commercial-actions.js
+          grep -q "collect_overdue" source-ao/backend/src/commercial-actions.js
+          grep -q "/api/admin/commercial-actions" source-ao/backend/src/router.js
           ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0019_collections.sql
       - name: Validate legal and evidence baseline
         shell: bash
@@ -236,6 +240,7 @@ jobs:
           node --check source-ao/backend/src/fulfillment.js
           node --check source-ao/backend/src/commercial-dashboard.js
           node --check source-ao/backend/src/collections.js
+          node --check source-ao/backend/src/commercial-actions.js
           node --check source-ao/backend/src/intelligence.js
           node --check source-ao/backend/src/intelligence-route.js
       - name: Validate staging scripts syntax

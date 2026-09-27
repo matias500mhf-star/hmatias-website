@@ -75,6 +75,16 @@ for(const forbidden of ['contact_encrypted','private_contact_encrypted','access_
   assert.equal(collectionsSerialized.includes(forbidden),false);
 }
 
+const actions=await call('/api/admin/commercial-actions?limit=12');
+assert.equal(actions?.ok,true);
+assert.equal(actions?.confidential,true);
+assert.equal(actions?.identity_minimized,true);
+assert.ok(Array.isArray(actions?.results));
+const actionsSerialized=JSON.stringify(actions);
+for(const forbidden of ['requester_name','requester_contact','supplier_name','supplier_id','contact_encrypted','private_contact_encrypted']){
+  assert.equal(actionsSerialized.includes(forbidden),false);
+}
+
 const dashboard=await call('/api/admin/commercial-dashboard');
 assert.equal(dashboard?.ok,true);
 assert.equal(dashboard?.confidential,true);
@@ -87,4 +97,4 @@ const dashboardSerialized=JSON.stringify(dashboard);
 for(const forbidden of ['requester_name','requester_contact','supplier_name','contact_encrypted','private_contact_encrypted']){
   assert.equal(dashboardSerialized.includes(forbidden),false);
 }
-console.log('Commercial-case, proposal-pack, fulfillment, collections and aggregate cockpit production smoke passed without creating commercial values.');
+console.log('Commercial-case, proposal-pack, fulfillment, collections, action queue and aggregate cockpit production smoke passed without creating commercial values.');

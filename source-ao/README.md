@@ -171,3 +171,22 @@ Collection status is derived from evidence:
 - `paid` — confirmed receipts cover the invoiced amount.
 
 The private Commercial Cockpit now keeps **invoiced**, **received**, **outstanding** and **overdue** values distinct from realized revenue and realized gross profit. No requester or supplier identities are included in the aggregate cockpit response.
+
+
+## Commercial Action Queue v1
+
+The authenticated Commercial Cockpit includes a deterministic next-action queue. It does not make eligibility or award claims; it prioritizes operational facts already recorded in SOURCE AO.
+
+Current priority order includes:
+- overdue receivables;
+- invoices due within three days;
+- delivered/completed work without a registered invoice;
+- accepted proposals without a recorded award;
+- awards without a recorded purchase;
+- purchases awaiting delivery confirmation;
+- sent proposals awaiting follow-up;
+- ready/revised proposals awaiting dispatch;
+- new requests awaiting qualification;
+- sourcing/verifications still open.
+
+The action endpoint is admin-only and identity-minimized. It returns the internal request reference, requirement, commercial states and actionable financial amount where relevant, but does not query or return requester names/contacts or supplier names/contacts. The Sourcing Desk can jump from an action directly to the appropriate private workflow panel.
