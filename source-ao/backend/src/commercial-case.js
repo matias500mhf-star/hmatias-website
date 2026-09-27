@@ -184,7 +184,7 @@ function hydrateCase(row){
 
 async function requestRow(env,requestId){
   return env.SOURCE_AO_DB.prepare(
-    'SELECT id,public_ref,requirement_text,normalized_search,category,specification,location,needed_by,status,created_at,updated_at FROM sourcing_requests WHERE id=?'
+    'SELECT id,public_ref,requirement_text,normalized_search,category,specification,quantity,unit,location,needed_by,status,created_at,updated_at FROM sourcing_requests WHERE id=?'
   ).bind(requestId).first();
 }
 
