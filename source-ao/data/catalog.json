@@ -1,6 +1,6 @@
 {
-  "version": "0.4",
-  "updated_at": "2026-09-25T19:50:00+01:00",
+  "version": "0.5",
+  "updated_at": "2026-09-27T08:00:00+01:00",
   "items": [
     {
       "id": "item-construction-general",
@@ -218,6 +218,161 @@
         "industrial",
         "CAS 50-00-0"
       ]
+    },
+    {
+      "id": "item-vci-corrosion-protection",
+      "name": "VCI corrosion protection",
+      "aliases": [
+        "proteção VCI",
+        "protecao VCI",
+        "vapor corrosion inhibitor",
+        "VCI film",
+        "VCI packaging",
+        "corrosion inhibitor packaging",
+        "proteção anticorrosiva VCI",
+        "protecao anticorrosiva VCI"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "corrosion-protection",
+      "specification": "VCI corrosion-protection family for metal parts, equipment, storage and transport. Exact format, substrate compatibility, quantity, brand/origin, stock and lead time require confirmation.",
+      "keywords": [
+        "corrosion",
+        "corrosão",
+        "corrosao",
+        "VCI",
+        "preservation",
+        "preservação",
+        "preservacao",
+        "storage",
+        "shipping",
+        "metal protection"
+      ]
+    },
+    {
+      "id": "item-industrial-protective-coatings",
+      "name": "Industrial protective coatings & rust-stabilising primers",
+      "aliases": [
+        "revestimento anticorrosivo",
+        "revestimento anti corrosão",
+        "primer anticorrosivo",
+        "rust stabilising primer",
+        "rust stabilizing primer",
+        "protective coating",
+        "corrosion coating",
+        "coating industrial"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "protective-coatings",
+      "specification": "Protective coating and rust-stabilising primer family for steel, piping, tanks, structures and industrial maintenance. Surface preparation, operating environment, coating system, colour, quantity and technical data require confirmation.",
+      "keywords": [
+        "coatings",
+        "primer",
+        "rust",
+        "ferrugem",
+        "steel",
+        "aço",
+        "aco",
+        "pipeline",
+        "tank",
+        "industrial maintenance"
+      ]
+    },
+    {
+      "id": "item-flange-piping-protection",
+      "name": "Flange & piping corrosion protection",
+      "aliases": [
+        "proteção de flange",
+        "protecao de flange",
+        "flange protection",
+        "pipe protection",
+        "piping protection",
+        "proteção de tubagem",
+        "protecao de tubagem",
+        "pipeline corrosion protection"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "piping-protection",
+      "specification": "Corrosion-protection solutions for flanges, piping and related industrial assets. Diameter, service environment, temperature, materials, installation conditions and availability require confirmation.",
+      "keywords": [
+        "flange",
+        "piping",
+        "pipeline",
+        "corrosion",
+        "maintenance",
+        "oil and gas",
+        "industrial"
+      ]
+    },
+    {
+      "id": "item-hydrotest-corrosion-treatment",
+      "name": "Hydrotest corrosion-control treatment",
+      "aliases": [
+        "tratamento anticorrosivo hidroteste",
+        "hydrotest corrosion inhibitor",
+        "hydrostatic test corrosion protection",
+        "water treatment hydrotest",
+        "pressure vessel corrosion treatment"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "hydrotest-treatment",
+      "specification": "Water-treatment and corrosion-control products for hydrostatic testing of pipes, tanks, heat exchangers and pressure vessels. Metallurgy, water chemistry, dosage, compatibility and regulatory requirements must be confirmed before supply.",
+      "keywords": [
+        "hydrotest",
+        "hydrostatic",
+        "pressure vessel",
+        "pipe",
+        "tank",
+        "heat exchanger",
+        "corrosion inhibitor"
+      ]
+    },
+    {
+      "id": "item-rust-preventive-storage",
+      "name": "Rust preventive for storage & transport",
+      "aliases": [
+        "preventivo de ferrugem",
+        "rust preventive",
+        "sprayable rust preventive",
+        "corrosion preventive grease",
+        "long term storage protection",
+        "shipping corrosion protection"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "storage-preservation",
+      "specification": "Removable rust-preventive products for machinery, metal parts and equipment during storage or transport. Substrate, exposure, protection period, removal method, packaging and availability require confirmation.",
+      "keywords": [
+        "storage",
+        "transport",
+        "shipping",
+        "machinery",
+        "equipment",
+        "rust",
+        "corrosion",
+        "preservation"
+      ]
+    },
+    {
+      "id": "item-industrial-cleaner-flash-rust",
+      "name": "Industrial cleaner with flash-rust inhibition",
+      "aliases": [
+        "limpador industrial anticorrosivo",
+        "industrial cleaner corrosion inhibitor",
+        "flash rust inhibitor",
+        "surface cleaner corrosion control",
+        "chloride removal cleaner"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "surface-preparation",
+      "specification": "Industrial cleaning and surface-preparation family for removal of oils, chlorides and contaminants while reducing flash-rust risk. Substrate, dilution, operating temperature, application and technical compatibility require confirmation.",
+      "keywords": [
+        "cleaner",
+        "surface preparation",
+        "chloride",
+        "oil removal",
+        "flash rust",
+        "corrosion",
+        "maintenance"
+      ]
     }
   ],
   "taxonomy": [
@@ -376,7 +531,19 @@
         "embalagem",
         "formol",
         "formalin",
-        "CAS 50-00-0"
+        "CAS 50-00-0",
+        "corrosion",
+        "corrosão",
+        "corrosao",
+        "VCI",
+        "protective coating",
+        "primer anticorrosivo",
+        "flange protection",
+        "piping protection",
+        "hydrotest",
+        "rust preventive",
+        "preservação industrial",
+        "preservacao industrial"
       ]
     }
   ]
