@@ -43,3 +43,10 @@ test('negative actual values are rejected instead of normalized',()=>{
   assert.equal(result.ok,false);
   assert.equal(result.code,'invalid_fields');
 });
+
+
+test('invalid fulfillment dates are rejected',()=>{
+  const result=validateFulfillmentInput({stage:'pending',awarded_at:'not-a-date'},{});
+  assert.equal(result.ok,false);
+  assert.equal(result.code,'invalid_fields');
+});
