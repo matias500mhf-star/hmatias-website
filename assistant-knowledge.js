@@ -14,7 +14,7 @@
   ];
 
   const kb = {
-    version: '2026-09-27.1',
+    version: '2026-09-27.2',
     updated: '2026-09-27',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
@@ -92,9 +92,10 @@
       marketsPt: ['Angola (AO/AOA) — mercado principal','Namíbia (NA/NAD) — descoberta regional controlada','África do Sul (ZA/ZAR) — descoberta regional controlada'],
       marketRulePt: 'Resultados regionais não significam participação automática. Elegibilidade, registo local, regras de preferência, fiscalidade, logística e necessidade de parceria devem ser revistos antes de avançar.',
       coreRulePt: 'Encontrar um fornecedor, catálogo, anúncio ou fonte pública não equivale a confirmar disponibilidade. O SOURCE AO separa descoberta, fonte verificada e confirmação comercial atual.',
-      publicCapabilitiesPt: ['Smart Search para materiais, equipamentos e serviços','Supplier Discovery','Estados transparentes de evidência e freshness','Smart RFQ / pedido de sourcing','Radar de procura no dispositivo','Opportunity / Intelligence Radar','Intelligence Core para fit, confiança, urgência, localização e complexidade','SOURCE Copilot para próximos passos operacionais'],
+      publicCapabilitiesPt: ['Smart Search para materiais, equipamentos e serviços','Supplier Discovery','Estados transparentes de evidência e freshness','Smart RFQ / pedido de sourcing','Radar de procura no dispositivo','Opportunity / Intelligence Radar','Atualização manual do Radar e sincronização automática a cada 5 minutos enquanto a página está visível','Intelligence Core para fit, confiança, urgência, localização e complexidade','SOURCE Copilot para próximos passos operacionais'],
       lifecyclePt: 'Fluxo de verificação: Search → Radar → confirmação do fornecedor → revisão humana HMATIAS → observação verificada → expiração → reconfirmação.',
       opportunityPt: 'O Intelligence Radar organiza RFQs, concursos e sinais comerciais, mantendo fonte, prazo, nível de confiança e contexto de decisão.',
+      refreshPt: 'O Radar público consulta a API live ao abrir, disponibiliza o botão “Atualizar agora” e volta a sincronizar automaticamente a cada 5 minutos enquanto a página está visível. Se a ligação live falhar, mantém os últimos dados disponíveis e informa o utilizador. O backend agenda varrimentos automáticos das fontes; oportunidades descobertas continuam sujeitas a validação antes de promoção pública.',
       privacyPt: 'Pedidos podem ser acompanhados por ligação privada. Dados de contacto, evidências privadas, tokens, rotas administrativas, prioridades internas e dados da rede privada de parceiros/fornecedores não devem ser expostos pelo assistente.',
       architecturePt: 'O endereço canónico é /source-ao/. A antiga página /procura.html funciona apenas como alias/redirecionamento para a plataforma oficial.',
       brandPt: 'A identidade visual final do SOURCE AO usa uma lupa com um H integrado; o logótipo aparece na plataforma e, de forma discreta, no rodapé do site HMATIAS.'
@@ -122,7 +123,7 @@
       `SMART RFQ: ${kb.smartRfq.summaryPt} ${kb.smartRfq.limitsPt} ${kb.smartRfq.privacyPt}`,
       `AGENDAMENTO HMATIAS: ${kb.booking.summaryPt} ${kb.booking.rulesPt.join('; ')}.`,
       `KARTA: ${kb.karta.summaryPt} ${kb.karta.statusPt} Capacidades atuais: ${kb.karta.currentPt.join('; ')}. Roadmap: ${kb.karta.roadmapPt.join('; ')}. ${kb.karta.rulePt}`,
-      `SOURCE AO: ${kb.sourceAO.positioningPt} Mercados: ${kb.sourceAO.marketsPt.join('; ')}. ${kb.sourceAO.marketRulePt} ${kb.sourceAO.coreRulePt} Capacidades públicas: ${kb.sourceAO.publicCapabilitiesPt.join('; ')}. ${kb.sourceAO.lifecyclePt} ${kb.sourceAO.opportunityPt} ${kb.sourceAO.privacyPt} ${kb.sourceAO.architecturePt} ${kb.sourceAO.brandPt}`,
+      `SOURCE AO: ${kb.sourceAO.positioningPt} Mercados: ${kb.sourceAO.marketsPt.join('; ')}. ${kb.sourceAO.marketRulePt} ${kb.sourceAO.coreRulePt} Capacidades públicas: ${kb.sourceAO.publicCapabilitiesPt.join('; ')}. ${kb.sourceAO.lifecyclePt} ${kb.sourceAO.opportunityPt} ${kb.sourceAO.refreshPt} ${kb.sourceAO.privacyPt} ${kb.sourceAO.architecturePt} ${kb.sourceAO.brandPt}`,
       `PROJETOS PÚBLICOS: ${kb.projects.publicExamplesPt.join('; ')}. ${kb.projects.conceptPt} ${kb.projects.disclosurePt}`,
       `REGRAS DE VERDADE: ${kb.safetyAndTruth.rulesPt.join(' ')}.`,
       `PÁGINAS: construção ${kb.pages.construction}; facilities ${kb.pages.facilities}; supply ${kb.pages.supply}; Smart RFQ ${kb.pages.rfq}; catálogo ${kb.pages.worksCatalogue}; credibilidade ${kb.pages.credibility}; clean ${kb.pages.clean}; KARTA ${kb.pages.karta}; business ${kb.pages.business}; agendamento ${kb.pages.booking}; SOURCE AO ${kb.pages.sourceAO}; Intelligence Radar ${kb.pages.sourceRadar}.`
