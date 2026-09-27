@@ -106,12 +106,19 @@
         <label>Preço de venda (AOA)<input class="case-sale" type="number" min="0" step="0.01" placeholder="Introduzir preço real"></label>
         <label>Estado da proposta<select class="case-proposal-status"><option value="not_ready">Não pronta</option><option value="ready">Pronta</option><option value="sent">Enviada</option><option value="revised">Revista</option><option value="accepted">Aceite</option><option value="rejected">Rejeitada</option><option value="expired">Expirada</option></select></label>
         <label>Referência proposta<input class="case-proposal-ref" maxlength="160" placeholder="Ex.: PROP-2026-..."></label>
+        <label>Validade (dias)<input class="case-validity" type="number" min="1" max="365" step="1" placeholder="Ex.: 15"></label>
+        <label>Condições de pagamento<input class="case-payment-terms" maxlength="500" placeholder="Ex.: 50% adjudicação, 50% entrega"></label>
+        <label>Condições de entrega<input class="case-delivery-terms" maxlength="500" placeholder="Prazo/local/condições confirmadas"></label>
+        <label>Tratamento fiscal<input class="case-tax-treatment" maxlength="500" placeholder="Indicar IVA/impostos conforme proposta"></label>
+        <label class="commercial-notes">Notas visíveis ao cliente<textarea class="case-customer-notes" rows="2" maxlength="1200" placeholder="Observações comerciais que podem constar da proposta"></textarea></label>
         <label class="commercial-notes">Notas internas<textarea class="case-notes" rows="2" maxlength="1600" placeholder="Decisões, riscos e próximos passos"></textarea></label>
       </div>
       <div class="commercial-actions">
         <button class="btn btn-primary btn-small save-commercial-case" type="button">Guardar caso comercial</button>
+        <button class="btn btn-outline btn-small generate-proposal-draft" type="button">Preparar resumo de proposta</button>
         <span class="commercial-message"></span>
       </div>
+      <section class="proposal-preview" hidden></section>
       <div class="cost-divider"></div>
       <div class="cost-head"><div><small>CUSTOS DE FORNECEDOR</small><h4>Opções privadas de custo</h4></div><button class="btn btn-outline btn-small new-cost-option" type="button">Novo custo</button></div>
       <form class="cost-form">
@@ -157,6 +164,11 @@
     panel.querySelector('.case-sale').value=commercial.sale_price_aoa??'';
     panel.querySelector('.case-proposal-status').value=commercial.proposal_status||'not_ready';
     panel.querySelector('.case-proposal-ref').value=commercial.proposal_ref||'';
+    panel.querySelector('.case-validity').value=commercial.proposal_validity_days??'';
+    panel.querySelector('.case-payment-terms').value=commercial.proposal_payment_terms||'';
+    panel.querySelector('.case-delivery-terms').value=commercial.proposal_delivery_terms||'';
+    panel.querySelector('.case-tax-treatment').value=commercial.proposal_tax_treatment||'';
+    panel.querySelector('.case-customer-notes').value=commercial.proposal_customer_notes||'';
     panel.querySelector('.case-notes').value=commercial.internal_notes||'';
     panel.querySelector('.summary-landed').textContent=fmtMoney(summary.landed_cost_aoa);
     panel.querySelector('.summary-sale').textContent=fmtMoney(summary.sale_price_aoa);
@@ -244,6 +256,11 @@
             sale_price_aoa:panel.querySelector('.case-sale').value===''?null:Number(panel.querySelector('.case-sale').value),
             proposal_status:panel.querySelector('.case-proposal-status').value,
             proposal_ref:panel.querySelector('.case-proposal-ref').value.trim()||null,
+            proposal_validity_days:panel.querySelector('.case-validity').value===''?null:Number(panel.querySelector('.case-validity').value),
+            proposal_payment_terms:panel.querySelector('.case-payment-terms').value.trim()||null,
+            proposal_delivery_terms:panel.querySelector('.case-delivery-terms').value.trim()||null,
+            proposal_tax_treatment:panel.querySelector('.case-tax-treatment').value.trim()||null,
+            proposal_customer_notes:panel.querySelector('.case-customer-notes').value.trim()||null,
             internal_notes:panel.querySelector('.case-notes').value.trim()||null
           })
         });
@@ -252,6 +269,66 @@
         message.textContent=error.message==='proposal_not_ready'?'A proposta ainda não está pronta: confirme qualificação, custo e preço.':'Falha ao guardar o caso comercial.';
         message.className='commercial-message error';
       }finally{button.disabled=false;}
+    });
+
+    panel.querySelector('.generate-proposal-draft').addEventListener('click',async()=>{
+      const button=panel.querySelector('.generate-proposal-draft');
+      const preview=panel.querySelector('.proposal-preview');
+      button.disabled=true;button.textContent='A preparar…';
+      try{
+        const proposal=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/proposal-draft');
+        preview.hidden=false;preview.innerHTML='';
+        const head=document.createElement('div');head.className='proposal-preview-head';
+        const title=document.createElement('div');
+        const eyebrow=document.createElement('small');eyebrow.textContent='RESUMO DE PROPOSTA · CLIENTE';
+        const strong=document.createElement('strong');strong.textContent=proposal?.draft?.proposal_reference||'Referência por definir';
+        title.append(eyebrow,strong);
+        const state=document.createElement('span');state.dataset.ready=proposal?.issuance_ready?'true':'false';
+        state.textContent=proposal?.issuance_ready?'Pronto para emissão':'Incompleto';head.append(title,state);
+        const body=document.createElement('div');body.className='proposal-preview-body';
+        const line=(label,value)=>{const wrap=document.createElement('div');const l=document.createElement('small');l.textContent=label;const v=document.createElement('strong');v.textContent=value||'A confirmar';wrap.append(l,v);return wrap;};
+        const draft=proposal?.draft||{};
+        body.append(
+          line('Cliente',[draft.customer_name,draft.company].filter(Boolean).join(' · ')),
+          line('Pedido',draft.source_request_reference),
+          line('Entrega',draft.delivery_location),
+          line('Preço total',fmtMoney(draft.total_price_aoa)),
+          line('Validade',draft.terms?.validity_days?draft.terms.validity_days+' dias':null),
+          line('Pagamento',draft.terms?.payment_terms),
+          line('Condições de entrega',draft.terms?.delivery_terms),
+          line('Tratamento fiscal',draft.terms?.tax_treatment)
+        );
+        const items=document.createElement('ol');items.className='proposal-preview-items';
+        for(const item of draft.items||[]){
+          const li=document.createElement('li');
+          li.textContent=[item.quantity,item.unit,item.description,item.specification].filter(v=>v!==null&&v!==undefined&&v!=='').join(' · ');
+          items.appendChild(li);
+        }
+        const notes=document.createElement('p');notes.className='proposal-preview-notes';notes.textContent=draft.customer_notes||'';
+        const missing=document.createElement('p');missing.className='proposal-preview-missing';
+        const labels={commercial_case_not_ready:'caso comercial',proposal_reference_required:'referência',validity_required:'validade',payment_terms_required:'pagamento',delivery_terms_required:'entrega',tax_treatment_required:'fiscalidade'};
+        if(!proposal?.issuance_ready)missing.textContent='Falta confirmar: '+(proposal?.missing_requirements||[]).map(x=>labels[x]||x).join(', ')+'.';
+        const copy=document.createElement('button');copy.type='button';copy.className='btn btn-outline btn-small';copy.textContent='Copiar resumo';copy.disabled=!proposal?.issuance_ready;
+        copy.addEventListener('click',async()=>{
+          const summaryText=[
+            draft.proposal_reference,
+            [draft.customer_name,draft.company].filter(Boolean).join(' · '),
+            'Ref. pedido: '+(draft.source_request_reference||'—'),
+            ...(draft.items||[]).map(item=>[item.quantity,item.unit,item.description,item.specification].filter(v=>v!==null&&v!==undefined&&v!=='').join(' · ')),
+            'Entrega: '+(draft.delivery_location||'A confirmar'),
+            'Preço total: '+fmtMoney(draft.total_price_aoa),
+            'Validade: '+(draft.terms?.validity_days?draft.terms.validity_days+' dias':'A confirmar'),
+            'Pagamento: '+(draft.terms?.payment_terms||'A confirmar'),
+            'Condições de entrega: '+(draft.terms?.delivery_terms||'A confirmar'),
+            'Tratamento fiscal: '+(draft.terms?.tax_treatment||'A confirmar'),
+            draft.customer_notes||''
+          ].filter(Boolean).join('\n');
+          try{await navigator.clipboard.writeText(summaryText);copy.textContent='Copiado';setTimeout(()=>copy.textContent='Copiar resumo',1200);}catch{copy.textContent='Falha ao copiar';}
+        });
+        preview.append(head,body,items,notes,missing,copy);
+      }catch(error){
+        preview.hidden=false;preview.innerHTML='<div class="empty-state compact"><strong>Resumo de proposta indisponível.</strong><p>Guarde primeiro os dados comerciais e tente novamente.</p></div>';
+      }finally{button.disabled=false;button.textContent='Preparar resumo de proposta';}
     });
 
     panel.querySelector('.cost-form').addEventListener('submit',async event=>{

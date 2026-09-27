@@ -134,6 +134,7 @@ jobs:
           ! grep -Eq 'JSON\.stringify\(requests\)|Blob\(' source-ao/requests.js
           grep -q '/commercial-case' source-ao/requests.js
           grep -q '/cost-options' source-ao/requests.js
+          grep -q '/proposal-draft' source-ao/requests.js
           ! grep -Eq 'localStorage|sessionStorage' source-ao/requests.js
       - name: Validate commercial case privacy and truth contract
         shell: bash
@@ -143,7 +144,10 @@ jobs:
           grep -q "CREATE TABLE IF NOT EXISTS sourcing_cost_options" source-ao/backend/migrations/0016_commercial_case.sql
           grep -q "proposal_ready" source-ao/backend/src/commercial-case.js
           grep -q "fx_rate_required" source-ao/backend/src/commercial-case.js
-          ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0016_commercial_case.sql
+          grep -q "proposal_payment_terms" source-ao/backend/migrations/0017_proposal_pack.sql
+          grep -q "buildProposalDraft" source-ao/backend/src/commercial-case.js
+          grep -q "/proposal-draft" source-ao/backend/src/router.js
+          ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0016_commercial_case.sql source-ao/backend/migrations/0017_proposal_pack.sql
       - name: Validate legal and evidence baseline
         shell: bash
         run: |

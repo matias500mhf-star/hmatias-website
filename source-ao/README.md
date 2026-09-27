@@ -130,3 +130,10 @@ Authenticated sourcing operations can attach a private commercial case to a cust
 Supplier cost options are stored separately from the public request. Material cost, transport, customs, taxes/fees, other costs, contingency and FX-to-AOA are entered by an authenticated operator; the system does not invent missing prices, FX, duties or logistics. Foreign-currency options can remain drafts without an FX rate, but cannot become verified/selected until the FX rate is supplied.
 
 Gross profit and gross margin are calculated only when a selected verified cost and an explicit AOA sale price exist. A proposal cannot move to ready/sent/revised/accepted until the request is qualified and those inputs are complete. All commercial-case endpoints are admin-only and are never exposed through public request tracking.
+
+
+## Proposal pack
+
+A qualified commercial case can prepare an internal customer-facing proposal summary only after the operator explicitly records a proposal reference, validity period, payment terms, delivery terms and tax treatment. The proposal pack reuses the encrypted RFQ line items but deliberately excludes the selected supplier, supplier quote, landed cost, internal profit and gross margin.
+
+The proposal preview is still an operational draft: SOURCE AO does not send it automatically, create invoices, award purchases or claim stock/lead time that has not been confirmed. Operators must review the scope and commercial conditions before issuing any proposal to a customer.

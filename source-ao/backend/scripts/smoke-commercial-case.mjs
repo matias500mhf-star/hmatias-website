@@ -45,4 +45,13 @@ assert.equal(updated?.commercial_case?.qualification_status,'declined');
 assert.equal(updated?.summary?.proposal_ready,false);
 assert.equal(updated?.summary?.gross_profit_aoa,null);
 assert.equal(updated?.summary?.gross_margin_pct,null);
-console.log('Commercial-case production smoke passed without creating commercial values.');
+
+const proposal=await call(`/api/admin/sourcing-requests/${encodeURIComponent(synthetic.id)}/proposal-draft`);
+assert.equal(proposal?.ok,true);
+assert.equal(proposal?.confidential,true);
+assert.equal(proposal?.issuance_ready,false);
+const proposalSerialized=JSON.stringify(proposal);
+for(const forbidden of ['supplier_id','supplier_name','landed_cost_aoa','gross_profit_aoa','gross_margin_pct','contact_encrypted','private_contact_encrypted']){
+  assert.equal(proposalSerialized.includes(forbidden),false);
+}
+console.log('Commercial-case and proposal-pack production smoke passed without creating commercial values.');
