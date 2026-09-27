@@ -66,9 +66,23 @@ jobs:
           run_lighthouse http://127.0.0.1:8080/en.html ./lighthouse-en-mobile.json
           run_lighthouse http://127.0.0.1:8080/ ./lighthouse-pt-desktop.json desktop
           run_lighthouse http://127.0.0.1:8080/en.html ./lighthouse-en-desktop.json desktop
-          for page in credibilidade credibility; do
-            run_lighthouse "http://127.0.0.1:8080/$page.html" "./lighthouse-$page-mobile.json"
-            run_lighthouse "http://127.0.0.1:8080/$page.html" "./lighthouse-$page-desktop.json" desktop
+          # Pre-launch regression baseline: audit every public commercial surface that
+          # can generate trust, RFQs or supplier/client enquiries. Keep both mobile and
+          # desktop so a future visual change cannot silently regress one viewport.
+          for page in \
+            credibilidade credibility \
+            construcao construction \
+            facilities facilities-en \
+            supply supply-en \
+            clean clean-en \
+            servicos-administrativos business-services \
+            rfq rfq-en \
+            catalogo-obras work-catalogue \
+            source-ao/index source-ao/opportunity-radar source-ao/rfq
+          do
+            safe_name="${page//\//-}"
+            run_lighthouse "http://127.0.0.1:8080/$page.html" "./lighthouse-$safe_name-mobile.json"
+            run_lighthouse "http://127.0.0.1:8080/$page.html" "./lighthouse-$safe_name-desktop.json" desktop
           done
       - name: Report and enforce quality floor
         shell: bash
