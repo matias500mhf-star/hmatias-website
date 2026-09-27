@@ -136,6 +136,7 @@ jobs:
           grep -q '/cost-options' source-ao/requests.js
           grep -q '/proposal-draft' source-ao/requests.js
           grep -q '/fulfillment' source-ao/requests.js
+          grep -q '/api/admin/commercial-dashboard' source-ao/requests.js
           ! grep -Eq 'localStorage|sessionStorage' source-ao/requests.js
       - name: Validate commercial case privacy and truth contract
         shell: bash
@@ -158,6 +159,8 @@ jobs:
           grep -q "accepted_proposal_required" source-ao/backend/src/fulfillment.js
           grep -q "stage_regression_not_allowed" source-ao/backend/src/fulfillment.js
           grep -q "/fulfillment" source-ao/backend/src/router.js
+          grep -q "aggregated_only" source-ao/backend/src/commercial-dashboard.js
+          grep -q "/api/admin/commercial-dashboard" source-ao/backend/src/router.js
           ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0018_fulfillment_profit.sql
       - name: Validate legal and evidence baseline
         shell: bash
@@ -217,6 +220,7 @@ jobs:
           node --check source-ao/backend/src/private-sourcing-suppliers.js
           node --check source-ao/backend/src/commercial-case.js
           node --check source-ao/backend/src/fulfillment.js
+          node --check source-ao/backend/src/commercial-dashboard.js
           node --check source-ao/backend/src/intelligence.js
           node --check source-ao/backend/src/intelligence-route.js
       - name: Validate staging scripts syntax

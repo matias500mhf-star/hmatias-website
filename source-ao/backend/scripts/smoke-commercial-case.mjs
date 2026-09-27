@@ -64,4 +64,12 @@ const fulfillmentSerialized=JSON.stringify(fulfillment);
 for(const forbidden of ['contact_encrypted','private_contact_encrypted','access_token_hash']){
   assert.equal(fulfillmentSerialized.includes(forbidden),false);
 }
-console.log('Commercial-case, proposal-pack and fulfillment production smoke passed without creating commercial values.');
+const dashboard=await call('/api/admin/commercial-dashboard');
+assert.equal(dashboard?.ok,true);
+assert.equal(dashboard?.confidential,true);
+assert.equal(dashboard?.aggregated_only,true);
+const dashboardSerialized=JSON.stringify(dashboard);
+for(const forbidden of ['requester_name','requester_contact','supplier_name','contact_encrypted','private_contact_encrypted']){
+  assert.equal(dashboardSerialized.includes(forbidden),false);
+}
+console.log('Commercial-case, proposal-pack, fulfillment and aggregate cockpit production smoke passed without creating commercial values.');

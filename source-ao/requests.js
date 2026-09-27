@@ -4,6 +4,7 @@
   let adminToken='';
   let requests=[];
   let demand=[];
+  let commercialDashboard=null;
 
   const apiBase=()=>String(window.SOURCE_AO_RUNTIME?.apiBase||'').replace(/\/$/,'');
 
@@ -49,6 +50,37 @@
     $('#receivedCount').textContent=String(requests.filter(r=>r.status==='received').length);
     $('#sourcingCount').textContent=String(requests.filter(r=>['sourcing','verifying'].includes(r.status)).length);
     $('#demandCount').textContent=String(demand.length);
+  }
+
+  function renderCommercialDashboard(){
+    const d=commercialDashboard;
+    if(!d){
+      $('#proposalPipelineValue').textContent='—';
+      $('#acceptedValue').textContent='—';
+      $('#realizedRevenue').textContent='—';
+      $('#realizedProfit').textContent='—';
+      $('#proposalCounts').textContent='—';
+      $('#acceptedCount').textContent='—';
+      $('#realizedMargin').textContent='—';
+      $('#cockpitAsOf').textContent='Unavailable';
+      for(const id of ['cockpitActive','cockpitTriage','cockpitAwarded','cockpitPurchased','cockpitDelivered','cockpitCompleted'])$('#'+id).textContent='—';
+      return;
+    }
+    $('#proposalPipelineValue').textContent=fmtMoney(d.proposals?.pipeline_value_aoa);
+    $('#acceptedValue').textContent=fmtMoney(d.proposals?.accepted_value_aoa);
+    $('#realizedRevenue').textContent=fmtMoney(d.execution?.completed_revenue_aoa);
+    $('#realizedProfit').textContent=fmtMoney(d.execution?.realized_gross_profit_aoa);
+    $('#proposalCounts').textContent=(d.proposals?.ready_count||0)+' ready/revised · '+(d.proposals?.sent_count||0)+' sent';
+    $('#acceptedCount').textContent=(d.proposals?.accepted_count||0)+' propostas aceites';
+    $('#realizedMargin').textContent=d.execution?.realized_gross_margin_pct==null?'Margem: —':'Margem: '+d.execution.realized_gross_margin_pct.toLocaleString('pt-AO',{maximumFractionDigits:2})+'%';
+    $('#cockpitActive').textContent=String(d.requests?.active||0);
+    $('#cockpitTriage').textContent=String(d.requests?.awaiting_triage||0);
+    $('#cockpitAwarded').textContent=String(d.execution?.by_stage?.awarded||0);
+    $('#cockpitPurchased').textContent=String(d.execution?.by_stage?.purchased||0);
+    $('#cockpitDelivered').textContent=String(d.execution?.by_stage?.delivered||0);
+    $('#cockpitCompleted').textContent=String(d.execution?.by_stage?.completed||0);
+    $('#cockpitAsOf').textContent=d.as_of?'Atualizado '+fmtDate(d.as_of):'Atualizado';
+    $('#realizedProfit').classList.toggle('negative',Number(d.execution?.realized_gross_profit_aoa)<0);
   }
 
   function setCardMessage(card,text,state=''){
@@ -650,8 +682,22 @@
     }
   }
 
+  async function loadCommercialDashboard(){
+    if(!adminToken)return false;
+    try{
+      commercialDashboard=await api('/api/admin/commercial-dashboard');
+      renderCommercialDashboard();
+      return true;
+    }catch(error){
+      commercialDashboard=null;
+      renderCommercialDashboard();
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
+      return false;
+    }
+  }
+
   async function loadAll(){
-    const [requestsOk,demandOk]=await Promise.all([loadRequests(),loadDemand()]);
+    const [requestsOk,demandOk]=await Promise.all([loadRequests(),loadDemand(),loadCommercialDashboard()]);
     const authorized=Boolean(adminToken&&requestsOk&&demandOk);
     setInternalAccess(authorized);
     if(authorized)setApiStatus('Connected · private operations loaded','connected');
@@ -666,9 +712,9 @@
     setApiStatus('Checking admin access…','ready');
     await loadAll();
   });
-  $('#refreshRequests').addEventListener('click',loadRequests);
+  $('#refreshRequests').addEventListener('click',async()=>{await Promise.all([loadRequests(),loadCommercialDashboard()]);});
   $('#refreshDemand').addEventListener('click',loadDemand);
   $('#statusFilter').addEventListener('change',renderRequests);
-  window.addEventListener('pagehide',()=>{adminToken='';requests=[];demand=[];});
+  window.addEventListener('pagehide',()=>{adminToken='';requests=[];demand=[];commercialDashboard=null;});
   document.addEventListener('DOMContentLoaded',configure,{once:true});
 })();
