@@ -17,6 +17,7 @@ for(const [name,value] of [['SOURCE_AO_API_BASE',apiBase],['SOURCE_AO_STAGING_PU
 const publicFiles=[
   'index.html','favicon.svg','sourceao.css','sourceao.js','data-engine.js','api-client.js','verified-results.css','verified-results.js',
   'sourcing-ui.css','sourcing-ui.js',
+  'rfq.html','rfq.css','rfq.js','rfq-model.js',
   'track.html','track.css','track.js',
   'confirm.html','confirm.css','confirm.js',
   'opportunity-radar.html','opportunity-radar.css','opportunity-radar.js',
@@ -41,6 +42,10 @@ for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
   await writeFile(target,html,{mode:0o644});
 }
 await cp(path.join(sourceRoot,'data'),path.join(out,'data'),{recursive:true});
+await mkdir(path.join(out,'images'),{recursive:true});
+await mkdir(path.join(out,'fonts'),{recursive:true});
+await copyFile(path.join(sourceRoot,'../images/source-ao-logo.svg'),path.join(out,'images/source-ao-logo.svg'));
+await copyFile(path.join(sourceRoot,'../fonts/inter-latin-variable.woff2'),path.join(out,'fonts/inter-latin-variable.woff2'));
 
 const runtime=`(()=>{\n  'use strict';\n  window.SOURCE_AO_RUNTIME=Object.freeze({\n    environment:'staging',\n    apiBase:${JSON.stringify(apiBase)}\n  });\n})();\n`;
 await writeFile(path.join(out,'runtime-config.js'),runtime,{mode:0o644});

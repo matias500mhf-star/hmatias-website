@@ -44,7 +44,7 @@
   }
 
   function metrics(){
-    const open=requests.filter(r=>r.status!=='closed').length;
+    const open=requests.filter(r=>!['closed','completed'].includes(r.status)).length;
     $('#openCount').textContent=String(open);
     $('#receivedCount').textContent=String(requests.filter(r=>r.status==='received').length);
     $('#sourcingCount').textContent=String(requests.filter(r=>['sourcing','verifying'].includes(r.status)).length);
@@ -72,6 +72,14 @@
     card.querySelector('.status-select').value=row.status||'received';
     card.querySelector('.assigned-to').value=row.assigned_to||'';
     card.querySelector('.internal-notes').value=row.internal_notes||'';
+    if(row.rfq){
+      const rfq=row.rfq;card.querySelector('.rfq-qualification').hidden=false;
+      const labels={company:'Empresa',individual:'Particular',institution:'Instituição',ready:'Compra após aprovação',budgeting:'Consulta de orçamento',recurring:'Fornecimento recorrente',urgent:'Urgente',normal:'Prazo normal',planned:'Compra programada',yes:'Aceita equivalentes',no:'Referência exata',discuss:'Consultar antes de substituir'};
+      card.querySelector('.rfq-buyer').textContent=[rfq.requester_name,rfq.company,labels[rfq.buyer_type]].filter(Boolean).join(' · ');
+      for(const item of rfq.items||[]){const li=document.createElement('li');li.textContent=`${item.quantity} ${item.unit} · ${item.description}${item.specification?' — '+item.specification:''}`;card.querySelector('.rfq-lines').append(li);}
+      card.querySelector('.rfq-conditions').textContent=[labels[rfq.intent],labels[rfq.urgency],labels[rfq.alternatives],rfq.budget==null?'Orçamento a confirmar':Number(rfq.budget).toLocaleString('pt-AO')+' Kz',rfq.origin].filter(Boolean).join(' · ');
+      card.querySelector('.rfq-notes').textContent=rfq.notes||'';
+    }
 
     card.querySelector('.copy-contact').addEventListener('click',async()=>{
       const value=row.contact||'';

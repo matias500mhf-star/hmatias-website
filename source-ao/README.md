@@ -111,3 +111,11 @@ Do not merge/publish Source AO v1 until:
 - the branch is synchronized with then-current `main` and all gates are rerun.
 
 The HMATIAS production site must remain independently operational if Source AO is disabled.
+
+## Catalogue quotation request
+
+`rfq.html` loads product families directly from `data/catalog.json`. Public Supply category links preselect the exact catalogue item. Requests support up to 20 lines with quantities, units and specifications, delivery to Angola, purchasing intent, alternatives and an optional AOA budget.
+
+The existing sourcing API accepts the versioned RFQ contract while preserving legacy requests. The complete customer profile and item list are encrypted with the existing PII key. An unpredictable browser-generated retry token is hashed for atomic deduplication and private tracking; no drafts or private tokens are saved in browser storage. Contact and full RFQ data follow the 180-day closed/completed retention schedule.
+
+The authenticated Sourcing Desk displays qualification and supports adjudication, purchasing and delivery states. Operators remain responsible for supplier selection, confirmed cost, margin, proposal, purchase and profit accounting; none of these actions or values is automatic or public.

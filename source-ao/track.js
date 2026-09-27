@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
   const $=s=>document.querySelector(s);
-  const stages=['received','triage','sourcing','verifying','verified','quoted','completed'];
+  const stages=['received','triage','sourcing','verifying','verified','quoted','awarded','purchased','delivered','completed'];
   let requestId='';
   let token='';
 
@@ -45,7 +45,8 @@
   function render(r){
     $('#publicRef').textContent=r.reference||'—';
     $('#requirement').textContent=r.requirement_text||'—';
-    $('#statusBadge').textContent=(r.status||'received').replaceAll('_',' ');
+    const labels={received:'Recebido',triage:'Em qualificação',sourcing:'Em sourcing',verifying:'Em verificação',verified:'Verificado',quoted:'Proposta preparada',awarded:'Adjudicado',purchased:'Em aquisição',delivered:'Entregue',completed:'Concluído',closed:'Encerrado'};
+    $('#statusBadge').textContent=labels[r.status]||r.status||'Recebido';
     $('#updatedAt').textContent='Atualizado '+fmtDate(r.updated_at);
     $('#category').textContent=r.category||'A classificar';
     $('#specification').textContent=r.specification||'A confirmar';
@@ -53,6 +54,9 @@
     $('#location').textContent=r.location||'—';
     $('#neededBy').textContent=r.needed_by||'Não indicada';
     $('#createdAt').textContent=fmtDate(r.created_at);
+    $('#trackedItemList').replaceChildren();
+    $('#trackedItems').hidden=!r.items?.length;
+    for(const item of r.items||[]){const li=document.createElement('li');li.textContent=`${item.quantity} ${item.unit} · ${item.description}${item.specification?' — '+item.specification:''}`;$('#trackedItemList').append(li);}
     renderTimeline(r.status||'received');
     $('#loadingState').hidden=true;
     $('#errorState').hidden=true;

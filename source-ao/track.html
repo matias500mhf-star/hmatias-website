@@ -38,6 +38,7 @@
           <div><dt>Necessário até</dt><dd id="neededBy">—</dd></div>
           <div><dt>Criado</dt><dd id="createdAt">—</dd></div>
         </dl>
+        <div id="trackedItems" hidden><h3>Produtos do pedido</h3><ul id="trackedItemList"></ul></div>
       </article>
 
       <article class="timeline-card">
@@ -49,6 +50,9 @@
           <li data-stage="verifying"><span></span><div><strong>Verificação</strong><small>Informação comercial em confirmação.</small></div></li>
           <li data-stage="verified"><span></span><div><strong>Verificado</strong><small>Dados relevantes confirmados.</small></div></li>
           <li data-stage="quoted"><span></span><div><strong>Cotação</strong><small>Condições comerciais preparadas.</small></div></li>
+          <li data-stage="awarded"><span></span><div><strong>Adjudicado</strong><small>Proposta aceite pelo cliente.</small></div></li>
+          <li data-stage="purchased"><span></span><div><strong>Em aquisição</strong><small>Compra em curso após adjudicação.</small></div></li>
+          <li data-stage="delivered"><span></span><div><strong>Entregue</strong><small>Entrega registada pela HMATIAS.</small></div></li>
           <li data-stage="completed"><span></span><div><strong>Concluído</strong><small>Processo finalizado.</small></div></li>
         </ol>
       </article>

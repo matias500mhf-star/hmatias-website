@@ -1,8 +1,11 @@
+import catalog from '../../data/catalog.json' with {type:'json'};
+import {validateRfq} from '../../rfq-model.js';
+
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 
 const ALLOWED_STATUSES = new Set([
-  'received','triage','sourcing','verifying','verified','quoted','completed','closed'
+  'received','triage','sourcing','verifying','verified','quoted','awarded','purchased','delivered','completed','closed'
 ]);
 
 function headers(env){
@@ -146,7 +149,13 @@ function publicRef(){
 }
 
 export async function createSourcingRequest(request,env){
-  const data=await bodyJson(request);
+  if(!(request.headers.get('content-type')||'').includes('application/json')) return fail(env,415,'json_required','JSON body required.');
+  const raw=await request.text();
+  if(enc.encode(raw).byteLength>40000) return fail(env,413,'payload_too_large','Request exceeds 40 KB.');
+  let data;
+  try{data=JSON.parse(raw);}catch{return fail(env,400,'invalid_json','Invalid JSON request.');}
+  if(!data || typeof data!=='object' || Array.isArray(data)) return fail(env,400,'invalid_request','Invalid request.');
+  if(data.rfq_version!=null) return createCatalogRfq(data,env);
   const validated=validateSourcingRequestInput(data);
   if(!validated.ok){
     const messages={
@@ -186,21 +195,64 @@ export async function createSourcingRequest(request,env){
   }},201);
 }
 
+async function createCatalogRfq(data,env){
+  const validated=validateRfq(data,catalog,new Date(Date.now()+3600000));
+  if(!validated.ok) return fail(env,400,validated.code,'Please check the quotation request fields.');
+  if(!env.PII_ENCRYPTION_KEY) return fail(env,503,'privacy_key_unavailable','Secure request intake is not configured.');
+  const v=validated.value;
+  const tokenHash=await sha256Hex(data.client_token);
+  const payloadHash=await sha256Hex(JSON.stringify(v));
+  const requestId=id('sr');
+  const reference=publicRef();
+  const now=iso();
+  const first=v.items[0];
+  const requirement=first.description+(v.items.length>1?` (+${v.items.length-1})`:'');
+  const category=[...new Set(v.items.map(item=>item.category))].join(', ');
+  const encryptedContact=await encryptPrivateText(v.requester_contact,env.PII_ENCRYPTION_KEY);
+  const encryptedRfq=await encryptPrivateText(JSON.stringify({...v,consent_at:now}),env.PII_ENCRYPTION_KEY);
+  await env.SOURCE_AO_DB.prepare(`
+    INSERT INTO sourcing_requests (
+      id,public_ref,access_token_hash,requirement_text,normalized_search,category,specification,
+      quantity,unit,location,needed_by,contact_channel,contact_encrypted,contact_hint,status,created_at,updated_at,
+      rfq_details_encrypted,submission_key_hash,rfq_payload_hash
+    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    ON CONFLICT(submission_key_hash) DO NOTHING
+  `).bind(requestId,reference,tokenHash,requirement,
+    normalizeRequirement(v.items.map(item=>item.description).join(' ')),category,
+    v.items.length===1?first.specification:null,v.items.length===1?first.quantity:null,v.items.length===1?first.unit:null,
+    v.location,v.needed_by,v.contact_channel,encryptedContact,contactHint(v.requester_contact),'received',now,now,
+    encryptedRfq,tokenHash,payloadHash).run();
+  const row=await env.SOURCE_AO_DB.prepare('SELECT id,public_ref,status,created_at,rfq_payload_hash FROM sourcing_requests WHERE submission_key_hash=?').bind(tokenHash).first();
+  if(!row) return fail(env,503,'registration_unconfirmed','Could not confirm registration. Retry the same request.');
+  if(row.rfq_payload_hash!==payloadHash) return fail(env,409,'submission_changed','This submission key already belongs to another request.');
+  return json(env,{ok:true,request:{
+    id:row.id,reference:row.public_ref,status:row.status,created_at:row.created_at,rfq_version:1,item_count:v.items.length,
+    status_path:`/api/sourcing-requests/${row.id}?token=${data.client_token}`
+  }},row.id===requestId?201:200);
+}
+
+async function readPrivateRfq(row,env){
+  if(!row.rfq_details_encrypted || row.rfq_details_encrypted==='PURGED') return null;
+  return JSON.parse(await decryptPrivateText(row.rfq_details_encrypted,env.PII_ENCRYPTION_KEY));
+}
+
 export async function getSourcingRequest(request,env,requestId){
   const url=new URL(request.url);
   const token=url.searchParams.get('token')||'';
   if(!token) return fail(env,401,'access_token_required','Private request token is required.');
   const row=await env.SOURCE_AO_DB.prepare(`
-    SELECT id,public_ref,access_token_hash,requirement_text,category,specification,quantity,unit,location,needed_by,status,created_at,updated_at
+    SELECT id,public_ref,access_token_hash,requirement_text,category,specification,quantity,unit,location,needed_by,status,created_at,updated_at,rfq_details_encrypted
     FROM sourcing_requests WHERE id=?
   `).bind(requestId).first();
   if(!row) return fail(env,404,'request_not_found','Sourcing request does not exist.');
   const suppliedHash=await sha256Hex(token);
   if(!secureEqual(suppliedHash,row.access_token_hash)) return fail(env,403,'invalid_access_token','Private request token is invalid.');
+  const rfq=await readPrivateRfq(row,env);
   return json(env,{ok:true,request:{
     id:row.id,reference:row.public_ref,requirement_text:row.requirement_text,category:row.category,
     specification:row.specification,quantity:row.quantity,unit:row.unit,location:row.location,
-    needed_by:row.needed_by,status:row.status,created_at:row.created_at,updated_at:row.updated_at
+    needed_by:row.needed_by,status:row.status,created_at:row.created_at,updated_at:row.updated_at,
+    items:rfq?.items||null
   }});
 }
 
@@ -219,12 +271,14 @@ export async function listSourcingRequests(request,env){
   for(const row of rows.results||[]){
     let contact=null;
     try{contact=await decryptPrivateText(row.contact_encrypted,env.PII_ENCRYPTION_KEY);}catch{contact=null;}
+    let rfq=null;
+    try{rfq=await readPrivateRfq(row,env);}catch{rfq=null;}
     results.push({
       id:row.id,reference:row.public_ref,requirement_text:row.requirement_text,normalized_search:row.normalized_search,
       category:row.category,specification:row.specification,quantity:row.quantity,unit:row.unit,location:row.location,
       needed_by:row.needed_by,contact_channel:row.contact_channel,contact,contact_hint:row.contact_hint,status:row.status,
       assigned_to:row.assigned_to,internal_notes:row.internal_notes,contact_purged_at:row.contact_purged_at||null,
-      created_at:row.created_at,updated_at:row.updated_at
+      created_at:row.created_at,updated_at:row.updated_at,rfq
     });
   }
   return json(env,{ok:true,results});

@@ -82,6 +82,8 @@ jobs:
           node --check source-ao/sourcing-ui.js
           node --check source-ao/track.js
           node --check source-ao/requests.js
+          node --check source-ao/rfq.js
+          node --check source-ao/rfq-model.js
       - name: Validate Ops Desk security contract
         shell: bash
         run: |
@@ -209,6 +211,8 @@ jobs:
           test -f .staging-web/privacy.html
           test -f .staging-web/terms.html
           test -f .staging-web/data/catalog.json
+          test -f .staging-web/rfq.html
+          test -f .staging-web/rfq-model.js
           test ! -e .staging-web/backend
           test ! -e .staging-web/docs
           test ! -e .staging-web/verification-desk.html
