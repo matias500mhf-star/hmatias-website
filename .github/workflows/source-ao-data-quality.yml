@@ -45,6 +45,17 @@ jobs:
           node-version: '22'
       - name: Validate Source AO data
         run: node source-ao/validate-data.mjs
+      - name: Validate confidential public industrial catalogue
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q '"item-vci-corrosion-protection"' source-ao/data/catalog.json
+          grep -q '"item-industrial-protective-coatings"' source-ao/data/catalog.json
+          grep -q '"item-hydrotest-corrosion-treatment"' source-ao/data/catalog.json
+          grep -q 'PROTEÇÃO & PRESERVAÇÃO INDUSTRIAL' supply.html
+          grep -q 'INDUSTRIAL PROTECTION & PRESERVATION' supply-en.html
+          ! grep -RqiE 'Kent Offshore|Shikongo' source-ao/data/catalog.json supply.html supply-en.html
+
       - name: Validate frontend scripts syntax
         run: |
           node --check source-ao/data-engine.js
