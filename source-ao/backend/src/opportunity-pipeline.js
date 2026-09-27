@@ -139,6 +139,23 @@ export function extractOpportunityLinks(html='',base=''){
   }
   return out;
 }
+export function extractCpbnBidLinks(html='',base=''){
+  const source=String(html||''),out=[],seen=new Set();
+  const re=/<a\b[^>]*href\s*=\s*["']([^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+  let m;
+  while((m=re.exec(source))){
+    let url;
+    try{url=new URL(m[1],base).toString()}catch{continue}
+    const parsed=new URL(url);
+    if(!isSafeDiscoveryUrl(url)||seen.has(url)||!/\/index\/bid\/\d+\/?$/.test(parsed.pathname))continue;
+    const before=source.slice(Math.max(0,m.index-1800),m.index);
+    const headings=[...before.matchAll(/<h[2-5]\b[^>]*>([\s\S]*?)<\/h[2-5]>/gi)];
+    const heading=headings.length?htmlToText(headings[headings.length-1][1]):'';
+    const label=(heading||htmlToText(m[2])||'CPBN bid').slice(0,300);
+    seen.add(url);out.push({url,label});
+  }
+  return out;
+}
 
 const pageTitle=html=>{
   const h1=String(html).match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
@@ -212,6 +229,42 @@ function normalizeCandidate(input,source){
   };
 }
 
+export function normalizeCpbnBidPage(html,pageUrl,source,clock=Date.now()){
+  const text=htmlToText(String(html||'')).replace(/\s+/g,' ').trim();
+  const pick=re=>{
+    const match=text.match(re);
+    return match?.[1]?match[1].trim():null;
+  };
+  const description=pick(/Description of the Bid\s*:?[\s|]*?(.*?)\s+Procurement Reference Number/i);
+  const institution=pick(/Institution\s*:?[\s|]*?(.*?)\s+Description of the Bid/i);
+  const category=pick(/Category\s*:?[\s|]*?(.*?)\s+Institution/i);
+  const documentPrice=pick(/Bid Document Price\s*:?[\s|]*?(.*?)\s+Address for the Collection/i);
+  const submissionAddress=pick(/Address for the Collection\s*&?\s*Submission of Documents\s*:?[\s|]*?(.*?)\s+Date of Issue/i);
+  const preBid=pick(/(?:Non-compulsory\s+)?Pre-Bid Meeting\/Site Visit\s*:?[\s|]*?(.*?)\s+(?:Documents|$)/i);
+  const fallbackTitle=pageTitle(html);
+  const title=(description&&description.length>8?description:
+    (fallbackTitle&&!/^bid details$/i.test(fallbackTitle)?fallbackTitle:'Namibia public procurement opportunity'));
+  const evidence=[
+    category?'Category: '+category:null,
+    institution?'Institution: '+institution:null,
+    description,
+    documentPrice?'Bid document price: '+documentPrice:null,
+    submissionAddress?'Collection/submission: '+submissionAddress:null,
+    preBid?'Pre-bid/site visit: '+preBid:null
+  ].filter(Boolean).join('. ');
+  return normalizeCandidate({
+    title,
+    issuer:institution||source.name,
+    location:'Namibia',
+    country_code:'NA',
+    currency_code:'NAD',
+    reference:extractReference(text),
+    deadline:extractDeadline(text,clock,'+02:00'),
+    source_url:pageUrl,
+    description:evidence,
+    evidence_excerpt:evidence
+  },source);
+}
 export function normalizeOcdsRelease(release,source,clock=Date.now()){
   const tender=release?.tender||{};
   const status=normalizeSearch(tender.status||'');
@@ -289,24 +342,32 @@ async function upsert(env,source,c){
 
 async function scanHtml(env,source,raw){
   const sourceHost=new URL(raw.url).hostname.toLowerCase();
-  const links=extractOpportunityLinks(raw.text,raw.url)
+  const discovered=source.adapter==='cpbn_namibia'
+    ?extractCpbnBidLinks(raw.text,raw.url)
+    :extractOpportunityLinks(raw.text,raw.url);
+  const links=discovered
     .filter(link=>new URL(link.url).hostname.toLowerCase()===sourceHost)
-    .slice(0,4);
+    .slice(0,source.adapter==='cpbn_namibia'?12:4);
   let seen=0;
   for(const link of links){
     try{
       const page=await fetchText(link.url,350000);
       if(!page.type.includes('text/html')&&!page.type.includes('text/plain'))continue;
-      const text=htmlToText(page.text).slice(0,12000),title=pageTitle(page.text)||link.label||'Oportunidade pública';
-      const summary=text.slice(0,1200);
-      const market=marketDefaults(source);
-      const c=normalizeCandidate({title,issuer:source.name,location:market.location,country_code:source.country_code,
-        currency_code:source.currency_code,reference:extractReference(text),
-        deadline:extractDeadline(text,Date.now(),market.offset),source_url:page.url,description:summary,evidence_excerpt:summary},source);
+      let c;
+      if(source.adapter==='cpbn_namibia'){
+        c=normalizeCpbnBidPage(page.text,page.url,source,Date.now());
+      }else{
+        const text=htmlToText(page.text).slice(0,12000),title=pageTitle(page.text)||link.label||'Oportunidade pública';
+        const summary=text.slice(0,1200);
+        const market=marketDefaults(source);
+        c=normalizeCandidate({title,issuer:source.name,location:market.location,country_code:source.country_code,
+          currency_code:source.currency_code,reference:extractReference(text),
+          deadline:extractDeadline(text,Date.now(),market.offset),source_url:page.url,description:summary,evidence_excerpt:summary},source);
+      }
       await upsert(env,source,c);seen++;
     }catch{}
   }
-  return {links_found:links.length,candidates_seen:seen};
+  return {links_found:links.length,candidates_seen:seen,adapter:source.adapter||'generic'};
 }
 
 async function scanJson(env,source,raw){
