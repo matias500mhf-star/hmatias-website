@@ -5,6 +5,7 @@
   let requests=[];
   let demand=[];
   let commercialDashboard=null;
+  let commercialActions=[];
 
   const apiBase=()=>String(window.SOURCE_AO_RUNTIME?.apiBase||'').replace(/\/$/,'');
 
@@ -91,6 +92,65 @@
     $('#cockpitOverdueCount').textContent=(d.collections?.overdue_count||0)+' vencida(s) · '+(d.collections?.paid_count||0)+' paga(s)';
     $('#cockpitAsOf').textContent=d.as_of?'Atualizado '+fmtDate(d.as_of):'Atualizado';
     $('#realizedProfit').classList.toggle('negative',Number(d.execution?.realized_gross_profit_aoa)<0);
+  }
+
+  function renderCommercialActions(){
+    const list=$('#commercialActionList');
+    const count=$('#commercialActionCount');
+    if(!list||!count)return;
+    list.innerHTML='';
+    count.textContent=String(commercialActions.length)+' ação(ões)';
+    if(!commercialActions.length){
+      list.innerHTML='<div class="cockpit-empty">Sem ações comerciais prioritárias nesta janela.</div>';
+      return;
+    }
+    const labels={critical:'Crítica',high:'Alta',medium:'Média',normal:'Normal'};
+    for(const action of commercialActions){
+      const card=document.createElement('article');card.className='commercial-action-item';card.dataset.priority=action.priority||'normal';
+      const copy=document.createElement('div');copy.className='commercial-action-copy';
+      const top=document.createElement('div');top.className='commercial-action-top';
+      const badge=document.createElement('span');badge.className='commercial-action-priority';badge.textContent=labels[action.priority]||action.priority||'Normal';
+      const ref=document.createElement('small');ref.textContent=action.reference||action.request_id;
+      top.append(badge,ref);
+      const title=document.createElement('strong');title.textContent=action.title||'Ação comercial';
+      const requirement=document.createElement('p');requirement.textContent=action.requirement_text||'—';
+      const why=document.createElement('p');why.className='commercial-action-why';why.textContent=action.why||'';
+      const next=document.createElement('p');next.className='commercial-action-next';next.textContent=action.recommended_action||'';
+      copy.append(top,title,requirement,why,next);
+      const side=document.createElement('div');side.className='commercial-action-side';
+      if(action.amount_aoa!=null){const amount=document.createElement('strong');amount.textContent=fmtMoney(action.amount_aoa);side.appendChild(amount);}
+      if(action.deadline){const deadline=document.createElement('small');deadline.textContent='Prazo '+fmtDate(action.deadline);side.appendChild(deadline);}
+      else if(action.age_days!=null){const age=document.createElement('small');age.textContent=action.age_days+' dia(s)';side.appendChild(age);}
+      const open=document.createElement('button');open.type='button';open.className='btn btn-outline btn-small';open.textContent='Abrir pedido';
+      open.addEventListener('click',()=>openCommercialAction(action));
+      side.appendChild(open);
+      card.append(copy,side);list.appendChild(card);
+    }
+  }
+
+  async function openCommercialAction(action){
+    $('#statusFilter').value='';
+    renderRequests();
+    const row=requests.find(item=>item.id===action.request_id);
+    const card=[...document.querySelectorAll('.request-card')].find(item=>item.dataset.requestId===action.request_id);
+    if(!row||!card){
+      setApiStatus('A ação refere um pedido fora da janela atual. Atualize a fila ou filtre pelo estado.','error');
+      return;
+    }
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+    card.classList.add('action-focus');
+    setTimeout(()=>card.classList.remove('action-focus'),2200);
+    if(['collect_overdue','collect_due_soon','issue_invoice'].includes(action.type)){
+      await loadCommercialCase(card,row);
+      const commercialPanel=card.querySelector('.commercial-case-panel');
+      if(commercialPanel)await loadCollections(card,row,commercialPanel);
+    }else if(['record_award','record_purchase','confirm_delivery'].includes(action.type)){
+      await loadCommercialCase(card,row);
+      const commercialPanel=card.querySelector('.commercial-case-panel');
+      if(commercialPanel)await loadFulfillment(card,row,commercialPanel);
+    }else if(['follow_up_proposal','send_proposal'].includes(action.type)){
+      await loadCommercialCase(card,row);
+    }
   }
 
   function setCardMessage(card,text,state=''){
@@ -899,8 +959,23 @@
     }
   }
 
+  async function loadCommercialActions(){
+    if(!adminToken)return false;
+    try{
+      const payload=await api('/api/admin/commercial-actions?limit=12');
+      commercialActions=payload?.results||[];
+      renderCommercialActions();
+      return true;
+    }catch(error){
+      commercialActions=[];
+      renderCommercialActions();
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
+      return false;
+    }
+  }
+
   async function loadAll(){
-    const [requestsOk,demandOk]=await Promise.all([loadRequests(),loadDemand(),loadCommercialDashboard()]);
+    const [requestsOk,demandOk]=await Promise.all([loadRequests(),loadDemand(),loadCommercialDashboard(),loadCommercialActions()]);
     const authorized=Boolean(adminToken&&requestsOk&&demandOk);
     setInternalAccess(authorized);
     if(authorized)setApiStatus('Connected · private operations loaded','connected');
@@ -915,9 +990,9 @@
     setApiStatus('Checking admin access…','ready');
     await loadAll();
   });
-  $('#refreshRequests').addEventListener('click',async()=>{await Promise.all([loadRequests(),loadCommercialDashboard()]);});
+  $('#refreshRequests').addEventListener('click',async()=>{await Promise.all([loadRequests(),loadCommercialDashboard(),loadCommercialActions()]);});
   $('#refreshDemand').addEventListener('click',loadDemand);
   $('#statusFilter').addEventListener('change',renderRequests);
-  window.addEventListener('pagehide',()=>{adminToken='';requests=[];demand=[];commercialDashboard=null;});
+  window.addEventListener('pagehide',()=>{adminToken='';requests=[];demand=[];commercialDashboard=null;commercialActions=[];});
   document.addEventListener('DOMContentLoaded',configure,{once:true});
 })();
