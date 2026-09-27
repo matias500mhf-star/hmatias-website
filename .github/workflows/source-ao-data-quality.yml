@@ -45,6 +45,18 @@ jobs:
           node-version: '22'
       - name: Validate Source AO data
         run: node source-ao/validate-data.mjs
+      - name: Validate confidential local-partner product catalogue
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q '"item-ppe-workplace-safety"' source-ao/data/catalog.json
+          grep -q '"item-professional-workwear-uniforms"' source-ao/data/catalog.json
+          grep -q '"item-furniture-workspaces"' source-ao/data/catalog.json
+          grep -q '"item-partition-systems"' source-ao/data/catalog.json
+          grep -q 'LINHAS COMPLEMENTARES DE FORNECIMENTO' supply.html
+          grep -q 'COMPLEMENTARY SUPPLY LINES' supply-en.html
+          ! grep -RqiE 'ADY-FERRAZ|MATEANA|MATIANA|MILIART' source-ao/data/catalog.json supply.html supply-en.html
+
       - name: Validate confidential public industrial catalogue
         shell: bash
         run: |
