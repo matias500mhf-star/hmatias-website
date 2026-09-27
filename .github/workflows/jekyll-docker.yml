@@ -67,6 +67,11 @@ jobs:
           fetch "/karta.html" /tmp/karta.html
           fetch "/credibilidade.html" /tmp/credibilidade.html
           fetch "/source-ao/index.html" /tmp/source-ao.html
+          fetch "/source-ao/opportunity-radar.html" /tmp/source-ao-radar.html
+          fetch "/source-ao/runtime-config.js" /tmp/source-ao-runtime.js
+          fetch "/source-ao/ops.html" /tmp/source-ao-ops.html
+          fetch "/source-ao/review.html" /tmp/source-ao-review.html
+          fetch "/source-ao/requests.html" /tmp/source-ao-requests.html
           fetch "/procura.html" /tmp/procura-alias.html
           fetch "/images/source-ao-logo.svg" /tmp/source-ao-logo.svg
 
@@ -80,6 +85,38 @@ jobs:
           grep -Fq "https://comercialhmatiasps.com/source-ao/index.html" /tmp/procura-alias.html
           grep -Fq "/source-ao/index.html" /tmp/procura-alias.html
           grep -Fq "SOURCE" /tmp/source-ao-logo.svg
+          grep -Fq "Disallow: /source-ao/ops.html" /tmp/robots.txt
+          grep -Fq "Disallow: /source-ao/review.html" /tmp/robots.txt
+          grep -Fq "Disallow: /source-ao/requests.html" /tmp/robots.txt
+          grep -Fq "Disallow: /source-ao/backend/" /tmp/robots.txt
+          grep -Fq "Disallow: /source-ao/docs/" /tmp/robots.txt
+
+          for private_page in /tmp/source-ao-ops.html /tmp/source-ao-review.html /tmp/source-ao-requests.html; do
+            grep -Fq 'noindex,nofollow,noarchive' "$private_page"
+            grep -Fq 'name="referrer" content="no-referrer"' "$private_page"
+          done
+
+          if grep -Eq 'href="[^"]*(ops|review|requests)\.html' /tmp/source-ao.html /tmp/source-ao-radar.html; then
+            echo "ERROR: public SOURCE AO page links to an internal desk"
+            exit 1
+          fi
+
+          if grep -Eq 'ADMIN_API_TOKEN|PILOT_ADMIN_API_TOKEN|Bearer[[:space:]]|authorization:' /tmp/source-ao-runtime.js; then
+            echo "ERROR: public SOURCE AO runtime config contains admin material"
+            exit 1
+          fi
+
+          api_base="$(sed -n 's/.*apiBase:[[:space:]]*"\([^"]*\)".*/\1/p' /tmp/source-ao-runtime.js | head -n1)"
+          if [ -z "$api_base" ]; then
+            echo "ERROR: unable to resolve SOURCE AO API base from production runtime config"
+            exit 1
+          fi
+          admin_probe_status="$(curl --silent --output /tmp/source-ao-admin-probe.json --write-out '%{http_code}'             --connect-timeout 15 --max-time 30 "$api_base/api/admin/partner-network" || true)"
+          if [ "$admin_probe_status" != "401" ]; then
+            echo "ERROR: unauthenticated SOURCE AO admin endpoint returned HTTP $admin_probe_status instead of 401"
+            cat /tmp/source-ao-admin-probe.json || true
+            exit 1
+          fi
 
           python3 - <<'PY'
           import re
