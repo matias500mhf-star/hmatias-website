@@ -31,6 +31,7 @@ import {
 } from './private-sourcing-suppliers.js';
 import {getCommercialCase,upsertCostOption,updateCommercialCase,getProposalDraft} from './commercial-case.js';
 import {getFulfillmentCase,updateFulfillmentCase} from './fulfillment.js';
+import {getCommercialDashboard} from './commercial-dashboard.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -81,6 +82,8 @@ export default {
             response=await getSourcingRequest(request,env,publicRequest[1]);
           }else if(url.pathname==='/api/admin/sourcing-requests' && request.method==='GET'){
             response=await listSourcingRequests(request,env);
+          }else if(url.pathname==='/api/admin/commercial-dashboard' && request.method==='GET'){
+            response=await getCommercialDashboard(request,env);
           }else{
             const adminStatus=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/status$/);
             const commercialCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/commercial-case$/);
