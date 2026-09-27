@@ -30,6 +30,7 @@ import {
   getPrivateSourcingSupplierContact
 } from './private-sourcing-suppliers.js';
 import {getCommercialCase,upsertCostOption,updateCommercialCase} from './commercial-case.js';
+import {getProposalDraft} from './proposal-builder.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -84,6 +85,7 @@ export default {
             const adminStatus=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/status$/);
             const commercialCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/commercial-case$/);
             const costOptions=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/cost-options$/);
+            const proposalDraft=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/proposal-draft$/);
             if(adminStatus && request.method==='POST'){
               response=await updateSourcingRequestStatus(request,env,adminStatus[1]);
             }else if(commercialCase && request.method==='GET'){
@@ -92,6 +94,8 @@ export default {
               response=await updateCommercialCase(request,env,commercialCase[1]);
             }else if(costOptions && request.method==='POST'){
               response=await upsertCostOption(request,env,costOptions[1]);
+            }else if(proposalDraft && request.method==='GET'){
+              response=await getProposalDraft(request,env,proposalDraft[1]);
             }else if(url.pathname==='/api/admin/maintenance/run' && request.method==='POST'){
               if(env.SOURCE_AO_ENV!=='staging'){
                 response=new Response(JSON.stringify({ok:false,error:{code:'not_found',message:'Not found.'}}),{
