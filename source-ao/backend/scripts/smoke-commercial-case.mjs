@@ -28,6 +28,13 @@ assert.ok(Array.isArray(opened?.cost_options));
 assert.ok(Array.isArray(opened?.supplier_candidates));
 assert.equal(opened?.summary?.proposal_ready,false);
 
+const proposal=await call(`/api/admin/sourcing-requests/${encodeURIComponent(synthetic.id)}/proposal-draft`);
+assert.equal(proposal?.ok,true);
+assert.equal(proposal?.confidential,true);
+assert.equal(proposal?.customer_facing_only,true);
+assert.equal(proposal?.ready,false);
+assert.equal(proposal?.draft,null);
+
 const serialized=JSON.stringify(opened);
 for(const forbidden of ['contact_encrypted','private_contact_encrypted','access_token_hash']){
   assert.equal(serialized.includes(forbidden),false);
