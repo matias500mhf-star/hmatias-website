@@ -33,6 +33,7 @@ import {getCommercialCase,upsertCostOption,updateCommercialCase,getProposalDraft
 import {getFulfillmentCase,updateFulfillmentCase} from './fulfillment.js';
 import {getCommercialDashboard} from './commercial-dashboard.js';
 import {getCollectionsCase,upsertInvoice,addPayment,voidPayment} from './collections.js';
+import {getCommercialActions} from './commercial-actions.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -85,6 +86,8 @@ export default {
             response=await listSourcingRequests(request,env);
           }else if(url.pathname==='/api/admin/commercial-dashboard' && request.method==='GET'){
             response=await getCommercialDashboard(request,env);
+          }else if(url.pathname==='/api/admin/commercial-actions' && request.method==='GET'){
+            response=await getCommercialActions(request,env);
           }else{
             const adminStatus=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/status$/);
             const commercialCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/commercial-case$/);
