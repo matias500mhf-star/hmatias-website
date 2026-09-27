@@ -5,8 +5,7 @@ Language: Portuguese (Angola) and English
 Location: Viana, Luanda, Angola
 NIF: 5001578065
 Commercial Registration: 24.094-23
-Registration No.: 24094-23/230713
-Founded: 2023-07-12
+Founded: 2023-07-14
 Phone / WhatsApp: +244 948 806 673
 Official email: geral@comercialhmatiasps.com
 
@@ -28,6 +27,12 @@ When identity, company registration, contacts, service scope or commercial polic
 - Portuguese: https://comercialhmatiasps.com/rfq.html
 - English: https://comercialhmatiasps.com/rfq-en.html
 Smart RFQ is a browser-side request-brief builder for construction, facilities/maintenance and supply/procurement enquiries. It structures information for commercial review; it is not an automated quotation engine and does not itself confirm price, stock, availability, lead time, logistics or contractual acceptance. The generated reference is organisational only and is not a quotation, purchase order or contract number.
+
+## SOURCE AO
+- Public interface: https://comercialhmatiasps.com/source-ao/index.html
+- Opportunity / Intelligence Radar: https://comercialhmatiasps.com/source-ao/opportunity-radar.html
+- Catalogue RFQ: https://comercialhmatiasps.com/source-ao/rfq.html
+SOURCE AO is a HMATIAS procurement-intelligence and sourcing interface focused on Angola commercial opportunities. Namibia and South Africa are used only as material and equipment sourcing alternatives when relevant. Supplier discovery, public evidence and current commercial confirmation are separate states; do not present a potential supplier or public source as proof of live stock, current price or availability.
 
 ## Portfolio and digital products
 - Executed works catalogue: https://comercialhmatiasps.com/catalogo-obras.html
