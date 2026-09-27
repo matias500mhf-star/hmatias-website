@@ -19,7 +19,12 @@
     el.dataset.state=state;
   }
 
+  function setInternalAccess(unlocked){
+    document.body.classList.toggle('internal-locked',!unlocked);
+  }
+
   function configureSessionUi(){
+    setInternalAccess(false);
     const base=apiBase();
     $('#apiEndpoint').value=base||'Not configured';
     if(!base){
@@ -267,7 +272,7 @@
       const payload=await api(`/api/admin/copilot/candidates/${encodeURIComponent(candidate.id)}`);
       renderCopilotPanel(card,payload);
     }catch(error){
-      if(error.status===401){adminToken='';setApiStatus('Token rejected','error');}
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
       alert('SOURCE Copilot analysis failed. Check the API session and try again.');
     }finally{
       button.disabled=false;button.textContent=original;
@@ -323,13 +328,13 @@
       const payload=await api('/api/admin/partner-network');
       renderPartnerNetwork(payload?.partners||[]);
     }catch(error){
-      if(error.status===401){adminToken='';setApiStatus('Token rejected','error');}
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
       $('#partnerNetworkList').innerHTML='<div class="empty-state"><strong>Partner network unavailable.</strong><p>Check the API session and try again.</p></div>';
     }
   }
 
   async function loadOpportunityPipeline(){
-    if(!adminToken||!apiBase()) return;
+    if(!adminToken||!apiBase()) return false;
     $('#opportunityCandidateCount').textContent='Loading…';
     try{
       const [sources,candidates]=await Promise.all([
@@ -338,9 +343,11 @@
       ]);
       renderOpportunitySources(sources?.sources||[]);
       renderOpportunityCandidates(candidates?.candidates||[]);
+      return true;
     }catch(error){
-      if(error.status===401){adminToken='';setApiStatus('Token rejected','error');}
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
       $('#opportunityCandidateList').innerHTML='<div class="empty-state"><strong>Opportunity queue unavailable.</strong><p>Check the API session and try again.</p></div>';
+      return false;
     }
   }
 
@@ -380,14 +387,20 @@
     }
   }
 
-  $('#connectApi').addEventListener('click',()=>{
+  $('#connectApi').addEventListener('click',async()=>{
     const candidate=$('#adminToken').value.trim();
-    if(!candidate){adminToken='';setApiStatus('API available · token required','ready');return;}
+    if(!candidate){adminToken='';setInternalAccess(false);setApiStatus('API available · token required','ready');return;}
     adminToken=candidate;
     $('#adminToken').value='';
-    setApiStatus('Session token loaded','connected');
-    loadOpportunityPipeline();
-    loadPartnerNetwork();
+    setApiStatus('Checking admin access…','ready');
+    const authorized=await loadOpportunityPipeline();
+    if(!authorized){
+      setInternalAccess(false);
+      return;
+    }
+    setInternalAccess(true);
+    setApiStatus('Connected · private operations loaded','connected');
+    await loadPartnerNetwork();
   });
 
   $('#refreshOpportunities').addEventListener('click',()=>loadOpportunityPipeline());
@@ -450,7 +463,7 @@
         setApiStatus('Connected · request created','connected');
       }catch(error){
         currentDraft.status='draft_api_failed';
-        if(error.status===401){adminToken='';setApiStatus('Token rejected · local draft only','error');}
+        if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected · local draft only','error');}
         else setApiStatus('API request failed · local draft only','error');
       }
     }
