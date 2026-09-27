@@ -388,7 +388,7 @@ async function scanJson(env,source,raw){
 
 async function dueSources(env,limit){
   const rows=await env.SOURCE_AO_DB.prepare(
-    "SELECT * FROM opportunity_sources WHERE active=1 ORDER BY priority ASC,coalesce(last_checked_at,'1970-01-01') ASC LIMIT 20"
+    "SELECT * FROM opportunity_sources WHERE active=1 AND country_code='AO' ORDER BY priority ASC,coalesce(last_checked_at,'1970-01-01') ASC LIMIT 20"
   ).all();
   const clock=Date.now();
   return (rows.results||[]).filter(s=>!s.last_checked_at||
@@ -437,7 +437,7 @@ export async function upsertOpportunitySource(request,env){
   }catch{return fail(env,400,'invalid_fields','Source fields are invalid.')}
   if(!name||!url||!isSafeDiscoveryUrl(url)||!KINDS.has(kind)||!ADAPTERS.has(adapter))return fail(env,400,'invalid_fields','name, source_url, source_kind and adapter are invalid.');
   const id=clean(input?.id,120)||'opp_source_'+(await sha(url)).slice(0,18);
-  const active=input?.active===false?0:1,priority=Math.max(1,Math.min(100,Number(input?.priority)||50));
+  const active=country==='AO'&&input?.active!==false?1:0,priority=Math.max(1,Math.min(100,Number(input?.priority)||50));
   const interval=Math.max(15,Math.min(1440,Number(input?.scan_interval_minutes)||60));
   await env.SOURCE_AO_DB.prepare(`
     INSERT INTO opportunity_sources(id,name,source_url,source_kind,country_code,currency_code,adapter,active,priority,scan_interval_minutes)

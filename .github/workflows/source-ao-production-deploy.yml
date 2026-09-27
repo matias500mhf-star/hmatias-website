@@ -237,20 +237,25 @@ jobs:
             --data '{"limit_sources":3}' > "$RUNNER_TEMP/source-ao-opportunity-scan.json"
           curl -fsS --max-time 15 "$SOURCE_AO_PRODUCTION_API_BASE/api/admin/opportunity-pipeline/candidates?status=pending&limit=5" \
             -H "$auth" > "$RUNNER_TEMP/source-ao-opportunity-candidates.json"
-          node --input-type=module - "$RUNNER_TEMP/source-ao-opportunity-sources.json" "$RUNNER_TEMP/source-ao-opportunity-scan.json" "$RUNNER_TEMP/source-ao-opportunity-candidates.json" <<'NODE'
+          curl -fsS --max-time 15 "$SOURCE_AO_PRODUCTION_API_BASE/api/opportunities" > "$RUNNER_TEMP/source-ao-public-opportunities.json"
+          node --input-type=module - "$RUNNER_TEMP/source-ao-opportunity-sources.json" "$RUNNER_TEMP/source-ao-opportunity-scan.json" "$RUNNER_TEMP/source-ao-opportunity-candidates.json" "$RUNNER_TEMP/source-ao-public-opportunities.json" <<'NODE'
           import {readFileSync} from 'node:fs';
-          const [sourcesFile,scanFile,candidatesFile]=process.argv.slice(2);
+          const [sourcesFile,scanFile,candidatesFile,publicFile]=process.argv.slice(2);
           const sources=JSON.parse(readFileSync(sourcesFile,'utf8'));
           const scan=JSON.parse(readFileSync(scanFile,'utf8'));
           const candidates=JSON.parse(readFileSync(candidatesFile,'utf8'));
-          if(sources?.ok!==true||!Array.isArray(sources.sources)||sources.sources.length<3) throw new Error('Opportunity source registry is not ready');
-          const markets=new Set(sources.sources.map(x=>x.country_code));
-          for(const code of ['AO','NA','ZA']) if(!markets.has(code)) throw new Error(`Missing regional opportunity source for ${code}`);
+          const publicOpportunities=JSON.parse(readFileSync(publicFile,'utf8'));
+          if(sources?.ok!==true||!Array.isArray(sources.sources)||sources.sources.length<1) throw new Error('Opportunity source registry is not ready');
+          const active=sources.sources.filter(x=>x.active);
+          if(!active.some(x=>x.country_code==='AO')) throw new Error('Missing active Angola opportunity source');
+          if(active.some(x=>x.country_code==='NA'||x.country_code==='ZA')) throw new Error('Foreign opportunity sources must remain disabled; NA/ZA are material-sourcing markets only');
           if(scan?.ok!==true||!Array.isArray(scan.results)) throw new Error('Opportunity scan endpoint failed');
           if(candidates?.ok!==true||!Array.isArray(candidates.candidates)) throw new Error('Opportunity candidate queue failed');
-          console.log('Production opportunity pipeline smoke passed.');
+          if(publicOpportunities?.ok!==true||!Array.isArray(publicOpportunities.results)) throw new Error('Public opportunity API failed');
+          if(publicOpportunities.results.some(x=>(x.country_code||'AO')!=='AO')) throw new Error('Public Opportunity Radar exposed a non-Angola opportunity');
+          console.log('Production Angola-only opportunity pipeline smoke passed.');
           NODE
-          rm -f "$RUNNER_TEMP/source-ao-opportunity-sources.json" "$RUNNER_TEMP/source-ao-opportunity-scan.json" "$RUNNER_TEMP/source-ao-opportunity-candidates.json"
+          rm -f "$RUNNER_TEMP/source-ao-opportunity-sources.json" "$RUNNER_TEMP/source-ao-opportunity-scan.json" "$RUNNER_TEMP/source-ao-opportunity-candidates.json" "$RUNNER_TEMP/source-ao-public-opportunities.json"
           rm -f "$RUNNER_TEMP/source-ao-partner-network.json"
 
       - name: Verify production commercial partner network
