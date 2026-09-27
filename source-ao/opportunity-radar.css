@@ -47,3 +47,22 @@
 @keyframes sourceRadarSpin{to{transform:rotate(360deg)}}
 @keyframes sourceRadarPulse{0%,100%{opacity:.45}50%{opacity:1}}
 @media(max-width:720px){.op-syncbar{align-items:flex-start;flex-direction:column}.op-refresh-button{width:100%;justify-content:center}}
+/* 2026-09-27 — smartphone hardening, preserve approved Source AO visual system */
+.op-body{overflow-x:hidden}
+.op-card,.op-card>*,.op-control,.op-filter-stack{min-width:0}
+.op-card h3,.op-fit,.op-meta,.op-source{overflow-wrap:anywhere}
+.op-market-filters button,.op-filters button,.op-refresh-button,.op-analyse{min-height:44px}
+@media(max-width:720px){
+  .op-hero h1{font-size:clamp(2.35rem,11.5vw,3.5rem);overflow-wrap:normal}
+  .op-control-copy h2{font-size:clamp(2rem,9vw,2.65rem)}
+  .op-market-filters,.op-filters{width:100%}
+  .op-market-filters button,.op-filters button{flex:1 1 auto}
+  .op-workspace-head{height:auto;min-height:48px;gap:10px;padding:12px 14px;flex-wrap:wrap}
+  .op-actions{width:100%}
+  .op-analyse{width:100%;justify-content:center}
+}
+@media(max-width:380px){
+  .op-stat-grid{grid-template-columns:1fr}
+  .op-stat-grid article+article{border-left:0;border-top:1px solid rgba(255,255,255,.12);padding-left:0}
+  .op-score-column{align-items:flex-start;flex-wrap:wrap}
+}
