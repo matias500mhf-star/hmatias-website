@@ -1,6 +1,6 @@
 {
-  "version": "0.5",
-  "updated_at": "2026-09-27T08:00:00+01:00",
+  "version": "0.6",
+  "updated_at": "2026-09-27T09:15:00+01:00",
   "items": [
     {
       "id": "item-construction-general",
@@ -373,6 +373,313 @@
         "corrosion",
         "maintenance"
       ]
+    },
+    {
+      "id": "item-ppe-workplace-safety",
+      "name": "PPE & workplace safety equipment",
+      "aliases": [
+        "EPI",
+        "EPIs",
+        "equipamento de proteção individual",
+        "equipamentos de protecao individual",
+        "personal protective equipment",
+        "PPE",
+        "workplace safety equipment",
+        "safety equipment"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "ppe-safety",
+      "specification": "Workplace PPE and safety-equipment family. Exact type, protection class, standard, size, quantity, brand, certification and stock require confirmation.",
+      "keywords": [
+        "safety",
+        "segurança",
+        "seguranca",
+        "PPE",
+        "EPI",
+        "construction",
+        "industrial",
+        "facilities"
+      ]
+    },
+    {
+      "id": "item-industrial-maintenance-consumables",
+      "name": "Industrial & maintenance consumables",
+      "aliases": [
+        "consumíveis industriais",
+        "consumiveis industriais",
+        "maintenance consumables",
+        "industrial consumables",
+        "consumíveis de manutenção",
+        "consumiveis de manutencao",
+        "consumables"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "consumables",
+      "specification": "General industrial and maintenance consumables. Exact reference, technical compatibility, packaging, quantity and stock require confirmation.",
+      "keywords": [
+        "consumables",
+        "maintenance",
+        "industrial",
+        "facilities",
+        "operations"
+      ]
+    },
+    {
+      "id": "item-professional-workwear-uniforms",
+      "name": "Professional workwear & uniforms",
+      "aliases": [
+        "fardamento profissional",
+        "uniformes profissionais",
+        "uniformes corporativos",
+        "uniformes escolares",
+        "uniformes de segurança",
+        "uniformes de seguranca",
+        "uniformes hotelaria",
+        "uniformes saúde",
+        "uniformes saude",
+        "uniformes indústria",
+        "uniformes industria",
+        "uniformes construção",
+        "uniformes construcao",
+        "workwear",
+        "corporate uniforms",
+        "security uniforms",
+        "hospitality uniforms",
+        "healthcare uniforms",
+        "industrial uniforms",
+        "construction workwear",
+        "sportswear"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "workwear-uniforms",
+      "specification": "Professional workwear and uniform solutions. Sector, fabric, model, sizes, branding/personalisation, quantity, delivery schedule and commercial conditions require confirmation.",
+      "keywords": [
+        "uniform",
+        "workwear",
+        "fardamento",
+        "construction",
+        "industry",
+        "security",
+        "hospitality",
+        "healthcare"
+      ]
+    },
+    {
+      "id": "item-furniture-workspaces",
+      "name": "Office, residential & hospitality furniture",
+      "aliases": [
+        "mobiliário de escritório",
+        "mobiliario de escritorio",
+        "office furniture",
+        "residential furniture",
+        "mobiliário residencial",
+        "mobiliario residencial",
+        "hotel furniture",
+        "restaurant furniture",
+        "mobiliário hoteleiro",
+        "mobiliario hoteleiro"
+      ],
+      "category": "construction",
+      "subcategory": "furniture-interiors",
+      "specification": "Furniture solutions for offices, residences, hotels and restaurants. Layout, dimensions, materials, finishes, quantity, installation and lead time require confirmation.",
+      "keywords": [
+        "furniture",
+        "mobiliário",
+        "mobiliario",
+        "office",
+        "hotel",
+        "restaurant",
+        "interiors"
+      ]
+    },
+    {
+      "id": "item-partition-systems",
+      "name": "Integrated partition systems",
+      "aliases": [
+        "divisórias integradas",
+        "divisorias integradas",
+        "office partitions",
+        "partition systems",
+        "divisórias de escritório",
+        "divisorias de escritorio"
+      ],
+      "category": "construction",
+      "subcategory": "partitions",
+      "specification": "Integrated partition systems for corporate and interior spaces. Layout, dimensions, acoustic requirement, finish, hardware, installation and lead time require confirmation.",
+      "keywords": [
+        "partitions",
+        "divisórias",
+        "divisorias",
+        "office",
+        "interiors",
+        "acoustic"
+      ]
+    },
+    {
+      "id": "item-floor-coverings",
+      "name": "Vinyl flooring & carpet",
+      "aliases": [
+        "pavimento vinílico",
+        "pavimento vinilico",
+        "vinyl flooring",
+        "carpet",
+        "carpete",
+        "floor coverings",
+        "revestimento de pavimento"
+      ],
+      "category": "construction",
+      "subcategory": "floor-coverings",
+      "specification": "Floor-covering family including vinyl and carpet solutions. Area, substrate, finish, traffic class, installation system, quantity and availability require confirmation.",
+      "keywords": [
+        "flooring",
+        "vinyl",
+        "carpet",
+        "interiors",
+        "office",
+        "hospitality"
+      ]
+    },
+    {
+      "id": "item-acoustic-solutions",
+      "name": "Acoustic products & solutions",
+      "aliases": [
+        "produtos acústicos",
+        "produtos acusticos",
+        "acoustic products",
+        "acoustic panels",
+        "painéis acústicos",
+        "paineis acusticos",
+        "acoustic treatment"
+      ],
+      "category": "construction",
+      "subcategory": "acoustic-solutions",
+      "specification": "Acoustic-product family for interior spaces. Acoustic objective, area, substrate, finish, fire/technical requirements, installation and lead time require confirmation.",
+      "keywords": [
+        "acoustic",
+        "acústica",
+        "acustica",
+        "interiors",
+        "office",
+        "hospitality"
+      ]
+    },
+    {
+      "id": "item-metal-ceilings-technical-floors",
+      "name": "Metal ceilings & technical flooring",
+      "aliases": [
+        "tetos metálicos",
+        "tectos metálicos",
+        "tetos metalicos",
+        "metal ceilings",
+        "technical floors",
+        "pavimentos técnicos",
+        "pavimentos tecnicos",
+        "raised floors"
+      ],
+      "category": "construction",
+      "subcategory": "technical-interiors",
+      "specification": "Metal ceiling and technical-flooring systems. Module, finish, load, access, installation, area and project specification require confirmation.",
+      "keywords": [
+        "ceiling",
+        "flooring",
+        "technical",
+        "raised floor",
+        "interiors",
+        "commercial"
+      ]
+    },
+    {
+      "id": "item-decorative-surfaces",
+      "name": "Quartz, natural stone & ultracompact surfaces",
+      "aliases": [
+        "quartzo decorativo",
+        "quartz surfaces",
+        "pedra natural",
+        "natural stone",
+        "ultracompact surfaces",
+        "superfícies ultracompactas",
+        "superficies ultracompactas",
+        "revestimento decorativo"
+      ],
+      "category": "construction",
+      "subcategory": "decorative-surfaces",
+      "specification": "Decorative surface family for walls, floors and fit-out applications. Material, thickness, finish, dimensions, fabrication, installation and availability require confirmation.",
+      "keywords": [
+        "quartz",
+        "stone",
+        "pedra",
+        "surfaces",
+        "interiors",
+        "fit-out"
+      ]
+    },
+    {
+      "id": "item-custom-kitchens-wardrobes",
+      "name": "Custom kitchens & wardrobes",
+      "aliases": [
+        "cozinhas por medida",
+        "custom kitchens",
+        "roupeiros por medida",
+        "custom wardrobes",
+        "kitchens",
+        "wardrobes",
+        "cozinhas",
+        "roupeiros"
+      ],
+      "category": "construction",
+      "subcategory": "joinery-fitout",
+      "specification": "Made-to-measure kitchen and wardrobe solutions. Site measurement, layout, carcass/door materials, hardware, finishes, installation and lead time require confirmation.",
+      "keywords": [
+        "kitchen",
+        "wardrobe",
+        "cozinha",
+        "roupeiro",
+        "joinery",
+        "interiors"
+      ]
+    },
+    {
+      "id": "item-blinds-curtains",
+      "name": "Blinds & curtains",
+      "aliases": [
+        "estores",
+        "cortinados",
+        "blinds",
+        "curtains",
+        "window coverings",
+        "cortinas"
+      ],
+      "category": "construction",
+      "subcategory": "window-coverings",
+      "specification": "Blind and curtain solutions for corporate, residential and hospitality spaces. Opening dimensions, fabric/material, control system, finish, installation and lead time require confirmation.",
+      "keywords": [
+        "blinds",
+        "curtains",
+        "estores",
+        "cortinados",
+        "interiors"
+      ]
+    },
+    {
+      "id": "item-smart-home",
+      "name": "Smart-home solutions",
+      "aliases": [
+        "smart home",
+        "smarthome",
+        "automação residencial",
+        "automacao residencial",
+        "home automation"
+      ],
+      "category": "hvac-electrical",
+      "subcategory": "smart-home",
+      "specification": "Smart-home solution family. Functions, compatibility, electrical/integration requirements, devices, installation, commissioning and lead time require confirmation.",
+      "keywords": [
+        "automation",
+        "smart home",
+        "electrical",
+        "integration",
+        "residential"
+      ]
     }
   ],
   "taxonomy": [
@@ -407,7 +714,25 @@
         "argamassa",
         "pvc",
         "pipe",
-        "tubo"
+        "tubo",
+        "mobiliário",
+        "mobiliario",
+        "furniture",
+        "divisórias",
+        "divisorias",
+        "partitions",
+        "pavimento vinílico",
+        "vinyl flooring",
+        "carpet",
+        "acoustic",
+        "acústica",
+        "quartzo",
+        "quartz",
+        "pedra natural",
+        "cozinhas",
+        "roupeiros",
+        "estores",
+        "cortinados"
       ]
     },
     {
@@ -432,7 +757,11 @@
         "elétrica",
         "eletrica",
         "generator",
-        "gerador"
+        "gerador",
+        "smart home",
+        "smarthome",
+        "automação residencial",
+        "automacao residencial"
       ]
     },
     {
@@ -543,7 +872,14 @@
         "hydrotest",
         "rust preventive",
         "preservação industrial",
-        "preservacao industrial"
+        "preservacao industrial",
+        "EPI",
+        "PPE",
+        "fardamento",
+        "uniformes",
+        "workwear",
+        "consumíveis industriais",
+        "consumiveis industriais"
       ]
     }
   ]
