@@ -41,6 +41,329 @@ jobs:
               if re.search(r'(?im)^\s*Disallow:\s*/\s*$', robots):
                   fail('robots.txt blocks the entire site')
 
+          # Public institutional facts must not regress to retired values.
+          public_fact_paths = set(ROOT.glob('*.html'))
+          public_fact_paths.update({
+              ROOT / 'company-profile.json',
+              ROOT / 'llms.txt',
+              ROOT / 'assistant-knowledge.js',
+          })
+          retired_values = ('24094-23/230713', '2023-07-12')
+          for path in public_fact_paths:
+              if not path.exists():
+                  continue
+              text = path.read_text(encoding='utf-8')
+              for value in retired_values:
+                  if value in text:
+                      fail(f'retired institutional value still published in {path}: {value}')
+
+          # Specific bot groups must not override the private-path rules above.
+          for bot in ('Googlebot', 'Bingbot'):
+              if re.search(rf'(?im)^\\s*User-agent:\\s*{bot}\\s*          sitemap_path = ROOT / 'sitemap.xml'
+          if not sitemap_path.exists():
+              fail('sitemap.xml is missing')
+              sitemap_urls = []
+              alternate_map = {}
+          else:
+              try:
+                  tree = ET.parse(sitemap_path)
+                  root = tree.getroot()
+                  ns = {
+                      'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9',
+                      'xhtml': 'http://www.w3.org/1999/xhtml',
+                  }
+                  sitemap_urls = []
+                  alternate_map = {}
+                  for entry in root.findall('sm:url', ns):
+                      loc_node = entry.find('sm:loc', ns)
+                      if loc_node is None or not (loc_node.text or '').strip():
+                          fail('sitemap entry without <loc>')
+                          continue
+                      loc = loc_node.text.strip()
+                      sitemap_urls.append(loc)
+                      alts = {}
+                      for link in entry.findall('xhtml:link', ns):
+                          lang = link.attrib.get('hreflang', '').strip()
+                          href = link.attrib.get('href', '').strip()
+                          if lang:
+                              alts[lang] = href
+                      alternate_map[loc] = alts
+              except Exception as exc:
+                  fail(f'sitemap.xml cannot be parsed: {exc}')
+                  sitemap_urls = []
+                  alternate_map = {}
+
+          if len(sitemap_urls) != len(set(sitemap_urls)):
+              fail('sitemap.xml contains duplicate URLs')
+
+          canonical_set = set(sitemap_urls)
+          for url in sitemap_urls:
+              parsed = urlparse(url)
+              if parsed.scheme != 'https' or parsed.netloc != DOMAIN:
+                  fail(f'non-canonical sitemap URL: {url}')
+                  continue
+
+              rel = parsed.path.lstrip('/')
+              html_path = ROOT / ('index.html' if not rel else rel)
+              if not html_path.exists():
+                  fail(f'sitemap URL has no matching file: {url}')
+                  continue
+
+              html = html_path.read_text(encoding='utf-8')
+              canonical = re.search(r'<link\b[^>]*\brel=["\']canonical["\'][^>]*\bhref=["\']([^"\']+)', html, re.I)
+              if not canonical:
+                  canonical = re.search(r'<link\b[^>]*\bhref=["\']([^"\']+)["\'][^>]*\brel=["\']canonical["\']', html, re.I)
+              if not canonical:
+                  fail(f'missing canonical tag: {html_path}')
+              elif canonical.group(1).rstrip('/') != url.rstrip('/'):
+                  fail(f'canonical mismatch in {html_path}: {canonical.group(1)} != {url}')
+
+              robots_meta = re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*\bcontent=["\']([^"\']+)', html, re.I)
+              if robots_meta and 'noindex' in robots_meta.group(1).lower():
+                  fail(f'noindex page appears in sitemap: {html_path}')
+
+              alts = alternate_map.get(url, {})
+              for required in ('pt-AO', 'en', 'x-default'):
+                  if required not in alts:
+                      fail(f'{url} missing sitemap hreflang {required}')
+              if alts.get('x-default') and alts.get('pt-AO') and alts['x-default'] != alts['pt-AO']:
+                  fail(f'{url} x-default should match pt-AO canonical')
+              for lang, href in alts.items():
+                  if href not in canonical_set:
+                      fail(f'{url} hreflang {lang} points outside canonical sitemap: {href}')
+
+          # Reciprocal PT/EN sitemap relationship.
+          for url, alts in alternate_map.items():
+              pt = alts.get('pt-AO')
+              en = alts.get('en')
+              if not pt or not en:
+                  continue
+              for target in (pt, en):
+                  target_alts = alternate_map.get(target, {})
+                  if target_alts.get('pt-AO') != pt or target_alts.get('en') != en:
+                      fail(f'non-reciprocal hreflang pair: {url} -> {target}')
+
+          # Legacy aliases may remain for users, but must stay out of the sitemap and out of indexing.
+          for html_path in ROOT.glob('*.html'):
+              html = html_path.read_text(encoding='utf-8')
+              robots_meta = re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*\bcontent=["\']([^"\']+)', html, re.I)
+              is_noindex = bool(robots_meta and 'noindex' in robots_meta.group(1).lower())
+              page_url = BASE + ('/' if html_path.name == 'index.html' else '/' + html_path.name)
+              if is_noindex and page_url in canonical_set:
+                  fail(f'noindex alias incorrectly included in sitemap: {html_path}')
+
+          # All hard-coded WhatsApp links must use the single commercial number.
+          whatsapp_refs = 0
+          for path in list(ROOT.glob('*.html')) + list(ROOT.glob('*.js')):
+              text = path.read_text(encoding='utf-8')
+              for match in re.finditer(r'wa\.me/(\d+)', text, re.I):
+                  whatsapp_refs += 1
+                  if match.group(1) != WHATSAPP:
+                      fail(f'WhatsApp number mismatch in {path}: {match.group(1)}')
+          if whatsapp_refs == 0:
+              fail('no WhatsApp routes found in site source')
+
+          # Homepage credibility access belongs in the footer, not the primary navigation.
+          for home_name, credibility_name in (('index.html', 'credibilidade.html'), ('en.html', 'credibility.html')):
+              home_path = ROOT / home_name
+              home = home_path.read_text(encoding='utf-8')
+              nav = home.partition('<nav class="nav-menu"')[2].partition('</nav>')[0]
+              if nav and credibility_name in nav:
+                  fail(f'credibility link must not appear in primary navigation: {home_name}')
+              if credibility_name not in home:
+                  fail(f'credibility footer link missing from homepage: {home_name}')
+
+          # Institutional pages must stay concise and must not duplicate the official email in the content card.
+          for page_name in ('credibilidade.html', 'credibility.html'):
+              page = (ROOT / page_name).read_text(encoding='utf-8')
+              card = page.partition('<aside class="institutional-card institutional-contact">')[2].partition('</aside>')[0]
+              if not card:
+                  fail(f'institutional contact card missing: {page_name}')
+              elif card.count('mailto:geral@comercialhmatiasps.com') != 1:
+                  fail(f'institutional contact card must contain the official email exactly once: {page_name}')
+
+          # SOURCE AO has one canonical public product entry. Legacy procura.html is redirect-only.
+          source_logo = ROOT / 'images' / 'source-ao-logo.svg'
+          source_page = ROOT / 'source-ao' / 'index.html'
+          source_alias = ROOT / 'procura.html'
+          source_canonical = 'https://comercialhmatiasps.com/source-ao/index.html'
+          if not source_logo.exists():
+              fail('SOURCE AO sub-logo is missing')
+          if not source_page.exists():
+              fail('SOURCE AO canonical page is missing')
+          else:
+              source_html = source_page.read_text(encoding='utf-8')
+              if '../images/source-ao-logo.svg' not in source_html:
+                  fail('SOURCE AO canonical page does not use the SOURCE AO sub-logo')
+              if source_canonical not in source_html:
+                  fail('SOURCE AO canonical page does not declare the expected canonical URL')
+          if not source_alias.exists():
+              fail('SOURCE AO legacy alias procura.html is missing')
+          else:
+              alias_html = source_alias.read_text(encoding='utf-8')
+              if 'noindex,follow' not in alias_html:
+                  fail('SOURCE AO legacy alias must stay noindex,follow')
+              if source_canonical not in alias_html:
+                  fail('SOURCE AO legacy alias must canonicalize to the official SOURCE AO page')
+              if '/source-ao/index.html' not in alias_html:
+                  fail('SOURCE AO legacy alias must redirect to the official SOURCE AO page')
+
+          # SOURCE AO access model: public discovery stays public; operational desks stay private-by-design.
+          private_source_pages = (
+              ROOT / 'source-ao' / 'ops.html',
+              ROOT / 'source-ao' / 'review.html',
+              ROOT / 'source-ao' / 'requests.html',
+          )
+          required_private_robots = ('noindex', 'nofollow', 'noarchive')
+          required_robot_disallows = (
+              '/source-ao/ops.html',
+              '/source-ao/review.html',
+              '/source-ao/requests.html',
+              '/source-ao/backend/',
+              '/source-ao/docs/',
+          )
+
+          for disallow_path in required_robot_disallows:
+              if f'Disallow: {disallow_path}' not in robots:
+                  fail(f'robots.txt must block SOURCE AO internal surface: {disallow_path}')
+
+          for private_path in private_source_pages:
+              if not private_path.exists():
+                  fail(f'SOURCE AO private desk is missing: {private_path}')
+                  continue
+              private_html = private_path.read_text(encoding='utf-8')
+              robots_meta = re.search(
+                  r'<meta\b[^>]*\bname=["\']robots["\'][^>]*\bcontent=["\']([^"\']+)',
+                  private_html,
+                  re.I,
+              )
+              if not robots_meta:
+                  fail(f'SOURCE AO private desk lacks robots protection: {private_path}')
+              else:
+                  directives = robots_meta.group(1).lower()
+                  for directive in required_private_robots:
+                      if directive not in directives:
+                          fail(f'SOURCE AO private desk missing {directive}: {private_path}')
+              if not re.search(
+                  r'<meta\b[^>]*\bname=["\']referrer["\'][^>]*\bcontent=["\']no-referrer["\']',
+                  private_html,
+                  re.I,
+              ):
+                  fail(f'SOURCE AO private desk must use no-referrer: {private_path}')
+
+              private_url = f'{BASE}/source-ao/{private_path.name}'
+              if private_url in canonical_set:
+                  fail(f'SOURCE AO private desk leaked into sitemap: {private_path}')
+
+          public_source_pages = (
+              ROOT / 'source-ao' / 'index.html',
+              ROOT / 'source-ao' / 'opportunity-radar.html',
+          )
+          for public_path in public_source_pages:
+              if not public_path.exists():
+                  continue
+              public_html = public_path.read_text(encoding='utf-8')
+              for private_name in ('ops.html', 'review.html', 'requests.html'):
+                  if re.search(rf'href=["\'][^"\']*{re.escape(private_name)}', public_html, re.I):
+                      fail(f'public SOURCE AO page links to private desk {private_name}: {public_path}')
+
+          runtime_config = ROOT / 'source-ao' / 'runtime-config.js'
+          if runtime_config.exists():
+              runtime_text = runtime_config.read_text(encoding='utf-8')
+              forbidden_runtime_terms = ('ADMIN_API_TOKEN', 'PILOT_ADMIN_API_TOKEN', 'authorization:', 'Bearer ')
+              for term in forbidden_runtime_terms:
+                  if term in runtime_text:
+                      fail(f'public SOURCE AO runtime config contains forbidden admin material: {term}')
+
+          # Keep the website assistant synchronized with the public site.
+          assistant_path = ROOT / 'assistant.js'
+          knowledge_path = ROOT / 'assistant-knowledge.js'
+          if not assistant_path.exists():
+              fail('assistant.js is missing')
+          if not knowledge_path.exists():
+              fail('assistant-knowledge.js is missing')
+          if assistant_path.exists() and knowledge_path.exists():
+              assistant_text = assistant_path.read_text(encoding='utf-8')
+              knowledge_text = knowledge_path.read_text(encoding='utf-8')
+
+              assistant_version_match = re.search(r"HMATIAS_ASSISTANT_VERSION=['\"]([^'\"]+)", assistant_text)
+              kb_src_match = re.search(r"KB_SRC=['\"]assistant-knowledge\.js\?v=([^'\"]+)", assistant_text)
+              knowledge_updated_match = re.search(r"updated:\s*['\"](\d{4}-\d{2}-\d{2})['\"]", knowledge_text)
+
+              if not assistant_version_match:
+                  fail('assistant.js does not declare HMATIAS_ASSISTANT_VERSION')
+                  assistant_version = ''
+              else:
+                  assistant_version = assistant_version_match.group(1)
+
+              expected_cache_version = re.sub(r'^(\d{4})-(\d{2})-(\d{2})-', r'\1\2\3-', assistant_version) if assistant_version else ''
+
+              if not kb_src_match:
+                  fail('assistant.js does not declare a versioned assistant-knowledge.js source')
+              elif expected_cache_version and kb_src_match.group(1) != expected_cache_version:
+                  fail(
+                      'assistant/knowledge cache versions differ: '
+                      f"{expected_cache_version} != {kb_src_match.group(1)}"
+                  )
+
+              required_knowledge = {
+                  'SOURCE AO': 'sourceAO: {',
+                  'KARTA': 'karta: {',
+                  'Smart RFQ': 'smartRfq: {',
+              }
+              for label, needle in required_knowledge.items():
+                  if needle not in knowledge_text:
+                      fail(f'assistant knowledge is missing {label}')
+
+              if sitemap_path.exists() and knowledge_updated_match:
+                  try:
+                      site_tree = ET.parse(sitemap_path)
+                      site_root = site_tree.getroot()
+                      sm = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+                      lastmods = [
+                          (node.text or '').strip()
+                          for node in site_root.findall('sm:url/sm:lastmod', sm)
+                          if (node.text or '').strip()
+                      ]
+                      if lastmods and knowledge_updated_match.group(1) < max(lastmods):
+                          fail(
+                              'assistant knowledge is older than the newest sitemap update: '
+                              f"{knowledge_updated_match.group(1)} < {max(lastmods)}"
+                          )
+                  except Exception as exc:
+                      fail(f'cannot compare assistant freshness with sitemap: {exc}')
+              elif not knowledge_updated_match:
+                  fail('assistant-knowledge.js does not declare an updated YYYY-MM-DD date')
+
+              if expected_cache_version:
+                  for html_path in ROOT.glob('*.html'):
+                      html = html_path.read_text(encoding='utf-8')
+                      for match in re.finditer(r'assistant\.js\?v=([^"\'<>\s]+)', html):
+                          page_cache_version = match.group(1)
+                          if not page_cache_version.startswith(expected_cache_version):
+                              fail(
+                                  f'stale assistant cache version in {html_path}: '
+                                  f"{page_cache_version} does not start with {expected_cache_version}"
+                              )
+
+          # GitHub Pages should have a custom lightweight 404 page.
+          not_found = ROOT / '404.html'
+          if not not_found.exists():
+              fail('404.html is missing')
+          elif 'noindex,follow' not in not_found.read_text(encoding='utf-8'):
+              fail('404.html must be noindex,follow')
+
+          if errors:
+              print('HMATIAS site integrity FAILED:')
+              for item in errors:
+                  print(f' - {item}')
+              sys.exit(1)
+
+          print(f'HMATIAS site integrity OK: {len(sitemap_urls)} canonical URLs; {whatsapp_refs} WhatsApp routes checked.')
+          PY
+, robots):
+                  fail(f'robots.txt contains a bot-specific group that may override private-path rules: {bot}')
+
           # Parse sitemap and validate canonical URLs + multilingual alternates.
           sitemap_path = ROOT / 'sitemap.xml'
           if not sitemap_path.exists():
