@@ -228,7 +228,7 @@ async function readCostOptions(env,requestId){
   return (rows.results||[]).map(hydrateCost);
 }
 
-async function buildPayload(env,requestId){
+export async function buildCommercialCasePayload(env,requestId){
   const request=await requestRow(env,requestId);
   if(!request)return null;
   const [caseRow,costOptions,matchedSuppliers]=await Promise.all([
@@ -266,7 +266,7 @@ async function buildPayload(env,requestId){
 
 export async function getCommercialCase(request,env,requestId){
   if(!isAdmin(request,env))return fail(env,401,'unauthorized','Admin authorization required.');
-  const payload=await buildPayload(env,requestId);
+  const payload=await buildCommercialCasePayload(env,requestId);
   if(!payload)return fail(env,404,'request_not_found','Sourcing request does not exist.');
   return json(env,payload);
 }
@@ -318,7 +318,7 @@ export async function upsertCostOption(request,env,requestId){
     `).bind(requestId,v.supplier_id,optionId,timestamp));
   }
   await env.SOURCE_AO_DB.batch(statements);
-  return json(env,await buildPayload(env,requestId),existing?200:201);
+  return json(env,await buildCommercialCasePayload(env,requestId),existing?200:201);
 }
 
 export async function updateCommercialCase(request,env,requestId){
@@ -395,5 +395,5 @@ export async function updateCommercialCase(request,env,requestId){
     ).bind(selectedCost,timestamp,requestId).run();
   }
 
-  return json(env,await buildPayload(env,requestId));
+  return json(env,await buildCommercialCasePayload(env,requestId));
 }
