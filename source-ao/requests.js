@@ -106,12 +106,19 @@
         <label>Preço de venda (AOA)<input class="case-sale" type="number" min="0" step="0.01" placeholder="Introduzir preço real"></label>
         <label>Estado da proposta<select class="case-proposal-status"><option value="not_ready">Não pronta</option><option value="ready">Pronta</option><option value="sent">Enviada</option><option value="revised">Revista</option><option value="accepted">Aceite</option><option value="rejected">Rejeitada</option><option value="expired">Expirada</option></select></label>
         <label>Referência proposta<input class="case-proposal-ref" maxlength="160" placeholder="Ex.: PROP-2026-..."></label>
+        <label>Validade (dias)<input class="case-validity" type="number" min="1" max="365" step="1" placeholder="Ex.: 15"></label>
+        <label>Condições de pagamento<input class="case-payment-terms" maxlength="500" placeholder="Ex.: 50% adjudicação, 50% entrega"></label>
+        <label>Condições de entrega<input class="case-delivery-terms" maxlength="500" placeholder="Prazo/local/condições confirmadas"></label>
+        <label>Tratamento fiscal<input class="case-tax-treatment" maxlength="500" placeholder="Indicar IVA/impostos conforme proposta"></label>
+        <label class="commercial-notes">Notas visíveis ao cliente<textarea class="case-customer-notes" rows="2" maxlength="1200" placeholder="Observações comerciais que podem constar da proposta"></textarea></label>
         <label class="commercial-notes">Notas internas<textarea class="case-notes" rows="2" maxlength="1600" placeholder="Decisões, riscos e próximos passos"></textarea></label>
       </div>
       <div class="commercial-actions">
         <button class="btn btn-primary btn-small save-commercial-case" type="button">Guardar caso comercial</button>
+        <button class="btn btn-outline btn-small generate-proposal-draft" type="button">Preparar resumo de proposta</button>
         <span class="commercial-message"></span>
       </div>
+      <section class="proposal-preview" hidden></section>
       <div class="cost-divider"></div>
       <div class="cost-head"><div><small>CUSTOS DE FORNECEDOR</small><h4>Opções privadas de custo</h4></div><button class="btn btn-outline btn-small new-cost-option" type="button">Novo custo</button></div>
       <form class="cost-form">
@@ -157,6 +164,11 @@
     panel.querySelector('.case-sale').value=commercial.sale_price_aoa??'';
     panel.querySelector('.case-proposal-status').value=commercial.proposal_status||'not_ready';
     panel.querySelector('.case-proposal-ref').value=commercial.proposal_ref||'';
+    panel.querySelector('.case-validity').value=commercial.proposal_validity_days??'';
+    panel.querySelector('.case-payment-terms').value=commercial.proposal_payment_terms||'';
+    panel.querySelector('.case-delivery-terms').value=commercial.proposal_delivery_terms||'';
+    panel.querySelector('.case-tax-treatment').value=commercial.proposal_tax_treatment||'';
+    panel.querySelector('.case-customer-notes').value=commercial.proposal_customer_notes||'';
     panel.querySelector('.case-notes').value=commercial.internal_notes||'';
     panel.querySelector('.summary-landed').textContent=fmtMoney(summary.landed_cost_aoa);
     panel.querySelector('.summary-sale').textContent=fmtMoney(summary.sale_price_aoa);
@@ -244,6 +256,11 @@
             sale_price_aoa:panel.querySelector('.case-sale').value===''?null:Number(panel.querySelector('.case-sale').value),
             proposal_status:panel.querySelector('.case-proposal-status').value,
             proposal_ref:panel.querySelector('.case-proposal-ref').value.trim()||null,
+            proposal_validity_days:panel.querySelector('.case-validity').value===''?null:Number(panel.querySelector('.case-validity').value),
+            proposal_payment_terms:panel.querySelector('.case-payment-terms').value.trim()||null,
+            proposal_delivery_terms:panel.querySelector('.case-delivery-terms').value.trim()||null,
+            proposal_tax_treatment:panel.querySelector('.case-tax-treatment').value.trim()||null,
+            proposal_customer_notes:panel.querySelector('.case-customer-notes').value.trim()||null,
             internal_notes:panel.querySelector('.case-notes').value.trim()||null
           })
         });
