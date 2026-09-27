@@ -153,10 +153,11 @@ function gateStage(stage,value,proposalStatus){
   if(!value.award_ref||!value.awarded_at)return 'award_required';
   if(stage==='awarded')return null;
   if(!value.purchase_ref||!value.purchased_at)return 'purchase_required';
-  const missingCosts=COST_FIELDS.filter(field=>value[field]==null);
-  if(stage==='purchased')return missingCosts.length?'actual_costs_required':null;
+  if(stage==='purchased')return null;
   if(!value.delivery_ref||!value.delivered_at)return 'delivery_required';
   if(stage==='delivered')return null;
+  const missingCosts=COST_FIELDS.filter(field=>value[field]==null);
+  if(missingCosts.length)return 'actual_costs_required';
   const summary=calculateFulfillmentSummary(value);
   if(!summary.realized_profit_ready)return 'realized_profit_required';
   return null;
