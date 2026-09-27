@@ -68,3 +68,43 @@
 .internal-locked .commercial-cockpit{display:none!important}
 @media(max-width:980px){.cockpit-kpis{grid-template-columns:1fr 1fr}}
 @media(max-width:720px){.cockpit-head{flex-direction:column}.cockpit-kpis{grid-template-columns:1fr}.commercial-cockpit{padding:16px}}
+
+
+.cockpit-cashflow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}
+.cockpit-cashflow article{padding:11px 12px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(0,0,0,.08)}
+.cockpit-cashflow small{display:block;color:#91adc1;font-size:8px;font-weight:850;letter-spacing:.08em}
+.cockpit-cashflow strong{display:block;margin-top:5px;color:#fff;font-size:14px}
+.cockpit-cashflow span{display:block;margin-top:3px;color:#9fb2c1;font-size:8px}
+
+.collections-block{margin:16px 0;padding:14px;border:1px solid #d7e4df;border-radius:12px;background:#f7fbf9}
+.collections-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.collections-head small,.collections-subhead small{display:block;color:#24745b;font-size:9px;font-weight:850;letter-spacing:.1em}
+.collections-head h4{margin:5px 0 0;color:#173e32;font-size:16px}
+.collections-head p{max-width:650px;margin:7px 0 0;color:#70827b;font-size:9px;line-height:1.5}
+.collections-panel{margin-top:14px;padding-top:14px;border-top:1px solid #dbe8e3}
+.collections-statusbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.collections-statusbar span{padding:6px 8px;border:1px solid #dbe8e3;border-radius:999px;background:#fff;color:#687c74;font-size:8px;text-transform:uppercase;letter-spacing:.06em}
+.collections-statusbar strong{color:#17483a}
+.collections-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0 14px}
+.collections-summary article{padding:11px;border:1px solid #dde9e4;border-radius:10px;background:#fff}
+.collections-summary small{display:block;color:#7b8f87;font-size:8px;font-weight:850;letter-spacing:.08em}
+.collections-summary strong{display:block;margin-top:5px;color:#123f32;font-size:14px}
+.invoice-form,.payment-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px;padding:14px;border:1px solid #dde9e4;border-radius:12px;background:#fff}
+.collections-subhead{grid-column:1/-1}
+.collections-subhead strong{display:block;margin-top:4px;color:#173e32;font-size:13px}
+.invoice-form label,.payment-form label{display:grid;gap:6px;color:#60756d;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.invoice-form input,.invoice-form textarea,.payment-form input,.payment-form select,.payment-form textarea{width:100%;padding:10px 11px;border:1px solid #dbe7e2;border-radius:10px;background:#fbfdfc;color:#102b22;font:inherit;outline:0;text-transform:none;letter-spacing:normal}
+.invoice-form input:focus,.invoice-form textarea:focus,.payment-form input:focus,.payment-form select:focus,.payment-form textarea:focus{border-color:#8bc7b4;box-shadow:0 0 0 3px rgba(36,116,91,.08)}
+.collections-actions{grid-column:1/-1;display:flex;align-items:center;gap:12px}
+.collections-message{font-size:10px;color:#6e827a}
+.collections-message.error{color:#a02f2f}
+.payment-ledger{margin-top:12px;padding:14px;border:1px solid #dde9e4;border-radius:12px;background:#fff}
+.payment-ledger-list{display:grid;gap:8px;margin-top:10px}
+.payment-ledger-item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:11px;border:1px solid #e1ebe7;border-radius:10px;background:#fbfdfc}
+.payment-ledger-item strong{color:#173e32;font-size:11px}
+.payment-ledger-item small{display:block;margin-top:3px;color:#7b8f87;font-size:8px}
+.payment-ledger-item p{grid-column:1/-1;margin:0;color:#8b5d5d;font-size:9px}
+.payment-ledger-item.voided{opacity:.62;background:#fafafa}
+.collections-truth-note{margin:10px 0 0;padding:9px 10px;border-left:3px solid #69a98f;background:#fff;color:#647970;font-size:9px;line-height:1.5}
+@media(max-width:980px){.cockpit-cashflow,.collections-summary{grid-template-columns:1fr 1fr}.invoice-form,.payment-form{grid-template-columns:1fr 1fr}.collections-subhead,.collections-actions{grid-column:1/-1}}
+@media(max-width:720px){.cockpit-cashflow,.collections-summary,.invoice-form,.payment-form{grid-template-columns:1fr}.collections-head,.collections-actions{align-items:flex-start;flex-direction:column}.collections-subhead,.collections-actions{grid-column:auto}.collections-head .btn,.collections-actions .btn{width:100%}.payment-ledger-item{grid-template-columns:1fr}.payment-ledger-item .btn{width:100%}}
