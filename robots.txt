@@ -4,6 +4,11 @@ Allow: /
 Disallow: /admin/
 Disallow: /.git/
 Disallow: /node_modules/
+Disallow: /source-ao/ops.html
+Disallow: /source-ao/review.html
+Disallow: /source-ao/requests.html
+Disallow: /source-ao/backend/
+Disallow: /source-ao/docs/
 
 # Sitemap
 Sitemap: https://comercialhmatiasps.com/sitemap.xml
