@@ -14,14 +14,14 @@
   ];
 
   const kb = {
-    version: '2026-09-27.2',
+    version: '2026-09-27.3',
     updated: '2026-09-27',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
       phone: '+244 948 806 673', whatsapp: '+244 948 806 673',
       emailGeneral: 'geral@comercialhmatiasps.com', emailCommercial: 'geral@comercialhmatiasps.com',
-      nif: '5001578065', commercialRegistration: '24.094-23', registrationNumber: '24094-23/230713'
+      nif: '5001578065', commercialRegistration: '24.094-23', founded: '2023-07-14'
     },
     siteState: {
       homepagePt: 'Homepage principal simplificada e estável, centrada em Construção, Facilities e Supply, com portfólio real, divisões especializadas, Smart RFQ e contacto comercial.',
