@@ -15,6 +15,8 @@ coverage/
 .dev.vars.*
 source-ao/backend/wrangler.staging.runtime.jsonc
 source-ao/backend/wrangler.production.runtime.jsonc
+source-ao/backend/wrangler.web.staging.runtime.jsonc
+source-ao/backend/.staging-web/
 .wrangler/
 .devcontainer/
 

@@ -225,6 +225,9 @@ jobs:
           NODE
           rm -f "$RUNNER_TEMP/source-ao-ready.json" "$RUNNER_TEMP/source-ao-search.json"
 
+      - name: Verify production RFQ intake and private tracking
+        run: node scripts/smoke-rfq.mjs
+
       - name: Verify production opportunity pipeline
         shell: bash
         run: |

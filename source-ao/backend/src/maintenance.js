@@ -39,7 +39,7 @@ export async function runMaintenance(env,now=Date.now()){
   if(cutoffs.contactBefore){
     statements.push(env.SOURCE_AO_DB.prepare(`
       UPDATE sourcing_requests
-      SET contact_encrypted='PURGED',contact_hint='purged',contact_purged_at=?
+      SET contact_encrypted='PURGED',rfq_details_encrypted='PURGED',contact_hint='purged',contact_purged_at=?
       WHERE status IN ('completed','closed')
         AND contact_purged_at IS NULL
         AND datetime(updated_at)<datetime(?)

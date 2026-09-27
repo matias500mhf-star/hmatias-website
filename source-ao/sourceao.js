@@ -8,7 +8,7 @@
   const dictionary={
     en:{
       eyebrow:'PROCUREMENT INTELLIGENCE FOR ANGOLA',heroTitle:'Search. Verify. Act on evidence.',heroLead:'Turn a purchasing need into a procurement mission: technical interpretation, potential suppliers, public evidence and commercial confirmation.',searchPlaceholder:'E.g. PP strapping 9 mm, 1 roll, urgent…',searchButton:'Search',popular:'Try:',asideLabel:'SOURCE AO',asideLine1:'SEARCH',asideLine2:'VERIFY',asideLine3:'SOURCE',asideSmall:'A service by HMATIAS',searchRead:'INTERPRETED MISSION',category:'Category',market:'Market',freshness:'Evidence state',notVerified:'Not yet verified',truthNote:'Source AO separates discovery, source evidence and commercial confirmation. A potential supplier is not presented as available stock.',publicSearch:'View public search',addRadar:'Add to Radar',confidence:'Data confidence',awaiting:'Awaiting verified source',confidenceText:'The state only advances when there is a traceable source, date and confirmation level.',browse:'QUICK ENTRIES',whatLooking:'Start from the requirement.',cat1:'Construction materials',cat2:'HVAC & electrical',cat3:'Tools & equipment',cat4:'Cleaning & facilities',cat5:'Services & contractors',cat6:'Industrial supply',radarEyebrow:'SOURCE AO RADAR',radarTitle:"A requirement does not disappear because the first search failed.",radarLead:'Keep requirements organised and track the evidence state. Radar does not turn a public reference into confirmed availability.',r1t:'Found',r1s:'A possible match exists.',r2t:'Checked',r2s:'Source and date are recorded.',r3t:'Verified',r3s:'Availability is commercially confirmed.',myRadar:'My Radar',radarPlaceholder:'What should Radar watch for?',watch:'Watch',emptyTitle:'No missions being tracked.',emptyText:'Add a requirement to keep the search organised until usable evidence exists.',radarDisclaimer:'In this version, the Radar list stays on this device. Source AO does not promise continuous monitoring without an active data source.',howEyebrow:'OPERATIONAL FLOW',howTitle:'From requirement to commercial decision.',step1t:'Describe',step1p:'Product, specification, quantity, location and priority.',step2t:'Discover',step2p:'Search suppliers, catalogues and relevant sources.',step3t:'Verify',step3p:'Separate match, evidence and current confirmation.',needSpecific:'NEED HMATIAS TO EXECUTE?',requestTitle:'Turn the search into an operational request.',requestLead:'Register the requirement and track it through a private link. The team validates the market before assuming availability, price or delivery.',itemPlaceholder:'Material / service',qtyPlaceholder:'Quantity / specification',prepareRequest:'Register sourcing request',footerLine:'Search. Verify. Source.',serviceBy:'A service by HMATIAS',footerTruth:'Evidence before commercial claims.',
-      navSearch:'Search',navRadar:'Radar',navOpportunities:'Opportunities',navHow:'How it works',angolaFirst:'Angola-first',navRequest:'Start sourcing',
+      navSearch:'Search',navRadar:'Radar',navOpportunities:'Opportunities',navHow:'How it works',angolaFirst:'Angola-first',navRequest:'Request quotation',fullRfq:'Quotation request with catalogue products →',
       missionInputLabel:'WHAT DO YOU NEED?',missionInputTitle:'Create a sourcing mission',truthChip:'No invented stock or price',
       locationLabel:'Location',quantityLabel:'Quantity',urgencyLabel:'Priority',priorityNormal:'Normal',priorityUrgent:'Urgent',priorityWeek:'This week',tryLabel:'Try:',
       commandEyebrow:'OPERATION MODE',commandTitle:'Procurement Mission',
@@ -30,7 +30,7 @@
     },
     pt:{
       eyebrow:'PROCUREMENT INTELLIGENCE PARA ANGOLA',heroTitle:'Procure. Verifique. Avance com evidência.',heroLead:'Transforme uma necessidade de compra numa missão de procurement: interpretação técnica, fornecedores potenciais, evidência pública e confirmação comercial.',searchPlaceholder:'Ex.: cinta PP 9 mm, 1 rolo, urgente…',searchButton:'Pesquisar',popular:'Pesquisas:',asideLabel:'SOURCE AO',asideLine1:'PESQUISAR',asideLine2:'VERIFICAR',asideLine3:'ENCONTRAR',asideSmall:'Um serviço da HMATIAS',searchRead:'MISSÃO INTERPRETADA',category:'Categoria',market:'Mercado',freshness:'Estado da evidência',notVerified:'Ainda não verificado',truthNote:'O Source AO separa descoberta, evidência em fonte e confirmação comercial. Um fornecedor potencial não é apresentado como stock disponível.',publicSearch:'Ver pesquisa pública',addRadar:'Adicionar ao Radar',confidence:'Confiança dos dados',awaiting:'Aguardando fonte verificada',confidenceText:'O estado sobe apenas quando existe fonte rastreável, data e nível de confirmação.',browse:'ENTRADAS RÁPIDAS',whatLooking:'Comece pela necessidade.',cat1:'Materiais de construção',cat2:'Climatização e elétrica',cat3:'Ferramentas e equipamentos',cat4:'Limpeza e facilities',cat5:'Serviços e empreiteiros',cat6:'Fornecimento industrial',radarEyebrow:'RADAR SOURCE AO',radarTitle:'Uma necessidade não desaparece porque a primeira pesquisa falhou.',radarLead:'Mantenha requisitos organizados e acompanhe o estado da evidência. O Radar não transforma uma referência pública em disponibilidade confirmada.',r1t:'Encontrado',r1s:'Existe uma possível correspondência.',r2t:'Verificado na fonte',r2s:'Fonte e data ficam registadas.',r3t:'Confirmado',r3s:'A disponibilidade foi confirmada comercialmente.',myRadar:'Fila de procura',radarPlaceholder:'Material, serviço ou especificação…',watch:'Adicionar',emptyTitle:'Nenhuma missão em acompanhamento.',emptyText:'Adicione uma necessidade para manter a pesquisa organizada até existir evidência utilizável.',radarDisclaimer:'Nesta versão, a lista do Radar fica neste dispositivo. O Source AO não promete monitorização contínua sem uma fonte de dados ativa.',howEyebrow:'FLUXO OPERACIONAL',howTitle:'Da necessidade à decisão comercial.',step1t:'Descrever',step1p:'Produto, especificação, quantidade, local e prioridade.',step2t:'Descobrir',step2p:'Pesquisar fornecedores, catálogos e fontes relevantes.',step3t:'Verificar',step3p:'Separar correspondência, evidência e confirmação atual.',needSpecific:'PRECISA QUE A HMATIAS EXECUTE?',requestTitle:'Transforme a pesquisa num pedido operacional.',requestLead:'Registe a necessidade e acompanhe o estado por ligação privada. A equipa valida o mercado antes de assumir disponibilidade, preço ou prazo.',itemPlaceholder:'Material / serviço',qtyPlaceholder:'Quantidade / especificação',prepareRequest:'Registar pedido de sourcing',footerLine:'Pesquisar. Verificar. Encontrar.',serviceBy:'Um serviço da HMATIAS',footerTruth:'Evidência antes de afirmações comerciais.',
-      navSearch:'Pesquisa',navRadar:'Radar',navOpportunities:'Oportunidades',navHow:'Como funciona',angolaFirst:'Angola-first',navRequest:'Iniciar sourcing',
+      navSearch:'Pesquisa',navRadar:'Radar',navOpportunities:'Oportunidades',navHow:'Como funciona',angolaFirst:'Angola-first',navRequest:'Pedir cotação',fullRfq:'Pedido de cotação com produtos do catálogo →',
       missionInputLabel:'O QUE PRECISA?',missionInputTitle:'Criar uma missão de sourcing',truthChip:'Sem inventar stock ou preço',
       locationLabel:'Local',quantityLabel:'Quantidade',urgencyLabel:'Prioridade',priorityNormal:'Normal',priorityUrgent:'Urgente',priorityWeek:'Esta semana',tryLabel:'Experimentar:',
       commandEyebrow:'MODO OPERACIONAL',commandTitle:'Procurement Mission',
@@ -75,6 +75,7 @@
     $$('[data-i18n]').forEach(node=>{const key=node.dataset.i18n;if(dictionary[state.lang][key]) node.textContent=dictionary[state.lang][key];});
     $$('[data-i18n-placeholder]').forEach(node=>{const key=node.dataset.i18nPlaceholder;if(dictionary[state.lang][key]) node.placeholder=dictionary[state.lang][key];});
     $('#langToggle').textContent=state.lang==='en'?'PT':'EN';
+    $$('a[href^="rfq.html"]').forEach(link=>link.href='rfq.html?lang='+state.lang);
     if(state.query) renderSearch(state.query,state.location,false);
     renderRadar();
   }
@@ -129,16 +130,11 @@
   $('#searchForm').addEventListener('submit',e=>{e.preventDefault();renderSearch($('#searchInput').value,$('#locationInput').value)});
   $$('[data-query]').forEach(btn=>btn.addEventListener('click',()=>renderSearch(btn.dataset.query,$('#locationInput').value)));
   $('#addRadar').addEventListener('click',()=>addRadarItem(state.query,state.location));
-  $('#startSourcing')?.addEventListener('click',()=>{
-    const item=$('#requestItem');
-    const qty=$('#requestQty');
-    const loc=$('#requestLocation');
-    if(item) item.value=state.query||$('#searchInput')?.value.trim()||'';
-    const quantity=$('#quantityInput')?.value.trim()||'';
-    if(qty&&quantity) qty.value=quantity;
-    if(loc) loc.value=state.location||$('#locationInput')?.value||'Luanda';
-    $('#request')?.scrollIntoView({behavior:'smooth',block:'start'});
-    setTimeout(()=>item?.focus(),350);
+  $('#startSourcing')?.addEventListener('click',event=>{
+    event.preventDefault();
+    const url=new URL('rfq.html',location.href);
+    url.search=new URLSearchParams({request:state.query||$('#searchInput')?.value.trim()||'',location:state.location||'Luanda',quantity:$('#quantityInput')?.value.trim()||'',urgency:$('#neededByInput')?.value||'',lang:state.lang}).toString();
+    location.href=url.href;
   });
   $('#radarForm').addEventListener('submit',e=>{e.preventDefault();addRadarItem($('#radarInput').value,$('#locationInput').value);$('#radarInput').value=''});
   $('#langToggle').addEventListener('click',()=>{state.lang=state.lang==='en'?'pt':'en';applyLanguage()});

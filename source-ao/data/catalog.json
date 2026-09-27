@@ -24,7 +24,8 @@
         "obra",
         "building",
         "civil construction"
-      ]
+      ],
+      "name_pt": "Materiais de construção"
     },
     {
       "id": "item-pipes-profiles",
@@ -54,7 +55,8 @@
         "ferro",
         "pvc",
         "metal"
-      ]
+      ],
+      "name_pt": "Tubos e perfis metálicos"
     },
     {
       "id": "item-electrical-materials",
@@ -78,7 +80,8 @@
         "electricidade",
         "automation",
         "automação"
-      ]
+      ],
+      "name_pt": "Materiais elétricos"
     },
     {
       "id": "item-hvac",
@@ -102,7 +105,8 @@
         "cooling",
         "ventilation",
         "climate"
-      ]
+      ],
+      "name_pt": "Climatização e ar condicionado"
     },
     {
       "id": "item-tools-equipment",
@@ -127,7 +131,8 @@
         "workshop",
         "obra",
         "industrial"
-      ]
+      ],
+      "name_pt": "Ferramentas e equipamentos"
     },
     {
       "id": "item-industrial-supply",
@@ -156,7 +161,8 @@
         "oil and gas",
         "mining",
         "maintenance"
-      ]
+      ],
+      "name_pt": "Equipamentos e fornecimento industrial"
     },
     {
       "id": "item-packaging-strapping",
@@ -186,7 +192,8 @@
         "strapping",
         "arqueação",
         "arqueacao"
-      ]
+      ],
+      "name_pt": "Cintas de embalagem"
     },
     {
       "id": "item-formaldehyde",
@@ -217,7 +224,8 @@
         "laboratorio",
         "industrial",
         "CAS 50-00-0"
-      ]
+      ],
+      "name_pt": "Formaldeído / solução de formol"
     },
     {
       "id": "item-vci-corrosion-protection",
@@ -246,7 +254,8 @@
         "storage",
         "shipping",
         "metal protection"
-      ]
+      ],
+      "name_pt": "Proteção anticorrosiva VCI"
     },
     {
       "id": "item-industrial-protective-coatings",
@@ -275,7 +284,8 @@
         "pipeline",
         "tank",
         "industrial maintenance"
-      ]
+      ],
+      "name_pt": "Coatings anticorrosivos e primários"
     },
     {
       "id": "item-flange-piping-protection",
@@ -301,7 +311,8 @@
         "maintenance",
         "oil and gas",
         "industrial"
-      ]
+      ],
+      "name_pt": "Proteção de flanges e tubagens"
     },
     {
       "id": "item-hydrotest-corrosion-treatment",
@@ -324,7 +335,8 @@
         "tank",
         "heat exchanger",
         "corrosion inhibitor"
-      ]
+      ],
+      "name_pt": "Tratamento anticorrosivo para hidrotestes"
     },
     {
       "id": "item-rust-preventive-storage",
@@ -349,7 +361,8 @@
         "rust",
         "corrosion",
         "preservation"
-      ]
+      ],
+      "name_pt": "Preservação em armazenamento e transporte"
     },
     {
       "id": "item-industrial-cleaner-flash-rust",
@@ -372,7 +385,8 @@
         "flash rust",
         "corrosion",
         "maintenance"
-      ]
+      ],
+      "name_pt": "Limpeza industrial e preparação de superfícies"
     },
     {
       "id": "item-ppe-workplace-safety",
@@ -399,7 +413,8 @@
         "construction",
         "industrial",
         "facilities"
-      ]
+      ],
+      "name_pt": "EPI e segurança profissional"
     },
     {
       "id": "item-industrial-maintenance-consumables",
@@ -422,7 +437,8 @@
         "industrial",
         "facilities",
         "operations"
-      ]
+      ],
+      "name_pt": "Consumíveis industriais e de manutenção"
     },
     {
       "id": "item-professional-workwear-uniforms",
@@ -462,7 +478,8 @@
         "security",
         "hospitality",
         "healthcare"
-      ]
+      ],
+      "name_pt": "Fardamento e uniformes profissionais"
     },
     {
       "id": "item-furniture-workspaces",
@@ -490,7 +507,8 @@
         "hotel",
         "restaurant",
         "interiors"
-      ]
+      ],
+      "name_pt": "Mobiliário e espaços"
     },
     {
       "id": "item-partition-systems",
@@ -513,7 +531,8 @@
         "office",
         "interiors",
         "acoustic"
-      ]
+      ],
+      "name_pt": "Sistemas de divisórias"
     },
     {
       "id": "item-floor-coverings",
@@ -537,7 +556,8 @@
         "interiors",
         "office",
         "hospitality"
-      ]
+      ],
+      "name_pt": "Pavimento vinílico e carpete"
     },
     {
       "id": "item-acoustic-solutions",
@@ -561,7 +581,8 @@
         "interiors",
         "office",
         "hospitality"
-      ]
+      ],
+      "name_pt": "Soluções acústicas"
     },
     {
       "id": "item-metal-ceilings-technical-floors",
@@ -586,7 +607,8 @@
         "raised floor",
         "interiors",
         "commercial"
-      ]
+      ],
+      "name_pt": "Tetos metálicos e pavimentos técnicos"
     },
     {
       "id": "item-decorative-surfaces",
@@ -611,7 +633,8 @@
         "surfaces",
         "interiors",
         "fit-out"
-      ]
+      ],
+      "name_pt": "Superfícies em quartzo, pedra e ultracompactos"
     },
     {
       "id": "item-custom-kitchens-wardrobes",
@@ -636,7 +659,8 @@
         "roupeiro",
         "joinery",
         "interiors"
-      ]
+      ],
+      "name_pt": "Cozinhas e roupeiros por medida"
     },
     {
       "id": "item-blinds-curtains",
@@ -658,7 +682,8 @@
         "estores",
         "cortinados",
         "interiors"
-      ]
+      ],
+      "name_pt": "Estores e cortinados"
     },
     {
       "id": "item-smart-home",
@@ -679,7 +704,8 @@
         "electrical",
         "integration",
         "residential"
-      ]
+      ],
+      "name_pt": "Soluções Smart Home"
     }
   ],
   "taxonomy": [

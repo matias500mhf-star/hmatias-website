@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Peça uma cotação à HMATIAS no SOURCE AO. Selecione produtos do catálogo, quantidades, especificações e prazo de entrega em Angola.">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#071f34">
+  <title>Pedido de Cotação / RFQ · SOURCE AO</title>
+  <link rel="canonical" href="https://comercialhmatiasps.com/source-ao/rfq.html">
+  <link rel="alternate" hreflang="pt-AO" href="https://comercialhmatiasps.com/source-ao/rfq.html">
+  <link rel="alternate" hreflang="en" href="https://comercialhmatiasps.com/source-ao/rfq.html">
+  <link rel="alternate" hreflang="x-default" href="https://comercialhmatiasps.com/source-ao/rfq.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="rfq.css?v=20260927">
+</head>
+<body>
+  <a class="skip-link" href="#rfqForm">Ir para o pedido</a>
+  <header class="rfq-header">
+    <a href="index.html" aria-label="SOURCE AO"><img src="../images/source-ao-logo.svg" width="760" height="360" alt="SOURCE AO by HMATIAS"></a>
+    <nav><a href="index.html" data-en="Back to Source AO">Voltar ao Source AO</a><button id="rfqLanguage" type="button" aria-label="Change language">EN</button></nav>
+  </header>
+  <main class="rfq-shell">
+    <div class="rfq-heading"><span class="eyebrow">HMATIAS SUPPLY · RFQ</span><h1 data-en="What do you need to buy?">O que precisa de comprar?</h1><p data-en="Send your list. HMATIAS will confirm specifications, availability and delivery before preparing a proposal.">Envie a sua lista. A HMATIAS confirma a especificação, a disponibilidade e a entrega antes de preparar a proposta.</p></div>
+    <div class="rfq-layout">
+      <section class="rfq-workspace" aria-label="Pedido de cotação">
+        <ol class="rfq-progress" aria-label="Etapas do pedido"><li aria-current="step"><span>1</span><b data-en="Products">Produtos</b></li><li><span>2</span><b data-en="Delivery">Entrega</b></li><li><span>3</span><b data-en="Contact & review">Contacto e revisão</b></li></ol>
+        <p id="catalogStatus" class="rfq-notice" role="status" data-en="Loading product categories…">A carregar categorias do catálogo…</p>
+        <form id="rfqForm" novalidate>
+          <fieldset data-step="0"><legend data-en="Your product list">A sua lista de produtos</legend><p class="field-help" data-en="Select a catalogue family or describe another requirement. Fields marked * are required.">Escolha uma família do catálogo ou descreva outra necessidade. Os campos com * são obrigatórios.</p><div id="rfqItems"></div><button class="text-button" id="addItem" type="button" data-en="+ Add another product">+ Adicionar outro produto</button></fieldset>
+          <fieldset data-step="1" hidden><legend data-en="Delivery and purchasing needs">Entrega e condições do pedido</legend><div id="deliveryFields" class="field-grid"></div></fieldset>
+          <fieldset data-step="2" hidden><legend data-en="Who should receive the proposal?">Quem deve receber a proposta?</legend><div id="contactFields" class="field-grid"></div><div id="rfqReview" class="rfq-review"></div><label class="consent"><input id="rfqConsent" type="checkbox" required><span data-en="I authorise HMATIAS to use these details to assess and respond to this request. I have read the Privacy notice.">Autorizo a HMATIAS a utilizar estes dados para avaliar e responder ao pedido. Li o aviso de Privacidade.</span></label><p class="field-help"><a href="privacy.html" target="_blank" rel="noopener" data-en="Read Privacy notice">Ler aviso de Privacidade</a> · <a href="terms.html" target="_blank" rel="noopener" data-en="Terms">Termos</a></p></fieldset>
+          <div class="honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+          <p id="rfqError" class="rfq-error" role="alert" hidden></p>
+          <div class="rfq-navigation"><button id="rfqBack" class="secondary" type="button" hidden data-en="Back">Voltar</button><button id="rfqNext" class="primary" type="button" data-en="Continue to delivery">Continuar para entrega</button><button id="rfqSubmit" class="primary" type="submit" hidden data-en="Send quotation request">Enviar pedido de cotação</button></div>
+        </form>
+        <div id="rfqResult" class="rfq-result" tabindex="-1" hidden aria-live="polite"></div>
+        <noscript><p>Ative JavaScript para registar o pedido ou contacte a HMATIAS pelo <a href="https://wa.me/244948806673">WhatsApp (+244) 948 806 673</a>.</p></noscript>
+      </section>
+      <aside class="rfq-aside"><div class="aside-card"><span class="eyebrow" data-en="YOUR REQUEST">O SEU PEDIDO</span><strong id="itemCount">1 produto</strong><p id="categorySummary" data-en="Choose a category to get started.">Escolha uma categoria para começar.</p><hr><h2 data-en="What happens next?">O que acontece a seguir?</h2><ol><li data-en="We check the quantities and technical requirements.">Validamos as quantidades e os requisitos técnicos.</li><li data-en="We confirm supply options and delivery terms.">Confirmamos as opções de fornecimento e entrega.</li><li data-en="You receive a proposal to review and approve.">Recebe uma proposta para analisar e adjudicar.</li></ol><p class="aside-note" data-en="A quotation request is not a purchase. Prices and lead times require confirmation.">O pedido de cotação não constitui uma compra. Preços e prazos dependem de confirmação.</p></div><p class="contact-note" data-en="Your details are used for this request. Save the private tracking link after sending.">Os seus dados são usados neste pedido. Após enviar, guarde o link privado de acompanhamento.</p></aside>
+    </div>
+  </main>
+  <footer class="rfq-footer"><span>SOURCE AO · HMATIAS</span><a href="../supply.html" data-en="HMATIAS Supply">HMATIAS Supply</a><a href="privacy.html" data-en="Privacy">Privacidade</a></footer>
+  <script src="runtime-config.js"></script>
+  <script type="module" src="rfq.js?v=20260927"></script>
+</body>
+</html>
