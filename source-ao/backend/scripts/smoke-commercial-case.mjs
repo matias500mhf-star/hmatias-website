@@ -64,12 +64,27 @@ const fulfillmentSerialized=JSON.stringify(fulfillment);
 for(const forbidden of ['contact_encrypted','private_contact_encrypted','access_token_hash']){
   assert.equal(fulfillmentSerialized.includes(forbidden),false);
 }
+const collections=await call(`/api/admin/sourcing-requests/${encodeURIComponent(synthetic.id)}/collections`);
+assert.equal(collections?.ok,true);
+assert.equal(collections?.confidential,true);
+assert.equal(collections?.invoice,null);
+assert.equal(collections?.summary?.status,'not_invoiced');
+assert.equal(collections?.summary?.total_received_aoa,0);
+const collectionsSerialized=JSON.stringify(collections);
+for(const forbidden of ['contact_encrypted','private_contact_encrypted','access_token_hash']){
+  assert.equal(collectionsSerialized.includes(forbidden),false);
+}
+
 const dashboard=await call('/api/admin/commercial-dashboard');
 assert.equal(dashboard?.ok,true);
 assert.equal(dashboard?.confidential,true);
 assert.equal(dashboard?.aggregated_only,true);
+assert.ok(dashboard?.collections);
+assert.ok(Number.isFinite(Number(dashboard.collections.invoiced_aoa)));
+assert.ok(Number.isFinite(Number(dashboard.collections.received_aoa)));
+assert.ok(Number.isFinite(Number(dashboard.collections.outstanding_aoa)));
 const dashboardSerialized=JSON.stringify(dashboard);
 for(const forbidden of ['requester_name','requester_contact','supplier_name','contact_encrypted','private_contact_encrypted']){
   assert.equal(dashboardSerialized.includes(forbidden),false);
 }
-console.log('Commercial-case, proposal-pack, fulfillment and aggregate cockpit production smoke passed without creating commercial values.');
+console.log('Commercial-case, proposal-pack, fulfillment, collections and aggregate cockpit production smoke passed without creating commercial values.');
