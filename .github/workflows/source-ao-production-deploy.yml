@@ -228,6 +228,9 @@ jobs:
       - name: Verify production RFQ intake and private tracking
         run: node scripts/smoke-rfq.mjs
 
+      - name: Verify production private commercial case
+        run: node scripts/smoke-commercial-case.mjs
+
       - name: Verify production opportunity pipeline
         shell: bash
         run: |
