@@ -271,6 +271,66 @@
       }finally{button.disabled=false;}
     });
 
+    panel.querySelector('.generate-proposal-draft').addEventListener('click',async()=>{
+      const button=panel.querySelector('.generate-proposal-draft');
+      const preview=panel.querySelector('.proposal-preview');
+      button.disabled=true;button.textContent='A preparar…';
+      try{
+        const proposal=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/proposal-draft');
+        preview.hidden=false;preview.innerHTML='';
+        const head=document.createElement('div');head.className='proposal-preview-head';
+        const title=document.createElement('div');
+        const eyebrow=document.createElement('small');eyebrow.textContent='RESUMO DE PROPOSTA · CLIENTE';
+        const strong=document.createElement('strong');strong.textContent=proposal?.draft?.proposal_reference||'Referência por definir';
+        title.append(eyebrow,strong);
+        const state=document.createElement('span');state.dataset.ready=proposal?.issuance_ready?'true':'false';
+        state.textContent=proposal?.issuance_ready?'Pronto para emissão':'Incompleto';head.append(title,state);
+        const body=document.createElement('div');body.className='proposal-preview-body';
+        const line=(label,value)=>{const wrap=document.createElement('div');const l=document.createElement('small');l.textContent=label;const v=document.createElement('strong');v.textContent=value||'A confirmar';wrap.append(l,v);return wrap;};
+        const draft=proposal?.draft||{};
+        body.append(
+          line('Cliente',[draft.customer_name,draft.company].filter(Boolean).join(' · ')),
+          line('Pedido',draft.source_request_reference),
+          line('Entrega',draft.delivery_location),
+          line('Preço total',fmtMoney(draft.total_price_aoa)),
+          line('Validade',draft.terms?.validity_days?draft.terms.validity_days+' dias':null),
+          line('Pagamento',draft.terms?.payment_terms),
+          line('Condições de entrega',draft.terms?.delivery_terms),
+          line('Tratamento fiscal',draft.terms?.tax_treatment)
+        );
+        const items=document.createElement('ol');items.className='proposal-preview-items';
+        for(const item of draft.items||[]){
+          const li=document.createElement('li');
+          li.textContent=[item.quantity,item.unit,item.description,item.specification].filter(v=>v!==null&&v!==undefined&&v!=='').join(' · ');
+          items.appendChild(li);
+        }
+        const notes=document.createElement('p');notes.className='proposal-preview-notes';notes.textContent=draft.customer_notes||'';
+        const missing=document.createElement('p');missing.className='proposal-preview-missing';
+        const labels={commercial_case_not_ready:'caso comercial',proposal_reference_required:'referência',validity_required:'validade',payment_terms_required:'pagamento',delivery_terms_required:'entrega',tax_treatment_required:'fiscalidade'};
+        if(!proposal?.issuance_ready)missing.textContent='Falta confirmar: '+(proposal?.missing_requirements||[]).map(x=>labels[x]||x).join(', ')+'.';
+        const copy=document.createElement('button');copy.type='button';copy.className='btn btn-outline btn-small';copy.textContent='Copiar resumo';copy.disabled=!proposal?.issuance_ready;
+        copy.addEventListener('click',async()=>{
+          const summaryText=[
+            draft.proposal_reference,
+            [draft.customer_name,draft.company].filter(Boolean).join(' · '),
+            'Ref. pedido: '+(draft.source_request_reference||'—'),
+            ...(draft.items||[]).map(item=>[item.quantity,item.unit,item.description,item.specification].filter(v=>v!==null&&v!==undefined&&v!=='').join(' · ')),
+            'Entrega: '+(draft.delivery_location||'A confirmar'),
+            'Preço total: '+fmtMoney(draft.total_price_aoa),
+            'Validade: '+(draft.terms?.validity_days?draft.terms.validity_days+' dias':'A confirmar'),
+            'Pagamento: '+(draft.terms?.payment_terms||'A confirmar'),
+            'Condições de entrega: '+(draft.terms?.delivery_terms||'A confirmar'),
+            'Tratamento fiscal: '+(draft.terms?.tax_treatment||'A confirmar'),
+            draft.customer_notes||''
+          ].filter(Boolean).join('\n');
+          try{await navigator.clipboard.writeText(summaryText);copy.textContent='Copiado';setTimeout(()=>copy.textContent='Copiar resumo',1200);}catch{copy.textContent='Falha ao copiar';}
+        });
+        preview.append(head,body,items,notes,missing,copy);
+      }catch(error){
+        preview.hidden=false;preview.innerHTML='<div class="empty-state compact"><strong>Resumo de proposta indisponível.</strong><p>Guarde primeiro os dados comerciais e tente novamente.</p></div>';
+      }finally{button.disabled=false;button.textContent='Preparar resumo de proposta';}
+    });
+
     panel.querySelector('.cost-form').addEventListener('submit',async event=>{
       event.preventDefault();
       const button=panel.querySelector('.save-cost-option');
