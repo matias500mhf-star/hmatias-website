@@ -191,6 +191,73 @@ jobs:
               if '/source-ao/index.html' not in alias_html:
                   fail('SOURCE AO legacy alias must redirect to the official SOURCE AO page')
 
+          # SOURCE AO access model: public discovery stays public; operational desks stay private-by-design.
+          private_source_pages = (
+              ROOT / 'source-ao' / 'ops.html',
+              ROOT / 'source-ao' / 'review.html',
+              ROOT / 'source-ao' / 'requests.html',
+          )
+          required_private_robots = ('noindex', 'nofollow', 'noarchive')
+          required_robot_disallows = (
+              '/source-ao/ops.html',
+              '/source-ao/review.html',
+              '/source-ao/requests.html',
+              '/source-ao/backend/',
+              '/source-ao/docs/',
+          )
+
+          for disallow_path in required_robot_disallows:
+              if f'Disallow: {disallow_path}' not in robots:
+                  fail(f'robots.txt must block SOURCE AO internal surface: {disallow_path}')
+
+          for private_path in private_source_pages:
+              if not private_path.exists():
+                  fail(f'SOURCE AO private desk is missing: {private_path}')
+                  continue
+              private_html = private_path.read_text(encoding='utf-8')
+              robots_meta = re.search(
+                  r'<meta\b[^>]*\bname=["\']robots["\'][^>]*\bcontent=["\']([^"\']+)',
+                  private_html,
+                  re.I,
+              )
+              if not robots_meta:
+                  fail(f'SOURCE AO private desk lacks robots protection: {private_path}')
+              else:
+                  directives = robots_meta.group(1).lower()
+                  for directive in required_private_robots:
+                      if directive not in directives:
+                          fail(f'SOURCE AO private desk missing {directive}: {private_path}')
+              if not re.search(
+                  r'<meta\b[^>]*\bname=["\']referrer["\'][^>]*\bcontent=["\']no-referrer["\']',
+                  private_html,
+                  re.I,
+              ):
+                  fail(f'SOURCE AO private desk must use no-referrer: {private_path}')
+
+              private_url = f'{BASE}/source-ao/{private_path.name}'
+              if private_url in canonical_set:
+                  fail(f'SOURCE AO private desk leaked into sitemap: {private_path}')
+
+          public_source_pages = (
+              ROOT / 'source-ao' / 'index.html',
+              ROOT / 'source-ao' / 'opportunity-radar.html',
+          )
+          for public_path in public_source_pages:
+              if not public_path.exists():
+                  continue
+              public_html = public_path.read_text(encoding='utf-8')
+              for private_name in ('ops.html', 'review.html', 'requests.html'):
+                  if re.search(rf'href=["\'][^"\']*{re.escape(private_name)}', public_html, re.I):
+                      fail(f'public SOURCE AO page links to private desk {private_name}: {public_path}')
+
+          runtime_config = ROOT / 'source-ao' / 'runtime-config.js'
+          if runtime_config.exists():
+              runtime_text = runtime_config.read_text(encoding='utf-8')
+              forbidden_runtime_terms = ('ADMIN_API_TOKEN', 'PILOT_ADMIN_API_TOKEN', 'authorization:', 'Bearer ')
+              for term in forbidden_runtime_terms:
+                  if term in runtime_text:
+                      fail(f'public SOURCE AO runtime config contains forbidden admin material: {term}')
+
           # Keep the website assistant synchronized with the public site.
           assistant_path = ROOT / 'assistant.js'
           knowledge_path = ROOT / 'assistant-knowledge.js'
