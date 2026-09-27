@@ -1,4 +1,4 @@
-import {isAdmin,normalizeRequirement} from './sourcing.js';
+import {isAdmin,normalizeRequirement,decryptPrivateText} from './sourcing.js';
 import {scorePrivateSupplierMatch} from './private-sourcing-suppliers.js';
 
 const QUALIFICATION_STATUSES=new Set(['pending','qualified','needs_info','declined']);
@@ -132,6 +132,51 @@ export function calculateCommercialSummary(commercialCase={},costOptions=[]){
   };
 }
 
+
+export function buildProposalDraft({request={},commercialCase={},summary={},rfq=null}={}){
+  const commercialReady=summary?.proposal_ready===true;
+  const validity=Number(commercialCase?.proposal_validity_days);
+  const terms={
+    validity_days:Number.isFinite(validity)&&validity>0?validity:null,
+    payment_terms:commercialCase?.proposal_payment_terms||null,
+    delivery_terms:commercialCase?.proposal_delivery_terms||null,
+    tax_treatment:commercialCase?.proposal_tax_treatment||null
+  };
+  const missing=[];
+  if(!commercialReady)missing.push('commercial_case_not_ready');
+  if(!commercialCase?.proposal_ref)missing.push('proposal_reference_required');
+  if(!terms.validity_days)missing.push('validity_required');
+  if(!terms.payment_terms)missing.push('payment_terms_required');
+  if(!terms.delivery_terms)missing.push('delivery_terms_required');
+  if(!terms.tax_treatment)missing.push('tax_treatment_required');
+  const items=Array.isArray(rfq?.items)&&rfq.items.length
+    ?rfq.items.map(item=>({
+      description:item.description,
+      specification:item.specification||null,
+      quantity:item.quantity,
+      unit:item.unit
+    }))
+    :[{description:request.requirement_text||'Requirement',specification:request.specification||null,quantity:null,unit:null}];
+  return {
+    issuance_ready:missing.length===0,
+    missing_requirements:missing,
+    draft:{
+      proposal_reference:commercialCase?.proposal_ref||null,
+      source_request_reference:request.public_ref||request.id||null,
+      customer_name:rfq?.requester_name||null,
+      company:rfq?.company||null,
+      buyer_type:rfq?.buyer_type||null,
+      items,
+      delivery_location:request.location||rfq?.location||null,
+      requested_by:request.needed_by||rfq?.needed_by||null,
+      currency:'AOA',
+      total_price_aoa:summary?.sale_price_aoa??null,
+      terms,
+      customer_notes:commercialCase?.proposal_customer_notes||null
+    }
+  };
+}
+
 function hydrateCost(row){
   const calculated=calculateLandedCost(row);
   return {
@@ -168,6 +213,11 @@ function hydrateCase(row){
     sale_price_aoa:row.sale_price_aoa==null?null:Number(row.sale_price_aoa),
     proposal_status:row.proposal_status,
     proposal_ref:row.proposal_ref,
+    proposal_validity_days:row.proposal_validity_days==null?null:Number(row.proposal_validity_days),
+    proposal_payment_terms:row.proposal_payment_terms,
+    proposal_delivery_terms:row.proposal_delivery_terms,
+    proposal_tax_treatment:row.proposal_tax_treatment,
+    proposal_customer_notes:row.proposal_customer_notes,
     internal_notes:row.internal_notes,
     created_at:row.created_at,
     updated_at:row.updated_at
@@ -178,6 +228,11 @@ function hydrateCase(row){
     sale_price_aoa:null,
     proposal_status:'not_ready',
     proposal_ref:null,
+    proposal_validity_days:null,
+    proposal_payment_terms:null,
+    proposal_delivery_terms:null,
+    proposal_tax_treatment:null,
+    proposal_customer_notes:null,
     internal_notes:null
   };
 }
@@ -327,7 +382,7 @@ export async function updateCommercialCase(request,env,requestId){
   let data;
   try{data=await request.json();}catch{return fail(env,400,'invalid_json','A JSON body is required.');}
   const existing=hydrateCase(await env.SOURCE_AO_DB.prepare('SELECT * FROM sourcing_commercial_cases WHERE request_id=?').bind(requestId).first());
-  let qualification,proposalStatus,selectedSupplier,selectedCost,salePrice,proposalRef,notes;
+  let qualification,proposalStatus,selectedSupplier,selectedCost,salePrice,proposalRef,validityDays,paymentTerms,deliveryTerms,taxTreatment,customerNotes,notes;
   try{
     qualification=data.qualification_status===undefined?existing.qualification_status:clean(data.qualification_status,30);
     proposalStatus=data.proposal_status===undefined?existing.proposal_status:clean(data.proposal_status,30);
@@ -335,6 +390,11 @@ export async function updateCommercialCase(request,env,requestId){
     selectedCost=data.selected_cost_option_id===undefined?existing.selected_cost_option_id:clean(data.selected_cost_option_id,120);
     salePrice=data.sale_price_aoa===undefined?existing.sale_price_aoa:numeric(data.sale_price_aoa,{allowNull:true,min:0});
     proposalRef=data.proposal_ref===undefined?existing.proposal_ref:clean(data.proposal_ref,160);
+    validityDays=data.proposal_validity_days===undefined?existing.proposal_validity_days:numeric(data.proposal_validity_days,{allowNull:true,min:1,max:365});
+    paymentTerms=data.proposal_payment_terms===undefined?existing.proposal_payment_terms:clean(data.proposal_payment_terms,500);
+    deliveryTerms=data.proposal_delivery_terms===undefined?existing.proposal_delivery_terms:clean(data.proposal_delivery_terms,500);
+    taxTreatment=data.proposal_tax_treatment===undefined?existing.proposal_tax_treatment:clean(data.proposal_tax_treatment,500);
+    customerNotes=data.proposal_customer_notes===undefined?existing.proposal_customer_notes:clean(data.proposal_customer_notes,1200);
     notes=data.internal_notes===undefined?existing.internal_notes:clean(data.internal_notes,1600);
   }catch{return fail(env,400,'invalid_fields','Commercial case fields are invalid.');}
   if(!QUALIFICATION_STATUSES.has(qualification))return fail(env,400,'invalid_qualification_status','Unsupported qualification status.');
@@ -362,6 +422,11 @@ export async function updateCommercialCase(request,env,requestId){
     sale_price_aoa:salePrice,
     proposal_status:proposalStatus,
     proposal_ref:proposalRef,
+    proposal_validity_days:validityDays,
+    proposal_payment_terms:paymentTerms,
+    proposal_delivery_terms:deliveryTerms,
+    proposal_tax_treatment:taxTreatment,
+    proposal_customer_notes:customerNotes,
     internal_notes:notes
   };
   const costs=await readCostOptions(env,requestId);
@@ -374,8 +439,9 @@ export async function updateCommercialCase(request,env,requestId){
   await env.SOURCE_AO_DB.prepare(`
     INSERT INTO sourcing_commercial_cases(
       request_id,qualification_status,selected_supplier_id,selected_cost_option_id,sale_price_aoa,
-      proposal_status,proposal_ref,internal_notes,created_at,updated_at
-    ) VALUES(?,?,?,?,?,?,?,?,?,?)
+      proposal_status,proposal_ref,proposal_validity_days,proposal_payment_terms,proposal_delivery_terms,
+      proposal_tax_treatment,proposal_customer_notes,internal_notes,created_at,updated_at
+    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     ON CONFLICT(request_id) DO UPDATE SET
       qualification_status=excluded.qualification_status,
       selected_supplier_id=excluded.selected_supplier_id,
@@ -383,10 +449,16 @@ export async function updateCommercialCase(request,env,requestId){
       sale_price_aoa=excluded.sale_price_aoa,
       proposal_status=excluded.proposal_status,
       proposal_ref=excluded.proposal_ref,
+      proposal_validity_days=excluded.proposal_validity_days,
+      proposal_payment_terms=excluded.proposal_payment_terms,
+      proposal_delivery_terms=excluded.proposal_delivery_terms,
+      proposal_tax_treatment=excluded.proposal_tax_treatment,
+      proposal_customer_notes=excluded.proposal_customer_notes,
       internal_notes=excluded.internal_notes,
       updated_at=excluded.updated_at
   `).bind(
-    requestId,qualification,selectedSupplier,selectedCost,salePrice,proposalStatus,proposalRef,notes,timestamp,timestamp
+    requestId,qualification,selectedSupplier,selectedCost,salePrice,proposalStatus,proposalRef,validityDays,
+    paymentTerms,deliveryTerms,taxTreatment,customerNotes,notes,timestamp,timestamp
   ).run();
 
   if(selectedCost&&['verified','selected'].includes(selectedCostStatus)){
@@ -396,4 +468,24 @@ export async function updateCommercialCase(request,env,requestId){
   }
 
   return json(env,await buildPayload(env,requestId));
+}
+
+export async function getProposalDraft(request,env,requestId){
+  if(!isAdmin(request,env))return fail(env,401,'unauthorized','Admin authorization required.');
+  const payload=await buildPayload(env,requestId);
+  if(!payload)return fail(env,404,'request_not_found','Sourcing request does not exist.');
+  const privateRow=await env.SOURCE_AO_DB.prepare(
+    'SELECT rfq_details_encrypted FROM sourcing_requests WHERE id=?'
+  ).bind(requestId).first();
+  let rfq=null;
+  if(privateRow?.rfq_details_encrypted&&privateRow.rfq_details_encrypted!=='PURGED'){
+    try{rfq=JSON.parse(await decryptPrivateText(privateRow.rfq_details_encrypted,env.PII_ENCRYPTION_KEY));}catch{rfq=null;}
+  }
+  const proposal=buildProposalDraft({
+    request:payload.request,
+    commercialCase:payload.commercial_case,
+    summary:payload.summary,
+    rfq
+  });
+  return json(env,{ok:true,confidential:true,...proposal});
 }
