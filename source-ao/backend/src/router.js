@@ -32,6 +32,7 @@ import {
 import {getCommercialCase,upsertCostOption,updateCommercialCase,getProposalDraft} from './commercial-case.js';
 import {getFulfillmentCase,updateFulfillmentCase} from './fulfillment.js';
 import {getCommercialDashboard} from './commercial-dashboard.js';
+import {getCollectionsCase,upsertInvoice,addPayment,voidPayment} from './collections.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -90,6 +91,10 @@ export default {
             const costOptions=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/cost-options$/);
             const proposalDraft=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/proposal-draft$/);
             const fulfillmentCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/fulfillment$/);
+            const collectionsCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/collections$/);
+            const invoiceCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/invoice$/);
+            const paymentCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/payments$/);
+            const voidPaymentCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/payments\/([^/]+)\/void$/);
             if(adminStatus && request.method==='POST'){
               response=await updateSourcingRequestStatus(request,env,adminStatus[1]);
             }else if(commercialCase && request.method==='GET'){
@@ -104,6 +109,14 @@ export default {
               response=await getFulfillmentCase(request,env,fulfillmentCase[1]);
             }else if(fulfillmentCase && request.method==='POST'){
               response=await updateFulfillmentCase(request,env,fulfillmentCase[1]);
+            }else if(collectionsCase && request.method==='GET'){
+              response=await getCollectionsCase(request,env,collectionsCase[1]);
+            }else if(invoiceCase && request.method==='POST'){
+              response=await upsertInvoice(request,env,invoiceCase[1]);
+            }else if(paymentCase && request.method==='POST'){
+              response=await addPayment(request,env,paymentCase[1]);
+            }else if(voidPaymentCase && request.method==='POST'){
+              response=await voidPayment(request,env,voidPaymentCase[1],voidPaymentCase[2]);
             }else if(url.pathname==='/api/admin/maintenance/run' && request.method==='POST'){
               if(env.SOURCE_AO_ENV!=='staging'){
                 response=new Response(JSON.stringify({ok:false,error:{code:'not_found',message:'Not found.'}}),{
