@@ -14,7 +14,7 @@
   <title>SOURCE AO Intelligence Radar | Oportunidades em Angola</title>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"SOURCE AO Intelligence Radar","url":"https://comercialhmatiasps.com/source-ao/opportunity-radar.html","description":"Radar de oportunidades comerciais e procurement com fonte, prazo e sinais de inteligência.","isPartOf":{"@type":"WebSite","name":"SOURCE AO","url":"https://comercialhmatiasps.com/source-ao/"},"publisher":{"@type":"Organization","name":"HMATIAS – Prestação de Serviços SU, LDA","url":"https://comercialhmatiasps.com/"}}</script>
   <link rel="stylesheet" href="sourceao.css">
-  <link rel="stylesheet" href="opportunity-radar.css">
+  <link rel="stylesheet" href="opportunity-radar.css?v=20260927-refresh1">
 </head>
 <body class="op-body">
   <header class="topbar op-topbar">
@@ -22,7 +22,7 @@
       <a class="source-brand" href="index.html" aria-label="SOURCE AO Intelligence Radar"><img src="../images/source-ao-logo.svg" alt="SOURCE AO — intelligence, sourcing e oportunidades by HMATIAS" width="760" height="360"></a>
       <div class="nav-actions">
         <a class="hmatias-return" href="../" aria-label="Abrir site oficial HMATIAS">HMATIAS ↗</a>
-        <span class="op-live-pill"><i></i><span data-i18n="live">Intelligence live</span></span>
+        <span class="op-live-pill"><i></i><span id="liveStateLabel" data-i18n="live">Intelligence live</span></span>
         <button class="lang" type="button" id="langToggle" aria-label="Mudar idioma">EN</button>
         <a class="btn btn-outline btn-small" href="index.html" data-i18n="back">← Source AO</a>
       </div>
@@ -84,6 +84,19 @@
     </section>
 
     <section class="shell op-workspace">
+      <div class="op-syncbar" role="status" aria-live="polite">
+        <div class="op-sync-status">
+          <span class="op-sync-dot" aria-hidden="true"></span>
+          <div>
+            <strong id="syncStatus">A sincronizar oportunidades com a API live…</strong>
+            <small id="syncMeta">Atualização automática a cada 5 min</small>
+          </div>
+        </div>
+        <button class="op-refresh-button" type="button" id="refreshRadar">
+          <span class="op-refresh-icon" aria-hidden="true">↻</span>
+          <span id="refreshRadarLabel">Atualizar agora</span>
+        </button>
+      </div>
       <div class="op-workspace-head">
         <div><span class="op-pulse"></span><strong data-i18n="workspaceTitle">Fila inteligente de oportunidades</strong></div>
         <span id="visibleCount">—</span>
@@ -108,6 +121,6 @@
   <script src="runtime-config.js" defer></script>
   <script src="api-client.js" defer></script>
   <script src="data-engine.js" defer></script>
-  <script src="opportunity-radar.js" defer></script>
+  <script src="opportunity-radar.js?v=20260927-refresh1" defer></script>
 </body>
 </html>
