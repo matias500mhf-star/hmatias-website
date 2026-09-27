@@ -348,3 +348,24 @@ body.hmatias-institutional.hmatias-clean .clean-cart-item{padding:18px 0;border:
 body.hmatias-institutional.hmatias-clean .clean-cart-item input{border-radius:2px}
 body.hmatias-institutional.hmatias-clean .clean-cart-remove{border-radius:2px}
 body.hmatias-institutional.hmatias-clean .clean-quote-form .clean-cart-summary{border-radius:0;background:#f6f8fa}
+
+/* FINAL PHOTO PRESENTATION STANDARD — 2026-09-27
+   One editorial frame across service evidence; focal positions preserve the useful subject. */
+body.hmatias-institutional .hm-evidence-item{overflow:hidden}
+body.hmatias-institutional .hm-evidence-item img{
+  display:block;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center center
+}
+body.hmatias-institutional .hm-evidence-item img[src*="cobertura-metalica-substituicao"]{object-position:center 48%}
+body.hmatias-institutional .hm-evidence-item img[src*="anexo-coberto-estrutura-metalica"]{object-position:center 42%}
+body.hmatias-institutional .hm-evidence-item img[src*="caixilharia-vidro-fumado"]{object-position:center 48%}
+body.hmatias-institutional .hm-evidence-item img[src*="perfis-metalicos-estrutura"]{object-position:center 48%}
+body.hmatias-institutional .hm-evidence-item img[src*="chapas-cobertura-fornecimento"]{object-position:center 52%}
+body.hmatias-institutional .hm-evidence-item img[src*="logistica-estrutura-metalica"]{object-position:center 52%}
+body.hmatias-institutional .unit-proof>div:first-child{overflow:hidden;background:#e7edf1}
+body.hmatias-institutional .unit-proof img{display:block;object-position:center center}
+body.hmatias-institutional.hmatias-facilities .unit-proof img[src*="cobertura-metalica-substituicao"]{object-position:center 48%}
+@media(max-width:620px){
+  body.hmatias-institutional .hm-evidence-item img{aspect-ratio:4/3}
+  body.hmatias-institutional .unit-proof>div:first-child{min-height:0}
+  body.hmatias-institutional .unit-proof img{width:100%;height:auto;min-height:0;aspect-ratio:4/3}
+}
