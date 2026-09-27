@@ -6,6 +6,8 @@ import {
   extractReference,
   extractDeadline,
   extractOpportunityLinks,
+  extractCpbnBidLinks,
+  normalizeCpbnBidPage,
   normalizeOcdsRelease,
   buildSourceFetchUrl
 } from '../src/opportunity-pipeline.js';
@@ -62,4 +64,25 @@ test('opportunity link discovery keeps procurement-like links only',()=>{
 
 test('title normalization removes generic procurement noise',()=>{
   assert.equal(normalizeOpportunityTitle('Concurso Público Angola — Reabilitação de Edifício'),'reabilitacao de edificio');
+});
+
+test('Namibia CPBN adapter discovers bid detail links even when anchor text is generic',()=>{
+  const html='<h4>Provision of landscaping and garden services: NCS/OAB/CPBN-05/2026</h4><a href="/index/bid/120">More Details</a><h4>Supply and delivery of vehicles: G/ONB/CPBN-11/2026</h4><a href="/index/bid/121">More Details</a><a href="/index/external/8">Awards</a>';
+  const links=extractCpbnBidLinks(html,'https://www.cpbn.com.na/index/external/2');
+  assert.equal(links.length,2);
+  assert.equal(links[0].url,'https://www.cpbn.com.na/index/bid/120');
+  assert.match(links[0].label,/landscaping/i);
+});
+
+test('Namibia CPBN bid detail page becomes a structured NA/NAD candidate',()=>{
+  const source={name:'Central Procurement Board of Namibia — Open Bids',source_url:'https://www.cpbn.com.na/index/external/2',country_code:'NA',currency_code:'NAD',adapter:'cpbn_namibia'};
+  const html='<h1>Bid Details</h1><div>Category: Works</div><div>Institution: University of Namibia</div><div>Description of the Bid: Procurement for the Provision of Landscaping and Garden Services for a Period of Three (3) Years.</div><div>Procurement Reference Number: NCS/OAB/CPBN-05/2026</div><div>Bid Document Price: N$300.00</div><div>Address for the Collection & Submission of Documents: CPBN, Windhoek, Namibia</div><div>Date of Issue: 4th September, 2026</div><div>Closing Date and Time: 8th October, 2026 11:00</div><div>Non-compulsory Pre-Bid Meeting/Site Visit: 25 September 2026 at 10H00, Windhoek</div><h3>Documents</h3>';
+  const candidate=normalizeCpbnBidPage(html,'https://www.cpbn.com.na/index/bid/120',source,Date.UTC(2026,8,27));
+  assert.equal(candidate.country_code,'NA');
+  assert.equal(candidate.currency_code,'NAD');
+  assert.equal(candidate.issuer,'University of Namibia');
+  assert.equal(candidate.reference,'NCS/OAB/CPBN-05/2026');
+  assert.equal(candidate.deadline,'2026-10-08T09:00:00.000Z');
+  assert.match(candidate.scope_summary,/N\$300\.00/);
+  assert.match(candidate.scope_summary,/Pre-bid\/site visit/i);
 });
