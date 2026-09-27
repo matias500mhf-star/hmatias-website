@@ -8,6 +8,7 @@ import {
   sha256Hex,
   isAdmin
 } from '../src/sourcing.js';
+import {supplierQualityRisk,scorePrivateSupplierMatch} from '../src/private-sourcing-suppliers.js';
 
 test('sourcing requirement normalization keeps technical meaning',()=>{
   assert.equal(normalizeRequirement('Tubo PVC 110 mm em Luanda'),'tubo pvc 110mm em luanda');
@@ -74,4 +75,35 @@ test('sourcing admin accepts the temporary pilot token only in staging',()=>{
     ...staging,
     SOURCE_AO_ENV:'production'
   }),false);
+});
+
+
+test('informal Angola supplier is not automatically rejected but carries stronger quality risk',()=>{
+  const result=supplierQualityRisk({
+    market_channel:'informal',
+    quality_status:'source_checked',
+    quality_evidence:[],
+    availability_status:'unknown'
+  });
+  assert.ok(result.score>0);
+  assert.ok(result.score<52);
+  assert.ok(result.flags.includes('informal_market_requires_material_verification'));
+  assert.ok(result.flags.includes('quality_evidence_missing'));
+});
+
+test('regional technical supplier can match a material requirement without implying stock',()=>{
+  const result=scorePrivateSupplierMatch('VCI corrosion protection for piping',{
+    name:'Regional Technical Supplier',
+    country_code:'NA',
+    market_channel:'regional',
+    supplier_role:'technical_supplier',
+    capabilities:['VCI corrosion protection','flange protection','protective coatings'],
+    brands:['Example Brand'],
+    quality_status:'documented',
+    quality_evidence:['manufacturer documentation'],
+    availability_status:'on_request'
+  });
+  assert.ok(result.match_score>=40);
+  assert.ok(result.quality_score>=60);
+  assert.equal(result.risk_flags.includes('informal_market_requires_material_verification'),false);
 });

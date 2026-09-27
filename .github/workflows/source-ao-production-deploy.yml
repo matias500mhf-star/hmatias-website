@@ -258,6 +258,25 @@ jobs:
           rm -f "$RUNNER_TEMP/source-ao-opportunity-sources.json" "$RUNNER_TEMP/source-ao-opportunity-scan.json" "$RUNNER_TEMP/source-ao-opportunity-candidates.json" "$RUNNER_TEMP/source-ao-public-opportunities.json"
           rm -f "$RUNNER_TEMP/source-ao-partner-network.json"
 
+      - name: Verify production confidential sourcing supplier network
+        shell: bash
+        run: |
+          set -euo pipefail
+          auth="Authorization: Bearer $SOURCE_AO_ADMIN_API_TOKEN"
+          curl -fsS --max-time 15 "$SOURCE_AO_PRODUCTION_API_BASE/api/admin/sourcing-suppliers" \
+            -H "$auth" > "$RUNNER_TEMP/source-ao-private-suppliers.json"
+          node --input-type=module - "$RUNNER_TEMP/source-ao-private-suppliers.json" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const x=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(x?.ok!==true||x?.confidential!==true||!Array.isArray(x.suppliers)) throw new Error('Private sourcing supplier network is not ready');
+          for(const supplier of x.suppliers){
+            if(supplier.confidentiality!=='private') throw new Error('Private supplier visibility contract failed');
+            if(Object.prototype.hasOwnProperty.call(supplier,'private_contact')) throw new Error('Private contact leaked into supplier list');
+          }
+          console.log('Production confidential sourcing supplier network smoke passed.');
+          NODE
+          rm -f "$RUNNER_TEMP/source-ao-private-suppliers.json"
+
       - name: Verify production commercial partner network
         shell: bash
         run: |
@@ -342,3 +361,4 @@ jobs:
           rm -f "$RUNNER_TEMP/source-ao-ready.json" "$RUNNER_TEMP/source-ao-search.json"
           rm -f "$RUNNER_TEMP/source-ao-opportunity-sources.json" "$RUNNER_TEMP/source-ao-opportunity-scan.json" "$RUNNER_TEMP/source-ao-opportunity-candidates.json"
           rm -f "$RUNNER_TEMP/source-ao-production-seed.sql"
+          rm -f "$RUNNER_TEMP/source-ao-private-suppliers.json"

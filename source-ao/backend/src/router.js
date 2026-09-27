@@ -24,6 +24,11 @@ import {
   scanOpportunitySources
 } from './opportunity-pipeline.js';
 import {listCommercialPartners,upsertCommercialPartner} from './partner-network.js';
+import {
+  listPrivateSourcingSuppliers,
+  upsertPrivateSourcingSupplier,
+  getPrivateSourcingSupplierContact
+} from './private-sourcing-suppliers.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -110,7 +115,15 @@ export default {
               response=await listCommercialPartners(request,env);
             }else if(url.pathname==='/api/admin/partner-network' && request.method==='POST'){
               response=await upsertCommercialPartner(request,env);
+            }else if(url.pathname==='/api/admin/sourcing-suppliers' && request.method==='GET'){
+              response=await listPrivateSourcingSuppliers(request,env);
+            }else if(url.pathname==='/api/admin/sourcing-suppliers' && request.method==='POST'){
+              response=await upsertPrivateSourcingSupplier(request,env);
             }else{
+              const privateSupplierContact=url.pathname.match(/^\/api\/admin\/sourcing-suppliers\/([^/]+)\/contact$/);
+              if(privateSupplierContact && request.method==='GET'){
+                response=await getPrivateSourcingSupplierContact(request,env,privateSupplierContact[1]);
+              }else{
               const copilotCandidate=url.pathname.match(/^\/api\/admin\/copilot\/candidates\/([^/]+)$/);
               const copilotOpportunity=url.pathname.match(/^\/api\/admin\/copilot\/opportunities\/([^/]+)$/);
               if(copilotCandidate && request.method==='GET'){
@@ -123,6 +136,7 @@ export default {
                 response=await reviewOpportunityCandidate(request,env,opportunityReview[1]);
               }else{
                 response=await core.fetch(request,env);
+              }
               }
               }
             }
