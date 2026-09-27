@@ -49,11 +49,29 @@ jobs:
             --exclude 'source-ao/docs/' \
             --exclude 'source-ao/schemas/' \
             --exclude 'source-ao/data-contract.json' \
-            --exclude 'source-ao/validate-data.mjs'
+            --exclude 'source-ao/validate-data.mjs' \
+            --exclude 'source-ao/ops.html' \
+            --exclude 'source-ao/ops.js' \
+            --exclude 'source-ao/ops.css' \
+            --exclude 'source-ao/review.html' \
+            --exclude 'source-ao/review.js' \
+            --exclude 'source-ao/review.css' \
+            --exclude 'source-ao/requests.html' \
+            --exclude 'source-ao/requests.js' \
+            --exclude 'source-ao/requests.css'
           test -f "$out/index.html"
           test -f "$out/source-ao/index.html"
           test ! -e "$out/source-ao/backend"
           test ! -e "$out/source-ao/docs"
+          test ! -e "$out/source-ao/ops.html"
+          test ! -e "$out/source-ao/ops.js"
+          test ! -e "$out/source-ao/ops.css"
+          test ! -e "$out/source-ao/review.html"
+          test ! -e "$out/source-ao/review.js"
+          test ! -e "$out/source-ao/review.css"
+          test ! -e "$out/source-ao/requests.html"
+          test ! -e "$out/source-ao/requests.js"
+          test ! -e "$out/source-ao/requests.css"
           test ! -e "$out/.github"
           echo "Public-only deployment artifact prepared."
 
@@ -94,9 +112,6 @@ jobs:
           fetch "/source-ao/index.html" /tmp/source-ao.html
           fetch "/source-ao/opportunity-radar.html" /tmp/source-ao-radar.html
           fetch "/source-ao/runtime-config.js" /tmp/source-ao-runtime.js
-          fetch "/source-ao/ops.html" /tmp/source-ao-ops.html
-          fetch "/source-ao/review.html" /tmp/source-ao-review.html
-          fetch "/source-ao/requests.html" /tmp/source-ao-requests.html
           fetch "/procura.html" /tmp/procura-alias.html
           fetch "/images/source-ao-logo.svg" /tmp/source-ao-logo.svg
 
@@ -115,7 +130,20 @@ jobs:
           grep -Fq "Disallow: /source-ao/requests.html" /tmp/robots.txt
           grep -Fq "Disallow: /source-ao/backend/" /tmp/robots.txt
 
-          for hidden_path in             "/source-ao/backend/src/router.js"             "/source-ao/backend/.env.staging.example"             "/source-ao/docs/MARKETS.md"             "/source-ao/data-contract.json"; do
+          for hidden_path in \
+            "/source-ao/ops.html" \
+            "/source-ao/ops.js" \
+            "/source-ao/ops.css" \
+            "/source-ao/review.html" \
+            "/source-ao/review.js" \
+            "/source-ao/review.css" \
+            "/source-ao/requests.html" \
+            "/source-ao/requests.js" \
+            "/source-ao/requests.css" \
+            "/source-ao/backend/src/router.js" \
+            "/source-ao/backend/.env.staging.example" \
+            "/source-ao/docs/MARKETS.md" \
+            "/source-ao/data-contract.json"; do
             hidden_status="$(curl --silent --output /dev/null --write-out '%{http_code}'               --location --connect-timeout 15 --max-time 30 "$base$hidden_path" || true)"
             if [ "$hidden_status" = "200" ]; then
               echo "ERROR: private Source AO build material is publicly accessible: $hidden_path"
@@ -123,11 +151,6 @@ jobs:
             fi
           done
           grep -Fq "Disallow: /source-ao/docs/" /tmp/robots.txt
-
-          for private_page in /tmp/source-ao-ops.html /tmp/source-ao-review.html /tmp/source-ao-requests.html; do
-            grep -Fq 'noindex,nofollow,noarchive' "$private_page"
-            grep -Fq 'name="referrer" content="no-referrer"' "$private_page"
-          done
 
           if grep -Eq 'href="[^"]*(ops|review|requests)\.html' /tmp/source-ao.html /tmp/source-ao-radar.html; then
             echo "ERROR: public SOURCE AO page links to an internal desk"
