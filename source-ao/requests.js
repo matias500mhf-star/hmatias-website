@@ -11,7 +11,12 @@
     const el=$('#apiStatus');el.textContent=text;el.dataset.state=state;
   }
 
+  function setInternalAccess(unlocked){
+    document.body.classList.toggle('internal-locked',!unlocked);
+  }
+
   function configure(){
+    setInternalAccess(false);
     const base=apiBase();
     $('#apiEndpoint').value=base||'Not configured';
     if(!base){$('#adminToken').disabled=true;$('#connectApi').disabled=true;setApiStatus('API not configured','error');}
@@ -94,7 +99,7 @@
         setCardMessage(card,'Saved. Private tracking will show the updated status.','success');
         metrics();
       }catch(error){
-        if(error.status===401){adminToken='';setApiStatus('Token rejected','error');$('#refreshRequests').disabled=true;$('#refreshDemand').disabled=true;}
+        if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');$('#refreshRequests').disabled=true;$('#refreshDemand').disabled=true;}
         setCardMessage(card,'Update failed. No status change was recorded.','error');
       }finally{button.disabled=false;}
     });
@@ -127,42 +132,52 @@
   }
 
   async function loadRequests(){
-    if(!adminToken) return;
+    if(!adminToken) return false;
     $('#requestList').innerHTML='<div class="empty-state"><strong>Loading private request queue…</strong><p>Contacts remain inside the authenticated session only.</p></div>';
     try{
       const payload=await api('/api/admin/sourcing-requests?limit=100');
       requests=payload?.results||[];
       renderRequests();metrics();
       $('#refreshRequests').disabled=false;
+      return true;
     }catch(error){
       requests=[];renderRequests();
-      if(error.status===401){adminToken='';setApiStatus('Token rejected','error');}
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
       else setApiStatus('Could not load requests','error');
+      return false;
     }
   }
 
   async function loadDemand(){
-    if(!adminToken) return;
+    if(!adminToken) return false;
     try{
       const payload=await api('/api/admin/demand-radar');
       demand=payload?.results||[];
       renderDemand();metrics();
       $('#refreshDemand').disabled=false;
+      return true;
     }catch(error){
       demand=[];renderDemand();metrics();
-      if(error.status===401){adminToken='';setApiStatus('Token rejected','error');}
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
+      return false;
     }
   }
 
   async function loadAll(){
-    await Promise.all([loadRequests(),loadDemand()]);
-    if(adminToken) setApiStatus('Connected · private operations loaded','connected');
+    const [requestsOk,demandOk]=await Promise.all([loadRequests(),loadDemand()]);
+    const authorized=Boolean(adminToken&&requestsOk&&demandOk);
+    setInternalAccess(authorized);
+    if(authorized)setApiStatus('Connected · private operations loaded','connected');
+    return authorized;
   }
 
   $('#connectApi').addEventListener('click',async()=>{
     const candidate=$('#adminToken').value.trim();
-    if(!candidate){setApiStatus('Enter an admin token','error');return;}
-    adminToken=candidate;$('#adminToken').value='';await loadAll();
+    if(!candidate){setInternalAccess(false);setApiStatus('Enter an admin token','error');return;}
+    adminToken=candidate;
+    $('#adminToken').value='';
+    setApiStatus('Checking admin access…','ready');
+    await loadAll();
   });
   $('#refreshRequests').addEventListener('click',loadRequests);
   $('#refreshDemand').addEventListener('click',loadDemand);
