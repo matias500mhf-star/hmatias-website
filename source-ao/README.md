@@ -119,3 +119,14 @@ The HMATIAS production site must remain independently operational if Source AO i
 The existing sourcing API accepts the versioned RFQ contract while preserving legacy requests. The complete customer profile and item list are encrypted with the existing PII key. An unpredictable browser-generated retry token is hashed for atomic deduplication and private tracking; no drafts or private tokens are saved in browser storage. Contact and full RFQ data follow the 180-day closed/completed retention schedule.
 
 The authenticated Sourcing Desk displays qualification and supports adjudication, purchasing and delivery states. Operators remain responsible for supplier selection, confirmed cost, margin, proposal, purchase and profit accounting; none of these actions or values is automatic or public.
+
+
+## Private commercial case
+
+Authenticated sourcing operations can attach a private commercial case to a customer request. The workflow is deliberately explicit:
+
+`request → qualification → private supplier → confirmed cost → landed cost → HMATIAS sale price → gross profit/margin → proposal`
+
+Supplier cost options are stored separately from the public request. Material cost, transport, customs, taxes/fees, other costs, contingency and FX-to-AOA are entered by an authenticated operator; the system does not invent missing prices, FX, duties or logistics. Foreign-currency options can remain drafts without an FX rate, but cannot become verified/selected until the FX rate is supplied.
+
+Gross profit and gross margin are calculated only when a selected verified cost and an explicit AOA sale price exist. A proposal cannot move to ready/sent/revised/accepted until the request is qualified and those inputs are complete. All commercial-case endpoints are admin-only and are never exposed through public request tracking.
