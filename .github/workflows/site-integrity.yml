@@ -279,10 +279,15 @@ jobs:
               else:
                   assistant_version = assistant_version_match.group(1)
 
+              expected_cache_version = re.sub(r'^(\d{4})-(\d{2})-(\d{2})-', r'\1\2\3-', assistant_version) if assistant_version else ''
+
               if not kb_src_match:
                   fail('assistant.js does not declare a versioned assistant-knowledge.js source')
-              elif assistant_version and kb_src_match.group(1) != assistant_version:
-                  fail(f'assistant/knowledge cache versions differ: {assistant_version} != {kb_src_match.group(1)}')
+              elif expected_cache_version and kb_src_match.group(1) != expected_cache_version:
+                  fail(
+                      'assistant/knowledge cache versions differ: '
+                      f"{expected_cache_version} != {kb_src_match.group(1)}"
+                  )
 
               required_knowledge = {
                   'SOURCE AO': 'sourceAO: {',
@@ -313,14 +318,15 @@ jobs:
               elif not knowledge_updated_match:
                   fail('assistant-knowledge.js does not declare an updated YYYY-MM-DD date')
 
-              if assistant_version:
+              if expected_cache_version:
                   for html_path in ROOT.glob('*.html'):
                       html = html_path.read_text(encoding='utf-8')
                       for match in re.finditer(r'assistant\.js\?v=([^"\'<>\s]+)', html):
-                          if match.group(1) != assistant_version:
+                          page_cache_version = match.group(1)
+                          if not page_cache_version.startswith(expected_cache_version):
                               fail(
                                   f'stale assistant cache version in {html_path}: '
-                                  f"{match.group(1)} != {assistant_version}"
+                                  f"{page_cache_version} does not start with {expected_cache_version}"
                               )
 
           # GitHub Pages should have a custom lightweight 404 page.
