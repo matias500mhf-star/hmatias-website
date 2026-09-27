@@ -12,7 +12,12 @@
     el.dataset.state=state;
   }
 
+  function setInternalAccess(unlocked){
+    document.body.classList.toggle('internal-locked',!unlocked);
+  }
+
   function configureSessionUi(){
+    setInternalAccess(false);
     const base=apiBase();
     $('#apiEndpoint').value=base||'Not configured';
     if(!base){
@@ -176,7 +181,7 @@
         setMessage(card,'Catalog item created and selected. Review once more before approval.','success');
         updateApprovalState(card);
       }catch(error){
-        if(error.status===401){adminToken='';setApiStatus('Session expired or token rejected','error');}
+        if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Session expired or token rejected','error');}
         setMessage(card,'Could not create the catalog item.','error');
       }finally{button.disabled=false;}
     });
@@ -204,7 +209,7 @@
       }catch(error){
         button.disabled=false;
         if(error.status===409){setMessage(card,'This response was already approved or is no longer pending. Refresh the list.','error');}
-        else if(error.status===401){adminToken='';setApiStatus('Session expired or token rejected','error');setMessage(card,'Admin session rejected. Reconnect before approving.','error');}
+        else if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Session expired or token rejected','error');setMessage(card,'Admin session rejected. Reconnect before approving.','error');}
         else setMessage(card,'Approval failed. No public observation was created.','error');
       }
     });
@@ -226,28 +231,32 @@
   }
 
   async function loadPending(){
-    if(!adminToken) return;
+    if(!adminToken) return false;
     $('#reviewList').innerHTML='<div class="empty-state"><strong>Loading pending responses…</strong><p>Reading only supplier responses that still require HMATIAS review.</p></div>';
     try{
       const payload=await api('/api/admin/verification-requests?status=supplier_responded');
       pending=payload?.results||[];
       renderPending();
       $('#refreshPending').disabled=false;
+      setInternalAccess(true);
       setApiStatus('Connected · review queue loaded','connected');
+      return true;
     }catch(error){
       pending=[];
       $('#pendingCount').textContent='0';
       $('#reviewList').innerHTML='<div class="empty-state"><strong>Could not load review queue.</strong><p>No approval action was performed.</p></div>';
-      if(error.status===401){adminToken='';setApiStatus('Token rejected','error');}
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
       else setApiStatus('API unavailable','error');
+      return false;
     }
   }
 
   $('#connectApi').addEventListener('click',async()=>{
     const candidate=$('#adminToken').value.trim();
-    if(!candidate){setApiStatus('Enter an admin token for this session','error');return;}
+    if(!candidate){setInternalAccess(false);setApiStatus('Enter an admin token for this session','error');return;}
     adminToken=candidate;
     $('#adminToken').value='';
+    setApiStatus('Checking admin access…','ready');
     await loadPending();
   });
 
