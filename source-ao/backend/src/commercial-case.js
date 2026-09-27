@@ -231,11 +231,27 @@ async function readCostOptions(env,requestId){
 async function buildPayload(env,requestId){
   const request=await requestRow(env,requestId);
   if(!request)return null;
-  const [caseRow,costOptions,suppliers]=await Promise.all([
+  const [caseRow,costOptions,matchedSuppliers]=await Promise.all([
     env.SOURCE_AO_DB.prepare('SELECT * FROM sourcing_commercial_cases WHERE request_id=?').bind(requestId).first(),
     readCostOptions(env,requestId),
     candidateSuppliers(env,normalizeRequirement([request.requirement_text,request.category,request.specification].filter(Boolean).join(' ')))
   ]);
+  const suppliers=[...matchedSuppliers];
+  if(caseRow?.selected_supplier_id&&!suppliers.some(s=>s.id===caseRow.selected_supplier_id)){
+    const row=await env.SOURCE_AO_DB.prepare(
+      'SELECT id,name,country_code,market_channel,supplier_role,location,capabilities_json,brands_json,quality_status,quality_evidence_json,availability_status,contact_hint,last_verified_at,updated_at FROM private_sourcing_suppliers WHERE id=?'
+    ).bind(caseRow.selected_supplier_id).first();
+    if(row){
+      const supplier={
+        id:row.id,name:row.name,country_code:row.country_code,market_channel:row.market_channel,
+        supplier_role:row.supplier_role,location:row.location,capabilities:parseJsonArray(row.capabilities_json),
+        brands:parseJsonArray(row.brands_json),quality_status:row.quality_status,
+        quality_evidence:parseJsonArray(row.quality_evidence_json),availability_status:row.availability_status,
+        contact_hint:row.contact_hint,last_verified_at:row.last_verified_at,updated_at:row.updated_at
+      };
+      suppliers.push({...supplier,...scorePrivateSupplierMatch(request.requirement_text,supplier)});
+    }
+  }
   const commercialCase={request_id:requestId,...hydrateCase(caseRow)};
   return {
     ok:true,
@@ -265,7 +281,8 @@ export async function upsertCostOption(request,env,requestId){
   const v=validated.value;
   const supplier=await env.SOURCE_AO_DB.prepare('SELECT id FROM private_sourcing_suppliers WHERE id=?').bind(v.supplier_id).first();
   if(!supplier)return fail(env,400,'supplier_not_found','Selected private supplier does not exist.');
-  const optionId=clean(data.id,120)||id('cost');
+  let optionId;
+  try{optionId=clean(data.id,120)||id('cost');}catch{return fail(env,400,'invalid_cost_option_id','Cost option ID is invalid.');}
   const existing=await env.SOURCE_AO_DB.prepare('SELECT id,request_id FROM sourcing_cost_options WHERE id=?').bind(optionId).first();
   if(existing&&existing.request_id!==requestId)return fail(env,409,'cost_option_conflict','Cost option belongs to another request.');
   const verifiedAt=['verified','selected'].includes(v.status)?(v.cost_verified_at||nowIso()):v.cost_verified_at;
