@@ -62,6 +62,11 @@
       $('#proposalCounts').textContent='—';
       $('#acceptedCount').textContent='—';
       $('#realizedMargin').textContent='—';
+      $('#cockpitInvoiced').textContent='—';
+      $('#cockpitReceived').textContent='—';
+      $('#cockpitOutstanding').textContent='—';
+      $('#cockpitOverdue').textContent='—';
+      $('#cockpitOverdueCount').textContent='—';
       $('#cockpitAsOf').textContent='Unavailable';
       for(const id of ['cockpitActive','cockpitTriage','cockpitAwarded','cockpitPurchased','cockpitDelivered','cockpitCompleted'])$('#'+id).textContent='—';
       return;
@@ -79,6 +84,11 @@
     $('#cockpitPurchased').textContent=String(d.execution?.by_stage?.purchased||0);
     $('#cockpitDelivered').textContent=String(d.execution?.by_stage?.delivered||0);
     $('#cockpitCompleted').textContent=String(d.execution?.by_stage?.completed||0);
+    $('#cockpitInvoiced').textContent=fmtMoney(d.collections?.invoiced_aoa);
+    $('#cockpitReceived').textContent=fmtMoney(d.collections?.received_aoa);
+    $('#cockpitOutstanding').textContent=fmtMoney(d.collections?.outstanding_aoa);
+    $('#cockpitOverdue').textContent=fmtMoney(d.collections?.overdue_aoa);
+    $('#cockpitOverdueCount').textContent=(d.collections?.overdue_count||0)+' vencida(s) · '+(d.collections?.paid_count||0)+' paga(s)';
     $('#cockpitAsOf').textContent=d.as_of?'Atualizado '+fmtDate(d.as_of):'Atualizado';
     $('#realizedProfit').classList.toggle('negative',Number(d.execution?.realized_gross_profit_aoa)<0);
   }
@@ -161,6 +171,17 @@
           <button class="btn btn-outline btn-small open-fulfillment" type="button">Abrir execução</button>
         </div>
         <section class="fulfillment-panel" hidden aria-live="polite"></section>
+      </section>
+      <section class="collections-block">
+        <div class="collections-head">
+          <div>
+            <small>COBRANÇA & CAIXA</small>
+            <h4>Fatura → pagamentos → saldo → atraso</h4>
+            <p>Receita final não é tratada como dinheiro recebido. Cada pagamento exige referência, valor e data confirmados.</p>
+          </div>
+          <button class="btn btn-outline btn-small open-collections" type="button">Abrir cobrança</button>
+        </div>
+        <section class="collections-panel" hidden aria-live="polite"></section>
       </section>
       <div class="cost-divider"></div>
       <div class="cost-head"><div><small>CUSTOS DE FORNECEDOR</small><h4>Opções privadas de custo</h4></div><button class="btn btn-outline btn-small new-cost-option" type="button">Novo custo</button></div>
@@ -315,6 +336,7 @@
     });
 
     panel.querySelector('.open-fulfillment').addEventListener('click',()=>loadFulfillment(card,row,panel));
+    panel.querySelector('.open-collections').addEventListener('click',()=>loadCollections(card,row,panel));
 
     panel.querySelector('.generate-proposal-draft').addEventListener('click',async()=>{
       const button=panel.querySelector('.generate-proposal-draft');
