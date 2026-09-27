@@ -148,3 +148,10 @@ After a proposal is explicitly marked **accepted**, authenticated HMATIAS operat
 The fulfillment case stores award and purchase references, confirmed actual AOA cost components, delivery evidence, and explicit final revenue. Estimated supplier cost, landed cost, proposal price, or margin are **never copied into realized values automatically**.
 
 Realized gross profit and realized gross margin are calculated only after all actual cost components have been explicitly entered (use `0` when a real cost does not exist), final revenue is explicit, and delivery has been recorded. Blank cost fields mean **unknown**, not zero. Fulfillment stages cannot move backwards, and advancing stages is blocked when required evidence is missing.
+
+
+## Private Commercial Cockpit
+
+The authenticated Sourcing Desk includes an aggregate commercial cockpit for operational decision-making. It reports request counts, proposal pipeline value, accepted proposal value, fulfillment-stage counts, completed revenue, completed actual cost, realized gross profit, and realized gross margin.
+
+The cockpit endpoint is admin-only and **aggregate-only**. It does not return requester identity, requester contact, supplier identity, supplier contact, or individual commercial records. Realized revenue/profit metrics are based only on completed fulfillment cases whose actual costs and final revenue were explicitly confirmed.
