@@ -112,6 +112,19 @@
         <button class="btn btn-primary btn-small save-commercial-case" type="button">Guardar caso comercial</button>
         <span class="commercial-message"></span>
       </div>
+      <section class="proposal-builder">
+        <div class="proposal-builder-head">
+          <div><small>PROPOSTA COMERCIAL</small><h4>Rascunho seguro para cliente</h4><p>Usa apenas dados confirmados. Fornecedor, custo interno, lucro e margem não entram na proposta.</p></div>
+          <button class="btn btn-outline btn-small generate-proposal" type="button">Gerar rascunho</button>
+        </div>
+        <div class="proposal-preview" hidden>
+          <textarea class="proposal-text" rows="16" readonly aria-label="Rascunho da proposta comercial"></textarea>
+          <div class="proposal-preview-actions">
+            <button class="btn btn-primary btn-small copy-proposal" type="button">Copiar proposta</button>
+            <small>Prazo, validade e pagamento permanecem “A confirmar” até serem definidos pela HMATIAS.</small>
+          </div>
+        </div>
+      </section>
       <div class="cost-divider"></div>
       <div class="cost-head"><div><small>CUSTOS DE FORNECEDOR</small><h4>Opções privadas de custo</h4></div><button class="btn btn-outline btn-small new-cost-option" type="button">Novo custo</button></div>
       <form class="cost-form">
@@ -168,6 +181,48 @@
     const missingLabels={qualification_not_complete:'qualificação',selected_cost_required:'custo selecionado',verified_cost_required:'custo confirmado',fx_or_cost_required:'câmbio/custo',sale_price_required:'preço de venda'};
     readiness.textContent=summary.proposal_ready?'Pronto para proposta':'Falta: '+(summary.missing_requirements||[]).map(x=>missingLabels[x]||x).join(', ');
     readiness.dataset.ready=summary.proposal_ready?'true':'false';
+
+    const proposalButton=panel.querySelector('.generate-proposal');
+    proposalButton.disabled=!summary.proposal_ready;
+    proposalButton.textContent=summary.proposal_ready?'Gerar rascunho':'Complete o caso primeiro';
+    proposalButton.addEventListener('click',async()=>{
+      const preview=panel.querySelector('.proposal-preview');
+      const textarea=panel.querySelector('.proposal-text');
+      proposalButton.disabled=true;
+      proposalButton.textContent='A gerar…';
+      try{
+        const proposal=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/proposal-draft');
+        if(!proposal?.ready||!proposal?.draft?.text){
+          throw new Error('proposal_not_ready');
+        }
+        textarea.value=proposal.draft.text;
+        preview.hidden=false;
+        proposalButton.textContent='Atualizar rascunho';
+      }catch(error){
+        preview.hidden=false;
+        textarea.value=error.message==='proposal_not_ready'
+          ?'O caso comercial ainda não reúne os dados mínimos para gerar uma proposta.'
+          :'Não foi possível gerar o rascunho da proposta.';
+        proposalButton.textContent='Tentar novamente';
+      }finally{
+        proposalButton.disabled=false;
+      }
+    });
+
+    panel.querySelector('.copy-proposal').addEventListener('click',async()=>{
+      const button=panel.querySelector('.copy-proposal');
+      const text=panel.querySelector('.proposal-text').value;
+      if(!text)return;
+      try{
+        await navigator.clipboard.writeText(text);
+        button.textContent='Copiada';
+        setTimeout(()=>button.textContent='Copiar proposta',1200);
+      }catch{
+        const message=panel.querySelector('.commercial-message');
+        message.textContent='Não foi possível copiar a proposta.';
+        message.className='commercial-message error';
+      }
+    });
 
     const list=panel.querySelector('.cost-option-list');
     if(!(payload?.cost_options||[]).length){
