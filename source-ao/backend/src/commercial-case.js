@@ -378,7 +378,8 @@ export async function upsertCostOption(request,env,requestId){
 
 export async function updateCommercialCase(request,env,requestId){
   if(!isAdmin(request,env))return fail(env,401,'unauthorized','Admin authorization required.');
-  if(!await requestRow(env,requestId))return fail(env,404,'request_not_found','Sourcing request does not exist.');
+  const sourceRequest=await requestRow(env,requestId);
+  if(!sourceRequest)return fail(env,404,'request_not_found','Sourcing request does not exist.');
   let data;
   try{data=await request.json();}catch{return fail(env,400,'invalid_json','A JSON body is required.');}
   const existing=hydrateCase(await env.SOURCE_AO_DB.prepare('SELECT * FROM sourcing_commercial_cases WHERE request_id=?').bind(requestId).first());
@@ -399,6 +400,7 @@ export async function updateCommercialCase(request,env,requestId){
   }catch{return fail(env,400,'invalid_fields','Commercial case fields are invalid.');}
   if(!QUALIFICATION_STATUSES.has(qualification))return fail(env,400,'invalid_qualification_status','Unsupported qualification status.');
   if(!PROPOSAL_STATUSES.has(proposalStatus))return fail(env,400,'invalid_proposal_status','Unsupported proposal status.');
+  if(validityDays!=null&&!Number.isInteger(validityDays))return fail(env,400,'invalid_validity_days','Proposal validity must be a whole number of days.');
 
   if(selectedSupplier){
     const supplier=await env.SOURCE_AO_DB.prepare('SELECT id FROM private_sourcing_suppliers WHERE id=?').bind(selectedSupplier).first();
@@ -431,8 +433,9 @@ export async function updateCommercialCase(request,env,requestId){
   };
   const costs=await readCostOptions(env,requestId);
   const summary=calculateCommercialSummary(previewCase,costs);
-  if(['ready','sent','revised','accepted'].includes(proposalStatus)&&!summary.proposal_ready){
-    return fail(env,409,'proposal_not_ready','Qualification, verified cost and sale price are required before proposal progression.');
+  const proposalPack=buildProposalDraft({request:sourceRequest,commercialCase:previewCase,summary});
+  if(['ready','sent','revised','accepted'].includes(proposalStatus)&&!proposalPack.issuance_ready){
+    return fail(env,409,'proposal_not_ready','Qualification, verified cost, sale price and complete proposal terms are required before proposal progression.');
   }
 
   const timestamp=nowIso();
