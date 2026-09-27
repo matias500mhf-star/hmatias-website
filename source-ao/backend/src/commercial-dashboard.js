@@ -20,7 +20,7 @@ function mapCounts(rows=[]){
   return out;
 }
 
-export function buildCommercialDashboard({requestStatusRows=[],proposalStatusRows=[],fulfillmentRows=[]}={}){
+export function buildCommercialDashboard({requestStatusRows=[],proposalStatusRows=[],fulfillmentRows=[],collectionRows=[],asOf=new Date()}={}){
   const requestByStatus=mapCounts(requestStatusRows);
   const proposalByStatus={};
   const proposalValueByStatus={};
@@ -50,6 +50,32 @@ export function buildCommercialDashboard({requestStatusRows=[],proposalStatusRow
   const realizedProfit=roundMoney(completedRevenue-completedActualCost);
   const realizedMargin=completedRevenue>0?Math.round((realizedProfit/completedRevenue)*10000)/100:null;
 
+  let invoiced=0;
+  let received=0;
+  let outstanding=0;
+  let overdueAmount=0;
+  let overdueCount=0;
+  let paidCount=0;
+  const now=asOf instanceof Date?asOf:new Date(asOf);
+  for(const row of collectionRows){
+    const amount=number(row.invoice_amount_aoa);
+    const collected=number(row.received_aoa);
+    const balance=Math.max(amount-collected,0);
+    invoiced+=amount;
+    received+=collected;
+    outstanding+=balance;
+    if(balance<=0&&amount>0)paidCount+=1;
+    const due=row.due_date?new Date(row.due_date):null;
+    if(balance>0&&due&&!Number.isNaN(due.getTime())&&due.getTime()<now.getTime()){
+      overdueCount+=1;
+      overdueAmount+=balance;
+    }
+  }
+  invoiced=roundMoney(invoiced);
+  received=roundMoney(received);
+  outstanding=roundMoney(outstanding);
+  overdueAmount=roundMoney(overdueAmount);
+
   return {
     requests:{
       total:requestTotal,
@@ -71,13 +97,21 @@ export function buildCommercialDashboard({requestStatusRows=[],proposalStatusRow
       completed_actual_cost_aoa:completedActualCost,
       realized_gross_profit_aoa:realizedProfit,
       realized_gross_margin_pct:realizedMargin
+    },
+    collections:{
+      invoiced_aoa:invoiced,
+      received_aoa:received,
+      outstanding_aoa:outstanding,
+      overdue_aoa:overdueAmount,
+      overdue_count:overdueCount,
+      paid_count:paidCount
     }
   };
 }
 
 export async function getCommercialDashboard(request,env){
   if(!isAdmin(request,env))return fail(env,401,'unauthorized','Admin authorization required.');
-  const [requests,proposals,fulfillment]=await Promise.all([
+  const [requests,proposals,fulfillment,collections]=await Promise.all([
     env.SOURCE_AO_DB.prepare(
       'SELECT status,COUNT(*) count FROM sourcing_requests GROUP BY status'
     ).all(),
@@ -96,6 +130,13 @@ export async function getCommercialDashboard(request,env){
         ELSE 0 END),0) actual_cost_aoa
       FROM sourcing_fulfillment_cases
       GROUP BY stage
+    `).all(),
+    env.SOURCE_AO_DB.prepare(`
+      SELECT i.request_id,i.invoice_amount_aoa,i.due_date,
+        COALESCE(SUM(CASE WHEN p.voided_at IS NULL THEN p.amount_aoa ELSE 0 END),0) received_aoa
+      FROM sourcing_invoices i
+      LEFT JOIN sourcing_payments p ON p.request_id=i.request_id
+      GROUP BY i.request_id,i.invoice_amount_aoa,i.due_date
     `).all()
   ]);
   return json(env,{
@@ -106,7 +147,8 @@ export async function getCommercialDashboard(request,env){
     ...buildCommercialDashboard({
       requestStatusRows:requests.results||[],
       proposalStatusRows:proposals.results||[],
-      fulfillmentRows:fulfillment.results||[]
+      fulfillmentRows:fulfillment.results||[],
+      collectionRows:collections.results||[]
     })
   });
 }

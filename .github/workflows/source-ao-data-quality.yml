@@ -137,6 +137,8 @@ jobs:
           grep -q '/proposal-draft' source-ao/requests.js
           grep -q '/fulfillment' source-ao/requests.js
           grep -q '/api/admin/commercial-dashboard' source-ao/requests.js
+          grep -q '/collections' source-ao/requests.js
+          grep -q '/payments' source-ao/requests.js
           ! grep -Eq 'localStorage|sessionStorage' source-ao/requests.js
       - name: Validate commercial case privacy and truth contract
         shell: bash
@@ -162,6 +164,18 @@ jobs:
           grep -q "aggregated_only" source-ao/backend/src/commercial-dashboard.js
           grep -q "/api/admin/commercial-dashboard" source-ao/backend/src/router.js
           ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0018_fulfillment_profit.sql
+      - name: Validate collections ledger truth contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "CREATE TABLE IF NOT EXISTS sourcing_invoices" source-ao/backend/migrations/0019_collections.sql
+          grep -q "CREATE TABLE IF NOT EXISTS sourcing_payments" source-ao/backend/migrations/0019_collections.sql
+          grep -q "payment_reference_exists" source-ao/backend/src/collections.js
+          grep -q "void_reason_required" source-ao/backend/src/collections.js
+          grep -q "delivery_required" source-ao/backend/src/collections.js
+          grep -q "/collections" source-ao/backend/src/router.js
+          grep -q "/payments" source-ao/backend/src/router.js
+          ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0019_collections.sql
       - name: Validate legal and evidence baseline
         shell: bash
         run: |
@@ -221,6 +235,7 @@ jobs:
           node --check source-ao/backend/src/commercial-case.js
           node --check source-ao/backend/src/fulfillment.js
           node --check source-ao/backend/src/commercial-dashboard.js
+          node --check source-ao/backend/src/collections.js
           node --check source-ao/backend/src/intelligence.js
           node --check source-ao/backend/src/intelligence-route.js
       - name: Validate staging scripts syntax

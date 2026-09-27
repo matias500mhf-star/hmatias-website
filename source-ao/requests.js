@@ -62,6 +62,11 @@
       $('#proposalCounts').textContent='—';
       $('#acceptedCount').textContent='—';
       $('#realizedMargin').textContent='—';
+      $('#cockpitInvoiced').textContent='—';
+      $('#cockpitReceived').textContent='—';
+      $('#cockpitOutstanding').textContent='—';
+      $('#cockpitOverdue').textContent='—';
+      $('#cockpitOverdueCount').textContent='—';
       $('#cockpitAsOf').textContent='Unavailable';
       for(const id of ['cockpitActive','cockpitTriage','cockpitAwarded','cockpitPurchased','cockpitDelivered','cockpitCompleted'])$('#'+id).textContent='—';
       return;
@@ -79,6 +84,11 @@
     $('#cockpitPurchased').textContent=String(d.execution?.by_stage?.purchased||0);
     $('#cockpitDelivered').textContent=String(d.execution?.by_stage?.delivered||0);
     $('#cockpitCompleted').textContent=String(d.execution?.by_stage?.completed||0);
+    $('#cockpitInvoiced').textContent=fmtMoney(d.collections?.invoiced_aoa);
+    $('#cockpitReceived').textContent=fmtMoney(d.collections?.received_aoa);
+    $('#cockpitOutstanding').textContent=fmtMoney(d.collections?.outstanding_aoa);
+    $('#cockpitOverdue').textContent=fmtMoney(d.collections?.overdue_aoa);
+    $('#cockpitOverdueCount').textContent=(d.collections?.overdue_count||0)+' vencida(s) · '+(d.collections?.paid_count||0)+' paga(s)';
     $('#cockpitAsOf').textContent=d.as_of?'Atualizado '+fmtDate(d.as_of):'Atualizado';
     $('#realizedProfit').classList.toggle('negative',Number(d.execution?.realized_gross_profit_aoa)<0);
   }
@@ -161,6 +171,17 @@
           <button class="btn btn-outline btn-small open-fulfillment" type="button">Abrir execução</button>
         </div>
         <section class="fulfillment-panel" hidden aria-live="polite"></section>
+      </section>
+      <section class="collections-block">
+        <div class="collections-head">
+          <div>
+            <small>COBRANÇA & CAIXA</small>
+            <h4>Fatura → pagamentos → saldo → atraso</h4>
+            <p>Receita final não é tratada como dinheiro recebido. Cada pagamento exige referência, valor e data confirmados.</p>
+          </div>
+          <button class="btn btn-outline btn-small open-collections" type="button">Abrir cobrança</button>
+        </div>
+        <section class="collections-panel" hidden aria-live="polite"></section>
       </section>
       <div class="cost-divider"></div>
       <div class="cost-head"><div><small>CUSTOS DE FORNECEDOR</small><h4>Opções privadas de custo</h4></div><button class="btn btn-outline btn-small new-cost-option" type="button">Novo custo</button></div>
@@ -315,6 +336,7 @@
     });
 
     panel.querySelector('.open-fulfillment').addEventListener('click',()=>loadFulfillment(card,row,panel));
+    panel.querySelector('.open-collections').addEventListener('click',()=>loadCollections(card,row,panel));
 
     panel.querySelector('.generate-proposal-draft').addEventListener('click',async()=>{
       const button=panel.querySelector('.generate-proposal-draft');
@@ -545,6 +567,187 @@
     }catch(error){
       panel.hidden=false;
       panel.innerHTML='<div class="empty-state compact"><strong>Não foi possível carregar a execução.</strong><p>Confirme a sessão privada e tente novamente.</p></div>';
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
+      button.textContent='Tentar novamente';
+    }finally{button.disabled=false;}
+  }
+
+
+  function dateOnly(value){
+    if(!value)return '';
+    const date=new Date(value);
+    if(Number.isNaN(date.getTime()))return '';
+    const pad=n=>String(n).padStart(2,'0');
+    return date.getFullYear()+'-'+pad(date.getMonth()+1)+'-'+pad(date.getDate());
+  }
+
+  function renderCollections(card,row,commercialPanel,payload){
+    const panel=commercialPanel.querySelector('.collections-panel');
+    panel.hidden=false;
+    const invoice=payload?.invoice||{};
+    const summary=payload?.summary||{};
+    const request=payload?.request||{};
+    const statusLabels={not_invoiced:'Não faturado',issued:'Emitida',partial:'Pagamento parcial',overdue:'Vencida',paid:'Paga'};
+    panel.innerHTML=`
+      <div class="collections-statusbar">
+        <span>Execução: <strong class="collections-stage"></strong></span>
+        <span>Receita final: <strong class="collections-final-revenue"></strong></span>
+        <span>Estado cobrança: <strong class="collections-status"></strong></span>
+      </div>
+      <div class="collections-summary">
+        <article><small>FATURA</small><strong class="collections-invoice-total">—</strong></article>
+        <article><small>RECEBIDO</small><strong class="collections-received">—</strong></article>
+        <article><small>POR COBRAR</small><strong class="collections-outstanding">—</strong></article>
+        <article><small>ATRASO</small><strong class="collections-overdue">—</strong></article>
+      </div>
+      <form class="invoice-form">
+        <div class="collections-subhead"><small>FATURA</small><strong>Registo de faturação</strong></div>
+        <label>Referência fatura<input class="invoice-ref" maxlength="160" placeholder="Ex.: FT 2026/..." required></label>
+        <label>Data fatura<input class="invoice-date" type="date" required></label>
+        <label>Vencimento<input class="invoice-due-date" type="date"></label>
+        <label>Valor faturado (AOA)<input class="invoice-amount" type="number" min="0.01" step="0.01" placeholder="Valor confirmado" required></label>
+        <label class="commercial-notes">Notas internas<textarea class="invoice-notes" rows="2" maxlength="1600" placeholder="Condições, documento emitido, observações"></textarea></label>
+        <div class="collections-actions"><button class="btn btn-primary btn-small save-invoice" type="submit">Guardar fatura</button><span class="collections-message invoice-message"></span></div>
+      </form>
+      <form class="payment-form">
+        <div class="collections-subhead"><small>PAGAMENTO</small><strong>Registar recebimento confirmado</strong></div>
+        <label>Referência pagamento<input class="payment-ref" maxlength="160" placeholder="Transferência / recibo / comprovativo" required></label>
+        <label>Método<select class="payment-method"><option value="bank_transfer">Transferência bancária</option><option value="cash">Numerário</option><option value="pos">TPA/POS</option><option value="other">Outro</option></select></label>
+        <label>Valor recebido (AOA)<input class="payment-amount" type="number" min="0.01" step="0.01" required></label>
+        <label>Recebido em<input class="payment-received-at" type="datetime-local" required></label>
+        <label class="commercial-notes">Notas internas<textarea class="payment-notes" rows="2" maxlength="1200" placeholder="Banco, confirmação, observações"></textarea></label>
+        <div class="collections-actions"><button class="btn btn-primary btn-small add-payment" type="submit">Registar pagamento</button><span class="collections-message payment-message"></span></div>
+      </form>
+      <div class="payment-ledger">
+        <div class="collections-subhead"><small>LEDGER</small><strong>Pagamentos registados</strong></div>
+        <div class="payment-ledger-list"></div>
+      </div>
+      <p class="collections-truth-note">O SOURCE AO não assume que a receita final foi recebida. Faturado, recebido e por cobrar são mantidos separadamente; pagamentos anulados permanecem no histórico.</p>
+    `;
+
+    panel.querySelector('.collections-stage').textContent=request.fulfillment_stage||'pending';
+    panel.querySelector('.collections-final-revenue').textContent=fmtMoney(request.final_revenue_aoa);
+    panel.querySelector('.collections-status').textContent=statusLabels[summary.status]||summary.status||'—';
+    panel.querySelector('.collections-invoice-total').textContent=fmtMoney(summary.invoice_amount_aoa);
+    panel.querySelector('.collections-received').textContent=fmtMoney(summary.total_received_aoa);
+    panel.querySelector('.collections-outstanding').textContent=fmtMoney(summary.outstanding_aoa);
+    panel.querySelector('.collections-overdue').textContent=summary.status==='overdue'
+      ?fmtMoney(summary.outstanding_aoa)+' · '+summary.overdue_days+' dia(s)'
+      :'—';
+
+    panel.querySelector('.invoice-ref').value=invoice.invoice_ref||'';
+    panel.querySelector('.invoice-date').value=dateOnly(invoice.invoice_date);
+    panel.querySelector('.invoice-due-date').value=dateOnly(invoice.due_date);
+    panel.querySelector('.invoice-amount').value=invoice.invoice_amount_aoa??'';
+    panel.querySelector('.invoice-notes').value=invoice.internal_notes||'';
+
+    const ledger=panel.querySelector('.payment-ledger-list');
+    if(!(payload?.payments||[]).length){
+      ledger.innerHTML='<div class="empty-state compact"><strong>Sem pagamentos registados.</strong><p>Adicione apenas recebimentos efetivamente confirmados.</p></div>';
+    }else{
+      for(const payment of payload.payments){
+        const item=document.createElement('article');item.className='payment-ledger-item'+(payment.voided_at?' voided':'');
+        const left=document.createElement('div');
+        const ref=document.createElement('strong');ref.textContent=payment.payment_ref;
+        const meta=document.createElement('small');
+        meta.textContent=[payment.payment_method,fmtDate(payment.received_at),payment.voided_at?'ANULADO':'CONFIRMADO'].filter(Boolean).join(' · ');
+        left.append(ref,meta);
+        const amount=document.createElement('strong');amount.textContent=fmtMoney(payment.amount_aoa);
+        item.append(left,amount);
+        if(payment.voided_at){
+          const reason=document.createElement('p');reason.textContent='Anulado: '+(payment.void_reason||'motivo registado');
+          item.appendChild(reason);
+        }else{
+          const voidButton=document.createElement('button');voidButton.type='button';voidButton.className='btn btn-outline btn-small';voidButton.textContent='Anular pagamento';
+          voidButton.addEventListener('click',async()=>{
+            const reason=window.prompt('Indique o motivo da anulação deste pagamento:','');
+            if(!reason||!reason.trim())return;
+            voidButton.disabled=true;
+            try{
+              const saved=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/payments/'+encodeURIComponent(payment.id)+'/void',{
+                method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({reason:reason.trim()})
+              });
+              renderCollections(card,row,commercialPanel,saved);
+              await loadCommercialDashboard();
+            }catch{
+              const msg=panel.querySelector('.payment-message');
+              msg.textContent='Não foi possível anular o pagamento.';msg.className='collections-message payment-message error';
+            }finally{voidButton.disabled=false;}
+          });
+          item.appendChild(voidButton);
+        }
+        ledger.appendChild(item);
+      }
+    }
+
+    panel.querySelector('.invoice-form').addEventListener('submit',async event=>{
+      event.preventDefault();
+      const button=panel.querySelector('.save-invoice');
+      const message=panel.querySelector('.invoice-message');
+      button.disabled=true;message.textContent='A guardar…';message.className='collections-message invoice-message';
+      try{
+        const saved=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/invoice',{
+          method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
+            invoice_ref:panel.querySelector('.invoice-ref').value.trim(),
+            invoice_date:panel.querySelector('.invoice-date').value,
+            due_date:panel.querySelector('.invoice-due-date').value||null,
+            invoice_amount_aoa:Number(panel.querySelector('.invoice-amount').value),
+            internal_notes:panel.querySelector('.invoice-notes').value.trim()||null
+          })
+        });
+        renderCollections(card,row,commercialPanel,saved);
+        await loadCommercialDashboard();
+      }catch(error){
+        const labels={
+          delivery_required:'A faturação só é aberta depois da entrega estar registada.',
+          due_before_invoice:'O vencimento não pode ser anterior à data da fatura.',
+          invalid_invoice:'Confirme referência, datas e valor da fatura.'
+        };
+        message.textContent=labels[error.message]||'Não foi possível guardar a fatura.';
+        message.className='collections-message invoice-message error';
+      }finally{button.disabled=false;}
+    });
+
+    panel.querySelector('.payment-form').addEventListener('submit',async event=>{
+      event.preventDefault();
+      const button=panel.querySelector('.add-payment');
+      const message=panel.querySelector('.payment-message');
+      button.disabled=true;message.textContent='A registar…';message.className='collections-message payment-message';
+      try{
+        const saved=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/payments',{
+          method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
+            payment_ref:panel.querySelector('.payment-ref').value.trim(),
+            payment_method:panel.querySelector('.payment-method').value,
+            amount_aoa:Number(panel.querySelector('.payment-amount').value),
+            received_at:fulfillmentDate(panel.querySelector('.payment-received-at').value),
+            internal_notes:panel.querySelector('.payment-notes').value.trim()||null
+          })
+        });
+        renderCollections(card,row,commercialPanel,saved);
+        await loadCommercialDashboard();
+      }catch(error){
+        const labels={
+          invoice_required:'Registe primeiro a fatura.',
+          payment_reference_exists:'Já existe um pagamento com esta referência.',
+          invalid_payment:'Confirme referência, valor e data do pagamento.'
+        };
+        message.textContent=labels[error.message]||'Não foi possível registar o pagamento.';
+        message.className='collections-message payment-message error';
+      }finally{button.disabled=false;}
+    });
+  }
+
+  async function loadCollections(card,row,commercialPanel){
+    const button=commercialPanel.querySelector('.open-collections');
+    const panel=commercialPanel.querySelector('.collections-panel');
+    button.disabled=true;button.textContent='A carregar…';
+    try{
+      const payload=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/collections');
+      renderCollections(card,row,commercialPanel,payload);
+      button.textContent='Atualizar cobrança';
+    }catch(error){
+      panel.hidden=false;
+      panel.innerHTML='<div class="empty-state compact"><strong>Não foi possível carregar a cobrança.</strong><p>Confirme a sessão privada e tente novamente.</p></div>';
       if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
       button.textContent='Tentar novamente';
     }finally{button.disabled=false;}

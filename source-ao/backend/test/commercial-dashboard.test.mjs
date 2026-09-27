@@ -15,7 +15,12 @@ test('commercial cockpit aggregates pipeline and realized profit without identit
     fulfillmentRows:[
       {stage:'awarded',count:1,final_revenue_aoa:0,actual_cost_aoa:0},
       {stage:'completed',count:2,final_revenue_aoa:1700000,actual_cost_aoa:1200000}
-    ]
+    ],
+    collectionRows:[
+      {invoice_amount_aoa:900000,received_aoa:900000,due_date:'2026-09-20T00:00:00.000Z'},
+      {invoice_amount_aoa:800000,received_aoa:300000,due_date:'2026-09-25T00:00:00.000Z'}
+    ],
+    asOf:new Date('2026-09-27T00:00:00.000Z')
   });
   assert.equal(result.requests.total,7);
   assert.equal(result.requests.active,5);
@@ -26,6 +31,12 @@ test('commercial cockpit aggregates pipeline and realized profit without identit
   assert.equal(result.execution.completed_actual_cost_aoa,1200000);
   assert.equal(result.execution.realized_gross_profit_aoa,500000);
   assert.equal(result.execution.realized_gross_margin_pct,29.41);
+  assert.equal(result.collections.invoiced_aoa,1700000);
+  assert.equal(result.collections.received_aoa,1200000);
+  assert.equal(result.collections.outstanding_aoa,500000);
+  assert.equal(result.collections.overdue_aoa,500000);
+  assert.equal(result.collections.overdue_count,1);
+  assert.equal(result.collections.paid_count,1);
   assert.equal(JSON.stringify(result).includes('supplier'),false);
   assert.equal(JSON.stringify(result).includes('contact'),false);
 });
@@ -37,4 +48,7 @@ test('commercial cockpit returns zero-safe metrics on an empty database',()=>{
   assert.equal(result.proposals.pipeline_value_aoa,0);
   assert.equal(result.execution.realized_gross_profit_aoa,0);
   assert.equal(result.execution.realized_gross_margin_pct,null);
+  assert.equal(result.collections.invoiced_aoa,0);
+  assert.equal(result.collections.received_aoa,0);
+  assert.equal(result.collections.outstanding_aoa,0);
 });
