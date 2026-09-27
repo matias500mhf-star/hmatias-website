@@ -1,0 +1,47 @@
+name: Repository Security Baseline
+
+on:
+  push:
+    branches: [main, 'feature/**', 'fix/**', 'security/**']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  secret-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reject tracked secret-bearing file types
+        shell: bash
+        run: |
+          set -euo pipefail
+          bad="$(git ls-files | grep -Ei '(^|/)(\.env($|\.)|\.dev\.vars($|\.)|credentials?/|secrets?/|private/)|\.(pem|key|p12|pfx|jks|keystore|mobileprovision|sqlite3?|db|dump|bak|backup)$'             | grep -Ev '(^|/)\.env(\.[^/]+)?\.example$' || true)"
+          if [ -n "$bad" ]; then
+            echo "::error title=Sensitive files tracked::Remove these files from Git and store secrets in protected secret management."
+            printf '%s\n' "$bad"
+            exit 1
+          fi
+
+      - name: Reject high-confidence private key or token material
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -nE -- '-----BEGIN ([A-Z0-9 ]+ )?PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{50,}|AKIA[0-9A-Z]{16}' -- .             ':!*.md' ':!*.example' ':!source-ao/backend/.env.staging.example'; then
+            echo "::error title=Possible secret committed::Rotate the credential and remove it from repository history."
+            exit 1
+          fi
+
+      - name: Confirm Source AO secret indirection
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'PII_ENCRYPTION_KEY' source-ao/backend/src/sourcing.js
+          grep -q '\$' .github/workflows/source-ao-production-deploy.yml
+          ! grep -Eq '^\s*(ADMIN_API_TOKEN|PII_ENCRYPTION_KEY|CONFIRMATION_SECRET|RATE_LIMIT_SECRET)=[^[:space:]]+' source-ao/backend/.env.staging.example
