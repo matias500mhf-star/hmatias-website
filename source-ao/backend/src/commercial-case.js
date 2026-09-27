@@ -328,11 +328,13 @@ export async function updateCommercialCase(request,env,requestId){
     if(!supplier)return fail(env,400,'supplier_not_found','Selected private supplier does not exist.');
   }
 
+  let selectedCostStatus=null;
   if(selectedCost){
-    const cost=await env.SOURCE_AO_DB.prepare('SELECT id,supplier_id FROM sourcing_cost_options WHERE id=? AND request_id=?').bind(selectedCost,requestId).first();
+    const cost=await env.SOURCE_AO_DB.prepare('SELECT id,supplier_id,status FROM sourcing_cost_options WHERE id=? AND request_id=?').bind(selectedCost,requestId).first();
     if(!cost)return fail(env,400,'cost_option_not_found','Selected cost option does not exist for this request.');
     if(selectedSupplier&&selectedSupplier!==cost.supplier_id)return fail(env,400,'supplier_cost_mismatch','Selected supplier does not match selected cost option.');
     selectedSupplier=cost.supplier_id;
+    selectedCostStatus=cost.status;
   }
 
   const previewCase={
@@ -370,7 +372,7 @@ export async function updateCommercialCase(request,env,requestId){
     requestId,qualification,selectedSupplier,selectedCost,salePrice,proposalStatus,proposalRef,notes,timestamp,timestamp
   ).run();
 
-  if(selectedCost){
+  if(selectedCost&&['verified','selected'].includes(selectedCostStatus)){
     await env.SOURCE_AO_DB.prepare(
       "UPDATE sourcing_cost_options SET status=CASE WHEN id=? THEN 'selected' WHEN status='selected' THEN 'verified' ELSE status END,updated_at=? WHERE request_id=?"
     ).bind(selectedCost,timestamp,requestId).run();
