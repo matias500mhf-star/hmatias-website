@@ -216,3 +216,15 @@ body.hmatias-catalogue footer .copyright{
   body.hmatias-catalogue .work-card:hover img{transform:none}
 }
 
+
+/* FINAL CATALOGUE PHOTO STANDARD — 2026-09-27 */
+body.hmatias-catalogue .work-card img{height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center center}
+body.hmatias-catalogue .work-card:nth-child(1) img{aspect-ratio:16/7;object-position:center 48%}
+body.hmatias-catalogue .work-card img[src*="anexo-coberto-estrutura-metalica"]{object-position:center 42%}
+body.hmatias-catalogue .work-card img[src*="perfis-metalicos-estrutura"]{object-position:center 48%}
+body.hmatias-catalogue .work-card img[src*="chapas-cobertura-fornecimento"],
+body.hmatias-catalogue .work-card img[src*="logistica-estrutura-metalica"]{object-position:center 52%}
+@media(max-width:640px){
+  body.hmatias-catalogue .work-card img,
+  body.hmatias-catalogue .work-card:nth-child(1) img{aspect-ratio:4/3;max-height:none}
+}
