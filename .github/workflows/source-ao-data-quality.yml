@@ -45,7 +45,7 @@ jobs:
           node-version: '22'
       - name: Validate Source AO data
         run: node source-ao/validate-data.mjs
-      - name: Validate confidential local-partner product catalogue
+      - name: Validate public catalogue privacy boundary
         shell: bash
         run: |
           set -euo pipefail
@@ -53,20 +53,12 @@ jobs:
           grep -q '"item-professional-workwear-uniforms"' source-ao/data/catalog.json
           grep -q '"item-furniture-workspaces"' source-ao/data/catalog.json
           grep -q '"item-partition-systems"' source-ao/data/catalog.json
-          grep -q 'LINHAS COMPLEMENTARES DE FORNECIMENTO' supply.html
-          grep -q 'COMPLEMENTARY SUPPLY LINES' supply-en.html
-          ! grep -RqiE 'ADY-FERRAZ|MATEANA|MATIANA|MILIART' source-ao/data/catalog.json supply.html supply-en.html
-
-      - name: Validate confidential public industrial catalogue
-        shell: bash
-        run: |
-          set -euo pipefail
           grep -q '"item-vci-corrosion-protection"' source-ao/data/catalog.json
           grep -q '"item-industrial-protective-coatings"' source-ao/data/catalog.json
           grep -q '"item-hydrotest-corrosion-treatment"' source-ao/data/catalog.json
-          grep -q 'PROTEÇÃO & PRESERVAÇÃO INDUSTRIAL' supply.html
-          grep -q 'INDUSTRIAL PROTECTION & PRESERVATION' supply-en.html
-          ! grep -RqiE 'Kent Offshore|Shikongo' source-ao/data/catalog.json supply.html supply-en.html
+          grep -q 'LINHAS COMPLEMENTARES DE FORNECIMENTO' supply.html
+          grep -q 'COMPLEMENTARY SUPPLY LINES' supply-en.html
+          ! grep -RqiE 'commercial_priority|next_action|relationship_stage|private_contact|internal_notes' source-ao/data/catalog.json supply.html supply-en.html
 
       - name: Validate frontend scripts syntax
         run: |
@@ -152,7 +144,7 @@ jobs:
           grep -q "proposal_payment_terms" source-ao/backend/migrations/0017_proposal_pack.sql
           grep -q "buildProposalDraft" source-ao/backend/src/commercial-case.js
           grep -q "/proposal-draft" source-ao/backend/src/router.js
-          ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0016_commercial_case.sql source-ao/backend/migrations/0017_proposal_pack.sql
+          ! grep -Eq "['\"][^'\"]+@[^'\"]+['\"]|['\"]\\+244[0-9[:space:]]+['\"]" source-ao/backend/migrations/0016_commercial_case.sql source-ao/backend/migrations/0017_proposal_pack.sql
       - name: Validate fulfillment and realized-profit truth contract
         shell: bash
         run: |
@@ -164,7 +156,7 @@ jobs:
           grep -q "/fulfillment" source-ao/backend/src/router.js
           grep -q "aggregated_only" source-ao/backend/src/commercial-dashboard.js
           grep -q "/api/admin/commercial-dashboard" source-ao/backend/src/router.js
-          ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0018_fulfillment_profit.sql
+          ! grep -Eq "['\"][^'\"]+@[^'\"]+['\"]|['\"]\\+244[0-9[:space:]]+['\"]" source-ao/backend/migrations/0018_fulfillment_profit.sql
       - name: Validate collections ledger truth contract
         shell: bash
         run: |
@@ -179,7 +171,7 @@ jobs:
           grep -q "identity_minimized" source-ao/backend/src/commercial-actions.js
           grep -q "collect_overdue" source-ao/backend/src/commercial-actions.js
           grep -q "/api/admin/commercial-actions" source-ao/backend/src/router.js
-          ! grep -Eq 'Kent Offshore|Shikongo|@|\+244[0-9]' source-ao/backend/migrations/0019_collections.sql
+          ! grep -Eq "['\"][^'\"]+@[^'\"]+['\"]|['\"]\\+244[0-9[:space:]]+['\"]" source-ao/backend/migrations/0019_collections.sql
       - name: Validate legal and evidence baseline
         shell: bash
         run: |
@@ -209,7 +201,7 @@ jobs:
           grep -q "/api/admin/sourcing-suppliers" source-ao/backend/src/router.js
           grep -q "PII_ENCRYPTION_KEY" source-ao/backend/src/private-sourcing-suppliers.js
           grep -q "informal_market_requires_material_verification" source-ao/backend/src/private-sourcing-suppliers.js
-          ! grep -RqiE 'Kent Offshore|Shikongo' source-ao/backend/migrations source-ao/data source-ao/*.html source-ao/*.js
+          ! grep -RqiE 'private_contact_encrypted[[:space:]]*[:=][[:space:]]*["'\''"][^"'\'']+|internal_notes[[:space:]]*[:=][[:space:]]*["'\''"][^"'\'']+' source-ao/data source-ao/*.html source-ao/*.js
 
       - name: Validate private commercial partner network
         shell: bash
@@ -219,10 +211,9 @@ jobs:
           grep -q "/api/admin/partner-network" source-ao/backend/src/router.js
           grep -q "matchCommercialPartners" source-ao/backend/src/intelligence-route.js
           grep -q "HMATIAS commercial partner network" source-ao/ops.html
-          ! grep -Eq '@|\+244[0-9]' source-ao/backend/migrations/0011_commercial_partner_network.sql
           grep -q "commercial_priority" source-ao/backend/migrations/0012_partner_followup_pipeline.sql
-          grep -q "partner-muxi-tracker" source-ao/backend/migrations/0012_partner_followup_pipeline.sql
-          ! grep -Eq '@|\+244[0-9]' source-ao/backend/migrations/0012_partner_followup_pipeline.sql
+          ! grep -Eq 'INSERT[[:space:]]+(OR[[:space:]]+IGNORE[[:space:]]+)?INTO[[:space:]]+commercial_partners|UPDATE[[:space:]]+commercial_partners[[:space:]]+SET' source-ao/backend/migrations/0011_commercial_partner_network.sql source-ao/backend/migrations/0012_partner_followup_pipeline.sql
+          ! grep -Eq '@|\+244[0-9]' source-ao/backend/migrations/0011_commercial_partner_network.sql source-ao/backend/migrations/0012_partner_followup_pipeline.sql
 
       - name: Validate backend syntax
         run: |
