@@ -12,10 +12,3 @@ Disallow: /source-ao/docs/
 
 # Sitemap
 Sitemap: https://comercialhmatiasps.com/sitemap.xml
-
-# Google/Bing may crawl normally
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
