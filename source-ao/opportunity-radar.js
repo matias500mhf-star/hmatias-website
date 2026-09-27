@@ -6,10 +6,17 @@
   let market='all';
   let opportunities=[];
   let lang='pt';
+  let localById=new Map();
+  let syncState='idle';
+  let lastSyncAt=null;
+  let refreshing=false;
+  const AUTO_REFRESH_MS=5*60*1000;
 
   const copy={
     pt:{
       live:'Intelligence live',
+      liveUpdating:'A sincronizar',
+      liveFallback:'Dados disponíveis',
       back:'← Source AO',
       eyebrow:'SOURCE AO · INTELLIGENCE RADAR',
       title:'Não veja apenas oportunidades.\nEntenda quais merecem ação.',
@@ -25,6 +32,13 @@
       filterAll:'Todas',filterSupply:'Supply',filterMaintenance:'Facilities',filterTender:'Concurso',
       workspaceTitle:'Fila inteligente de oportunidades',
       loading:'A carregar inteligência de oportunidades…',empty:'Nenhuma oportunidade ativa neste filtro.',
+      refreshNow:'Atualizar agora',refreshing:'A atualizar…',
+      syncing:'A sincronizar oportunidades com a API live…',
+      liveSynced:'Sincronizado com a API live',
+      liveUnavailable:'Ligação live temporariamente indisponível',
+      autoRefresh:'Atualização automática a cada 5 min',
+      fallbackNote:'A mostrar os últimos dados disponíveis; nova tentativa automática em até 5 min',
+      sourcesChecked:'fontes verificadas',
       fit:'Fit',confidence:'Confiança',sourceChecked:'Fonte verificada',deadline:'Prazo',
       priorityHigh:'Prioridade alta',priorityMedium:'Avaliar',priorityLow:'Monitorizar',
       openSource:'Abrir fonte →',analyse:'Analisar oportunidade',map:'Ver no Google Maps ↗',
@@ -34,6 +48,8 @@
     },
     en:{
       live:'Intelligence live',
+      liveUpdating:'Syncing',
+      liveFallback:'Available data',
       back:'← Source AO',
       eyebrow:'SOURCE AO · INTELLIGENCE RADAR',
       title:'Do not just see opportunities.\nKnow which ones deserve action.',
@@ -49,6 +65,13 @@
       filterAll:'All',filterSupply:'Supply',filterMaintenance:'Facilities',filterTender:'Tender',
       workspaceTitle:'Intelligent opportunity queue',
       loading:'Loading opportunity intelligence…',empty:'No active opportunity in this filter.',
+      refreshNow:'Refresh now',refreshing:'Refreshing…',
+      syncing:'Syncing opportunities with the live API…',
+      liveSynced:'Synced with the live API',
+      liveUnavailable:'Live connection temporarily unavailable',
+      autoRefresh:'Automatic refresh every 5 min',
+      fallbackNote:'Showing the latest available data; automatic retry within 5 min',
+      sourcesChecked:'sources checked',
       fit:'Fit',confidence:'Confidence',sourceChecked:'Source checked',deadline:'Deadline',
       priorityHigh:'High priority',priorityMedium:'Assess',priorityLow:'Monitor',
       openSource:'Open source →',analyse:'Analyse opportunity',map:'Open in Google Maps ↗',
@@ -60,7 +83,77 @@
 
   const t=key=>copy[lang][key]||key;
   const fmt=value=>new Intl.DateTimeFormat(lang==='pt'?'pt-PT':'en-GB',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(value));
+  const clock=value=>new Intl.DateTimeFormat(lang==='pt'?'pt-PT':'en-GB',{hour:'2-digit',minute:'2-digit'}).format(new Date(value));
   const daysLeft=value=>Math.ceil((new Date(value).getTime()-Date.now())/86400000);
+
+  function latestSourceCheckedAt(){
+    const times=opportunities
+      .map(o=>new Date(o.source_checked_at||'').getTime())
+      .filter(Number.isFinite);
+    return times.length?new Date(Math.max(...times)):null;
+  }
+
+  function updateSyncUI(){
+    const status=$('#syncStatus');
+    const meta=$('#syncMeta');
+    const button=$('#refreshRadar');
+    const buttonLabel=$('#refreshRadarLabel');
+    const liveLabel=$('#liveStateLabel');
+    if(!status||!meta)return;
+
+    const sourceAt=latestSourceCheckedAt();
+    const sourceMeta=sourceAt?t('sourcesChecked')+' '+clock(sourceAt):'';
+    document.body.classList.toggle('op-live-unavailable',syncState==='fallback');
+    document.body.classList.toggle('op-live-syncing',syncState==='syncing');
+
+    if(syncState==='syncing'){
+      status.textContent=t('syncing');
+      meta.textContent=t('autoRefresh');
+      if(liveLabel)liveLabel.textContent=t('liveUpdating');
+    }else if(syncState==='live'){
+      status.textContent=t('liveSynced')+(lastSyncAt?' · '+clock(lastSyncAt):'');
+      meta.textContent=[t('autoRefresh'),sourceMeta].filter(Boolean).join(' · ');
+      if(liveLabel)liveLabel.textContent=t('live');
+    }else if(syncState==='fallback'){
+      status.textContent=t('liveUnavailable');
+      meta.textContent=[t('fallbackNote'),sourceMeta].filter(Boolean).join(' · ');
+      if(liveLabel)liveLabel.textContent=t('liveFallback');
+    }else{
+      status.textContent=t('syncing');
+      meta.textContent=t('autoRefresh');
+      if(liveLabel)liveLabel.textContent=t('liveUpdating');
+    }
+
+    if(button){
+      button.disabled=refreshing;
+      button.setAttribute('aria-busy',refreshing?'true':'false');
+    }
+    if(buttonLabel)buttonLabel.textContent=refreshing?t('refreshing'):t('refreshNow');
+  }
+
+  async function refreshLiveData(){
+    if(refreshing)return;
+    refreshing=true;
+    syncState='syncing';
+    updateSyncUI();
+    try{
+      if(!window.SourceAOAPI?.isConfigured?.())throw new Error('live_api_not_configured');
+      const payload=await window.SourceAOAPI.opportunities();
+      const live=Array.isArray(payload)?payload:(payload?.results||payload?.opportunities||[]);
+      if(!Array.isArray(live))throw new Error('invalid_opportunity_payload');
+      opportunities=live.map(row=>({...localById.get(row.id),...row}));
+      lastSyncAt=new Date();
+      syncState='live';
+    }catch(error){
+      syncState='fallback';
+      if(!opportunities.length)opportunities=[...localById.values()];
+      console.warn('[Source AO Radar] live refresh unavailable; keeping latest available data',error);
+    }finally{
+      refreshing=false;
+      render();
+      updateSyncUI();
+    }
+  }
 
   function inferredCountry(o){
     if(o.country_code)return o.country_code;
@@ -152,6 +245,7 @@
     });
     $('#langToggle').textContent=lang==='pt'?'EN':'PT';
     render();
+    updateSyncUI();
   }
 
   function render(){
@@ -222,31 +316,32 @@
   document.addEventListener('DOMContentLoaded',async()=>{
     await window.SourceAOData?.init();
     const local=window.SourceAOData?.activeOpportunities?.()||[];
-    const localById=new Map(local.map(row=>[row.id,row]));
+    localById=new Map(local.map(row=>[row.id,row]));
     opportunities=local;
-
-    if(window.SourceAOAPI?.isConfigured?.()){
-      try{
-        const payload=await window.SourceAOAPI.opportunities();
-        const live=Array.isArray(payload)?payload:(payload?.results||payload?.opportunities||[]);
-        if(Array.isArray(live))opportunities=live.map(row=>({...localById.get(row.id),...row}));
-      }catch(error){
-        console.warn('[Source AO Radar] live API unavailable; using bundled opportunity data');
-      }
-    }
-
+    syncState='syncing';
     applyLanguage();
+    await refreshLiveData();
 
-    $$('[data-market]').forEach(btn=>btn.addEventListener('click',()=>{
+    $('[data-market]').forEach(btn=>btn.addEventListener('click',()=>{
       market=btn.dataset.market;
-      $$('[data-market]').forEach(b=>b.classList.toggle('active',b===btn));
+      $('[data-market]').forEach(b=>b.classList.toggle('active',b===btn));
       render();
     }));
-    $$('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
+    $('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
       filter=btn.dataset.filter;
-      $$('[data-filter]').forEach(b=>b.classList.toggle('active',b===btn));
+      $('[data-filter]').forEach(b=>b.classList.toggle('active',b===btn));
       render();
     }));
     $('#langToggle')?.addEventListener('click',()=>{lang=lang==='pt'?'en':'pt';applyLanguage();});
+    $('#refreshRadar')?.addEventListener('click',()=>refreshLiveData());
+
+    setInterval(()=>{
+      if(document.visibilityState==='visible')refreshLiveData();
+    },AUTO_REFRESH_MS);
+
+    document.addEventListener('visibilitychange',()=>{
+      if(document.visibilityState!=='visible')return;
+      if(!lastSyncAt||Date.now()-lastSyncAt.getTime()>=AUTO_REFRESH_MS)refreshLiveData();
+    });
   });
 })();
