@@ -155,3 +155,19 @@ Realized gross profit and realized gross margin are calculated only after all ac
 The authenticated Sourcing Desk includes an aggregate commercial cockpit for operational decision-making. It reports request counts, proposal pipeline value, accepted proposal value, fulfillment-stage counts, completed revenue, completed actual cost, realized gross profit, and realized gross margin.
 
 The cockpit endpoint is admin-only and **aggregate-only**. It does not return requester identity, requester contact, supplier identity, supplier contact, or individual commercial records. Realized revenue/profit metrics are based only on completed fulfillment cases whose actual costs and final revenue were explicitly confirmed.
+
+
+## Collections v1 — invoice to cash
+
+The authenticated Sourcing Desk separates **commercial revenue** from **cash actually received**. After delivery is recorded, HMATIAS can register a confirmed invoice with its own reference, issue date, due date and amount. The system does not copy the proposal price or final revenue into the invoice automatically.
+
+Payments are stored as an append-only operational ledger with a unique reference per request, payment method, amount and receipt date. Incorrect entries are not silently deleted: an authenticated operator can void them only with an explicit reason, preserving the financial audit trail.
+
+Collection status is derived from evidence:
+- `not_invoiced` — no confirmed invoice;
+- `issued` — invoice open before due date;
+- `partial` — some cash received but balance remains;
+- `overdue` — unpaid balance after the due date;
+- `paid` — confirmed receipts cover the invoiced amount.
+
+The private Commercial Cockpit now keeps **invoiced**, **received**, **outstanding** and **overdue** values distinct from realized revenue and realized gross profit. No requester or supplier identities are included in the aggregate cockpit response.
