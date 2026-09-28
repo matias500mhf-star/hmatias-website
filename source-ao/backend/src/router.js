@@ -24,6 +24,7 @@ import {
   scanOpportunitySources
 } from './opportunity-pipeline.js';
 import {listCommercialPartners,upsertCommercialPartner} from './partner-network.js';
+import {createPartnerApplication,listPartnerApplications,getPartnerApplication,reviewPartnerApplication} from './partner-applications.js';
 import {
   listPrivateSourcingSuppliers,
   upsertPrivateSourcingSupplier,
@@ -78,6 +79,8 @@ export default {
           response=await procurementMission(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
           response=await createSourcingRequest(request,env);
+        }else if(request.method==='POST' && url.pathname==='/api/partner-applications'){
+          response=await createPartnerApplication(request,env);
         }else{
           const publicRequest=url.pathname.match(/^\/api\/sourcing-requests\/([^/]+)$/);
           if(publicRequest && request.method==='GET'){
@@ -152,7 +155,16 @@ export default {
               response=await listCommercialPartners(request,env);
             }else if(url.pathname==='/api/admin/partner-network' && request.method==='POST'){
               response=await upsertCommercialPartner(request,env);
-            }else if(url.pathname==='/api/admin/sourcing-suppliers' && request.method==='GET'){
+            }else if(url.pathname==='/api/admin/partner-applications' && request.method==='GET'){
+              response=await listPartnerApplications(request,env);
+            }else{
+              const partnerApplication=url.pathname.match(/^\/api\/admin\/partner-applications\/([^/]+)$/);
+              const partnerApplicationReview=url.pathname.match(/^\/api\/admin\/partner-applications\/([^/]+)\/review$/);
+              if(partnerApplication && request.method==='GET'){
+                response=await getPartnerApplication(request,env,partnerApplication[1]);
+              }else if(partnerApplicationReview && request.method==='POST'){
+                response=await reviewPartnerApplication(request,env,partnerApplicationReview[1]);
+              }else if(url.pathname==='/api/admin/sourcing-suppliers' && request.method==='GET'){
               response=await listPrivateSourcingSuppliers(request,env);
             }else if(url.pathname==='/api/admin/sourcing-suppliers' && request.method==='POST'){
               response=await upsertPrivateSourcingSupplier(request,env);
@@ -173,6 +185,7 @@ export default {
                 response=await reviewOpportunityCandidate(request,env,opportunityReview[1]);
               }else{
                 response=await core.fetch(request,env);
+              }
               }
               }
               }
