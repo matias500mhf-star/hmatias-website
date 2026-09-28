@@ -160,6 +160,7 @@ test('UNGM detail parser is ready but requires explicit Angola beneficiary evide
   const candidate=normalizeUngmNoticePage(html,'https://www.ungm.org/Public/Notice/999999',source,Date.UTC(2026,8,28));
   assert.equal(candidate.country_code,'AO');
   assert.equal(candidate.reference,'UNDP-AGO-00200');
+  assert.match(candidate.deadline,/2026-10-30/);
   assert.equal(normalizeUngmNoticePage(html.replace('Angola','Namibia'),'https://www.ungm.org/Public/Notice/999999',source,Date.UTC(2026,8,28)),null);
 });
 
