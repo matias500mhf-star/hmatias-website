@@ -4,6 +4,7 @@
   const $=s=>document.querySelector(s);
   const $$=s=>[...document.querySelectorAll(s)];
   const state={lang:'pt',query:'',location:'Luanda'};
+  const track=(eventName,parameters={})=>window.hmatiasAnalytics?.track?.(eventName,parameters);
 
   const dictionary={
     en:{
@@ -67,6 +68,11 @@
     if(!match) return state.lang==='pt'?'Sourcing geral':'General sourcing';
     return state.lang==='pt'?match.pt:match.name;
   };
+  const categoryCode=q=>{
+    const value=String(q||'').toLowerCase();
+    const match=categories.find(c=>c.terms.some(term=>value.includes(term)));
+    return match?match.name.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,''):'general';
+  };
 
   const t=key=>dictionary[state.lang][key]||key;
 
@@ -91,7 +97,10 @@
     const suffix=state.lang==='pt'?' fornecedor Angola':' supplier Angola';
     $('#publicSearch').href='https://www.google.com/search?q='+encodeURIComponent(state.query+suffix);
     $('#resultZone').hidden=false;
-    if(scroll) $('#resultZone').scrollIntoView({behavior:'smooth',block:'start'});
+    if(scroll){
+      track('source_search',{source_category:categoryCode(state.query),source_language:state.lang});
+      $('#resultZone').scrollIntoView({behavior:'smooth',block:'start'});
+    }
   }
 
   function radarItems(){
@@ -102,7 +111,11 @@
     const q=(query||'').trim(); if(!q) return;
     const items=radarItems();
     const duplicate=items.some(i=>i.query.toLowerCase()===q.toLowerCase()&&i.location===location);
-    if(!duplicate){items.unshift({id:Date.now(),query:q,location:location||'Luanda',createdAt:new Date().toISOString(),status:'awaiting_verified_source'});saveRadar(items)}
+    if(!duplicate){
+      items.unshift({id:Date.now(),query:q,location:location||'Luanda',createdAt:new Date().toISOString(),status:'awaiting_verified_source'});
+      saveRadar(items);
+      track('source_radar_add',{source_category:categoryCode(q),source_language:state.lang});
+    }
     $('#radar').scrollIntoView({behavior:'smooth',block:'start'});
   }
   function removeRadarItem(id){saveRadar(radarItems().filter(i=>i.id!==id))}
@@ -133,7 +146,9 @@
   $('#startSourcing')?.addEventListener('click',event=>{
     event.preventDefault();
     const url=new URL('rfq.html',location.href);
-    url.search=new URLSearchParams({request:state.query||$('#searchInput')?.value.trim()||'',location:state.location||'Luanda',quantity:$('#quantityInput')?.value.trim()||'',urgency:$('#neededByInput')?.value||'',lang:state.lang}).toString();
+    const requestValue=state.query||$('#searchInput')?.value.trim()||'';
+    url.search=new URLSearchParams({request:requestValue,location:state.location||'Luanda',quantity:$('#quantityInput')?.value.trim()||'',urgency:$('#neededByInput')?.value||'',lang:state.lang}).toString();
+    track('source_rfq_open',{source_category:categoryCode(requestValue),source_language:state.lang,source_origin:'search'});
     location.href=url.href;
   });
   $('#radarForm').addEventListener('submit',e=>{e.preventDefault();addRadarItem($('#radarInput').value,$('#locationInput').value);$('#radarInput').value=''});
@@ -147,6 +162,7 @@
     const message=state.lang==='pt'
       ?`Olá, HMATIAS. Vim pelo Source AO e preciso de sourcing.\nItem/serviço: ${item}\nQuantidade/especificação: ${qty||'A confirmar'}\nLocal: ${location}\nPretendo validação de fornecedor, disponibilidade e cotação.`
       :`Hello, HMATIAS. I came through Source AO and need sourcing support.\nItem/service: ${item}\nQuantity/specification: ${qty||'To confirm'}\nLocation: ${location}\nI need supplier, availability and quotation validation.`;
+    track('source_whatsapp_handoff',{source_category:categoryCode(item),source_language:state.lang});
     window.open('https://wa.me/244948806673?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');
   });
 
