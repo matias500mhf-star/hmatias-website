@@ -2,7 +2,9 @@
   'use strict';
   const $=s=>document.querySelector(s);
   const $$=s=>[...document.querySelectorAll(s)];
-  let filter='all';
+  let area='all';
+  let format='all';
+  let query='';
   let market='AO';
   let opportunities=[];
   let lang='pt';
@@ -28,8 +30,11 @@
       statMarkets:'Mercado',statMarketsNote:'Angola',
       currentEyebrow:'PRIORIDADE COMERCIAL',currentTitle:'Opportunity Intelligence',
       currentLead:'Ordenado por prazo e enriquecido com sinais de fit e confiança. A decisão final continua dependente da análise das peças do procedimento.',
-      marketLabel:'MERCADO',typeLabel:'TIPO',marketAll:'Todos',
-      filterAll:'Todas',filterSupply:'Supply',filterMaintenance:'Facilities',filterTender:'Concurso',
+      marketLabel:'MERCADO',areaLabel:'ÁREA',formatLabel:'FORMATO',marketAll:'Todos',
+      searchLabel:'PESQUISAR',searchPlaceholder:'Ex.: canalização, pintura, manutenção…',
+      filterAll:'Todas',areaConstruction:'Construção',areaFacilities:'Facilities',areaPlumbing:'Canalização',areaElectrical:'Elétrica / HVAC',areaSupply:'Fornecimento',areaSubcontracting:'Subcontratação',
+      formatAll:'Todos',filterTender:'Concurso',
+      nextAction:'PRÓXIMA AÇÃO',actionPrepare:'Rever requisitos e preparar candidatura',actionSupply:'Confirmar custo e fornecedor',actionPartner:'Validar capacidade e parceiro',actionVerify:'Abrir fonte e validar elegibilidade',actionMonitor:'Monitorizar e reconfirmar',
       workspaceTitle:'Fila inteligente de oportunidades',
       loading:'A carregar inteligência de oportunidades…',empty:'Nenhuma oportunidade ativa neste filtro.',
       refreshNow:'Atualizar agora',refreshing:'A atualizar…',
@@ -61,8 +66,11 @@
       statMarkets:'Market',statMarketsNote:'Angola',
       currentEyebrow:'COMMERCIAL PRIORITY',currentTitle:'Opportunity Intelligence',
       currentLead:'Sorted by deadline and enriched with fit and confidence signals. Final decisions still require review of the procurement documents.',
-      marketLabel:'MARKET',typeLabel:'TYPE',marketAll:'All',
-      filterAll:'All',filterSupply:'Supply',filterMaintenance:'Facilities',filterTender:'Tender',
+      marketLabel:'MARKET',areaLabel:'AREA',formatLabel:'FORMAT',marketAll:'All',
+      searchLabel:'SEARCH',searchPlaceholder:'E.g. plumbing, painting, maintenance…',
+      filterAll:'All',areaConstruction:'Construction',areaFacilities:'Facilities',areaPlumbing:'Plumbing',areaElectrical:'Electrical / HVAC',areaSupply:'Supply',areaSubcontracting:'Subcontracting',
+      formatAll:'All',filterTender:'Tender',
+      nextAction:'NEXT ACTION',actionPrepare:'Review requirements and prepare bid',actionSupply:'Confirm cost and supplier',actionPartner:'Validate capacity and partner',actionVerify:'Open source and validate eligibility',actionMonitor:'Monitor and reconfirm',
       workspaceTitle:'Intelligent opportunity queue',
       loading:'Loading opportunity intelligence…',empty:'No active opportunity in this filter.',
       refreshNow:'Refresh now',refreshing:'Refreshing…',
@@ -163,12 +171,41 @@
     return 'AO';
   }
 
+  function normalizeText(value=''){
+    return String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  }
+
+  function opportunityText(o){
+    const tags=Array.isArray(o.fit_tags)?o.fit_tags.join(' '):'';
+    return normalizeText([
+      o.title,o.title_pt,o.scope_summary,o.scope_summary_pt,o.source_fit,o.source_fit_pt,
+      o.sector,o.issuer,o.location,o.type,tags
+    ].filter(Boolean).join(' '));
+  }
+
+  function areaTags(o){
+    const text=opportunityText(o);
+    const tags=new Set();
+    if(/construc|obra|civil|edific|building|rehabilit|reabilit|renovat|remodel|infraestrut/.test(text))tags.add('construction');
+    if(/facilit|manutenc|maintenance|limpeza|cleaning|higien|reparac|repair/.test(text))tags.add('facilities');
+    if(/canaliz|plumbing|hidraul|hydraulic|abastecimento de agua|water supply|borehole|furo/.test(text))tags.add('plumbing');
+    if(/electric|eletric|hvac|climatiz|ar condicionado|air condition/.test(text))tags.add('electrical-hvac');
+    if(o.type==='supply-request'||/fornec|supply|aquisic|procurement|material|equipament|equipment|ferrament/.test(text))tags.add('supply');
+    if(o.type==='subcontracting'||/subcontrat|subcontract/.test(text))tags.add('subcontracting');
+    if(!tags.size&&['maintenance','small-contract'].includes(o.type))tags.add('facilities');
+    return [...tags];
+  }
+
   function matchesFilter(o){
     if(market!=='all'&&inferredCountry(o)!==market)return false;
-    if(filter==='all')return true;
-    if(filter==='supply')return o.type==='supply-request';
-    if(filter==='maintenance')return ['maintenance','small-contract','subcontracting'].includes(o.type);
-    return o.type===filter;
+    if(area!=='all'&&!areaTags(o).includes(area))return false;
+    if(format!=='all'&&o.type!==format)return false;
+    if(query){
+      const terms=normalizeText(query).split(/\s+/).filter(Boolean);
+      const haystack=opportunityText(o);
+      if(!terms.every(term=>haystack.includes(term)))return false;
+    }
+    return true;
   }
 
   function marketLabel(o){
@@ -181,6 +218,22 @@
     const pt={rfq:'RFQ',tender:'Concurso','supply-request':'Fornecimento',maintenance:'Manutenção','small-contract':'Pequeno contrato',subcontracting:'Subcontratação'};
     const en={rfq:'RFQ',tender:'Tender','supply-request':'Supply',maintenance:'Maintenance','small-contract':'Small contract',subcontracting:'Subcontracting'};
     return (lang==='pt'?pt:en)[type]||type||'Opportunity';
+  }
+
+  function areaLabelValue(value){
+    const pt={construction:'Construção',facilities:'Facilities',plumbing:'Canalização / Hidráulica','electrical-hvac':'Elétrica / HVAC',supply:'Fornecimento',subcontracting:'Subcontratação'};
+    const en={construction:'Construction',facilities:'Facilities',plumbing:'Plumbing / Hydraulic','electrical-hvac':'Electrical / HVAC',supply:'Supply',subcontracting:'Subcontracting'};
+    return (lang==='pt'?pt:en)[value]||value;
+  }
+
+  function recommendedAction(o){
+    const fit=Number(o.fit_score)||0;
+    const days=daysLeft(o.deadline);
+    if(fit>=80&&days>=0&&days<=14)return t('actionPrepare');
+    if(o.type==='supply-request'||areaTags(o).includes('supply'))return t('actionSupply');
+    if(['maintenance','small-contract','subcontracting'].includes(o.type))return t('actionPartner');
+    if(fit>=60)return t('actionVerify');
+    return t('actionMonitor');
   }
 
   function confidenceScore(o){
@@ -237,11 +290,15 @@
 
   function applyLanguage(){
     document.documentElement.lang=lang==='pt'?'pt-AO':'en';
-    $$('[data-i18n]').forEach(node=>{
+    $('[data-i18n]').forEach(node=>{
       const value=copy[lang][node.dataset.i18n];
       if(!value)return;
       if(node.tagName==='H1')node.innerHTML=value.replace('\n','<br>');
       else node.textContent=value;
+    });
+    $('[data-i18n-placeholder]').forEach(node=>{
+      const value=copy[lang][node.dataset.i18nPlaceholder];
+      if(value)node.setAttribute('placeholder',value);
     });
     $('#langToggle').textContent=lang==='pt'?'EN':'PT';
     render();
@@ -283,6 +340,8 @@
       const kickerText=document.createElement('span');kickerText.textContent=marketLabel(o)+' · '+typeLabel(o.type)+(o.reference?' · '+o.reference:'');
       kicker.append(dot,kickerText);
       const title=document.createElement('h3');title.textContent=lang==='pt'?(o.title_pt||o.title):o.title;
+      const areaRow=document.createElement('div');areaRow.className='op-area-row';
+      areaTags(o).slice(0,3).forEach(value=>{const s=document.createElement('span');s.textContent=areaLabelValue(value);areaRow.appendChild(s);});
       const meta=document.createElement('div');meta.className='op-meta';
       [o.issuer,o.location,o.currency_code,o.sector].filter(Boolean).forEach(v=>{const s=document.createElement('span');s.textContent=v;meta.appendChild(s);});
       const fitText=lang==='pt'?(o.source_fit_pt||o.scope_summary_pt||o.source_fit||o.scope_summary||''):(o.source_fit||o.scope_summary||'');
@@ -299,12 +358,18 @@
         const age=(Date.now()-new Date(o.source_checked_at).getTime())/86400000;
         const s=document.createElement('span');s.className='op-signal '+(age<=7?'good':'warn');s.textContent=t('signalFresh');signals.appendChild(s);
       }
-      main.append(kicker,title,meta);
+      main.append(kicker,title);
+      if(areaRow.childElementCount)main.append(areaRow);
+      main.append(meta);
       if(fitText)main.append(fit,fitDetails);
       main.append(signals);
 
       const side=document.createElement('div');side.className='op-side';
       const priorityEl=document.createElement('span');priorityEl.className='op-priority '+p.cls;priorityEl.textContent=t(p.key);
+      const next=document.createElement('div');next.className='op-next-action';
+      const nextLabel=document.createElement('small');nextLabel.textContent=t('nextAction');
+      const nextValue=document.createElement('strong');nextValue.textContent=recommendedAction(o);
+      next.append(nextLabel,nextValue);
       const deadline=document.createElement('div');deadline.className='op-deadline';deadline.textContent=t('deadline');
       const strong=document.createElement('strong');strong.textContent=fmt(o.deadline);deadline.appendChild(strong);
       const remaining=document.createElement('small');remaining.className='op-remaining';remaining.textContent=deadlineLabel(o.deadline);deadline.appendChild(remaining);
@@ -313,7 +378,7 @@
       const source=document.createElement('a');source.className='op-source';source.href=o.source_url;source.target='_blank';source.rel='noopener noreferrer';source.textContent=t('openSource');
       const map=document.createElement('a');map.className='op-map';map.href=mapHref(o);map.target='_blank';map.rel='noopener noreferrer';map.textContent=t('map');
       actions.append(analyse,source,map);
-      side.append(priorityEl,deadline,actions);
+      side.append(priorityEl,next,deadline,actions);
 
       card.append(scoreCol,main,side);
       list.appendChild(card);
@@ -334,11 +399,20 @@
       $('[data-market]').forEach(b=>b.classList.toggle('active',b===btn));
       render();
     }));
-    $('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
-      filter=btn.dataset.filter;
-      $('[data-filter]').forEach(b=>b.classList.toggle('active',b===btn));
+    $('[data-area]').forEach(btn=>btn.addEventListener('click',()=>{
+      area=btn.dataset.area;
+      $('[data-area]').forEach(b=>b.classList.toggle('active',b===btn));
       render();
     }));
+    $('[data-format]').forEach(btn=>btn.addEventListener('click',()=>{
+      format=btn.dataset.format;
+      $('[data-format]').forEach(b=>b.classList.toggle('active',b===btn));
+      render();
+    }));
+    $('#opportunitySearch')?.addEventListener('input',event=>{
+      query=event.target.value.trim();
+      render();
+    });
     $('#langToggle')?.addEventListener('click',()=>{lang=lang==='pt'?'en':'pt';applyLanguage();});
     $('#refreshRadar')?.addEventListener('click',()=>refreshLiveData());
 

@@ -14,7 +14,7 @@
   <title>SOURCE AO Intelligence Radar | Oportunidades em Angola</title>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"SOURCE AO Intelligence Radar","url":"https://comercialhmatiasps.com/source-ao/opportunity-radar.html","description":"Radar de oportunidades comerciais e procurement com fonte, prazo e sinais de inteligência.","isPartOf":{"@type":"WebSite","name":"SOURCE AO","url":"https://comercialhmatiasps.com/source-ao/"},"publisher":{"@type":"Organization","name":"HMATIAS – Prestação de Serviços SU, LDA","url":"https://comercialhmatiasps.com/"}}</script>
   <link rel="stylesheet" href="sourceao.css">
-  <link rel="stylesheet" href="opportunity-radar.css?v=20260928-mobile-density1">
+  <link rel="stylesheet" href="opportunity-radar.css?v=20260928-vertical-intelligence2">
 </head>
 <body class="op-body">
   <header class="topbar op-topbar">
@@ -61,14 +61,28 @@
       </div>
 
       <div class="op-filter-stack">
+        <label class="op-radar-search">
+          <small data-i18n="searchLabel">PESQUISAR</small>
+          <input id="opportunitySearch" type="search" autocomplete="off" data-i18n-placeholder="searchPlaceholder" placeholder="Ex.: canalização, pintura, manutenção…">
+        </label>
         <div class="op-filter-group">
-          <small data-i18n="typeLabel">TIPO</small>
-          <div class="op-filters" aria-label="Filtros de oportunidades">
-            <button class="active" data-filter="all" data-i18n="filterAll">Todas</button>
-            <button data-filter="supply" data-i18n="filterSupply">Supply</button>
-            <button data-filter="maintenance" data-i18n="filterMaintenance">Facilities</button>
-            <button data-filter="rfq">RFQ</button>
-            <button data-filter="tender" data-i18n="filterTender">Concurso</button>
+          <small data-i18n="areaLabel">ÁREA</small>
+          <div class="op-filters" aria-label="Filtros por área de negócio">
+            <button class="active" data-area="all" data-i18n="filterAll">Todas</button>
+            <button data-area="construction" data-i18n="areaConstruction">Construção</button>
+            <button data-area="facilities" data-i18n="areaFacilities">Facilities</button>
+            <button data-area="plumbing" data-i18n="areaPlumbing">Canalização</button>
+            <button data-area="electrical-hvac" data-i18n="areaElectrical">Elétrica / HVAC</button>
+            <button data-area="supply" data-i18n="areaSupply">Fornecimento</button>
+            <button data-area="subcontracting" data-i18n="areaSubcontracting">Subcontratação</button>
+          </div>
+        </div>
+        <div class="op-filter-group">
+          <small data-i18n="formatLabel">FORMATO</small>
+          <div class="op-filters op-format-filters" aria-label="Filtros por formato">
+            <button class="active" data-format="all" data-i18n="formatAll">Todos</button>
+            <button data-format="rfq">RFQ</button>
+            <button data-format="tender" data-i18n="filterTender">Concurso</button>
           </div>
         </div>
       </div>
@@ -112,6 +126,6 @@
   <script src="runtime-config.js" defer></script>
   <script src="api-client.js" defer></script>
   <script src="data-engine.js" defer></script>
-  <script src="opportunity-radar.js?v=20260928-mobile-density1" defer></script>
+  <script src="opportunity-radar.js?v=20260928-vertical-intelligence2" defer></script>
 </body>
 </html>
