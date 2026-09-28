@@ -96,10 +96,22 @@ function qualificationScore(record,service,complex){
   return clamp(score);
 }
 
+function sourceAuthority(url){
+  try{
+    const host=new URL(String(url||'')).hostname.toLowerCase();
+    if(host==='compraspublicas.minfin.gov.ao')return 'official';
+    if(host==='afdb.org'||host.endsWith('.afdb.org'))return 'official';
+    if(host==='worldbank.org'||host.endsWith('.worldbank.org'))return 'official';
+    if(host==='ungm.org'||host.endsWith('.ungm.org'))return 'official';
+    return 'web';
+  }catch{return 'unknown'}
+}
+
 function confidenceScore(record,clock){
   let score=0;
   const signals=[];
-  if(/^https:\/\//i.test(String(record.source_url||''))){score+=20;signals.push('https_source');}
+  if(/^https:\/\//i.test(String(record.source_url||''))){score+=5;signals.push('https_source');}
+  if(sourceAuthority(record.source_url)==='official'){score+=20;signals.push('official_source');}
   if(record.deadline){score+=20;signals.push('deadline_present');}
   if(record.reference){score+=15;signals.push('reference_present');}
   if(record.issuer && norm(record.issuer)!==norm(record.source_name)){score+=15;signals.push('issuer_identified');}
