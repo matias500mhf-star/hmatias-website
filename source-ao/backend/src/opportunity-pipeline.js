@@ -74,8 +74,8 @@ export function classifyOpportunityText(value=''){
 
 export function extractReference(text=''){
   for(const re of [
-    /(?:procurement\s+)?reference\s+(?:number|no\.?)\s*(?:\||:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
-    /(?:refer[eê]ncia|ref\.?|processo|procedimento|concurso|rfq)\s*(?:n(?:umber|o|º|°)?\.?|#|:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
+    /(?:procurement\s+)?reference(?:\s+(?:number|no\.?))?\s*(?:\||:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
+    /(?:refer[eê]ncia|reference|ref\.?\b|processo|procedimento|concurso|rfq)\s*(?:n(?:umber|o|º|°)?\.?|#|:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
     /\b([0-9]{2,}[A-Z]{0,3}\/[A-Z0-9./_-]{2,})\b/i
   ]){
     const m=String(text).match(re);
@@ -86,7 +86,8 @@ export function extractReference(text=''){
 
 const monthNumber=name=>{
   const names=['january','february','march','april','may','june','july','august','september','october','november','december'];
-  const i=names.indexOf(String(name||'').toLowerCase());
+  const needle=String(name||'').toLowerCase().slice(0,3);
+  const i=names.findIndex(month=>month.slice(0,3)===needle);
   return i>=0?i+1:null;
 };
 const isoAt=(d,m,y,h=23,min=59,offset='+00:00')=>{
@@ -116,7 +117,7 @@ export function extractDeadline(text='',clock=Date.now(),offset='+00:00'){
     while((m=eu.exec(window))){
       const x=isoAt(m[1],m[2],m[3],m[4]??23,m[5]??59,offset);if(x)found.push(x);
     }
-    const words=/\b([0-2]?\d|3[01])(?:st|nd|rd|th)?\s+(January|February|March|April|May|June|July|August|September|October|November|December),?\s+(20\d{2})(?:\s+(\d{1,2}):(\d{2}))?\b/gi;
+    const words=/\b([0-2]?\d|3[01])(?:st|nd|rd|th)?[\s-]+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)[\s,-]+(20\d{2})(?:\s+(\d{1,2}):(\d{2}))?\b/gi;
     while((m=words.exec(window))){
       const x=isoAt(m[1],monthNumber(m[2]),m[3],m[4]??23,m[5]??59,offset);if(x)found.push(x);
     }
