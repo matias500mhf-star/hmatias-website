@@ -336,6 +336,65 @@ jobs:
           elif 'noindex,follow' not in not_found.read_text(encoding='utf-8'):
               fail('404.html must be noindex,follow')
 
+          # Cookiebot/GA4 prior-consent regression guard.
+          cookiebot_src = 'https://consent.cookiebot.com/uc.js'
+          consent_checked = 0
+          analytics_checked = 0
+          html_candidates = list(ROOT.glob('*.html')) + list((ROOT / 'source-ao').glob('*.html'))
+          for html_path in html_candidates:
+              html = html_path.read_text(encoding='utf-8')
+              script_tags = re.findall(r'<script\\b[^>]*>', html, re.I)
+              cookiebot_tags = [tag for tag in script_tags if cookiebot_src in tag]
+
+              if cookiebot_tags:
+                  consent_checked += 1
+                  if len(cookiebot_tags) != 1:
+                      fail(f'Cookiebot must be implemented exactly once: {html_path}')
+                  cookie_tag = cookiebot_tags[0]
+                  if script_tags and script_tags[0] != cookie_tag:
+                      fail(f'Cookiebot must be the first script tag: {html_path}')
+                  if 'data-blockingmode="auto"' not in cookie_tag.lower():
+                      fail(f'Cookiebot auto-blocking is missing: {html_path}')
+                  if re.search(r'\\b(?:async|defer)\\b', cookie_tag, re.I):
+                      fail(f'Cookiebot must not use async/defer in auto-blocking mode: {html_path}')
+
+              for tag in script_tags:
+                  if re.search(r'\\bsrc=["\\\'](?:\\./)?analytics\\.js\\?[^"\\\']*', tag, re.I):
+                      analytics_checked += 1
+                      if not cookiebot_tags:
+                          fail(f'analytics.js is present without Cookiebot: {html_path}')
+                      if 'data-cookieconsent="ignore"' not in tag.lower():
+                          fail(f'analytics.js consent-controller must be ignored by Cookiebot auto-blocking: {html_path}')
+
+              if 'googletagmanager.com/gtag/js' in html:
+                  fail(f'Google Analytics must not be hard-coded in HTML: {html_path}')
+
+          analytics_path = ROOT / 'analytics.js'
+          if not analytics_path.exists():
+              fail('analytics.js is missing')
+          else:
+              analytics_text = analytics_path.read_text(encoding='utf-8')
+              required_analytics_guards = (
+                  "analytics_storage: 'denied'",
+                  "ad_storage: 'denied'",
+                  "ad_user_data: 'denied'",
+                  "ad_personalization: 'denied'",
+                  "functionality_storage: 'denied'",
+                  "personalization_storage: 'denied'",
+                  "security_storage: 'granted'",
+                  "statisticsAllowed()",
+                  "if (!allowed || loaded || document.querySelector('script[data-hmatias-analytics]')) return;",
+                  "https://www.googletagmanager.com/gtag/js?id=",
+              )
+              for needle in required_analytics_guards:
+                  if needle not in analytics_text:
+                      fail(f'analytics consent guard is missing: {needle}')
+
+          if consent_checked == 0:
+              fail('Cookiebot was not found on any checked page')
+          if analytics_checked == 0:
+              fail('No analytics.js consent-controller tags were found')
+
           if errors:
               print('HMATIAS site integrity FAILED:')
               for item in errors:
