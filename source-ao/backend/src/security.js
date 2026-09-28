@@ -6,6 +6,9 @@ export function rateLimitPolicy(request, pathname='') {
   if (request.method === 'POST' && pathname === '/api/sourcing-requests') {
     return {bucket:'sourcing-create', limit:6, windowSeconds:600};
   }
+  if (request.method === 'POST' && pathname === '/api/partner-applications') {
+    return {bucket:'partner-application-create', limit:4, windowSeconds:1800};
+  }
   if (/^\/api\/confirm\/[^/]+$/.test(pathname)) {
     return request.method === 'POST'
       ? {bucket:'supplier-confirm-submit', limit:12, windowSeconds:600}
