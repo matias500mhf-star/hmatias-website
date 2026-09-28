@@ -1,0 +1,36 @@
+# HMATIAS GitHub Pages publication policy.
+# Branch-based Pages must never publish internal Source AO desks, backend code,
+# operational documentation or repository/development files.
+include:
+  - .well-known
+
+exclude:
+  - .github
+  - .gitignore
+  - .source-ao-production-release
+  - .assetsignore
+  - SECURITY.md
+  - OWNERSHIP.md
+  - README.txt
+  - LICENSE
+  - package.json
+  - package-lock.json
+  - vite.config.js
+  - wrangler.jsonc
+  - docs
+  - cloudflare-ai
+  - source-ao/README.md
+  - source-ao/backend
+  - source-ao/docs
+  - source-ao/schemas
+  - source-ao/data-contract.json
+  - source-ao/validate-data.mjs
+  - source-ao/ops.html
+  - source-ao/ops.js
+  - source-ao/ops.css
+  - source-ao/review.html
+  - source-ao/review.js
+  - source-ao/review.css
+  - source-ao/requests.html
+  - source-ao/requests.js
+  - source-ao/requests.css
