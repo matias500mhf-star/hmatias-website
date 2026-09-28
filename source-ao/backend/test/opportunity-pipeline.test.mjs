@@ -21,6 +21,10 @@ test('HMATIAS opportunity classifier prioritizes directly relevant work',()=>{
   const maintenance=classifyOpportunityText('Manutenção e reparação das instalações eléctricas e ar condicionado');
   assert.equal(maintenance.type,'maintenance');
   assert.ok(maintenance.fit_tags.includes('facilities'));
+  const plumbing=classifyOpportunityText('Serviços de canalização e hidráulica predial');
+  assert.equal(plumbing.sector,'technical-maintenance');
+  assert.ok(plumbing.fit_score>=50);
+  assert.ok(plumbing.fit_tags.includes('technical-services'));
 });
 
 test('opportunity reference and deadline extraction use traceable page text',()=>{
@@ -60,6 +64,20 @@ test('opportunity link discovery keeps procurement-like links only',()=>{
   const links=extractOpportunityLinks(html,'https://compras.example.ao/');
   assert.equal(links.length,2);
   assert.ok(links.every(x=>x.url.startsWith('https://')));
+});
+
+test('opportunity link discovery includes plumbing, facilities and technical works',()=>{
+  const html=[
+    '<a href="/servicos/canalizacao">Serviços de canalização predial</a>',
+    '<a href="/facilities/gestao">Facilities para edifícios</a>',
+    '<a href="/infraestrutura/hidraulica">Infraestrutura hidráulica</a>',
+    '<a href="/institucional">Institucional</a>'
+  ].join('');
+  const links=extractOpportunityLinks(html,'https://compras.example.ao/');
+  assert.equal(links.length,3);
+  assert.ok(links.some(x=>/canalizacao/.test(x.url)));
+  assert.ok(links.some(x=>/facilities/.test(x.url)));
+  assert.ok(links.some(x=>/hidraulica/.test(x.url)));
 });
 
 test('title normalization removes generic procurement noise',()=>{
