@@ -11,6 +11,7 @@ let registered=false;
 let lastBody='';
 let clientToken='';
 const copy=(pt,eng)=>en?eng:pt;
+const track=(eventName,parameters={})=>window.hmatiasAnalytics?.track?.(eventName,parameters);
 const value=id=>$('#'+id)?.value.trim()||'';
 const apiBase=()=>String(window.SOURCE_AO_RUNTIME?.apiBase||'').replace(/\/$/,'');
 const today=()=>new Date(Date.now()+3600000).toISOString().slice(0,10);
@@ -174,6 +175,15 @@ async function submit(event){
   data.client_token=clientToken;
   const validation=validateRfq(data,catalog,new Date(Date.now()+3600000));
   if(!validation.ok){error(copy('Verifique os campos e a data pretendida antes de enviar.','Check the fields and target date before sending.'));return;}
+  track('source_rfq_submit_attempt',{
+    item_count:data.items.length,
+    buyer_type:data.buyer_type,
+    urgency:data.urgency,
+    purchase_intent:data.intent,
+    contact_channel:data.contact_channel,
+    source_origin:data.origin,
+    source_language:data.language
+  });
   busy=true;$('#rfqSubmit').disabled=true;$('#rfqBack').disabled=true;$('#rfqLanguage').disabled=true;$('#rfqSubmit').textContent=copy('A registar…','Registering…');$('#rfqResult').hidden=true;
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
   try{
@@ -182,8 +192,21 @@ async function submit(event){
     const result=await response.json().catch(()=>null);
     if(!response.ok)throw Object.assign(new Error('registration_failed'),{status:response.status});
     if(result?.ok!==true || result.request?.rfq_version!==1 || !result.request.reference || !result.request.status_path)throw new Error('unconfirmed');
+    track('source_rfq_registered',{
+      item_count:data.items.length,
+      buyer_type:data.buyer_type,
+      urgency:data.urgency,
+      purchase_intent:data.intent,
+      contact_channel:data.contact_channel,
+      source_origin:data.origin,
+      source_language:data.language
+    });
+    window.hmatiasAnalytics?.confirmLead?.('source_rfq','website');
     showSuccess(result.request,trackingUrl(result.request.status_path));
-  }catch(failure){showFailure(data,failure.status);}
+  }catch(failure){
+    track('source_rfq_registration_failed',{status_code:Number(failure.status)||0,source_origin:data.origin,source_language:data.language});
+    showFailure(data,failure.status);
+  }
   finally{clearTimeout(timeout);busy=false;$('#rfqSubmit').disabled=false;$('#rfqBack').disabled=false;$('#rfqLanguage').disabled=registered;$('#rfqSubmit').textContent=copy('Enviar pedido de cotação','Send quotation request');}
 }
 
