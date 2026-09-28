@@ -47,10 +47,23 @@
     if (!allowed || loaded || document.querySelector('script[data-hmatias-analytics]')) return;
 
     loaded = true;
+    const pageUrl = new URL(window.location.href);
+    if (pageUrl.pathname.startsWith('/source-ao/')) {
+      const allowedCampaignParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid'];
+      const cleanUrl = new URL(pageUrl.origin + pageUrl.pathname);
+      allowedCampaignParams.forEach(key => {
+        const value = pageUrl.searchParams.get(key);
+        if (value) cleanUrl.searchParams.set(key, value);
+      });
+      pageUrl.search = cleanUrl.search;
+    }
+    pageUrl.hash = '';
+
     window.gtag('js', new Date());
     window.gtag('config', measurementId, {
       allow_google_signals: false,
-      allow_ad_personalization_signals: false
+      allow_ad_personalization_signals: false,
+      page_location: pageUrl.toString()
     });
 
     const tag = document.createElement('script');
@@ -61,7 +74,7 @@
 
     if (!document.querySelector('script[data-hmatias-analytics-events]')) {
       const events = document.createElement('script');
-      events.src = 'analytics-events.js?v=20260917-stable1';
+      events.src = '/analytics-events.js?v=20260928-commercial1';
       events.defer = true;
       events.dataset.hmatiasAnalyticsEvents = 'true';
       document.head.appendChild(events);

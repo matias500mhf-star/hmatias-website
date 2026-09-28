@@ -7,6 +7,15 @@
   const pageLanguage = (document.documentElement.lang || 'pt-AO').toLowerCase();
   const pageName = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
   const pagePath = window.location.pathname || '/';
+  const sourceAO = pagePath.startsWith('/source-ao/');
+  const sourceSurface = sourceAO
+    ? ({
+        'index.html': 'home',
+        'opportunity-radar.html': 'opportunity_radar',
+        'rfq.html': 'rfq',
+        'partner-application.html': 'partner_application'
+      }[pageName] || 'other')
+    : null;
 
   const servicePages = {
     'construcao.html': 'construction',
@@ -53,6 +62,7 @@
 
   const serviceName = servicePages[pageName];
   if (serviceName) track('service_view', { service_name: serviceName });
+  if (sourceSurface) track('source_ao_view', { source_surface: sourceSurface });
 
   document.addEventListener('click', event => {
     if (!(event.target instanceof Element)) return;
