@@ -16,8 +16,13 @@
     ad_storage: 'denied',
     ad_user_data: 'denied',
     ad_personalization: 'denied',
+    functionality_storage: 'denied',
+    personalization_storage: 'denied',
+    security_storage: 'granted',
     wait_for_update: 500
   });
+  window.gtag('set', 'ads_data_redaction', true);
+  window.gtag('set', 'url_passthrough', false);
 
   let loaded = false;
 
@@ -30,7 +35,10 @@
       analytics_storage: granted ? 'granted' : 'denied',
       ad_storage: 'denied',
       ad_user_data: 'denied',
-      ad_personalization: 'denied'
+      ad_personalization: 'denied',
+      functionality_storage: 'denied',
+      personalization_storage: 'denied',
+      security_storage: 'granted'
     });
   }
 
