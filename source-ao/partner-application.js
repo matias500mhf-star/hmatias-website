@@ -6,6 +6,7 @@
   const values=()=>[...document.querySelectorAll('#capabilities input:checked')].map(x=>x.value);
   const apiBase=()=>String(window.SOURCE_AO_RUNTIME?.apiBase||'').replace(/\/$/,'');
   const message=(text,type='')=>{status.textContent=text;status.className='status '+type};
+  const track=(eventName,parameters={})=>window.hmatiasAnalytics?.track?.(eventName,parameters);
 
   form?.addEventListener('submit',async event=>{
     event.preventDefault();
@@ -42,6 +43,11 @@
       if(!res.ok)throw new Error(body?.error?.message||'Não foi possível submeter a candidatura.');
       const ref=body.reference||'';
       message((body.duplicate?'A candidatura já se encontra registada. ':'Candidatura recebida. ')+(ref?'Referência: '+ref+'. ':'')+'A HMATIAS fará a avaliação antes de qualquer ativação na rede.','ok');
+      track(body.duplicate?'partner_application_duplicate':'partner_application_registered',{
+        partner_type:String(data.get('partner_type')||'unknown'),
+        country_code:String(data.get('country_code')||'unknown'),
+        capability_count:capabilities.length
+      });
       if(!body.duplicate)form.reset();
     }catch(error){
       message(error instanceof Error?error.message:'Não foi possível submeter a candidatura.','error');
