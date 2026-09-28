@@ -1,0 +1,45 @@
+# HMATIAS public static-site boundary for Cloudflare Workers Assets.
+# Keep deployment/configuration files and internal operational surfaces out of the public asset bundle.
+
+# Repository, CI and local tooling
+.git/
+.github/
+node_modules/
+.wrangler/
+.devcontainer/
+.vscode/
+.idea/
+.qa/
+.sites-runtime/
+.public-site/
+coverage/
+dist/
+build/
+
+# Deployment/configuration files
+.assetsignore
+.gitignore
+wrangler.jsonc
+package.json
+package-lock.json
+SECURITY.md
+README*
+*.md
+scripts/
+cloudflare-ai/
+
+# SOURCE AO server-side/internal material
+source-ao/backend/
+source-ao/docs/
+source-ao/schemas/
+source-ao/data-contract.json
+source-ao/validate-data.mjs
+source-ao/ops.html
+source-ao/ops.js
+source-ao/ops.css
+source-ao/review.html
+source-ao/review.js
+source-ao/review.css
+source-ao/requests.html
+source-ao/requests.js
+source-ao/requests.css
