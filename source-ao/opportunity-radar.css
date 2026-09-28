@@ -66,3 +66,77 @@
   .op-stat-grid article+article{border-left:0;border-top:1px solid rgba(255,255,255,.12);padding-left:0}
   .op-score-column{align-items:flex-start;flex-wrap:wrap}
 }
+
+
+/* 2026-09-28 — compact smartphone information hierarchy */
+.op-fit-mobile{display:none}
+@media(max-width:720px){
+  .op-fit-desktop{display:none}
+  .op-fit-mobile{
+    display:block;
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px solid #e2e9ee;
+  }
+  .op-fit-mobile summary{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    min-height:40px;
+    cursor:pointer;
+    list-style:none;
+    color:#294a67;
+    font-size:10px;
+    font-weight:850;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .op-fit-mobile summary::-webkit-details-marker{display:none}
+  .op-fit-mobile summary:after{content:"+";font-size:18px;line-height:1;color:#0b6fba}
+  .op-fit-mobile[open] summary:after{content:"−"}
+  .op-fit-mobile .op-fit{
+    margin:9px 0 0;
+    max-width:none;
+    overflow-wrap:break-word;
+    word-break:normal;
+  }
+  .op-kicker{line-height:1.45;overflow-wrap:anywhere}
+  .op-card h3{
+    font-size:clamp(1.2rem,6vw,1.5rem);
+    line-height:1.2;
+    overflow-wrap:break-word;
+    word-break:normal;
+  }
+  .op-meta{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0;
+    margin-top:12px;
+  }
+  .op-meta span{
+    padding:7px 0;
+    border-right:0;
+    border-bottom:1px solid #eef2f5;
+    overflow-wrap:break-word;
+    word-break:normal;
+  }
+  .op-meta span:last-child{border-bottom:0}
+  .op-signal-row{margin-top:10px}
+  .op-side{
+    padding-top:14px;
+    border-top:1px solid #e2e9ee;
+    gap:12px;
+  }
+  .op-actions{
+    display:grid;
+    grid-template-columns:1fr;
+    align-items:stretch;
+    width:100%;
+  }
+  .op-source,.op-map{
+    display:inline-flex;
+    align-items:center;
+    min-height:40px;
+  }
+}

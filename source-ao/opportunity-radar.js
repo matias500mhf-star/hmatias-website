@@ -42,7 +42,7 @@
       fit:'Fit',confidence:'Confiança',sourceChecked:'Fonte verificada',deadline:'Prazo',
       priorityHigh:'Prioridade alta',priorityMedium:'Avaliar',priorityLow:'Monitorizar',
       openSource:'Abrir fonte →',analyse:'Analisar oportunidade',map:'Ver no Google Maps ↗',
-      signalFresh:'Fonte recente',signalRef:'Referência',signalDeadline:'Prazo confirmado',
+      signalFresh:'Fonte recente',signalRef:'Referência',signalDeadline:'Prazo confirmado',details:'Detalhes da análise',
       serviceBy:'Um serviço da HMATIAS',
       disclaimer:'Fit e confiança são sinais de triagem, não garantias de elegibilidade ou adjudicação. Confirme sempre a fonte original, os documentos do procedimento e os requisitos de qualificação.'
     },
@@ -75,7 +75,7 @@
       fit:'Fit',confidence:'Confidence',sourceChecked:'Source checked',deadline:'Deadline',
       priorityHigh:'High priority',priorityMedium:'Assess',priorityLow:'Monitor',
       openSource:'Open source →',analyse:'Analyse opportunity',map:'Open in Google Maps ↗',
-      signalFresh:'Recent source',signalRef:'Reference',signalDeadline:'Deadline confirmed',
+      signalFresh:'Recent source',signalRef:'Reference',signalDeadline:'Deadline confirmed',details:'Analysis details',
       serviceBy:'A service by HMATIAS',
       disclaimer:'Fit and confidence are triage signals, not guarantees of eligibility or award. Always verify the original source, procurement documents and qualification requirements.'
     }
@@ -285,7 +285,12 @@
       const title=document.createElement('h3');title.textContent=lang==='pt'?(o.title_pt||o.title):o.title;
       const meta=document.createElement('div');meta.className='op-meta';
       [o.issuer,o.location,o.currency_code,o.sector].filter(Boolean).forEach(v=>{const s=document.createElement('span');s.textContent=v;meta.appendChild(s);});
-      const fit=document.createElement('p');fit.className='op-fit';fit.textContent=lang==='pt'?(o.source_fit_pt||o.scope_summary_pt||o.source_fit||o.scope_summary||''):(o.source_fit||o.scope_summary||'');
+      const fitText=lang==='pt'?(o.source_fit_pt||o.scope_summary_pt||o.source_fit||o.scope_summary||''):(o.source_fit||o.scope_summary||'');
+      const fit=document.createElement('p');fit.className='op-fit op-fit-desktop';fit.textContent=fitText;
+      const fitDetails=document.createElement('details');fitDetails.className='op-fit-mobile';
+      const fitSummary=document.createElement('summary');fitSummary.textContent=t('details');
+      const fitMobile=document.createElement('p');fitMobile.className='op-fit';fitMobile.textContent=fitText;
+      fitDetails.append(fitSummary,fitMobile);
 
       const signals=document.createElement('div');signals.className='op-signal-row';
       if(o.reference){const s=document.createElement('span');s.className='op-signal good';s.textContent=t('signalRef');signals.appendChild(s);}
@@ -294,7 +299,9 @@
         const age=(Date.now()-new Date(o.source_checked_at).getTime())/86400000;
         const s=document.createElement('span');s.className='op-signal '+(age<=7?'good':'warn');s.textContent=t('signalFresh');signals.appendChild(s);
       }
-      main.append(kicker,title,meta,fit,signals);
+      main.append(kicker,title,meta);
+      if(fitText)main.append(fit,fitDetails);
+      main.append(signals);
 
       const side=document.createElement('div');side.className='op-side';
       const priorityEl=document.createElement('span');priorityEl.className='op-priority '+p.cls;priorityEl.textContent=t(p.key);
