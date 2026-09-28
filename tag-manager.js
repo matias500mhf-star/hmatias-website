@@ -1,0 +1,54 @@
+/* HMATIAS Google Tag Manager loader — consent-gated by Cookiebot. */
+(() => {
+  'use strict';
+
+  const containerId = 'GTM-MXT9VM65';
+  const productionHosts = ['comercialhmatiasps.com', 'www.comercialhmatiasps.com'];
+
+  if (!productionHosts.includes(window.location.hostname)) return;
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+
+  let loaded = false;
+
+  function statisticsAllowed() {
+    return Boolean(window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.statistics);
+  }
+
+  function updateConsent() {
+    const granted = statisticsAllowed();
+    window.gtag('consent', 'update', {
+      analytics_storage: granted ? 'granted' : 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      functionality_storage: 'denied',
+      personalization_storage: 'denied',
+      security_storage: 'granted'
+    });
+    return granted;
+  }
+
+  function loadTagManager() {
+    if (!updateConsent() || loaded || document.querySelector('script[data-hmatias-gtm]')) return;
+    loaded = true;
+    window.dataLayer.push({'gtm.start': Date.now(), event: 'gtm.js'});
+    const tag = document.createElement('script');
+    tag.async = true;
+    tag.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(containerId);
+    tag.dataset.hmatiasGtm = containerId;
+    const firstScript = document.getElementsByTagName('script')[0];
+    if (firstScript && firstScript.parentNode) firstScript.parentNode.insertBefore(tag, firstScript);
+    else document.head.appendChild(tag);
+  }
+
+  function syncConsent() {
+    if (updateConsent()) loadTagManager();
+  }
+
+  window.addEventListener('CookiebotOnConsentReady', syncConsent);
+  window.addEventListener('CookiebotOnAccept', syncConsent);
+  window.addEventListener('CookiebotOnDecline', syncConsent);
+  syncConsent();
+})();
