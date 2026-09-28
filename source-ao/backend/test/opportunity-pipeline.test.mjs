@@ -7,7 +7,12 @@ import {
   extractDeadline,
   extractOpportunityLinks,
   extractCpbnBidLinks,
+  extractAfdbAngolaLinks,
+  extractUngmNoticeLinks,
   normalizeCpbnBidPage,
+  normalizeAfdbAngolaPage,
+  normalizeUngmNoticePage,
+  normalizeWorldBankNotice,
   normalizeOcdsRelease,
   buildSourceFetchUrl
 } from '../src/opportunity-pipeline.js';
@@ -103,4 +108,65 @@ test('Namibia CPBN bid detail page becomes a structured NA/NAD candidate',()=>{
   assert.equal(candidate.deadline,'2026-10-08T09:00:00.000Z');
   assert.match(candidate.scope_summary,/N\$300\.00/);
   assert.match(candidate.scope_summary,/Pre-bid\/site visit/i);
+});
+
+
+test('World Bank Angola adapter builds an official country/deadline query',()=>{
+  const url=buildSourceFetchUrl({adapter:'world_bank_angola',source_url:'https://search.worldbank.org/api/v2/procnotices'},Date.UTC(2026,8,28));
+  assert.match(url,/project_ctry_name=Angola/);
+  assert.match(url,/deadline_strdate=2026-09-28/);
+  assert.match(url,/rows=100/);
+});
+
+test('World Bank notice becomes an AO candidate and rejects other countries',()=>{
+  const source={name:'World Bank — Angola Procurement Notices',source_url:'https://search.worldbank.org/api/v2/procnotices',country_code:'AO',currency_code:'AOA',adapter:'world_bank_angola'};
+  const candidate=normalizeWorldBankNotice({
+    id:'OP00470001',project_ctry_name:'Angola',project_name:'Water Sector Institutional Development Project',
+    notice_type:'Invitation for Bids',notice_title:'Rehabilitation of water supply infrastructure',
+    procurement_reference:'AO-WATER-001',noticedate:'27-Sep-2026',submission_deadline_date:'2026-10-20T23:59:00Z',
+    notice_text:'Works include rehabilitation, plumbing and hydraulic systems.'
+  },source,Date.UTC(2026,8,28));
+  assert.equal(candidate.country_code,'AO');
+  assert.equal(candidate.reference,'AO-WATER-001');
+  assert.match(candidate.source_url,/OP00470001/);
+  assert.ok(candidate.fit_tags.includes('construction')||candidate.fit_tags.includes('technical-services'));
+  assert.equal(normalizeWorldBankNotice({...candidate,project_ctry_name:'Kenya'},source,Date.UTC(2026,8,28)),null);
+});
+
+test('AfDB Angola discovery keeps only relevant Angola procurement links',()=>{
+  const html=[
+    '<a href="/notice/1">SPN - Angola - Rehabilitation of IDA Offices in Saurimo</a>',
+    '<a href="/notice/2">SPN - Kenya - Construction of offices</a>',
+    '<a href="/notice/3">SPN - Angola - Consulting services for policy review</a>'
+  ].join('');
+  const links=extractAfdbAngolaLinks(html,'https://www.afdb.org/en/');
+  assert.equal(links.length,1);
+  assert.match(links[0].label,/Rehabilitation/i);
+});
+
+test('AfDB Angola detail page is normalized only when Angola is evidenced',()=>{
+  const source={name:'African Development Bank — Angola SPN',source_url:'https://www.afdb.org/en/documents/category/specific-procurement-notices',country_code:'AO',currency_code:'AOA',adapter:'afdb_angola'};
+  const html='<title>SPN - Angola - Construction of EDA Office</title><h1>SPN - Angola - Construction of EDA Office</h1><p>Reference: ERAVCDP/W/02</p><p>Closing date: 20 October 2026</p><p>Construction and rehabilitation works in Angola.</p>';
+  const candidate=normalizeAfdbAngolaPage(html,'https://www.afdb.org/en/documents/example',source,Date.UTC(2026,8,28));
+  assert.equal(candidate.country_code,'AO');
+  assert.equal(candidate.reference,'ERAVCDP/W/02');
+  assert.match(candidate.deadline,/2026-10-20/);
+  assert.equal(normalizeAfdbAngolaPage(html.replaceAll('Angola','Zambia'),'https://www.afdb.org/en/documents/example',source,Date.UTC(2026,8,28)),null);
+});
+
+test('UNGM detail parser is ready but requires explicit Angola beneficiary evidence',()=>{
+  const source={name:'UNGM — Angola',source_url:'https://www.ungm.org/Public/Notice',country_code:'AO',currency_code:'AOA',adapter:'ungm_angola'};
+  const html='<title>Construction services in Luanda</title><p>Reference: UNDP-AGO-00200</p><p>Beneficiary countries or territories: Angola</p><p>Deadline on: 30-Oct-2026 17:00</p><p>Facilities maintenance and plumbing.</p>';
+  const candidate=normalizeUngmNoticePage(html,'https://www.ungm.org/Public/Notice/999999',source,Date.UTC(2026,8,28));
+  assert.equal(candidate.country_code,'AO');
+  assert.equal(candidate.reference,'UNDP-AGO-00200');
+  assert.match(candidate.deadline,/2026-10-30/);
+  assert.equal(normalizeUngmNoticePage(html.replace('Angola','Namibia'),'https://www.ungm.org/Public/Notice/999999',source,Date.UTC(2026,8,28)),null);
+});
+
+test('UNGM link discovery accepts only notice detail URLs',()=>{
+  const html='<a href="/Public/Notice/312134">Angola RFP</a><a href="/Public/Notice">Search</a><a href="/Account/Login">Login</a>';
+  const links=extractUngmNoticeLinks(html,'https://www.ungm.org/');
+  assert.equal(links.length,1);
+  assert.match(links[0].url,/312134/);
 });

@@ -5,7 +5,7 @@ import {buildOpportunityIntelligence} from './intelligence.js';
 const TYPES=new Set(['rfq','tender','small-contract','maintenance','supply-request','subcontracting']);
 const KINDS=new Set(['html_index','json_feed']);
 const COUNTRIES=new Set(['AO','NA','ZA']);
-const ADAPTERS=new Set(['generic','sncp_angola','cpbn_namibia','ocds_etenders_za']);
+const ADAPTERS=new Set(['generic','sncp_angola','cpbn_namibia','ocds_etenders_za','afdb_angola','world_bank_angola','ungm_angola']);
 const MARKET_DEFAULTS={
   AO:{location:'Angola',currency:'AOA',offset:'+01:00'},
   NA:{location:'Namibia',currency:'NAD',offset:'+02:00'},
@@ -74,8 +74,8 @@ export function classifyOpportunityText(value=''){
 
 export function extractReference(text=''){
   for(const re of [
-    /(?:procurement\s+)?reference\s+(?:number|no\.?)\s*(?:\||:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
-    /(?:refer[eê]ncia|ref\.?|processo|procedimento|concurso|rfq)\s*(?:n(?:umber|o|º|°)?\.?|#|:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
+    /(?:procurement\s+)?reference(?:\s+(?:number|no\.?))?\s*(?:\||:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
+    /(?:refer[eê]ncia|reference|ref\.?\b|processo|procedimento|concurso|rfq)\s*(?:n(?:umber|o|º|°)?\.?|#|:|-)?\s*([A-Z0-9][A-Z0-9./_-]{3,})/i,
     /\b([0-9]{2,}[A-Z]{0,3}\/[A-Z0-9./_-]{2,})\b/i
   ]){
     const m=String(text).match(re);
@@ -86,7 +86,8 @@ export function extractReference(text=''){
 
 const monthNumber=name=>{
   const names=['january','february','march','april','may','june','july','august','september','october','november','december'];
-  const i=names.indexOf(String(name||'').toLowerCase());
+  const needle=String(name||'').toLowerCase().slice(0,3);
+  const i=names.findIndex(month=>month.slice(0,3)===needle);
   return i>=0?i+1:null;
 };
 const isoAt=(d,m,y,h=23,min=59,offset='+00:00')=>{
@@ -116,7 +117,7 @@ export function extractDeadline(text='',clock=Date.now(),offset='+00:00'){
     while((m=eu.exec(window))){
       const x=isoAt(m[1],m[2],m[3],m[4]??23,m[5]??59,offset);if(x)found.push(x);
     }
-    const words=/\b([0-2]?\d|3[01])(?:st|nd|rd|th)?\s+(January|February|March|April|May|June|July|August|September|October|November|December),?\s+(20\d{2})(?:\s+(\d{1,2}):(\d{2}))?\b/gi;
+    const words=/\b([0-2]?\d|3[01])(?:st|nd|rd|th)?[\s-]+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)[\s,-]+(20\d{2})(?:\s+(\d{1,2}):(\d{2}))?\b/gi;
     while((m=words.exec(window))){
       const x=isoAt(m[1],monthNumber(m[2]),m[3],m[4]??23,m[5]??59,offset);if(x)found.push(x);
     }
@@ -139,6 +140,38 @@ export function extractOpportunityLinks(html='',base=''){
   }
   return out;
 }
+export function extractAfdbAngolaLinks(html='',base=''){
+  const source=String(html||''),out=[],seen=new Set();
+  const re=/<a\b[^>]*href\s*=\s*["']([^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+  let m;
+  while((m=re.exec(source))){
+    let url;
+    try{url=new URL(m[1],base).toString()}catch{continue}
+    if(!isSafeDiscoveryUrl(url)||seen.has(url))continue;
+    const label=htmlToText(m[2]).slice(0,400);
+    const hay=normalizeSearch(label+' '+url);
+    if(!/\bangola\b/.test(hay))continue;
+    if(!/(construction|construcao|rehabilitation|reabilitacao|works|obra|supply|fornecimento|equipment|equipamento|water|agua|sanitation|saneamento|building|edificio|road|estrada|electrical|eletrica|irrigation|irrigacao|maintenance|manutencao)/.test(hay))continue;
+    seen.add(url);out.push({url,label});
+  }
+  return out;
+}
+
+export function extractUngmNoticeLinks(html='',base=''){
+  const source=String(html||''),out=[],seen=new Set();
+  const re=/<a\b[^>]*href\s*=\s*["']([^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+  let m;
+  while((m=re.exec(source))){
+    let url;
+    try{url=new URL(m[1],base).toString()}catch{continue}
+    const path=new URL(url).pathname;
+    if(!isSafeDiscoveryUrl(url)||seen.has(url)||!/^\/Public\/Notice\/\d+\/?$/i.test(path))continue;
+    const label=htmlToText(m[2]).slice(0,400);
+    seen.add(url);out.push({url,label});
+  }
+  return out;
+}
+
 export function extractCpbnBidLinks(html='',base=''){
   const source=String(html||''),out=[],seen=new Set();
   const re=/<a\b[^>]*href\s*=\s*["']([^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi;
@@ -265,6 +298,57 @@ export function normalizeCpbnBidPage(html,pageUrl,source,clock=Date.now()){
     evidence_excerpt:evidence
   },source);
 }
+export function normalizeAfdbAngolaPage(html,pageUrl,source,clock=Date.now()){
+  const text=htmlToText(String(html||'')).replace(/\s+/g,' ').trim();
+  const title=pageTitle(html)||'AfDB Angola procurement notice';
+  if(!/\bangola\b/i.test(title+' '+text.slice(0,6000)))return null;
+  const summary=text.slice(0,1800);
+  return normalizeCandidate({
+    title,issuer:source.name,location:'Angola',country_code:'AO',currency_code:'AOA',
+    reference:extractReference(text),deadline:extractDeadline(text,clock,'+01:00'),
+    source_url:pageUrl,description:summary,evidence_excerpt:summary
+  },source);
+}
+
+export function normalizeUngmNoticePage(html,pageUrl,source,clock=Date.now()){
+  const text=htmlToText(String(html||'')).replace(/\s+/g,' ').trim();
+  const title=pageTitle(html)||'UNGM Angola procurement opportunity';
+  const beneficiary=/Beneficiary countries? or territories\s*:\s*Angola/i.test(text)||/Beneficiary countries?\/territories\s*:\s*Angola/i.test(text);
+  if(!beneficiary)return null;
+  const summary=text.slice(0,1800);
+  return normalizeCandidate({
+    title,issuer:source.name,location:'Angola',country_code:'AO',currency_code:'AOA',
+    reference:extractReference(text),deadline:extractDeadline(text,clock,'+01:00'),
+    source_url:pageUrl,description:summary,evidence_excerpt:summary
+  },source);
+}
+
+export function normalizeWorldBankNotice(row,source,clock=Date.now()){
+  const country=normalizeSearch(row?.project_ctry_name||row?.country||'');
+  if(!country.includes('angola'))return null;
+  const deadline=date(row?.submission_deadline_date||row?.submission_date||row?.deadline);
+  if(deadline&&new Date(deadline).getTime()<clock-86400000)return null;
+  const noticeText=htmlToText(row?.notice_text||row?.description||'').replace(/\s+/g,' ').trim();
+  const title=clean(row?.notice_title||row?.title||row?.project_name||noticeText.slice(0,220)||'World Bank Angola procurement notice',260);
+  const id=clean(row?.id,180);
+  const sourceUrl=id
+    ?'https://projects.worldbank.org/en/projects-operations/procurement-detail/'+encodeURIComponent(id)
+    :source.source_url;
+  const description=[row?.notice_type,row?.procurement_method,row?.project_name,noticeText].filter(Boolean).join(' ').slice(0,1800);
+  return normalizeCandidate({
+    title,
+    issuer:row?.contact_organization||row?.executing_agency||row?.borrower||row?.project_name||source.name,
+    location:'Angola',country_code:'AO',currency_code:'AOA',
+    reference:row?.procurement_reference||row?.reference_no||row?.reference||id,
+    published_at:row?.noticedate||row?.publish_date,
+    deadline,
+    source_url:sourceUrl,
+    description,
+    evidence_excerpt:description,
+    sector:row?.sector
+  },source);
+}
+
 export function normalizeOcdsRelease(release,source,clock=Date.now()){
   const tender=release?.tender||{};
   const status=normalizeSearch(tender.status||'');
@@ -294,6 +378,18 @@ export function normalizeOcdsRelease(release,source,clock=Date.now()){
 }
 
 export function buildSourceFetchUrl(source,clock=Date.now()){
+  if(source?.adapter==='world_bank_angola'){
+    const u=new URL(source.source_url);
+    u.searchParams.set('format','json');
+    u.searchParams.set('rows','100');
+    u.searchParams.set('os','0');
+    u.searchParams.set('apilang','en');
+    u.searchParams.set('project_ctry_name','Angola');
+    u.searchParams.set('srt','noticedate');
+    u.searchParams.set('order','desc');
+    u.searchParams.set('deadline_strdate',ymd(clock));
+    return u.toString();
+  }
   if(source?.adapter!=='ocds_etenders_za')return source.source_url;
   const u=new URL(source.source_url);
   u.searchParams.set('dateFrom',ymd(clock-7*86400000));
@@ -344,10 +440,15 @@ async function scanHtml(env,source,raw){
   const sourceHost=new URL(raw.url).hostname.toLowerCase();
   const discovered=source.adapter==='cpbn_namibia'
     ?extractCpbnBidLinks(raw.text,raw.url)
-    :extractOpportunityLinks(raw.text,raw.url);
+    :source.adapter==='afdb_angola'
+      ?extractAfdbAngolaLinks(raw.text,raw.url)
+      :source.adapter==='ungm_angola'
+        ?extractUngmNoticeLinks(raw.text,raw.url)
+        :extractOpportunityLinks(raw.text,raw.url);
+  const expandedAdapters=new Set(['cpbn_namibia','afdb_angola','ungm_angola']);
   const links=discovered
     .filter(link=>new URL(link.url).hostname.toLowerCase()===sourceHost)
-    .slice(0,source.adapter==='cpbn_namibia'?12:4);
+    .slice(0,expandedAdapters.has(source.adapter)?12:4);
   let seen=0;
   for(const link of links){
     try{
@@ -356,6 +457,10 @@ async function scanHtml(env,source,raw){
       let c;
       if(source.adapter==='cpbn_namibia'){
         c=normalizeCpbnBidPage(page.text,page.url,source,Date.now());
+      }else if(source.adapter==='afdb_angola'){
+        c=normalizeAfdbAngolaPage(page.text,page.url,source,Date.now());
+      }else if(source.adapter==='ungm_angola'){
+        c=normalizeUngmNoticePage(page.text,page.url,source,Date.now());
       }else{
         const text=htmlToText(page.text).slice(0,12000),title=pageTitle(page.text)||link.label||'Oportunidade pública';
         const summary=text.slice(0,1200);
@@ -364,6 +469,7 @@ async function scanHtml(env,source,raw){
           currency_code:source.currency_code,reference:extractReference(text),
           deadline:extractDeadline(text,Date.now(),market.offset),source_url:page.url,description:summary,evidence_excerpt:summary},source);
       }
+      if(!c)continue;
       await upsert(env,source,c);seen++;
     }catch{}
   }
@@ -373,17 +479,24 @@ async function scanHtml(env,source,raw){
 async function scanJson(env,source,raw){
   const data=JSON.parse(raw.text);
   const ocds=Array.isArray(data?.releases);
-  const rows=ocds?data.releases:(Array.isArray(data)?data:(data?.results||data?.opportunities||data?.items||[]));
+  const wb=source.adapter==='world_bank_angola';
+  let rows;
+  if(wb){
+    const notices=data?.procnotices;
+    rows=Array.isArray(notices)?notices:(notices&&typeof notices==='object'?Object.values(notices):[]);
+  }else{
+    rows=ocds?data.releases:(Array.isArray(data)?data:(data?.results||data?.opportunities||data?.items||[]));
+  }
   if(!Array.isArray(rows))throw new Error('json_feed_shape_invalid');
   let seen=0;
-  for(const row of rows.slice(0,50)){
+  for(const row of rows.slice(0,100)){
     try{
-      const candidate=ocds?normalizeOcdsRelease(row,source):normalizeCandidate(row,source);
+      const candidate=wb?normalizeWorldBankNotice(row,source):ocds?normalizeOcdsRelease(row,source):normalizeCandidate(row,source);
       if(!candidate)continue;
       await upsert(env,source,candidate);seen++;
     }catch{}
   }
-  return {links_found:0,candidates_seen:seen,format:ocds?'ocds':'json'};
+  return {links_found:0,candidates_seen:seen,format:wb?'world-bank':ocds?'ocds':'json'};
 }
 
 async function dueSources(env,limit){
