@@ -140,3 +140,25 @@
     min-height:40px;
   }
 }
+
+/* 2026-09-28 — vertical intelligence and public commercial differentiation */
+.op-radar-search{display:grid;grid-template-columns:auto minmax(260px,430px);align-items:center;gap:12px;width:100%;justify-content:end}
+.op-radar-search>small{font-size:9px;letter-spacing:.12em;color:#8493a0;font-weight:850}
+.op-radar-search input{width:100%;min-height:44px;border:1px solid #d7e1e8;background:#fff;color:#17354d;padding:10px 12px;font:inherit;font-size:12px;outline:none}
+.op-radar-search input:focus{border-color:#7aa9ca;box-shadow:0 0 0 2px rgba(49,121,184,.08)}
+.op-format-filters button{min-width:72px}
+.op-area-row{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0 2px}
+.op-area-row span{display:inline-flex;align-items:center;min-height:24px;padding:4px 7px;border:1px solid #d8e4ec;background:#f7fafc;color:#294f6c;font-size:9px;font-weight:800;letter-spacing:.025em}
+.op-next-action{max-width:230px;padding:10px 11px;border-left:2px solid #0b6fba;background:#f5f9fc;text-align:left}
+.op-next-action small{display:block;color:#728593;font-size:8px;font-weight:850;letter-spacing:.09em}
+.op-next-action strong{display:block;margin-top:4px;color:#17354d;font-size:11px;line-height:1.38;font-weight:800}
+@media(max-width:980px){
+  .op-radar-search{grid-template-columns:1fr;justify-content:start;max-width:620px}
+  .op-filter-stack{width:100%}
+}
+@media(max-width:720px){
+  .op-radar-search{max-width:none}
+  .op-radar-search input{width:100%}
+  .op-next-action{max-width:none;width:100%}
+  .op-area-row{margin-top:10px}
+}
