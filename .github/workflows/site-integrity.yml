@@ -15,6 +15,7 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          from html.parser import HTMLParser
           from urllib.parse import urlparse
           import re
           import sys
@@ -28,6 +29,22 @@ jobs:
 
           def fail(message):
               errors.append(message)
+
+          class LanguageSignals(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.language = ''
+                  self.alternates = {}
+
+              def handle_starttag(self, tag, attributes):
+                  attrs = dict(attributes)
+                  if tag == 'html':
+                      self.language = attrs.get('lang', '')
+                  if tag == 'link' and attrs.get('rel') == 'alternate' and attrs.get('hreflang'):
+                      lang = attrs['hreflang']
+                      if lang in self.alternates:
+                          fail(f'duplicate HTML hreflang {lang}')
+                      self.alternates[lang] = attrs.get('href', '')
 
           # robots.txt must allow public crawling and advertise the canonical sitemap.
           robots_path = ROOT / 'robots.txt'
@@ -69,6 +86,8 @@ jobs:
                           lang = link.attrib.get('hreflang', '').strip()
                           href = link.attrib.get('href', '').strip()
                           if lang:
+                              if lang in alts:
+                                  fail(f'{loc} has duplicate sitemap hreflang {lang}')
                               alts[lang] = href
                       alternate_map[loc] = alts
               except Exception as exc:
@@ -106,34 +125,52 @@ jobs:
                   fail(f'noindex page appears in sitemap: {html_path}')
 
               alts = alternate_map.get(url, {})
-              for required in ('pt-AO', 'en', 'x-default'):
+              signals = LanguageSignals()
+              signals.feed(html.partition('</head>')[0])
+              # Source AO switches language on one URL; it has no separate English
+              # canonical pages. Keep the established bilingual root-page contract.
+              required_languages = ['pt-AO', 'x-default']
+              if not rel.startswith('source-ao/') or 'en' in signals.alternates:
+                  required_languages.append('en')
+              for required in required_languages:
                   if required not in alts:
                       fail(f'{url} missing sitemap hreflang {required}')
+              if alts.get(signals.language) != url:
+                  fail(f'{url} missing self-referencing hreflang for {signals.language}')
+              if signals.alternates and signals.alternates != alts:
+                  fail(f'{url} HTML and sitemap hreflang disagree')
               if alts.get('x-default') and alts.get('pt-AO') and alts['x-default'] != alts['pt-AO']:
                   fail(f'{url} x-default should match pt-AO canonical')
+              target_languages = {}
               for lang, href in alts.items():
                   if href not in canonical_set:
                       fail(f'{url} hreflang {lang} points outside canonical sitemap: {href}')
+                  if lang != 'x-default':
+                      target_languages.setdefault(href, set()).add(lang.split('-')[0].lower())
+              for href, languages in target_languages.items():
+                  if len(languages) > 1:
+                      fail(f'{url} references {href} for multiple languages: {sorted(languages)}')
 
-          # Reciprocal PT/EN sitemap relationship.
+          # Every language target must return the same group, including single-URL pages.
           for url, alts in alternate_map.items():
-              pt = alts.get('pt-AO')
-              en = alts.get('en')
-              if not pt or not en:
-                  continue
-              for target in (pt, en):
+              for target in set(alts.values()):
                   target_alts = alternate_map.get(target, {})
-                  if target_alts.get('pt-AO') != pt or target_alts.get('en') != en:
+                  if target_alts != alts:
                       fail(f'non-reciprocal hreflang pair: {url} -> {target}')
 
-          # Legacy aliases may remain for users, but must stay out of the sitemap and out of indexing.
-          for html_path in ROOT.glob('*.html'):
+          # Cover all public HTML, including Source AO legal pages. Legacy aliases
+          # and private desks remain excluded; indexable canonical pages must be listed.
+          for html_path in list(ROOT.glob('*.html')) + list((ROOT / 'source-ao').glob('*.html')):
               html = html_path.read_text(encoding='utf-8')
               robots_meta = re.search(r'<meta\b[^>]*\bname=["\']robots["\'][^>]*\bcontent=["\']([^"\']+)', html, re.I)
               is_noindex = bool(robots_meta and 'noindex' in robots_meta.group(1).lower())
-              page_url = BASE + ('/' if html_path.name == 'index.html' else '/' + html_path.name)
+              page_rel = html_path.relative_to(ROOT).as_posix()
+              page_url = BASE + ('/' if page_rel == 'index.html' else '/' + page_rel)
               if is_noindex and page_url in canonical_set:
                   fail(f'noindex alias incorrectly included in sitemap: {html_path}')
+              canonical = re.search(r'<link\b[^>]*\brel=["\']canonical["\'][^>]*\bhref=["\']([^"\']+)', html, re.I)
+              if not is_noindex and (not canonical or canonical.group(1) == page_url) and page_url not in canonical_set:
+                  fail(f'indexable page missing from sitemap: {html_path}')
 
           # All hard-coded WhatsApp links must use the single commercial number.
           whatsapp_refs = 0
