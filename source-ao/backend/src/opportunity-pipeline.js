@@ -62,7 +62,7 @@ export function classifyOpportunityText(value=''){
   if(hit(['construcao','construction','obra','reabilitacao','rehabilitation','pintura','civil'],'construction',34)){
     if(sector==='general')sector='construction';
   }
-  if(hit(['ar condicionado','hvac','electrica','eletrica','electrical','canalizacao','plumbing'],'technical-services',22)){
+  if(hit(['ar condicionado','hvac','electrica','eletrica','electrical','canalizacao','plumbing','hidraulica','hydraulic'],'technical-services',30)){
     if(sector==='general')sector='technical-maintenance';
   }
   if(/\brfq\b|request for quotation|pedido de cotacao/.test(text))type='rfq';
@@ -134,7 +134,7 @@ export function extractOpportunityLinks(html='',base=''){
     if(!isSafeDiscoveryUrl(url)||seen.has(url))continue;
     const label=htmlToText(m[2]).slice(0,300);
     const hay=normalizeSearch(`${label} ${url}`);
-    if(!/(concurso|tender|licitacao|procedimento|aquisicao|procurement|fornecimento|supply|rfq|manutencao|maintenance|reabilitacao|construction|obra|limpeza|cleaning)/.test(hay))continue;
+    if(!/(concurso|tender|licitacao|procedimento|aquisicao|procurement|fornecimento|supply|rfq|manutencao|maintenance|facilities|facility|reabilitacao|construction|obra|limpeza|cleaning|canalizacao|plumbing|reparacao|repair|infraestrutura|infrastructure|hidraulica|hydraulic|hvac|electrica|eletrica|electrical)/.test(hay))continue;
     seen.add(url);out.push({url,label});
   }
   return out;
