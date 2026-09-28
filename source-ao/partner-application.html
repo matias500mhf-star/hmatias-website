@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#071f34">
+  <meta name="description" content="Candidatura privada de fornecedores, subempreiteiros e parceiros empresariais à rede comercial Source AO / HMATIAS.">
+  <title>Candidatura à Rede de Parceiros | SOURCE AO</title>
+  <link rel="stylesheet" href="partner-application.css?v=20260928">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="index.html"><span>SOURCE AO</span><small>by HMATIAS</small></a>
+    <a class="back" href="index.html">← Voltar</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">REDE COMERCIAL · CANDIDATURA</p>
+      <h1>Apresente a sua empresa para avaliação.</h1>
+      <p>A HMATIAS avalia fornecedores, subempreiteiros e prestadores com base na capacidade real, documentação e adequação às oportunidades. A submissão não constitui aprovação nem parceria automática.</p>
+      <div class="rules">
+        <span>01 · Identificação empresarial</span>
+        <span>02 · Capacidade comprovável</span>
+        <span>03 · Revisão HMATIAS</span>
+        <span>04 · Ativação apenas após aprovação</span>
+      </div>
+    </section>
+
+    <section class="form-shell">
+      <form id="partnerForm">
+        <div class="section-head">
+          <p class="eyebrow dark">IDENTIFICAÇÃO</p>
+          <h2>Dados da empresa</h2>
+        </div>
+        <div class="grid">
+          <label class="wide">Nome legal da empresa<input name="company_name" maxlength="220" required></label>
+          <label>NIF / Registo comercial<input name="registration_number" maxlength="120" required></label>
+          <label>Tipo
+            <select name="partner_type" required>
+              <option value="">Selecionar</option>
+              <option value="supplier">Fornecedor</option>
+              <option value="subcontractor">Subempreiteiro</option>
+              <option value="service_provider">Prestador de serviços</option>
+              <option value="technical_partner">Parceiro técnico</option>
+              <option value="strategic_partner">Parceiro estratégico</option>
+            </select>
+          </label>
+          <label>País
+            <select name="country_code" required>
+              <option value="AO">Angola</option>
+              <option value="NA">Namíbia</option>
+              <option value="ZA">África do Sul</option>
+            </select>
+          </label>
+          <label>Província / cidade<input name="locality" maxlength="180" placeholder="Ex.: Luanda" required></label>
+          <label class="wide">Website<input name="website" type="url" maxlength="600" placeholder="https://"></label>
+        </div>
+
+        <div class="section-head">
+          <p class="eyebrow dark">CAPACIDADE</p>
+          <h2>O que a empresa consegue executar ou fornecer?</h2>
+          <p>Selecione apenas atividades que consegue comprovar comercial ou tecnicamente.</p>
+        </div>
+        <div class="checks" id="capabilities">
+          <label><input type="checkbox" value="construction"> Construção / obras civis</label>
+          <label><input type="checkbox" value="facilities"> Facilities / manutenção</label>
+          <label><input type="checkbox" value="plumbing"> Canalização / hidráulica</label>
+          <label><input type="checkbox" value="electrical"> Eletricidade</label>
+          <label><input type="checkbox" value="hvac"> Climatização / HVAC</label>
+          <label><input type="checkbox" value="painting"> Pintura / acabamentos</label>
+          <label><input type="checkbox" value="cleaning"> Limpeza / higiene</label>
+          <label><input type="checkbox" value="materials-supply"> Materiais de construção</label>
+          <label><input type="checkbox" value="industrial-supply"> Fornecimento industrial</label>
+          <label><input type="checkbox" value="equipment"> Equipamentos / ferramentas</label>
+          <label><input type="checkbox" value="uniforms"> Uniformes / fardamento</label>
+          <label><input type="checkbox" value="professional-services"> Serviços empresariais / técnicos</label>
+        </div>
+
+        <div class="section-head">
+          <p class="eyebrow dark">CONTACTO E EVIDÊNCIA</p>
+          <h2>Responsável pela candidatura</h2>
+        </div>
+        <div class="grid">
+          <label>Nome do responsável<input name="contact_name" maxlength="180" required></label>
+          <label>Função<input name="contact_role" maxlength="120"></label>
+          <label>Email<input name="email" type="email" maxlength="180"></label>
+          <label>WhatsApp / telefone<input name="whatsapp" maxlength="80" inputmode="tel"></label>
+          <label class="wide">Portfólio / página de referências<input name="portfolio_url" type="url" maxlength="600" placeholder="https://"></label>
+          <label class="wide">Nota comercial<textarea name="note" maxlength="1600" rows="5" placeholder="Experiência, cobertura geográfica, equipa, principais capacidades e tipo de colaboração pretendida."></textarea></label>
+        </div>
+
+        <label class="consent"><input id="confirmAccuracy" type="checkbox" required><span>Confirmo que a informação submetida é verdadeira e autorizo a HMATIAS a utilizá-la exclusivamente para avaliação comercial e contacto relacionado com esta candidatura. Li a <a href="privacy.html" target="_blank" rel="noopener">Privacidade</a> e os <a href="terms.html" target="_blank" rel="noopener">Termos</a>.</span></label>
+        <p class="privacy-note">Não envie documentos confidenciais, BI, passaporte, dados bancários ou ficheiros nesta página. Documentação adicional só será solicitada pela HMATIAS após triagem.</p>
+
+        <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+        <button id="submitPartner" type="submit">Submeter candidatura</button>
+      </form>
+
+      <aside>
+        <p class="eyebrow dark">PROCESSO</p>
+        <h2>O que acontece depois?</h2>
+        <ol>
+          <li><strong>Triagem</strong><span>Identidade, capacidade e aderência comercial.</span></li>
+          <li><strong>Revisão</strong><span>A HMATIAS pode pedir portfólio, documentos ou referências.</span></li>
+          <li><strong>Classificação</strong><span>A empresa é enquadrada por capacidade e tipo de colaboração.</span></li>
+          <li><strong>Ativação</strong><span>Só empresas aprovadas entram na rede operacional.</span></li>
+        </ol>
+        <div class="warning"><strong>Importante</strong><p>Estar na base não garante adjudicação, exclusividade, volume de trabalho ou convite para todos os processos.</p></div>
+      </aside>
+    </section>
+  </main>
+
+  <footer><span>© 2026 SOURCE AO · HMATIAS</span><a href="privacy.html">Privacidade</a></footer>
+  <script src="runtime-config.js"></script>
+  <script src="partner-application.js?v=20260928"></script>
+</body>
+</html>
