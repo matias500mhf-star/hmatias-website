@@ -97,3 +97,16 @@ test('cross-border opportunity never becomes an automatic direct-bid recommendat
   assert.equal(result.recommended_action,'cross_border_review');
   assert.ok(result.risks.some(x=>x.includes('Mercado externo')));
 });
+
+
+test('official procurement hosts receive a distinct confidence signal',()=>{
+  const base={
+    title:'Reabilitação de edifício',sector:'construction',opportunity_type:'tender',location:'Angola',
+    issuer:'Entidade pública',reference:'AO/PROC/01',deadline:'2026-10-20T23:59:59Z',
+    source_checked_at:'2026-09-26T10:00:00Z',scope_summary:'Obras de reabilitação.',fit_score:84
+  };
+  const official=buildOpportunityIntelligence({...base,source_url:'https://www.afdb.org/en/documents/example'},{clock});
+  const generic=buildOpportunityIntelligence({...base,source_url:'https://example.com/tender/1'},{clock});
+  assert.ok(official.confidence_signals.includes('official_source'));
+  assert.ok(official.confidence_score>generic.confidence_score);
+});
