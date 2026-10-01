@@ -34,8 +34,9 @@ export function normalizePursuitInput(input={}){
   const stage=clean(input.stage,30)||'review';
   if(!PURSUIT_DECISIONS.has(decision))throw new Error('invalid_decision');
   if(!PURSUIT_STAGES.has(stage))throw new Error('invalid_stage');
-  if(decision==='no_go'&&!['lost','withdrawn','review'].includes(stage))throw new Error('no_go_stage_conflict');
-  if(['won','lost','withdrawn'].includes(stage)&&decision==='watch')throw new Error('closed_stage_requires_decision');
+  if(decision==='no_go'&&!['review','withdrawn'].includes(stage))throw new Error('no_go_stage_conflict');
+  if(['won','lost'].includes(stage)&&decision!=='go')throw new Error('competitive_outcome_requires_go');
+  if(stage==='withdrawn'&&decision==='watch')throw new Error('closed_stage_requires_decision');
   return {
     decision,
     stage,
@@ -85,10 +86,8 @@ export async function listOpportunityPursuits(request,env){
     FROM opportunities o
     LEFT JOIN opportunity_pursuits p ON p.opportunity_id=o.id
     WHERE o.country_code='AO'
-      AND (
-        o.status='active'
-        OR (?=1 AND p.stage IN ('won','lost','withdrawn'))
-      )
+      AND (o.status='active' OR p.opportunity_id IS NOT NULL)
+      AND (?=1 OR COALESCE(p.stage,'review') NOT IN ('won','lost','withdrawn'))
     ORDER BY
       CASE COALESCE(p.decision,'watch') WHEN 'go' THEN 0 WHEN 'watch' THEN 1 ELSE 2 END,
       CASE COALESCE(p.stage,'review')
@@ -122,6 +121,12 @@ export async function upsertOpportunityPursuit(request,env,opportunityId){
   ).bind(opportunityId).first();
   if(!opportunity)return fail(env,404,'opportunity_not_found','Opportunity does not exist.');
   if(opportunity.country_code!=='AO')return fail(env,409,'market_not_supported','Commercial pursuits are Angola opportunities only.');
+  const existing=await env.SOURCE_AO_DB.prepare(
+    'SELECT opportunity_id FROM opportunity_pursuits WHERE opportunity_id=?'
+  ).bind(opportunityId).first();
+  if(opportunity.status!=='active'&&!existing){
+    return fail(env,409,'opportunity_closed','A closed or expired public opportunity cannot start a new pursuit.');
+  }
 
   let input;
   try{input=await request.json();}catch{return fail(env,400,'invalid_json','A JSON body is required.');}
