@@ -28,6 +28,14 @@ jobs:
         run: |
           set -euo pipefail
           chrome_flags="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu"
+          # Keep this regression gate deterministic and focused on first-party code.
+          # Consent/analytics integrations are validated separately by integrity/privacy checks.
+          blocked_external=(
+            '--blocked-url-patterns=*://consent.cookiebot.com/*'
+            '--blocked-url-patterns=*://consentcdn.cookiebot.com/*'
+            '--blocked-url-patterns=*://www.googletagmanager.com/*'
+            '--blocked-url-patterns=*://www.google-analytics.com/*'
+          )
 
           run_lighthouse() {
             local url="$1"
@@ -40,6 +48,7 @@ jobs:
               if [ "$preset" = "desktop" ]; then
                 if npx --yes lighthouse@latest "$url" \
                   --quiet --preset=desktop --chrome-flags="$chrome_flags" \
+                  "${blocked_external[@]}" \
                   --only-categories=performance,accessibility,best-practices,seo \
                   --output=json --output-path="$output"; then
                   test -s "$output"
@@ -48,6 +57,7 @@ jobs:
               else
                 if npx --yes lighthouse@latest "$url" \
                   --quiet --chrome-flags="$chrome_flags" \
+                  "${blocked_external[@]}" \
                   --only-categories=performance,accessibility,best-practices,seo \
                   --output=json --output-path="$output"; then
                   test -s "$output"
