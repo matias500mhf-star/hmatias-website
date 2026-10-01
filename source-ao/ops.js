@@ -333,6 +333,131 @@
     }
   }
 
+
+  function fmtAoa(value){
+    const n=Number(value);
+    if(!Number.isFinite(n))return '—';
+    return new Intl.NumberFormat('pt-AO',{style:'currency',currency:'AOA',maximumFractionDigits:0}).format(n);
+  }
+
+  function pursuitStageLabel(value){
+    return ({
+      review:'Revisão',qualification:'Qualificação',partnering:'Parceiros',
+      preparing_bid:'Preparar proposta',submitted:'Submetida',clarification:'Clarificação',
+      won:'Ganha',lost:'Perdida',withdrawn:'Retirada'
+    })[value]||value||'Revisão';
+  }
+
+  function renderOpportunityPursuits(payload){
+    const summary=payload?.summary||{};
+    const items=payload?.pursuits||[];
+    $('#pursuitGoCount').textContent=String(summary.go_count||0);
+    $('#pursuitSubmittedCount').textContent=String(summary.submitted_count||0);
+    $('#pursuitPipelineValue').textContent=fmtAoa(summary.pipeline_value_aoa);
+    $('#pursuitWonCount').textContent=String(summary.won_count||0);
+    $('#pursuitCount').textContent=`${items.length} oportunidade${items.length===1?'':'s'}`;
+    const list=$('#pursuitList');list.innerHTML='';
+    if(!items.length){
+      list.innerHTML='<div class="empty-state"><strong>No promoted opportunities available.</strong><p>Approve a valid Radar candidate first, then decide whether HMATIAS should pursue it.</p></div>';
+      return;
+    }
+    for(const item of items){
+      const card=document.createElement('article');card.className='pursuit-card';card.dataset.decision=item.decision||'watch';card.dataset.stage=item.stage||'review';
+      const top=document.createElement('div');top.className='pursuit-top';
+      const main=document.createElement('div');
+      const title=document.createElement('strong');title.textContent=item.title||item.opportunity_id;
+      const meta=document.createElement('small');meta.textContent=[item.issuer,item.reference,item.deadline?'Prazo '+new Date(item.deadline).toLocaleDateString('pt-AO'):null].filter(Boolean).join(' · ');
+      main.append(title,meta);
+      const badges=document.createElement('div');badges.className='pursuit-badges';
+      const decision=document.createElement('span');decision.className='pursuit-decision';decision.textContent=(item.decision||'watch').replace('_','-').toUpperCase();
+      const stage=document.createElement('span');stage.className='queue-badge';stage.textContent=pursuitStageLabel(item.stage);
+      badges.append(decision,stage);top.append(main,badges);
+
+      const facts=document.createElement('div');facts.className='pursuit-facts';
+      const fact=(label,value)=>{const el=document.createElement('div');const s=document.createElement('small');s.textContent=label;const b=document.createElement('strong');b.textContent=value||'—';el.append(s,b);facts.appendChild(el);};
+      fact('VALOR POTENCIAL',fmtAoa(item.estimated_value_aoa));
+      fact('RESPONSÁVEL',item.owner);
+      fact('PRÓXIMA AÇÃO',item.next_action);
+      fact('AÇÃO ATÉ',item.next_action_due_at?new Date(item.next_action_due_at).toLocaleDateString('pt-AO'):'—');
+
+      const actions=document.createElement('div');actions.className='ops-actions compact pursuit-actions';
+      if(item.source_url){const source=document.createElement('a');source.className='btn btn-outline btn-small';source.href=item.source_url;source.target='_blank';source.rel='noopener noreferrer';source.textContent='Open source';actions.appendChild(source);}
+      const manage=document.createElement('button');manage.type='button';manage.className='btn btn-primary btn-small';manage.textContent=item.pursuit_updated_at?'Atualizar':'Definir GO / NO-GO';manage.addEventListener('click',()=>editOpportunityPursuit(item));actions.appendChild(manage);
+
+      if(item.partner_need){const partner=document.createElement('p');partner.className='pursuit-note';partner.textContent='Parceiros/capacidade: '+item.partner_need;card.append(top,facts,partner,actions);}
+      else card.append(top,facts,actions);
+      list.appendChild(card);
+    }
+  }
+
+  async function loadOpportunityPursuits(){
+    if(!adminToken||!apiBase())return false;
+    $('#pursuitCount').textContent='Loading…';
+    try{
+      const payload=await api('/api/admin/opportunity-pursuits?include_closed=1');
+      renderOpportunityPursuits(payload);
+      return true;
+    }catch(error){
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
+      $('#pursuitList').innerHTML='<div class="empty-state"><strong>Commercial pursuit pipeline unavailable.</strong><p>Check the API session and try again.</p></div>';
+      return false;
+    }
+  }
+
+  async function editOpportunityPursuit(item){
+    const allowedDecisions=['watch','go','no_go'];
+    const allowedStages=['review','qualification','partnering','preparing_bid','submitted','clarification','won','lost','withdrawn'];
+    const decision=prompt('Decisão: watch, go ou no_go',item.decision||'watch');
+    if(decision===null)return;
+    const normalizedDecision=decision.trim().toLowerCase();
+    if(!allowedDecisions.includes(normalizedDecision))return alert('Use watch, go ou no_go.');
+    const defaultStage=normalizedDecision==='no_go'?'withdrawn':(item.stage||'review');
+    const stage=prompt('Etapa: review, qualification, partnering, preparing_bid, submitted, clarification, won, lost ou withdrawn',defaultStage);
+    if(stage===null)return;
+    const normalizedStage=stage.trim().toLowerCase();
+    if(!allowedStages.includes(normalizedStage))return alert('Etapa inválida.');
+
+    const owner=prompt('Responsável interno:',item.owner||'Henrique Fernandes Matias');
+    if(owner===null)return;
+    const amount=prompt('Valor potencial em AOA (deixe vazio se ainda desconhecido):',item.estimated_value_aoa??'');
+    if(amount===null)return;
+    const parsedAmount=amount.trim()===''?null:Number(amount.replace(/\s/g,'').replace(',','.'));
+    if(parsedAmount!=null&&(!Number.isFinite(parsedAmount)||parsedAmount<0))return alert('Valor potencial inválido.');
+    const nextAction=prompt('Próxima ação comercial:',item.next_action||'');
+    if(nextAction===null)return;
+    const dueDefault=item.next_action_due_at?new Date(item.next_action_due_at).toISOString().slice(0,10):'';
+    const due=prompt('Data da próxima ação (YYYY-MM-DD, opcional):',dueDefault);
+    if(due===null)return;
+    if(due.trim()&&!/^\d{4}-\d{2}-\d{2}$/.test(due.trim()))return alert('Use o formato YYYY-MM-DD.');
+    const partnerNeed=prompt('Parceiro/capacidade necessária (opcional):',item.partner_need||'');
+    if(partnerNeed===null)return;
+    let outcome=item.outcome_reason||'';
+    if(['won','lost','withdrawn'].includes(normalizedStage)){
+      const result=prompt('Registe o resultado/motivo de encerramento:',outcome);
+      if(result===null||!result.trim())return alert('O resultado é obrigatório para fechar a oportunidade.');
+      outcome=result.trim();
+    }
+    const payload={
+      decision:normalizedDecision,
+      stage:normalizedStage,
+      owner:owner.trim()||null,
+      estimated_value_aoa:parsedAmount,
+      next_action:nextAction.trim()||null,
+      next_action_due_at:due.trim()?due.trim()+'T17:00:00+01:00':null,
+      partner_need:partnerNeed.trim()||null,
+      outcome_reason:outcome||null
+    };
+    try{
+      await api(`/api/admin/opportunities/${encodeURIComponent(item.opportunity_id)}/pursuit`,{
+        method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)
+      });
+      await loadOpportunityPursuits();
+      setApiStatus('Pursuit updated · commercial next action recorded','connected');
+    }catch(error){
+      alert('Could not update the pursuit: '+(error.message||'check the commercial fields.'));
+    }
+  }
+
   async function loadOpportunityPipeline(){
     if(!adminToken||!apiBase()) return false;
     $('#opportunityCandidateCount').textContent='Loading…';
@@ -381,7 +506,7 @@
         headers:{'content-type':'application/json'},
         body:JSON.stringify(review)
       });
-      await loadOpportunityPipeline();
+      await Promise.all([loadOpportunityPipeline(),loadOpportunityPursuits()]);
     }catch(error){
       alert(error.message==='deadline_expired'?'The deadline has expired. The candidate was not published.':'Review action failed. Check the candidate data and API session.');
     }
@@ -400,10 +525,11 @@
     }
     setInternalAccess(true);
     setApiStatus('Connected · private operations loaded','connected');
-    await loadPartnerNetwork();
+    await Promise.all([loadPartnerNetwork(),loadOpportunityPursuits()]);
   });
 
   $('#refreshOpportunities').addEventListener('click',()=>loadOpportunityPipeline());
+  $('#refreshPursuits').addEventListener('click',()=>loadOpportunityPursuits());
   $('#refreshPartners').addEventListener('click',()=>loadPartnerNetwork());
 
   $('#scanOpportunities').addEventListener('click',async()=>{
