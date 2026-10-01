@@ -20,8 +20,14 @@ test('normalizes a revenue pursuit without inventing commercial values',()=>{
 test('rejects unsupported pipeline states',()=>{
   assert.throws(()=>normalizePursuitInput({decision:'maybe'}),/invalid_decision/);
   assert.throws(()=>normalizePursuitInput({decision:'no_go',stage:'submitted'}),/no_go_stage_conflict/);
+  assert.throws(()=>normalizePursuitInput({decision:'no_go',stage:'won'}),/no_go_stage_conflict/);
 });
 
-test('closed stages require an explicit decision',()=>{
-  assert.throws(()=>normalizePursuitInput({decision:'watch',stage:'won'}),/closed_stage_requires_decision/);
+test('competitive outcomes require a GO decision',()=>{
+  assert.throws(()=>normalizePursuitInput({decision:'watch',stage:'won'}),/competitive_outcome_requires_go/);
+  assert.throws(()=>normalizePursuitInput({decision:'watch',stage:'lost'}),/competitive_outcome_requires_go/);
+});
+
+test('withdrawal requires an explicit decision',()=>{
+  assert.throws(()=>normalizePursuitInput({decision:'watch',stage:'withdrawn'}),/closed_stage_requires_decision/);
 });
