@@ -290,13 +290,13 @@
 
   function applyLanguage(){
     document.documentElement.lang=lang==='pt'?'pt-AO':'en';
-    $('[data-i18n]').forEach(node=>{
+    $$('[data-i18n]').forEach(node=>{
       const value=copy[lang][node.dataset.i18n];
       if(!value)return;
       if(node.tagName==='H1')node.innerHTML=value.replace('\n','<br>');
       else node.textContent=value;
     });
-    $('[data-i18n-placeholder]').forEach(node=>{
+    $$('[data-i18n-placeholder]').forEach(node=>{
       const value=copy[lang][node.dataset.i18nPlaceholder];
       if(value)node.setAttribute('placeholder',value);
     });
@@ -394,19 +394,19 @@
     applyLanguage();
     await refreshLiveData();
 
-    $('[data-market]').forEach(btn=>btn.addEventListener('click',()=>{
+    $$('[data-market]').forEach(btn=>btn.addEventListener('click',()=>{
       market=btn.dataset.market;
-      $('[data-market]').forEach(b=>b.classList.toggle('active',b===btn));
+      $$('[data-market]').forEach(b=>b.classList.toggle('active',b===btn));
       render();
     }));
-    $('[data-area]').forEach(btn=>btn.addEventListener('click',()=>{
+    $$('[data-area]').forEach(btn=>btn.addEventListener('click',()=>{
       area=btn.dataset.area;
-      $('[data-area]').forEach(b=>b.classList.toggle('active',b===btn));
+      $$('[data-area]').forEach(b=>b.classList.toggle('active',b===btn));
       render();
     }));
-    $('[data-format]').forEach(btn=>btn.addEventListener('click',()=>{
+    $$('[data-format]').forEach(btn=>btn.addEventListener('click',()=>{
       format=btn.dataset.format;
-      $('[data-format]').forEach(b=>b.classList.toggle('active',b===btn));
+      $$('[data-format]').forEach(b=>b.classList.toggle('active',b===btn));
       render();
     }));
     $('#opportunitySearch')?.addEventListener('input',event=>{
