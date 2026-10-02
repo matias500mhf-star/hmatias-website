@@ -82,9 +82,29 @@
       <p class="ops-note">Automatic discovery can identify a possible procurement notice, but it does not publish it. Approval requires a traceable source and a future deadline; expired or unresolved candidates stay out of the public Radar.</p>
     </section>
 
+    <section class="ops-card queue-card pursuit-pipeline">
+      <div class="ops-card-head">
+        <div><small>05</small><h2>HMATIAS opportunity pursuits</h2></div>
+        <div class="ops-actions compact">
+          <button class="btn btn-outline btn-small" type="button" id="refreshPursuits">Refresh pursuits</button>
+        </div>
+      </div>
+      <div class="pursuit-summary">
+        <article><small>GO</small><strong id="pursuitGoCount">—</strong></article>
+        <article><small>SUBMETIDAS</small><strong id="pursuitSubmittedCount">—</strong></article>
+        <article><small>PIPELINE POTENCIAL</small><strong id="pursuitPipelineValue">—</strong></article>
+        <article><small>GANHAS</small><strong id="pursuitWonCount">—</strong></article>
+      </div>
+      <div class="op-pipeline-head"><strong>Radar → decisão comercial → proposta → resultado</strong><span id="pursuitCount">—</span></div>
+      <div id="pursuitList" class="pursuit-list">
+        <div class="empty-state"><strong>Admin session required.</strong><p>Load the API token above to manage GO/NO-GO decisions and commercial follow-up.</p></div>
+      </div>
+      <p class="ops-note">Private HMATIAS pipeline. Estimated value, owner and next action are entered by the commercial team; SOURCE AO does not invent contract values or award probabilities.</p>
+    </section>
+
     <section class="ops-card queue-card partner-network">
       <div class="ops-card-head">
-        <div><small>05</small><h2>HMATIAS commercial partner network</h2></div>
+        <div><small>06</small><h2>HMATIAS commercial partner network</h2></div>
         <div class="ops-actions compact">
           <span id="partnerCount">—</span>
           <button class="btn btn-outline btn-small" type="button" id="refreshPartners">Refresh network</button>
