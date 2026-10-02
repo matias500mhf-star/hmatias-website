@@ -47,7 +47,7 @@
       fit:'Fit',confidence:'Confiança',sourceChecked:'Fonte verificada',deadline:'Prazo',
       priorityHigh:'Prioridade alta',priorityMedium:'Avaliar',priorityLow:'Monitorizar',
       openSource:'Abrir fonte →',analyse:'Analisar oportunidade',map:'Ver no Google Maps ↗',
-      signalFresh:'Fonte recente',signalRef:'Referência',signalDeadline:'Prazo confirmado',details:'Detalhes da análise',
+      signalFresh:'Fonte recente',signalAged:'Rever fonte',signalRef:'Referência',signalDeadline:'Prazo confirmado',details:'Detalhes da análise',
       serviceBy:'Um serviço da HMATIAS',
       disclaimer:'Fit e confiança são sinais de triagem, não garantias de elegibilidade ou adjudicação. Confirme sempre a fonte original, os documentos do procedimento e os requisitos de qualificação.'
     },
@@ -83,16 +83,18 @@
       fit:'Fit',confidence:'Confidence',sourceChecked:'Source checked',deadline:'Deadline',
       priorityHigh:'High priority',priorityMedium:'Assess',priorityLow:'Monitor',
       openSource:'Open source →',analyse:'Analyse opportunity',map:'Open in Google Maps ↗',
-      signalFresh:'Recent source',signalRef:'Reference',signalDeadline:'Deadline confirmed',details:'Analysis details',
+      signalFresh:'Recent source',signalAged:'Recheck source',signalRef:'Reference',signalDeadline:'Deadline confirmed',details:'Analysis details',
       serviceBy:'A service by HMATIAS',
       disclaimer:'Fit and confidence are triage signals, not guarantees of eligibility or award. Always verify the original source, procurement documents and qualification requirements.'
     }
   };
 
   const t=key=>copy[lang][key]||key;
-  const fmt=value=>new Intl.DateTimeFormat(lang==='pt'?'pt-PT':'en-GB',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(value));
-  const clock=value=>new Intl.DateTimeFormat(lang==='pt'?'pt-PT':'en-GB',{hour:'2-digit',minute:'2-digit'}).format(new Date(value));
-  const daysLeft=value=>Math.ceil((new Date(value).getTime()-Date.now())/86400000);
+  const fmt=value=>new Intl.DateTimeFormat(lang==='pt'?'pt-PT':'en-GB',{day:'2-digit',month:'short',year:'numeric',timeZone:'Africa/Luanda'}).format(new Date(value));
+  const clock=value=>new Intl.DateTimeFormat(lang==='pt'?'pt-PT':'en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Africa/Luanda'}).format(new Date(value));
+  // Deadlines use Angola calendar days, independently of the visitor's timezone.
+  const daysLeft=value=>Math.floor((new Date(value).getTime()+3600000)/86400000)-Math.floor((Date.now()+3600000)/86400000);
+  const isActive=o=>(!o.status||o.status==='active')&&Number.isFinite(new Date(o.deadline).getTime())&&new Date(o.deadline).getTime()>Date.now();
 
   function latestSourceCheckedAt(){
     const times=opportunities
@@ -110,7 +112,7 @@
     if(!status||!meta)return;
 
     const sourceAt=latestSourceCheckedAt();
-    const sourceMeta=sourceAt?t('sourcesChecked')+' '+clock(sourceAt):'';
+    const sourceMeta=sourceAt?t('sourcesChecked')+' '+fmt(sourceAt)+' · '+clock(sourceAt):'';
     document.body.classList.toggle('op-live-unavailable',syncState==='fallback');
     document.body.classList.toggle('op-live-syncing',syncState==='syncing');
 
@@ -197,6 +199,7 @@
   }
 
   function matchesFilter(o){
+    if(!isActive(o))return false;
     if(market!=='all'&&inferredCountry(o)!==market)return false;
     if(area!=='all'&&!areaTags(o).includes(area))return false;
     if(format!=='all'&&o.type!==format)return false;
@@ -281,7 +284,7 @@
   }
 
   function updateStats(){
-    const active=opportunities.filter(o=>daysLeft(o.deadline)>=0);
+    const active=opportunities.filter(isActive);
     $('#activeCount').textContent=active.length;
     $('#highFitCount').textContent=active.filter(o=>(Number(o.fit_score)||0)>=80).length;
     $('#urgentCount').textContent=active.filter(o=>{const d=daysLeft(o.deadline);return d>=0&&d<=5;}).length;
@@ -356,7 +359,7 @@
       if(o.deadline){const s=document.createElement('span');s.className='op-signal good';s.textContent=t('signalDeadline');signals.appendChild(s);}
       if(o.source_checked_at){
         const age=(Date.now()-new Date(o.source_checked_at).getTime())/86400000;
-        const s=document.createElement('span');s.className='op-signal '+(age<=7?'good':'warn');s.textContent=t('signalFresh');signals.appendChild(s);
+        const s=document.createElement('span');s.className='op-signal '+(age<=7?'good':'warn');s.textContent=t(age<=7?'signalFresh':'signalAged');signals.appendChild(s);
       }
       main.append(kicker,title);
       if(areaRow.childElementCount)main.append(areaRow);
