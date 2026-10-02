@@ -183,3 +183,12 @@ body.hmatias-home.contact-in-view .whatsapp-float,body.hmatias-home.contact-in-v
   .site-stable{scroll-behavior:auto}
   .site-stable *, .site-stable *::before, .site-stable *::after{animation:none!important;transition:none!important}
 }
+
+
+/* 2026-10-02 — discreet HMATIAS → SOURCE AO bridge in the footer only. */
+body.hmatias-home .footer-source-ao{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:center;gap:12px;max-width:340px;margin-top:20px;padding:10px 12px;background:#fff;border:1px solid #47637e;border-radius:6px;color:#082f5c;text-decoration:none}
+body.hmatias-home .footer-source-ao img{display:block;width:92px;height:auto}
+body.hmatias-home .footer-source-ao span{font-size:.75rem;line-height:1.45;font-weight:700;color:#294a67}
+body.hmatias-home .footer-source-ao b{color:#0b6fba;font-size:1rem}
+body.hmatias-home .footer-source-ao:hover{border-color:#8fd0f3}
+@media(max-width:560px){body.hmatias-home .footer-source-ao{grid-template-columns:78px minmax(0,1fr);max-width:100%}body.hmatias-home .footer-source-ao img{width:78px}}
