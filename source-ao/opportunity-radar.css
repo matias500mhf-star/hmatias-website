@@ -162,3 +162,15 @@
   .op-next-action{max-width:none;width:100%}
   .op-area-row{margin-top:10px}
 }
+
+
+/* 2026-10-02 — final responsive cascade guard: keep catalogue desktop grid from overriding tablet/mobile layouts */
+@media(max-width:980px){
+  .op-card{grid-template-columns:90px minmax(0,1fr)}
+  .op-side{grid-column:2;align-items:flex-start;text-align:left}
+  .op-actions{align-items:flex-start}
+}
+@media(max-width:720px){
+  .op-card{grid-template-columns:minmax(0,1fr);gap:18px;padding:22px 18px}
+  .op-side{grid-column:1}
+}
