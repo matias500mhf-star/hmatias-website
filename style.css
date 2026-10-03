@@ -10,3 +10,10 @@
 
 /* Accessible back-to-top control; keep it out of the document flow. */
 .hmatias-backtop{position:fixed;left:18px;bottom:18px;z-index:60;display:grid;place-items:center;width:44px;height:44px;border:1px solid #cbd8e5;border-radius:50%;background:#fff;color:#062d56;font:600 1.25rem Arial,sans-serif;box-shadow:0 6px 18px rgba(6,45,86,.12);cursor:pointer;visibility:hidden;opacity:0;transition:opacity .2s ease}.hmatias-backtop.show{visibility:visible;opacity:1}@media(max-width:560px){.hmatias-backtop{left:10px;bottom:12px}}
+
+/* Mobile contact access uses the single operational mailbox. */
+.nav-menu .mobile-email-link{display:none}
+@media(max-width:850px){
+  .hmatias-header .nav-menu{max-height:calc(100dvh - 100px);overflow-y:auto}
+  .hmatias-header .nav-menu .mobile-email-link{display:flex;align-items:center;justify-content:center;min-height:44px;padding:12px 14px;white-space:normal;overflow-wrap:anywhere;font-size:.8125rem;line-height:1.4;color:var(--blue)}
+}

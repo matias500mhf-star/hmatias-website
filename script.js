@@ -119,6 +119,16 @@
     navMenu.appendChild(mobileWhatsApp);
   }
 
+  // Keep the single working mailbox available alongside WhatsApp on mobile.
+  if(navMenu&&!navMenu.querySelector('.mobile-email-link')){
+    const mobileEmail=document.createElement('a');
+    mobileEmail.className='mobile-email-link';
+    mobileEmail.href='mailto:geral@comercialhmatiasps.com';
+    mobileEmail.textContent='geral@comercialhmatiasps.com';
+    mobileEmail.setAttribute('aria-label',pageEnglish?'Email HMATIAS':'Enviar e-mail à HMATIAS');
+    navMenu.appendChild(mobileEmail);
+  }
+
   document.querySelectorAll('.nav-menu a').forEach(a=>a.addEventListener('click',()=>setMenuState(false)));
   document.addEventListener('keydown',event=>{
     if(event.key==='Escape'&&navMenu?.classList.contains('open')){
