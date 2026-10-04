@@ -130,7 +130,7 @@
     head.append(title,status);
 
     const grid=document.createElement('div');grid.className='mission-grid';
-    const exact=[...(mission.exact_matches||[])];
+    const exact=[...(mission.product_matches||mission.exact_matches||[])];
     const rows=exact.slice(0,5);
     grid.hidden=rows.length===0;
 

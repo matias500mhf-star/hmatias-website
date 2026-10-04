@@ -208,7 +208,11 @@ export function publicProcurementMission(mission){
     urgency:mission.urgency,
     interpretation:mission.interpretation,
     requirement:mission.requirement,
-    exact_matches:mission.exact_matches.map(row=>({
+    // Older browser bundles expect a supplier in every exact_matches row.
+    // Keep that list empty during rolling deployment; publish anonymous
+    // product evidence in its own field instead.
+    exact_matches:[],
+    product_matches:mission.exact_matches.map(row=>({
       item:{id:row.item.id,name:row.item.name,specification:row.item.specification},
       status:row.status,
       source_type:row.source_type,

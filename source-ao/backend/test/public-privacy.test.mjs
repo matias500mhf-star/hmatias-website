@@ -75,7 +75,8 @@ test('public procurement remains anonymous even with an admin header; the protec
   for(const headers of [{},{authorization:'Bearer '+env.ADMIN_API_TOKEN}]){
     const response=await router.fetch(new Request('https://source.example/api/procurement-mission'+query,{headers}),env);
     assert.equal(response.status,200);const data=await response.json();assertPublic(data);
-    assert.equal(data.mission.exact_matches[0].status,'in_stock_confirmed');
+    assert.equal(data.mission.product_matches[0].status,'in_stock_confirmed');
+    assert.deepEqual(data.mission.exact_matches,[],'legacy browser must not receive anonymous rows where it expects a supplier');
     assert.equal(data.mission.requirement.quantity,2);assert.match(data.mission.rfq.pt,/9mm/);
   }
   for(const headers of [{},{authorization:'Bearer wrong-token'}]){
