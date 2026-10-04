@@ -41,6 +41,7 @@
 .mission-head small{display:block;color:#607383;font-size:8px;font-weight:900;letter-spacing:.11em}
 .mission-head strong{display:block;margin-top:4px;color:var(--navy);font-size:14px}
 .mission-grid{display:grid;gap:7px}
+.mission-grid[hidden]{display:none}
 .mission-supplier{
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;
   padding:12px 13px;border:1px solid #e0e8ee;border-radius:11px;background:#fafcfd
@@ -53,6 +54,7 @@
   padding:6px 8px;font:inherit;font-size:9px;font-weight:800;text-decoration:none;cursor:pointer
 }
 .mission-contact:hover,.mission-copy:hover{border-color:#9fc3dd;background:#f7fbfe}
+.procurement-mission>.mission-contact{display:inline-flex;align-items:center;min-height:44px;margin-top:12px;padding:10px 14px;font-size:12px;box-sizing:border-box}
 .mission-rfq{margin-top:12px;padding:12px;border-radius:11px;background:#f5f8fa;border:1px solid #dce5eb}
 .mission-rfq>div{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .mission-rfq strong{font-size:11px;color:var(--navy)}

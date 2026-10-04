@@ -111,17 +111,6 @@
     return panel;
   }
 
-  function contactLink(supplier){
-    if(supplier.whatsapp){
-      const digits=String(supplier.whatsapp).replace(/\D/g,'');
-      return {label:'WhatsApp',href:'https://wa.me/'+digits};
-    }
-    if(supplier.phone) return {label:isPt()?'Ligar':'Call',href:'tel:'+String(supplier.phone).replace(/\s+/g,'')};
-    if(supplier.email) return {label:'Email',href:'mailto:'+supplier.email};
-    if(supplier.website) return {label:isPt()?'Website':'Website',href:supplier.website};
-    return null;
-  }
-
   function renderMission(payload){
     const mission=payload?.mission;
     const panel=ensureMissionPanel();
@@ -132,7 +121,7 @@
     const head=document.createElement('div');head.className='mission-head';
     const title=document.createElement('div');
     const eyebrow=document.createElement('small');eyebrow.textContent=isPt()?'MISSÃO DE PROCUREMENT':'PROCUREMENT MISSION';
-    const heading=document.createElement('strong');heading.textContent=isPt()?'Opções para agir agora':'Options to act now';
+    const heading=document.createElement('strong');heading.textContent=isPt()?'Prepare o seu pedido à HMATIAS':'Prepare your request to HMATIAS';
     title.append(eyebrow,heading);
     const status=document.createElement('span');status.className='data-badge data-source_checked';
     status.textContent=mission.status==='commercial_confirmation_available'
@@ -141,29 +130,30 @@
     head.append(title,status);
 
     const grid=document.createElement('div');grid.className='mission-grid';
-    const exact=[...(mission.exact_matches||[])];
-    const candidates=[...(mission.supplier_candidates||[])];
-    const rows=[
-      ...exact.map(row=>({supplier:row.supplier,status:row.status,detail:isPt()?'Referência encontrada em fonte':'Reference found in source',exact:true})),
-      ...candidates.map(row=>({supplier:row,status:'supplier_candidate',detail:isPt()?'Fornecedor potencial; confirmar referência/stock':'Potential supplier; confirm reference/stock',exact:false}))
-    ].slice(0,5);
+    const exact=[...(mission.product_matches||mission.exact_matches||[])];
+    const rows=exact.slice(0,5);
+    grid.hidden=rows.length===0;
 
     rows.forEach(entry=>{
       const card=document.createElement('article');card.className='mission-supplier';
       const copy=document.createElement('div');
-      const name=document.createElement('strong');name.textContent=entry.supplier.name;
-      const detail=document.createElement('small');detail.textContent=[entry.detail,entry.supplier.location].filter(Boolean).join(' · ');
+      const name=document.createElement('strong');name.textContent=entry.item?.name||mission.requirement?.query||'';
+      const detail=document.createElement('small');detail.textContent=[entry.item?.specification,formatDate(entry.verified_at)].filter(Boolean).join(' · ');
       copy.append(name,detail);
       const actions=document.createElement('div');actions.className='mission-actions';
       const badge=document.createElement('span');badge.className='data-badge data-'+entry.status;badge.textContent=L(entry.status);
       actions.appendChild(badge);
-      const link=contactLink(entry.supplier);
-      if(link){
-        const a=document.createElement('a');a.href=link.href;a.textContent=link.label;a.target=link.href.startsWith('http')?'_blank':'';a.rel='noopener noreferrer';a.className='mission-contact';
-        actions.appendChild(a);
-      }
       card.append(copy,actions);grid.appendChild(card);
     });
+
+    const requestLink=document.createElement('a');requestLink.className='mission-contact';
+    const requestParams=new URLSearchParams({request:mission.requirement?.query||'',location:mission.requirement?.location||'Luanda',lang:isPt()?'pt':'en'});
+    if(mission.interpretation?.item_id) requestParams.set('item',mission.interpretation.item_id);
+    if(mission.requirement?.quantity!=null) requestParams.set('quantity',String(mission.requirement.quantity));
+    if(mission.requirement?.needed_by) requestParams.set('needed_by',mission.requirement.needed_by);
+    if(mission.urgency==='urgent') requestParams.set('urgency','urgent');
+    requestLink.href='rfq.html?'+requestParams.toString();
+    requestLink.textContent=isPt()?'Pedir cotação à HMATIAS':'Request a quote from HMATIAS';
 
     const rfq=document.createElement('div');rfq.className='mission-rfq';
     const rfqHead=document.createElement('div');
@@ -185,17 +175,10 @@
       ?'Fornecedor potencial não significa stock confirmado. O Source AO só confirma após evidência comercial atual.'
       :'Potential supplier does not mean confirmed stock. Source AO confirms only with current commercial evidence.';
 
-    panel.append(head,grid,rfq,truth);
+    panel.append(head,grid,requestLink,rfq,truth);
   }
 
   function matchCopy(match){
-    if(match.kind==='supplier_candidate'){
-      return {
-        title:match.supplier.name,
-        detail:[isPt()?'Fornecedor potencial; produto exato por confirmar':'Potential supplier; exact product unconfirmed',match.supplier.location].filter(Boolean).join(' · '),
-        time:match.supplier.last_verified_at
-      };
-    }
     if(match.kind==='service'){
       return {
         title:match.provider.name,
@@ -205,14 +188,14 @@
     }
     return {
       title:match.item.name,
-      detail:[match.item.specification,match.supplier?.name,match.observation?.location||match.supplier?.location].filter(Boolean).join(' · '),
+      detail:match.item.specification,
       time:match.observation?.verified_at||match.observation?.observed_at
     };
   }
 
   function renderMatches(result){
     const list=ensureList();
-    const visible=(result.matches||[]).filter(m=>m.status!=='discovered').slice(0,3);
+    const visible=(result.matches||[]).filter(m=>['item','service'].includes(m.kind)&&m.status!=='discovered').slice(0,3);
     list.innerHTML='';
     if(!visible.length){list.hidden=true;return;}
     list.hidden=false;
@@ -263,18 +246,14 @@
   }
 
   function fromApi(payload){
-    const matches=(payload?.results||[]).map(row=>{
+    const matches=(payload?.results||[]).filter(row=>['item','service'].includes(row.type)).map(row=>{
       if(row.type==='service'){
-        return {kind:'service',provider:{name:row.name,service_category:row.category,location:row.location,last_verified_at:row.verified_at},status:row.status||'discovered'};
-      }
-      if(row.type==='supplier_candidate'){
-        return {kind:'supplier_candidate',supplier:{name:row.name,location:row.location,website:row.website,last_verified_at:row.verified_at},status:'supplier_candidate'};
+        return {kind:'service',provider:{name:isPt()?'Serviço sob consulta':'Service on request',service_category:row.category,location:payload.location,last_verified_at:row.verified_at},status:row.status||'discovered'};
       }
       return {
         kind:'item',
         item:{name:row.name,specification:row.specification||'',category:row.category},
-        supplier:row.supplier||null,
-        observation:{verified_at:row.verified_at||null,observed_at:row.verified_at||null,location:row.supplier?.location||null},
+        observation:{verified_at:row.verified_at||null,observed_at:row.verified_at||null},
         status:row.status||'discovered'
       };
     }).sort((a,b)=>(rank[b.status]||0)-(rank[a.status]||0));

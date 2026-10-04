@@ -25,7 +25,7 @@ for(const page of ['/confirm.html','/track.html','/privacy.html','/terms.html'])
 const robots=await text('/robots.txt');
 if(!/Disallow:\s*\//i.test(robots)) fail('robots.txt must disallow staging crawling');
 
-for(const privatePath of ['/backend/package.json','/docs/SECURITY_AND_TRUST.md','/verification-desk.html','/review-desk.html','/sourcing-desk.html']){
+for(const privatePath of ['/backend/package.json','/docs/SECURITY_AND_TRUST.md','/verification-desk.html','/review-desk.html','/sourcing-desk.html','/data/suppliers.json','/data/services.json','/data/observations.json','/data/verification-queue.json','/data/acceptance-cases.json']){
   const res=await fetch(origin+privatePath,{redirect:'manual'});
   if(res.status===200) fail(`private/internal asset is publicly bundled: ${privatePath}`);
 }

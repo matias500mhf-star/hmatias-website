@@ -1,5 +1,5 @@
 import {buildSmartSearchPlan} from './smart-search.js';
-import {effectiveObservationStatus,normalizeSearch} from './index.js';
+import {effectiveObservationStatus,normalizeSearch,isAdmin} from './index.js';
 
 function headers(env){
   return {
@@ -198,7 +198,35 @@ export async function buildProcurementMission(env,{query,location='Luanda',neede
   };
 }
 
-export async function procurementMission(request,env){
+export function publicProcurementMission(mission){
+  // Explicit projection: internal contacts, shortlist, purchase prices and the
+  // fast path must never be serialized on the public route, even for admins.
+  return {
+    mission_id:mission.mission_id,
+    created_at:mission.created_at,
+    status:mission.status,
+    urgency:mission.urgency,
+    interpretation:mission.interpretation,
+    requirement:mission.requirement,
+    // Older browser bundles expect a supplier in every exact_matches row.
+    // Keep that list empty during rolling deployment; publish anonymous
+    // product evidence in its own field instead.
+    exact_matches:[],
+    product_matches:mission.exact_matches.map(row=>({
+      item:{id:row.item.id,name:row.item.name,specification:row.item.specification},
+      status:row.status,
+      source_type:row.source_type,
+      verified_at:row.verified_at,
+      expires_at:row.expires_at
+    })),
+    rfq:mission.rfq,
+    verification_required:mission.verification_required,
+    truth_rule:mission.truth_rule
+  };
+}
+
+export async function procurementMission(request,env,{privateView=false}={}){
+  if(privateView&&!isAdmin(request,env)) return fail(env,401,'unauthorized','Admin authorization required.');
   const url=new URL(request.url);
   const query=(url.searchParams.get('q')||'').trim();
   const location=(url.searchParams.get('location')||'Luanda').trim();
@@ -210,7 +238,7 @@ export async function procurementMission(request,env){
   }
   try{
     const mission=await buildProcurementMission(env,{query,location,neededBy,quantity});
-    return json(env,{ok:true,engine:'source-ao-procurement-mission-v1',mission});
+    return json(env,{ok:true,engine:'source-ao-procurement-mission-v1',mission:privateView?mission:publicProcurementMission(mission)});
   }catch(error){
     const code=error instanceof Error?error.message:'mission_failed';
     if(code==='invalid_query') return fail(env,400,code,'Search query must contain 2 to 180 characters.');
