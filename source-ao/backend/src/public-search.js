@@ -18,9 +18,7 @@ export function mapPublicItemRow(r,now=Date.now()){
   const verification=r.observation_id?{
     source_type:r.source_type||null,
     verified_at:r.verified_at||null,
-    expires_at:r.expires_at||null,
-    supplier_id:r.supplier_id||null,
-    supplier_name:r.supplier_name||null
+    expires_at:r.expires_at||null
   }:null;
 
   return {
@@ -30,18 +28,10 @@ export function mapPublicItemRow(r,now=Date.now()){
     category:r.category,
     specification:r.specification,
     unit:r.unit,
-    supplier:r.supplier_id?{
-      id:r.supplier_id,
-      name:r.supplier_name,
-      location:r.supplier_location,
-      website:r.supplier_website
-    }:null,
     status,
     verified_at:r.verified_at||null,
     expires_at:r.expires_at||null,
-    verification,
-    quantity_reported:r.quantity_reported??null,
-    price:r.price_reported==null?null:{amount:r.price_reported,currency:r.currency}
+    verification
   };
 }
 
@@ -59,9 +49,7 @@ export async function publicSearch(request,env){
 
   const itemRows=await env.SOURCE_AO_DB.prepare(`
     SELECT i.id item_id,i.name item_name,i.category,i.specification,i.unit,
-           s.id supplier_id,s.name supplier_name,s.location supplier_location,s.website supplier_website,
-           o.id observation_id,o.verification_status,o.quantity_reported,o.price_reported,o.currency,
-           o.location observation_location,o.verified_at,o.expires_at,o.source_type
+           o.id observation_id,o.verification_status,o.verified_at,o.expires_at,o.source_type
     FROM items i
     LEFT JOIN observations o ON o.id=(
       SELECT oo.id
@@ -73,7 +61,6 @@ export async function publicSearch(request,env){
       ORDER BY oo.verified_at DESC
       LIMIT 1
     )
-    LEFT JOIN suppliers s ON s.id=o.supplier_id
     WHERE i.search_text LIKE ?
     ORDER BY CASE o.verification_status
       WHEN 'in_stock_confirmed' THEN 1
@@ -86,53 +73,27 @@ export async function publicSearch(request,env){
   `).bind(normalizedLocation,locationLike,like).all();
 
   const serviceRows=await env.SOURCE_AO_DB.prepare(`
-    SELECT id,name,service_category,specialties_json,location,website,verification_status,last_verified_at
+    SELECT service_category,MAX(last_verified_at) last_verified_at
     FROM service_providers
     WHERE search_text LIKE ? AND (?='angola' OR lower(location) LIKE ?)
+    GROUP BY service_category
     ORDER BY last_verified_at DESC LIMIT 8
   `).bind(like,normalizedLocation,locationLike).all();
 
   const items=(itemRows.results||[]).map(r=>mapPublicItemRow(r));
-  const candidateSuppliers=[];
-  if(!items.some(item=>item.status!=='discovered')){
-    const candidateCategories=[...new Set(items.map(item=>item.category).filter(Boolean))];
-    for(const category of candidateCategories.slice(0,3)){
-      const categoryLike=`%"${category}"%`;
-      const rows=await env.SOURCE_AO_DB.prepare(`
-        SELECT id,name,location,website,public_status,last_verified_at,categories_json
-        FROM suppliers
-        WHERE categories_json LIKE ?
-          AND (?='angola' OR lower(location) LIKE ?)
-        ORDER BY last_verified_at DESC
-        LIMIT 6
-      `).bind(categoryLike,normalizedLocation,locationLike).all();
-      for(const supplier of rows.results||[]){
-        if(candidateSuppliers.some(row=>row.id===supplier.id)) continue;
-        candidateSuppliers.push({
-          type:'supplier_candidate',
-          id:supplier.id,
-          name:supplier.name,
-          category,
-          location:supplier.location,
-          website:supplier.website,
-          status:'supplier_candidate',
-          verified_at:supplier.last_verified_at,
-          exact_product_confirmed:false,
-          reason:'Supplier has a source-checked capability in the matched category; exact product, stock and price are not confirmed.'
-        });
-      }
-    }
-  }
+  // Provider identities and supplier shortlists belong to the authenticated desk.
+  // A category match is not a confirmation of service availability.
+  const serviceLabels={construction:'Construção',remodelling:'Remodelação',facilities:'Facilities',cleaning:'Limpeza',electrical:'Electricidade',hvac:'Climatização / AVAC',plumbing:'Canalização','industrial-maintenance':'Manutenção industrial','transport-logistics':'Transporte e logística','technical-services':'Serviços técnicos','services-contractors':'Serviços e empreitadas'};
   const services=(serviceRows.results||[]).map(r=>{
     const checked=new Date(r.last_verified_at).getTime();
     const ageHours=Number.isFinite(checked)?(Date.now()-checked)/36e5:Infinity;
     return {
-      type:'service',id:r.id,name:r.name,category:r.service_category,location:r.location,website:r.website,
-      specialties:JSON.parse(r.specialties_json||'[]'),
-      status:ageHours<=168?r.verification_status:'needs_reconfirmation',
+      type:'service',id:`service-category-${r.service_category}`,
+      name:serviceLabels[r.service_category]||'Serviço sob consulta',category:r.service_category,location,
+      status:ageHours>=0&&ageHours<=168?'source_checked':'needs_reconfirmation',
       verified_at:r.last_verified_at
     };
   });
 
-  return json(env,{ok:true,query:raw,normalized_query:q,location,results:[...items,...candidateSuppliers,...services]});
+  return json(env,{ok:true,query:raw,normalized_query:q,location,results:[...items,...services]});
 }

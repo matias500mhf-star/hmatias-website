@@ -1,4 +1,5 @@
-import {cp,copyFile,mkdir,readFile,rm,writeFile} from 'node:fs/promises';
+import {copyFile,mkdir,readFile,rm,writeFile} from 'node:fs/promises';
+import {copyPublicData} from './public-data.mjs';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 
@@ -41,7 +42,7 @@ for(const file of publicFiles.filter(file=>file.endsWith('.html'))){
   }
   await writeFile(target,html,{mode:0o644});
 }
-await cp(path.join(sourceRoot,'data'),path.join(out,'data'),{recursive:true});
+await copyPublicData(path.join(out,'data'));
 await mkdir(path.join(out,'images'),{recursive:true});
 await mkdir(path.join(out,'fonts'),{recursive:true});
 await copyFile(path.join(sourceRoot,'../images/source-ao-logo.svg'),path.join(out,'images/source-ao-logo.svg'));

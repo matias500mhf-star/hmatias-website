@@ -77,6 +77,8 @@ export default {
           response=await smartSearchPlan(request,env);
         }else if(request.method==='GET' && url.pathname==='/api/procurement-mission'){
           response=await procurementMission(request,env);
+        }else if(request.method==='GET' && url.pathname==='/api/admin/procurement-mission'){
+          response=await procurementMission(request,env,{privateView:true});
         }else if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
           response=await createSourcingRequest(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/partner-applications'){

@@ -1,12 +1,12 @@
 # Source AO Backend
 
-Private backend scaffold for Source AO. This code is intentionally isolated from the public HMATIAS website and is not production-deployed by this branch.
+Cloudflare backend for Source AO. Server files are excluded from the public HMATIAS website artifact; API deployment is managed by the production release workflow.
 
 ## Architecture
 
 - Edge API: Cloudflare Worker-compatible runtime.
 - Persistent data: D1/SQLite-compatible schema.
-- Public routes: search and active opportunities only.
+- Public routes: catalogue search, anonymised procurement, active opportunities and customer RFQ intake/tracking.
 - Supplier routes: signed, expiring confirmation links.
 - HMATIAS routes: bearer-protected creation/review/approval.
 - Trust model: supplier responses never become public facts until HMATIAS review creates an approved observation.
@@ -45,6 +45,14 @@ node scripts/export-seed-sql.mjs > seed.sql
 
 Public search can return catalog/service matches and approved, unexpired observations. Expired availability is not presented as current.
 
+`GET /api/procurement-mission?q=<query>&location=Luanda`
+
+Both public search and procurement use explicit response projections. They retain product specifications, evidence status and dates, but do not return supplier/provider identities, contacts, shortlists or purchase prices. Service results describe categories, not named providers. The legacy core search entry point uses the same projection.
+
+Only `catalog.json`, `opportunities.json` and `source-registry.json` are copied into public production/staging assets. Offline search uses catalogue families without asserting stock. Supplier, service, observation and verification queue data remain excluded from those artifacts.
+
+This boundary does not conceal files or history in a public Git repository. Repository visibility/history and hosting support require separate review; do not commit new confidential sourcing relationships or contacts to seed files.
+
 ### Supplier confirmation
 
 `GET /api/confirm/:requestId?token=<signed-token>`
@@ -56,6 +64,10 @@ Supplier responses are stored with status `supplier_responded`; they are not pub
 ### HMATIAS internal
 
 Requires `Authorization: Bearer <ADMIN_API_TOKEN>`.
+
+`GET /api/admin/procurement-mission?q=<query>&location=Luanda`
+
+The authenticated procurement route retains supplier contact details, shortlists and purchase information for HMATIAS operations. Supplying an admin token to the public route does not expand its response.
 
 `POST /api/admin/items`
 

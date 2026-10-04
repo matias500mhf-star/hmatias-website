@@ -26,18 +26,22 @@ test('expired confirmed observation becomes needs_reconfirmation, not discovered
   const result=mapPublicItemRow({...base,expires_at:'2026-09-22T23:00:00.000Z'},now);
   assert.equal(result.status,'needs_reconfirmation');
   assert.equal(result.verification.source_type,'direct_supplier_confirmation');
-  assert.equal(result.verification.supplier_id,'sup_1');
+  assert.equal(Object.hasOwn(result.verification,'supplier_id'),false);
   assert.equal(result.verified_at,'2026-09-22T10:00:00.000Z');
 });
 
-test('current confirmed observation keeps public provenance without private evidence reference',()=>{
+test('current confirmed observation keeps freshness without exposing the buying channel or purchase price',()=>{
   const now=Date.parse('2026-09-22T12:00:00.000Z');
   const result=mapPublicItemRow({...base,expires_at:'2026-09-23T12:00:00.000Z'},now);
   assert.equal(result.status,'in_stock_confirmed');
-  assert.equal(result.supplier.name,'Supplier Test');
+  assert.equal(Object.hasOwn(result,'supplier'),false);
+  assert.equal(Object.hasOwn(result,'price'),false);
+  assert.equal(Object.hasOwn(result,'quantity_reported'),false);
   assert.equal(result.verification.source_type,'direct_supplier_confirmation');
   assert.equal(Object.prototype.hasOwnProperty.call(result,'evidence_reference'),false);
   assert.equal(JSON.stringify(result).includes('verification_request:'),false);
+  assert.equal(JSON.stringify(result).includes('Supplier Test'),false);
+  assert.equal(JSON.stringify(result).includes('supplier.example'),false);
 });
 
 test('item with no approved observation remains discovered',()=>{

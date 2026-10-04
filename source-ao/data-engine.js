@@ -3,14 +3,11 @@
 
   const paths={
     catalog:'data/catalog.json',
-    suppliers:'data/suppliers.json',
-    services:'data/services.json',
     opportunities:'data/opportunities.json',
-    observations:'data/observations.json',
     registry:'data/source-registry.json'
   };
 
-  const db={catalog:{items:[],taxonomy:[]},suppliers:{suppliers:[]},services:{providers:[]},opportunities:{opportunities:[]},observations:{observations:[]},registry:{source_types:[],verification_rules:{}}};
+  const db={catalog:{items:[],taxonomy:[]},opportunities:{opportunities:[]},registry:{source_types:[],verification_rules:{}}};
   let ready=false;
 
   const normalize=value=>(value||'')
@@ -19,7 +16,6 @@
     .replace(/[^a-z0-9]+/g,' ').trim();
 
   const tokens=value=>new Set(normalize(value).split(/\s+/).filter(Boolean));
-  const hoursBetween=(a,b)=>Math.abs(new Date(a).getTime()-new Date(b).getTime())/36e5;
 
   async function load(name,path){
     try{
@@ -78,87 +74,16 @@
     return best;
   }
 
-  function sourceType(id){return (db.registry.source_types||[]).find(s=>s.id===id)||null;}
-
-  function effectiveStatus(observation){
-    if(!observation) return 'discovered';
-    const status=observation.verification_status||'discovered';
-    if(['unavailable','needs_reconfirmation','discovered'].includes(status)) return status;
-    const verified=observation.verified_at||observation.observed_at;
-    if(!verified) return 'needs_reconfirmation';
-    if(observation.expires_at && new Date(observation.expires_at).getTime()<Date.now()) return 'needs_reconfirmation';
-    const rule=(db.registry.verification_rules||{})[status];
-    const source=sourceType(observation.source_type);
-    const maxHours=rule?.expires_hours||source?.default_freshness_hours||72;
-    return hoursBetween(verified,new Date())>maxHours?'needs_reconfirmation':status;
-  }
-
-  const statusRank={in_stock_confirmed:6,supplier_confirmed:5,source_checked:4,recently_seen:3,supplier_candidate:2.5,needs_reconfirmation:2,discovered:1,unavailable:0};
-
-  function itemMatches(query,location){
-    const suppliers=new Map((db.suppliers.suppliers||[]).map(x=>[x.id,x]));
-    const observations=db.observations.observations||[];
-    const out=[];
-    for(const item of db.catalog.items||[]){
-      const score=textScore(query,item);
-      if(score<35) continue;
-      const itemObs=observations.filter(o=>o.item_id===item.id);
-      if(!itemObs.length){out.push({kind:'item',item,score,status:'discovered'});continue;}
-      for(const obs of itemObs){
-        const supplier=suppliers.get(obs.supplier_id)||null;
-        const loc=normalize(obs.location||supplier?.location||'');
-        if(location&&normalize(location)!=='angola'&&loc&&!loc.includes(normalize(location))) continue;
-        out.push({kind:'item',item,supplier,observation:obs,score,status:effectiveStatus(obs)});
-      }
-    }
-    return out;
-  }
-
-  function supplierCandidateMatches(itemResults,location){
-    if(itemResults.some(row=>row.status!=='discovered')) return [];
-    const categories=new Set(itemResults.map(row=>row.item?.category).filter(Boolean));
-    if(!categories.size) return [];
-    const out=[];
-    for(const supplier of db.suppliers.suppliers||[]){
-      const caps=new Set(supplier.category||[]);
-      if(![...categories].some(category=>caps.has(category))) continue;
-      const loc=normalize(supplier.location||'');
-      if(location&&normalize(location)!=='angola'&&loc&&!loc.includes(normalize(location))) continue;
-      out.push({
-        kind:'supplier_candidate',
-        supplier,
-        score:25,
-        status:'supplier_candidate',
-        reason:'category_capability_match'
-      });
-    }
-    return out.slice(0,6);
-  }
-
-  function serviceMatches(query,location){
-    const out=[];
-    for(const provider of db.services.providers||[]){
-      const score=textScore(query,provider);
-      if(score<35) continue;
-      const loc=normalize(provider.location||'');
-      if(location&&normalize(location)!=='angola'&&loc&&!loc.includes(normalize(location))) continue;
-      let status=provider.verification_status||'discovered';
-      if(provider.last_verified_at&&['supplier_confirmed','source_checked','recently_seen'].includes(status)){
-        const limit=status==='source_checked'?168:72;
-        if(hoursBetween(provider.last_verified_at,new Date())>limit) status='needs_reconfirmation';
-      }
-      out.push({kind:'service',provider,score,status});
-    }
-    return out;
-  }
-
   function search(query,location='Luanda'){
-    const items=itemMatches(query,location);
-    const matches=[...items,...supplierCandidateMatches(items,location),...serviceMatches(query,location)]
-      .sort((a,b)=>(statusRank[b.status]||0)-(statusRank[a.status]||0)||b.score-a.score)
+    // Offline fallback describes catalogue families only. Supplier evidence is
+    // obtained through the API's public projection, never raw browser data.
+    const matches=(db.catalog.items||[])
+      .map(item=>({kind:'item',item,score:textScore(query,item),status:'discovered'}))
+      .filter(row=>row.score>=35)
+      .sort((a,b)=>b.score-a.score)
       .slice(0,8);
     const best=matches[0]||null;
-    return {query,location,category:taxonomyMatch(query),matches,best,best_status:best?.status||'discovered'};
+    return {query,location,category:taxonomyMatch(query),matches,best,best_status:'discovered'};
   }
 
   function activeOpportunities(){
