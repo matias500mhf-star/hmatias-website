@@ -16,6 +16,8 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           from urllib.parse import urlparse
+          from html import unescape
+          import json
           import re
           import sys
           import xml.etree.ElementTree as ET
@@ -106,14 +108,63 @@ jobs:
                   fail(f'noindex page appears in sitemap: {html_path}')
 
               alts = alternate_map.get(url, {})
-              for required in ('pt-AO', 'en', 'x-default'):
-                  if required not in alts:
-                      fail(f'{url} missing sitemap hreflang {required}')
+              head = html.partition('</head>')[0]
+              html_alts = dict(re.findall(
+                  r'<link\b[^>]*\bhreflang=["\']([^"\']+)["\'][^>]*\bhref=["\']([^"\']+)', head, re.I
+              ))
+              if html_alts != alts:
+                  fail(f'HTML and sitemap language alternatives differ: {html_path}')
+              # Single-URL language toggles are not separate localized pages.
+              if alts:
+                  for required in ('pt-AO', 'en', 'x-default'):
+                      if required not in alts:
+                          fail(f'{url} missing sitemap hreflang {required}')
               if alts.get('x-default') and alts.get('pt-AO') and alts['x-default'] != alts['pt-AO']:
                   fail(f'{url} x-default should match pt-AO canonical')
+              language_by_target = {}
               for lang, href in alts.items():
                   if href not in canonical_set:
                       fail(f'{url} hreflang {lang} points outside canonical sitemap: {href}')
+                  if lang == 'x-default':
+                      continue
+                  primary_language = lang.lower().split('-')[0]
+                  if href in language_by_target and language_by_target[href] != primary_language:
+                      fail(f'{url} assigns different languages to the same URL: {href}')
+                  language_by_target[href] = primary_language
+
+              metadata = dict(re.findall(
+                  r'<meta\b[^>]*\b(?:name|property)=["\']([^"\']+)["\'][^>]*\bcontent=["\']([^"\']*)', head, re.I
+              ))
+              for key in ('description', 'og:title', 'og:description', 'og:type', 'og:url', 'og:image', 'twitter:card'):
+                  if not metadata.get(key):
+                      fail(f'missing public search/share metadata {key}: {html_path}')
+              if not 100 <= len(unescape(metadata.get('description', ''))) <= 160:
+                  fail(f'meta description outside the editorial range of 100-160 characters: {html_path}')
+              if metadata.get('og:url') != url:
+                  fail(f'Open Graph URL differs from canonical: {html_path}')
+
+              def check_schema(value):
+                  if isinstance(value, list):
+                      for item in value:
+                          check_schema(item)
+                  elif isinstance(value, dict):
+                      types = value.get('@type', [])
+                      types = [types] if isinstance(types, str) else types
+                      if 'serviceType' in value and set(types).intersection(('Organization', 'LocalBusiness', 'ProfessionalService')) and 'Service' not in types:
+                          fail(f'serviceType must describe a Service: {html_path}')
+                      for item in value.values():
+                          check_schema(item)
+
+              for raw in re.findall(r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', head, re.I | re.S):
+                  try:
+                      check_schema(json.loads(raw))
+                  except (TypeError, ValueError) as exc:
+                      fail(f'invalid structured data in {html_path}: {exc}')
+
+          # Public legal pages are canonical; internal desks and legacy aliases are not.
+          for name in ('privacy', 'terms'):
+              if f'{BASE}/source-ao/{name}.html' not in canonical_set:
+                  fail(f'SOURCE AO public {name} page is missing from sitemap')
 
           # Reciprocal PT/EN sitemap relationship.
           for url, alts in alternate_map.items():
