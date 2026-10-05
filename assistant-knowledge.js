@@ -15,7 +15,7 @@
 
   const kb = {
     version: '2026-09-27.3',
-    updated: '2026-09-27',
+    updated: '2026-10-05',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
