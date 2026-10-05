@@ -228,3 +228,21 @@ jobs:
           fi
 
           echo "HMATIAS production smoke test OK."
+
+  indexnow:
+    needs: production-smoke-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify public URL selection
+        run: python3 -m unittest discover -s .github/scripts -p 'test_indexnow.py'
+      - name: Notify IndexNow after successful publication
+        env:
+          INDEXNOW_BEFORE: ${{ github.event.before }}
+        run: python3 .github/scripts/indexnow.py --submit
