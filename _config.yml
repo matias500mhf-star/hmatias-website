@@ -23,6 +23,11 @@ exclude:
   - source-ao/backend
   - source-ao/docs
   - source-ao/schemas
+  - source-ao/data/suppliers.json
+  - source-ao/data/services.json
+  - source-ao/data/observations.json
+  - source-ao/data/verification-queue.json
+  - source-ao/data/acceptance-cases.json
   - source-ao/data-contract.json
   - source-ao/validate-data.mjs
   - source-ao/ops.html
