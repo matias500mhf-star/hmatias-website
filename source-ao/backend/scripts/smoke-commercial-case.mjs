@@ -28,6 +28,17 @@ assert.ok(Array.isArray(opened?.cost_options));
 assert.ok(Array.isArray(opened?.supplier_candidates));
 assert.equal(opened?.summary?.proposal_ready,false);
 
+const supplierOutreach=await call(`/api/admin/sourcing-requests/${encodeURIComponent(synthetic.id)}/supplier-outreach`);
+assert.equal(supplierOutreach?.ok,true);
+assert.equal(supplierOutreach?.confidential,true);
+assert.ok(Array.isArray(supplierOutreach?.outreach));
+assert.ok(Number.isFinite(Number(supplierOutreach?.summary?.total)));
+
+const pursuits=await call('/api/admin/opportunity-pursuits?include_closed=1');
+assert.equal(pursuits?.ok,true);
+assert.equal(pursuits?.confidential,true);
+assert.ok(Array.isArray(pursuits?.pursuits));
+
 const serialized=JSON.stringify(opened);
 for(const forbidden of ['contact_encrypted','private_contact_encrypted','access_token_hash']){
   assert.equal(serialized.includes(forbidden),false);
@@ -97,4 +108,4 @@ const dashboardSerialized=JSON.stringify(dashboard);
 for(const forbidden of ['requester_name','requester_contact','supplier_name','contact_encrypted','private_contact_encrypted']){
   assert.equal(dashboardSerialized.includes(forbidden),false);
 }
-console.log('Commercial-case, proposal-pack, fulfillment, collections, action queue and aggregate cockpit production smoke passed without creating commercial values.');
+console.log('Commercial-case, supplier-outreach, opportunity-pursuit, proposal-pack, fulfillment, collections, action queue and aggregate cockpit production smoke passed without creating commercial values.');
