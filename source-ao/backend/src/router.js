@@ -35,6 +35,7 @@ import {getFulfillmentCase,updateFulfillmentCase} from './fulfillment.js';
 import {getCommercialDashboard} from './commercial-dashboard.js';
 import {getCollectionsCase,upsertInvoice,addPayment,voidPayment} from './collections.js';
 import {getCommercialActions} from './commercial-actions.js';
+import {listOpportunityPursuits,upsertOpportunityPursuit} from './opportunity-pursuits.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -93,7 +94,10 @@ export default {
             response=await getCommercialDashboard(request,env);
           }else if(url.pathname==='/api/admin/commercial-actions' && request.method==='GET'){
             response=await getCommercialActions(request,env);
+          }else if(url.pathname==='/api/admin/opportunity-pursuits' && request.method==='GET'){
+            response=await listOpportunityPursuits(request,env);
           }else{
+            const opportunityPursuit=url.pathname.match(/^\/api\/admin\/opportunities\/([^/]+)\/pursuit$/);
             const adminStatus=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/status$/);
             const commercialCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/commercial-case$/);
             const costOptions=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/cost-options$/);
@@ -103,7 +107,9 @@ export default {
             const invoiceCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/invoice$/);
             const paymentCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/payments$/);
             const voidPaymentCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/payments\/([^/]+)\/void$/);
-            if(adminStatus && request.method==='POST'){
+            if(opportunityPursuit && request.method==='POST'){
+              response=await upsertOpportunityPursuit(request,env,opportunityPursuit[1]);
+            }else if(adminStatus && request.method==='POST'){
               response=await updateSourcingRequestStatus(request,env,adminStatus[1]);
             }else if(commercialCase && request.method==='GET'){
               response=await getCommercialCase(request,env,commercialCase[1]);
