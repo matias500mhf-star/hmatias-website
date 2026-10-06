@@ -51,3 +51,37 @@ test('sent proposal gets follow-up and never exposes customer or supplier identi
   assert.equal(serialized.includes('requester_name'),false);
   assert.equal(serialized.includes('supplier_name'),false);
 });
+
+
+test('supplier clarification outranks generic sourcing',()=>{
+  const action=deriveCommercialAction({
+    id:'sr-6',public_ref:'SAO-6',request_status:'sourcing',requirement_text:'Stud bolts',
+    proposal_status:'not_ready',fulfillment_stage:'pending',
+    outreach_open_count:2,outreach_clarification_count:1,outreach_quote_received_count:0,
+    supplier_follow_up_at:'2026-09-27T10:00:00Z',outreach_updated_at:'2026-09-27T09:00:00Z'
+  },now);
+  assert.equal(action.type,'supplier_clarification');
+  assert.equal(action.score,82);
+});
+
+test('due supplier follow-up becomes an explicit action',()=>{
+  const action=deriveCommercialAction({
+    id:'sr-7',public_ref:'SAO-7',request_status:'verifying',requirement_text:'Industrial material',
+    proposal_status:'not_ready',fulfillment_stage:'pending',
+    outreach_open_count:1,outreach_clarification_count:0,outreach_quote_received_count:0,
+    supplier_follow_up_at:'2026-09-26T12:00:00Z',outreach_updated_at:'2026-09-26T08:00:00Z'
+  },now);
+  assert.equal(action.type,'supplier_follow_up');
+  assert.equal(action.deadline,'2026-09-26T12:00:00Z');
+});
+
+test('received supplier quote is sent to validation before generic sourcing',()=>{
+  const action=deriveCommercialAction({
+    id:'sr-8',public_ref:'SAO-8',request_status:'sourcing',requirement_text:'Fasteners',
+    proposal_status:'not_ready',fulfillment_stage:'pending',
+    outreach_open_count:0,outreach_clarification_count:0,outreach_quote_received_count:1,
+    outreach_updated_at:'2026-09-27T11:00:00Z'
+  },now);
+  assert.equal(action.type,'validate_supplier_quote');
+  assert.equal(action.score,80);
+});
