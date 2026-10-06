@@ -243,6 +243,36 @@
         </div>
         <section class="collections-panel" hidden aria-live="polite"></section>
       </section>
+      <section class="outreach-block">
+        <div class="outreach-head">
+          <div>
+            <small>CONSULTA A FORNECEDORES</small>
+            <h4>Contactado → resposta → cotação</h4>
+            <p>Registe apenas o estado comercial e a evidência necessária. O conteúdo integral de e-mails não deve ser copiado para aqui.</p>
+          </div>
+          <button class="btn btn-outline btn-small new-outreach" type="button">Novo contacto</button>
+        </div>
+        <div class="outreach-summary">
+          <article><small>AGUARDAM RESPOSTA</small><strong class="outreach-awaiting">0</strong></article>
+          <article><small>ESCLARECIMENTO</small><strong class="outreach-clarification">0</strong></article>
+          <article><small>COTAÇÕES</small><strong class="outreach-quotes">0</strong></article>
+          <article><small>ENCERRADOS</small><strong class="outreach-closed">0</strong></article>
+        </div>
+        <form class="outreach-form">
+          <label>Fornecedor<select class="outreach-supplier" required><option value="">Selecionar fornecedor</option></select></label>
+          <label>Estado<select class="outreach-status"><option value="shortlisted">Pré-selecionado</option><option value="contacted">Contactado</option><option value="awaiting_response">Aguardar resposta</option><option value="needs_clarification">Pediu esclarecimento</option><option value="out_of_scope">Fora do escopo</option><option value="quote_received">Cotação recebida</option><option value="declined">Recusou</option><option value="no_response">Sem resposta</option></select></label>
+          <label>Canal<select class="outreach-channel"><option value="">Ainda não contactado</option><option value="email">E-mail</option><option value="whatsapp">WhatsApp</option><option value="phone">Telefone</option><option value="web">Portal/Web</option><option value="other">Outro</option></select></label>
+          <label>Contactado em<input class="outreach-contacted" type="datetime-local"></label>
+          <label>Resposta em<input class="outreach-responded" type="datetime-local"></label>
+          <label>Próximo follow-up<input class="outreach-followup" type="datetime-local"></label>
+          <label>Referência contacto<input class="outreach-contact-ref" maxlength="240" placeholder="Assunto/thread/ref. interna"></label>
+          <label>Ref. cotação<input class="outreach-quote-ref" maxlength="160" placeholder="Cotação/proforma/ref."></label>
+          <label class="commercial-notes">Resumo da resposta<textarea class="outreach-response" rows="2" maxlength="1200" placeholder="Ex.: fora do escopo; pediu conversão métrica; proposta recebida."></textarea></label>
+          <label class="commercial-notes">Notas internas<textarea class="outreach-notes" rows="2" maxlength="1600" placeholder="Próximo passo, risco ou condição a confirmar"></textarea></label>
+          <div class="outreach-form-actions"><button class="btn btn-primary btn-small save-outreach" type="submit">Guardar contacto</button><span class="outreach-message"></span></div>
+        </form>
+        <div class="outreach-list"></div>
+      </section>
       <div class="cost-divider"></div>
       <div class="cost-head"><div><small>CUSTOS DE FORNECEDOR</small><h4>Opções privadas de custo</h4></div><button class="btn btn-outline btn-small new-cost-option" type="button">Novo custo</button></div>
       <form class="cost-form">
@@ -275,6 +305,7 @@
       const label=supplier.name+(suffix?' · '+suffix:'');
       addOption(supplierSelect,supplier.id,label,supplier.id===commercial.selected_supplier_id);
       addOption(costSupplier,supplier.id,label,false);
+      addOption(panel.querySelector('.outreach-supplier'),supplier.id,label,false);
     }
 
     const costSelect=panel.querySelector('.case-cost');
@@ -304,6 +335,87 @@
     const missingLabels={qualification_not_complete:'qualificação',selected_cost_required:'custo selecionado',verified_cost_required:'custo confirmado',fx_or_cost_required:'câmbio/custo',sale_price_required:'preço de venda'};
     readiness.textContent=summary.proposal_ready?'Pronto para proposta':'Falta: '+(summary.missing_requirements||[]).map(x=>missingLabels[x]||x).join(', ');
     readiness.dataset.ready=summary.proposal_ready?'true':'false';
+
+    const outreachSummary=payload?.supplier_outreach_summary||{};
+    panel.querySelector('.outreach-awaiting').textContent=String(outreachSummary.awaiting_response||0);
+    panel.querySelector('.outreach-clarification').textContent=String(outreachSummary.needs_clarification||0);
+    panel.querySelector('.outreach-quotes').textContent=String(outreachSummary.quote_received||0);
+    panel.querySelector('.outreach-closed').textContent=String(outreachSummary.closed||0);
+
+    const outreachList=panel.querySelector('.outreach-list');
+    const outreachLabels={
+      shortlisted:'Pré-selecionado',contacted:'Contactado',awaiting_response:'Aguardar resposta',
+      needs_clarification:'Pediu esclarecimento',out_of_scope:'Fora do escopo',
+      quote_received:'Cotação recebida',declined:'Recusou',no_response:'Sem resposta'
+    };
+    const setOutreachForm=item=>{
+      panel.querySelector('.outreach-supplier').value=item?.supplier_id||'';
+      panel.querySelector('.outreach-status').value=item?.status||'shortlisted';
+      panel.querySelector('.outreach-channel').value=item?.channel||'';
+      panel.querySelector('.outreach-contacted').value=toLocalDateTime(item?.contacted_at);
+      panel.querySelector('.outreach-responded').value=toLocalDateTime(item?.responded_at);
+      panel.querySelector('.outreach-followup').value=toLocalDateTime(item?.next_follow_up_at);
+      panel.querySelector('.outreach-contact-ref').value=item?.contact_reference||'';
+      panel.querySelector('.outreach-quote-ref').value=item?.supplier_quote_ref||'';
+      panel.querySelector('.outreach-response').value=item?.response_summary||'';
+      panel.querySelector('.outreach-notes').value=item?.internal_notes||'';
+    };
+    if(!(payload?.supplier_outreach||[]).length){
+      outreachList.innerHTML='<div class="empty-state compact"><strong>Nenhum fornecedor contactado.</strong><p>Registe o primeiro contacto antes de criar uma opção de custo.</p></div>';
+    }else{
+      for(const outreach of payload.supplier_outreach){
+        const item=document.createElement('article');item.className='outreach-card';item.dataset.status=outreach.status;
+        const top=document.createElement('div');top.className='outreach-card-top';
+        const copy=document.createElement('div');
+        const name=document.createElement('strong');name.textContent=outreach.supplier_name||outreach.supplier_id;
+        const meta=document.createElement('small');meta.textContent=[outreach.supplier_country_code,outreach.channel,outreachLabels[outreach.status]||outreach.status].filter(Boolean).join(' · ');
+        copy.append(name,meta);
+        const edit=document.createElement('button');edit.type='button';edit.className='btn btn-outline btn-small';edit.textContent='Editar';
+        edit.addEventListener('click',()=>{setOutreachForm(outreach);panel.querySelector('.outreach-form').scrollIntoView({behavior:'smooth',block:'nearest'});});
+        top.append(copy,edit);
+        const detail=document.createElement('p');
+        detail.textContent=[
+          outreach.response_summary,
+          outreach.supplier_quote_ref?'Cotação: '+outreach.supplier_quote_ref:null,
+          outreach.next_follow_up_at?'Follow-up: '+fmtDate(outreach.next_follow_up_at):null
+        ].filter(Boolean).join(' · ')||'Sem resumo adicional.';
+        item.append(top,detail);outreachList.appendChild(item);
+      }
+    }
+    panel.querySelector('.new-outreach').addEventListener('click',()=>setOutreachForm(null));
+    panel.querySelector('.outreach-form').addEventListener('submit',async event=>{
+      event.preventDefault();
+      const button=panel.querySelector('.save-outreach');
+      const message=panel.querySelector('.outreach-message');
+      const isoValue=selector=>{const value=panel.querySelector(selector).value;return value?new Date(value).toISOString():null;};
+      button.disabled=true;message.textContent='A guardar…';message.className='outreach-message';
+      try{
+        await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/supplier-outreach',{
+          method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
+            supplier_id:panel.querySelector('.outreach-supplier').value,
+            status:panel.querySelector('.outreach-status').value,
+            channel:panel.querySelector('.outreach-channel').value||null,
+            contacted_at:isoValue('.outreach-contacted'),
+            responded_at:isoValue('.outreach-responded'),
+            next_follow_up_at:isoValue('.outreach-followup'),
+            contact_reference:panel.querySelector('.outreach-contact-ref').value.trim()||null,
+            supplier_quote_ref:panel.querySelector('.outreach-quote-ref').value.trim()||null,
+            response_summary:panel.querySelector('.outreach-response').value.trim()||null,
+            internal_notes:panel.querySelector('.outreach-notes').value.trim()||null
+          })
+        });
+        await loadCommercialCase(card,row);
+      }catch(error){
+        const labels={
+          channel_required:'Selecione o canal utilizado.',
+          contacted_at_required:'Indique quando o fornecedor foi contactado.',
+          responded_at_required:'Indique quando a resposta foi recebida.',
+          quote_evidence_required:'Registe a referência da cotação ou um resumo da resposta.'
+        };
+        message.textContent=labels[error.message]||'Falha ao guardar o contacto do fornecedor.';
+        message.className='outreach-message error';
+      }finally{button.disabled=false;}
+    });
 
     const list=panel.querySelector('.cost-option-list');
     if(!(payload?.cost_options||[]).length){
