@@ -42,6 +42,10 @@ export function deriveCommercialAction(row={},asOf=new Date()){
   const overdueDays=row.due_date?Math.max(0,dayDiff(now,row.due_date)||0):0;
   const dueIn=row.due_date?daysUntil(now,row.due_date):null;
   const commercialAge=Math.max(0,dayDiff(now,row.commercial_updated_at||row.request_updated_at||row.created_at)||0);
+  const supplierFollowUpIn=row.supplier_follow_up_at?daysUntil(now,row.supplier_follow_up_at):null;
+  const outreachOpen=Number(row.outreach_open_count||0);
+  const outreachClarification=Number(row.outreach_clarification_count||0);
+  const outreachQuotes=Number(row.outreach_quote_received_count||0);
 
   let action=null;
   if(invoiceAmount!=null&&outstanding>0&&row.due_date&&new Date(row.due_date).getTime()<now.getTime()){
@@ -132,6 +136,39 @@ export function deriveCommercialAction(row={},asOf=new Date()){
       deadline:null,
       age_days:commercialAge
     };
+  }else if(['sourcing','verifying'].includes(requestStatus)&&outreachClarification>0){
+    action={
+      type:'supplier_clarification',
+      score:82,
+      title:'Fornecedor pediu esclarecimento',
+      recommended_action:'Responder ao pedido técnico/comercial do fornecedor e registar a atualização.',
+      why:'Existe pelo menos uma consulta de fornecedor a aguardar esclarecimento da HMATIAS.',
+      amount_aoa:null,
+      deadline:row.supplier_follow_up_at||null,
+      age_days:Math.max(0,dayDiff(now,row.outreach_updated_at||row.request_updated_at)||0)
+    };
+  }else if(['sourcing','verifying'].includes(requestStatus)&&outreachQuotes>0){
+    action={
+      type:'validate_supplier_quote',
+      score:80,
+      title:'Cotação de fornecedor por validar',
+      recommended_action:'Validar especificação, validade, prazo, logística e custo antes de criar/confirmar a opção de custo.',
+      why:'Foi registada uma cotação de fornecedor e o pedido ainda não chegou à proposta.',
+      amount_aoa:null,
+      deadline:null,
+      age_days:Math.max(0,dayDiff(now,row.outreach_updated_at||row.request_updated_at)||0)
+    };
+  }else if(['sourcing','verifying'].includes(requestStatus)&&supplierFollowUpIn!=null&&supplierFollowUpIn<=0&&outreachOpen>0){
+    action={
+      type:'supplier_follow_up',
+      score:79,
+      title:'Follow-up de fornecedor vencido',
+      recommended_action:'Contactar o fornecedor e atualizar o estado da consulta.',
+      why:'O próximo follow-up registado já venceu.',
+      amount_aoa:null,
+      deadline:row.supplier_follow_up_at,
+      age_days:Math.max(0,-supplierFollowUpIn)
+    };
   }else if(requestStatus==='received'){
     action={
       type:'qualify_request',
@@ -153,6 +190,17 @@ export function deriveCommercialAction(row={},asOf=new Date()){
       amount_aoa:null,
       deadline:null,
       age_days:Math.max(0,dayDiff(now,row.request_updated_at||row.created_at)||0)
+    };
+  }else if(['sourcing','verifying'].includes(requestStatus)&&outreachOpen>0){
+    action={
+      type:'await_supplier_response',
+      score:73,
+      title:'Consultas a fornecedores em aberto',
+      recommended_action:'Acompanhar respostas e confirmar se alguma opção já pode avançar para custo.',
+      why:'Existem fornecedores contactados ainda sem resultado comercial concluído.',
+      amount_aoa:null,
+      deadline:row.supplier_follow_up_at||null,
+      age_days:Math.max(0,dayDiff(now,row.outreach_updated_at||row.request_updated_at||row.created_at)||0)
     };
   }else if(['sourcing','verifying'].includes(requestStatus)){
     action={
@@ -197,18 +245,33 @@ export async function getCommercialActions(request,env){
       c.proposal_status,c.sale_price_aoa,c.updated_at commercial_updated_at,
       f.stage fulfillment_stage,f.updated_at fulfillment_updated_at,
       i.invoice_amount_aoa,i.due_date,
+      o.supplier_follow_up_at,o.outreach_open_count,o.outreach_clarification_count,o.outreach_quote_received_count,o.outreach_updated_at,
       COALESCE(SUM(CASE WHEN p.voided_at IS NULL THEN p.amount_aoa ELSE 0 END),0) received_aoa
     FROM sourcing_requests r
     LEFT JOIN sourcing_commercial_cases c ON c.request_id=r.id
     LEFT JOIN sourcing_fulfillment_cases f ON f.request_id=r.id
     LEFT JOIN sourcing_invoices i ON i.request_id=r.id
     LEFT JOIN sourcing_payments p ON p.request_id=r.id
+    LEFT JOIN (
+      SELECT
+        request_id,
+        MIN(CASE
+          WHEN status IN ('contacted','awaiting_response','needs_clarification','no_response')
+          THEN next_follow_up_at END) supplier_follow_up_at,
+        SUM(CASE WHEN status IN ('contacted','awaiting_response','needs_clarification','no_response') THEN 1 ELSE 0 END) outreach_open_count,
+        SUM(CASE WHEN status='needs_clarification' THEN 1 ELSE 0 END) outreach_clarification_count,
+        SUM(CASE WHEN status='quote_received' THEN 1 ELSE 0 END) outreach_quote_received_count,
+        MAX(updated_at) outreach_updated_at
+      FROM sourcing_supplier_outreach
+      GROUP BY request_id
+    ) o ON o.request_id=r.id
     WHERE r.status!='closed'
     GROUP BY
       r.id,r.public_ref,r.status,r.requirement_text,r.created_at,r.updated_at,
       c.proposal_status,c.sale_price_aoa,c.updated_at,
       f.stage,f.updated_at,
-      i.invoice_amount_aoa,i.due_date
+      i.invoice_amount_aoa,i.due_date,
+      o.supplier_follow_up_at,o.outreach_open_count,o.outreach_clarification_count,o.outreach_quote_received_count,o.outreach_updated_at
     ORDER BY r.updated_at DESC
     LIMIT 200
   `).all();
