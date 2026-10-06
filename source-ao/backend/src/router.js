@@ -36,6 +36,7 @@ import {getCommercialDashboard} from './commercial-dashboard.js';
 import {getCollectionsCase,upsertInvoice,addPayment,voidPayment} from './collections.js';
 import {getCommercialActions} from './commercial-actions.js';
 import {listOpportunityPursuits,upsertOpportunityPursuit} from './opportunity-pursuits.js';
+import {getSupplierOutreach,upsertSupplierOutreach} from './supplier-outreach.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -99,6 +100,7 @@ export default {
           }else{
             const opportunityPursuit=url.pathname.match(/^\/api\/admin\/opportunities\/([^/]+)\/pursuit$/);
             const adminStatus=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/status$/);
+            const supplierOutreach=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/supplier-outreach$/);
             const commercialCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/commercial-case$/);
             const costOptions=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/cost-options$/);
             const proposalDraft=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/proposal-draft$/);
@@ -111,6 +113,10 @@ export default {
               response=await upsertOpportunityPursuit(request,env,opportunityPursuit[1]);
             }else if(adminStatus && request.method==='POST'){
               response=await updateSourcingRequestStatus(request,env,adminStatus[1]);
+            }else if(supplierOutreach && request.method==='GET'){
+              response=await getSupplierOutreach(request,env,supplierOutreach[1]);
+            }else if(supplierOutreach && request.method==='POST'){
+              response=await upsertSupplierOutreach(request,env,supplierOutreach[1]);
             }else if(commercialCase && request.method==='GET'){
               response=await getCommercialCase(request,env,commercialCase[1]);
             }else if(commercialCase && request.method==='POST'){
