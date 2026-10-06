@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: current public HMATIAS website content, sitemap and SOURCE AO public product state, 2026-09-27. */
+   Source of truth: current public HMATIAS website content, sitemap and SOURCE AO public product state, 2026-10-06. */
 (() => {
   'use strict';
 
@@ -14,8 +14,8 @@
   ];
 
   const kb = {
-    version: '2026-09-27.3',
-    updated: '2026-10-05',
+    version: '2026-10-06.4',
+    updated: '2026-10-06',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
@@ -92,10 +92,12 @@
       marketsPt: ['Angola (AO/AOA) — clientes, entregas e oportunidades comerciais','Namíbia (NA/NAD) — sourcing de materiais e equipamentos','África do Sul (ZA/ZAR) — sourcing de materiais e equipamentos'],
       marketRulePt: 'O Radar de oportunidades comerciais está focado em Angola. Namíbia e África do Sul são alternativas privadas para fornecimento de materiais e equipamentos; disponibilidade, qualidade, prazo, transporte e custo de entrega são confirmados por pedido.',
       coreRulePt: 'Encontrar um fornecedor, catálogo, anúncio ou fonte pública não equivale a confirmar disponibilidade. O SOURCE AO separa descoberta, fonte verificada e confirmação comercial atual.',
+      commercialFlowPt: 'Para pedidos reais, o fluxo operacional é: necessidade/RFQ → qualificação → consulta privada a fornecedores → confirmação técnica e comercial → custo e logística confirmados → proposta HMATIAS → adjudicação/compra → entrega → faturação e cobrança. Valores, margens, contactos e decisões internas não são públicos.',
+      commercialFlowEn: 'For real requests, the operating flow is: requirement/RFQ → qualification → private supplier outreach → technical and commercial confirmation → confirmed cost and logistics → HMATIAS proposal → award/purchase → delivery → invoicing and collection. Costs, margins, contacts and internal decisions are not public.',
       publicCapabilitiesPt: ['Smart Search para materiais, equipamentos e serviços','Supplier Discovery','Estados transparentes de evidência e freshness','Pedido de Cotação / RFQ com até 20 itens, categorias ligadas ao catálogo, quantidade, especificações, local, prazo e qualificação de compra','Radar de procura no dispositivo','Opportunity / Intelligence Radar','Atualização manual do Radar e sincronização automática a cada 5 minutos enquanto a página está visível','Intelligence Core para fit, confiança, urgência, localização e complexidade','SOURCE Copilot para próximos passos operacionais'],
       rfqPt: 'Em /source-ao/rfq.html, o cliente pode selecionar famílias do catálogo, indicar vários produtos, quantidades, requisitos técnicos, destino em Angola, prioridade e contacto. A confirmação de registo fornece referência e acompanhamento privado. A HMATIAS qualifica e confirma as condições antes da proposta; o formulário não calcula preços, margens, stock nem realiza compras. Se o registo não for confirmado, o formulário informa e permite tentar novamente ou preparar contacto por WhatsApp, cujo envio exige ação do utilizador.',
       lifecyclePt: 'Fluxo de verificação: Search → Radar → confirmação do fornecedor → revisão humana HMATIAS → observação verificada → expiração → reconfirmação.',
-      opportunityPt: 'O Intelligence Radar organiza RFQs, concursos e sinais comerciais, mantendo fonte, prazo, nível de confiança e contexto de decisão.',
+      opportunityPt: 'O Intelligence Radar organiza RFQs, concursos e sinais comerciais, mantendo fonte, prazo, nível de confiança e contexto de decisão. Depois de validada, a decisão interna de perseguir ou não uma oportunidade e o respetivo follow-up comercial permanecem privados.',
       refreshPt: 'O Radar público consulta a API live ao abrir, disponibiliza o botão “Atualizar agora” e volta a sincronizar automaticamente a cada 5 minutos enquanto a página está visível. Se a ligação live falhar, mantém os últimos dados disponíveis e informa o utilizador. O backend agenda varrimentos automáticos das fontes; oportunidades descobertas continuam sujeitas a validação antes de promoção pública.',
       privacyPt: 'Pedidos podem ser acompanhados por ligação privada. Dados de contacto, evidências privadas, tokens, rotas administrativas, prioridades internas e dados da rede privada de parceiros/fornecedores não devem ser expostos pelo assistente.',
       architecturePt: 'O endereço canónico é /source-ao/. A antiga página /procura.html funciona apenas como alias/redirecionamento para a plataforma oficial.',
@@ -124,7 +126,7 @@
       `SMART RFQ: ${kb.smartRfq.summaryPt} ${kb.smartRfq.limitsPt} ${kb.smartRfq.privacyPt}`,
       `AGENDAMENTO HMATIAS: ${kb.booking.summaryPt} ${kb.booking.rulesPt.join('; ')}.`,
       `KARTA: ${kb.karta.summaryPt} ${kb.karta.statusPt} Capacidades atuais: ${kb.karta.currentPt.join('; ')}. Roadmap: ${kb.karta.roadmapPt.join('; ')}. ${kb.karta.rulePt}`,
-      `SOURCE AO: ${kb.sourceAO.positioningPt} Mercados: ${kb.sourceAO.marketsPt.join('; ')}. ${kb.sourceAO.marketRulePt} ${kb.sourceAO.coreRulePt} Capacidades públicas: ${kb.sourceAO.publicCapabilitiesPt.join('; ')}. ${kb.sourceAO.rfqPt} ${kb.sourceAO.lifecyclePt} ${kb.sourceAO.opportunityPt} ${kb.sourceAO.refreshPt} ${kb.sourceAO.privacyPt} ${kb.sourceAO.architecturePt} ${kb.sourceAO.brandPt}`,
+      `SOURCE AO: ${kb.sourceAO.positioningPt} Mercados: ${kb.sourceAO.marketsPt.join('; ')}. ${kb.sourceAO.marketRulePt} ${kb.sourceAO.coreRulePt} ${kb.sourceAO.commercialFlowPt} Capacidades públicas: ${kb.sourceAO.publicCapabilitiesPt.join('; ')}. ${kb.sourceAO.rfqPt} ${kb.sourceAO.lifecyclePt} ${kb.sourceAO.opportunityPt} ${kb.sourceAO.refreshPt} ${kb.sourceAO.privacyPt} ${kb.sourceAO.architecturePt} ${kb.sourceAO.brandPt}`,
       `PROJETOS PÚBLICOS: ${kb.projects.publicExamplesPt.join('; ')}. ${kb.projects.conceptPt} ${kb.projects.disclosurePt}`,
       `REGRAS DE VERDADE: ${kb.safetyAndTruth.rulesPt.join(' ')}.`,
       `PÁGINAS: construção ${kb.pages.construction}; facilities ${kb.pages.facilities}; supply ${kb.pages.supply}; Smart RFQ ${kb.pages.rfq}; catálogo ${kb.pages.worksCatalogue}; credibilidade ${kb.pages.credibility}; clean ${kb.pages.clean}; KARTA ${kb.pages.karta}; business ${kb.pages.business}; agendamento ${kb.pages.booking}; SOURCE AO ${kb.pages.sourceAO}; Intelligence Radar ${kb.pages.sourceRadar}.`
