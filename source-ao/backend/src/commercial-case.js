@@ -1,5 +1,6 @@
 import {isAdmin,normalizeRequirement,decryptPrivateText} from './sourcing.js';
 import {scorePrivateSupplierMatch} from './private-sourcing-suppliers.js';
+import {readSupplierOutreachRows,summarizeSupplierOutreach} from './supplier-outreach.js';
 
 const QUALIFICATION_STATUSES=new Set(['pending','qualified','needs_info','declined']);
 const PROPOSAL_STATUSES=new Set(['not_ready','ready','sent','revised','accepted','rejected','expired']);
@@ -286,12 +287,19 @@ async function readCostOptions(env,requestId){
 async function buildPayload(env,requestId){
   const request=await requestRow(env,requestId);
   if(!request)return null;
-  const [caseRow,costOptions,matchedSuppliers]=await Promise.all([
+  const [caseRow,costOptions,matchedSuppliers,supplierOutreach]=await Promise.all([
     env.SOURCE_AO_DB.prepare('SELECT * FROM sourcing_commercial_cases WHERE request_id=?').bind(requestId).first(),
     readCostOptions(env,requestId),
-    candidateSuppliers(env,normalizeRequirement([request.requirement_text,request.category,request.specification].filter(Boolean).join(' ')))
+    candidateSuppliers(env,normalizeRequirement([request.requirement_text,request.category,request.specification].filter(Boolean).join(' '))),
+    readSupplierOutreachRows(env,requestId)
   ]);
   const suppliers=[...matchedSuppliers];
+  for(const outreach of supplierOutreach){
+    if(!suppliers.some(s=>s.id===outreach.supplier_id))suppliers.push({
+      id:outreach.supplier_id,name:outreach.supplier_name,country_code:outreach.supplier_country_code,
+      match_score:null,quality_status:'',availability_status:'',supplier_role:'outreach'
+    });
+  }
   if(caseRow?.selected_supplier_id&&!suppliers.some(s=>s.id===caseRow.selected_supplier_id)){
     const row=await env.SOURCE_AO_DB.prepare(
       'SELECT id,name,country_code,market_channel,supplier_role,location,capabilities_json,brands_json,quality_status,quality_evidence_json,availability_status,contact_hint,last_verified_at,updated_at FROM private_sourcing_suppliers WHERE id=?'
@@ -315,6 +323,8 @@ async function buildPayload(env,requestId){
     commercial_case:commercialCase,
     summary:calculateCommercialSummary(commercialCase,costOptions),
     cost_options:costOptions,
+    supplier_outreach:supplierOutreach,
+    supplier_outreach_summary:summarizeSupplierOutreach(supplierOutreach),
     supplier_candidates:suppliers
   };
 }
