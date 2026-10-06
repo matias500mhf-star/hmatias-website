@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: current public HMATIAS website content, sitemap and SOURCE AO public product state, 2026-09-27. */
+   Source of truth: current public HMATIAS website content, sitemap and SOURCE AO public product state, 2026-10-06. */
 (() => {
   'use strict';
 
@@ -14,7 +14,7 @@
   ];
 
   const kb = {
-    version: '2026-09-27.3',
+    version: '2026-10-06.1',
     updated: '2026-10-05',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
@@ -51,7 +51,9 @@
       summaryEn: 'Procurement, sourcing and business supply guided by reference, specification, quantity, origin, logistics and target date.',
       capabilitiesPt: ['Sourcing nacional','Pesquisa regional na África Austral','Fornecimento internacional','Materiais, consumíveis, produtos e equipamentos','Pesquisa e comparação de alternativas'],
       processPt: ['Especificação do produto/referência, quantidade, local e prazo','Pesquisa e comparação de opções, disponibilidade, origem e logística','Cotação com preço, prazo, condições e validade'],
-      rulePt: 'Marcas, fornecedores e contactos de terceiros são referenciados apenas quando relevantes; isso não implica representação, exclusividade ou parceria institucional.'
+      rulePt: 'Marcas, fornecedores e contactos de terceiros são referenciados apenas quando relevantes; isso não implica representação, exclusividade ou parceria institucional.',
+      technicalRfqPt: 'Para RFQs técnicos ou industriais, indique sempre que aplicável: norma e grade, dimensões e tipo de rosca/conexão, revestimento ou acabamento, quantidade e unidade, documentação exigida (por exemplo MTC/CoC, ficha técnica ou desenho), local e prazo pretendido e se aceita equivalentes. Preço, stock, lead time, certificados e conformidade só ficam confirmados com evidência do fornecedor e revisão HMATIAS.',
+      technicalRfqEn: 'For technical or industrial RFQs, provide when applicable: standard and grade, dimensions and thread/connection type, coating or finish, quantity and unit, required documentation (for example MTC/CoC, datasheet or drawing), delivery point and target date, and whether equivalents are acceptable. Price, stock, lead time, certificates and compliance are confirmed only with supplier evidence and HMATIAS review.'
     },
     clean: {
       summaryPt: 'Produtos de limpeza e higiene para utilização doméstica e profissional. Produtos fornecidos sob encomenda; stock, prazo e entrega ficam sujeitos a confirmação comercial.',
@@ -117,7 +119,7 @@
       `ESTADO DO SITE: ${kb.siteState.homepagePt} ${kb.siteState.sourcePlacementPt} ${kb.siteState.commercialJourneyPt}`,
       `CONSTRUÇÃO: ${kb.construction.summaryPt} Capacidades: ${kb.construction.capabilitiesPt.join('; ')}. Processo: ${kb.construction.processPt.join('; ')}.`,
       `FACILITIES: ${kb.facilities.summaryPt} Capacidades: ${kb.facilities.capabilitiesPt.join('; ')}.`,
-      `SUPPLY: ${kb.supply.summaryPt} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. ${kb.supply.rulePt}`,
+      `SUPPLY: ${kb.supply.summaryPt} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. ${kb.supply.rulePt} ${kb.supply.technicalRfqPt}`,
       `CLEAN: ${kb.clean.summaryPt} 123 Pine Gel 500 ml: preço sob consulta. Taurus Pine Gel T563P: ${p.descriptionPt} ${p.featuresPt} Formatos/preços: 500 g sob consulta; 1 kg 8.500 Kz; 5 kg 26.500 Kz; 20 kg 94.000 Kz. Aplicações: ${p.applicationsPt.join(', ')}. Diluições: ${p.dilutionsPt.join('; ')}. Aviso: ${p.warningPt} ${kb.clean.brandNotePt}`,
       `CATÁLOGO CLEAN: ${cleanCatalog.map(x=>`${x[0]} ${x[1]} [${x[2]}]`).join('; ')}. Para estes itens, se não houver preço publicado, confirmar com equipa comercial.`,
       `BUSINESS SERVICES: ${kb.businessServices.pricesPt.map(x=>`${x[0]} — ${x[1]}`).join('; ')}. ${kb.businessServices.pricingRulePt} Vistos/agendamentos: ${kb.businessServices.visaLimitsPt}`,
