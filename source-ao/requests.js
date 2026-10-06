@@ -148,7 +148,7 @@
       await loadCommercialCase(card,row);
       const commercialPanel=card.querySelector('.commercial-case-panel');
       if(commercialPanel)await loadFulfillment(card,row,commercialPanel);
-    }else if(['follow_up_proposal','send_proposal'].includes(action.type)){
+    }else if(['follow_up_proposal','send_proposal','supplier_clarification','supplier_follow_up','validate_supplier_quote','await_supplier_response'].includes(action.type)){
       await loadCommercialCase(card,row);
     }
   }
