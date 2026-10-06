@@ -309,6 +309,26 @@ jobs:
                   if term in runtime_text:
                       fail(f'public SOURCE AO runtime config contains forbidden admin material: {term}')
 
+          # Keep advertising tags consent-gated and prevent sample Meta Pixel code from shipping.
+          tag_manager_path = ROOT / 'tag-manager.js'
+          if not tag_manager_path.exists():
+              fail('tag-manager.js is missing')
+          else:
+              tag_manager_text = tag_manager_path.read_text(encoding='utf-8')
+              if 'Cookiebot.consent.marketing' not in tag_manager_text:
+                  fail('Meta/marketing tags are not gated by Cookiebot marketing consent')
+              if 'https://connect.facebook.net/en_US/fbevents.js' not in tag_manager_text:
+                  fail('Meta Pixel loader does not use the official fbevents.js endpoint')
+              if 'https://facebook.net' in tag_manager_text:
+                  fail('invalid Meta Pixel script endpoint detected')
+              if 'YOUR_15_DIGIT_PIXEL_ID' in tag_manager_text:
+                  fail('sample Meta Pixel ID placeholder must not ship')
+              meta_id = re.search(r"const metaPixelId\s*=\s*['\"]([^'\"]*)['\"]", tag_manager_text)
+              if not meta_id:
+                  fail('tag-manager.js does not declare metaPixelId')
+              elif meta_id.group(1) and not re.fullmatch(r'\d{10,25}', meta_id.group(1)):
+                  fail('configured Meta Pixel ID must be numeric')
+
           # Keep the website assistant synchronized with the public site.
           assistant_path = ROOT / 'assistant.js'
           knowledge_path = ROOT / 'assistant-knowledge.js'
