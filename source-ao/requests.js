@@ -6,6 +6,9 @@
   let demand=[];
   let commercialDashboard=null;
   let commercialActions=[];
+  let requestLoadState='idle';
+  let demandLoadState='idle';
+  let actionLoadState='idle';
 
   const apiBase=()=>String(window.SOURCE_AO_RUNTIME?.apiBase||'').replace(/\/$/,'');
 
@@ -47,10 +50,10 @@
 
   function metrics(){
     const open=requests.filter(r=>!['closed','completed'].includes(r.status)).length;
-    $('#openCount').textContent=String(open);
-    $('#receivedCount').textContent=String(requests.filter(r=>r.status==='received').length);
-    $('#sourcingCount').textContent=String(requests.filter(r=>['sourcing','verifying'].includes(r.status)).length);
-    $('#demandCount').textContent=String(demand.length);
+    $('#openCount').textContent=requestLoadState==='ready'?String(open):'—';
+    $('#receivedCount').textContent=requestLoadState==='ready'?String(requests.filter(r=>r.status==='received').length):'—';
+    $('#sourcingCount').textContent=requestLoadState==='ready'?String(requests.filter(r=>['sourcing','verifying'].includes(r.status)).length):'—';
+    $('#demandCount').textContent=demandLoadState==='ready'?String(demand.length):'—';
   }
 
   function renderCommercialDashboard(){
@@ -99,6 +102,13 @@
     const count=$('#commercialActionCount');
     if(!list||!count)return;
     list.innerHTML='';
+    if(actionLoadState!=='ready'){
+      count.textContent='—';
+      list.innerHTML=actionLoadState==='error'
+        ?'<div class="cockpit-empty" role="alert">Não foi possível carregar as ações comerciais. Atualize os pedidos para tentar novamente.</div>'
+        :'<div class="cockpit-empty">A carregar ações comerciais…</div>';
+      return;
+    }
     count.textContent=String(commercialActions.length)+' ação(ões)';
     if(!commercialActions.length){
       list.innerHTML='<div class="cockpit-empty">Sem ações comerciais prioritárias nesta janela.</div>';
@@ -892,12 +902,24 @@
     const filter=$('#statusFilter').value;
     const visible=filter?requests.filter(r=>r.status===filter):requests;
     const list=$('#requestList');list.innerHTML='';
+    if(requestLoadState!=='ready'){
+      list.innerHTML=requestLoadState==='error'
+        ?'<div class="empty-state" role="alert"><strong>Não foi possível carregar os pedidos.</strong><p>Volte a ligar a sessão ou atualize a fila. A quantidade de pedidos está indisponível.</p></div>'
+        :'<div class="empty-state"><strong>A carregar pedidos…</strong><p>Os contactos permanecem apenas na sessão autenticada.</p></div>';
+      return;
+    }
     if(!visible.length){list.innerHTML='<div class="empty-state"><strong>No requests in this view.</strong><p>Change the filter or wait for a new Source AO request.</p></div>';return;}
     visible.forEach(row=>list.appendChild(renderRequest(row)));
   }
 
   function renderDemand(){
     const list=$('#demandList');list.innerHTML='';
+    if(demandLoadState!=='ready'){
+      list.innerHTML=demandLoadState==='error'
+        ?'<div class="empty-state" role="alert"><strong>Não foi possível carregar a procura.</strong><p>Volte a ligar a sessão ou atualize para tentar novamente.</p></div>'
+        :'<div class="empty-state"><strong>A carregar procura…</strong></div>';
+      return;
+    }
     if(!demand.length){list.innerHTML='<div class="empty-state"><strong>No aggregated demand yet.</strong><p>Demand signals appear only after sourcing requests exist.</p></div>';return;}
     demand.forEach(row=>{
       const card=document.createElement('article');card.className='demand-card';
@@ -915,15 +937,16 @@
 
   async function loadRequests(){
     if(!adminToken) return false;
-    $('#requestList').innerHTML='<div class="empty-state"><strong>Loading private request queue…</strong><p>Contacts remain inside the authenticated session only.</p></div>';
+    requestLoadState='loading';renderRequests();metrics();
     try{
       const payload=await api('/api/admin/sourcing-requests?limit=100');
-      requests=payload?.results||[];
+      if(payload?.ok!==true||!Array.isArray(payload.results))throw new Error('invalid_response');
+      requests=payload.results;requestLoadState='ready';
       renderRequests();metrics();
       $('#refreshRequests').disabled=false;
       return true;
     }catch(error){
-      requests=[];renderRequests();
+      requests=[];requestLoadState='error';renderRequests();metrics();
       if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
       else setApiStatus('Could not load requests','error');
       return false;
@@ -932,14 +955,16 @@
 
   async function loadDemand(){
     if(!adminToken) return false;
+    demandLoadState='loading';renderDemand();metrics();
     try{
       const payload=await api('/api/admin/demand-radar');
-      demand=payload?.results||[];
+      if(payload?.ok!==true||!Array.isArray(payload.results))throw new Error('invalid_response');
+      demand=payload.results;demandLoadState='ready';
       renderDemand();metrics();
       $('#refreshDemand').disabled=false;
       return true;
     }catch(error){
-      demand=[];renderDemand();metrics();
+      demand=[];demandLoadState='error';renderDemand();metrics();
       if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
       return false;
     }
@@ -948,7 +973,9 @@
   async function loadCommercialDashboard(){
     if(!adminToken)return false;
     try{
-      commercialDashboard=await api('/api/admin/commercial-dashboard');
+      const payload=await api('/api/admin/commercial-dashboard');
+      if(payload?.ok!==true)throw new Error('invalid_response');
+      commercialDashboard=payload;
       renderCommercialDashboard();
       return true;
     }catch(error){
@@ -961,25 +988,35 @@
 
   async function loadCommercialActions(){
     if(!adminToken)return false;
+    actionLoadState='loading';renderCommercialActions();
     try{
       const payload=await api('/api/admin/commercial-actions?limit=12');
-      commercialActions=payload?.results||[];
+      if(payload?.ok!==true||!Array.isArray(payload.results))throw new Error('invalid_response');
+      commercialActions=payload.results;actionLoadState='ready';
       renderCommercialActions();
       return true;
     }catch(error){
-      commercialActions=[];
+      commercialActions=[];actionLoadState='error';
       renderCommercialActions();
       if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
       return false;
     }
   }
 
-  async function loadAll(){
-    const [requestsOk,demandOk]=await Promise.all([loadRequests(),loadDemand(),loadCommercialDashboard(),loadCommercialActions()]);
-    const authorized=Boolean(adminToken&&requestsOk&&demandOk);
+  function updateSessionStatus(){
+    const authorized=Boolean(adminToken&&requestLoadState==='ready'&&demandLoadState==='ready');
     setInternalAccess(authorized);
-    if(authorized)setApiStatus('Connected · private operations loaded','connected');
+    if(!adminToken)setApiStatus('Token rejected','error');
+    else if(requestLoadState!=='ready')setApiStatus('Não foi possível carregar os pedidos. Volte a ligar a sessão.','error');
+    else if(demandLoadState!=='ready')setApiStatus('Não foi possível carregar a procura. Volte a ligar a sessão.','error');
+    else if(!commercialDashboard||actionLoadState!=='ready')setApiStatus('Sessão ligada · informação comercial incompleta. Atualize os pedidos.','error');
+    else setApiStatus('Connected · private operations loaded','connected');
     return authorized;
+  }
+
+  async function loadAll(){
+    await Promise.all([loadRequests(),loadDemand(),loadCommercialDashboard(),loadCommercialActions()]);
+    return updateSessionStatus();
   }
 
   $('#connectApi').addEventListener('click',async()=>{
@@ -990,8 +1027,8 @@
     setApiStatus('Checking admin access…','ready');
     await loadAll();
   });
-  $('#refreshRequests').addEventListener('click',async()=>{await Promise.all([loadRequests(),loadCommercialDashboard(),loadCommercialActions()]);});
-  $('#refreshDemand').addEventListener('click',loadDemand);
+  $('#refreshRequests').addEventListener('click',loadAll);
+  $('#refreshDemand').addEventListener('click',async()=>{await loadDemand();updateSessionStatus();});
   $('#statusFilter').addEventListener('change',renderRequests);
   window.addEventListener('pagehide',()=>{adminToken='';requests=[];demand=[];commercialDashboard=null;commercialActions=[];});
   document.addEventListener('DOMContentLoaded',configure,{once:true});
