@@ -267,6 +267,9 @@ jobs:
           rm -f "$RUNNER_TEMP/source-ao-opportunity-sources.json" "$RUNNER_TEMP/source-ao-opportunity-scan.json" "$RUNNER_TEMP/source-ao-opportunity-candidates.json" "$RUNNER_TEMP/source-ao-public-opportunities.json"
           rm -f "$RUNNER_TEMP/source-ao-partner-network.json"
 
+      - name: Verify production private opportunity pursuits
+        run: node scripts/smoke-opportunity-pursuits.mjs
+
       - name: Verify production confidential sourcing supplier network
         shell: bash
         run: |
