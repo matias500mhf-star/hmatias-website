@@ -19,6 +19,7 @@ exclude:
   - wrangler.jsonc
   - docs
   - cloudflare-ai
+  - lead-intake
   - source-ao/README.md
   - source-ao/backend
   - source-ao/docs
