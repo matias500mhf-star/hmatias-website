@@ -111,7 +111,7 @@ function fromRow(row){return {...row,name:row.full_name};}
 async function handleRequest(request,env,ctx){
   const origin=request.headers.get('origin')||'';
   if(!ORIGINS.has(origin))return json({error:'origin_not_allowed'},403,origin);
-  if(!env.LEADS_DB||!env.TURNSTILE_SECRET||!env.RATE_LIMIT_SALT)return json({error:'service_not_configured'},503,origin);
+  if(!env.LEADS_DB||!env.TURNSTILE_SECRET||!env.RATE_LIMIT_SALT||!env.LEADS_NOTIFY_TO||!env.RESEND_API_KEY||!env.RESEND_FROM||!env.HUBSPOT_PORTAL_ID||!env.HUBSPOT_FORM_GUID)return json({error:'service_not_configured'},503,origin);
   if(Number(request.headers.get('content-length')||0)>16000)return json({error:'payload_too_large'},413,origin);
   let d;
   try{d=cleanInput(await request.json())}catch(_){return json({error:'invalid_json'},400,origin)}
@@ -134,7 +134,7 @@ async function handleRequest(request,env,ctx){
 export default {
   async fetch(request,env,ctx){
     const url=new URL(request.url),origin=request.headers.get('origin')||'';
-    if(url.pathname==='/health'&&request.method==='GET')return json({status:env.LEADS_DB&&env.TURNSTILE_SECRET&&env.RATE_LIMIT_SALT?'ready':'not_configured'},200,origin);
+    if(url.pathname==='/health'&&request.method==='GET')return json({status:env.LEADS_DB&&env.TURNSTILE_SECRET&&env.RATE_LIMIT_SALT&&env.LEADS_NOTIFY_TO&&env.RESEND_API_KEY&&env.RESEND_FROM&&env.HUBSPOT_PORTAL_ID&&env.HUBSPOT_FORM_GUID?'ready':'not_configured'},200,origin);
     if(url.pathname==='/v1/leads'&&request.method==='OPTIONS'){
       if(!ORIGINS.has(origin))return json({error:'origin_not_allowed'},403,origin);
       return new Response(null,{status:204,headers:{'access-control-allow-origin':origin,'access-control-allow-methods':'POST,OPTIONS','access-control-allow-headers':'Content-Type','access-control-max-age':'600','vary':'Origin'}});
