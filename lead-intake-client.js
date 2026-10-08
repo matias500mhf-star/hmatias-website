@@ -20,13 +20,14 @@ function encodeForm(form){
  return {...base,kind:'appointment',name:get(d,'client_name'),company:'',email:get(d,'email'),phone:get(d,'contact'),service:get(d,'service_type')||'Atendimento',location:get(d,'location'),details:'Pedido de atendimento. '+details};
 }
 function manualLink(node,payload,reference=''){
+ const old=node.parentNode?.querySelector('[data-hmatias-fallback]');if(old)old.remove();
  const text=(reference?'Referência: '+reference+'\n':'')+
   'HMATIAS - Pedido '+payload.kind+'\nNome: '+payload.name+'\nTelefone: '+payload.phone+'\nEmail: '+payload.email+
   '\nServiço: '+payload.service+'\nDetalhes: '+payload.details;
  const a=document.createElement('a');a.href='https://wa.me/244948806673?text='+encodeURIComponent(text.slice(0,3400));
  a.target='_blank';a.rel='noopener noreferrer';
  a.textContent=en?'Continue via WhatsApp':'Continuar pelo WhatsApp';
- a.className='btn btn-outline';a.style.marginTop='12px';node.insertAdjacentElement('afterend',a);
+ a.className='btn btn-outline';a.dataset.hmatiasFallback='true';a.style.marginTop='12px';node.insertAdjacentElement('afterend',a);
 }
 function addConsent(form){
  if(form.querySelector('input[name="privacy_consent"]'))return;
@@ -50,6 +51,11 @@ function turnstileLoad(){
 for(const id of forms){
  const form=document.getElementById(id);if(!form)continue;
  addConsent(form);
+ const emailField=form.querySelector('input[name="email"]');
+ if(emailField)emailField.required=true; // mandatory to create CRM contact and send receipt when enabled
+ const oldNote=form.querySelector('.form-note,.form-privacy-note,.booking-smallprint');
+ if(oldNote)oldNote.textContent=en?'When enabled, the request is first registered in HMATIAS systems. WhatsApp remains an optional additional contact channel.':'Quando ativado, o pedido é primeiro registado nos sistemas da HMATIAS. O WhatsApp mantém-se como canal complementar.';
+
  const root=document.createElement('div');root.className='hmatias-lead-verification';root.style.margin='12px 0';
  const submit=form.querySelector('button[type="submit"]');
  if(submit)submit.parentNode.insertBefore(root,submit);else form.appendChild(root);
@@ -69,7 +75,7 @@ for(const id of forms){
     finally{clearTimeout(timer)}
     const data=await response.json().catch(()=>({}));
     if(!response.ok||data.saved!==true||!/^HM-[0-9]{8}-[A-Z0-9]+$/.test(String(data.reference||'')))throw new Error('not_saved');
-    const box=msg(form,(en?'Request registered. Reference: ':'Pedido registado. Referência: ')+data.reference+(en?'. HMATIAS will review and contact you.':'. A HMATIAS irá analisar e contactar-lhe.'));
+    const box=msg(form,(en?'Request registered. Reference: ':'Pedido registado. Referência: ')+data.reference+(en?'. HMATIAS will review and contact you.':'. A equipa HMATIAS irá analisar e responder pelo contacto indicado.'));
     manualLink(box,payload,data.reference);
     form.dataset.leadNonce='';
   }catch(_){
