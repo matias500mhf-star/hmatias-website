@@ -1,0 +1,23 @@
+/* HMATIAS Facilities: HMATIAS Clean product showcase. Scoped to Facilities only. */
+body.hmatias-facilities .facilities-clean{background:#f4f8fb}
+body.hmatias-facilities .facilities-clean-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+body.hmatias-facilities .facilities-clean-grid>*{min-width:0}
+body.hmatias-facilities .facilities-clean-card{display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #dce6ed;border-radius:14px}
+body.hmatias-facilities .facilities-clean-image{display:grid;place-items:center;aspect-ratio:4/3;background:#f5f7f8;padding:14px}
+body.hmatias-facilities .facilities-clean-image img{display:block;width:100%;height:100%;object-fit:contain;max-height:285px}
+body.hmatias-facilities .facilities-clean-copy{display:flex;flex:1;flex-direction:column;align-items:flex-start;padding:22px 23px 25px;gap:11px}
+body.hmatias-facilities .facilities-clean-copy small,body.hmatias-facilities .facilities-clean-overview small{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#48748d}
+body.hmatias-facilities .facilities-clean-copy h3,body.hmatias-facilities .facilities-clean-overview h3{margin:0;color:#143448;font-size:clamp(1.25rem,2vw,1.65rem);line-height:1.25}
+body.hmatias-facilities .facilities-clean-copy p,body.hmatias-facilities .facilities-clean-overview p{margin:0;color:#4d6475;font-size:.94rem;line-height:1.65}
+body.hmatias-facilities .facilities-clean-copy .btn{margin-top:auto}
+body.hmatias-facilities .facilities-clean-overview{display:flex;flex-direction:column;gap:16px;padding:29px;border-radius:14px;background:#0e3452;color:#fff}
+body.hmatias-facilities .facilities-clean-overview small{color:#a4d9ef}
+body.hmatias-facilities .facilities-clean-overview h3{color:#fff}
+body.hmatias-facilities .facilities-clean-overview p{color:#d5e4ee}
+body.hmatias-facilities .facilities-clean-overview ul{margin:0;padding-left:19px;color:#d5e4ee;line-height:1.75}
+body.hmatias-facilities .facilities-clean-overview .btn{margin-top:auto;align-self:flex-start}
+body.hmatias-facilities .facilities-clean-note{margin:20px 0 0;color:#61717f;font-size:.84rem;line-height:1.6}
+body.hmatias-clean .clean-parent-link{margin:0 0 14px;font-size:.84rem}
+body.hmatias-clean .clean-parent-link a{color:#0c5987;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:940px){body.hmatias-facilities .facilities-clean-grid{grid-template-columns:repeat(2,minmax(0,1fr))}body.hmatias-facilities .facilities-clean-overview{grid-column:1/-1}}
+@media(max-width:600px){body.hmatias-facilities .facilities-clean-grid{grid-template-columns:1fr;gap:16px}body.hmatias-facilities .facilities-clean-overview{grid-column:auto}body.hmatias-facilities .facilities-clean-image{aspect-ratio:5/3}body.hmatias-facilities .facilities-clean-copy{padding:19px 20px 22px}}
