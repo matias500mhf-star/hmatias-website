@@ -1,0 +1,13 @@
+/* HMATIAS mobile contact controls — prevent WhatsApp/assistant overlap. */
+@media (max-width:850px){
+  body .hmatias-assistant{bottom:98px!important;right:max(14px,env(safe-area-inset-right))!important}
+  body .whatsapp-float{bottom:18px!important;right:max(14px,env(safe-area-inset-right))!important}
+  body.hmatias-assistant-open .whatsapp-float{visibility:hidden!important;pointer-events:none!important}
+}
+@media (max-width:600px){
+  body .hmatias-assistant{bottom:calc(92px + env(safe-area-inset-bottom))!important}
+  body .whatsapp-float{bottom:calc(14px + env(safe-area-inset-bottom))!important}
+  body .hmatias-assistant-panel{bottom:calc(154px + env(safe-area-inset-bottom))!important;height:min(520px,calc(100dvh - 172px - env(safe-area-inset-bottom)))!important}
+  body:has(.mobile-sticky-contact) .whatsapp-float{display:none!important}
+  body:has(.mobile-sticky-contact) .hmatias-assistant{bottom:calc(90px + env(safe-area-inset-bottom))!important}
+}
