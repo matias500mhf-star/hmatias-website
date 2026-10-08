@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: current public HMATIAS website content, sitemap and SOURCE AO public product state, 2026-10-06. */
+   Source of truth: current public HMATIAS website content, sitemap and SOURCE AO public product state, 2026-10-08. */
 (() => {
   'use strict';
 
@@ -14,8 +14,8 @@
   ];
 
   const kb = {
-    version: '2026-10-06.4',
-    updated: '2026-10-06',
+    version: '2026-10-08.1',
+    updated: '2026-10-08',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
@@ -24,8 +24,8 @@
       nif: '5001578065', commercialRegistration: '24.094-23', founded: '2023-07-14'
     },
     siteState: {
-      homepagePt: 'Homepage principal simplificada e estável, centrada em Construção, Facilities e Supply, com portfólio real, divisões especializadas, Smart RFQ e contacto comercial.',
-      homepageEn: 'Stable, simplified main homepage centred on Construction, Facilities and Supply, with real portfolio evidence, specialised divisions, Smart RFQ and direct commercial contact.',
+      homepagePt: 'Homepage institucional centrada em quatro áreas principais: Construção, Facilities e Manutenção (inclui HMATIAS Clean), Supply e Procurement e Business Services. Portfólio real, Smart RFQ e contacto comercial.',
+      homepageEn: 'Institutional homepage built around four core areas: Construction, Facilities and Maintenance (including HMATIAS Clean), Supply and Procurement, and Business Services, with real project evidence, Smart RFQ and commercial contact.',
       sourcePlacementPt: 'O SOURCE AO é um produto próprio da HMATIAS com identidade visual própria. No site HMATIAS principal permanece como acesso discreto no rodapé; a experiência completa vive em /source-ao/.',
       sourcePlacementEn: 'SOURCE AO is a dedicated HMATIAS product with its own visual identity. On the main HMATIAS site it remains a discreet footer entry; the full experience lives under /source-ao/.',
       commercialJourneyPt: 'A jornada comercial do site orienta o visitante da informação e prova para uma ação adequada: pedido de orçamento, Smart RFQ, WhatsApp, pedido de atendimento ou SOURCE AO, conforme a necessidade.'
@@ -58,15 +58,15 @@
       summaryEn: 'Cleaning and hygiene products for domestic and professional use. Products are supplied on order; stock, lead time and delivery are subject to commercial confirmation.',
       featured: {
         pine500: {name:'123 Pine Gel',format:'500 ml',price:'Sob consulta',status:'Sob encomenda',descriptionPt:'Gel de limpeza multiusos para utilização doméstica e profissional. Consulte e respeite sempre as instruções do rótulo.'},
-        taurusPine: {code:'T563P',name:'Taurus Pine Gel',formats:{'500 g':'Sob consulta','1 kg':'8.500 Kz','5 kg':'26.500 Kz','20 kg':'94.000 Kz'},status:'Sob encomenda',descriptionPt:'Gel multiuso com ação germicida, indicado para remoção de sujidade, manchas, gordura e odores em diversas superfícies.',featuresPt:'Gel verde, odor a pinho, pH 7, completamente solúvel e biodegradável.',applicationsPt:['Cerâmica de banho','Sanitas','Lavatórios','Pias','Pisos','Carpetes','Estofos'],dilutionsPt:['Pisos e banheiras/lavatórios 1:25','Carpetes aproximadamente 1:10','Vinil aproximadamente 1:20'],warningPt:'O fabricante não aconselha a utilização em superfícies em contacto com alimentos.'}
+        taurusPine: {code:'T563P',name:'Taurus Pine Gel',formats:'Formato e capacidade sujeitos a confirmação comercial',status:'Sob encomenda',descriptionPt:'Gel multiuso com ação germicida, indicado para remoção de sujidade, manchas, gordura e odores em diversas superfícies.',featuresPt:'Gel verde, odor a pinho, pH 7, completamente solúvel e biodegradável.',applicationsPt:['Cerâmica de banho','Sanitas','Lavatórios','Pias','Pisos','Carpetes','Estofos'],dilutionsPt:['Pisos e banheiras/lavatórios 1:25','Carpetes aproximadamente 1:10','Vinil aproximadamente 1:20'],warningPt:'O fabricante não aconselha a utilização em superfícies em contacto com alimentos.'}
       },
-      catalogNotePt: 'O catálogo profissional inclui produtos por código e categoria. Para produtos sem preço publicado, o assistente nunca deve inventar preço, formato, stock, prazo ou condições de entrega; deve encaminhar para confirmação comercial.',
+      catalogNotePt: 'O catálogo profissional inclui produtos por código e categoria. A HMATIAS não publica preços, formatos ou stock confirmados sem validação comercial da referência; encaminhar para cotação.',
       brandNotePt: 'A referência à Taurus identifica produtos do fabricante e não implica representação exclusiva, parceria ou exclusividade comercial.', cleanCatalog
     },
     businessServices: {
       summaryPt: 'Apoio administrativo, documental e empresarial para profissionais, empreendedores e empresas, presencial em Luanda e remoto quando aplicável.',
-      pricesPt: [['Expediente Administrativo & Redação Institucional','Desde 5.000 Kz'],['Estruturação de CV Profissional','Desde 10.000 Kz'],['Gestão & Organização Documental','Desde 10.000 Kz'],['Propostas Comerciais & Business Support','Desde 15.000 Kz'],['Apresentações Empresariais','Desde 20.000 Kz'],['Apoio Administrativo Recorrente para PME','Desde 75.000 Kz/mês'],['Apoio Administrativo a Processos de Visto & Agendamentos Consulares','Sob consulta']],
-      pricingRulePt: 'Os valores são preços base. Volume, complexidade, urgência e prazo podem alterar o orçamento final, que é confirmado antes da execução.',
+      servicesPt: ['Expediente administrativo e redação institucional','Estruturação de CV profissional','Gestão e organização documental','Propostas comerciais e apoio empresarial','Apresentações empresariais','Apoio administrativo recorrente para PME','Apoio documental a processos de visto e agendamentos consulares'],
+      pricingRulePt: 'A HMATIAS não publica uma tabela de preços do Business Services. Cada serviço é orçamentado após avaliação do âmbito, volume documental, complexidade e prazo. Solicitar proposta pelos canais comerciais.',
       visaPt: 'Inclui checklist e organização documental, conferência de completude do dossier, assistência administrativa no preenchimento de formulários, apoio na utilização de plataformas oficiais, preparação do dossier e acompanhamento administrativo.',
       visaLimitsPt: 'A HMATIAS presta apenas apoio administrativo e documental. Não comercializa vagas de agendamento, não garante disponibilidade de marcação ou concessão de visto e não possui acesso privilegiado a embaixadas, consulados, VFS Global ou outras plataformas oficiais. Taxas consulares/VFS e outros encargos oficiais não estão incluídos salvo indicação expressa. Serviços jurídicos e representação legal não fazem parte desta oferta.'
     },
@@ -120,9 +120,9 @@
       `CONSTRUÇÃO: ${kb.construction.summaryPt} Capacidades: ${kb.construction.capabilitiesPt.join('; ')}. Processo: ${kb.construction.processPt.join('; ')}.`,
       `FACILITIES: ${kb.facilities.summaryPt} Capacidades: ${kb.facilities.capabilitiesPt.join('; ')}.`,
       `SUPPLY: ${kb.supply.summaryPt} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. ${kb.supply.rulePt}`,
-      `CLEAN: ${kb.clean.summaryPt} 123 Pine Gel 500 ml: preço sob consulta. Taurus Pine Gel T563P: ${p.descriptionPt} ${p.featuresPt} Formatos/preços: 500 g sob consulta; 1 kg 8.500 Kz; 5 kg 26.500 Kz; 20 kg 94.000 Kz. Aplicações: ${p.applicationsPt.join(', ')}. Diluições: ${p.dilutionsPt.join('; ')}. Aviso: ${p.warningPt} ${kb.clean.brandNotePt}`,
+      `CLEAN: ${kb.clean.summaryPt} 123 Pine Gel 500 ml: preço sob consulta. Taurus Pine Gel T563P: ${p.descriptionPt} ${p.featuresPt} Formato, preço, stock e prazo sujeitos a confirmação comercial. Aplicações: ${p.applicationsPt.join(', ')}. Diluições: ${p.dilutionsPt.join('; ')}. Aviso: ${p.warningPt} ${kb.clean.brandNotePt}`,
       `CATÁLOGO CLEAN: ${cleanCatalog.map(x=>`${x[0]} ${x[1]} [${x[2]}]`).join('; ')}. Para estes itens, se não houver preço publicado, confirmar com equipa comercial.`,
-      `BUSINESS SERVICES: ${kb.businessServices.pricesPt.map(x=>`${x[0]} — ${x[1]}`).join('; ')}. ${kb.businessServices.pricingRulePt} Vistos/agendamentos: ${kb.businessServices.visaLimitsPt}`,
+      `BUSINESS SERVICES: ${kb.businessServices.servicesPt.join('; ')}. ${kb.businessServices.pricingRulePt} Vistos/agendamentos: ${kb.businessServices.visaLimitsPt}`,
       `SMART RFQ: ${kb.smartRfq.summaryPt} ${kb.smartRfq.limitsPt} ${kb.smartRfq.privacyPt}`,
       `AGENDAMENTO HMATIAS: ${kb.booking.summaryPt} ${kb.booking.rulesPt.join('; ')}.`,
       `KARTA: ${kb.karta.summaryPt} ${kb.karta.statusPt} Capacidades atuais: ${kb.karta.currentPt.join('; ')}. Roadmap: ${kb.karta.roadmapPt.join('; ')}. ${kb.karta.rulePt}`,
