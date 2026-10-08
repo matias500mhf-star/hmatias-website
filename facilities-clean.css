@@ -21,3 +21,7 @@ body.hmatias-clean .clean-parent-link{margin:0 0 14px;font-size:.84rem}
 body.hmatias-clean .clean-parent-link a{color:#0c5987;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:940px){body.hmatias-facilities .facilities-clean-grid{grid-template-columns:repeat(2,minmax(0,1fr))}body.hmatias-facilities .facilities-clean-overview{grid-column:1/-1}}
 @media(max-width:600px){body.hmatias-facilities .facilities-clean-grid{grid-template-columns:1fr;gap:16px}body.hmatias-facilities .facilities-clean-overview{grid-column:auto}body.hmatias-facilities .facilities-clean-image{aspect-ratio:5/3}body.hmatias-facilities .facilities-clean-copy{padding:19px 20px 22px}}
+
+/* Shared product-media resilience: avoid broken-image icons. */
+body.hmatias-facilities .hmatias-product-photo-unavailable,body.hmatias-clean .hmatias-product-photo-unavailable{display:flex;align-items:center;justify-content:center;min-height:160px;max-width:100%;padding:20px;text-align:center;background:#edf4f8;border:1px solid #d5e4ec;border-radius:8px;color:#4d6679;font-size:.88rem;line-height:1.6}
+body.hmatias-facilities img[data-hmatias-product-photo],body.hmatias-clean img[data-hmatias-product-photo]{object-fit:contain}
