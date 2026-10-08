@@ -1,0 +1,38 @@
+name: HMATIAS Lead Intake Safety
+on:
+  pull_request:
+    paths:
+      - 'lead-intake/**'
+      - 'lead-intake-client.js'
+      - 'site-bootstrap.js'
+      - 'mobile-contact-layout.css'
+      - '.github/workflows/lead-intake-quality.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'lead-intake/**'
+      - 'lead-intake-client.js'
+      - 'site-bootstrap.js'
+      - 'mobile-contact-layout.css'
+      - '.github/workflows/lead-intake-quality.yml'
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript syntax
+        run: |
+          node --check site-bootstrap.js
+          node --check lead-intake-client.js
+          node --check lead-intake/src/index.js
+      - name: Test private intake with mocked services
+        run: node --test lead-intake/test.mjs
+      - name: Verify no private backend shipped in Jekyll static publication
+        run: |
+          grep -Eq '^  - lead-intake$' _config.yml
+          grep -Fq -- "--exclude 'lead-intake/'" .github/workflows/jekyll-docker.yml
