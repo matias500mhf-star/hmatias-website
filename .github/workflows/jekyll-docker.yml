@@ -46,6 +46,7 @@ jobs:
             --exclude '.source-ao-production-release' \
             --exclude 'SECURITY.md' \
             --exclude 'source-ao/backend/' \
+            --exclude 'lead-intake/' \
             --exclude 'source-ao/data/' \
             --exclude 'source-ao/docs/' \
             --exclude 'source-ao/schemas/' \
@@ -69,6 +70,7 @@ jobs:
           test -f "$out/index.html"
           test -f "$out/source-ao/index.html"
           test ! -e "$out/source-ao/backend"
+          test ! -e "$out/lead-intake"
           test ! -e "$out/source-ao/docs"
           test ! -e "$out/source-ao/ops.html"
           test ! -e "$out/source-ao/ops.js"
