@@ -1,0 +1,6 @@
+/* HMATIAS Business Services: quotation-led, no public rate cards. */
+body.hmatias-business .business-service-action{display:flex;align-items:center;justify-content:flex-end;min-width:190px}
+body.hmatias-business .business-service-action .btn{font-size:.8rem;white-space:normal;text-align:center;line-height:1.4}
+body.hmatias-business .business-anchor-alias{display:block;position:relative;top:-100px;visibility:hidden;height:0}
+@media(max-width:850px){body.hmatias-business .business-service-action{justify-content:flex-start;min-width:0}}
+@media(max-width:420px){body.hmatias-business .business-service-action .btn{width:100%}}
