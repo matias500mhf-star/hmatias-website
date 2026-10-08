@@ -31,7 +31,7 @@ function manualLink(node,payload,reference=''){
 }
 function addConsent(form){
  if(form.querySelector('input[name="privacy_consent"]'))return;
- const div=document.createElement('label');div.className='hmatias-lead-privacy';div.style.display='flex';div.style.gap='10px';div.style.alignItems='flex-start';div.style.margin='14px 0';div.style.fontSize='.84rem';div.style.lineHeight='1.6';
+ const div=document.createElement('label');div.className='hmatias-lead-privacy';div.style.display='flex';div.style.gridColumn='1/-1';div.style.gap='10px';div.style.alignItems='flex-start';div.style.margin='14px 0';div.style.fontSize='.84rem';div.style.lineHeight='1.6';
  const input=document.createElement('input');input.type='checkbox';input.name='privacy_consent';input.required=true;input.style.marginTop='4px';input.style.flexShrink='0';
  const span=document.createElement('span');
  const a=document.createElement('a');a.href=en?'privacy.html':'privacidade.html';a.textContent=en?'Privacy Policy':'Política de Privacidade';
@@ -56,9 +56,12 @@ for(const id of forms){
  const oldNote=form.querySelector('.form-note,.form-privacy-note,.booking-smallprint');
  if(oldNote)oldNote.textContent=en?'When enabled, the request is first registered in HMATIAS systems. WhatsApp remains an optional additional contact channel.':'Quando ativado, o pedido é primeiro registado nos sistemas da HMATIAS. O WhatsApp mantém-se como canal complementar.';
 
- const root=document.createElement('div');root.className='hmatias-lead-verification';root.style.margin='12px 0';
+ const root=document.createElement('div');root.className='hmatias-lead-verification';root.style.margin='12px 0';root.style.gridColumn='1/-1';
  const submit=form.querySelector('button[type="submit"]');
- if(submit)submit.parentNode.insertBefore(root,submit);else form.appendChild(root);
+ const actionGroup=submit?.closest('.form-actions,.booking-actions');
+ if(actionGroup)actionGroup.parentNode.insertBefore(root,actionGroup);
+ else if(submit)submit.parentNode.insertBefore(root,submit);
+ else form.appendChild(root);
  let token='',widget=null;
  turnstileLoad().then(t=>{widget=t.render(root,{sitekey:siteKey,callback:value=>{token=value},'expired-callback':()=>{token=''},'error-callback':()=>{token=''}})}).catch(()=>msg(form,en?'Verification could not load. Please use WhatsApp.':'Não foi possível carregar a verificação. Utilize o WhatsApp.'));
  form.addEventListener('submit',async event=>{
