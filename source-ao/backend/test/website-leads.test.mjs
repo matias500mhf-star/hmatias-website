@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  validateWebsiteLead,websiteLeadCors,createWebsiteLead,
+  validateWebsiteLead,websiteLeadCors,websiteLeadConfig,verifyWebsiteLeadChallenge,createWebsiteLead,
   listWebsiteLeads,websiteDeliveryReady,deliverWebsiteLeadAlerts
 } from '../src/website-leads.js';
 import {rateLimitPolicy} from '../src/security.js';
@@ -87,20 +87,22 @@ test('preserves idempotent submissions and stores only ciphertext',async()=>{
       };
     }
   };
-  const env={WEBSITE_LEAD_INTAKE_ENABLED:'true',PII_ENCRYPTION_KEY:'safe-test-key-not-live',SOURCE_AO_DB:db};
-  const first=await createWebsiteLead(submit(),env);
+  const env={WEBSITE_LEAD_INTAKE_ENABLED:'true',PII_ENCRYPTION_KEY:'safe-test-key-not-live',SOURCE_AO_DB:db,
+    WEBSITE_LEADS_TURNSTILE_SECRET:'test-turnstile-secret',WEBSITE_LEADS_TURNSTILE_SITE_KEY:'0x4AAAA_testsitekey'};
+  const fetchFn=async()=>new Response(JSON.stringify({success:true,hostname:'comercialhmatiasps.com'}),{status:200});
+  const first=await createWebsiteLead(submit({...body,turnstileToken:'valid-challenge-token'}),env,{fetchFn});
   assert.equal(first.status,201);
   const x=await first.json();
   assert.match(x.reference,/^HM-[0-9]{8}-[A-Z0-9]{8}$/);
   assert.equal(x.saved,true);
   assert.equal(x.notification,'not_confirmed');
-  const second=await createWebsiteLead(submit(),env);
+  const second=await createWebsiteLead(submit({...body,turnstileToken:'valid-challenge-token'}),env,{fetchFn});
   assert.equal(second.status,200);
   assert.equal((await second.json()).reference,x.reference);
   assert.equal(inserted,1);
   const saved=[...data.values()][0];
   assert.equal(saved.encrypted_payload.includes('Cliente Teste'),false);
-  const conflict=await createWebsiteLead(submit({...body,details:'Texto diferente no mesmo nonce.'}),env);
+  const conflict=await createWebsiteLead(submit({...body,details:'Texto diferente no mesmo nonce.',turnstileToken:'valid-challenge-token'}),env,{fetchFn});
   assert.equal(conflict.status,409);
 });
 
@@ -115,4 +117,53 @@ test('internal review shell exposes no private data or credentials',async()=>{
   assert.match(html,/\/api\/admin\/website-leads/);
   assert.equal(html.includes('ADMIN_API_TOKEN'),false);
   assert.equal(html.includes('geral@comercialhmatiasps.com'),false);
+});
+
+test('public site key is offered only with complete anti-bot configuration',()=>{
+  const request=new Request('https://worker.example/api/website-leads/config',{
+    headers:{origin:'https://comercialhmatiasps.com'}
+  });
+  const env={WEBSITE_LEAD_INTAKE_ENABLED:'true',SOURCE_AO_DB:{},PII_ENCRYPTION_KEY:'secret'};
+  let r=websiteLeadConfig(request,env);
+  assert.equal(r.status,200);
+  return r.json().then(async value=>{
+    assert.equal(value.enabled,false);
+    assert.equal(Object.hasOwn(value,'turnstileSiteKey'),false);
+    const complete={...env,WEBSITE_LEADS_TURNSTILE_SITE_KEY:'0x4AAAA_testsitekey',
+      WEBSITE_LEADS_TURNSTILE_SECRET:'private-server-key'};
+    r=websiteLeadConfig(request,complete);
+    const config=await r.json();
+    assert.equal(config.enabled,true);
+    assert.equal(config.turnstileSiteKey,'0x4AAAA_testsitekey');
+    assert.equal(JSON.stringify(config).includes('private-server-key'),false);
+  });
+});
+test('server anti-bot validation rejects missing, failed and foreign-host challenges',async()=>{
+  const env={WEBSITE_LEADS_TURNSTILE_SECRET:'server-secret'};
+  assert.equal(await verifyWebsiteLeadChallenge(submit(body),env,{}),false);
+  assert.equal(await verifyWebsiteLeadChallenge(submit(body),env,{turnstileToken:'some-token'},{
+    fetchFn:async()=>new Response(JSON.stringify({success:false,hostname:'comercialhmatiasps.com'}))
+  }),false);
+  assert.equal(await verifyWebsiteLeadChallenge(submit(body),env,{turnstileToken:'some-token'},{
+    fetchFn:async()=>new Response(JSON.stringify({success:true,hostname:'fraudulent.example'}))
+  }),false);
+  assert.equal(await verifyWebsiteLeadChallenge(submit(body),env,{turnstileToken:'some-token'},{
+    fetchFn:async()=>new Response(JSON.stringify({success:true,hostname:'comercialhmatiasps.com'}))
+  }),true);
+});
+test('new lead cannot be stored before the server validates Turnstile',async()=>{
+  let writes=0;
+  const db={prepare(sql){return{
+    bind(){return this;},
+    async first(){return null;},
+    async run(){writes++;return{success:true};}
+  };}};
+  const env={WEBSITE_LEAD_INTAKE_ENABLED:'true',PII_ENCRYPTION_KEY:'test-key',SOURCE_AO_DB:db,
+    WEBSITE_LEADS_TURNSTILE_SECRET:'server-key',WEBSITE_LEADS_TURNSTILE_SITE_KEY:'0x4AAAA_testsitekey'};
+  const r=await createWebsiteLead(submit({...body,turnstileToken:'bad-token'}),env,{
+    fetchFn:async()=>new Response(JSON.stringify({success:false,hostname:'comercialhmatiasps.com'}))
+  });
+  assert.equal(r.status,403);
+  assert.equal((await r.json()).error.code,'turnstile_verification_failed');
+  assert.equal(writes,0);
 });
