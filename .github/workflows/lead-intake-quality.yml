@@ -4,6 +4,7 @@ on:
     paths:
       - 'lead-intake/**'
       - 'lead-intake-client.js'
+      - 'website-lead-client.js'
       - 'site-bootstrap.js'
       - 'mobile-contact-layout.css'
       - '.github/workflows/lead-intake-quality.yml'
@@ -12,6 +13,7 @@ on:
     paths:
       - 'lead-intake/**'
       - 'lead-intake-client.js'
+      - 'website-lead-client.js'
       - 'site-bootstrap.js'
       - 'mobile-contact-layout.css'
       - '.github/workflows/lead-intake-quality.yml'
@@ -29,6 +31,8 @@ jobs:
         run: |
           node --check site-bootstrap.js
           node --check lead-intake-client.js
+          node --check website-lead-client.js
+          node --check source-ao/website-leads-ops.js
           node --check lead-intake/src/index.js
       - name: Test private intake with mocked services
         run: node --test lead-intake/test.mjs
