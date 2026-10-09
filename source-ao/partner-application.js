@@ -42,7 +42,7 @@
       const body=await res.json().catch(()=>({}));
       if(!res.ok)throw new Error(body?.error?.message||'Não foi possível submeter a candidatura.');
       const ref=body.reference||'';
-      message((body.duplicate?'A candidatura já se encontra registada. ':'Candidatura recebida. ')+(ref?'Referência: '+ref+'. ':'')+'A HMATIAS fará a avaliação antes de qualquer ativação na rede.','ok');
+      message((body.duplicate?'A candidatura já se encontra registada. ':'Candidatura registada na plataforma. ')+(ref?'Referência: '+ref+'. ':'')+'A avaliação e a confirmação de contacto dependem de acompanhamento pela equipa comercial. A candidatura não constitui aprovação da parceria.','ok');
       track(body.duplicate?'partner_application_duplicate':'partner_application_registered',{
         partner_type:String(data.get('partner_type')||'unknown'),
         country_code:String(data.get('country_code')||'unknown'),

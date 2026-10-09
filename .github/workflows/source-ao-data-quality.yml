@@ -220,6 +220,7 @@ jobs:
           node --check source-ao/backend/src/index.js
           node --check source-ao/backend/src/public-search.js
           node --check source-ao/backend/src/router.js
+          node --check source-ao/backend/src/intake-alerts.js
           node --check source-ao/backend/src/sourcing.js
           node --check source-ao/backend/src/security.js
           node --check source-ao/backend/src/health.js
