@@ -70,3 +70,13 @@
   .mission-actions{justify-content:flex-start;flex-wrap:wrap}
   .mission-rfq>div{align-items:flex-start}
 }
+
+/* Honest search coverage / externally-initiated supplier research. */
+.source-research-panel{margin:18px 0;padding:19px 21px;background:#eef5f9;border:1px solid #cadae6;border-left:3px solid #236e9c;border-radius:7px;color:#173f58}
+.source-research-panel>strong{display:block;font-size:.74rem;font-weight:800;letter-spacing:.11em}
+.source-research-panel p{font-size:.87rem;line-height:1.7;margin:10px 0;color:#38566e}
+.source-research-links{display:flex;flex-wrap:wrap;gap:9px}
+.source-research-links a{display:inline-flex;align-items:center;min-height:43px;padding:9px 12px;border:1px solid #a9c6d8;background:#fff;border-radius:5px;color:#17557b;font-size:.8rem;font-weight:700;text-decoration:none}
+.source-research-links a:hover,.source-research-links a:focus-visible{border-color:#1b668e;background:#f2f8fb}
+.source-research-panel>small{display:block;margin-top:12px;color:#557084;font-size:.77rem;line-height:1.55}
+@media(max-width:620px){.source-research-panel{padding:16px}.source-research-links{display:grid;grid-template-columns:1fr}.source-research-links a{width:100%}}
