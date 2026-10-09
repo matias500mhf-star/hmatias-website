@@ -5,6 +5,7 @@ import {
   listWebsiteLeads,websiteDeliveryReady,deliverWebsiteLeadAlerts
 } from '../src/website-leads.js';
 import {rateLimitPolicy} from '../src/security.js';
+import {websiteLeadDesk} from '../src/website-lead-desk.js';
 
 const body={
   kind:'contact',nonce:'550e8400-e29b-41d4-a716-446655440000',
@@ -101,4 +102,17 @@ test('preserves idempotent submissions and stores only ciphertext',async()=>{
   assert.equal(saved.encrypted_payload.includes('Cliente Teste'),false);
   const conflict=await createWebsiteLead(submit({...body,details:'Texto diferente no mesmo nonce.'}),env);
   assert.equal(conflict.status,409);
+});
+
+
+test('internal review shell exposes no private data or credentials',async()=>{
+  const response=websiteLeadDesk();
+  assert.equal(response.status,200);
+  assert.equal(response.headers.get('cache-control'),'no-store, private');
+  assert.equal(response.headers.get('x-robots-tag'),'noindex, nofollow, noarchive');
+  assert.match(response.headers.get('content-security-policy'),/frame-ancestors 'none'/);
+  const html=await response.text();
+  assert.match(html,/\/api\/admin\/website-leads/);
+  assert.equal(html.includes('ADMIN_API_TOKEN'),false);
+  assert.equal(html.includes('geral@comercialhmatiasps.com'),false);
 });
