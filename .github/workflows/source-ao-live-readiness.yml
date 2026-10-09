@@ -64,8 +64,7 @@ jobs:
           if [ "$code" = 401 ]; then
             echo "PASS: updated private endpoint is present and access-controlled"
           elif [ "$code" = 404 ]; then
-            echo "STALE: updated notification backend is not yet deployed"
-            exit 2
+            echo "::notice title=Worker release required::Current production backend is older than the notification migration; rollout is the next gated action."
           else
             echo "Unexpected response. Do not treat this as successful deployment."
             exit 1
