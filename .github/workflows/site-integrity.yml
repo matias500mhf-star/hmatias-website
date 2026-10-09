@@ -426,3 +426,6 @@ jobs:
           node --check growth-intelligence.js
           node --check source-ao/sourceao.js
           node scripts/check-commercial-audit.mjs
+
+      - name: Validate sitemap page assets and internal links
+        run: python3 scripts/check-public-site-assets.py
