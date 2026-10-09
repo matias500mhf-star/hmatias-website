@@ -1,10 +1,6 @@
 name: HMATIAS Turnstile Protected Setup
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/turnstile-protected-setup.yml'
 permissions:
   contents: read
 concurrency:
@@ -20,6 +16,7 @@ jobs:
         working-directory: source-ao/backend
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_TURNSTILE_API_TOKEN: ${{ secrets.CLOUDFLARE_TURNSTILE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v5
