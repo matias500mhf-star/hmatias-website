@@ -10,7 +10,7 @@ import {enforceRateLimit,hardenResponse,safeRequestLog} from './security.js';
 import {readinessResponse} from './health.js';
 import {runMaintenance} from './maintenance.js';
 import {sendPendingIntakeAlerts,intakeAlertStatus} from './intake-alerts.js';
-import {websiteLeadCors,createWebsiteLead,listWebsiteLeads,getWebsiteLead,updateWebsiteLeadStatus,deliverWebsiteLeadAlerts,pruneWebsiteLeads} from './website-leads.js';
+import {websiteLeadConfig,websiteLeadCors,createWebsiteLead,listWebsiteLeads,getWebsiteLead,updateWebsiteLeadStatus,deliverWebsiteLeadAlerts,pruneWebsiteLeads} from './website-leads.js';
 import {publicSearch} from './public-search.js';
 import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
@@ -92,6 +92,8 @@ export default {
               status:200,headers:alertHeaders
             });
           }
+        }else if(request.method==='GET' && url.pathname==='/api/website-leads/config'){
+          response=websiteLeadConfig(request,env);
         }else if(request.method==='OPTIONS' && url.pathname==='/api/website-leads'){
           response=websiteLeadCors(request);
         }else if(request.method==='POST' && url.pathname==='/api/website-leads'){
