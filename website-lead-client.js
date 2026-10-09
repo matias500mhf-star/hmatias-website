@@ -26,7 +26,7 @@
       return value.length<=max&&/^[a-z0-9][a-z0-9_.-]*$/.test(value)?value:'';
     };
     const path=window.location.pathname||'/';
-    const landing_path=/^\\/(?:[a-z0-9-]+\\.html|source-ao\\/(?:index\\.html|rfq\\.html|opportunity-radar\\.html)?)?$/.test(path)?path:'';
+    const landing_path=new RegExp('^/(?:[a-z0-9-]+[.]html|source-ao/(?:index[.]html|rfq[.]html|opportunity-radar[.]html)?)?$').test(path)?path:'';
     let referrer_host='';
     try{
       const host=new URL(document.referrer).hostname.toLowerCase();
