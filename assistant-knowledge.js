@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: current public HMATIAS website content, sitemap and SOURCE AO public product state, 2026-10-08. */
+   Source of truth: current public HMATIAS site, HMATIAS lead intake status and SOURCE AO public capabilities, 2026-10-09. */
 (() => {
   'use strict';
 
@@ -14,8 +14,8 @@
   ];
 
   const kb = {
-    version: '2026-10-08.1',
-    updated: '2026-10-08',
+    version: '2026-10-09.1',
+    updated: '2026-10-09',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
@@ -94,6 +94,10 @@
       coreRulePt: 'Encontrar um fornecedor, catálogo, anúncio ou fonte pública não equivale a confirmar disponibilidade. O SOURCE AO separa descoberta, fonte verificada e confirmação comercial atual.',
       commercialFlowPt: 'Para pedidos reais, o fluxo operacional é: necessidade/RFQ → qualificação → consulta privada a fornecedores → confirmação técnica e comercial → custo e logística confirmados → proposta HMATIAS → adjudicação/compra → entrega → faturação e cobrança. Valores, margens, contactos e decisões internas não são públicos.',
       commercialFlowEn: 'For real requests, the operating flow is: requirement/RFQ → qualification → private supplier outreach → technical and commercial confirmation → confirmed cost and logistics → HMATIAS proposal → award/purchase → delivery → invoicing and collection. Costs, margins, contacts and internal decisions are not public.',
+      intakeTruthPt: 'Na HMATIAS, os formulários da homepage, Business Services, atendimento, Facilities e Smart RFQ institucional podem apenas preparar uma mensagem para WhatsApp/e-mail; sem envio manual e confirmação não constituem um lead recebido. O Source AO disponibiliza formulário rápido e RFQ completo com registo numa API privada quando disponível. Uma referência SAO significa pedido gravado na plataforma, não necessariamente equipa notificada ou contacto iniciado. Os avisos comerciais dependem de configuração e entrega efetiva do backend.',
+      intakeTruthEn: 'The main HMATIAS contact, Business Services, booking and institutional Smart RFQ forms may only prepare a WhatsApp/email message; manual sending is still required. Source AO offers quick and full RFQ intake backed by a private API when available. An SAO reference confirms database registration, not staff notification or a completed quotation. Commercial alerts require a configured and confirmed delivery channel.',
+      searchTruthPt: 'A pesquisa Source AO cruza referências curadas e resultados indexados e pode usar um backend com evidência de fornecedores. Não é um motor de pesquisa geral ao mercado em tempo real. Quando o índice não responder, a interface informa e oferece pesquisa pública externa e RFQ; fornecedor potencial não equivale a disponibilidade confirmada.',
+      searchTruthEn: 'Source AO searches a curated/indexed supplier and product evidence base with optional backend enrichment, not all suppliers in the real-time market. When the backend is unavailable, the interface shows this and offers public external research and a structured RFQ. A potential supplier is not proof of stock.',
       publicCapabilitiesPt: ['Smart Search para materiais, equipamentos e serviços','Supplier Discovery','Estados transparentes de evidência e freshness','Pedido de Cotação / RFQ com até 20 itens, categorias ligadas ao catálogo, quantidade, especificações, local, prazo e qualificação de compra','Radar de procura no dispositivo','Opportunity / Intelligence Radar','Atualização manual do Radar e sincronização automática a cada 5 minutos enquanto a página está visível','Intelligence Core para fit, confiança, urgência, localização e complexidade','SOURCE Copilot para próximos passos operacionais'],
       rfqPt: 'Em /source-ao/rfq.html, o cliente pode selecionar famílias do catálogo, indicar vários produtos, quantidades, requisitos técnicos, destino em Angola, prioridade e contacto. A confirmação de registo fornece referência e acompanhamento privado. A HMATIAS qualifica e confirma as condições antes da proposta; o formulário não calcula preços, margens, stock nem realiza compras. Se o registo não for confirmado, o formulário informa e permite tentar novamente ou preparar contacto por WhatsApp, cujo envio exige ação do utilizador.',
       lifecyclePt: 'Fluxo de verificação: Search → Radar → confirmação do fornecedor → revisão humana HMATIAS → observação verificada → expiração → reconfirmação.',
