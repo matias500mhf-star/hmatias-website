@@ -5,7 +5,6 @@
   const stablePresentation = document.body?.classList.contains('site-stable');
 
   const reviewStylesheet = 'site-review.css?v=20260917-stable2';
-  const kartaStylesheet = 'karta-access.css?v=20260917-stable1';
   const premiumTypographyStylesheet = 'premium-typography.css?v=20260920-final2';
   const brandLockStylesheet = 'brand-lock.css?v=20260920-final1';
   const corporateCleanupStylesheet = 'corporate-cleanup.css?v=20260920-final1';
@@ -41,7 +40,6 @@
 
   const ensureSharedAssets = () => {
     if (!stablePresentation) ensureReviewStylesheet();
-    loadStylesheet('link[data-hmatias-karta-access]', kartaStylesheet, 'hmatiasKartaAccess');
     if (!stablePresentation && document.body?.classList.contains('hmatias-home')) {
       loadStylesheet('link[data-hmatias-premium-typography]', premiumTypographyStylesheet, 'hmatiasPremiumTypography');
     }
@@ -145,52 +143,9 @@
     });
   };
 
-  const ensureKartaAccess = () => {
-    const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
-    const path = window.location.pathname || '/';
-    if (/\/karta(?:-en)?\.html$/.test(path)) return;
-
-    const kartaHref = isEn ? 'karta-en.html' : 'karta.html';
-    const allowedPositions = new Set(['left-center', 'right-center', 'bottom-left', 'bottom-right']);
-    const requestedPosition = document.body?.dataset.kartaPosition || 'left-center';
-    const position = allowedPositions.has(requestedPosition) ? requestedPosition : 'left-center';
-
-    if (!document.querySelector('[data-karta-float]')) {
-      const link = document.createElement('a');
-      link.className = 'karta-float';
-      link.href = kartaHref;
-      link.dataset.kartaFloat = 'true';
-      link.dataset.position = position;
-      link.setAttribute('aria-label', 'KARTA Identity Wallet');
-      link.title = isEn ? 'Open KARTA Identity Wallet' : 'Conhecer KARTA Identity Wallet';
-      link.innerHTML = '<span class="karta-float-mark" aria-hidden="true">K</span><span class="karta-float-copy"><strong>KARTA</strong><small>Identity Wallet</small></span>';
-      document.body.appendChild(link);
-    }
-
-    const navMenu = document.querySelector('.hmatias-header .nav-menu');
-    if (navMenu && !navMenu.querySelector('[data-karta-mobile]')) {
-      const link = document.createElement('a');
-      link.className = 'mobile-karta-link';
-      link.href = kartaHref;
-      link.dataset.kartaMobile = 'true';
-      link.setAttribute('aria-label', 'KARTA');
-      link.innerHTML = '<span class="mobile-karta-mark" aria-hidden="true">K</span><span>KARTA</span>';
-      const quote = navMenu.querySelector('.mobile-quote-link');
-      const language = navMenu.querySelector('.mobile-lang-switch');
-      navMenu.insertBefore(link, quote || language || null);
-    }
-
-    const footerBrand = document.querySelector('footer .footer-grid > div:first-child, footer .footer-pro-brand');
-    if (footerBrand && !footerBrand.querySelector('[data-karta-footer]')) {
-      const link = document.createElement('a');
-      link.className = 'footer-karta-link';
-      link.href = kartaHref;
-      link.dataset.kartaFooter = 'true';
-      link.setAttribute('aria-label', 'HMATIAS KARTA');
-      link.innerHTML = '<span class="footer-karta-mark" aria-hidden="true">K</span><span class="footer-karta-copy"><small>HMATIAS</small><strong>KARTA</strong></span>';
-      footerBrand.appendChild(link);
-    }
-  };
+  // KARTA is an Alpha digital project, not a primary commercial service.
+  // Its dedicated institutional project page remains reachable via
+  // Informacao Institucional > Inovacao e Projetos Digitais.
 
   const ensureSourceAOAccess = () => {
     const footerBrand = document.querySelector('footer .footer-grid > div:first-child, footer .footer-pro-brand');
@@ -207,8 +162,8 @@
     link.className = 'footer-source-ao-link';
     link.href = 'source-ao/';
     link.dataset.sourceAoFooter = 'true';
-    link.setAttribute('aria-label', 'Abrir SOURCE AO — intelligence, sourcing e oportunidades');
-    link.innerHTML = '<img class="footer-source-ao-logo" src="images/source-ao-logo.svg" alt="SOURCE AO — intelligence, sourcing e oportunidades by HMATIAS" width="760" height="360">';
+    link.setAttribute('aria-label', 'Abrir Source AO — pesquisa de materiais e pedidos de fornecimento');
+    link.innerHTML = '<img class="footer-source-ao-logo" src="images/source-ao-logo.svg" alt="SOURCE AO — pesquisa técnica e fornecimento HMATIAS" width="760" height="360">';
     footerBrand.appendChild(link);
   };
 
@@ -222,7 +177,6 @@
     addInstagramLink();
     normalizeOfficialEmail();
     normaliseSharedLinks();
-    ensureKartaAccess();
     ensureSourceAOAccess();
     loadPortfolioLayer();
   };
