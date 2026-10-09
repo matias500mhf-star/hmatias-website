@@ -23,6 +23,9 @@ export function rateLimitPolicy(request, pathname='') {
   if (request.method === 'GET' && /^\/api\/sourcing-requests\/[^/]+$/.test(pathname)) {
     return {bucket:'private-tracking', limit:45, windowSeconds:600};
   }
+  if (request.method === 'POST' && pathname === '/api/admin/supplier-discovery') {
+    return {bucket:'admin-external-discovery', limit:6, windowSeconds:3600};
+  }
   if (pathname.startsWith('/api/admin/')) {
     return {bucket:'admin-api', limit:180, windowSeconds:60};
   }
