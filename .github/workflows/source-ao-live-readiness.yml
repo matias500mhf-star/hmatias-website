@@ -64,7 +64,8 @@ jobs:
           if [ "$code" = 401 ]; then
             echo "PASS: updated private endpoint is present and access-controlled"
           elif [ "$code" = 404 ]; then
-            echo "::notice title=Worker release required::Current production backend is older than the notification migration; rollout is the next gated action."
+            echo "::error title=Notification backend still missing::Post-release diagnostic expected HTTP 401 on the protected route."
+            exit 2
           else
             echo "Unexpected response. Do not treat this as successful deployment."
             exit 1
