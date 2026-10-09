@@ -391,8 +391,11 @@ jobs:
             exit 1
           fi
           page_file="$RUNNER_TEMP/source-ao-public-page.html"
-          curl -fsS "https://comercialhmatiasps.com/source-ao/" -o "$page_file"
-          grep -Fq "Procure. Verifique." "$page_file"
+          curl -fsS "https://comercialhmatiasps.com/source-ao/?check=$GITHUB_RUN_ID" -o "$page_file"
+          grep -Fq "Pesquisa técnica de materiais e fornecedores." "$page_file" || {
+            echo "::error title=Source AO public copy mismatch::Updated technical sourcing headline not visible at the production website." >&2
+            exit 1
+          }
           rm -f "$page_file"
           echo "SOURCE_AO_PRODUCTION=PASS"
           echo "Public frontend is connected to the healthy production API."
