@@ -26,7 +26,7 @@ const clean=(value,max)=>typeof value==='string'?value.trim().replace(/[\u0000-\
 
 // Only non-identifying campaign codes and approved site paths are accepted.
 // Never store URLs, search phrases, ad click IDs, cookies or arbitrary referrer paths.
-const ATTRIBUTION_PAGE=/^\\/(?:[a-z0-9-]+\\.html|source-ao\\/(?:index\\.html|rfq\\.html|opportunity-radar\\.html)?)?$/;
+const ATTRIBUTION_PAGE=new RegExp('^/(?:[a-z0-9-]+[.]html|source-ao/(?:index[.]html|rfq[.]html|opportunity-radar[.]html)?)?$');
 function attributionSlug(value,max){
   if(value===undefined||value===null||value==='')return '';
   if(typeof value!=='string'||value.length>max||
