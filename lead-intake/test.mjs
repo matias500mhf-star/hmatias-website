@@ -94,3 +94,26 @@ test('successful request is stored once, has a reference, and sends optional out
   assert.equal(db.leads.size,1);
  }finally{globalThis.fetch=original}
 });
+
+test('replayed nonce with modified customer details cannot impersonate an existing saved lead',async()=>{
+ const db=fakeDb(),env=configured(db),pending=[];
+ const original=globalThis.fetch;
+ globalThis.fetch=async url=>String(url).includes('turnstile')
+   ? new Response(JSON.stringify({success:true,hostname:'comercialhmatiasps.com'}),{status:200})
+   : new Response(JSON.stringify({success:true}),{status:200});
+ try{
+  const ctx={waitUntil(p){pending.push(p)}};
+  const created=await worker.fetch(request(input()),env,ctx);
+  assert.equal(created.status,201);
+  await Promise.all(pending);
+  const changed={...input(),details:'Texto alterado depois da primeira submissão.'};
+  const replay=await worker.fetch(request(changed),env,{waitUntil(){throw Error('must not deliver')}});
+  assert.equal(replay.status,409);
+  assert.equal((await replay.json()).error,'submission_nonce_conflict');
+  assert.equal(db.leads.size,1);
+  assert.equal([...db.leads.values()][0].details,input().details);
+  const retry=await worker.fetch(request(input()),env,{waitUntil(){throw Error('must not redeliver')}});
+  assert.equal(retry.status,200);
+  assert.equal((await retry.json()).saved,true);
+ }finally{globalThis.fetch=original}
+});

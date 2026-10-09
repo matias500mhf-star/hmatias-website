@@ -117,7 +117,12 @@ async function handleRequest(request,env,ctx){
   try{d=cleanInput(await request.json())}catch(_){return json({error:'invalid_json'},400,origin)}
   if(!d)return json({error:'invalid_fields_or_consent'},422,origin);
   const existing=await lookupByNonce(env.LEADS_DB,d.nonce);
-  if(existing)return json({saved:true,reference:existing.reference,receiptSent:existing.receipt_status==='sent'},200,origin);
+  if(existing){
+    const same=['kind','company','email','phone','service','location','details'].every(key=>existing[key]===d[key])
+      &&existing.full_name===d.name;
+    if(!same)return json({error:'submission_nonce_conflict'},409,origin);
+    return json({saved:true,reference:existing.reference,receiptSent:existing.receipt_status==='sent'},200,origin);
+  }
   const ip=request.headers.get('CF-Connecting-IP')||'unknown';
   if(!(await limit(env.LEADS_DB,ip,env.RATE_LIMIT_SALT)))return json({error:'rate_limited'},429,origin);
   let verified=false;
