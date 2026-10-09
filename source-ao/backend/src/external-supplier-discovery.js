@@ -5,7 +5,10 @@ const MARKETS=Object.freeze({
   NA:'Namíbia',
   ZA:'África do Sul'
 });
-const JSON_HEADERS={'content-type':'application/json; charset=utf-8','cache-control':'no-store'};
+const JSON_HEADERS={'content-type':'application/json; charset=utf-8','cache-control':'no-store',
+  'access-control-allow-origin':'https://comercialhmatiasps.com',
+  'access-control-allow-methods':'POST,OPTIONS',
+  'access-control-allow-headers':'authorization,content-type'};
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:JSON_HEADERS});
 const fail=(status,code,message)=>json({ok:false,error:{code,message}},status);
 
