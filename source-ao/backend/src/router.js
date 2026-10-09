@@ -9,6 +9,7 @@ import {
 import {enforceRateLimit,hardenResponse,safeRequestLog} from './security.js';
 import {readinessResponse} from './health.js';
 import {runMaintenance} from './maintenance.js';
+import {sendPendingIntakeAlerts} from './intake-alerts.js';
 import {publicSearch} from './public-search.js';
 import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
@@ -228,6 +229,8 @@ export default {
     ctx.waitUntil((async()=>{
       const cron=controller?.cron||'';
       try{
+        const intake=await sendPendingIntakeAlerts(env,{limit:8});
+        console.log(JSON.stringify({type:'source_ao_intake_notification_tick',cron,...intake}));
         const discovery=await processPendingDiscoveryJobs(env,{limit:4});
         console.log(JSON.stringify({type:'source_ao_discovery_tick',cron,...discovery}));
         const opportunityScan=await scanOpportunitySources(env,{limitSources:2});
