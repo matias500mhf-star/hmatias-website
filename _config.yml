@@ -40,3 +40,7 @@ exclude:
   - source-ao/requests.html
   - source-ao/requests.js
   - source-ao/requests.css
+  - source-ao/supplier-discovery.html
+  - source-ao/supplier-discovery.js
+  - source-ao/website-leads.html
+  - source-ao/website-leads-ops.js
