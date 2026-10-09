@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0b2f4f">
+  <title>HMATIAS — Pedidos institucionais | Área interna</title>
+  <link rel="stylesheet" href="sourceao.css">
+  <link rel="stylesheet" href="ops.css">
+  <style>
+    .lead-ops{max-width:1040px;margin:32px auto 72px}.lead-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+    .lead-controls label{flex:1;min-width:220px}.lead-controls input{width:100%}
+    .lead-card{border:1px solid #d2dce5;border-radius:10px;padding:15px;margin:12px 0}
+    .lead-card h3{margin:0 0 6px}.lead-card p{overflow-wrap:anywhere}
+    .lead-status{font-size:.88rem;color:#4d6277}.lead-ops button{cursor:pointer}
+    #websiteLeadDetail{white-space:pre-wrap;overflow-wrap:anywhere}
+  </style>
+</head>
+<body class="ops-body">
+  <header class="topbar"><div class="shell nav">
+    <a class="source-brand" href="../index.html">HMATIAS · ÁREA COMERCIAL</a>
+    <div class="nav-actions"><a class="btn btn-outline btn-small" href="ops.html">Operações Source AO</a></div>
+  </div></header>
+  <main class="shell lead-ops">
+    <section class="ops-intro"><span class="eyebrow">ACESSO ADMINISTRATIVO</span>
+      <h1>Pedidos do website</h1>
+      <p>Contactos, solicitações de serviços empresariais e pedidos de atendimento recebidos pelo sistema. Os RFQs do Source AO mantêm-se numa fila independente.</p>
+    </section>
+    <section class="ops-card">
+      <div class="lead-controls">
+        <label>Token administrativo da sessão<input id="websiteLeadsToken" type="password" autocomplete="off" spellcheck="false" placeholder="Token nunca guardado"></label>
+        <button id="websiteLeadsLogin" class="btn btn-primary" type="button">Consultar pedidos</button>
+        <button id="websiteLeadsClear" class="btn btn-outline" type="button">Limpar sessão</button>
+      </div>
+      <p id="websiteLeadsStatus" role="status" aria-live="polite">Introduza a credencial administrativa para consultar a receção dos formulários.</p>
+    </section>
+    <section class="ops-card">
+      <div class="ops-card-head"><h2>Fila comercial</h2><span id="websiteLeadsCount">Sem dados</span></div>
+      <div id="websiteLeadsList"></div>
+    </section>
+    <section class="ops-card">
+      <h2>Detalhe reservado</h2>
+      <div id="websiteLeadDetail" role="region" aria-live="polite">Selecione um pedido depois da autenticação.</div>
+    </section>
+    <p class="ops-note">Apenas para pessoal autorizado. Um pedido registado na base D1 não prova que a notificação Resend foi entregue. Contacte os clientes somente por canais comerciais legítimos e respeite a política de conservação.</p>
+  </main>
+  <script src="runtime-config.js" defer></script>
+  <script src="website-leads-ops.js" defer></script>
+</body></html>
