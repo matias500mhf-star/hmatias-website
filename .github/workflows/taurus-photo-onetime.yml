@@ -1,0 +1,44 @@
+name: Refresh Taurus Official Photo (one-time)
+on:
+  push:
+    branches: [fix/facilities-taurus-institutional-20261009]
+    paths:
+      - '.github/workflows/taurus-photo-onetime.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch-official-product-photo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Obtain verified product image from Taurus manufacturer
+        run: |
+          set -euo pipefail
+          mkdir -p images/products
+          curl --fail --location --retry 3 --retry-delay 2 --max-time 35 \
+            --header 'User-Agent: Mozilla/5.0 (compatible; HMATIAS product catalogue)' \
+            'https://www.tmpn.com/contents/media/l_taurus-563p.jpg' \
+            -o images/products/taurus-pine-gel-t563p-official.jpg
+          python -m pip -q install Pillow
+          python - <<'PY'
+          from PIL import Image
+          p='images/products/taurus-pine-gel-t563p-official.jpg'
+          with Image.open(p) as im:
+              im.verify()
+          with Image.open(p) as im:
+              w,h=im.size
+              assert im.format=='JPEG', f'Unexpected format: {im.format}'
+              assert w>=350 and h>=350, f'Too small: {w}x{h}'
+              print('Manufacturer Taurus T563P verified JPEG:',w,h)
+          PY
+      - name: Commit image back to the feature branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add images/products/taurus-pine-gel-t563p-official.jpg
+          if ! git diff --cached --quiet; then
+            git commit -m 'Restore authentic Taurus T563P manufacturer image (verified JPEG)'
+            git push origin HEAD:refs/heads/fix/facilities-taurus-institutional-20261009
+          fi
