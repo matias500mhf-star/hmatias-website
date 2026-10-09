@@ -415,3 +415,14 @@ jobs:
 
           print(f'HMATIAS site integrity OK: {len(sitemap_urls)} canonical URLs; {whatsapp_refs} WhatsApp routes checked.')
           PY
+
+      - name: Audit commercial client attribution, site copy and navigation
+        run: |
+          node --check analytics.js
+          node --check analytics-events.js
+          node --check website-lead-client.js
+          node --check site-bootstrap.js
+          node --check script.js
+          node --check growth-intelligence.js
+          node --check source-ao/sourceao.js
+          node scripts/check-commercial-audit.mjs
