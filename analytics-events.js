@@ -133,11 +133,15 @@
       lead_type: leadType
     });
 
-    /* Current forms hand the visitor to WhatsApp. This is a handoff attempt, not a confirmed lead. */
-    track('lead_handoff', {
-      method: 'whatsapp',
-      lead_type: leadType
-    });
+    /* A form attempt is not a completed lead. If the protected website intake
+       is enabled, only its successful saved response records generate_lead.
+       Otherwise WhatsApp is merely a handoff attempt. */
+    if(form.dataset.hmatiasWebsiteIntake!=='true'){
+      track('lead_handoff', {
+        method: 'whatsapp',
+        lead_type: leadType
+      });
+    }
   }, true);
 
   const confirmLead = (leadType = 'general_quote', method = 'website') => {
