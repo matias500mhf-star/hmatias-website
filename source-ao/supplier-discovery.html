@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0b2f4f">
+  <title>Source AO — Pesquisa interna de fornecedores</title>
+  <link rel="stylesheet" href="sourceao.css">
+  <link rel="stylesheet" href="ops.css">
+  <style>
+    .discovery-wrap{max-width:1000px;margin:32px auto 64px}
+    .discovery-head{margin-bottom:28px}
+    .discovery-head h1{margin:12px 0}
+    .discovery-form{display:grid;gap:16px}
+    .discovery-form input[type="text"],.discovery-form input[type="password"]{width:100%}
+    .discovery-market{display:flex;flex-wrap:wrap;gap:12px}
+    .discovery-market label{display:flex;align-items:center;gap:8px}
+    .discovery-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+    .discovery-result{margin-top:18px;padding:16px;border:1px solid #b6c5d3;border-radius:10px}
+    .discovery-result h3{margin:0 0 8px}
+    .discovery-result p{overflow-wrap:anywhere}
+    .discovery-result a{overflow-wrap:anywhere}
+    .discovery-result small{display:block;margin:6px 0}
+    #discoveryStatus{min-height:24px}
+  </style>
+</head>
+<body class="ops-body">
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="source-brand" href="index.html">SOURCE AO — HMATIAS</a>
+      <div class="nav-actions"><a class="btn btn-outline btn-small" href="ops.html">Área operacional</a></div>
+    </div>
+  </header>
+  <main class="shell discovery-wrap">
+    <section class="discovery-head">
+      <span class="eyebrow">ÁREA INTERNA · PILOTO CONTROLADO</span>
+      <h1>Pesquisa técnica de fornecedores</h1>
+      <p>Identificação assistida de fornecedores potenciais em fontes públicas. Resultados não constituem cotação, prova de stock ou homologação.</p>
+    </section>
+    <section class="ops-card">
+      <form id="discoveryForm" class="discovery-form" autocomplete="off">
+        <label>Token administrativo desta sessão
+          <input type="password" id="discoveryToken" required autocomplete="off" spellcheck="false" placeholder="Não é guardado pelo navegador">
+        </label>
+        <label>Material e especificação técnica
+          <input type="text" id="discoveryQuery" minlength="3" maxlength="180" required placeholder="Ex.: cinta de arqueação PP 9 mm, 1 rolo">
+        </label>
+        <fieldset><legend>Mercados a pesquisar</legend>
+          <div class="discovery-market">
+            <label><input type="checkbox" name="markets" value="AO" checked> Angola</label>
+            <label><input type="checkbox" name="markets" value="NA" checked> Namíbia</label>
+            <label><input type="checkbox" name="markets" value="ZA" checked> África do Sul</label>
+          </div>
+        </fieldset>
+        <div class="discovery-actions">
+          <button type="submit" class="btn btn-primary" id="discoverySubmit">Pesquisar fornecedores</button>
+          <button type="button" class="btn btn-outline" id="clearDiscovery">Limpar sessão</button>
+          <span id="discoveryStatus" role="status" aria-live="polite">Pesquisa externa desativada até à ativação segura do piloto.</span>
+        </div>
+      </form>
+    </section>
+    <section class="ops-card" aria-labelledby="resultsTitle">
+      <h2 id="resultsTitle">Resultados rastreáveis</h2>
+      <p id="resultsInfo">As fontes encontradas surgirão aqui após uma pesquisa autorizada.</p>
+      <div id="discoveryResults"></div>
+    </section>
+    <p class="ops-note">As credenciais são usadas apenas nesta sessão e nunca gravadas em armazenamento local. A análise por IA é uma indicação de relevância, não uma validação técnica. Nenhum e-mail é enviado a fornecedores nesta ferramenta.</p>
+  </main>
+  <script src="runtime-config.js" defer></script>
+  <script src="supplier-discovery.js" defer></script>
+</body>
+</html>
