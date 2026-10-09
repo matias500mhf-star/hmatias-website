@@ -137,6 +137,9 @@
           '. Our team will review it. Internal email notification may still be pending.'
         );
         nonce=crypto.randomUUID();
+        // Consent-gated GA4 tracking receives no contact details or lead references.
+        const leadTypes={contact:'general_quote',business:'business_services_request',appointment:'appointment_request'};
+        window.hmatiasAnalytics?.confirmLead?.(leadTypes[config.kind]||'general_quote','website');
       }catch{
         status.textContent=text(
           'Não foi possível confirmar o registo. Envie o pedido pelo WhatsApp ou pela alternativa de e-mail disponível nesta página.',

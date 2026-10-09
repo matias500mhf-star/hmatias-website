@@ -92,7 +92,7 @@
         return form.classList.contains('contact-form') || /(contact|quote|request|booking|clean|supply|business)/i.test(id);
       })
       .forEach(form => {
-        if (form.querySelector('[data-email-fallback]')) return;
+        if (form.querySelector('[data-email-fallback], [data-hmatias-email-alternative], a[href^="mailto:"]')) return;
         const submit = form.querySelector('button[type="submit"], input[type="submit"]');
         if (!submit) return;
         const link = document.createElement('a');
