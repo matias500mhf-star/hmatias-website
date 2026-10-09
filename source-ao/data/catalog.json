@@ -135,6 +135,33 @@
       "name_pt": "Ferramentas e equipamentos"
     },
     {
+      "id": "item-pvc-polymer",
+      "name": "PVC resin and polymer material",
+      "aliases": [
+        "PVC",
+        "PVC resin",
+        "PVC granules",
+        "PVC pellets",
+        "policloreto de vinilo",
+        "policloreto de vinila",
+        "resina PVC",
+        "granulado PVC",
+        "composto PVC"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "polymers-plastics",
+      "specification": "Material family only. Confirm whether the requester means PVC resin, compound, granules, flexible sheet or another PVC product. Grade, additives, form, packaging and stock require commercial verification.",
+      "keywords": [
+        "plastic",
+        "polymer",
+        "resina",
+        "granulado",
+        "composto",
+        "industrial"
+      ],
+      "name_pt": "PVC — resina e material polimérico"
+    },
+    {
       "id": "item-industrial-supply",
       "name": "Industrial equipment & supplies",
       "aliases": [
@@ -399,7 +426,15 @@
         "personal protective equipment",
         "PPE",
         "workplace safety equipment",
-        "safety equipment"
+        "safety equipment",
+        "helmet",
+        "safety helmet",
+        "hard hat",
+        "industrial safety helmet",
+        "capacete de segurança",
+        "capacete de protecao",
+        "capacete de proteção",
+        "capacete EPI"
       ],
       "category": "industrial-supply",
       "subcategory": "ppe-safety",
