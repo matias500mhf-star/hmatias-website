@@ -21,6 +21,12 @@
 
   function setInternalAccess(unlocked){
     document.body.classList.toggle('internal-locked',!unlocked);
+    const refresh=$('#refreshIntakeAlerts');
+    if(refresh)refresh.disabled=!unlocked;
+    if(!unlocked){
+      const status=$('#intakeAlertsStatus');
+      if(status)status.textContent='Inicie sessão administrativa para consultar os pedidos pendentes de notificação.';
+    }
   }
 
   function configureSessionUi(){
@@ -77,6 +83,27 @@
     portal.search='';
     portal.hash=`id=${encodeURIComponent(requestId)}&token=${encodeURIComponent(token)}`;
     return portal.toString();
+  }
+
+  async function loadIntakeAlerts(){
+    const status=$('#intakeAlertsStatus');
+    if(!status||!adminToken||!apiBase())return;
+    status.textContent='A consultar estado dos alertas...';
+    try{
+      const result=await api('/api/admin/intake-alerts/status');
+      if(result.ok!==true)throw new Error('invalid_alert_status');
+      const pending=Math.max(0,Number(result.pending)||0);
+      const accepted=Math.max(0,Number(result.sent)||0);
+      const deliveryConfigured=result.configured===true;
+      status.dataset.state=deliveryConfigured?(pending?'pending':'ready'):'not-configured';
+      status.textContent=deliveryConfigured
+        ?(pending+' pedido(s) pendente(s) de notificação. '+accepted+' alerta(s) aceite(s) pelo serviço de e-mail. Confirme a entrega na caixa de entrada.')
+        :('ATENÇÃO: envio automático de e-mail não configurado. '+pending+' pedido(s) pendente(s); '+accepted+' alerta(s) anteriormente aceite(s). Consulte a lista privada para seguimento.');
+    }catch(error){
+      status.textContent='Não foi possível confirmar o estado dos alertas. Consulte os pedidos na área privada.';
+      status.dataset.state='unavailable';
+      if(error.status===401){adminToken='';setInternalAccess(false);setApiStatus('Token rejected','error');}
+    }
   }
 
   async function loadSuppliers(){
@@ -525,9 +552,10 @@
     }
     setInternalAccess(true);
     setApiStatus('Connected · private operations loaded','connected');
-    await Promise.all([loadPartnerNetwork(),loadOpportunityPursuits()]);
+    await Promise.all([loadPartnerNetwork(),loadOpportunityPursuits(),loadIntakeAlerts()]);
   });
 
+  $('#refreshIntakeAlerts').addEventListener('click',()=>loadIntakeAlerts());
   $('#refreshOpportunities').addEventListener('click',()=>loadOpportunityPipeline());
   $('#refreshPursuits').addEventListener('click',()=>loadOpportunityPursuits());
   $('#refreshPartners').addEventListener('click',()=>loadPartnerNetwork());
