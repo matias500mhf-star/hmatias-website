@@ -19,6 +19,15 @@ async function call(route,{method='GET',token='',body,headers={}}={}){
   const parsed=response.status===204?null:await response.json().catch(()=>null);
   return {response,parsed};
 }
+const desk=await fetch(base+'/internal/website-leads',{signal:AbortSignal.timeout(12000)});
+assert.equal(desk.status,200);
+assert.equal(desk.headers.get('x-robots-tag'),'noindex, nofollow, noarchive');
+assert.match(desk.headers.get('content-security-policy')||'',/frame-ancestors 'none'/);
+const deskBody=await desk.text();
+assert.match(deskBody,/HMATIAS/);
+assert.match(deskBody,/\/api\/admin\/website-leads/);
+assert.equal(deskBody.includes('ADMIN_API_TOKEN'),false);
+
 const config=await call('/api/website-leads/config');
 assert.equal(config.response.status,200);
 assert.equal(config.parsed?.ok,true);
