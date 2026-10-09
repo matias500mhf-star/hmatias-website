@@ -13,6 +13,7 @@ import {sendPendingIntakeAlerts,intakeAlertStatus} from './intake-alerts.js';
 import {publicSearch} from './public-search.js';
 import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
+import {discoverExternalSuppliers} from './external-supplier-discovery.js';
 import {collectorRoute} from './collector-route.js';
 import {processPendingDiscoveryJobs} from './collector-discovery.js';
 import {copilotOpportunityResponse} from './intelligence-route.js';
@@ -87,6 +88,8 @@ export default {
           response=await publicSearch(request,env);
         }else if(request.method==='GET' && url.pathname==='/api/search-intelligence'){
           response=await smartSearchPlan(request,env);
+        }else if(request.method==='POST' && url.pathname==='/api/admin/supplier-discovery'){
+          response=await discoverExternalSuppliers(request,env);
         }else if(request.method==='GET' && url.pathname==='/api/procurement-mission'){
           response=await procurementMission(request,env);
         }else if(request.method==='GET' && url.pathname==='/api/admin/procurement-mission'){
