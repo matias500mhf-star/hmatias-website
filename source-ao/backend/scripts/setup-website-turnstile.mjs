@@ -6,17 +6,20 @@ import {spawnSync} from 'node:child_process';
 const name='HMATIAS Website Lead Intake';
 const domains=['comercialhmatiasps.com','www.comercialhmatiasps.com'];
 const account=(process.env.CLOUDFLARE_ACCOUNT_ID||'').trim();
-const token=(process.env.CLOUDFLARE_API_TOKEN||'').trim();
+const workersToken=(process.env.CLOUDFLARE_API_TOKEN||'').trim();
+const turnstileToken=(process.env.CLOUDFLARE_TURNSTILE_API_TOKEN||'').trim();
 const base='https://api.cloudflare.com/client/v4/accounts/'+encodeURIComponent(account)+'/challenges/widgets';
-if(!/^[a-f0-9]{32}$/i.test(account)||token.length<15)
-  throw Error('Cloudflare account/token configuration is missing.');
+if(!/^[a-f0-9]{32}$/i.test(account)||workersToken.length<15)
+  throw Error('Cloudflare Worker credentials or account ID are missing.');
+if(turnstileToken.length<15)
+  throw Error('Missing dedicated CLOUDFLARE_TURNSTILE_API_TOKEN. Create a scoped Turnstile Sites Write token and add it as a GitHub environment secret.');
 function log(message){process.stdout.write(message+'\n');}
 async function api(path,{method='GET',body}={}){
   let response;
   try{
     response=await fetch(base+path,{
       method,
-      headers:{authorization:'Bearer '+token,'content-type':'application/json'},
+      headers:{authorization:'Bearer '+turnstileToken,'content-type':'application/json'},
       ...(body?{body:JSON.stringify(body)}:{}),
       signal:AbortSignal.timeout(18000)
     });
