@@ -126,12 +126,18 @@ The Source AO API stores sourcing requests and partner applications in private D
 
 To activate email notification from the production deployment workflow, set the following in the GitHub repository/environment used by the production release:
 - Repository/environment **secret** `SOURCE_AO_RESEND_API_KEY`: valid Resend API key with permission to send mail from a verified domain.
-- Repository/environment **variable** `SOURCE_AO_ALERT_FROM`: verified sender identity (e.g. `HMATIAS <noreply@your-verified-domain>`).
-- Repository/environment **variable** `SOURCE_AO_ALERT_TO`: `geral@comercialhmatiasps.com`.
+- Repository/environment **variable** `SOURCE_AO_ALERT_FROM` (optional override): by default `HMATIAS Source AO <geral@comercialhmatiasps.com>` from the verified domain.
+- Repository/environment **variable** `SOURCE_AO_ALERT_TO` (optional override): by default `geral@comercialhmatiasps.com`.
 
-Do **not** put the Resend API key into code, public forms, documentation or ChatGPT conversation content. GitHub Actions transfers the values to Cloudflare Worker secrets only when all three are present; if any is missing, previously configured Worker secrets are preserved and outbound email remains unconfirmed.
+Do **not** put the Resend API key into code, public forms, documentation or ChatGPT conversation content. GitHub Actions transfers the values to Cloudflare Worker secrets only when the restricted Resend API secret is present; sender and recipient have verified-domain defaults. If the key is missing, previously configured Worker secrets are preserved and outbound email remains unconfirmed.
 
 After a controlled production deployment, verify the **admin-only** endpoint `GET /api/admin/intake-alerts/status` with the existing secret `ADMIN_API_TOKEN`. It exposes only `configured`, `pending` and `sent` counts, never client contact details. Then submit two labelled **test** records (one sourcing RFQ and one partner application), validate the references and D1 rows, and check the email inbox and D1 transition from pending to sent. Verify duplicate protection and retry on simulated provider failure. A provider-accepted email is not evidence of inbox delivery; review Resend delivery logs and the actual mailbox.
 
 The production deploy job also runs read-only health, private-outbox and search verification after the migration. New notification rows are created only for **new** requests; no backfill is run against historical customers. The existing workbench uses an entirely separate `lead-intake/` Worker for non-SourceAO HMATIAS website forms; that integration remains disabled until independently tested with HubSpot and Turnstile.
 
+
+### Secure setup for Source AO alerts
+1. In Resend, create a **sending-only**, domain-restricted key for the verified sending domain; copy it once at creation.
+2. In GitHub repository Settings → Secrets and variables → Actions, add a new repository secret named `SOURCE_AO_RESEND_API_KEY`. Never paste the secret into commits, issues, chats or Action logs.
+3. With the secret configured, run the existing **Source AO Production Deploy** workflow using its approval gate or bump `.source-ao-production-release`. This transfers the token to the Worker through `wrangler secret put` and retains the verified-domain defaults.
+4. Verify the admin endpoint returns `configured:true`. Then confirm one labelled test email and provider delivery status before treating the commercial inbox as alerted. Backlogged D1 alerts remain pending until processed by the scheduled job.
