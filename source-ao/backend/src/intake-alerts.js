@@ -74,3 +74,11 @@ export async function sendPendingIntakeAlerts(env,{limit=8,now=new Date()}={}){
   }
   return {configured:true,processed:(rows.results||[]).length,sent,failed};
 }
+
+export async function intakeAlertStatus(env){
+  if(!env.SOURCE_AO_DB)return {configured:false,error:'database_unavailable'};
+  const counts=await env.SOURCE_AO_DB.prepare("SELECT state,COUNT(*) total FROM intake_alerts GROUP BY state").all();
+  const result={pending:0,sent:0};
+  for(const row of counts.results||[])if(row.state==='pending'||row.state==='sent')result[row.state]=Number(row.total||0);
+  return {configured:deliveryReady(env),...result};
+}
