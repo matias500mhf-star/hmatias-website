@@ -51,7 +51,9 @@ export function validateWebsiteLead(value){
 
 export function websiteLeadConfig(request,env){
   if(!allowedPublicOrigin(request))return fail(request,403,'origin_not_allowed');
-  return result(request,{ok:true,enabled:enabled(env)});
+  const active=enabled(env);
+  return result(request,{ok:true,enabled:active,
+    ...(active?{turnstileSiteKey:env.WEBSITE_LEADS_TURNSTILE_SITE_KEY}:{})});
 }
 export function websiteLeadCors(request){
   if(!ALLOWED_ORIGINS.has(request.headers.get('origin')||''))return fail(request,403,'origin_not_allowed');
@@ -61,20 +63,47 @@ function allowedPublicOrigin(request){
   return ALLOWED_ORIGINS.has(request.headers.get('origin')||'');
 }
 function enabled(env){
-  return env.WEBSITE_LEAD_INTAKE_ENABLED==='true'&&Boolean(env.SOURCE_AO_DB&&env.PII_ENCRYPTION_KEY);
+  return env.WEBSITE_LEAD_INTAKE_ENABLED==='true'&&Boolean(
+    env.SOURCE_AO_DB&&env.PII_ENCRYPTION_KEY&&
+    env.WEBSITE_LEADS_TURNSTILE_SECRET&&
+    typeof env.WEBSITE_LEADS_TURNSTILE_SITE_KEY==='string'&&
+    /^[0-9A-Za-z_-]{8,180}$/.test(env.WEBSITE_LEADS_TURNSTILE_SITE_KEY)
+  );
 }
+
+export async function verifyWebsiteLeadChallenge(request,env,raw,{fetchFn=fetch}={}){
+  const token=typeof raw?.turnstileToken==='string'?raw.turnstileToken.trim():'';
+  if(!token||token.length>2048||!env.WEBSITE_LEADS_TURNSTILE_SECRET)return false;
+  const challenge=new URLSearchParams({secret:env.WEBSITE_LEADS_TURNSTILE_SECRET,response:token});
+  const ip=request.headers.get('CF-Connecting-IP')||'';
+  if(ip)challenge.set('remoteip',ip);
+  try{
+    const response=await fetchFn('https://challenges.cloudflare.com/turnstile/v0/siteverify',{
+      method:'POST',
+      headers:{'content-type':'application/x-www-form-urlencoded'},
+      body:challenge,
+      signal:AbortSignal.timeout(10000)
+    });
+    if(!response.ok)return false;
+    const confirmation=await response.json();
+    return confirmation?.success===true&&
+      ['comercialhmatiasps.com','www.comercialhmatiasps.com'].includes(confirmation.hostname);
+  }catch{return false;}
+}
+
 const ref=()=> 'HM-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+crypto.randomUUID().replace(/-/g,'').slice(0,8).toUpperCase();
 
-export async function createWebsiteLead(request,env){
+export async function createWebsiteLead(request,env,{fetchFn=fetch}={}){
   if(!allowedPublicOrigin(request))return fail(request,403,'origin_not_allowed');
   if(!enabled(env))return fail(request,503,'website_intake_disabled');
   if(!(request.headers.get('content-type')||'').startsWith('application/json'))return fail(request,415,'json_required');
   if(Number(request.headers.get('content-length')||0)>6500)return fail(request,413,'payload_too_large');
-  let payload;
+  let payload,submissionInput;
   try{
     const raw=await request.text();
     if(new TextEncoder().encode(raw).length>6500)return fail(request,413,'payload_too_large');
-    payload=validateWebsiteLead(JSON.parse(raw));
+    submissionInput=JSON.parse(raw);
+    payload=validateWebsiteLead(submissionInput);
   }catch{return fail(request,400,'invalid_json');}
   if(!payload)return fail(request,400,'invalid_fields_or_consent');
   const {submission,...fields}=payload;
@@ -87,6 +116,8 @@ export async function createWebsiteLead(request,env){
     if(existing.payload_hash!==payloadHash)return fail(request,409,'submission_changed');
     return result(request,{ok:true,saved:true,reference:existing.reference,notification:'not_confirmed'},200);
   }
+  if(!(await verifyWebsiteLeadChallenge(request,env,submissionInput,{fetchFn})))
+    return fail(request,403,'turnstile_verification_failed');
   const reference=ref(),id='wl_'+crypto.randomUUID();
   const encrypted=await encryptPrivateText(JSON.stringify(fields),env.PII_ENCRYPTION_KEY);
   await env.SOURCE_AO_DB.prepare(`

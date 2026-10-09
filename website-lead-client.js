@@ -43,7 +43,20 @@
     }
     return p;
   }
-  function setup(form,config){
+  let turnstilePromise;
+  function turnstileApi(){
+    if(window.turnstile)return Promise.resolve(window.turnstile);
+    if(!turnstilePromise)turnstilePromise=new Promise((resolve,reject)=>{
+      const script=document.createElement('script');
+      script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      script.async=true;
+      script.onload=()=>window.turnstile?resolve(window.turnstile):reject(Error('turnstile_unavailable'));
+      script.onerror=()=>reject(Error('turnstile_unavailable'));
+      document.head.appendChild(script);
+    });
+    return turnstilePromise;
+  }
+  function setup(form,config,siteKey,turnstile){
     if(form.dataset.hmatiasWebsiteIntake)return;
     form.dataset.hmatiasWebsiteIntake='true';
     const submit=form.querySelector('button[type="submit"]');
@@ -73,15 +86,31 @@
     consent.append(input,wording);
     parent.insertAdjacentElement('beforebegin',consent);
     const status=notice(form);
+    const verification=document.createElement('div');
+    verification.className='hmatias-turnstile';
+    verification.style.gridColumn='1 / -1';
+    verification.style.margin='10px 0';
+    parent.insertAdjacentElement('beforebegin',verification);
+    let challengeToken='';
+    const widget=turnstile.render(verification,{
+      sitekey:siteKey,
+      callback:value=>{challengeToken=value;},
+      'expired-callback':()=>{challengeToken='';},
+      'error-callback':()=>{challengeToken='';}
+    });
     let nonce=crypto.randomUUID();
     form.addEventListener('submit',async event=>{
       event.preventDefault();
       event.stopImmediatePropagation();
       if(!form.reportValidity())return;
+      if(!challengeToken){
+        status.textContent=text('Conclua a verificação de segurança antes de enviar.','Complete the security check before submitting.');
+        return;
+      }
       const fd=new FormData(form);
       const get=key=>key?String(fd.get(key)||'').trim():'';
       const payload={
-        kind:config.kind,nonce,consent:input.checked,website:'',
+        kind:config.kind,nonce,consent:input.checked,website:'',turnstileToken:challengeToken,
         name:get(config.name),company:get(config.company),phone:get(config.phone),
         email:get(config.email),service:get(config.service)||text('Contacto comercial','Business enquiry'),
         location:get(config.location)||'Luanda',
@@ -114,6 +143,8 @@
           'Registration could not be confirmed. Please use WhatsApp or the manual email alternative on this page.'
         );
       }finally{
+        challengeToken='';
+        try{turnstile.reset(widget);}catch{}
         submit.disabled=false;
       }
     },true);
@@ -126,8 +157,12 @@
       const response=await fetch(endpoint+'/config',{headers:{accept:'application/json'},cache:'no-store',signal:AbortSignal.timeout(6500)});
       if(!response.ok)return;
       const data=await response.json();
-      if(data?.enabled!==true)return;
-      for(const item of available)setup(item.form,item.config);
+      if(data?.enabled!==true||
+        typeof data.turnstileSiteKey!=='string'||
+        !/^[0-9A-Za-z_-]{8,180}$/.test(data.turnstileSiteKey))return;
+      let verifier;
+      try{verifier=await turnstileApi();}catch{return;}
+      for(const item of available)setup(item.form,item.config,data.turnstileSiteKey,verifier);
     }catch{
       // The original WhatsApp/email flows are unaffected when the API is unavailable.
     }
