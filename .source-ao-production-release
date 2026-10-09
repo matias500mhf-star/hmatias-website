@@ -5,3 +5,4 @@ refresh=preserve-commercial-history-and-pursuits-20261007
 rollout=notification-queue-migration-0023-20261009
 rollout=external-discovery-0024-disabled-default-20261009
 rollout=external-discovery-0024-smoke-technical-heading-20261009
+rollout=admin-intake-status-cors-ops-20261009

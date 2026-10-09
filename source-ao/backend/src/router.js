@@ -75,13 +75,20 @@ export default {
         }else if(request.method==='GET' && url.pathname==='/ready'){
           response=await readinessResponse(env);
         }else if(request.method==='GET' && url.pathname==='/api/admin/intake-alerts/status'){
+          const alertHeaders={
+            'content-type':'application/json; charset=utf-8',
+            'cache-control':'no-store',
+            'access-control-allow-origin':env.PUBLIC_ORIGIN||'https://comercialhmatiasps.com',
+            'access-control-allow-methods':'GET,OPTIONS',
+            'access-control-allow-headers':'authorization,content-type'
+          };
           if(!isAdmin(request,env)){
             response=new Response(JSON.stringify({ok:false,error:{code:'unauthorized'}}),{
-              status:401,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}
+              status:401,headers:alertHeaders
             });
           }else{
             response=new Response(JSON.stringify({ok:true,...await intakeAlertStatus(env)}),{
-              status:200,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}
+              status:200,headers:alertHeaders
             });
           }
         }else if(request.method==='GET' && url.pathname==='/api/search'){

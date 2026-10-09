@@ -37,6 +37,13 @@
       <p class="ops-note">The admin token stays only in this page's memory. It is never written to localStorage, sessionStorage, exports or supplier messages.</p>
     </section>
 
+    <section class="ops-card intake-alerts-card" aria-labelledby="intakeAlertsHeading">
+      <div class="ops-card-head"><div><small>ALERTAS COMERCIAIS</small><h2 id="intakeAlertsHeading">Pedidos registados e notificações</h2></div><button class="btn btn-outline btn-small" id="refreshIntakeAlerts" type="button" disabled>Atualizar estado</button></div>
+      <p id="intakeAlertsStatus" role="status" aria-live="polite">Inicie sessão administrativa para consultar os pedidos pendentes de notificação.</p>
+      <p class="ops-note">Pedido registado na base de dados não significa e-mail entregue. Se o envio automático não estiver configurado, consulte os pedidos na área privada e defina o seguimento comercial.</p>
+      <a class="btn btn-outline btn-small" href="requests.html">Abrir lista privada de pedidos</a>
+    </section>
+
     <section class="ops-grid">
       <article class="ops-card">
         <div class="ops-card-head"><div><small>01</small><h2>Create verification request</h2></div><span id="supplierCount">0 suppliers</span></div>
@@ -124,6 +131,6 @@
   </main>
 
   <script src="runtime-config.js"></script>
-  <script src="ops.js" defer></script>
+  <script src="ops.js?v=20261009-intake-status1" defer></script>
 </body>
 </html>
