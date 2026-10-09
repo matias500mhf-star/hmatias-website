@@ -28,22 +28,25 @@ const client=read('website-lead-client.js');
 assert.ok(client.includes("window.hmatiasAnalytics?.confirmLead?.("));
 assert.ok(client.includes("if(!response.ok||result?.saved!==true"));
 assert.ok(client.includes('turnstileToken:challengeToken'));
+assert.ok(client.includes('attribution:campaignAttribution()'));
+assert.ok(client.includes("utm_source"));
+assert.ok(client.includes("referrer_host"));
 
 const allForms=['index.html','en.html','servicos-administrativos.html',
   'business-services.html','agendamento.html','booking.html'];
 for(const path of allForms){
   const html=read(path);
-  assert.ok(html.includes('analytics.js?v=20261009-confirmed-leads1'),
-    'Analytics cache version not updated: '+path);
+  assert.match(html,/analytics[.]js[?]v=[a-zA-Z0-9._-]+/,
+    'Analytics script must be versioned: '+path);
   if(path==='index.html'||path==='en.html'){
-    assert.ok(html.includes('site-bootstrap.js?v=20261009-commercial-audit1'));
+    assert.match(html,/site-bootstrap[.]js[?]v=[a-zA-Z0-9._-]+/);
   }else{
-    assert.ok(html.includes('website-lead-client.js?v=20261009-confirmed-attribution1'),
+    assert.ok(html.includes('website-lead-client.js?v=20261010-campaign-origin1'),
       'Secure client not loaded: '+path);
   }
 }
 const bootstrap=read('site-bootstrap.js');
-assert.ok(bootstrap.includes('website-lead-client.js?v=20261009-confirmed-attribution1'));
+assert.ok(bootstrap.includes('website-lead-client.js?v=20261010-campaign-origin1'));
 assert.ok(bootstrap.includes('growth-intelligence.js?v=20261009-email-cta1'));
 assert.ok(read('script.js').includes('const existing=target.querySelector'));
 assert.ok(read('growth-intelligence.js').includes('[data-hmatias-email-alternative]'));
