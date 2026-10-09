@@ -90,7 +90,7 @@ if(resend){
     ['SOURCE_AO_ALERT_TO',to]
   ]){
     run('npx',['wrangler','secret','put',key,'--config','wrangler.production.runtime.jsonc'],{
-      input:value+'\\n'
+      input:value+'\n'
     });
     log('Worker notification binding installed securely: '+key+' (value withheld).');
   }
