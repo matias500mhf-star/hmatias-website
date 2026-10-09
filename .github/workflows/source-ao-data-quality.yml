@@ -45,6 +45,8 @@ jobs:
           node-version: '22'
       - name: Validate Source AO data
         run: node source-ao/validate-data.mjs
+      - name: Validate institutional website leads migration
+        run: python3 source-ao/backend/scripts/test-website-leads-migration.py
       - name: Validate synthetic RFQ alert isolation
         run: python3 source-ao/backend/scripts/test-synthetic-alert-migration.py
       - name: Validate public catalogue privacy boundary
