@@ -19,7 +19,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="sourceao.css">
   <link rel="stylesheet" href="verified-results.css">
-  <link rel="stylesheet" href="sourcing-ui.css">
+  <link rel="stylesheet" href="sourcing-ui.css?v=20261009-2">
   <meta property="og:image" content="https://comercialhmatiasps.com/og-hmatias.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -313,11 +313,17 @@
           <div class="request-trust"><span>✓</span><small data-i18n="requestTrust">Contacto protegido · acompanhamento privado · sem publicação automática</small></div>
           <a class="btn btn-light" href="rfq.html" data-i18n="fullRfq">Pedido de cotação com produtos do catálogo →</a>
         </div>
-        <form class="request-form" id="requestForm">
-          <input id="requestItem" type="text" data-i18n-placeholder="itemPlaceholder" placeholder="Material / serviço" required>
-          <input id="requestQty" type="text" data-i18n-placeholder="qtyPlaceholder" placeholder="Quantidade / especificação">
-          <input id="requestLocation" type="text" value="Luanda" aria-label="Local de entrega">
+        <form class="request-form request-form-structured" id="requestForm" novalidate>
+          <label class="request-field request-field-full"><span data-request-pt="Material ou serviço *" data-request-en="Material or service *">Material ou serviço *</span><input id="requestItem" type="text" maxlength="240" placeholder="Ex.: capacete de segurança, tubo PVC" required></label>
+          <label class="request-field"><span data-request-pt="Quantidade" data-request-en="Quantity">Quantidade</span><input id="requestQty" type="number" inputmode="decimal" min="0.001" step="any" placeholder="Ex.: 15"></label>
+          <label class="request-field"><span data-request-pt="Unidade" data-request-en="Unit">Unidade</span><select id="requestUnit"><option value="">A confirmar</option><option value="un">Unidade (un)</option><option value="kg">kg</option><option value="m">m</option><option value="m2">m²</option><option value="m3">m³</option><option value="L">Litros (L)</option><option value="rolo">Rolo</option><option value="caixa">Caixa</option><option value="palete">Palete</option></select></label>
+          <label class="request-field request-field-full"><span data-request-pt="Especificações / referência" data-request-en="Technical specification / reference">Especificações / referência</span><input id="requestSpec" type="text" maxlength="300" placeholder="Norma, dimensão, marca ou código técnico"></label>
+          <label class="request-field"><span data-request-pt="Local de entrega *" data-request-en="Delivery location *">Local de entrega *</span><input id="requestLocation" type="text" value="Luanda" maxlength="100" required></label>
+          <label class="request-field"><span data-request-pt="Prioridade" data-request-en="Priority">Prioridade</span><select id="requestUrgency"><option value="">Normal</option><option value="urgent">Urgente</option><option value="this week">Esta semana</option></select></label>
+          <label class="request-field request-field-full"><span data-request-pt="WhatsApp, telefone ou e-mail *" data-request-en="WhatsApp, phone or email *">WhatsApp, telefone ou e-mail *</span><input id="requestContact" type="text" autocomplete="email" maxlength="180" required placeholder="+244 … ou email@empresa.com"></label>
+          <label class="request-consent request-field-full"><input id="requestConsent" type="checkbox" required><span data-request-pt="Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver" data-request-en="I authorise HMATIAS to register and use these details to respond to my request. See">Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver</span> <a href="privacy.html">política de privacidade</a>.</label>
           <button class="btn btn-light" type="submit" data-i18n="prepareRequest">Registar pedido de sourcing</button>
+          <p class="request-disclosure request-field-full" id="requestDisclosure" role="status" aria-live="polite">O pedido só fica registado quando o sistema apresenta uma referência. O registo não confirma stock, preço nem notificação à equipa.</p>
         </form>
       </div>
     </section>
@@ -334,7 +340,7 @@
   </footer>
 
   <script src="runtime-config.js" defer></script>
-  <script src="sourcing-ui.js" defer></script>
+  <script src="sourcing-ui.js?v=20261009-2" defer></script>
   <script src="data-engine.js" defer></script>
   <script src="sourceao.js?v=20260927-rfq" defer></script>
   <script src="verified-results.js" defer></script>
