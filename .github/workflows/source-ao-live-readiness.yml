@@ -1,0 +1,71 @@
+name: Source AO Production Read-only Diagnostic
+on:
+  push:
+    branches:
+      - ops/source-ao-delivery-readiness-20261009
+    paths:
+      - '.github/workflows/source-ao-live-readiness.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-api-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check Source AO health and readiness (no writes)
+        shell: bash
+        env:
+          BASE: https://source-ao-api.matias500-mhf.workers.dev
+        run: |
+          set -euo pipefail
+          for path in /health /ready; do
+            code=$(curl -fsS --max-time 16 -o /tmp/api-response.json -w '%{http_code}' "$BASE$path") || {
+              echo "$path network_failed"; exit 1;
+            }
+            echo "$path http=$code"
+            node --input-type=module - "$path" /tmp/api-response.json <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const [path,file]=process.argv.slice(2),data=JSON.parse(readFileSync(file,'utf8'));
+          if(path==='/ready'){
+            console.log('ready='+Boolean(data.ready)+' env='+(data.environment||'unknown'));
+            console.log('checks='+JSON.stringify(data.checks||{}));
+            if(data.ready!==true||data.environment!=='production')process.exit(1);
+          }else{
+            console.log('health_ok='+Boolean(data.ok));
+            if(data.ok!==true)process.exit(1);
+          }
+          NODE
+          done
+      - name: Search public index for HELMET and PVC (no RFQ submissions)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for term in helmet PVC; do
+            echo "Testing public search: $term"
+            curl -fsS --max-time 20 --get \
+              --data-urlencode "q=$term" \
+              --data-urlencode "location=Luanda" \
+              https://source-ao-api.matias500-mhf.workers.dev/api/search > /tmp/source-public-search.json
+            node --input-type=module - "$term" /tmp/source-public-search.json <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const [term,file]=process.argv.slice(2),data=JSON.parse(readFileSync(file,'utf8'));
+          console.log('query='+term+' api_ok='+Boolean(data.ok)+' results='+((data.results||data.matches||[]).length));
+          if(data.ok!==true)process.exit(1);
+          NODE
+          done
+      - name: Check admin notification status requires authorization
+        shell: bash
+        run: |
+          set -euo pipefail
+          code=$(curl -sS --max-time 16 -o /tmp/admin-outcome -w '%{http_code}' \
+            https://source-ao-api.matias500-mhf.workers.dev/api/admin/intake-alerts/status)
+          echo "Intake alerts admin endpoint anonymous HTTP=$code"
+          if [ "$code" = 401 ]; then
+            echo "PASS: updated private endpoint is present and access-controlled"
+          elif [ "$code" = 404 ]; then
+            echo "::notice title=Worker release required::Current production backend is older than the notification migration; rollout is the next gated action."
+          else
+            echo "Unexpected response. Do not treat this as successful deployment."
+            exit 1
+          fi

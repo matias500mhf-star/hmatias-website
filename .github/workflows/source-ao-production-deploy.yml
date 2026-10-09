@@ -34,6 +34,9 @@ jobs:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
       SOURCE_AO_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_ADMIN_API_TOKEN }}
+      SOURCE_AO_RESEND_API_KEY: ${{ secrets.SOURCE_AO_RESEND_API_KEY }}
+      SOURCE_AO_ALERT_FROM: ${{ vars.SOURCE_AO_ALERT_FROM }}
+      SOURCE_AO_ALERT_TO: ${{ vars.SOURCE_AO_ALERT_TO }}
 
     steps:
       - name: Checkout production release
@@ -170,6 +173,17 @@ jobs:
 
           echo "::add-mask::$SOURCE_AO_ADMIN_API_TOKEN"
           printf '%s' "$SOURCE_AO_ADMIN_API_TOKEN" | npx wrangler secret put ADMIN_API_TOKEN --config wrangler.production.runtime.jsonc
+
+          # Optional transactional email configuration, strictly from GitHub secret/vars.
+          # A deployed outbox is NOT proof of notification delivery.
+          if [ -n "${SOURCE_AO_RESEND_API_KEY:-}" ] && [ -n "${SOURCE_AO_ALERT_FROM:-}" ] && [ -n "${SOURCE_AO_ALERT_TO:-}" ]; then
+            printf '%s' "$SOURCE_AO_RESEND_API_KEY" | npx wrangler secret put RESEND_API_KEY --config wrangler.production.runtime.jsonc
+            printf '%s' "$SOURCE_AO_ALERT_FROM" | npx wrangler secret put SOURCE_AO_ALERT_FROM --config wrangler.production.runtime.jsonc
+            printf '%s' "$SOURCE_AO_ALERT_TO" | npx wrangler secret put SOURCE_AO_ALERT_TO --config wrangler.production.runtime.jsonc
+            echo "Source AO internal notification credentials configured (sender/recipient not printed)."
+          else
+            echo "::notice title=Source AO email not activated::Set GitHub secret SOURCE_AO_RESEND_API_KEY and variables SOURCE_AO_ALERT_FROM / SOURCE_AO_ALERT_TO; the request queue will remain pending until valid Worker email configuration is present."
+          fi
           rm -f "$secret_file"
 
       - name: Redeploy production API with final bindings
@@ -224,6 +238,26 @@ jobs:
           console.log('Production API ready and public search smoke passed.');
           NODE
           rm -f "$RUNNER_TEMP/source-ao-ready.json" "$RUNNER_TEMP/source-ao-search.json"
+
+      - name: Verify protected Source AO notification outbox
+        shell: bash
+        run: |
+          set -euo pipefail
+          code=$(curl -fsS -o "$RUNNER_TEMP/source-ao-intake-alert-status.json" -w '%{http_code}' \
+            -H "Authorization: Bearer $SOURCE_AO_ADMIN_API_TOKEN" \
+            "$SOURCE_AO_PRODUCTION_API_BASE/api/admin/intake-alerts/status")
+          [ "$code" = 200 ] || { echo "::error title=Intake outbox unavailable::Expected private alert status HTTP 200"; exit 1; }
+          node --input-type=module - "$RUNNER_TEMP/source-ao-intake-alert-status.json" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const x=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(x?.ok!==true||typeof x.pending!=='number'||typeof x.sent!=='number') {
+            throw new Error('Notification outbox migration and status endpoint are not ready');
+          }
+          console.log('D1 notification outbox present: pending='+x.pending+', sent='+x.sent);
+          if(x.configured!==true) console.log('WARNING: email delivery remains disabled pending verified Resend sender and key');
+          else console.log('Email transport configured. End-to-end inbox receipt must be verified separately.');
+          NODE
+          rm -f "$RUNNER_TEMP/source-ao-intake-alert-status.json"
 
       - name: Verify public sourcing privacy
         run: node scripts/smoke-public-privacy.mjs
