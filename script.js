@@ -245,6 +245,65 @@
     });
   }
 
+  // Manual email alternative for users without WhatsApp. This opens the visitor's
+  // email application; no lead is saved or claimed as received by clicking this link.
+  const emailAlternativeConfigs=[
+    {id:'contactForm',subject:'Pedido comercial HMATIAS',fields:[
+      ['Nome','nome'],['Empresa','empresa'],['E-mail','email'],
+      ['Telefone','telefone'],['Serviço','servico'],['Pedido','mensagem']
+    ]},
+    {id:'businessContactForm',subject:'Pedido HMATIAS Business Services',fields:[
+      ['Nome / Entidade','client_name'],['Telefone / WhatsApp','contact'],
+      ['E-mail','email'],['Localização','location'],
+      ['Serviço','service_type'],['Pedido','details']
+    ]},
+    {id:'bookingRequestForm',subject:'Pedido de atendimento HMATIAS',fields:[
+      ['Nome / Entidade','client_name'],['Telefone / WhatsApp','contact'],
+      ['E-mail','email'],['Serviço','service_type'],['Modalidade','meeting_mode'],
+      ['Data preferida','preferred_date'],['Período','time_window'],
+      ['Localização','location'],['Observações','notes']
+    ]}
+  ];
+  emailAlternativeConfigs.forEach(config=>{
+    const target=document.getElementById(config.id);
+    const send=target?.querySelector('button[type="submit"]');
+    if(!target||!send||target.querySelector('[data-hmatias-email-alternative]'))return;
+    const link=document.createElement('a');
+    link.className='btn btn-outline hmatias-email-alternative';
+    link.dataset.hmatiasEmailAlternative='true';
+    link.href='mailto:geral@comercialhmatiasps.com';
+    link.textContent=pageEnglish?'Prepare email instead':'Preparar por e-mail';
+    link.setAttribute('aria-label',pageEnglish?'Prepare a request in your email application':'Preparar pedido na sua aplicação de e-mail');
+    link.style.margin='8px 0 0 10px';
+    link.addEventListener('click',event=>{
+      if(!target.reportValidity()){event.preventDefault();return;}
+      const data=new FormData(target);
+      const rows=config.fields.map(([label,name])=>{
+        const value=String(data.get(name)||'').trim();
+        return value?label+': '+value:'';
+      }).filter(Boolean);
+      const body=rows.join('\\n').slice(0,2300)+'\\n\\n'+
+        (pageEnglish?'Please confirm receipt and advise the next steps.':'Agradeço confirmação de receção e indicação dos próximos passos.');
+      const subject=pageEnglish
+        ?({contactForm:'HMATIAS business enquiry',businessContactForm:'HMATIAS Business Services enquiry',bookingRequestForm:'HMATIAS appointment request'}[config.id])
+        :config.subject;
+      link.href='mailto:geral@comercialhmatiasps.com?subject='+
+        encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+      const status=target.querySelector('[data-hmatias-manual-email-status]')||document.createElement('p');
+      if(!status.dataset.hmatiasManualEmailStatus){
+        status.dataset.hmatiasManualEmailStatus='true';
+        status.setAttribute('role','status');
+        status.style.gridColumn='1 / -1';
+        status.style.fontSize='.875rem';
+        link.insertAdjacentElement('afterend',status);
+      }
+      status.textContent=pageEnglish
+        ?'Email prepared. Review and send it in your email app; it has not been submitted automatically.'
+        :'E-mail preparado. Reveja e envie na sua aplicação; o pedido não foi submetido automaticamente.';
+    });
+    send.insertAdjacentElement('afterend',link);
+  });
+
   const navLinks=[...document.querySelectorAll('.nav-menu a[href^="#"]')];
   const sections=navLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
   if(sections.length&&'IntersectionObserver' in window){
