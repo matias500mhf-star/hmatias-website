@@ -33,8 +33,10 @@ def local_path(raw, page):
         fragment = address.lstrip("/")
     else:
         fragment = str(page.parent / address)
-    if fragment.endswith("/") or not fragment:
-        fragment += "index.html"
+    # Directories use an index document even when Path normalisation has
+    # removed the trailing slash (e.g. "source-ao/" or "../").
+    if address.endswith("/") or not fragment:
+        fragment = str(Path(fragment) / "index.html")
     # Canonical destination must stay inside the repository.
     candidate = (ROOT / fragment).resolve()
     if not candidate.is_relative_to(ROOT.resolve()):
