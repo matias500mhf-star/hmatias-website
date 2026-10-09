@@ -49,6 +49,23 @@
     });
   };
 
+  /* Attribute AI-search referrals without sending query text, contact data or
+     any other visitor-entered information to analytics. GA4 itself remains
+     subject to Cookiebot statistics consent in analytics.js. */
+  const aiReferralProvider = (() => {
+    try {
+      const utm = new URLSearchParams(window.location.search).get('utm_source')?.toLowerCase() || '';
+      if (utm === 'chatgpt.com' || utm === 'chatgpt') return 'chatgpt';
+      const refHost = new URL(document.referrer).hostname.toLowerCase();
+      if (refHost === 'chatgpt.com' || refHost.endsWith('.chatgpt.com') || refHost === 'chat.openai.com') return 'chatgpt';
+      if (refHost === 'perplexity.ai' || refHost.endsWith('.perplexity.ai')) return 'perplexity';
+      if (refHost === 'gemini.google.com') return 'gemini';
+      if (refHost === 'copilot.microsoft.com') return 'copilot';
+    } catch (_) { /* No referral or malformed referral URL. */ }
+    return null;
+  })();
+  if (aiReferralProvider) track('ai_referral_view', { ai_provider: aiReferralProvider });
+
   const serviceFromHref = href => {
     try {
       const url = new URL(href, window.location.href);
