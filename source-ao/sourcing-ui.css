@@ -1,1 +1,16 @@
 .request-feedback{margin-top:14px;padding:16px 18px;border:1px solid rgba(255,255,255,.2);border-radius:14px;background:rgba(255,255,255,.08);color:#fff}.request-feedback strong{display:block;font-size:13px}.request-feedback p{margin:6px 0 0;color:#c7d9e5;font-size:11px;line-height:1.55}.request-feedback-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.request-feedback .btn-outline{border-color:rgba(255,255,255,.3);color:#fff;background:transparent}.request-feedback .btn-light{background:#fff;color:#0b2f4f}@media(max-width:620px){.request-feedback-actions .btn{width:100%}}
+/* Structured procurement intake: legible labels, accessible focus, no fake confirmation. */
+.request-form-structured{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 14px}
+.request-form-structured .request-field{display:grid;gap:6px;min-width:0}
+.request-form-structured .request-field>span{font-size:.76rem;font-weight:700;line-height:1.45;color:#dcecf7}
+.request-form-structured .request-field-full,.request-form-structured .request-consent,.request-form-structured .request-disclosure{grid-column:1/-1}
+.request-form-structured .request-field input,.request-form-structured .request-field select{width:100%;min-width:0;min-height:48px;padding:11px 13px;border:1px solid rgba(204,225,238,.4);background:#fff;color:#16344b;border-radius:8px;font:inherit}
+.request-form-structured .request-field input:focus-visible,.request-form-structured .request-field select:focus-visible,.request-form-structured button:focus-visible{outline:3px solid #65b5eb;outline-offset:2px}
+.request-form-structured .request-consent{display:flex;align-items:flex-start;gap:10px;font-size:.77rem;line-height:1.65;color:#d7e9f5}
+.request-form-structured .request-consent input{width:18px;height:18px;flex:none;margin:3px 0}
+.request-form-structured .request-consent a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.request-form-structured .request-disclosure{margin:0;font-size:.77rem;line-height:1.55;color:#d7e9f5}
+.request-form-structured button[type=submit]{grid-column:1/-1;min-height:49px}
+.request-feedback{line-height:1.65}
+.request-feedback a{color:#fff}
+@media(max-width:620px){.request-form-structured{grid-template-columns:1fr;gap:11px}.request-form-structured .request-field-full,.request-form-structured .request-consent,.request-form-structured .request-disclosure,.request-form-structured button[type=submit]{grid-column:1}}
