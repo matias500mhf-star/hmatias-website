@@ -2,9 +2,9 @@
 (()=>{
 'use strict';
 const API=['https://api.comercialhmatiasps.com/api/ai','/api/ai'];
-const WA='https://wa.me/244948806673',KB_SRC='assistant-knowledge.js?v=20261009-integrity1';
+const WA='https://wa.me/244948806673',KB_SRC='assistant-knowledge.js?v=20261009-site-audit2';
 const pageEn=(document.documentElement.lang||'').toLowerCase().startsWith('en');
-window.HMATIAS_ASSISTANT_VERSION='2026-10-09-integrity1';
+window.HMATIAS_ASSISTANT_VERSION='2026-10-09-site-audit2';
 const getKB=()=>window.HMATIAS_KNOWLEDGE||null;
 const enFor=q=>pageEn||/\b(hello|hi|hey|please|what|where|when|how|can|could|do|does|is|are|price|service|visa|appointment|cleaning|construction|facilities|supply|contact|document|quote|quotation|business|product|stock|catalogue|catalog|company|project|rfq|source|radar|opportunity|intelligence|karta|wallet|address|email|phone)\b/i.test(String(q||''));
 const normalizeProductAlias=q=>{const raw=String(q||'');if(!/\b(?:pingel|pinegel|pin\s*gel|pinho\s*gel)\b/i.test(raw))return raw;const replacement=/\b(?:taurus|t563p)\b/i.test(raw)?'Taurus Pine Gel T563P':'123 Pine Gel 500 ml';return raw.replace(/\b(?:pingel|pinegel|pin\s*gel|pinho\s*gel)\b/gi,replacement)};
