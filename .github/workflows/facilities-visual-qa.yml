@@ -1,0 +1,57 @@
+name: Facilities Photo and Visual QA
+on:
+  pull_request:
+    paths:
+      - 'facilities.html'
+      - 'facilities-en.html'
+      - 'clean.html'
+      - 'clean-en.html'
+      - 'facilities-clean.css'
+      - 'clean-catalog.js'
+      - 'images/products/taurus-pine-gel-t563p-official.jpg'
+      - '.github/scripts/verify-facilities-visual.mjs'
+      - '.github/workflows/facilities-visual-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'facilities.html'
+      - 'facilities-en.html'
+      - 'clean.html'
+      - 'clean-en.html'
+      - 'facilities-clean.css'
+      - 'clean-catalog.js'
+      - 'images/products/taurus-pine-gel-t563p-official.jpg'
+      - '.github/scripts/verify-facilities-visual.mjs'
+      - '.github/workflows/facilities-visual-qa.yml'
+permissions:
+  contents: read
+jobs:
+  product-photo-visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Start local site
+        run: |
+          python3 -m http.server 8080 --bind 127.0.0.1 >/tmp/hmatias-facilities-http.log 2>&1 &
+          for i in {1..20}; do
+            curl -fsS http://127.0.0.1:8080/facilities.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/hmatias-facilities-http.log
+          exit 1
+      - name: Use installed Chrome with Playwright
+        run: npm install --no-save --ignore-scripts playwright@1.56.0
+      - name: Check Taurus product photo and layouts in desktop and mobile Chrome
+        run: node .github/scripts/verify-facilities-visual.mjs
+      - name: Save screenshots for design review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: facilities-and-clean-pt-en-previews
+          path: facilities-previews/*.png
+          if-no-files-found: ignore
+          retention-days: 7
