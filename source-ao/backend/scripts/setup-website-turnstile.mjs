@@ -77,5 +77,24 @@ for(const [key,value] of [
   });
   log('Worker binding installed securely: '+key+' (value withheld).');
 }
+const resend=(process.env.SOURCE_AO_RESEND_API_KEY||'').trim();
+if(resend){
+  const from=(process.env.SOURCE_AO_ALERT_FROM||'').trim();
+  const to=(process.env.SOURCE_AO_ALERT_TO||'').trim();
+  if(!from.includes('geral@comercialhmatiasps.com')||
+    to!=='geral@comercialhmatiasps.com')
+    throw Error('Resend sender/recipient configuration must use the approved HMATIAS mailbox.');
+  for(const [key,value] of [
+    ['RESEND_API_KEY',resend],
+    ['SOURCE_AO_ALERT_FROM',from],
+    ['SOURCE_AO_ALERT_TO',to]
+  ]){
+    run('npx',['wrangler','secret','put',key,'--config','wrangler.production.runtime.jsonc'],{
+      input:value+'\\n'
+    });
+    log('Worker notification binding installed securely: '+key+' (value withheld).');
+  }
+  log('Resend delivery configured at Worker; inbox acceptance still requires a real delivery test.');
+}else log('Resend secret not yet available. Email delivery remains unconfigured.');
 log('Turnstile setup complete. Reused existing widget: '+(!created)+'.');
 log('No website intake was enabled; final lead registration remains disabled until Resend and end-to-end QA.');
