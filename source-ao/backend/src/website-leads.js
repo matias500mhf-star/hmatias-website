@@ -37,6 +37,8 @@ export function validateWebsiteLead(value){
   const details=clean(value.details,2400);
   const preferred=clean(value.preferred_date,20);
   const channel=clean(value.preferred_channel,20);
+  const maxLengths={nonce:90,name:120,company:160,phone:60,email:180,service:140,location:160,details:2400,preferred_date:20,preferred_channel:20};
+  if(Object.entries(maxLengths).some(([field,maxLength])=>typeof value[field]==='string'&&value[field].length>maxLength))return null;
   if(!KINDS.has(kind)||!/^[a-zA-Z0-9_-]{18,90}$/.test(submission)||
      value.consent!==true||Boolean(value.website)||
      name.length<2||service.length<2||details.length<5||
@@ -47,6 +49,10 @@ export function validateWebsiteLead(value){
   return {kind,submission,name,company,phone,email,service,location,details,preferred,channel};
 }
 
+export function websiteLeadConfig(request,env){
+  if(!allowedPublicOrigin(request))return fail(request,403,'origin_not_allowed');
+  return result(request,{ok:true,enabled:enabled(env)});
+}
 export function websiteLeadCors(request){
   if(!ALLOWED_ORIGINS.has(request.headers.get('origin')||''))return fail(request,403,'origin_not_allowed');
   return new Response(null,{status:204,headers:headers(request)});
