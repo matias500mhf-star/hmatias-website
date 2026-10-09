@@ -10,6 +10,7 @@ import {enforceRateLimit,hardenResponse,safeRequestLog} from './security.js';
 import {readinessResponse} from './health.js';
 import {runMaintenance} from './maintenance.js';
 import {sendPendingIntakeAlerts,intakeAlertStatus} from './intake-alerts.js';
+import {websiteLeadCors,createWebsiteLead,listWebsiteLeads,getWebsiteLead,updateWebsiteLeadStatus,deliverWebsiteLeadAlerts,pruneWebsiteLeads} from './website-leads.js';
 import {publicSearch} from './public-search.js';
 import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
@@ -91,6 +92,16 @@ export default {
               status:200,headers:alertHeaders
             });
           }
+        }else if(request.method==='OPTIONS' && url.pathname==='/api/website-leads'){
+          response=websiteLeadCors(request);
+        }else if(request.method==='POST' && url.pathname==='/api/website-leads'){
+          response=await createWebsiteLead(request,env);
+        }else if(request.method==='GET' && url.pathname==='/api/admin/website-leads'){
+          response=await listWebsiteLeads(request,env);
+        }else if(request.method==='GET' && /^\/api\/admin\/website-leads\/wl_[0-9a-f-]{36}$/.test(url.pathname)){
+          response=await getWebsiteLead(request,env,url.pathname.split('/').pop());
+        }else if(request.method==='POST' && /^\/api\/admin\/website-leads\/wl_[0-9a-f-]{36}\/status$/.test(url.pathname)){
+          response=await updateWebsiteLeadStatus(request,env,url.pathname.split('/').at(-2));
         }else if(request.method==='GET' && url.pathname==='/api/search'){
           response=await publicSearch(request,env);
         }else if(request.method==='GET' && url.pathname==='/api/search-intelligence'){
@@ -251,11 +262,15 @@ export default {
       try{
         const intake=await sendPendingIntakeAlerts(env,{limit:8});
         console.log(JSON.stringify({type:'source_ao_intake_notification_tick',cron,...intake}));
+        const websiteAlerts=await deliverWebsiteLeadAlerts(env,{limit:5});
+        console.log(JSON.stringify({type:'hmatias_website_leads_alert_tick',cron,...websiteAlerts}));
         const discovery=await processPendingDiscoveryJobs(env,{limit:4});
         console.log(JSON.stringify({type:'source_ao_discovery_tick',cron,...discovery}));
         const opportunityScan=await scanOpportunitySources(env,{limitSources:2});
         console.log(JSON.stringify({type:'source_ao_opportunity_scan',cron,...opportunityScan}));
         if(cron==='17 2 * * *'){
+          const websitePruned=await pruneWebsiteLeads(env);
+          console.log(JSON.stringify({type:'hmatias_website_leads_retention',deleted:websitePruned}));
           const result=await runMaintenance(env);
           console.log(JSON.stringify({type:'source_ao_maintenance',...result}));
         }
