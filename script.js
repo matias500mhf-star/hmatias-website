@@ -268,13 +268,18 @@
     const target=document.getElementById(config.id);
     const send=target?.querySelector('button[type="submit"]');
     if(!target||!send||target.querySelector('[data-hmatias-email-alternative]'))return;
-    const link=document.createElement('a');
-    link.className='btn btn-outline hmatias-email-alternative';
+    // Reuse existing mailto links rather than adding duplicate email CTAs.
+    const existing=target.querySelector('a[href^="mailto:"],a[data-email-fallback]');
+    const link=existing||document.createElement('a');
+    link.classList.add('hmatias-email-alternative');
     link.dataset.hmatiasEmailAlternative='true';
-    link.href='mailto:geral@comercialhmatiasps.com';
-    link.textContent=pageEnglish?'Prepare email instead':'Preparar por e-mail';
+    if(!existing){
+      link.classList.add('btn','btn-outline');
+      link.href='mailto:geral@comercialhmatiasps.com';
+      link.textContent=pageEnglish?'Prepare email instead':'Preparar por e-mail';
+      link.style.margin='8px 0 0 10px';
+    }
     link.setAttribute('aria-label',pageEnglish?'Prepare a request in your email application':'Preparar pedido na sua aplicação de e-mail');
-    link.style.margin='8px 0 0 10px';
     link.addEventListener('click',event=>{
       if(!target.reportValidity()){event.preventDefault();return;}
       const data=new FormData(target);
@@ -301,7 +306,7 @@
         ?'Email prepared. Review and send it in your email app; it has not been submitted automatically.'
         :'E-mail preparado. Reveja e envie na sua aplicação; o pedido não foi submetido automaticamente.';
     });
-    send.insertAdjacentElement('afterend',link);
+    if(!existing)send.insertAdjacentElement('afterend',link);
   });
 
   const navLinks=[...document.querySelectorAll('.nav-menu a[href^="#"]')];
