@@ -98,11 +98,12 @@ export async function createWebsiteLead(request,env,{fetchFn=fetch}={}){
   if(!enabled(env))return fail(request,503,'website_intake_disabled');
   if(!(request.headers.get('content-type')||'').startsWith('application/json'))return fail(request,415,'json_required');
   if(Number(request.headers.get('content-length')||0)>6500)return fail(request,413,'payload_too_large');
-  let payload;
+  let payload,submissionInput;
   try{
     const raw=await request.text();
     if(new TextEncoder().encode(raw).length>6500)return fail(request,413,'payload_too_large');
-    payload=validateWebsiteLead(JSON.parse(raw));
+    submissionInput=JSON.parse(raw);
+    payload=validateWebsiteLead(submissionInput);
   }catch{return fail(request,400,'invalid_json');}
   if(!payload)return fail(request,400,'invalid_fields_or_consent');
   const {submission,...fields}=payload;
@@ -115,7 +116,7 @@ export async function createWebsiteLead(request,env,{fetchFn=fetch}={}){
     if(existing.payload_hash!==payloadHash)return fail(request,409,'submission_changed');
     return result(request,{ok:true,saved:true,reference:existing.reference,notification:'not_confirmed'},200);
   }
-  if(!(await verifyWebsiteLeadChallenge(request,env,JSON.parse(raw),{fetchFn})))
+  if(!(await verifyWebsiteLeadChallenge(request,env,submissionInput,{fetchFn})))
     return fail(request,403,'turnstile_verification_failed');
   const reference=ref(),id='wl_'+crypto.randomUUID();
   const encrypted=await encryptPrivateText(JSON.stringify(fields),env.PII_ENCRYPTION_KEY);
