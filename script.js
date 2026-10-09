@@ -279,7 +279,7 @@
       link.textContent=pageEnglish?'Prepare email instead':'Preparar por e-mail';
       link.style.margin='8px 0 0 10px';
     }
-    link.setAttribute('aria-label',pageEnglish?'Prepare a request in your email application':'Preparar pedido na sua aplicação de e-mail');
+    link.setAttribute('aria-label',link.textContent.trim()+(pageEnglish?' (opens your email application)':' (abre a aplicação de e-mail)'));
     link.addEventListener('click',event=>{
       if(!target.reportValidity()){event.preventDefault();return;}
       const data=new FormData(target);
