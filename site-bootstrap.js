@@ -57,7 +57,7 @@
     // Opt-in to persisted institutional leads after the Worker capability check.
     // Keep WhatsApp and email working if the backend remains disabled.
     if(!leadEndpoint && document.querySelector('#contactForm,#businessContactForm,#bookingRequestForm')){
-      loadScript('script[data-hmatias-website-leads]','website-lead-client.js?v=20261009-confirmed-attribution1','hmatiasWebsiteLeads',document.body);
+      loadScript('script[data-hmatias-website-leads]','website-lead-client.js?v=20261010-campaign-origin1','hmatiasWebsiteLeads',document.body);
     }
     loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260920-stable3', 'hmatiasSiteEnhancements');
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20261009-email-cta1', 'hmatiasGrowthIntelligence');

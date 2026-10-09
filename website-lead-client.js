@@ -17,6 +17,25 @@
       date:'preferred_date',channel:'meeting_mode',window:'time_window'}
   ];
   const text=(pt,english)=>en?english:pt;
+  // Campaign information is read only when the visitor submits a lead form.
+  // No persistent tracking, ad click IDs, full URLs or search terms.
+  function campaignAttribution(){
+    const params=new URLSearchParams(window.location.search);
+    const code=(key,max)=>{
+      const value=String(params.get(key)||'').trim().toLowerCase();
+      return value.length<=max&&/^[a-z0-9][a-z0-9_.-]*$/.test(value)?value:'';
+    };
+    const path=window.location.pathname||'/';
+    const landing_path=new RegExp('^/(?:[a-z0-9-]+[.]html|source-ao/(?:index[.]html|rfq[.]html|opportunity-radar[.]html)?)?$').test(path)?path:'';
+    let referrer_host='';
+    try{
+      const host=new URL(document.referrer).hostname.toLowerCase();
+      if(host!=='comercialhmatiasps.com'&&host!=='www.comercialhmatiasps.com'&&
+        host.length<=100&&/^[a-z0-9][a-z0-9_.-]*$/.test(host))referrer_host=host;
+    }catch{}
+    return {source:code('utm_source',60),medium:code('utm_medium',60),
+      campaign:code('utm_campaign',80),landing_path,referrer_host};
+  }
   function detail(form,config,fd){
     const get=key=>String(fd.get(key)||'').trim();
     const baseDetails=get(config.details);
@@ -111,6 +130,7 @@
       const get=key=>key?String(fd.get(key)||'').trim():'';
       const payload={
         kind:config.kind,nonce,consent:input.checked,website:'',turnstileToken:challengeToken,
+        attribution:campaignAttribution(),
         name:get(config.name),company:get(config.company),phone:get(config.phone),
         email:get(config.email),service:get(config.service)||text('Contacto comercial','Business enquiry'),
         location:get(config.location)||'Luanda',

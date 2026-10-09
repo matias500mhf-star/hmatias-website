@@ -24,6 +24,29 @@ function fail(request,status,code){
 }
 const clean=(value,max)=>typeof value==='string'?value.trim().replace(/[\u0000-\u0008\u000b\u000e-\u001f]/g,'').slice(0,max):'';
 
+// Only non-identifying campaign codes and approved site paths are accepted.
+// Never store URLs, search phrases, ad click IDs, cookies or arbitrary referrer paths.
+const ATTRIBUTION_PAGE=new RegExp('^/(?:[a-z0-9-]+[.]html|source-ao/(?:index[.]html|rfq[.]html|opportunity-radar[.]html)?)?$');
+function attributionSlug(value,max){
+  if(value===undefined||value===null||value==='')return '';
+  if(typeof value!=='string'||value.length>max||
+    !/^[a-z0-9][a-z0-9_.-]*$/i.test(value))return null;
+  return value.toLowerCase();
+}
+function normaliseAttribution(value){
+  if(value===undefined||value===null)return {source:'',medium:'',campaign:'',landing_path:'',referrer_host:''};
+  if(typeof value!=='object'||Array.isArray(value))return null;
+  const source=attributionSlug(value.source,60);
+  const medium=attributionSlug(value.medium,60);
+  const campaign=attributionSlug(value.campaign,80);
+  const referrer_host=attributionSlug(value.referrer_host,100);
+  const landing_path=value.landing_path===undefined||value.landing_path===null?'':value.landing_path;
+  if([source,medium,campaign,referrer_host].some(x=>x===null)||
+     (landing_path!==''&&(typeof landing_path!=='string'||landing_path.length>90||!ATTRIBUTION_PAGE.test(landing_path))))return null;
+  if(referrer_host&&(!referrer_host.includes('.')||referrer_host.includes('..')))return null;
+  return {source,medium,campaign,landing_path,referrer_host};
+}
+
 export function validateWebsiteLead(value){
   if(!value || typeof value!=='object'||Array.isArray(value))return null;
   const kind=clean(value.kind,40);
@@ -37,16 +60,17 @@ export function validateWebsiteLead(value){
   const details=clean(value.details,2400);
   const preferred=clean(value.preferred_date,20);
   const channel=clean(value.preferred_channel,20);
+  const attribution=normaliseAttribution(value.attribution);
   const maxLengths={nonce:90,name:120,company:160,phone:60,email:180,service:140,location:160,details:2400,preferred_date:20,preferred_channel:20};
   if(Object.entries(maxLengths).some(([field,maxLength])=>typeof value[field]==='string'&&value[field].length>maxLength))return null;
-  if(!KINDS.has(kind)||!/^[a-zA-Z0-9_-]{18,90}$/.test(submission)||
+  if(!attribution||!KINDS.has(kind)||!/^[a-zA-Z0-9_-]{18,90}$/.test(submission)||
      value.consent!==true||Boolean(value.website)||
      name.length<2||service.length<2||details.length<5||
      (!phone&&!email)|| (phone&&phone.length<6)||
      (email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))||
      (channel&&!['phone','email','whatsapp'].includes(channel))||
      (preferred&&!/^\d{4}-\d{2}-\d{2}$/.test(preferred)))return null;
-  return {kind,submission,name,company,phone,email,service,location,details,preferred,channel};
+  return {kind,submission,name,company,phone,email,service,location,details,preferred,channel,attribution};
 }
 
 export function websiteLeadConfig(request,env){
@@ -190,6 +214,11 @@ export async function deliverWebsiteLeadAlerts(env,{limit=5,now=new Date(),fetch
         'Telefone: '+details.phone,'E-mail: '+details.email,
         'Localização: '+details.location,'Descrição: '+details.details,
         'Data pretendida: '+details.preferred,
+        'Origem UTM: '+(details.attribution?.source||'não identificada'),
+        'Meio UTM: '+(details.attribution?.medium||'não identificado'),
+        'Campanha UTM: '+(details.attribution?.campaign||'não identificada'),
+        'Página de entrada: '+(details.attribution?.landing_path||'não identificada'),
+        'Domínio de referência: '+(details.attribution?.referrer_host||'não identificado'),
         '',
         'Registado na D1. Atribuir responsável comercial e verificar os detalhes na área interna.'
       ];

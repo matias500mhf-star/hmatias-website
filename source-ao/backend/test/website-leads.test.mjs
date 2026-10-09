@@ -32,6 +32,25 @@ test('accepts only explicit consent and valid business contact fields',()=>{
   assert.equal(validateWebsiteLead({...body,email:'not-an-email'}),null);
   assert.equal(validateWebsiteLead({...body,nonce:'too short'}),null);
 });
+test('campaign attribution is strictly limited to public paths and non-identifying codes',()=>{
+  const value=validateWebsiteLead({...body,attribution:{
+    source:'Google',medium:'CPC',campaign:'facilities_luanda_2026',
+    landing_path:'/facilities.html',referrer_host:'google.com'
+  }});
+  assert.deepEqual(value.attribution,{
+    source:'google',medium:'cpc',campaign:'facilities_luanda_2026',
+    landing_path:'/facilities.html',referrer_host:'google.com'
+  });
+  assert.equal(validateWebsiteLead({...body,attribution:{source:'lead@example.com'}}),null);
+  assert.equal(validateWebsiteLead({...body,attribution:{landing_path:'/source-ao/ops.html'}}),null);
+  assert.equal(validateWebsiteLead({...body,attribution:{landing_path:'/private?token=secret'}}),null);
+  assert.equal(validateWebsiteLead({...body,attribution:{referrer_host:'https://example.com/contact?id=2'}}),null);
+  assert.equal(validateWebsiteLead({...body,attribution:{campaign:'a'.repeat(81)}}),null);
+  assert.equal(validateWebsiteLead({...body,attribution:{campaign:'obra agosto'}}),null);
+  assert.equal(validateWebsiteLead({...body,attribution:{landing_path:'/source-ao/rfq.html'}})?.attribution.landing_path,'/source-ao/rfq.html');
+  assert.equal(validateWebsiteLead({...body,attribution:undefined})?.attribution.source,'');
+});
+
 test('blocks cross-origin preflights and production writes',async()=>{
   assert.equal(websiteLeadCors(new Request('https://worker.example/api/website-leads',{
     method:'OPTIONS',headers:{origin:'https://attacker.example'}
