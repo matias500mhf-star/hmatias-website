@@ -1,0 +1,76 @@
+name: HMATIAS Website Leads Readiness
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/website-leads-readiness.yml'
+permissions:
+  contents: read
+jobs:
+  read-only-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    environment: source-ao-staging
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+      ADMIN_TOKEN: ${{ secrets.SOURCE_AO_ADMIN_API_TOKEN }}
+      RESEND_CONFIGURED_IN_GITHUB: ${{ secrets.SOURCE_AO_RESEND_API_KEY != '' }}
+    steps:
+      - name: Read-only audit of production lead readiness
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          const api='https://source-ao-api.matias500-mhf.workers.dev';
+          const official='https://comercialhmatiasps.com';
+          const yes=v=>v?'YES':'NO';
+          const status={};
+          async function readJson(url,headers={}){
+            const response=await fetch(url,{headers,signal:AbortSignal.timeout(18000),cache:'no-store'});
+            const body=await response.json().catch(()=>({}));
+            return {status:response.status,body};
+          }
+          try{
+            const c=await readJson(api+'/api/website-leads/config',{origin:official,accept:'application/json'});
+            status.public_config_http=c.status;
+            status.lead_intake_enabled=c.status===200&&c.body?.enabled===true;
+            status.public_turnstile_key_supplied=c.status===200&&typeof c.body?.turnstileSiteKey==='string';
+          }catch(e){status.public_config_http='unavailable';status.lead_intake_enabled=false;}
+          console.log('Website lead intake active:',yes(status.lead_intake_enabled));
+          console.log('Turnstile public site key exposed only if active:',yes(status.public_turnstile_key_supplied));
+          console.log('Lead capability endpoint HTTP:',status.public_config_http);
+          const admin=process.env.ADMIN_TOKEN||'';
+          if(admin){
+            try{
+              const r=await readJson(api+'/api/admin/website-leads',{
+                authorization:'Bearer '+admin,origin:official,accept:'application/json'
+              });
+              console.log('Private lead queue HTTP:',r.status);
+              if(r.status===200&&r.body?.ok===true){
+                console.log('Recent institutional leads in queue:',Array.isArray(r.body.results)?r.body.results.length:'unavailable');
+                console.log('Lead alerts pending:',Number(r.body.alerts?.pending)||0);
+                console.log('Lead alerts accepted by email provider:',Number(r.body.alerts?.accepted)||0);
+                console.log('Worker email delivery configured:',yes(r.body.delivery_configured===true));
+              }
+            }catch(e){console.log('Private lead queue status: unavailable ('+e.name+')');}
+          }else console.log('Private lead queue status: admin credential not available to audit');
+          const account=process.env.CLOUDFLARE_ACCOUNT_ID||'';
+          const token=process.env.CLOUDFLARE_API_TOKEN||'';
+          if(account&&token){
+            try{
+              const url='https://api.cloudflare.com/client/v4/accounts/'+encodeURIComponent(account)+
+                '/workers/scripts/source-ao-api/secrets';
+              const res=await readJson(url,{authorization:'Bearer '+token,accept:'application/json'});
+              if(res.status===200&&res.body?.success===true&&Array.isArray(res.body.result)){
+                const names=new Set(res.body.result.map(x=>x.name));
+                for(const key of ['PII_ENCRYPTION_KEY','ADMIN_API_TOKEN','WEBSITE_LEADS_TURNSTILE_SECRET','RESEND_API_KEY']){
+                  console.log('Worker secret '+key+' present:',yes(names.has(key)));
+                }
+              }else console.log('Worker secret inventory unavailable (read-only permission or API response).');
+            }catch(e){console.log('Worker secret inventory unavailable ('+e.name+').');}
+          }else console.log('Cloudflare secret inventory cannot be checked: read-only API credentials unavailable.');
+          console.log('Resend key present in GitHub environment:',yes(process.env.RESEND_CONFIGURED_IN_GITHUB==='true'));
+          console.log('No lead created, no email sent and no secret value displayed in this audit.');
+          NODE
