@@ -35,8 +35,8 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
       SOURCE_AO_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_ADMIN_API_TOKEN }}
       SOURCE_AO_RESEND_API_KEY: ${{ secrets.SOURCE_AO_RESEND_API_KEY }}
-      SOURCE_AO_ALERT_FROM: ${{ vars.SOURCE_AO_ALERT_FROM }}
-      SOURCE_AO_ALERT_TO: ${{ vars.SOURCE_AO_ALERT_TO }}
+      SOURCE_AO_ALERT_FROM: ${{ vars.SOURCE_AO_ALERT_FROM || 'HMATIAS Source AO <geral@comercialhmatiasps.com>' }}
+      SOURCE_AO_ALERT_TO: ${{ vars.SOURCE_AO_ALERT_TO || 'geral@comercialhmatiasps.com' }}
 
     steps:
       - name: Checkout production release
@@ -182,7 +182,7 @@ jobs:
             printf '%s' "$SOURCE_AO_ALERT_TO" | npx wrangler secret put SOURCE_AO_ALERT_TO --config wrangler.production.runtime.jsonc
             echo "Source AO internal notification credentials configured (sender/recipient not printed)."
           else
-            echo "::notice title=Source AO email not activated::Set GitHub secret SOURCE_AO_RESEND_API_KEY and variables SOURCE_AO_ALERT_FROM / SOURCE_AO_ALERT_TO; the request queue will remain pending until valid Worker email configuration is present."
+            echo "::notice title=Source AO email not activated::Set GitHub secret SOURCE_AO_RESEND_API_KEY with a sending-only token. Verified-domain sender and HMATIAS commercial recipient have safe defaults; email remains disabled until a valid token is provided."
           fi
           rm -f "$secret_file"
 
