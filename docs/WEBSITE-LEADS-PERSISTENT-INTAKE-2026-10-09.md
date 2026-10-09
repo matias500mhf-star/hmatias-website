@@ -17,7 +17,8 @@ Implementar uma via segura de registo dos formulários institucionais sem depend
 ## URLs e fronteiras
 - Público: `GET /api/website-leads/config`, `OPTIONS /api/website-leads`, `POST /api/website-leads`.
 - Protegido: `GET /api/admin/website-leads`, `GET /api/admin/website-leads/:id`, `POST /api/admin/website-leads/:id/status`.
-- Frontend privado: `/source-ao/website-leads.html` (não indexável, sem conteúdo privado no HTML estático).
+- Painel interno operacional: `https://source-ao-api.matias500-mhf.workers.dev/internal/website-leads` (servido pelo Worker, noindex e sem quaisquer dados antes da autenticação).
+- O ficheiro fonte `/source-ao/website-leads.html` é excluído do artefacto público GitHub Pages; não é uma ligação pública de consulta.
 - Nenhum dos endpoints expõe API keys ou dados pessoais sem autenticação administrativa.
 
 ## Validações obrigatórias antes da ativação
