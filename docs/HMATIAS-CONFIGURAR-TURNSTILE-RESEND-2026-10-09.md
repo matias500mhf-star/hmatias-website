@@ -9,7 +9,7 @@ Diagnóstico de 09/10/2026: a API Cloudflare respondeu **HTTP 403** ao consultar
 2. Dar apenas a permissão de conta **Turnstile Sites: Write** (ou `Account:Turnstile:Edit`, conforme o painel), para a conta Cloudflare correta. Não modificar o token existente de Workers.
 3. No GitHub, abrir `Settings > Environments > source-ao-staging > Environment secrets`.
 4. Adicionar o novo token como `CLOUDFLARE_TURNSTILE_API_TOKEN`. **Não enviar o valor ao ChatGPT.**
-5. Em `Actions > HMATIAS Turnstile Protected Setup > Run workflow`, selecionar `main` e executar uma vez.
+5. Depois de adicionar **também** o segredo Resend descrito na secção B, executar uma única vez `Actions > HMATIAS Turnstile Protected Setup > Run workflow` na branch `main`.
 6. O workflow pesquisa um widget de nome exato, cria se necessário, restringe a `comercialhmatiasps.com` e `www.comercialhmatiasps.com`, instala a site key e secret como bindings privadas no Worker existente. Não ativa captação.
 
 ### B. Resend — chave de envio dedicada
@@ -17,7 +17,7 @@ Diagnóstico de 09/10/2026: a API Cloudflare respondeu **HTTP 403** ao consultar
 2. Criar uma nova chave **Sending access**, limitada ao domínio verificado, específica para os alertas HMATIAS.
 3. Adicionar o valor somente em `Settings > Environments > source-ao-staging > Environment secrets`, com o nome `SOURCE_AO_RESEND_API_KEY`.
 4. Não inserir a chave no GitHub em arquivos, issues, comentários, nem na conversa.
-5. A publicação do Source AO lê este secret e configura `RESEND_API_KEY` no Worker no deploy de produção autorizado. Revalidar com o workflow `Source AO Resend Configuration Readiness`.
+5. O workflow protegido do Turnstile também instala `RESEND_API_KEY` no Worker quando este secret estiver presente, mantendo o remetente e o destino internos aprovados. Revalidar com o workflow `Source AO Resend Configuration Readiness` e confirmar entrega real antes de ativar os formulários.
 
 ### C. Aceitação final
 - Rever texto dos formulários e a política de privacidade em PT/EN.
