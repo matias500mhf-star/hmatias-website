@@ -74,7 +74,7 @@
 
     if (!document.querySelector('script[data-hmatias-analytics-events]')) {
       const events = document.createElement('script');
-      events.src = '/analytics-events.js?v=20261009-confirmed-leads1';
+      events.src = '/analytics-events.js?v=20261010-ai-referral1';
       events.defer = true;
       events.dataset.hmatiasAnalyticsEvents = 'true';
       document.head.appendChild(events);
