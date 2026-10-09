@@ -25,3 +25,82 @@ body.hmatias-clean .clean-parent-link a{color:#0c5987;text-decoration:underline;
 /* Shared product-media resilience: avoid broken-image icons. */
 body.hmatias-facilities .hmatias-product-photo-unavailable,body.hmatias-clean .hmatias-product-photo-unavailable{display:flex;align-items:center;justify-content:center;min-height:160px;max-width:100%;padding:20px;text-align:center;background:#edf4f8;border:1px solid #d5e4ec;border-radius:8px;color:#4d6679;font-size:.88rem;line-height:1.6}
 body.hmatias-facilities img[data-hmatias-product-photo],body.hmatias-clean img[data-hmatias-product-photo]{object-fit:contain}
+
+/* Facilities institutional visual system — actual project evidence before commercial product references. */
+body.hmatias-facilities .hm-evidence.facility-evidence{padding:68px 0 84px;background:#fff}
+body.hmatias-facilities .facility-evidence-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:28px}
+body.hmatias-facilities .facility-evidence-heading>div{max-width:720px}
+body.hmatias-facilities .facility-evidence-heading h2{max-width:21ch;margin:10px 0 12px;color:#0d2d45;font-size:clamp(1.9rem,3.4vw,3.1rem);font-weight:650;line-height:1.08;letter-spacing:-.045em}
+body.hmatias-facilities .facility-evidence-heading p{max-width:67ch;margin:0;color:#526c80;font-size:.95rem;line-height:1.7}
+body.hmatias-facilities .facility-evidence-link{display:inline-flex;align-items:center;gap:14px;flex-shrink:0;min-height:44px;padding:0 0 6px;border-bottom:1px solid #2c6385;font-size:.84rem;font-weight:700;color:#144666;text-decoration:none}
+body.hmatias-facilities .facility-evidence-link:hover,body.hmatias-facilities .facility-evidence-link:focus-visible{color:#00679e;border-color:#00679e}
+body.hmatias-facilities .facility-evidence .hm-evidence-grid{gap:19px}
+body.hmatias-facilities .facility-evidence .hm-evidence-item img{aspect-ratio:5/3;object-fit:cover;background:#eef2f5}
+body.hmatias-facilities .facility-evidence .hm-evidence-item figcaption{padding-top:17px}
+body.hmatias-facilities .facilities-clean{padding-top:76px;padding-bottom:86px;background:#f3f7fa}
+body.hmatias-facilities .facilities-clean .unit-heading{margin-bottom:31px}
+body.hmatias-facilities .facilities-clean .unit-heading h2{max-width:21ch}
+body.hmatias-facilities .facilities-clean .unit-heading p{max-width:73ch;line-height:1.7}
+body.hmatias-facilities .facilities-clean-grid{gap:18px}
+body.hmatias-facilities .facilities-clean-card{border:1px solid #dbe6ed;border-radius:8px;box-shadow:0 10px 30px rgba(9,44,69,.045)}
+body.hmatias-facilities .facilities-clean-image{aspect-ratio:4/3;min-height:230px;padding:23px;background:#fff;border-bottom:1px solid #e5ebef}
+body.hmatias-facilities .facilities-clean-image img{max-height:285px;filter:none;object-fit:contain}
+body.hmatias-facilities .facilities-clean-copy{gap:12px;padding:22px 23px 24px}
+body.hmatias-facilities .facilities-clean-copy h3{font-size:1.5rem;letter-spacing:-.035em}
+body.hmatias-facilities .facilities-clean-copy p{font-size:.89rem;line-height:1.75}
+body.hmatias-facilities .facilities-clean-copy .btn{min-height:44px;display:inline-flex;align-items:center}
+body.hmatias-facilities .facilities-clean-overview{gap:17px;border-radius:8px;padding:30px 27px;background:#10334d}
+body.hmatias-facilities .facilities-clean-overview h3{font-size:1.62rem;line-height:1.2}
+body.hmatias-facilities .facilities-clean-overview ul{padding-left:18px;font-size:.91rem;line-height:1.9}
+body.hmatias-facilities .facilities-clean-overview .btn{display:inline-flex;min-height:44px;align-items:center}
+body.hmatias-facilities .facilities-clean-note{font-size:.8rem;max-width:100ch}
+body.hmatias-facilities .facility-request-actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+body.hmatias-facilities .facility-request-secondary{display:inline-flex;min-height:44px;align-items:center;color:#fff;font-size:.87rem;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+body.hmatias-facilities .facility-request .unit-cta-inner{gap:26px}
+
+/* Clean product quotation catalogue: equal-height real product cards, no fabricated pricing. */
+body.hmatias-clean .clean-feature-grid{align-items:stretch;gap:25px}
+body.hmatias-clean .clean-feature-card{display:flex;flex-direction:column;min-width:0;padding:23px;border:1px solid #dce6ed;border-radius:9px;background:#fff}
+body.hmatias-clean .clean-feature-card .product-media{flex:0 0 auto;min-height:365px;margin:0 0 24px;padding:24px;background:#fff;border-color:#e0e8ee;border-radius:5px}
+body.hmatias-clean .clean-feature-card .product-media img{display:block;width:100%;max-width:370px;height:310px;max-height:310px;margin:auto;object-fit:contain;filter:none}
+body.hmatias-clean .clean-feature-card .product-gallery{display:grid;place-items:center;width:100%;min-width:0}
+body.hmatias-clean .clean-feature-card .commerce-badges{margin-bottom:15px}
+body.hmatias-clean .clean-feature-card h3{margin:0 0 13px;color:#14364f;font-size:clamp(1.55rem,2.3vw,2.1rem);line-height:1.18}
+body.hmatias-clean .clean-product-code{display:block;margin-top:6px;color:#628095;font-family:inherit;font-size:.74rem;font-weight:700;letter-spacing:.13em}
+body.hmatias-clean .clean-feature-card>p{margin:0 0 19px;min-height:76px;color:#526b7e;font-size:.91rem;line-height:1.75}
+body.hmatias-clean .clean-feature-card .clean-status-line{margin-top:0}
+body.hmatias-clean .clean-feature-card .clean-price-table{margin-top:15px;border-radius:6px}
+body.hmatias-clean .clean-feature-card .product-buy-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 18px;margin-top:auto;padding-top:20px}
+body.hmatias-clean .clean-feature-card .product-buy-actions .btn{min-height:46px;display:inline-flex;align-items:center;justify-content:center}
+body.hmatias-clean .clean-technical-link{font-size:.81rem;font-weight:700;color:#155a82;text-decoration:underline;text-underline-offset:3px}
+body.hmatias-clean .clean-technical-link:hover{color:#063855}
+body.hmatias-clean .clean-feature-card .product-media-note{font-size:.62rem;letter-spacing:.07em;line-height:1.3;max-width:100%;white-space:normal}
+body.hmatias-clean .commerce-products{background:#f7f9fb}
+body.hmatias-clean .commerce-products .section-heading p{max-width:76ch;margin-left:auto;margin-right:auto}
+
+@media(max-width:1020px) and (min-width:661px){
+ body.hmatias-facilities .facilities-clean-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.hmatias-facilities .facilities-clean-overview{grid-column:1/-1}
+ body.hmatias-facilities .facility-evidence .hm-evidence-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:660px){
+ body.hmatias-facilities .hm-evidence.facility-evidence{padding:55px 0 65px}
+ body.hmatias-facilities .facility-evidence-heading{display:block;margin-bottom:22px}
+ body.hmatias-facilities .facility-evidence-heading h2{font-size:2rem}
+ body.hmatias-facilities .facility-evidence-link{margin-top:19px}
+ body.hmatias-facilities .facility-evidence .hm-evidence-grid{grid-template-columns:1fr}
+ body.hmatias-facilities .facilities-clean{padding-top:59px;padding-bottom:62px}
+ body.hmatias-facilities .facilities-clean-grid{grid-template-columns:1fr}
+ body.hmatias-facilities .facilities-clean-overview{grid-column:auto}
+ body.hmatias-facilities .facilities-clean-image{min-height:210px;padding:17px}
+ body.hmatias-facilities .facilities-clean-image img{max-height:240px}
+ body.hmatias-facilities .facility-request-actions{flex-direction:column;align-items:stretch}
+ body.hmatias-facilities .facility-request-actions .btn{text-align:center}
+ body.hmatias-clean .clean-feature-grid{grid-template-columns:1fr;gap:21px}
+ body.hmatias-clean .clean-feature-card{padding:18px}
+ body.hmatias-clean .clean-feature-card .product-media{min-height:260px;padding:17px}
+ body.hmatias-clean .clean-feature-card .product-media img{max-height:235px;height:225px}
+ body.hmatias-clean .clean-feature-card>p{min-height:0}
+ body.hmatias-clean .clean-feature-card .product-buy-actions{flex-direction:column;align-items:stretch}
+ body.hmatias-clean .clean-feature-card .product-buy-actions .btn{width:100%}
+}
