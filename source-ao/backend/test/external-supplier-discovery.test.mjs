@@ -9,7 +9,7 @@ const makeRequest=(body,token='correct')=>new Request('https://example.test/api/
 function env(overrides={}){
   let requests=0;
   return {
-    ADMIN_TOKEN:'correct',SOURCE_AO_AI_PILOT_ENABLED:'true',
+    ADMIN_API_TOKEN:'correct',SOURCE_AO_AI_PILOT_ENABLED:'true',
     BRAVE_SEARCH_API_KEY:'brave-secret',SOURCE_AO_DISCOVERY_DAILY_LIMIT:'2',
     SOURCE_AO_DB:{prepare(){return {bind(){return {async first(){requests+=1;return requests<=2?{requests}:null;}};}};}},
     ...overrides
