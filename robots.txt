@@ -1,3 +1,18 @@
+# Pesquisa ChatGPT: páginas públicas permitidas; áreas operacionais privadas excluídas.
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /source-ao/ops.html
+Disallow: /source-ao/review.html
+Disallow: /source-ao/requests.html
+Disallow: /source-ao/website-leads.html
+Disallow: /source-ao/supplier-discovery.html
+Disallow: /source-ao/backend/
+Disallow: /source-ao/docs/
+
+# Conteúdo público igualmente acessível ao Bing e Google pelo grupo genérico.
 # HMATIAS Website Robots.txt
 User-agent: *
 Allow: /
