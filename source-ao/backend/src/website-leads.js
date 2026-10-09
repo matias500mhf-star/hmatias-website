@@ -26,9 +26,7 @@ const clean=(value,max)=>typeof value==='string'?value.trim().replace(/[\u0000-\
 
 // Only non-identifying campaign codes and approved site paths are accepted.
 // Never store URLs, search phrases, ad click IDs, cookies or arbitrary referrer paths.
-const ATTRIBUTION_PAGES=new Set(['/','/index.html','/en.html',
-  '/servicos-administrativos.html','/business-services.html',
-  '/agendamento.html','/booking.html']);
+const ATTRIBUTION_PAGE=/^\\/(?:[a-z0-9-]+\\.html|source-ao\\/(?:index\\.html|rfq\\.html|opportunity-radar\\.html)?)?$/;
 function attributionSlug(value,max){
   if(value===undefined||value===null||value==='')return '';
   if(typeof value!=='string'||value.length>max||
@@ -44,7 +42,7 @@ function normaliseAttribution(value){
   const referrer_host=attributionSlug(value.referrer_host,100);
   const landing_path=value.landing_path===undefined||value.landing_path===null?'':value.landing_path;
   if([source,medium,campaign,referrer_host].some(x=>x===null)||
-     (landing_path!==''&&!ATTRIBUTION_PAGES.has(landing_path)))return null;
+     (landing_path!==''&&(typeof landing_path!=='string'||landing_path.length>90||!ATTRIBUTION_PAGE.test(landing_path))))return null;
   if(referrer_host&&(!referrer_host.includes('.')||referrer_host.includes('..')))return null;
   return {source,medium,campaign,landing_path,referrer_host};
 }
