@@ -282,7 +282,7 @@
         const value=String(data.get(name)||'').trim();
         return value?label+': '+value:'';
       }).filter(Boolean);
-      const body=rows.join('\\n').slice(0,2300)+'\\n\\n'+
+      const body=rows.join('\n').slice(0,2300)+'\n\n'+
         (pageEnglish?'Please confirm receipt and advise the next steps.':'Agradeço confirmação de receção e indicação dos próximos passos.');
       const subject=pageEnglish
         ?({contactForm:'HMATIAS business enquiry',businessContactForm:'HMATIAS Business Services enquiry',bookingRequestForm:'HMATIAS appointment request'}[config.id])
