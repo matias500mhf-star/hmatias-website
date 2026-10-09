@@ -8,6 +8,7 @@ Disallow: /source-ao/ops.html
 Disallow: /source-ao/review.html
 Disallow: /source-ao/requests.html
 Disallow: /source-ao/website-leads.html
+Disallow: /source-ao/supplier-discovery.html
 Disallow: /source-ao/backend/
 Disallow: /source-ao/docs/
 

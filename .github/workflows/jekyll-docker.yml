@@ -60,7 +60,11 @@ jobs:
             --exclude 'source-ao/review.css' \
             --exclude 'source-ao/requests.html' \
             --exclude 'source-ao/requests.js' \
-            --exclude 'source-ao/requests.css'
+            --exclude 'source-ao/requests.css' \
+            --exclude 'source-ao/supplier-discovery.html' \
+            --exclude 'source-ao/supplier-discovery.js' \
+            --exclude 'source-ao/website-leads.html' \
+            --exclude 'source-ao/website-leads-ops.js'
           node source-ao/backend/scripts/public-data.mjs "$out/source-ao/data"
           test -f "$out/source-ao/data/catalog.json"
           test ! -e "$out/source-ao/data/suppliers.json"
@@ -81,6 +85,10 @@ jobs:
           test ! -e "$out/source-ao/requests.html"
           test ! -e "$out/source-ao/requests.js"
           test ! -e "$out/source-ao/requests.css"
+          test ! -e "$out/source-ao/supplier-discovery.html"
+          test ! -e "$out/source-ao/supplier-discovery.js"
+          test ! -e "$out/source-ao/website-leads.html"
+          test ! -e "$out/source-ao/website-leads-ops.js"
           test ! -e "$out/.github"
           echo "Public-only deployment artifact prepared."
 
@@ -137,6 +145,8 @@ jobs:
           grep -Fq "Disallow: /source-ao/ops.html" /tmp/robots.txt
           grep -Fq "Disallow: /source-ao/review.html" /tmp/robots.txt
           grep -Fq "Disallow: /source-ao/requests.html" /tmp/robots.txt
+          grep -Fq "Disallow: /source-ao/website-leads.html" /tmp/robots.txt
+          grep -Fq "Disallow: /source-ao/supplier-discovery.html" /tmp/robots.txt
           grep -Fq "Disallow: /source-ao/backend/" /tmp/robots.txt
 
           for hidden_path in \
@@ -149,6 +159,10 @@ jobs:
             "/source-ao/requests.html" \
             "/source-ao/requests.js" \
             "/source-ao/requests.css" \
+            "/source-ao/supplier-discovery.html" \
+            "/source-ao/supplier-discovery.js" \
+            "/source-ao/website-leads.html" \
+            "/source-ao/website-leads-ops.js" \
             "/source-ao/data/suppliers.json" \
             "/source-ao/data/services.json" \
             "/source-ao/data/observations.json" \
