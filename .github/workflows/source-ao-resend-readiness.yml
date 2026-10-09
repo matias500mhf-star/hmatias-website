@@ -1,0 +1,50 @@
+name: Source AO Resend Configuration Readiness
+on:
+  push:
+    branches: [ops/resend-verified-delivery-20261009]
+    paths:
+      - '.github/workflows/source-ao-resend-readiness.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  notification-readiness:
+    runs-on: ubuntu-latest
+    environment: source-ao-staging
+    timeout-minutes: 5
+    env:
+      EMAIL_API_KEY: ${{ secrets.SOURCE_AO_RESEND_API_KEY }}
+      ADMIN_TOKEN: ${{ secrets.SOURCE_AO_ADMIN_API_TOKEN }}
+      EMAIL_FROM: ${{ vars.SOURCE_AO_ALERT_FROM }}
+      EMAIL_TO: ${{ vars.SOURCE_AO_ALERT_TO }}
+      BASE: https://source-ao-api.matias500-mhf.workers.dev
+    steps:
+      - name: Read-only secrets presence and production Worker outbox
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          const env=process.env;
+          const keyReady=Boolean(env.EMAIL_API_KEY);
+          const adminReady=Boolean(env.ADMIN_TOKEN);
+          const fromReady=Boolean(env.EMAIL_FROM);
+          const toReady=Boolean(env.EMAIL_TO);
+          console.log('GitHub environment email key configured:', keyReady);
+          console.log('GitHub environment sender configured:', fromReady);
+          console.log('GitHub environment recipient configured:', toReady);
+          console.log('GitHub environment admin token configured:', adminReady);
+          console.log('Note: only presence is reported, never credentials or recipient addresses.');
+          if(adminReady){
+            try{
+              const res=await fetch(env.BASE+'/api/admin/intake-alerts/status',{
+                headers:{'authorization':'Bearer '+env.ADMIN_TOKEN},signal:AbortSignal.timeout(15000)});
+              console.log('Worker protected outbox status HTTP:',res.status);
+              if(res.status===200){
+                const o=await res.json();
+                console.log('Worker email delivery configured:',o.configured===true);
+                console.log('Pending intake alerts:',Number(o.pending)||0);
+                console.log('Provider-accepted intake alerts:',Number(o.sent)||0);
+              }else console.log('Could not access private outbox; its operational state remains unconfirmed.');
+            }catch(e){console.log('Worker private outbox status could not be verified:',e.name)}
+          }
+          NODE
