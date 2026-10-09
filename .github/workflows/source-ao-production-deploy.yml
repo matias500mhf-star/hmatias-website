@@ -239,6 +239,9 @@ jobs:
           NODE
           rm -f "$RUNNER_TEMP/source-ao-ready.json" "$RUNNER_TEMP/source-ao-search.json"
 
+      - name: Verify institutional website lead intake is protected and disabled by default
+        run: node scripts/smoke-website-leads.mjs
+
       - name: Verify protected Source AO notification outbox
         shell: bash
         run: |
