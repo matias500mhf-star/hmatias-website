@@ -109,7 +109,7 @@
       lines.push(`${fieldLabel(el)}: ${value}`);
     });
 
-    lines.push('', isEn ? `Source: ${location.origin + location.pathname}` : `Origem: ${location.href}`);
+    lines.push('', isEn ? `Source: ${location.origin + location.pathname}` : `Origem: ${location.origin}${location.pathname}`);
     return lines.join('\n').slice(0, 6000);
   };
 
