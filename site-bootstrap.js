@@ -44,7 +44,7 @@
       loadStylesheet('link[data-hmatias-premium-typography]', premiumTypographyStylesheet, 'hmatiasPremiumTypography');
     }
     loadStylesheet('link[data-hmatias-brand-lock]', brandLockStylesheet, 'hmatiasBrandLock');
-    loadStylesheet('link[data-hmatias-mobile-contact]', 'mobile-contact-layout.css?v=20261008-1', 'hmatiasMobileContact');
+    loadStylesheet('link[data-hmatias-mobile-contact]', 'mobile-contact-layout.css?v=20261010-form-outcome1', 'hmatiasMobileContact');
     if (!stablePresentation) loadStylesheet('link[data-hmatias-corporate-cleanup]', corporateCleanupStylesheet, 'hmatiasCorporateCleanup');
     // This is an opt-in integration: no request, storage or browser-side CRM calls
     // until the secure Worker endpoint and Turnstile site key are explicitly configured.
