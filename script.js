@@ -11,6 +11,19 @@
   }
 
   const pageEnglish=(document.documentElement.lang||'').toLowerCase().startsWith('en');
+  // Campaign codes appear only in messages reviewed and sent by visitors.
+  const campaignFooter=()=>{
+    const params=new URLSearchParams(window.location.search);
+    const safe=(key,max)=>{
+      const value=String(params.get(key)||'').trim().toLowerCase();
+      return value.length<=max&&/^[a-z0-9][a-z0-9_.-]*$/.test(value)?value:'';
+    };
+    const codes=[['src',safe('utm_source',60)],['med',safe('utm_medium',60)],
+      ['cmp',safe('utm_campaign',80)]].filter(([,value])=>Boolean(value));
+    if(!codes.length)return '';
+    return '\n\n'+(pageEnglish?'Campaign reference':'Referência da campanha')+
+      ': '+codes.map(([key,value])=>key+'='+value).join('; ');
+  };
   const menuToggle=document.querySelector('.menu-toggle');
   const navMenu=document.querySelector('.nav-menu');
   const homePage=document.body.classList.contains('hmatias-home');
@@ -160,7 +173,7 @@
       const text=pageEnglish
         ?`Hello HMATIAS.\n\nName: ${name}\nCompany: ${company}\nE-mail: ${email}\nPhone / WhatsApp: ${phone}\nService: ${service}\n\nRequest:\n${message}`
         :`Olá HMATIAS.\n\nNome: ${name}\nEmpresa: ${company}\nE-mail: ${email}\nTelefone / WhatsApp: ${phone}\nServiço: ${service}\n\nPedido:\n${message}`;
-      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
+      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text+campaignFooter()),'_blank','noopener,noreferrer');
     });
   }
 
@@ -207,7 +220,7 @@
         ?`Hello HMATIAS Business Services.\n\nName / Entity: ${name}\nPhone / WhatsApp: ${contact}\nE-mail: ${email}\nLocation: ${location}\nService: ${service}\n\nRequest:\n${details}`
         :`Olá HMATIAS Business Services.\n\nNome / Entidade: ${name}\nTelefone / WhatsApp: ${contact}\nE-mail: ${email}\nLocalização: ${location}\nServiço: ${service}\n\nPedido:\n${details}`;
       if(status)status.textContent=pageEnglish?'Request prepared. WhatsApp will open for your review and final sending.':'Pedido preparado. O WhatsApp será aberto para revisão e envio final.';
-      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
+      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text+campaignFooter()),'_blank','noopener,noreferrer');
     });
   }
 
@@ -241,7 +254,7 @@
         ?`Hello HMATIAS. I would like to request an appointment.\n\nName / Entity: ${name}\nPhone / WhatsApp: ${contact}\nE-mail: ${email}\nService: ${service}\nMeeting format: ${mode}\nPreferred date: ${date}\nTime window: ${windowName}\nLocation: ${location}\n\nBrief context:\n${notes}\n\nI understand that this is an appointment request and the time is only confirmed after an express response from HMATIAS.`
         :`Olá HMATIAS. Pretendo solicitar um agendamento.\n\nNome / Entidade: ${name}\nTelefone / WhatsApp: ${contact}\nE-mail: ${email}\nServiço: ${service}\nModalidade: ${mode}\nData preferida: ${date}\nPeríodo: ${windowName}\nLocalização: ${location}\n\nContexto breve:\n${notes}\n\nCompreendo que este é um pedido de agendamento e que o horário só fica confirmado após resposta expressa da HMATIAS.`;
       if(status)status.textContent=pageEnglish?'Appointment request prepared. WhatsApp will open for review and sending.':'Pedido de agendamento preparado. O WhatsApp será aberto para revisão e envio.';
-      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
+      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text+campaignFooter()),'_blank','noopener,noreferrer');
     });
   }
 
@@ -287,7 +300,7 @@
         const value=String(data.get(name)||'').trim();
         return value?label+': '+value:'';
       }).filter(Boolean);
-      const body=rows.join('\n').slice(0,2300)+'\n\n'+
+      const body=rows.join('\n').slice(0,2300)+campaignFooter()+'\n\n'+
         (pageEnglish?'Please confirm receipt and advise the next steps.':'Agradeço confirmação de receção e indicação dos próximos passos.');
       const subject=pageEnglish
         ?({contactForm:'HMATIAS business enquiry',businessContactForm:'HMATIAS Business Services enquiry',bookingRequestForm:'HMATIAS appointment request'}[config.id])
