@@ -23,3 +23,6 @@
  .supply-request-delivery .btn{width:100%}
  .supply-request-actions .btn,.supply-rfq-choice .btn{min-height:48px}
 }
+
+/* Supply evidence caption contrast in both languages. */
+body.hmatias-supply .hm-evidence-item figcaption small{color:#486477}
