@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate shared PT/EN responsive header
+        run: python3 .github/scripts/check_header_consistency.py
       - name: Validate indexing, multilingual signals and WhatsApp routing
         shell: bash
         run: |
