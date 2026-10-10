@@ -106,5 +106,12 @@
     "descriptionEn": "On-demand procurement; specification validation, supplier research, proposal and logistics coordination on request.",
     "availability": "Confirmed per supplier and item only",
     "supplierCatalogues": "Original third-party documents are published only with authorisation."
+  },
+  "marketReach": {
+    "registeredOperatingBase": "Viana, Luanda, Angola",
+    "domesticEnquiries": "Requests from any province in Angola are welcome; physical execution, capacity, mobilisation, logistics and commercial terms are assessed for each project.",
+    "internationalAudience": "Overseas companies and partners seeking services and supplies for projects in Angola may enquire in Portuguese or English.",
+    "overseasOfficesClaimed": false,
+    "worldwideExecutionGuaranteed": false
   }
 }
