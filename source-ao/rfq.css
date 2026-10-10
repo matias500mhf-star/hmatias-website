@@ -28,11 +28,11 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 
 /* 2026-10-10: preserve the initial mobile form footprint while the JS module starts. */
-#rfqItems:empty{min-height:340px}
+#rfqItems{min-height:340px}
 @media(max-width:580px){
-  #rfqItems:empty{min-height:660px}
+  #rfqItems{min-height:660px}
   .rfq-header nav a,#rfqLanguage{min-height:44px;display:inline-flex;align-items:center}
   .rfq-notice{min-height:50px;overflow-wrap:anywhere}
   .rfq-progress li b{font-size:.78rem;line-height:1.35}
 }
-@media(max-width:360px){#rfqItems:empty{min-height:675px}}
+@media(max-width:360px){#rfqItems{min-height:675px}}
