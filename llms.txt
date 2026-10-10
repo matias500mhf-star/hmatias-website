@@ -31,6 +31,9 @@ When identity, company registration, contacts, service scope or commercial polic
 - English: https://comercialhmatiasps.com/rfq-en.html
 Smart RFQ is a browser-side request-brief builder for construction, facilities/maintenance and supply/procurement enquiries. It structures information for commercial review; it is not an automated quotation engine and does not itself confirm price, stock, availability, lead time, logistics or contractual acceptance. The generated reference is organisational only and is not a quotation, purchase order or contract number.
 
+## Supply & Procurement commercial model
+HMATIAS does not own merchandise inventory or operate a public stock catalogue. Supply is managed on request through independently contacted suppliers. Customers submit specifications, quantities, delivery points and target dates. HMATIAS researches options, checks technical and commercial details, issues its own proposal and coordinates fulfilment after acceptance. A supplier's catalogue does not confirm stock or a commercial arrangement. Original partner catalogues are published only when authorised.
+
 ## SOURCE AO
 - Public interface: https://comercialhmatiasps.com/source-ao/index.html
 - Opportunity / Intelligence Radar: https://comercialhmatiasps.com/source-ao/opportunity-radar.html

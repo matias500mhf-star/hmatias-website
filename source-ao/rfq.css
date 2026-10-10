@@ -26,3 +26,13 @@ html,body{max-width:100%;overflow-x:hidden}
   .rfq-heading h1{font-size:1.9rem}
   .rfq-workspace{padding:18px 14px}
 }
+
+/* 2026-10-10: preserve the initial mobile form footprint while the JS module starts. */
+#rfqItems{min-height:340px}
+@media(max-width:580px){
+  #rfqItems{min-height:660px}
+  .rfq-header nav a,#rfqLanguage{min-height:44px;display:inline-flex;align-items:center}
+  .rfq-notice{min-height:50px;overflow-wrap:anywhere}
+  .rfq-progress li b{font-size:.78rem;line-height:1.35}
+}
+@media(max-width:360px){#rfqItems{min-height:675px}}

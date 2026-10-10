@@ -369,3 +369,11 @@ body.hmatias-institutional.hmatias-facilities .unit-proof img[src*="cobertura-me
   body.hmatias-institutional .unit-proof>div:first-child{min-height:0}
   body.hmatias-institutional .unit-proof img{width:100%;height:auto;min-height:0;aspect-ratio:4/3}
 }
+
+/* Readable institutional microtype: minimum 12px for category, evidence and form labels.
+   This preserves the approved typography and card layouts across PT/EN. */
+body.hmatias-institutional .hm-evidence-item small{font-size:.75rem;line-height:1.5;letter-spacing:.06em;color:#52697b}
+body.hmatias-institutional .unit-card>span,body.hmatias-institutional .unit-step-bar span{font-size:.75rem;line-height:1.45}
+body.hmatias-institutional footer strong{font-size:.75rem;line-height:1.45}
+body.hmatias-institutional.hmatias-rfq .rfq-badge,body.hmatias-institutional.hmatias-booking .booking-chips span{font-size:.75rem;line-height:1.45}
+body.hmatias-institutional.hmatias-legal .lang,body.hmatias-institutional.hmatias-legal .content .meta{font-size:.75rem;line-height:1.45}
