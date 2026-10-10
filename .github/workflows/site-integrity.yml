@@ -12,6 +12,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate shared PT/EN responsive header
         run: python3 .github/scripts/check_header_consistency.py
+      - name: Validate national contact location routing PT/EN
+        run: python3 scripts/check-national-contact-location.py
       - name: Validate indexing, multilingual signals and WhatsApp routing
         shell: bash
         run: |
