@@ -131,6 +131,11 @@
     const summary = buildSummary();
     if (preview) preview.textContent = summary;
     updateChannels(summary);
+    // A second, consent-protected channel can store this completed RFQ in the HMATIAS
+    // private lead desk. The local reference remains distinct from any server reference.
+    form.dispatchEvent(new CustomEvent('hmatias:rfq-brief-ready',{
+      detail:{message:summary},bubbles:false
+    }));
     setProgress(3);
     if (window.hmatiasAnalytics?.track) {
       window.hmatiasAnalytics.track('rfq_built', { service_name: service?.value || 'general' });
