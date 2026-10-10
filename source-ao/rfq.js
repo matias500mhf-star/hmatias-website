@@ -25,6 +25,7 @@ function staticLanguage(){
   document.title=copy('Pedido de Cotação / RFQ · SOURCE AO','Quotation Request / RFQ · SOURCE AO');
   document.querySelectorAll('[data-en]').forEach(node=>{if(!node.dataset.pt)node.dataset.pt=node.textContent;node.textContent=en?node.dataset.en:node.dataset.pt;});
   $('#rfqLanguage').textContent=en?'PT':'EN';
+  $('#rfqLanguage').setAttribute('aria-label',en?'Switch to PT — Português':'Mudar para EN — English');
 }
 
 function renderFields(){
@@ -220,18 +221,75 @@ $('#rfqLanguage').addEventListener('click',()=>{
   en=!en;staticLanguage();renderFields();Object.entries(saved).forEach(([id,val])=>{$('#'+id).value=val;});syncContact();$('#rfqItems').replaceChildren();items.forEach(addItem);showStep(step,false);updateCatalogNotice();
 });
 let catalogLoaded=false;
-function updateCatalogNotice(){const node=$('#catalogStatus');node.hidden=catalogLoaded;node.textContent=copy('O catálogo não está disponível neste momento. Pode descrever os produtos e selecionar a categoria manualmente.','The catalogue is temporarily unavailable. Describe your products and select their categories manually.');}
+function updateCatalogNotice(){
+  const node=$('#catalogStatus');
+  // Keep the same visible guidance region when the catalogue loads, preventing a
+  // page-wide upward shift as a remote request finishes on a slow connection.
+  node.hidden=false;
+  node.textContent=catalogLoaded
+    ?copy('Categorias disponíveis. Se não encontrar a referência, descreva o produto no campo abaixo.','Categories available. If the reference is not listed, describe the product below.')
+    :copy('O catálogo não está disponível neste momento. Pode descrever os produtos e selecionar a categoria manualmente.','The catalogue is temporarily unavailable. Describe your products and select their categories manually.');
+}
 
-staticLanguage();renderFields();
-const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),8000);
-try{const response=await fetch('data/catalog.json',{cache:'no-store',signal:controller.signal});if(!response.ok)throw new Error('catalog');const data=await response.json();if(!Array.isArray(data.items))throw new Error('catalog');catalog=data;catalogLoaded=true;}catch{}finally{clearTimeout(timeout);}
-updateCatalogNotice();
-const normalize=text=>String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-const query=' '+normalize(params.get('request'))+' ';
-const inferred=catalog.items.flatMap(item=>[item.name,item.name_pt,...(item.aliases||[])].filter(Boolean).map(alias=>({item,alias:normalize(alias)}))).filter(match=>match.alias.length>=3 && query.includes(' '+match.alias+' ')).sort((a,b)=>b.alias.length-a.alias.length)[0]?.item;
-addItem({catalog_item_id:params.get('item')||inferred?.id,category:params.get('category'),description:(params.get('request')||'').slice(0,200),quantity:/^\d+(\.\d+)?$/.test(params.get('quantity')||'')?params.get('quantity'):'',specification:(params.get('specification')||'').slice(0,600)});
+// Present the first usable product form immediately. A catalogue network call must
+// never be a prerequisite for the customer to start describing the requirement.
+staticLanguage();
+renderFields();
+addItem({
+  category:params.get('category'),
+  description:(params.get('request')||'').slice(0,200),
+  quantity:/^\d+(\.\d+)?$/.test(params.get('quantity')||'')?params.get('quantity'):'',
+  specification:(params.get('specification')||'').slice(0,600)
+});
 $('#rfqLocation').value=(params.get('location')||'Luanda').slice(0,100);
 if(params.get('urgency')==='urgent')$('#rfqUrgency').value='urgent';
 if(/^\d{4}-\d{2}-\d{2}$/.test(params.get('needed_by')||''))$('#rfqDate').value=params.get('needed_by');
-if(params.get('item')&&!catalog.items.some(item=>item.id===params.get('item'))){$('#catalogStatus').hidden=false;$('#catalogStatus').textContent=copy('A referência do catálogo já não está disponível. Selecione outra família ou descreva o produto.','This catalogue reference is no longer available. Select another family or describe the product.');}
 showStep(0,false);
+
+// Enrich available catalogue choices after the form is already visible. Preserve
+// any typing/category selections made while the catalogue was loading.
+const controller=new AbortController();
+const timeout=setTimeout(()=>controller.abort(),8000);
+try{
+  const response=await fetch('data/catalog.json',{cache:'no-store',signal:controller.signal});
+  if(!response.ok)throw new Error('catalog');
+  const data=await response.json();
+  if(!Array.isArray(data.items))throw new Error('catalog');
+  catalog=data;
+  catalogLoaded=true;
+}catch{}finally{clearTimeout(timeout);}
+
+if(catalogLoaded){
+  const normalize=text=>String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const query=' '+normalize(params.get('request'))+' ';
+  const inferred=catalog.items.flatMap(item=>
+    [item.name,item.name_pt,...(item.aliases||[])].filter(Boolean)
+      .map(alias=>({item,alias:normalize(alias)}))
+  ).filter(match=>match.alias.length>=3 && query.includes(' '+match.alias+' '))
+    .sort((a,b)=>b.alias.length-a.alias.length)[0]?.item;
+  const matched=catalog.items.find(item=>item.id===params.get('item'))||inferred;
+  const first=rows()[0];
+  const firstCategory=first?.querySelector('.item-category');
+  if(matched && firstCategory && !firstCategory.value){
+    firstCategory.value=matched.category;
+  }
+  rows().forEach(row=>{
+    const selected=row.querySelector('.item-product');
+    const formerSelection=selected.value;
+    row.querySelector('.item-category').dispatchEvent(new Event('change'));
+    if(formerSelection)selected.value=formerSelection;
+    if(row===first && matched && row.querySelector('.item-category').value===matched.category){
+      selected.value=matched.id;
+      const desc=row.querySelector('.item-description');
+      if(!desc.value.trim())desc.value=itemLabel(matched,en);
+    }
+  });
+  summary();
+}
+updateCatalogNotice();
+if(params.get('item')&&!catalog.items.some(item=>item.id===params.get('item'))){
+  $('#catalogStatus').textContent=copy(
+    'A referência do catálogo já não está disponível. Selecione outra família ou descreva o produto.',
+    'This catalogue reference is no longer available. Select another family or describe the product.'
+  );
+}
