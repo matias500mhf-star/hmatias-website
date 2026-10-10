@@ -35,7 +35,7 @@
     added: 'Added to request',
     summary: 'Your quotation request contains',
     submit: 'Prepare quotation request →',
-    status: 'Request prepared. WhatsApp will open for review and final sending.',
+    status: 'Request prepared. Choose a channel below to send it; nothing has been registered automatically.',
     requestOrder: 'Order request — subject to commercial confirmation',
     messageTitle: 'HMATIAS CLEAN — QUOTATION REQUEST',
     name: 'Name / Entity',
@@ -64,7 +64,7 @@
     added: 'Adicionado ao pedido',
     summary: 'O pedido de cotação contém',
     submit: 'Preparar pedido de cotação →',
-    status: 'Pedido preparado. O WhatsApp será aberto para revisão e envio final.',
+    status: 'Pedido preparado. Escolha abaixo o canal de envio; ainda não foi registado automaticamente.',
     requestOrder: 'Pedido de encomenda — sujeito a confirmação comercial',
     messageTitle: 'HMATIAS CLEAN — PEDIDO DE COTAÇÃO',
     name: 'Nome / Entidade',
@@ -324,6 +324,39 @@
       : 'Preço, disponibilidade, prazo e condições de entrega ficam sujeitos a confirmação comercial da HMATIAS.');
 
     if (status) status.textContent = copy.status;
-    window.open(`https://wa.me/${wa}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener,noreferrer');
+    let panel=form.querySelector('[data-hmatias-clean-handoff]');
+    if(!panel){
+      panel=document.createElement('section');
+      panel.dataset.hmatiasCleanHandoff='true';
+      panel.setAttribute('aria-label',isEn?'Send Clean quotation request':'Enviar pedido de cotação Clean');
+      panel.style.cssText='grid-column:1/-1;margin:16px 0;padding:20px;border:1px solid #d8e1e6;border-radius:12px;background:#f6f9fb;color:#182c3a';
+      const title=document.createElement('strong');
+      title.textContent=isEn?'Quotation request ready':'Pedido de cotação preparado';
+      title.style.cssText='display:block;font-size:1.1rem;margin-bottom:8px';
+      const guidance=document.createElement('p');
+      guidance.textContent=isEn
+        ?'Complete the send on WhatsApp or in your email application. Nothing has been submitted automatically.'
+        :'Conclua o envio pelo WhatsApp ou pela aplicação de e-mail. O pedido não foi submetido automaticamente.';
+      const actions=document.createElement('div');
+      actions.style.cssText='display:flex;gap:10px;flex-wrap:wrap;margin:12px 0';
+      const whatsapp=document.createElement('a');whatsapp.className='btn btn-primary';whatsapp.dataset.cleanSendWhatsapp='true';
+      whatsapp.rel='noopener noreferrer';whatsapp.target='_blank';
+      whatsapp.textContent=isEn?'Send on WhatsApp':'Enviar pelo WhatsApp';
+      const email=document.createElement('a');email.className='btn btn-outline';email.dataset.cleanSendEmail='true';
+      email.textContent=isEn?'Send by email':'Enviar por e-mail';
+      const review=document.createElement('details');review.style.marginTop='10px';
+      const label=document.createElement('summary');label.textContent=isEn?'Review request':'Rever pedido';
+      const preview=document.createElement('pre');preview.dataset.cleanRequestPreview='true';
+      preview.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:.85rem;line-height:1.6';
+      review.append(label,preview);
+      actions.append(whatsapp,email);panel.append(title,guidance,actions,review);form.append(panel);
+    }
+    const body=lines.join('\\n');
+    panel.querySelector('[data-clean-send-whatsapp]').href='https://wa.me/'+wa+'?text='+encodeURIComponent(body.slice(0,3400));
+    panel.querySelector('[data-clean-send-email]').href='mailto:geral@comercialhmatiasps.com?subject='+
+      encodeURIComponent(isEn?'HMATIAS Clean quotation request':'Pedido de cotação HMATIAS Clean')+
+      '&body='+encodeURIComponent(body.slice(0,3500));
+    panel.querySelector('[data-clean-request-preview]').textContent=body;
+    panel.scrollIntoView({behavior:'smooth',block:'nearest'});
   });
 })();
