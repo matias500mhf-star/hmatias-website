@@ -1,6 +1,8 @@
 name: HMATIAS Live Publication Freshness
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '23 8 * * 1'  # Mondays 09:23 Africa/Luanda; UTC+1, no DST
   push:
     branches: [main]
     paths:
@@ -20,6 +22,16 @@ jobs:
           node --input-type=module <<'NODE'
           const base='https://comercialhmatiasps.com';
           const editorial=[
+            {path:'/',markers:['Construção, Facilities, Supply e Business Services em Angola']},
+            {path:'/en.html',markers:['Construction, Facilities, Supply and Business Services in Angola']},
+            {path:'/construcao.html',markers:['Construção civil, remodelação e infraestrutura em Angola.']},
+            {path:'/construction.html',markers:['Civil construction, refurbishment and infrastructure in Angola.']},
+            {path:'/facilities.html',markers:['Facilities e manutenção de instalações em Angola.']},
+            {path:'/facilities-en.html',markers:['Facilities and building maintenance in Angola.']},
+            {path:'/supply-en.html',markers:['international buyers sourcing for Angola']},
+            {path:'/llms.txt',markers:['Geographical scope and international enquiries']},
+            {path:'/company-profile.json',markers:['"marketReach"', '"overseasOfficesClaimed": false']},
+            {path:'/robots.txt',markers:['User-agent: OAI-SearchBot','Sitemap: https://comercialhmatiasps.com/sitemap.xml']},
             {path:'/credibilidade.html',markers:['Missão, visão e valores','Inovação e projetos digitais']},
             {path:'/source-ao/index.html',markers:['Pesquisa técnica de materiais e fornecedores.']},
             {path:'/karta.html',markers:['PROJETOS DIGITAIS HMATIAS']},
@@ -73,6 +85,7 @@ jobs:
               issues.push('Could not verify private path: '+path);
             }
           }
+          console.log('INFO: This audit checks public access and correct copy, NOT Google indexation, ChatGPT ranking or bot-IP access through CDN/firewall.');
           if(issues.length){
             console.error('HMATIAS PUBLICATION AUDIT FAILED:',JSON.stringify(issues));
             process.exitCode=1;
