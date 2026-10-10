@@ -9,7 +9,7 @@
   const service = form.querySelector('#rfqService');
   const preview = document.getElementById('rfqSummary');
   const referenceEl = document.getElementById('rfqReference');
-  const emailLink = document.getElementById('rfqEmail');
+  const emailLink = document.getElementById('rfqEmailSend');
   const whatsappLink = document.getElementById('rfqWhatsapp');
   const copyButton = document.getElementById('rfqCopy');
   const copyStatus = document.getElementById('rfqCopyStatus');
@@ -109,7 +109,7 @@
       lines.push(`${fieldLabel(el)}: ${value}`);
     });
 
-    lines.push('', isEn ? `Source: ${location.href}` : `Origem: ${location.href}`);
+    lines.push('', isEn ? `Source: ${location.origin + location.pathname}` : `Origem: ${location.href}`);
     return lines.join('\n').slice(0, 6000);
   };
 

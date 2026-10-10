@@ -46,6 +46,14 @@ for(const path of allForms){
       'Secure versioned client not loaded: '+path);
   }
 }
+for(const path of ['rfq.html','rfq-en.html']){
+  const html=read(path);
+  assert.equal((html.match(/id="rfqEmail"/g)||[]).length,1,'One contact email input: '+path);
+  assert.equal((html.match(/id="rfqEmailSend"/g)||[]).length,1,'One email send link: '+path);
+  assert.ok(!/<a id="rfqEmailSend"[^>]*data-quote-link/.test(html),
+    'Email action must not be redirected as quote CTA: '+path);
+}
+assert.ok(read('rfq.js').includes("getElementById('rfqEmailSend')"));
 const bootstrap=read('site-bootstrap.js');
 assert.match(bootstrap,/website-lead-client[.]js[?]v=[a-zA-Z0-9._-]+/);
 assert.ok(bootstrap.includes('growth-intelligence.js?v=20261009-email-cta1'));
