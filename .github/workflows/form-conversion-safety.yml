@@ -1,0 +1,50 @@
+name: HMATIAS Form Conversion Safety
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'form-conversions.test.mjs'
+      - 'script.js'
+      - 'site-bootstrap.js'
+      - 'website-advanced-intake.js'
+      - 'website-lead-client.js'
+      - 'rfq.js'
+      - 'rfq.html'
+      - 'rfq-en.html'
+      - 'clean-store.js'
+      - 'clean.html'
+      - 'clean-en.html'
+      - 'source-ao/**'
+      - '.github/workflows/form-conversion-safety.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'form-conversions.test.mjs'
+      - 'script.js'
+      - 'site-bootstrap.js'
+      - 'website-advanced-intake.js'
+      - 'rfq.js'
+      - 'clean-store.js'
+permissions:
+  contents: read
+jobs:
+  form-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate scripts parse
+        run: |
+          node --check script.js
+          node --check rfq.js
+          node --check clean-store.js
+          node --check website-advanced-intake.js
+          node --check website-lead-client.js
+          node --check source-ao/sourcing-ui.js
+          node --check source-ao/rfq.js
+          node --check source-ao/partner-application.js
+      - name: Validate all forms, unique IDs and secure handoffs
+        run: node --test form-conversions.test.mjs
