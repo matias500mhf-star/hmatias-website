@@ -4,3 +4,22 @@
 .supply-rfq-choice{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:flex-end}
 .supply-rfq-choice .btn{display:inline-flex;align-items:center;justify-content:center;min-height:47px;text-align:center}
 @media(max-width:760px){.supply-rfq-choice{width:100%;flex-direction:column;align-items:stretch}.supply-rfq-choice .btn{width:100%}}
+
+/* Smartphone RFQs: readable details and reliable touch targets, including generated delivery links. */
+.supply-request-form,.supply-request-grid,.supply-item,.supply-request-delivery{min-width:0}
+.supply-request-delivery{max-width:100%;overflow-wrap:anywhere}
+.supply-request-delivery .btn{min-height:48px;text-align:center;white-space:normal;line-height:1.4}
+.supply-request-delivery pre{max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:560px){
+ .supply-request-section{padding:48px 0}
+ .supply-request-copy h2{font-size:clamp(1.65rem,7vw,2.125rem)}
+ .supply-request-form{padding:18px 14px}
+ .supply-request-field input,.supply-request-field textarea,.supply-item input{min-height:48px}
+ .supply-items-head{flex-wrap:wrap;align-items:flex-start}
+ .supply-items-head .supply-add-item{min-height:48px}
+ .supply-request-consent{font-size:.84rem}
+ .supply-request-consent input{width:22px;height:22px}
+ .supply-request-delivery{padding:16px!important}
+ .supply-request-delivery .btn{width:100%}
+ .supply-request-actions .btn,.supply-rfq-choice .btn{min-height:48px}
+}
