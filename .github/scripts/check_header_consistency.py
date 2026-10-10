@@ -19,6 +19,10 @@ for page in sorted(ROOT.glob("*.html")):
     if not nav or not actions:
         problems.append(f"{page.name}: missing shared navigation/action structure")
         continue
+    labels = [re.sub(r"<[^>]+>", "", item).strip() for item in re.findall(r"<a\b[^>]*>(.*?)</a>", nav.group(), re.S)]
+    expected_labels = ["Home", "About us", "Services", "Projects"] if re.search(r'<html\b[^>]*lang="en"', html) else ["Início", "Sobre nós", "Serviços", "Projetos"]
+    if labels != expected_labels:
+        problems.append(f"{page.name}: inconsistent corporate navigation {labels!r}; expected {expected_labels!r}")
     switches = re.findall(r'<a\b[^>]*class="lang-switch"[^>]*>', actions.group())
     if len(switches) != 1 or switches[0].count('data-lang-switch') != 1:
         problems.append(f"{page.name}: expected exactly one declared language switch")
