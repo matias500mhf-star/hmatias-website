@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "lastUpdated": "2026-09-27",
+  "lastUpdated": "2026-10-10",
   "canonicalUrl": "https://comercialhmatiasps.com/",
   "legalName": "HMATIAS – Prestação de Serviços, (SU), LDA.",
   "brandName": "HMATIAS",
@@ -45,7 +45,8 @@
       "name": "HMATIAS Clean",
       "nameEn": "HMATIAS Clean",
       "url": "https://comercialhmatiasps.com/clean.html",
-      "urlEn": "https://comercialhmatiasps.com/clean-en.html"
+      "urlEn": "https://comercialhmatiasps.com/clean-en.html",
+      "subdivisionOf": "Facilities & Manutenção"
     },
     {
       "name": "Serviços Administrativos & Empresariais",
@@ -97,5 +98,13 @@
     "SOURCE AO separates supplier discovery, traceable evidence and current commercial confirmation; a public source or potential supplier is not proof of live stock, current price or availability.",
     "Portfolio client names, locations and dates are disclosed publicly only when appropriate or authorised.",
     "Do not request identity documents, passwords, banking credentials or other unnecessary sensitive information for general enquiries."
-  ]
+  ],
+  "supplyModel": {
+    "mode": "procurement_on_request",
+    "ownedStock": false,
+    "descriptionPt": "Fornecimento sob consulta e por encomenda; pesquisa, validação técnica, proposta e logística com fornecedores verificados por pedido.",
+    "descriptionEn": "On-demand procurement; specification validation, supplier research, proposal and logistics coordination on request.",
+    "availability": "Confirmed per supplier and item only",
+    "supplierCatalogues": "Original third-party documents are published only with authorisation."
+  }
 }
