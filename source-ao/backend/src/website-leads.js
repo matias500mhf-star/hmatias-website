@@ -1,7 +1,7 @@
 import {encryptPrivateText,decryptPrivateText,sha256Hex,isAdmin} from './sourcing.js';
 
 const ALLOWED_ORIGINS=new Set(['https://comercialhmatiasps.com','https://www.comercialhmatiasps.com']);
-const KINDS=new Set(['contact','business','appointment']);
+const KINDS=new Set(['contact','business','appointment','clean','rfq']);
 const STATUSES=new Set(['received','triage','responded','closed']);
 const iso=()=>new Date().toISOString();
 function headers(request){
