@@ -209,10 +209,11 @@
       const email=String(d.get('email')||(pageEnglish?'Not provided':'Não indicado')).trim();
       const phone=String(d.get('telefone')||(pageEnglish?'Not provided':'Não indicado')).trim();
       const service=String(d.get('servico')||(pageEnglish?'Not provided':'Não indicado')).trim();
+      const location=String(d.get('location')||(pageEnglish?'Not specified':'Não indicada')).trim();
       const message=String(d.get('mensagem')||'').trim();
       const text=pageEnglish
-        ?`Hello HMATIAS.\n\nName: ${name}\nCompany: ${company}\nE-mail: ${email}\nPhone / WhatsApp: ${phone}\nService: ${service}\n\nRequest:\n${message}`
-        :`Olá HMATIAS.\n\nNome: ${name}\nEmpresa: ${company}\nE-mail: ${email}\nTelefone / WhatsApp: ${phone}\nServiço: ${service}\n\nPedido:\n${message}`;
+        ?`Hello HMATIAS.\n\nName: ${name}\nCompany: ${company}\nE-mail: ${email}\nPhone / WhatsApp: ${phone}\nService: ${service}\nLocation: ${location}\n\nRequest:\n${message}`
+        :`Olá HMATIAS.\n\nNome: ${name}\nEmpresa: ${company}\nE-mail: ${email}\nTelefone / WhatsApp: ${phone}\nServiço: ${service}\nLocalização: ${location}\n\nPedido:\n${message}`;
       presentManualHandoff(form,text,pageEnglish?'HMATIAS business enquiry':'Pedido comercial HMATIAS');
     });
   }
