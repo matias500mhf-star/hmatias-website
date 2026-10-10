@@ -9,7 +9,7 @@
   const service = form.querySelector('#rfqService');
   const preview = document.getElementById('rfqSummary');
   const referenceEl = document.getElementById('rfqReference');
-  const emailLink = document.getElementById('rfqEmail');
+  const emailLink = document.getElementById('rfqEmailSend');
   const whatsappLink = document.getElementById('rfqWhatsapp');
   const copyButton = document.getElementById('rfqCopy');
   const copyStatus = document.getElementById('rfqCopyStatus');
