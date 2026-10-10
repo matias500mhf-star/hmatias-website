@@ -1,4 +1,4 @@
-/* Compact, file-backed PDF catalogue cards. PDFs are never embedded or preloaded. */
+/* Supplier catalogue card. Display an honest pending state until an authorised PDF is available. */
 body.hmatias-supply .supply-pdf-area{background:#f4f8fb}
 body.hmatias-supply .supply-pdf-layout{display:grid;grid-template-columns:minmax(0,1fr) 220px;align-items:center;gap:28px;padding:30px 34px;background:#fff;border:1px solid #dce5ee;border-radius:12px}
 body.hmatias-supply .supply-pdf-info{display:flex;gap:20px;align-items:flex-start;min-width:0}
@@ -12,3 +12,11 @@ body.hmatias-supply .supply-pdf-actions a{text-align:center}
 body.hmatias-supply .supply-pdf-note{margin:19px 0 0;max-width:76ch;color:#617386;font-size:.84rem;line-height:1.65}
 @media(max-width:740px){body.hmatias-supply .supply-pdf-layout{grid-template-columns:1fr;padding:23px 20px;gap:20px}body.hmatias-supply .supply-pdf-actions{flex-direction:row;flex-wrap:wrap}body.hmatias-supply .supply-pdf-actions>a{flex:1 1 170px}}
 @media(max-width:420px){body.hmatias-supply .supply-pdf-info{gap:12px}body.hmatias-supply .supply-pdf-file{flex-basis:50px;width:50px;height:64px;font-size:13px}}
+
+/* On-demand procurement: keep the supplier information legible without suggesting inventory. */
+body.hmatias-supply .supply-pdf-pending{display:block;text-align:center;padding:12px 14px;border-radius:9px;background:#eef3f7;border:1px solid #d7e1e9;color:#415b71;font-size:.82rem;font-weight:700;line-height:1.4}
+body.hmatias-supply .supply-value{background:#f5f9fc}
+body.hmatias-supply .supply-pdf-details small{display:block;overflow-wrap:anywhere;line-height:1.55}
+body.hmatias-supply .supply-pdf-actions .btn{min-height:48px;white-space:normal;overflow-wrap:anywhere;line-height:1.4}
+@media(max-width:920px){body.hmatias-supply .supply-pdf-layout{grid-template-columns:1fr;gap:20px;padding:24px}body.hmatias-supply .supply-pdf-actions{flex-direction:row;flex-wrap:wrap}body.hmatias-supply .supply-pdf-actions>*{flex:1 1 190px}}
+@media(max-width:560px){body.hmatias-supply .supply-pdf-layout{padding:20px 16px}body.hmatias-supply .supply-pdf-actions{flex-direction:column;align-items:stretch}body.hmatias-supply .supply-pdf-actions>*{width:100%;flex-basis:auto}body.hmatias-supply .supply-pdf-info{min-width:0}body.hmatias-supply .supply-pdf-details h3{font-size:1.18rem}body.hmatias-supply .supply-value .unit-card{min-width:0}body.hmatias-supply .supply-pdf-area,body.hmatias-supply .supply-value{overflow-wrap:anywhere}}
