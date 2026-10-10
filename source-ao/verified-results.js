@@ -78,7 +78,7 @@
     panel.replaceChildren();
 
     const head=document.createElement('div');head.className='smart-search-head';
-    const title=document.createElement('strong');title.textContent=isPt()?'Pesquisa inteligente':'Smart search';
+    const title=document.createElement('strong');title.textContent=isPt()?'Plano de pesquisa':'Search plan';
     const badge=document.createElement('span');badge.className='data-badge data-source_checked';badge.textContent=plan.urgency==='urgent'?(isPt()?'URGENTE':'URGENT'):(isPt()?'PLANO':'PLAN');
     head.append(title,badge);
 
@@ -94,8 +94,8 @@
 
     const note=document.createElement('small');
     note.textContent=isPt()
-      ?'A IA de pesquisa expande nomes e especificações. Stock, preço e prazo continuam a exigir confirmação rastreável.'
-      :'Search intelligence expands names and specifications. Stock, price and delivery still require traceable confirmation.';
+      ?'O plano organiza termos equivalentes e especificações para consultar as referências disponíveis. Stock, preço e prazo exigem confirmação comercial.'
+      :'The plan organises equivalent terms and specifications to consult the available references. Stock, pricing and delivery require commercial confirmation.';
 
     panel.append(head,summary,terms,note);
   }
