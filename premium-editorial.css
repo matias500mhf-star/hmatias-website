@@ -212,3 +212,8 @@ body.hmatias-home .home-anchor-alias{display:block;position:relative;top:-96px;v
 body.hmatias-home .partner-intro p{margin:10px 0 8px;max-width:57ch;color:#5d7180;font-size:.83rem;line-height:1.65}
 body.hmatias-home .partner-application-link{display:inline-flex;min-height:42px;align-items:center;font-size:.81rem;font-weight:700;color:#16567e;text-decoration:underline;text-underline-offset:3px}
 body.hmatias-home .partner-application-link:hover,body.hmatias-home .partner-application-link:focus-visible{color:#006ca4}
+
+/* Homepage access: clear link contrast on the deep navy company section. */
+body.hmatias-home .company a.text-link{color:#fff;text-decoration:underline;text-underline-offset:5px;font-weight:650;display:inline-flex;align-items:center;min-height:44px;line-height:1.5}
+body.hmatias-home .company a.text-link:hover{color:#cfeaff}
+body.hmatias-home .company a.text-link:focus-visible{outline:3px solid #a5d8ff;outline-offset:3px}
