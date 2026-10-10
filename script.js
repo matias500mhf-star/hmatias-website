@@ -100,7 +100,7 @@
     navMenu.appendChild(mobileLang);
   }
 
-  const headerQuote=document.querySelector('.hmatias-header .nav-actions [data-quote-link]');
+  const headerQuote=document.querySelector('.hmatias-header .nav-actions [data-quote-link],.hmatias-header .nav-actions a.btn[href]');
   if(navMenu&&headerQuote&&!navMenu.querySelector('.mobile-quote-link')){
     const mobileQuote=headerQuote.cloneNode(true);
     mobileQuote.classList.add('mobile-quote-link');
