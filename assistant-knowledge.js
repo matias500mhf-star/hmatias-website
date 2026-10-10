@@ -14,7 +14,7 @@
   ];
 
   const kb = {
-    version: '2026-10-09.1',
+    version: '2026-10-10.2',
     updated: '2026-10-10',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
@@ -65,10 +65,8 @@
     },
     businessServices: {
       summaryPt: 'Apoio administrativo, documental e empresarial para profissionais, empreendedores e empresas, presencial em Luanda e remoto quando aplicável.',
-      servicesPt: ['Expediente administrativo e redação institucional','Estruturação de CV profissional','Gestão e organização documental','Propostas comerciais e apoio empresarial','Apresentações empresariais','Apoio administrativo recorrente para PME','Apoio documental a processos de visto e agendamentos consulares'],
+      servicesPt: ['Expediente administrativo e redação institucional','Estruturação de CV profissional','Gestão e organização documental','Propostas comerciais e apoio empresarial','Apresentações empresariais','Apoio administrativo recorrente para PME'],
       pricingRulePt: 'A HMATIAS não publica uma tabela de preços do Business Services. Cada serviço é orçamentado após avaliação do âmbito, volume documental, complexidade e prazo. Solicitar proposta pelos canais comerciais.',
-      visaPt: 'Inclui checklist e organização documental, conferência de completude do dossier, assistência administrativa no preenchimento de formulários, apoio na utilização de plataformas oficiais, preparação do dossier e acompanhamento administrativo.',
-      visaLimitsPt: 'A HMATIAS presta apenas apoio administrativo e documental. Não comercializa vagas de agendamento, não garante disponibilidade de marcação ou concessão de visto e não possui acesso privilegiado a embaixadas, consulados, VFS Global ou outras plataformas oficiais. Taxas consulares/VFS e outros encargos oficiais não estão incluídos salvo indicação expressa. Serviços jurídicos e representação legal não fazem parte desta oferta.'
     },
     smartRfq: {
       summaryPt: 'O Smart RFQ organiza um briefing comercial para Construção & Remodelação, Facilities & Manutenção ou Supply & Procurement, sem criar conta e sem carregar documentos.',
@@ -76,7 +74,7 @@
       limitsPt: 'Não é uma cotação automática: não calcula preço ou prazo, não confirma stock ou disponibilidade e o envio só acontece quando o utilizador escolhe um canal. Preço, prazo, stock, logística e condições são confirmados pela equipa comercial.',
       privacyPt: 'Não deve ser usado para enviar palavras-passe, dados bancários, passaporte, BI ou outros documentos de identidade.'
     },
-    booking: {summaryPt:'O agendamento do site é um pedido de atendimento HMATIAS. Pode ser presencial em Luanda ou remoto quando aplicável. O horário é sempre sujeito a confirmação da equipa.',rulesPt:['Não existe disponibilidade em tempo real','O formulário não confirma automaticamente data ou hora','Não processa pagamentos online','A marcação só fica confirmada após resposta expressa da HMATIAS','Uma marcação HMATIAS não é uma vaga consular, VFS ou embaixada e não garante visto ou agendamento oficial']},
+    booking: {summaryPt:'O agendamento do site é um pedido de atendimento HMATIAS. Pode ser presencial em Luanda ou remoto quando aplicável. O horário é sempre sujeito a confirmação da equipa.',rulesPt:['Não existe disponibilidade em tempo real','O formulário não confirma automaticamente data ou hora','Não processa pagamentos online','A marcação só fica confirmada após resposta expressa da HMATIAS']},
     karta: {
       summaryPt: 'KARTA Identity Wallet é um projeto digital da HMATIAS em fase Alpha, orientado à organização de documentos. Funcionalidades de segurança e distribuição pública ainda dependem de validação.',
       summaryEn: 'KARTA Identity Wallet is an Alpha-stage HMATIAS digital project for document organisation. Security features and public distribution remain subject to validation.',
@@ -109,10 +107,9 @@
     },
     projects: {
       publicExamplesPt:['Galpão com Estrutura Metálica','Preparação de Terreno','Substituição de Cobertura Metálica','Pavilhões Rurais Concluídos','Alvenaria, Vãos & Reforços','Reservatório Compartimentado','Alumínio & Vidro Fumado'],
-      conceptPt:'O Galpão Metálico Modular é identificado no catálogo como projeto protótipo conceptual desenvolvido pela HMATIAS; a representação é ilustrativa e não corresponde a uma obra executada.',
       disclosurePt:'Cliente, data e localização de projetos são identificados publicamente apenas quando a divulgação é adequada ou autorizada.'
     },
-    safetyAndTruth: {rulesPt:['Nunca inventar preço, stock, disponibilidade, prazo, parceria, representação, garantia ou capacidade não publicada.','Quando um preço não está publicado, dizer “sob consulta” e indicar o contacto comercial.','Para obras, facilities e supply, explicar que escopo/preço dependem de levantamento, especificação e cotação.','Não pedir nem incentivar envio de passaporte, BI, palavras-passe, dados bancários ou outros documentos sensíveis no assistente.','Não afirmar que uma vaga consular, aprovação de visto, horário ou pagamento está confirmado sem resposta expressa da HMATIAS/entidade competente.','No SOURCE AO, nunca transformar fornecedor potencial, fonte pública ou oportunidade descoberta em stock, preço, adjudicação, elegibilidade ou disponibilidade confirmados.','Nunca divulgar dados privados de parceiros, fornecedores, contactos de clientes, tokens, rotas administrativas, prioridades internas ou inteligência comercial não publicada.','Na KARTA, distinguir rigorosamente capacidades Alpha atuais de itens de roadmap.','Responder no idioma do utilizador sempre que possível; PT e EN são suportados.']}
+    safetyAndTruth: {rulesPt:['Nunca inventar preço, stock, disponibilidade, prazo, parceria, representação, garantia ou capacidade não publicada.','Quando um preço não está publicado, dizer “sob consulta” e indicar o contacto comercial.','Para obras, facilities e supply, explicar que escopo/preço dependem de levantamento, especificação e cotação.','Não pedir nem incentivar envio de passaporte, BI, palavras-passe, dados bancários ou outros documentos sensíveis no assistente.','Não apresentar apoio consular como serviço público da HMATIAS. Não confirmar horários, pagamentos ou contratação sem resposta expressa da equipa.','No SOURCE AO, nunca transformar fornecedor potencial, fonte pública ou oportunidade descoberta em stock, preço, adjudicação, elegibilidade ou disponibilidade confirmados.','Nunca divulgar dados privados de parceiros, fornecedores, contactos de clientes, tokens, rotas administrativas, prioridades internas ou inteligência comercial não publicada.','Na KARTA, distinguir rigorosamente capacidades Alpha atuais de itens de roadmap.','Responder no idioma do utilizador sempre que possível; PT e EN são suportados.']}
   };
 
   const compactContext = () => {
@@ -126,12 +123,12 @@
       `SUPPLY: ${kb.supply.summaryPt} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. ${kb.supply.rulePt}`,
       `CLEAN: ${kb.clean.summaryPt} 123 Pine Gel 500 ml: preço sob consulta. Taurus Pine Gel T563P: ${p.descriptionPt} ${p.featuresPt} Formato, preço, stock e prazo sujeitos a confirmação comercial. Aplicações: ${p.applicationsPt.join(', ')}. Diluições: ${p.dilutionsPt.join('; ')}. Aviso: ${p.warningPt} ${kb.clean.brandNotePt}`,
       `CATÁLOGO CLEAN: ${cleanCatalog.map(x=>`${x[0]} ${x[1]} [${x[2]}]`).join('; ')}. Para estes itens, se não houver preço publicado, confirmar com equipa comercial.`,
-      `BUSINESS SERVICES: ${kb.businessServices.servicesPt.join('; ')}. ${kb.businessServices.pricingRulePt} Vistos/agendamentos: ${kb.businessServices.visaLimitsPt}`,
+      `BUSINESS SERVICES: ${kb.businessServices.servicesPt.join('; ')}. ${kb.businessServices.pricingRulePt}`,
       `SMART RFQ: ${kb.smartRfq.summaryPt} ${kb.smartRfq.limitsPt} ${kb.smartRfq.privacyPt}`,
       `AGENDAMENTO HMATIAS: ${kb.booking.summaryPt} ${kb.booking.rulesPt.join('; ')}.`,
       `KARTA: ${kb.karta.summaryPt} ${kb.karta.statusPt} Capacidades atuais: ${kb.karta.currentPt.join('; ')}. Roadmap: ${kb.karta.roadmapPt.join('; ')}. ${kb.karta.rulePt}`,
       `SOURCE AO: ${kb.sourceAO.positioningPt} Mercados: ${kb.sourceAO.marketsPt.join('; ')}. ${kb.sourceAO.marketRulePt} ${kb.sourceAO.coreRulePt} ${kb.sourceAO.searchTruthPt} ${kb.sourceAO.intakeTruthPt} ${kb.sourceAO.commercialFlowPt} Capacidades públicas: ${kb.sourceAO.publicCapabilitiesPt.join('; ')}. ${kb.sourceAO.rfqPt} ${kb.sourceAO.lifecyclePt} ${kb.sourceAO.opportunityPt} ${kb.sourceAO.refreshPt} ${kb.sourceAO.privacyPt} ${kb.sourceAO.architecturePt} ${kb.sourceAO.brandPt}`,
-      `PROJETOS PÚBLICOS: ${kb.projects.publicExamplesPt.join('; ')}. ${kb.projects.conceptPt} ${kb.projects.disclosurePt}`,
+      `PROJETOS PÚBLICOS: ${kb.projects.publicExamplesPt.join('; ')}. ${kb.projects.disclosurePt}`,
       `REGRAS DE VERDADE: ${kb.safetyAndTruth.rulesPt.join(' ')}.`,
       `PÁGINAS: construção ${kb.pages.construction}; facilities ${kb.pages.facilities}; supply ${kb.pages.supply}; Smart RFQ ${kb.pages.rfq}; catálogo ${kb.pages.worksCatalogue}; credibilidade ${kb.pages.credibility}; clean ${kb.pages.clean}; KARTA ${kb.pages.karta}; business ${kb.pages.business}; agendamento ${kb.pages.booking}; SOURCE AO ${kb.pages.sourceAO}; Intelligence Radar ${kb.pages.sourceRadar}.`
     ].join('\n');

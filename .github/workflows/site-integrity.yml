@@ -197,14 +197,17 @@ jobs:
           if whatsapp_refs == 0:
               fail('no WhatsApp routes found in site source')
 
-          # Homepage credibility access belongs in the footer, not the primary navigation.
+          # About reaches the corporate content; the separate Credibility label stays in the footer.
           for home_name, credibility_name in (('index.html', 'credibilidade.html'), ('en.html', 'credibility.html')):
               home_path = ROOT / home_name
               home = home_path.read_text(encoding='utf-8')
               nav = home.partition('<nav class="nav-menu"')[2].partition('</nav>')[0]
-              if nav and credibility_name in nav:
-                  fail(f'credibility link must not appear in primary navigation: {home_name}')
-              if credibility_name not in home:
+              if re.search(r'>\s*(?:Credibilidade|Credibility|Trust Center)\s*</a>', nav, re.I):
+                  fail(f'credibility label must not appear in primary navigation: {home_name}')
+              if not re.search(r'href="' + re.escape(credibility_name) + r'"[^>]*>(?:Sobre nós|About us)</a>', nav):
+                  fail(f'About navigation must reach corporate information: {home_name}')
+              footer = re.search(r'<footer\b[^>]*>(.*?)</footer>', home, re.S)
+              if not footer or credibility_name not in footer.group(1):
                   fail(f'credibility footer link missing from homepage: {home_name}')
 
           # Institutional pages must stay concise and must not duplicate the official email in the content card.

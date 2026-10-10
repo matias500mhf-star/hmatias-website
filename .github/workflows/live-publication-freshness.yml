@@ -20,7 +20,7 @@ jobs:
           node --input-type=module <<'NODE'
           const base='https://comercialhmatiasps.com';
           const editorial=[
-            {path:'/credibilidade.html',markers:['Missão, visão e princípios de trabalho','Inovação e projetos digitais']},
+            {path:'/credibilidade.html',markers:['Missão, visão e valores','Inovação e projetos digitais']},
             {path:'/source-ao/index.html',markers:['Pesquisa técnica de materiais e fornecedores.']},
             {path:'/karta.html',markers:['PROJETOS DIGITAIS HMATIAS']},
             {path:'/website-lead-client.js',markers:['HMATIAS website lead capture']}

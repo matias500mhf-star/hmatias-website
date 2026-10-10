@@ -137,7 +137,7 @@ jobs:
           grep -Fq "Sitemap: https://comercialhmatiasps.com/sitemap.xml" /tmp/robots.txt
           grep -Fq "SMART RFQ" /tmp/rfq.html
           grep -Fq "KARTA Wallet Mobile" /tmp/karta.html
-          grep -Fq "Informação básica e verificável da empresa." /tmp/credibilidade.html
+          grep -Fq "Missão, visão e valores" /tmp/credibilidade.html
           grep -Fq "../images/source-ao-logo.svg" /tmp/source-ao.html
           grep -Fq "https://comercialhmatiasps.com/source-ao/index.html" /tmp/procura-alias.html
           grep -Fq "/source-ao/index.html" /tmp/procura-alias.html
@@ -217,8 +217,10 @@ jobs:
           for path, credibility in (('/tmp/home.html', 'credibilidade.html'), ('/tmp/en.html', 'credibility.html')):
               html = open(path, encoding='utf-8').read()
               nav = html.partition('<nav class="nav-menu"')[2].partition('</nav>')[0]
-              if nav and credibility in nav:
-                  raise SystemExit(f'Credibility link leaked back into primary navigation: {path}')
+              if re.search(r'>\s*(?:Credibilidade|Credibility|Trust Center)\s*</a>', nav, re.I):
+                  raise SystemExit(f'Credibility label leaked back into primary navigation: {path}')
+              if not re.search(r'href="' + re.escape(credibility) + r'"[^>]*>(?:Sobre nós|About us)</a>', nav):
+                  raise SystemExit(f'About navigation does not reach corporate information: {path}')
 
           credibility = open('/tmp/credibilidade.html', encoding='utf-8').read()
           card = credibility.partition('<aside class="institutional-card institutional-contact">')[2].partition('</aside>')[0]

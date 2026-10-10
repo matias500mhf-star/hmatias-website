@@ -37,7 +37,7 @@
     notes: 'Logistics or additional notes',
     consent: 'I confirm that HMATIAS may use the information above to assess and respond to this commercial request.',
     submit: 'Prepare sourcing request →',
-    status: 'Request prepared. WhatsApp will open for review and final sending.',
+    status: 'Request prepared. Review the details and choose WhatsApp or e-mail to complete sending.',
     required: 'Please complete the required fields before preparing the request.',
     itemPlaceholder: 'e.g. industrial pump, cable, anti-corrosion coating',
     specPlaceholder: 'Brand, model, standard, dimensions or technical reference',
@@ -68,7 +68,7 @@
     notes: 'Logística ou observações adicionais',
     consent: 'Confirmo que a HMATIAS pode utilizar as informações acima para avaliar e responder a este pedido comercial.',
     submit: 'Preparar pedido de sourcing →',
-    status: 'Pedido preparado. O WhatsApp será aberto para revisão e envio final.',
+    status: 'Pedido preparado. Reveja os dados e escolha WhatsApp ou e-mail para concluir o envio.',
     required: 'Preencha os campos obrigatórios antes de preparar o pedido.',
     itemPlaceholder: 'Ex.: bomba industrial, cabo, revestimento anticorrosivo',
     specPlaceholder: 'Marca, modelo, norma, dimensão ou referência técnica',
@@ -120,6 +120,75 @@
   const form = section.querySelector('#supplyRequestForm');
   const status = section.querySelector('#supplyRequestStatus');
   let sequence = 0;
+  let preparedMessage = '';
+  let deliveryPanel = null;
+
+  const invalidateDelivery = () => {
+    preparedMessage = '';
+    if (deliveryPanel) deliveryPanel.hidden = true;
+    status.textContent = '';
+  };
+  form.addEventListener('input', invalidateDelivery);
+  form.addEventListener('change', invalidateDelivery);
+
+  const presentDelivery = message => {
+    preparedMessage = message;
+    if (!deliveryPanel) {
+      deliveryPanel = document.createElement('section');
+      deliveryPanel.className = 'supply-request-delivery';
+      deliveryPanel.style.cssText = 'grid-column:1/-1;min-width:0;padding:20px;border:1px solid #d8e1e6;border-radius:12px;background:#f6f9fb;color:#182c3a';
+      deliveryPanel.setAttribute('aria-label', isEn ? 'Review and send request' : 'Rever e enviar pedido');
+      const guidance = document.createElement('p');
+      guidance.textContent = isEn
+        ? 'Choose a channel and finish sending in the corresponding application. This request has not yet been registered by HMATIAS. For a long request, copy the complete text below.'
+        : 'Escolha um canal e conclua o envio na aplicação correspondente. Este pedido ainda não foi registado pela HMATIAS. Para um pedido extenso, copie o texto integral abaixo.';
+      const actions = document.createElement('div');
+      actions.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;margin:14px 0';
+      const whatsapp = document.createElement('a');
+      whatsapp.className = 'btn btn-primary';
+      whatsapp.dataset.supplyWhatsapp = 'true';
+      whatsapp.target = '_blank';
+      whatsapp.rel = 'noopener noreferrer';
+      whatsapp.textContent = isEn ? 'Send via WhatsApp' : 'Enviar pelo WhatsApp';
+      const email = document.createElement('a');
+      email.className = 'btn btn-outline';
+      email.dataset.supplyEmail = 'true';
+      email.textContent = isEn ? 'Send by e-mail' : 'Enviar por e-mail';
+      const copyButton = document.createElement('button');
+      copyButton.type = 'button';
+      copyButton.className = 'btn btn-outline';
+      copyButton.textContent = isEn ? 'Copy complete request' : 'Copiar pedido integral';
+      const details = document.createElement('details');
+      const heading = document.createElement('summary');
+      heading.textContent = isEn ? 'Review all items and specifications' : 'Rever todos os itens e especificações';
+      const preview = document.createElement('pre');
+      preview.dataset.supplyPreview = 'true';
+      preview.style.cssText = 'white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:.88rem;line-height:1.6';
+      details.append(heading, preview);
+      copyButton.addEventListener('click', async () => {
+        const current = preparedMessage;
+        if (!current) return;
+        try {
+          await navigator.clipboard.writeText(current);
+          if (preparedMessage === current) status.textContent = isEn ? 'Complete request copied.' : 'Pedido integral copiado.';
+        } catch {
+          if (preparedMessage === current) {
+            details.open = true;
+            status.textContent = isEn ? 'Select and copy the complete text below.' : 'Selecione e copie o texto integral abaixo.';
+          }
+        }
+      });
+      actions.append(whatsapp, email, copyButton);
+      deliveryPanel.append(guidance, actions, details);
+      form.appendChild(deliveryPanel);
+    }
+    deliveryPanel.querySelector('[data-supply-whatsapp]').href = 'https://wa.me/244948806673?text=' + encodeURIComponent(message);
+    deliveryPanel.querySelector('[data-supply-email]').href = 'mailto:geral@comercialhmatiasps.com?subject=' + encodeURIComponent(copy.messageTitle) + '&body=' + encodeURIComponent(message);
+    deliveryPanel.querySelector('[data-supply-preview]').textContent = message;
+    deliveryPanel.hidden = false;
+    status.textContent = copy.status;
+    deliveryPanel.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest'});
+  };
 
   const addItem = (preset = {}) => {
     sequence += 1;
@@ -132,6 +201,7 @@
       <label>${copy.qty}<input type="text" name="qty_${sequence}" maxlength="80" placeholder="${copy.qtyPlaceholder}" value="${String(preset.qty || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" required></label>
       <button class="supply-remove-item" type="button" aria-label="${copy.remove}" title="${copy.remove}">×</button>`;
     row.querySelector('.supply-remove-item').addEventListener('click', () => {
+      invalidateDelivery();
       if (itemsWrap.querySelectorAll('.supply-item').length === 1) {
         row.querySelectorAll('input').forEach(input => input.value = '');
         row.querySelector('input')?.focus();
@@ -144,6 +214,7 @@
 
   addItem();
   addButton.addEventListener('click', () => {
+    invalidateDelivery();
     addItem();
     const rows = itemsWrap.querySelectorAll('.supply-item');
     rows[rows.length - 1]?.querySelector('input')?.focus();
@@ -188,7 +259,6 @@
       ? `${copy.messageTitle}\n\nName / Company: ${name}\nPhone / WhatsApp: ${phone}\nE-mail: ${email}\nDelivery / project location: ${locationValue}\nTarget date: ${targetDate}\n\nITEMS\n${itemLines}\n\nLogistics / additional notes: ${notes}\n\nI understand that price, availability, lead time, origin and logistics are subject to HMATIAS commercial confirmation.`
       : `${copy.messageTitle}\n\nNome / Empresa: ${name}\nTelefone / WhatsApp: ${phone}\nE-mail: ${email}\nLocal de entrega / projeto: ${locationValue}\nPrazo pretendido: ${targetDate}\n\nITENS\n${itemLines}\n\nLogística / observações adicionais: ${notes}\n\nCompreendo que preço, disponibilidade, prazo, origem e logística ficam sujeitos a confirmação comercial da HMATIAS.`;
 
-    status.textContent = copy.status;
-    window.open(`https://wa.me/244948806673?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    presentDelivery(message);
   });
 })();

@@ -90,7 +90,7 @@
     const notice = isEn
       ? 'This is a client-prepared request brief, not a quotation, contract or confirmation of price, stock or delivery.'
       : 'Este é um briefing de pedido preparado pelo cliente, não constitui cotação, contrato nem confirmação de preço, stock ou entrega.';
-    const lines = [title, `Reference: ${reference}`, notice, ''];
+    const lines = [title, `${isEn ? 'Reference' : 'Referência'}: ${reference}`, notice, ''];
 
     const fields = [...form.querySelectorAll('input, select, textarea')]
       .filter(el => !el.disabled && el.type !== 'submit' && el.type !== 'button' && safeForSummary(el));
@@ -109,7 +109,7 @@
       lines.push(`${fieldLabel(el)}: ${value}`);
     });
 
-    lines.push('', isEn ? `Source: ${location.origin + location.pathname}` : `Origem: ${location.href}`);
+    lines.push('', isEn ? `Source: ${location.origin + location.pathname}` : `Origem: ${location.origin}${location.pathname}`);
     return lines.join('\n').slice(0, 6000);
   };
 
