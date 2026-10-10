@@ -20,3 +20,6 @@ body.hmatias-supply .supply-pdf-details small{display:block;overflow-wrap:anywhe
 body.hmatias-supply .supply-pdf-actions .btn{min-height:48px;white-space:normal;overflow-wrap:anywhere;line-height:1.4}
 @media(max-width:920px){body.hmatias-supply .supply-pdf-layout{grid-template-columns:1fr;gap:20px;padding:24px}body.hmatias-supply .supply-pdf-actions{flex-direction:row;flex-wrap:wrap}body.hmatias-supply .supply-pdf-actions>*{flex:1 1 190px}}
 @media(max-width:560px){body.hmatias-supply .supply-pdf-layout{padding:20px 16px}body.hmatias-supply .supply-pdf-actions{flex-direction:column;align-items:stretch}body.hmatias-supply .supply-pdf-actions>*{width:100%;flex-basis:auto}body.hmatias-supply .supply-pdf-info{min-width:0}body.hmatias-supply .supply-pdf-details h3{font-size:1.18rem}body.hmatias-supply .supply-value .unit-card{min-width:0}body.hmatias-supply .supply-pdf-area,body.hmatias-supply .supply-value{overflow-wrap:anywhere}}
+
+/* Improve caption legibility on smartphone screens (verified contrast issue). */
+body.hmatias-supply .hm-evidence-item figcaption small{color:#486477}
