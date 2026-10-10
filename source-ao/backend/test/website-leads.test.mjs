@@ -32,6 +32,11 @@ test('accepts only explicit consent and valid business contact fields',()=>{
   assert.equal(validateWebsiteLead({...body,email:'not-an-email'}),null);
   assert.equal(validateWebsiteLead({...body,nonce:'too short'}),null);
 });
+test('Clean and Smart RFQ are accepted as explicit business lead types',()=>{
+  assert.equal(validateWebsiteLead({...body,kind:'clean',service:'HMATIAS Clean'})?.kind,'clean');
+  assert.equal(validateWebsiteLead({...body,kind:'rfq',service:'Supply & Procurement'})?.kind,'rfq');
+  assert.equal(validateWebsiteLead({...body,kind:'unknown'}),null);
+});
 test('campaign attribution is strictly limited to public paths and non-identifying codes',()=>{
   const value=validateWebsiteLead({...body,attribution:{
     source:'Google',medium:'CPC',campaign:'facilities_luanda_2026',
