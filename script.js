@@ -145,6 +145,59 @@
   const year=document.getElementById('year');
   if(year)year.textContent=String(new Date().getFullYear());
 
+  // Explicit, in-page handoff: browser popup blockers must never make a request disappear.
+  // No backend storage is implied; visitors must choose and complete a sending channel.
+  const presentManualHandoff=(form,body,subject,statusNode=null)=>{
+    let panel=form.querySelector('[data-hmatias-send-actions]');
+    if(!panel){
+      panel=document.createElement('section');
+      panel.dataset.hmatiasSendActions='true';
+      panel.setAttribute('aria-label',pageEnglish?'Review and send your request':'Rever e enviar o pedido');
+      panel.style.cssText='grid-column:1/-1;display:block;margin:18px 0;padding:20px;border:1px solid #d8e1e6;border-radius:12px;background:#f6f9fb;color:#182c3a';
+      const heading=document.createElement('strong');
+      heading.textContent=pageEnglish?'Request ready for delivery':'Pedido preparado para envio';
+      heading.style.cssText='display:block;font-size:1.1rem;margin-bottom:8px';
+      const guidance=document.createElement('p');
+      guidance.textContent=pageEnglish
+        ?'Select WhatsApp or email below and complete the send in that application. This website has not registered your request yet.'
+        :'Escolha WhatsApp ou e-mail e conclua o envio na aplicação correspondente. O website ainda não registou este pedido.';
+      guidance.style.cssText='font-size:.91rem;line-height:1.55;margin:0 0 12px';
+      const actions=document.createElement('div');
+      actions.style.cssText='display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px';
+      const wa=document.createElement('a');wa.className='btn btn-primary';wa.dataset.hmatiasSendWhatsapp='true';
+      wa.target='_blank';wa.rel='noopener noreferrer';
+      wa.textContent=pageEnglish?'Send via WhatsApp':'Enviar pelo WhatsApp';
+      const mail=document.createElement('a');mail.className='btn btn-outline';mail.dataset.hmatiasSendEmail='true';
+      mail.textContent=pageEnglish?'Send via email':'Enviar por e-mail';
+      const copy=document.createElement('button');copy.type='button';copy.className='btn btn-outline';
+      copy.dataset.hmatiasCopyRequest='true';
+      copy.textContent=pageEnglish?'Copy request':'Copiar pedido';
+      const details=document.createElement('details');
+      const summary=document.createElement('summary');
+      summary.textContent=pageEnglish?'Review request text':'Rever texto do pedido';
+      const preview=document.createElement('pre');
+      preview.dataset.hmatiasRequestPreview='true';
+      preview.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:.85rem;line-height:1.6;margin:10px 0 0';
+      details.append(summary,preview);
+      const feedback=document.createElement('p');feedback.dataset.hmatiasHandoffFeedback='true';
+      feedback.setAttribute('role','status');feedback.style.cssText='font-size:.85rem;margin:5px 0';
+      copy.addEventListener('click',async()=>{
+        try{await navigator.clipboard.writeText(panel.querySelector('[data-hmatias-request-preview]').textContent);
+          feedback.textContent=pageEnglish?'Copied. Paste it into your chosen channel.':'Copiado. Cole no canal de envio pretendido.';}
+        catch{feedback.textContent=pageEnglish?'Select the text above to copy it.':'Selecione o texto acima para o copiar.';details.open=true;}
+      });
+      actions.append(wa,mail,copy);
+      panel.append(heading,guidance,actions,details,feedback);
+      form.appendChild(panel);
+    }
+    panel.querySelector('[data-hmatias-send-whatsapp]').href='https://wa.me/244948806673?text='+encodeURIComponent(body.slice(0,3400));
+    panel.querySelector('[data-hmatias-send-email]').href='mailto:geral@comercialhmatiasps.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body.slice(0,3500));
+    panel.querySelector('[data-hmatias-request-preview]').textContent=body;
+    panel.querySelector('[data-hmatias-handoff-feedback]').textContent='';
+    if(statusNode)statusNode.textContent=pageEnglish?'Request prepared. Select a sending channel below.':'Pedido preparado. Escolha abaixo um canal para o enviar.';
+    panel.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});
+  };
+
   const form=document.getElementById('contactForm');
   if(form){
     form.addEventListener('submit',e=>{
@@ -160,7 +213,7 @@
       const text=pageEnglish
         ?`Hello HMATIAS.\n\nName: ${name}\nCompany: ${company}\nE-mail: ${email}\nPhone / WhatsApp: ${phone}\nService: ${service}\n\nRequest:\n${message}`
         :`Olá HMATIAS.\n\nNome: ${name}\nEmpresa: ${company}\nE-mail: ${email}\nTelefone / WhatsApp: ${phone}\nServiço: ${service}\n\nPedido:\n${message}`;
-      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
+      presentManualHandoff(form,text,pageEnglish?'HMATIAS business enquiry':'Pedido comercial HMATIAS');
     });
   }
 
@@ -207,7 +260,7 @@
         ?`Hello HMATIAS Business Services.\n\nName / Entity: ${name}\nPhone / WhatsApp: ${contact}\nE-mail: ${email}\nLocation: ${location}\nService: ${service}\n\nRequest:\n${details}`
         :`Olá HMATIAS Business Services.\n\nNome / Entidade: ${name}\nTelefone / WhatsApp: ${contact}\nE-mail: ${email}\nLocalização: ${location}\nServiço: ${service}\n\nPedido:\n${details}`;
       if(status)status.textContent=pageEnglish?'Request prepared. WhatsApp will open for your review and final sending.':'Pedido preparado. O WhatsApp será aberto para revisão e envio final.';
-      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
+      presentManualHandoff(businessForm,text,pageEnglish?'HMATIAS Business Services enquiry':'Pedido HMATIAS Business Services',status);
     });
   }
 
@@ -241,7 +294,7 @@
         ?`Hello HMATIAS. I would like to request an appointment.\n\nName / Entity: ${name}\nPhone / WhatsApp: ${contact}\nE-mail: ${email}\nService: ${service}\nMeeting format: ${mode}\nPreferred date: ${date}\nTime window: ${windowName}\nLocation: ${location}\n\nBrief context:\n${notes}\n\nI understand that this is an appointment request and the time is only confirmed after an express response from HMATIAS.`
         :`Olá HMATIAS. Pretendo solicitar um agendamento.\n\nNome / Entidade: ${name}\nTelefone / WhatsApp: ${contact}\nE-mail: ${email}\nServiço: ${service}\nModalidade: ${mode}\nData preferida: ${date}\nPeríodo: ${windowName}\nLocalização: ${location}\n\nContexto breve:\n${notes}\n\nCompreendo que este é um pedido de agendamento e que o horário só fica confirmado após resposta expressa da HMATIAS.`;
       if(status)status.textContent=pageEnglish?'Appointment request prepared. WhatsApp will open for review and sending.':'Pedido de agendamento preparado. O WhatsApp será aberto para revisão e envio.';
-      window.open('https://wa.me/244948806673?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
+      presentManualHandoff(bookingForm,text,pageEnglish?'HMATIAS appointment request':'Pedido de atendimento HMATIAS',status);
     });
   }
 

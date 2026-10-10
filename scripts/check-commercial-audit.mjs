@@ -33,7 +33,8 @@ assert.ok(client.includes("utm_source"));
 assert.ok(client.includes("referrer_host"));
 
 const allForms=['index.html','en.html','servicos-administrativos.html',
-  'business-services.html','agendamento.html','booking.html'];
+  'business-services.html','agendamento.html','booking.html',
+  'clean.html','clean-en.html','rfq.html','rfq-en.html'];
 for(const path of allForms){
   const html=read(path);
   assert.match(html,/analytics[.]js[?]v=[a-zA-Z0-9._-]+/,
@@ -41,13 +42,15 @@ for(const path of allForms){
   if(path==='index.html'||path==='en.html'){
     assert.match(html,/site-bootstrap[.]js[?]v=[a-zA-Z0-9._-]+/);
   }else{
-    assert.ok(html.includes('website-lead-client.js?v=20261010-campaign-origin1'),
-      'Secure client not loaded: '+path);
+    assert.match(html,/website-lead-client[.]js[?]v=[a-zA-Z0-9._-]+/,
+      'Secure versioned client not loaded: '+path);
   }
 }
 const bootstrap=read('site-bootstrap.js');
-assert.ok(bootstrap.includes('website-lead-client.js?v=20261010-campaign-origin1'));
+assert.match(bootstrap,/website-lead-client[.]js[?]v=[a-zA-Z0-9._-]+/);
 assert.ok(bootstrap.includes('growth-intelligence.js?v=20261009-email-cta1'));
 assert.ok(read('script.js').includes('const existing=target.querySelector'));
 assert.ok(read('growth-intelligence.js').includes('[data-hmatias-email-alternative]'));
-console.log('PASS: HMATIAS digital portfolio, Source AO copy, six intake surfaces and consent-gated lead attribution align.');
+assert.ok(client.includes("id:'cleanQuoteForm'"));
+assert.ok(client.includes("id:'smartRfqForm'"));
+console.log('PASS: institutional, Clean and Smart RFQ intake surfaces and consent-gated lead attribution align.');
