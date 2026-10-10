@@ -35,7 +35,7 @@
     added: 'Added to request',
     summary: 'Your quotation request contains',
     submit: 'Prepare quotation request →',
-    status: 'Request prepared. WhatsApp will open for review and final sending.',
+    status: 'Request prepared. Select a channel below and complete sending in that application.',
     requestOrder: 'Order request — subject to commercial confirmation',
     messageTitle: 'HMATIAS CLEAN — QUOTATION REQUEST',
     name: 'Name / Entity',
@@ -64,7 +64,7 @@
     added: 'Adicionado ao pedido',
     summary: 'O pedido de cotação contém',
     submit: 'Preparar pedido de cotação →',
-    status: 'Pedido preparado. O WhatsApp será aberto para revisão e envio final.',
+    status: 'Pedido preparado. Escolha um canal abaixo e confirme o envio nessa aplicação.',
     requestOrder: 'Pedido de encomenda — sujeito a confirmação comercial',
     messageTitle: 'HMATIAS CLEAN — PEDIDO DE COTAÇÃO',
     name: 'Nome / Entidade',
@@ -324,6 +324,13 @@
       : 'Preço, disponibilidade, prazo e condições de entrega ficam sujeitos a confirmação comercial da HMATIAS.');
 
     if (status) status.textContent = copy.status;
-    window.open(`https://wa.me/${wa}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener,noreferrer');
+    const requestText=lines.join('\n');
+    if(window.HMATIASFormOutcome?.present){
+      window.HMATIASFormOutcome.present(form,requestText,
+        isEn?'HMATIAS Clean quotation request':'Pedido de cotação HMATIAS Clean');
+    }else{
+      // Emergency fallback: never depend on a popup or claim successful submission.
+      window.location.assign('https://wa.me/'+wa+'?text='+encodeURIComponent(requestText));
+    }
   });
 })();
