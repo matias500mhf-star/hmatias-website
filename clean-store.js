@@ -351,7 +351,7 @@
       review.append(label,preview);
       actions.append(whatsapp,email);panel.append(title,guidance,actions,review);form.append(panel);
     }
-    const body=lines.join('\\n');
+    const body=lines.join('\n');
     panel.querySelector('[data-clean-send-whatsapp]').href='https://wa.me/'+wa+'?text='+encodeURIComponent(body.slice(0,3400));
     panel.querySelector('[data-clean-send-email]').href='mailto:geral@comercialhmatiasps.com?subject='+
       encodeURIComponent(isEn?'HMATIAS Clean quotation request':'Pedido de cotação HMATIAS Clean')+
