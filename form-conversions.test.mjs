@@ -53,6 +53,6 @@ test('secure quote intake is capability-gated and recognises only stored referen
 test('Source AO has a stored request route, not just an unverified WhatsApp popup',()=>{
   assert.match(read('source-ao/sourcing-ui.js'),/api\/sourcing-requests/);
   assert.match(read('source-ao/sourcing-ui.js'),/addEventListener\('submit',onSubmit,true\)/);
-  assert.match(read('source-ao/rfq.js'),/body\.request/);
+  assert.match(read('source-ao/rfq.js'),/result\.request\.reference/);
   assert.match(read('source-ao/partner-application.js'),/api\/partner-applications/);
 });
