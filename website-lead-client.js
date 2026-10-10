@@ -55,7 +55,7 @@
         'Tipo de cliente: '+get('clientType'),
         'Produtos: '+(items.length?items.join('; '):get('product')+' · Qtd: '+get('quantity')),
         'Local: '+get('location'),'Observações: '+get('note')
-      ].join('\\n').slice(0,2400);
+      ].join('\n').slice(0,2400);
     }
     if(config.kind==='rfq'){
       const preview=document.getElementById('rfqSummary');
@@ -224,7 +224,7 @@
         const fd=new FormData(form),get=key=>key?String(fd.get(key)||'').trim():'';
         const body=['HMATIAS · '+config.kind,get(config.name),
           get(config.service),detail(form,config,fd),
-          'Telefone: '+get(config.phone),'Email: '+get(config.email)].filter(Boolean).join('\\n');
+          'Telefone: '+get(config.phone),'Email: '+get(config.email)].filter(Boolean).join('\n');
         let fallback=status.parentElement.querySelector('[data-website-lead-fallback]');
         if(!fallback){
           fallback=document.createElement('div');
