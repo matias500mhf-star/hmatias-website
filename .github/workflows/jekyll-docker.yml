@@ -45,6 +45,15 @@ jobs:
             --exclude '.public-site/' \
             --exclude '.source-ao-production-release' \
             --exclude 'SECURITY.md' \
+            --exclude 'OWNERSHIP.md' \
+            --exclude 'docs/' \
+            --exclude 'cloudflare-ai/' \
+            --exclude '_config.yml' \
+            --exclude '.gitignore' \
+            --exclude 'package.json' \
+            --exclude 'package-lock.json' \
+            --exclude 'vite.config.js' \
+            --exclude 'wrangler.jsonc' \
             --exclude 'source-ao/backend/' \
             --exclude 'lead-intake/' \
             --exclude 'source-ao/data/' \
@@ -89,6 +98,11 @@ jobs:
           test ! -e "$out/source-ao/supplier-discovery.js"
           test ! -e "$out/source-ao/website-leads.html"
           test ! -e "$out/source-ao/website-leads-ops.js"
+          test ! -e "$out/docs"
+          test ! -e "$out/cloudflare-ai"
+          test ! -e "$out/OWNERSHIP.md"
+          test ! -e "$out/package.json"
+          test ! -e "$out/wrangler.jsonc"
           test ! -e "$out/.github"
           echo "Public-only deployment artifact prepared."
 
@@ -171,6 +185,9 @@ jobs:
             "/source-ao/backend/src/router.js" \
             "/source-ao/backend/.env.staging.example" \
             "/source-ao/docs/MARKETS.md" \
+            "/docs/CONTINUIDADE-WEBSITE-2026-10-10.md" \
+            "/cloudflare-ai/README.md" \
+            "/OWNERSHIP.md" \
             "/source-ao/data-contract.json"; do
             hidden_status="$(curl --silent --output /dev/null --write-out '%{http_code}'               --location --connect-timeout 15 --max-time 30 "$base$hidden_path" || true)"
             if [ "$hidden_status" = "200" ]; then
