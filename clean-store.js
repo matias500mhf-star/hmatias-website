@@ -325,6 +325,11 @@
 
     if (status) status.textContent = copy.status;
     const requestText=lines.join('\n');
+    const prepared=new CustomEvent('hmatias:clean-quote-prepared',{
+      bubbles:false,cancelable:true,detail:{message:requestText}
+    });
+    form.dispatchEvent(prepared);
+    if(prepared.defaultPrevented)return;
     if(window.HMATIASFormOutcome?.present){
       window.HMATIASFormOutcome.present(form,requestText,
         isEn?'HMATIAS Clean quotation request':'Pedido de cotação HMATIAS Clean');
