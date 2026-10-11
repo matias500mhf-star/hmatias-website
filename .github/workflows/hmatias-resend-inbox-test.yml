@@ -1,0 +1,83 @@
+name: HMATIAS Resend Inbox Acceptance Test
+
+# An explicitly approved internal-only probe, never triggered by PRs or pushes.
+# This tests GitHub secret -> Resend -> official mailbox, NOT Worker lead delivery.
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Digite ENVIAR_TESTE para autorizar 1 email interno de teste; nenhum dado de cliente sera enviado'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hmatias-resend-inbox-test
+  cancel-in-progress: false
+
+jobs:
+  internal-mailbox-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    environment: source-ao-staging
+    env:
+      RESEND_TEST_API_KEY: ${{ secrets.SOURCE_AO_RESEND_API_KEY }}
+      CONFIRMATION: ${{ inputs.confirmation }}
+    steps:
+      - name: Require explicit one-email approval and submit test
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          // No personal data, CRM records, RFQs, leads, D1 writes, or credentials in logs.
+          const confirmation=process.env.CONFIRMATION||'';
+          if(confirmation!=='ENVIAR_TESTE'){
+            throw Error('Not authorised. Re-run workflow and type ENVIAR_TESTE exactly.');
+          }
+          const apiKey=process.env.RESEND_TEST_API_KEY||'';
+          if(!/^re_[^\s]{12,}$/.test(apiKey)){
+            throw Error('GitHub environment secret SOURCE_AO_RESEND_API_KEY is missing or invalid.');
+          }
+          const runId=(process.env.GITHUB_RUN_ID||'').trim();
+          if(!/^\d{5,}$/.test(runId)){
+            throw Error('GitHub run identifier unavailable; refusing an untracked test.');
+          }
+          const approvedAddress='geral@comercialhmatiasps.com';
+          const payload={
+            from:'HMATIAS Source AO <'+approvedAddress+'>',
+            to:[approvedAddress],
+            subject:'[TESTE INTERNO] HMATIAS · Resend · #'+runId,
+            text:[
+              'TESTE INTERNO CONTROLADO — nao e um pedido comercial.',
+              'Objectivo: confirmar a entrega da notificacao na caixa oficial HMATIAS.',
+              'GitHub Actions execution: '+runId,
+              'Nenhum dado de cliente foi utilizado.',
+              'Este teste nao comprova ainda o circuito Worker / Cloudflare D1 / formularios.'
+            ].join('\n')
+          };
+          const response=await fetch('https://api.resend.com/emails',{
+            method:'POST',
+            headers:{
+              authorization:'Bearer '+apiKey,
+              'content-type':'application/json',
+              'Idempotency-Key':'hm-mailbox-test-'+runId
+            },
+            body:JSON.stringify(payload),
+            signal:AbortSignal.timeout(18000)
+          });
+          if(!response.ok){
+            throw Error('Resend did not accept the internal test: HTTP '+response.status+
+              '. Verify the domain, sending-only key, and sender restrictions.');
+          }
+          const result=await response.json().catch(()=>({}));
+          if(typeof result.id!=='string'||!result.id){
+            throw Error('Resend response had no email ID; provider acceptance unconfirmed.');
+          }
+          console.log('RESEND_PROVIDER_ACCEPTED=true');
+          console.log('RESEND_EMAIL_ID='+result.id);
+          console.log('INBOX_DELIVERY_UNVERIFIED=true');
+          console.log('Next: check the official commercial mailbox (including spam), and Resend email delivery status.');
+          console.log('No public website lead intake, CRM or Source AO records were created.');
+          NODE
