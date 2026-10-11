@@ -90,8 +90,21 @@
   };
 
   const t=key=>copy[lang][key]||key;
-  const fmt=value=>new Intl.DateTimeFormat(lang==='pt'?'pt-PT':'en-GB',{day:'2-digit',month:'short',year:'numeric',timeZone:'Africa/Luanda'}).format(new Date(value));
-  const clock=value=>new Intl.DateTimeFormat(lang==='pt'?'pt-PT':'en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Africa/Luanda'}).format(new Date(value));
+  // Reuse locale formatters across cards, filters and five-minute refreshes.
+  // Locale/timezone remain unchanged when visitors switch language.
+  const formatCache=new Map();
+  function formatDate(value,kind){
+    const key=lang+':'+kind;
+    let formatter=formatCache.get(key);
+    if(!formatter){
+      const options=kind==='date'?{day:'2-digit',month:'short',year:'numeric',timeZone:'Africa/Luanda'}:{hour:'2-digit',minute:'2-digit',timeZone:'Africa/Luanda'};
+      formatter=new Intl.DateTimeFormat(lang==='pt'?'pt-PT':'en-GB',options);
+      formatCache.set(key,formatter);
+    }
+    return formatter.format(new Date(value));
+  }
+  const fmt=value=>formatDate(value,'date');
+  const clock=value=>formatDate(value,'time');
   // Deadlines use Angola calendar days, independently of the visitor's timezone.
   const daysLeft=value=>Math.floor((new Date(value).getTime()+3600000)/86400000)-Math.floor((Date.now()+3600000)/86400000);
   const isActive=o=>(!o.status||o.status==='active')&&Number.isFinite(new Date(o.deadline).getTime())&&new Date(o.deadline).getTime()>Date.now();
@@ -323,6 +336,7 @@
       const p=document.createElement('p');p.className='op-loading';p.textContent=t('empty');list.appendChild(p);return;
     }
 
+    const fragment=document.createDocumentFragment();
     visible.forEach(o=>{
       const fitScore=Math.max(0,Math.min(100,Number(o.fit_score)||0));
       const confidence=confidenceScore(o);
@@ -384,8 +398,9 @@
       side.append(priorityEl,next,deadline,actions);
 
       card.append(scoreCol,main,side);
-      list.appendChild(card);
+      fragment.appendChild(card);
     });
+    list.appendChild(fragment);
   }
 
   document.addEventListener('DOMContentLoaded',async()=>{
