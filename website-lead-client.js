@@ -9,7 +9,7 @@
   if(document.documentElement.dataset.hmatiasLeadsEndpoint)return; // legacy integration is separately gated
   const configs=[
     {id:'contactForm',kind:'contact',name:'nome',company:'empresa',phone:'telefone',
-      email:'email',service:'servico',details:'mensagem'},
+      email:'email',service:'servico',location:'location',details:'mensagem'},
     {id:'businessContactForm',kind:'business',name:'client_name',phone:'contact',
       email:'email',service:'service_type',details:'details',location:'location'},
     {id:'bookingRequestForm',kind:'appointment',name:'client_name',phone:'contact',
@@ -188,7 +188,7 @@
         email:get(config.email),service:config.kind==='clean'?'HMATIAS Clean':
           (config.kind==='rfq'?({construction:'Construção e Remodelação',facilities:'Facilities e Manutenção',supply:'Supply e Procurement'}[get(config.service)]||'Smart RFQ')
             :get(config.service)||text('Contacto comercial','Business enquiry')),
-        location:get(config.location)||'Luanda',
+        location:get(config.location),
         details:detail(form,config,fd)
       };
       if(config.kind==='appointment')payload.preferred_date=get(config.date);
@@ -223,7 +223,7 @@
         );
         const fd=new FormData(form),get=key=>key?String(fd.get(key)||'').trim():'';
         const body=['HMATIAS · '+config.kind,get(config.name),
-          get(config.service),detail(form,config,fd),
+          get(config.service),get(config.location),detail(form,config,fd),
           'Telefone: '+get(config.phone),'Email: '+get(config.email)].filter(Boolean).join('\n');
         let fallback=status.parentElement.querySelector('[data-website-lead-fallback]');
         if(!fallback){

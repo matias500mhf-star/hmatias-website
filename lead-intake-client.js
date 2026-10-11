@@ -14,7 +14,7 @@ function get(d,k){return String(d.get(k)||'').trim();}
 function encodeForm(form){
  const d=new FormData(form);const id=form.id;
  const base={nonce:form.dataset.leadNonce||(form.dataset.leadNonce=crypto.randomUUID().replaceAll('-','')),consent:true};
- if(id==='contactForm')return {...base,kind:'contact',name:get(d,'nome'),company:get(d,'empresa'),email:get(d,'email'),phone:get(d,'telefone'),service:get(d,'servico')||'Contacto comercial',location:'',details:get(d,'mensagem')};
+ if(id==='contactForm')return {...base,kind:'contact',name:get(d,'nome'),company:get(d,'empresa'),email:get(d,'email'),phone:get(d,'telefone'),service:get(d,'servico')||'Contacto comercial',location:get(d,'location'),details:get(d,'mensagem')};
  if(id==='businessContactForm')return {...base,kind:'business',name:get(d,'client_name'),company:'',email:get(d,'email'),phone:get(d,'contact'),service:get(d,'service_type'),location:get(d,'location'),details:get(d,'details')};
  const details=[get(d,'notes'),get(d,'preferred_date')&&'Data: '+get(d,'preferred_date'),get(d,'time_window')&&'Período: '+get(d,'time_window'),get(d,'meeting_mode')&&'Modalidade: '+get(d,'meeting_mode')].filter(Boolean).join('\n');
  return {...base,kind:'appointment',name:get(d,'client_name'),company:'',email:get(d,'email'),phone:get(d,'contact'),service:get(d,'service_type')||'Atendimento',location:get(d,'location'),details:'Pedido de atendimento. '+details};
@@ -23,7 +23,7 @@ function manualLink(node,payload,reference=''){
  const old=node.parentNode?.querySelector('[data-hmatias-fallback]');if(old)old.remove();
  const text=(reference?'Referência: '+reference+'\n':'')+
   'HMATIAS - Pedido '+payload.kind+'\nNome: '+payload.name+'\nTelefone: '+payload.phone+'\nEmail: '+payload.email+
-  '\nServiço: '+payload.service+'\nDetalhes: '+payload.details;
+  '\nServiço: '+payload.service+'\nLocal: '+payload.location+'\nDetalhes: '+payload.details;
  const a=document.createElement('a');a.href='https://wa.me/244948806673?text='+encodeURIComponent(text.slice(0,3400));
  a.target='_blank';a.rel='noopener noreferrer';
  a.textContent=en?'Continue via WhatsApp':'Continuar pelo WhatsApp';
