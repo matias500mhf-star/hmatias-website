@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: current public HMATIAS site, HMATIAS lead intake status and SOURCE AO public capabilities, 2026-10-09. */
+   Source of truth: public HMATIAS content, commercial quotation conditions and SOURCE AO public capabilities, 2026-10-12. */
 (() => {
   'use strict';
 
@@ -14,8 +14,8 @@
   ];
 
   const kb = {
-    version: '2026-10-10.2',
-    updated: '2026-10-10',
+    version: '2026-10-12.1',
+    updated: '2026-10-12',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
@@ -35,10 +35,10 @@
       homeEn: '/en.html', constructionEn: '/construction.html', facilitiesEn: '/facilities-en.html', supplyEn: '/supply-en.html', rfqEn: '/rfq-en.html', worksCatalogueEn: '/work-catalogue.html', credibilityEn: '/credibility.html', cleanEn: '/clean-en.html', kartaEn: '/karta-en.html', businessEn: '/business-services.html', bookingEn: '/booking.html', privacyEn: '/privacy.html', termsEn: '/terms.html'
     },
     construction: {
-      summaryPt: 'Construção civil e infraestrutura para empresas, instituições e projetos, com escopo claro, organização no terreno e acompanhamento até à entrega.',
-      summaryEn: 'Civil construction and infrastructure for companies, institutions and projects, with clear scope, organised site execution and follow-through to delivery.',
+      summaryPt: 'Construção civil, remodelação e infraestrutura em Angola, com base operacional em Viana, Luanda. Pedidos de outras províncias dependem de avaliação do local, escopo e mobilização. Orçamento e prazo são definidos após levantamento técnico, antes do início dos trabalhos.',
+      summaryEn: 'Civil construction, refurbishment and infrastructure in Angola, with an operating base in Viana, Luanda. Enquiries from other provinces are subject to site, scope and mobilisation assessment. Quotations and timeframes follow a technical assessment before work starts.',
       capabilitiesPt: ['Betonagem e pavimentação','Infraestrutura e estruturas','Estruturas e coberturas','Remodelação de escritórios, instalações, espaços residenciais e áreas empresariais','Revestimentos e acabamentos','Adaptação de espaços'],
-      processPt: ['Levantamento da necessidade, localização, fotografias e medidas','Proposta com escopo, materiais, prazo e condições','Execução e acompanhamento até à entrega']
+      processPt: ['Pedido com província, município, fotografias, medidas, tipo de intervenção e prazo pretendido; indicar projeto ou levantamento de quantidades quando disponível','Levantamento técnico, avaliação de acesso, mobilização e condições de execução','Proposta com escopo, quantidades, materiais, prazo e condições antes do início dos trabalhos','Execução e acompanhamento até à entrega']
     },
     facilities: {
       summaryPt: 'Manutenção, limpeza/conservação e apoio operacional para instalações empresariais, com frequência, áreas, recursos e responsabilidades definidos em escopo.',
@@ -47,10 +47,10 @@
       processPt: ['Diagnóstico da necessidade e prioridade','Plano de serviço com escopo, responsabilidades, recursos e frequência','Execução ou coordenação e acompanhamento']
     },
     supply: {
-      summaryPt: 'Procurement, sourcing e fornecimento empresarial orientados por referência, especificação, quantidade, origem, logística e prazo.',
-      summaryEn: 'Procurement, sourcing and business supply guided by reference, specification, quantity, origin, logistics and target date.',
-      capabilitiesPt: ['Sourcing nacional','Pesquisa regional na África Austral','Fornecimento internacional','Materiais, consumíveis, produtos e equipamentos','Pesquisa e comparação de alternativas'],
-      processPt: ['Especificação do produto/referência, quantidade, local e prazo','Pesquisa e comparação de opções, disponibilidade, origem e logística','Cotação com preço, prazo, condições e validade'],
+      summaryPt: 'Procurement, sourcing e fornecimento empresarial em Angola, sem stock próprio. Recebemos consultas de todo o país e de compradores internacionais para fornecimentos em Angola. Disponibilidade no fornecedor, transporte, prazo e documentação são confirmados por pedido e definidos na proposta antes da adjudicação.',
+      summaryEn: 'Procurement, sourcing and business supply in Angola, with no own stock. We accept enquiries from across Angola and international buyers seeking supply into Angola. Supplier availability, transport, lead time and documentation are confirmed per request and defined in the proposal before order award.',
+      capabilitiesPt: ['Sourcing nacional','Pesquisa regional na África Austral','Consultas de compradores internacionais para fornecimentos em Angola','Materiais, consumíveis, produtos e equipamentos','Pesquisa e comparação de alternativas'],
+      processPt: ['Referência ou descrição técnica, norma e dimensões quando aplicável, quantidade e unidade de medida, local de entrega e prazo; indicar certificados exigidos e juntar fotografias, fichas técnicas ou códigos do catálogo quando disponíveis','Pesquisa e comparação de opções, disponibilidade, origem, logística e documentos técnicos aplicáveis','Cotação com preço, custos de transporte, prazo, documentação, condições e validade antes da adjudicação'],
       rulePt: 'Marcas, fornecedores e contactos de terceiros são referenciados apenas quando relevantes; isso não implica representação, exclusividade ou parceria institucional.'
     },
     clean: {
@@ -120,7 +120,7 @@
       `ESTADO DO SITE: ${kb.siteState.homepagePt} ${kb.siteState.sourcePlacementPt} ${kb.siteState.commercialJourneyPt}`,
       `CONSTRUÇÃO: ${kb.construction.summaryPt} Capacidades: ${kb.construction.capabilitiesPt.join('; ')}. Processo: ${kb.construction.processPt.join('; ')}.`,
       `FACILITIES: ${kb.facilities.summaryPt} Capacidades: ${kb.facilities.capabilitiesPt.join('; ')}.`,
-      `SUPPLY: ${kb.supply.summaryPt} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. ${kb.supply.rulePt}`,
+      `SUPPLY: ${kb.supply.summaryPt} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. Processo: ${kb.supply.processPt.join('; ')}. ${kb.supply.rulePt}`,
       `CLEAN: ${kb.clean.summaryPt} 123 Pine Gel 500 ml: preço sob consulta. Taurus Pine Gel T563P: ${p.descriptionPt} ${p.featuresPt} Formato, preço, stock e prazo sujeitos a confirmação comercial. Aplicações: ${p.applicationsPt.join(', ')}. Diluições: ${p.dilutionsPt.join('; ')}. Aviso: ${p.warningPt} ${kb.clean.brandNotePt}`,
       `CATÁLOGO CLEAN: ${cleanCatalog.map(x=>`${x[0]} ${x[1]} [${x[2]}]`).join('; ')}. Para estes itens, se não houver preço publicado, confirmar com equipa comercial.`,
       `BUSINESS SERVICES: ${kb.businessServices.servicesPt.join('; ')}. ${kb.businessServices.pricingRulePt}`,
