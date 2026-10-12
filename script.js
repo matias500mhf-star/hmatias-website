@@ -4,7 +4,7 @@
   // Shared UI/bootstrap must remain independent from analytics/ad-blocking rules.
   if(!document.querySelector('script[data-hmatias-site-bootstrap]')){
     const bootstrap=document.createElement('script');
-    bootstrap.src='site-bootstrap.js?v=20261009-website-intake1';
+    bootstrap.src='site-bootstrap.js?v=20261012-accessibility1';
     bootstrap.defer=true;
     bootstrap.dataset.hmatiasSiteBootstrap='true';
     document.head.appendChild(bootstrap);

@@ -167,8 +167,14 @@
     link.className = 'footer-source-ao-link';
     link.href = 'source-ao/';
     link.dataset.sourceAoFooter = 'true';
-    link.setAttribute('aria-label', 'Abrir Source AO — pesquisa de materiais e pedidos de fornecimento');
-    link.innerHTML = '<img class="footer-source-ao-logo" src="images/source-ao-logo.svg" alt="SOURCE AO — pesquisa técnica e fornecimento HMATIAS" width="760" height="360">';
+    const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
+    link.setAttribute('aria-label', isEn
+      ? 'Open Source AO — materials research and supply requests'
+      : 'Abrir Source AO — pesquisa de materiais e pedidos de fornecimento');
+    const imageAlt = isEn
+      ? 'SOURCE AO — technical research and HMATIAS supply'
+      : 'SOURCE AO — pesquisa técnica e fornecimento HMATIAS';
+    link.innerHTML = '<img class="footer-source-ao-logo" src="images/source-ao-logo.svg" alt="' + imageAlt + '" width="760" height="360">';
     footerBrand.appendChild(link);
   };
 
