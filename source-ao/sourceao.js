@@ -27,7 +27,21 @@
       cat4s:'consumables · hygiene · maintenance',cat5s:'installation · repair · execution',cat6s:'chemicals · packaging · components',
       howNote:'Technology accelerates discovery; commercial confirmation remains explicit.',
       step4t:'Execute',step4p:'Contact, send RFQ, compare and prepare the quotation.',
-      requestTrust:'Protected contact · private tracking · no automatic publication'
+      requestTrust:'Protected contact · private tracking · no automatic publication',
+      mainNavigation:'Main navigation',officialSite:'Open the official HMATIAS website',sourceLogo:'SOURCE AO — technical research for materials and suppliers by HMATIAS',
+      exampleSearches:'Example searches',sourceRules:'Source AO rules',capabilities:'Capabilities',commercialNetwork:'Source AO commercial network',
+      exampleStrapping:'PP strapping 9 mm',exampleFormalin:'Formalin 37% 1 L',exampleAC:'AC 24,000 BTU',
+      intelligenceEyebrow:'COMMERCIAL ANALYSIS',intelligenceTitle:'More than listing opportunities.',intelligenceLink:'Open Intelligence Radar →',
+      intelligence1Label:'IDENTIFY',intelligence1Title:'Traceable source',intelligence1Text:'Collects RFQs, tenders and commercial signals in Angola, preserving the source link for validation.',
+      intelligence2Label:'ASSESS',intelligence2Title:'Commercial fit',intelligence2Text:'Organises business area, fit, evidence confidence, urgency and location before a decision.',
+      intelligence3Label:'ACT',intelligence3Title:'Operational action',intelligence3Text:'Turns an opportunity into a next step: validate requirements, find a partner or supplier, and prepare costs, margin and an application.',
+      networkEyebrow:'HMATIAS COMMERCIAL NETWORK',networkTitle:'Suppliers and subcontractors are assessed before joining.',networkLink:'Introduce your company →',
+      network1Label:'IDENTIFY',network1Title:'Company identity',network1Text:'Legal name, registration, location, business contact and digital presence when available.',
+      network2Label:'QUALIFY',network2Title:'Proven capability',network2Text:'Construction, facilities, plumbing, electrical work, HVAC, supply and other verifiable capabilities.',
+      network3Label:'REVIEW',network3Title:'Controlled activation',network3Text:'Applications enter private review. No company is automatically presented as an approved partner.',
+      partners:'Partners',privacy:'Privacy',terms:'Terms',privacyPolicy:'privacy policy',
+      unitConfirm:'To confirm',unitEach:'Unit (ea)',unitLitres:'Litres (L)',unitRoll:'Roll',unitBox:'Box',unitPallet:'Pallet',
+      requestItemPlaceholder:'E.g. safety helmet, PVC pipe',requestQtyPlaceholder:'E.g. 15',requestSpecPlaceholder:'Standard, dimension, brand or technical code'
     },
     pt:{
       eyebrow:'PESQUISA COMERCIAL E SOURCING PARA ANGOLA',heroTitle:'Pesquisa técnica de materiais e fornecedores.',heroLead:'Organize especificações, consulte referências disponíveis no índice e registe pedidos de cotação. Fornecedores, preço, stock e entrega dependem de confirmação comercial.',searchPlaceholder:'Ex.: cinta PP 9 mm, 1 rolo, urgente…',searchButton:'Pesquisar',popular:'Pesquisas:',asideLabel:'SOURCE AO',asideLine1:'PESQUISAR',asideLine2:'VERIFICAR',asideLine3:'ENCONTRAR',asideSmall:'Um serviço da HMATIAS',searchRead:'NECESSIDADE ESTRUTURADA',category:'Categoria',market:'Mercado',freshness:'Estado da evidência',notVerified:'Ainda não verificado',truthNote:'O Source AO separa descoberta, evidência em fonte e confirmação comercial. Um fornecedor potencial não é apresentado como stock disponível.',publicSearch:'Ver pesquisa pública',addRadar:'Adicionar ao Radar',confidence:'Confiança dos dados',awaiting:'Aguardando fonte verificada',confidenceText:'O estado sobe apenas quando existe fonte rastreável, data e nível de confirmação.',browse:'ENTRADAS RÁPIDAS',whatLooking:'Comece pela necessidade.',cat1:'Materiais de construção',cat2:'Climatização e elétrica',cat3:'Ferramentas e equipamentos',cat4:'Limpeza e facilities',cat5:'Serviços e empreiteiros',cat6:'Fornecimento industrial',radarEyebrow:'RADAR SOURCE AO',radarTitle:'Uma necessidade não desaparece porque a primeira pesquisa falhou.',radarLead:'Mantenha requisitos organizados e acompanhe o estado da evidência. O Radar não transforma uma referência pública em disponibilidade confirmada.',r1t:'Encontrado',r1s:'Existe uma possível correspondência.',r2t:'Verificado na fonte',r2s:'Fonte e data ficam registadas.',r3t:'Confirmado',r3s:'A disponibilidade foi confirmada comercialmente.',myRadar:'Fila de procura',radarPlaceholder:'Material, serviço ou especificação…',watch:'Adicionar',emptyTitle:'Nenhuma necessidade em acompanhamento.',emptyText:'Adicione uma necessidade para manter a pesquisa organizada até existir evidência utilizável.',radarDisclaimer:'Nesta versão, a lista do Radar fica neste dispositivo. O Source AO não promete monitorização contínua sem uma fonte de dados ativa.',howEyebrow:'FLUXO OPERACIONAL',howTitle:'Da necessidade à decisão comercial.',step1t:'Descrever',step1p:'Produto, especificação, quantidade, local e prioridade.',step2t:'Descobrir',step2p:'Pesquisar fornecedores, catálogos e fontes relevantes.',step3t:'Verificar',step3p:'Separar correspondência, evidência e confirmação atual.',needSpecific:'PRECISA QUE A HMATIAS EXECUTE?',requestTitle:'Transforme a pesquisa num pedido operacional.',requestLead:'Registe a necessidade e acompanhe o estado por ligação privada. A equipa valida o mercado antes de assumir disponibilidade, preço ou prazo.',itemPlaceholder:'Material / serviço',qtyPlaceholder:'Quantidade / especificação',prepareRequest:'Registar pedido de sourcing',footerLine:'Pesquisar. Verificar. Encontrar.',serviceBy:'Um serviço da HMATIAS',footerTruth:'Evidência antes de afirmações comerciais.',
@@ -49,7 +63,21 @@
       cat4s:'consumíveis · higiene · manutenção',cat5s:'instalação · reparação · execução',cat6s:'químicos · embalagem · componentes',
       howNote:'A tecnologia acelera a procura; a confirmação comercial continua explícita.',
       step4t:'Executar',step4p:'Contactar, enviar RFQ, comparar e preparar a cotação.',
-      requestTrust:'Contacto protegido · acompanhamento privado · sem publicação automática'
+      requestTrust:'Contacto protegido · acompanhamento privado · sem publicação automática',
+      mainNavigation:'Navegação principal',officialSite:'Abrir site oficial HMATIAS',sourceLogo:'SOURCE AO — pesquisa técnica de materiais e fornecedores da HMATIAS',
+      exampleSearches:'Pesquisas de exemplo',sourceRules:'Regras do Source AO',capabilities:'Capacidades',commercialNetwork:'Rede comercial Source AO',
+      exampleStrapping:'Cinta PP 9 mm',exampleFormalin:'Formol 37% 1 L',exampleAC:'AC 24.000 BTU',
+      intelligenceEyebrow:'ANÁLISE COMERCIAL',intelligenceTitle:'Mais do que listar oportunidades.',intelligenceLink:'Abrir Intelligence Radar →',
+      intelligence1Label:'IDENTIFICAR',intelligence1Title:'Fonte rastreável',intelligence1Text:'Capta RFQs, concursos e sinais comerciais em Angola mantendo a ligação à origem para validação.',
+      intelligence2Label:'AVALIAR',intelligence2Title:'Adequação comercial',intelligence2Text:'Organiza área de negócio, adequação, confiança da evidência, urgência e localização antes da decisão.',
+      intelligence3Label:'AGIR',intelligence3Title:'Ação operacional',intelligence3Text:'Transforma a oportunidade em próxima ação: validar requisitos, localizar parceiro ou fornecedor, preparar custo, margem e candidatura.',
+      networkEyebrow:'REDE COMERCIAL HMATIAS',networkTitle:'Fornecedores e subempreiteiros entram por avaliação.',networkLink:'Apresentar empresa →',
+      network1Label:'IDENTIFICAR',network1Title:'Identidade empresarial',network1Text:'Nome legal, registo, localização, contacto profissional e presença digital quando disponível.',
+      network2Label:'QUALIFICAR',network2Title:'Capacidade real',network2Text:'Construção, facilities, canalização, eletricidade, HVAC, fornecimento e outras capacidades comprováveis.',
+      network3Label:'REVER',network3Title:'Ativação controlada',network3Text:'A candidatura entra em revisão privada. Nenhuma empresa é apresentada como parceira aprovada automaticamente.',
+      partners:'Parceiros',privacy:'Privacidade',terms:'Termos',privacyPolicy:'política de privacidade',
+      unitConfirm:'A confirmar',unitEach:'Unidade (un)',unitLitres:'Litros (L)',unitRoll:'Rolo',unitBox:'Caixa',unitPallet:'Palete',
+      requestItemPlaceholder:'Ex.: capacete de segurança, tubo PVC',requestQtyPlaceholder:'Ex.: 15',requestSpecPlaceholder:'Norma, dimensão, marca ou código técnico'
     }
   };
 
@@ -80,6 +108,8 @@
     document.documentElement.lang=state.lang==='pt'?'pt-AO':'en';
     $$('[data-i18n]').forEach(node=>{const key=node.dataset.i18n;if(dictionary[state.lang][key]) node.textContent=dictionary[state.lang][key];});
     $$('[data-i18n-placeholder]').forEach(node=>{const key=node.dataset.i18nPlaceholder;if(dictionary[state.lang][key]) node.placeholder=dictionary[state.lang][key];});
+    $$('[data-i18n-aria-label]').forEach(node=>{const value=dictionary[state.lang][node.dataset.i18nAriaLabel];if(value) node.setAttribute('aria-label',value);});
+    $$('[data-i18n-alt]').forEach(node=>{const value=dictionary[state.lang][node.dataset.i18nAlt];if(value) node.setAttribute('alt',value);});
     $('#langToggle').textContent=state.lang==='en'?'PT':'EN';
     $$('a[href^="rfq.html"]').forEach(link=>link.href='rfq.html?lang='+state.lang);
     if(state.query) renderSearch(state.query,state.location,false);
