@@ -35,16 +35,16 @@
   <header class="topbar">
     <div class="shell nav">
       <a class="source-brand" href="#top" aria-label="SOURCE AO by HMATIAS">
-        <img src="../images/source-ao-logo.svg" alt="SOURCE AO — pesquisa técnica de materiais e fornecedores da HMATIAS" width="760" height="360">
+        <img src="../images/source-ao-logo.svg" data-i18n-alt="sourceLogo" alt="SOURCE AO — pesquisa técnica de materiais e fornecedores da HMATIAS" width="760" height="360">
       </a>
-      <nav class="nav-links" aria-label="Navegação principal">
+      <nav class="nav-links" data-i18n-aria-label="mainNavigation" aria-label="Navegação principal">
         <a href="#search" data-i18n="navSearch">Pesquisa</a>
         <a href="#radar" data-i18n="navRadar">Radar</a>
         <a href="opportunity-radar.html" data-i18n="navOpportunities">Oportunidades</a>
         <a href="#how" data-i18n="navHow">Como funciona</a>
       </nav>
       <div class="nav-actions">
-        <a class="hmatias-return" href="../" aria-label="Abrir site oficial HMATIAS">HMATIAS ↗</a>
+        <a class="hmatias-return" href="../" data-i18n-aria-label="officialSite" aria-label="Abrir site oficial HMATIAS">HMATIAS ↗</a>
         <span class="environment-pill"><span></span><b data-i18n="angolaFirst">Foco: Angola</b></span>
         <button class="lang" type="button" id="langToggle">EN</button>
         <a class="btn btn-primary btn-small" href="rfq.html" data-i18n="navRequest">Pedir cotação</a>
@@ -79,7 +79,7 @@
             <div class="mission-context">
               <label>
                 <span data-i18n="locationLabel">Local</span>
-                <select id="locationInput" aria-label="Localização">
+                <select id="locationInput" data-i18n-aria-label="locationLabel" aria-label="Localização">
                   <option value="Luanda">Luanda</option>
                   <option value="Angola">Angola</option>
                 </select>
@@ -90,7 +90,7 @@
               </label>
               <label>
                 <span data-i18n="urgencyLabel">Prioridade</span>
-                <select id="neededByInput" aria-label="Prioridade">
+                <select id="neededByInput" data-i18n-aria-label="urgencyLabel" aria-label="Prioridade">
                   <option value="" data-i18n="priorityNormal">Normal</option>
                   <option value="urgent" data-i18n="priorityUrgent">Urgente</option>
                   <option value="this week" data-i18n="priorityWeek">Esta semana</option>
@@ -98,16 +98,16 @@
               </label>
             </div>
 
-            <div class="suggestions" aria-label="Pesquisas de exemplo">
+            <div class="suggestions" data-i18n-aria-label="exampleSearches" aria-label="Pesquisas de exemplo">
               <span data-i18n="tryLabel">Experimentar:</span>
-              <button type="button" data-query="cinta PP 9mm 1 rolo urgente">Cinta PP 9 mm</button>
-              <button type="button" data-query="formol 37% 1L urgente">Formol 37% 1 L</button>
-              <button type="button" data-query="ar condicionado 24000 BTU">AC 24.000 BTU</button>
+              <button type="button" data-query="cinta PP 9mm 1 rolo urgente" data-i18n="exampleStrapping">Cinta PP 9 mm</button>
+              <button type="button" data-query="formol 37% 1L urgente" data-i18n="exampleFormalin">Formol 37% 1 L</button>
+              <button type="button" data-query="ar condicionado 24000 BTU" data-i18n="exampleAC">AC 24.000 BTU</button>
             </div>
           </div>
         </div>
 
-        <aside class="hero-command" aria-label="Regras do Source AO">
+        <aside class="hero-command" data-i18n-aria-label="sourceRules" aria-label="Regras do Source AO">
           <div class="command-head">
             <span class="command-icon" aria-hidden="true">S</span>
             <div><small data-i18n="commandEyebrow">MODO OPERACIONAL</small><strong data-i18n="commandTitle">Pesquisa estruturada</strong></div>
@@ -135,7 +135,7 @@
         </aside>
       </div>
 
-      <div class="shell capability-strip" aria-label="Capacidades">
+      <div class="shell capability-strip" data-i18n-aria-label="capabilities" aria-label="Capacidades">
         <div><span>01</span><p><strong data-i18n="cap1t">Pesquisa técnica</strong><small data-i18n="cap1s">Termos PT/EN e especificações</small></p></div>
         <div><span>02</span><p><strong data-i18n="cap2t">Pesquisa de fornecedores</strong><small data-i18n="cap2s">Angola e Luanda primeiro</small></p></div>
         <div><span>03</span><p><strong data-i18n="cap3t">Estados de evidência</strong><small data-i18n="cap3s">Fonte ≠ stock confirmado</small></p></div>
@@ -147,29 +147,29 @@
     <section class="intelligence-bridge shell" aria-label="Source AO Intelligence">
       <div class="intelligence-bridge-head">
         <div>
-          <p class="eyebrow">ANÁLISE COMERCIAL</p>
-          <h2>Mais do que listar oportunidades.</h2>
+          <p class="eyebrow" data-i18n="intelligenceEyebrow">ANÁLISE COMERCIAL</p>
+          <h2 data-i18n="intelligenceTitle">Mais do que listar oportunidades.</h2>
         </div>
-        <a class="btn btn-outline" href="opportunity-radar.html">Abrir Intelligence Radar →</a>
+        <a class="btn btn-outline" href="opportunity-radar.html" data-i18n="intelligenceLink">Abrir Intelligence Radar →</a>
       </div>
       <div class="intelligence-bridge-grid">
         <article>
           <span>01</span>
-          <small>IDENTIFICAR</small>
-          <strong>Fonte rastreável</strong>
-          <p>Capta RFQs, concursos e sinais comerciais em Angola mantendo a ligação à origem para validação.</p>
+          <small data-i18n="intelligence1Label">IDENTIFICAR</small>
+          <strong data-i18n="intelligence1Title">Fonte rastreável</strong>
+          <p data-i18n="intelligence1Text">Capta RFQs, concursos e sinais comerciais em Angola mantendo a ligação à origem para validação.</p>
         </article>
         <article>
           <span>02</span>
-          <small>AVALIAR</small>
-          <strong>Adequação comercial</strong>
-          <p>Organiza área de negócio, adequação, confiança da evidência, urgência e localização antes da decisão.</p>
+          <small data-i18n="intelligence2Label">AVALIAR</small>
+          <strong data-i18n="intelligence2Title">Adequação comercial</strong>
+          <p data-i18n="intelligence2Text">Organiza área de negócio, adequação, confiança da evidência, urgência e localização antes da decisão.</p>
         </article>
         <article class="intelligence-highlight">
           <span>03</span>
-          <small>AGIR</small>
-          <strong>Ação operacional</strong>
-          <p>Transforma a oportunidade em próxima ação: validar requisitos, localizar parceiro ou fornecedor, preparar custo, margem e candidatura.</p>
+          <small data-i18n="intelligence3Label">AGIR</small>
+          <strong data-i18n="intelligence3Title">Ação operacional</strong>
+          <p data-i18n="intelligence3Text">Transforma a oportunidade em próxima ação: validar requisitos, localizar parceiro ou fornecedor, preparar custo, margem e candidatura.</p>
         </article>
       </div>
     </section>
@@ -264,26 +264,26 @@
       </div>
     </section>
 
-    <section class="intelligence-bridge shell" aria-label="Rede comercial Source AO">
+    <section class="intelligence-bridge shell" data-i18n-aria-label="commercialNetwork" aria-label="Rede comercial Source AO">
       <div class="intelligence-bridge-head">
         <div>
-          <p class="eyebrow">REDE COMERCIAL HMATIAS</p>
-          <h2>Fornecedores e subempreiteiros entram por avaliação.</h2>
+          <p class="eyebrow" data-i18n="networkEyebrow">REDE COMERCIAL HMATIAS</p>
+          <h2 data-i18n="networkTitle">Fornecedores e subempreiteiros entram por avaliação.</h2>
         </div>
-        <a class="btn btn-primary" href="partner-application.html">Apresentar empresa →</a>
+        <a class="btn btn-primary" href="partner-application.html" data-i18n="networkLink">Apresentar empresa →</a>
       </div>
       <div class="intelligence-bridge-grid">
         <article>
-          <span>01</span><small>IDENTIFY</small><strong>Identidade empresarial</strong>
-          <p>Nome legal, registo, localização, contacto profissional e presença digital quando disponível.</p>
+          <span>01</span><small data-i18n="network1Label">IDENTIFICAR</small><strong data-i18n="network1Title">Identidade empresarial</strong>
+          <p data-i18n="network1Text">Nome legal, registo, localização, contacto profissional e presença digital quando disponível.</p>
         </article>
         <article>
-          <span>02</span><small>QUALIFY</small><strong>Capacidade real</strong>
-          <p>Construção, facilities, canalização, eletricidade, HVAC, fornecimento e outras capacidades comprováveis.</p>
+          <span>02</span><small data-i18n="network2Label">QUALIFICAR</small><strong data-i18n="network2Title">Capacidade real</strong>
+          <p data-i18n="network2Text">Construção, facilities, canalização, eletricidade, HVAC, fornecimento e outras capacidades comprováveis.</p>
         </article>
         <article class="intelligence-highlight">
-          <span>03</span><small>REVIEW</small><strong>Ativação controlada</strong>
-          <p>A candidatura entra em revisão privada. Nenhuma empresa é apresentada como parceira aprovada automaticamente.</p>
+          <span>03</span><small data-i18n="network3Label">REVER</small><strong data-i18n="network3Title">Ativação controlada</strong>
+          <p data-i18n="network3Text">A candidatura entra em revisão privada. Nenhuma empresa é apresentada como parceira aprovada automaticamente.</p>
         </article>
       </div>
     </section>
@@ -314,14 +314,14 @@
           <a class="btn btn-light" href="rfq.html" data-i18n="fullRfq">Pedido de cotação com produtos do catálogo →</a>
         </div>
         <form class="request-form request-form-structured" id="requestForm" novalidate>
-          <label class="request-field request-field-full"><span data-request-pt="Material ou serviço *" data-request-en="Material or service *">Material ou serviço *</span><input id="requestItem" type="text" maxlength="240" placeholder="Ex.: capacete de segurança, tubo PVC" required></label>
-          <label class="request-field"><span data-request-pt="Quantidade" data-request-en="Quantity">Quantidade</span><input id="requestQty" type="number" inputmode="decimal" min="0.001" step="any" placeholder="Ex.: 15"></label>
-          <label class="request-field"><span data-request-pt="Unidade" data-request-en="Unit">Unidade</span><select id="requestUnit"><option value="">A confirmar</option><option value="un">Unidade (un)</option><option value="kg">kg</option><option value="m">m</option><option value="m2">m²</option><option value="m3">m³</option><option value="L">Litros (L)</option><option value="rolo">Rolo</option><option value="caixa">Caixa</option><option value="palete">Palete</option></select></label>
-          <label class="request-field request-field-full"><span data-request-pt="Especificações / referência" data-request-en="Technical specification / reference">Especificações / referência</span><input id="requestSpec" type="text" maxlength="300" placeholder="Norma, dimensão, marca ou código técnico"></label>
+          <label class="request-field request-field-full"><span data-request-pt="Material ou serviço *" data-request-en="Material or service *">Material ou serviço *</span><input id="requestItem" type="text" maxlength="240" data-i18n-placeholder="requestItemPlaceholder" placeholder="Ex.: capacete de segurança, tubo PVC" required></label>
+          <label class="request-field"><span data-request-pt="Quantidade" data-request-en="Quantity">Quantidade</span><input id="requestQty" type="number" inputmode="decimal" min="0.001" step="any" data-i18n-placeholder="requestQtyPlaceholder" placeholder="Ex.: 15"></label>
+          <label class="request-field"><span data-request-pt="Unidade" data-request-en="Unit">Unidade</span><select id="requestUnit"><option value="" data-i18n="unitConfirm">A confirmar</option><option value="un" data-i18n="unitEach">Unidade (un)</option><option value="kg">kg</option><option value="m">m</option><option value="m2">m²</option><option value="m3">m³</option><option value="L" data-i18n="unitLitres">Litros (L)</option><option value="rolo" data-i18n="unitRoll">Rolo</option><option value="caixa" data-i18n="unitBox">Caixa</option><option value="palete" data-i18n="unitPallet">Palete</option></select></label>
+          <label class="request-field request-field-full"><span data-request-pt="Especificações / referência" data-request-en="Technical specification / reference">Especificações / referência</span><input id="requestSpec" type="text" maxlength="300" data-i18n-placeholder="requestSpecPlaceholder" placeholder="Norma, dimensão, marca ou código técnico"></label>
           <label class="request-field"><span data-request-pt="Local de entrega *" data-request-en="Delivery location *">Local de entrega *</span><input id="requestLocation" type="text" value="Luanda" maxlength="100" required></label>
-          <label class="request-field"><span data-request-pt="Prioridade" data-request-en="Priority">Prioridade</span><select id="requestUrgency"><option value="">Normal</option><option value="urgent">Urgente</option><option value="this week">Esta semana</option></select></label>
+          <label class="request-field"><span data-request-pt="Prioridade" data-request-en="Priority">Prioridade</span><select id="requestUrgency"><option value="" data-i18n="priorityNormal">Normal</option><option value="urgent" data-i18n="priorityUrgent">Urgente</option><option value="this week" data-i18n="priorityWeek">Esta semana</option></select></label>
           <label class="request-field request-field-full"><span data-request-pt="WhatsApp, telefone ou e-mail *" data-request-en="WhatsApp, phone or email *">WhatsApp, telefone ou e-mail *</span><input id="requestContact" type="text" autocomplete="email" maxlength="180" required placeholder="+244 … ou email@empresa.com"></label>
-          <label class="request-consent request-field-full"><input id="requestConsent" type="checkbox" required><span data-request-pt="Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver" data-request-en="I authorise HMATIAS to register and use these details to respond to my request. See">Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver</span> <a href="privacy.html">política de privacidade</a>.</label>
+          <label class="request-consent request-field-full"><input id="requestConsent" type="checkbox" required><span data-request-pt="Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver" data-request-en="I authorise HMATIAS to register and use these details to respond to my request. See">Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver</span> <a href="privacy.html" data-i18n="privacyPolicy">política de privacidade</a>.</label>
           <button class="btn btn-light" type="submit" data-i18n="prepareRequest">Registar pedido de sourcing</button>
           <p class="request-disclosure request-field-full" id="requestDisclosure" role="status" aria-live="polite">O pedido só fica registado quando o sistema apresenta uma referência. O registo não confirma stock, preço nem notificação à equipa.</p>
         </form>
@@ -331,10 +331,10 @@
 
   <footer class="footer">
     <div class="shell footer-main">
-      <a class="source-brand source-brand-footer" href="#top"><img src="../images/source-ao-logo.svg" alt="SOURCE AO — pesquisa técnica de materiais e fornecedores da HMATIAS" width="760" height="360" loading="lazy"></a>
+      <a class="source-brand source-brand-footer" href="#top"><img src="../images/source-ao-logo.svg" data-i18n-alt="sourceLogo" alt="SOURCE AO — pesquisa técnica de materiais e fornecedores da HMATIAS" width="760" height="360" loading="lazy"></a>
       <p data-i18n="footerLine">Search. Verify. Source.</p>
-      <div class="footer-links"><a href="#search" data-i18n="navSearch">Pesquisa</a><a href="#radar" data-i18n="navRadar">Radar</a><a href="opportunity-radar.html" data-i18n="navOpportunities">Oportunidades</a><a href="#how" data-i18n="navHow">Como funciona</a><a href="partner-application.html">Parceiros</a><a href="privacy.html">Privacidade</a><a href="terms.html">Termos</a></div>
-      <a class="service-by service-by-link" href="../" aria-label="Abrir site oficial HMATIAS"><span data-i18n="serviceBy">Um serviço da HMATIAS</span> ↗</a>
+      <div class="footer-links"><a href="#search" data-i18n="navSearch">Pesquisa</a><a href="#radar" data-i18n="navRadar">Radar</a><a href="opportunity-radar.html" data-i18n="navOpportunities">Oportunidades</a><a href="#how" data-i18n="navHow">Como funciona</a><a href="partner-application.html" data-i18n="partners">Parceiros</a><a href="privacy.html" data-i18n="privacy">Privacidade</a><a href="terms.html" data-i18n="terms">Termos</a></div>
+      <a class="service-by service-by-link" href="../" data-i18n-aria-label="officialSite" aria-label="Abrir site oficial HMATIAS"><span data-i18n="serviceBy">Um serviço da HMATIAS</span> ↗</a>
     </div>
     <div class="shell footer-bottom"><small>© 2026 Source AO.</small><small data-i18n="footerTruth">Evidência antes de afirmações comerciais.</small></div>
   </footer>
@@ -342,7 +342,7 @@
   <script src="runtime-config.js" defer></script>
   <script src="sourcing-ui.js?v=20261009-2" defer></script>
   <script src="data-engine.js" defer></script>
-  <script src="sourceao.js?v=20261010-professional-copy1" defer></script>
+  <script src="sourceao.js?v=20261012-language2" defer></script>
   <script src="verified-results.js?v=20261012-accessibility1" defer></script>
 </body>
 </html>
