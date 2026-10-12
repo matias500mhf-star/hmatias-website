@@ -262,11 +262,14 @@
 
   function sourceResearchPanel(){
     let root=$('#sourceResearchPanel');
-    if(root)return root;
-    root=document.createElement('aside');root.id='sourceResearchPanel';root.className='source-research-panel';
-    root.setAttribute('aria-label','Supplier research and search coverage');
-    const zone=$('#resultZone');
-    (ensureList()?.parentElement||zone)?.append(root);
+    if(!root){
+      root=document.createElement('aside');root.id='sourceResearchPanel';root.className='source-research-panel';
+      const zone=$('#resultZone');
+      (ensureList()?.parentElement||zone)?.append(root);
+    }
+    root.setAttribute('aria-label',isPt()
+      ?'Pesquisa de fornecedores e cobertura da pesquisa'
+      :'Supplier research and search coverage');
     return root;
   }
   function updateResearchCoverage(status){
