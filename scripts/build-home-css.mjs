@@ -1,4 +1,4 @@
-import {readFileSync, writeFileSync} from 'node:fs';
+import {readFileSync, readdirSync, writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {transform} from 'lightningcss';
 
@@ -17,11 +17,26 @@ export const homeCssSource = sources => sources
 
 // Minify after concatenation so source order and the final cart overrides stay intact.
 // The original stylesheets remain readable and are the only files edited by hand.
-export const homeCssContent = sources => transform({
-  filename: 'hmatias-bundle.css',
-  code: Buffer.from(homeCssSource(sources)),
-  minify: true,
-}).code.toString() + '\n';
+export const homeCssContent = sources => {
+  let visitor;
+  if(sources.includes('clean-store.css')||sources.includes('facilities-clean.css')){
+    const cleanMarkup=['clean.html','clean-en.html'].map(path=>readFileSync(new URL(path,root),'utf8')).join('\n');
+    const sharedRuntime=readdirSync(root).filter(path=>path.endsWith('.js'))
+      .map(path=>readFileSync(new URL(path,root),'utf8')).join('\n');
+    // Remove only audited families from other pages. Header, forms, cart,
+    // assistant and unknown/dynamically generated classes always remain.
+    const otherPageClass=/^(?:(?:unit|business|division|visa|karta|rfq|booking|catalogue|company|project|sector|supply|why-us)-|hmatias-(?:booking|credibility|facilities|karta|legal|rfq|catalogue)$)/;
+    const unused=name=>otherPageClass.test(name)&&!cleanMarkup.includes(name)&&!sharedRuntime.includes(name);
+    visitor={Rule:{style(rule){
+      // Inspect direct positive classes only. Nested :not(), :is(), :has()
+      // branches are deliberately preserved, including non-home positioning.
+      // Keep mixed selector lists intact. Drop a rule only when every selector
+      // explicitly belongs to an unused family from another page.
+      if(rule.value.selectors.every(selector=>selector.some(part=>part.type==='class'&&unused(part.name))))return [];
+    }}};
+  }
+  return transform({filename:'hmatias-bundle.css',code:Buffer.from(homeCssSource(sources)),minify:true,visitor}).code.toString()+'\n';
+};
 
 export function validateHomeCssBundles() {
   for (const [bundle, sources] of Object.entries(homeCssBundles)) {
