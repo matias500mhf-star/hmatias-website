@@ -5,6 +5,7 @@
   let apiSequence=0;
   let smartSequence=0;
   let missionSequence=0;
+  const radarRequests=new Map();
   let technical=null;
   const technicalReady=import('./technical-requirement.js?v=20261013-reference2')
     .then(module=>{technical=module;})
@@ -386,6 +387,9 @@
 
   function refreshSearch(){
     // A failed lookup for a new requirement must not retain the previous brief.
+    ++apiSequence;
+    ++smartSequence;
+    ++missionSequence;
     renderSmartPlan(null);
     renderMission(null);
     updateResearchCoverage('pending');
@@ -417,17 +421,28 @@
       const small=row.querySelector('small');
       if(!q||!small) return;
       const loc=(small.textContent.split(' · ')[0]||'Luanda').trim();
+      const key=JSON.stringify([q,loc]);
       try{
-        const result=fromApi(await window.SourceAOAPI.search(q,loc));
+        let pending=radarRequests.get(key);
+        if(!pending){
+          pending=Promise.resolve().then(()=>window.SourceAOAPI.search(q,loc))
+            .finally(()=>{if(radarRequests.get(key)===pending)radarRequests.delete(key);});
+          radarRequests.set(key,pending);
+        }
+        const payload=await pending;
+        if(!row.isConnected)return;
+        const result=fromApi(payload);
         const best=result.best_status||'discovered';
-        small.textContent=loc+' · '+L(best==='discovered'?'awaiting':best);
+        const next=loc+' · '+L(best==='discovered'?'awaiting':best);
+        if(small.textContent!==next)small.textContent=next;
       }catch(error){
         console.warn('[Source AO Radar API fallback]',error);
       }
     }));
   }
 
-  function later(){setTimeout(()=>{refreshSearch();enrichRadar();void enrichRadarApi();},0);}
+  function laterSearch(){setTimeout(refreshSearch,0);}
+  function laterLanguage(){setTimeout(()=>{refreshSearch();enrichRadar();void enrichRadarApi();},0);}
 
   document.addEventListener('DOMContentLoaded',async()=>{
     ensureList();
@@ -438,16 +453,16 @@
     enrichRadar();
     void enrichRadarApi();
 
-    $('#searchForm')?.addEventListener('submit',later);
-    document.querySelectorAll('[data-query]').forEach(btn=>btn.addEventListener('click',later));
-    $('#langToggle')?.addEventListener('click',later);
-    $('#locationInput')?.addEventListener('change',later);
-    $('#quantityInput')?.addEventListener('change',later);
-    $('#neededByInput')?.addEventListener('change',later);
-    $('#radarForm')?.addEventListener('submit',later);
-    $('#addRadar')?.addEventListener('click',later);
+    $('#searchForm')?.addEventListener('submit',laterSearch);
+    document.querySelectorAll('[data-query]').forEach(btn=>btn.addEventListener('click',laterSearch));
+    $('#langToggle')?.addEventListener('click',laterLanguage);
+    $('#locationInput')?.addEventListener('change',laterSearch);
+    $('#quantityInput')?.addEventListener('change',laterSearch);
+    $('#neededByInput')?.addEventListener('change',laterSearch);
 
     const list=$('#radarList');
-    if(list) new MutationObserver(()=>{enrichRadar();void enrichRadarApi();}).observe(list,{childList:true,subtree:true});
+    // Status text belongs to a row, not to the list's set of requirements.
+    // Observing descendants feeds our own API updates back into more lookups.
+    if(list) new MutationObserver(()=>{enrichRadar();void enrichRadarApi();}).observe(list,{childList:true});
   });
 })();
