@@ -433,6 +433,7 @@ jobs:
           node --check analytics.js
           node --check analytics-events.js
           node --check website-lead-client.js
+          node --check website-lead-intake.js
           node --check site-bootstrap.js
           node --check script.js
           node --check growth-intelligence.js

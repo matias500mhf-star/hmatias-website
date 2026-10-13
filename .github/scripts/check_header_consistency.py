@@ -33,7 +33,7 @@ for page in sorted(ROOT.glob("*.html")):
             problems.append(f"{page.name}: switch should lead to {expected} variant")
     if "header.css?v=20261010-freeze1" not in html:
         problems.append(f"{page.name}: stale global navigation stylesheet")
-    if "script.js?v=20261012-accessibility1" not in html:
+    if "script.js?v=20261014-lazy1" not in html:
         problems.append(f"{page.name}: stale mobile navigation controller")
     if page.name in ("en.html", "credibility.html", "work-catalogue.html", "karta-en.html"):
         if 'About us' not in nav.group():

@@ -34,7 +34,7 @@ for filename in ("index.html", "en.html"):
             require(f'for="{input_id.group(1)}"' in form,
                     f"{filename}: location has no associated label")
 
-auto = (ROOT / "website-lead-client.js").read_text(encoding="utf-8")
+auto = (ROOT / "website-lead-intake.js").read_text(encoding="utf-8")
 legacy = (ROOT / "lead-intake-client.js").read_text(encoding="utf-8")
 manual = (ROOT / "script.js").read_text(encoding="utf-8")
 
