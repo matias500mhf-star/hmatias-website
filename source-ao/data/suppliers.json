@@ -1,6 +1,6 @@
 {
   "version": "0.6",
-  "updated_at": "2026-09-25T21:00:00+01:00",
+  "updated_at": "2026-10-13T13:22:00+01:00",
   "suppliers": [
     {
       "id": "sup-imbo-angola",
@@ -412,6 +412,78 @@
       "phone": "+244 952 824 464",
       "email": "Info@angoayiti.com",
       "contact_source": "https://www.angoayiti.com/contact"
+    },
+    {
+      "id": "sup-evolution-safety-namibia",
+      "name": "Evolution Safety Namibia",
+      "category": [
+        "industrial-supply",
+        "tools-equipment"
+      ],
+      "location": "Walvis Bay, Namibia",
+      "website": "https://www.esn.com.na/",
+      "source_urls": [
+        "https://www.esn.com.na/",
+        "https://www.esn.com.na/wenaas",
+        "https://www.esn.com.na/vulcan",
+        "https://www.esn.com.na/brady",
+        "https://www.esn.com.na/karam",
+        "https://www.esn.com.na/blackline",
+        "https://www.esn.com.na/mechanix",
+        "https://www.esn.com.na/wiley"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-10-13T13:22:00+01:00",
+      "brands": [
+        "Wenaas",
+        "Vulcan",
+        "Brady",
+        "Karam",
+        "Blackline Safety",
+        "Mechanix Wear",
+        "Wiley X"
+      ],
+      "capabilities": [
+        "personal protective equipment",
+        "PPE",
+        "EPI",
+        "equipamentos de proteção individual",
+        "industrial safety equipment",
+        "safety equipment",
+        "segurança industrial",
+        "industrial workwear",
+        "uniformes profissionais",
+        "fardamento industrial",
+        "vestuário ignífugo",
+        "flame retardant workwear",
+        "offshore workwear",
+        "protective footwear",
+        "fall arrest protection",
+        "fall protection",
+        "arnês de segurança",
+        "linhas de vida",
+        "gas detection",
+        "detetor de gases",
+        "sistemas de deteção de gases",
+        "lockout tagout",
+        "sinalização industrial",
+        "industrial identification",
+        "work gloves",
+        "luvas de proteção",
+        "luvas industriais",
+        "safety eyewear",
+        "óculos de proteção",
+        "Wenaas",
+        "Vulcan",
+        "Brady",
+        "Karam",
+        "Blackline",
+        "Mechanix",
+        "Wiley X"
+      ],
+      "phone": "+264 83 723 3790",
+      "email": "sales@esn.com.na",
+      "contact_source": "https://www.esn.com.na/"
     }
   ],
   "rules": {
