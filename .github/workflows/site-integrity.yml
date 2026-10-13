@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned CSS build tooling
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Validate shared PT/EN responsive header
         run: python3 .github/scripts/check_header_consistency.py
       - name: Validate national contact location routing PT/EN
