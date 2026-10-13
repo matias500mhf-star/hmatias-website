@@ -1,5 +1,6 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
+import {transform} from 'lightningcss';
 
 const root = new URL('../', import.meta.url);
 export const homeCssBundles = {
@@ -10,9 +11,17 @@ export const homeCssBundles = {
   'clean-details.css': ['typography.css', 'site-review.css', 'premium-typography.css', 'institutional-premium.css', 'facilities-clean.css', 'clean-cart.css'],
 };
 
-export const homeCssContent = sources => sources
+export const homeCssSource = sources => sources
   .map(source => `/* ${source} */\n${readFileSync(new URL(source, root), 'utf8').trimEnd()}\n`)
   .join('\n');
+
+// Minify after concatenation so source order and the final cart overrides stay intact.
+// The original stylesheets remain readable and are the only files edited by hand.
+export const homeCssContent = sources => transform({
+  filename: 'hmatias-bundle.css',
+  code: Buffer.from(homeCssSource(sources)),
+  minify: true,
+}).code.toString() + '\n';
 
 export function validateHomeCssBundles() {
   for (const [bundle, sources] of Object.entries(homeCssBundles)) {
