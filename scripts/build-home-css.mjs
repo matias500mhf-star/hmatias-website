@@ -5,6 +5,9 @@ const root = new URL('../', import.meta.url);
 export const homeCssBundles = {
   'home-base.css': ['style.css', 'typography.css'],
   'home-details.css': ['assistant.css', 'karta-access.css', 'brand-lock.css', 'premium-editorial.css'],
+  'clean-base.css': ['style.css', 'premium.css', 'division.css', 'commerce.css', 'clean-store.css', 'clean-cart.css', 'assistant.css'],
+  // The final cart rules preserve the original runtime stylesheet cascade.
+  'clean-details.css': ['typography.css', 'site-review.css', 'premium-typography.css', 'institutional-premium.css', 'facilities-clean.css', 'clean-cart.css'],
 };
 
 export const homeCssContent = sources => sources
@@ -26,5 +29,5 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     }
   }
   validateHomeCssBundles();
-  console.log('PASS: homepage styles preserve the source CSS and cascade order.');
+  console.log('PASS: homepage and Clean styles preserve the source CSS and cascade order.');
 }
