@@ -406,6 +406,11 @@ button{color:inherit}
 .footer .source-brand img{filter:none!important;opacity:1!important}
 .service-by-link{color:#dbeaf5!important;font-weight:700;white-space:nowrap}
 .service-by-link:hover{color:#fff!important}
+/* Legible small labels and footer links; retain the existing brand palette. */
+.intelligence-bridge-grid small{color:#0b5f9d;font-size:11px}
+.footer> .shell>p,.footer> .shell>small,.footer .footer-links{color:#c9d7e3}
+.footer .footer-links a{color:inherit}
+.footer> .shell>p,.footer> .shell>small,.footer .footer-links{font-size:12px}
 @media(max-width:760px){.hmatias-return{font-size:9px;padding:0 8px;border-left:0}}
 @media(max-width:620px){.hmatias-return{min-height:30px}.source-brand{width:138px;flex-basis:138px}.source-brand img{max-height:68px}.source-brand-footer{width:154px}}
 
