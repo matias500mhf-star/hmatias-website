@@ -5,6 +5,10 @@
   let apiSequence=0;
   let smartSequence=0;
   let missionSequence=0;
+  let technical=null;
+  const technicalReady=import('./technical-requirement.js?v=20261013-reference1')
+    .then(module=>{technical=module;})
+    .catch(error=>console.warn('[Source AO technical requirement]',error));
 
   const isPt=()=>document.documentElement.lang.toLowerCase().startsWith('pt');
   const labels={
@@ -38,6 +42,7 @@
   }
 
   async function ensureRuntimeAPI(){
+    await technicalReady;
     try{
       if(!window.SOURCE_AO_RUNTIME) await loadScript('runtime-config.js');
       if(!window.SourceAOAPI) await loadScript('api-client.js');
@@ -84,7 +89,8 @@
 
     const summary=document.createElement('p');
     const label=isPt()?plan.interpretation?.label_pt:plan.interpretation?.label_en;
-    const specs=(plan.interpretation?.specifications||[]).join(', ');
+    const requirement=technical?.technicalRequirement(plan.query||$('#searchInput')?.value||'');
+    const specs=[...new Set([...(requirement?.specifications||[]),...(plan.interpretation?.specifications||[])])].join(', ');
     summary.textContent=[label,specs,plan.location].filter(Boolean).join(' · ');
 
     const terms=document.createElement('div');terms.className='smart-search-terms';
@@ -124,13 +130,15 @@
     const heading=document.createElement('strong');heading.textContent=isPt()?'Prepare o seu pedido à HMATIAS':'Prepare your request to HMATIAS';
     title.append(eyebrow,heading);
     const status=document.createElement('span');status.className='data-badge data-source_checked';
-    status.textContent=mission.status==='commercial_confirmation_available'
+    const requirement=technical?.technicalRequirement(mission.requirement?.query||'');
+    const exact=[...(mission.product_matches||mission.exact_matches||[])]
+      .filter(row=>!requirement||technical.matchesTechnicalRequirement(row.item,requirement));
+    status.textContent=exact.some(row=>['in_stock_confirmed','supplier_confirmed'].includes(row.status))
       ?(isPt()?'CONFIRMAÇÃO DISPONÍVEL':'CONFIRMATION AVAILABLE')
       :(isPt()?'A CONFIRMAR':'TO CONFIRM');
     head.append(title,status);
 
     const grid=document.createElement('div');grid.className='mission-grid';
-    const exact=[...(mission.product_matches||mission.exact_matches||[])];
     const rows=exact.slice(0,5);
     grid.hidden=rows.length===0;
 
@@ -150,6 +158,12 @@
     const requestParams=new URLSearchParams({request:mission.requirement?.query||'',location:mission.requirement?.location||'Luanda',lang:isPt()?'pt':'en'});
     if(mission.interpretation?.item_id) requestParams.set('item',mission.interpretation.item_id);
     if(mission.requirement?.quantity!=null) requestParams.set('quantity',String(mission.requirement.quantity));
+    if(requirement?.specifications.length)requestParams.set('specification',requirement.specifications.join(', '));
+    if(requirement?.quantity){
+      requestParams.set('unit',requirement.quantity.unit);
+      if(!requestParams.has('quantity'))requestParams.set('quantity',String(requirement.quantity.value));
+    }
+    if(requirement?.strict)requestParams.set('alternatives','no');
     if(mission.requirement?.needed_by) requestParams.set('needed_by',mission.requirement.needed_by);
     if(mission.urgency==='urgent') requestParams.set('urgency','urgent');
     requestLink.href='rfq.html?'+requestParams.toString();
@@ -161,7 +175,11 @@
     const copyBtn=document.createElement('button');copyBtn.type='button';copyBtn.className='mission-copy';copyBtn.textContent=isPt()?'Copiar RFQ':'Copy RFQ';
     rfqHead.append(rfqTitle,copyBtn);
     const pre=document.createElement('pre');
-    const rfqText=(isPt()?mission.rfq?.pt:mission.rfq?.en)||'';
+    const rfqText=requirement?technical.technicalRfq(requirement,{
+      lang:isPt()?'pt':'en',location:mission.requirement?.location||'Luanda',
+      quantity:$('#quantityInput')?.value.trim()||mission.requirement?.quantity||'',
+      neededBy:mission.requirement?.needed_by||$('#neededByInput')?.value||''
+    }):(isPt()?mission.rfq?.pt:mission.rfq?.en)||'';
     // Older API responses use Portuguese defaults even in the English brief.
     pre.textContent=isPt()?rfqText:rfqText.replace(/^(Quantity|Required): a confirmar(?=\r?$)/gm,'$1: to confirm');
     copyBtn.addEventListener('click',async()=>{
@@ -219,6 +237,13 @@
   }
 
   function applyResult(result){
+    const requirement=technical?.technicalRequirement($('#searchInput')?.value||'');
+    if(requirement){
+      const matches=(result.matches||[]).filter(row=>row.kind==='item'
+        ?technical.matchesTechnicalRequirement(row.item,requirement)
+        :!requirement.specifications.length);
+      result={...result,matches,best_status:matches.reduce((best,row)=>(rank[row.status]||0)>(rank[best]||0)?row.status:best,'discovered')};
+    }
     const status=$('#resultStatus');
     const freshness=$('.result-meta>div:nth-child(3) strong');
     const confidence=$('.confidence-card strong');
@@ -358,6 +383,9 @@
   }
 
   function refreshSearch(){
+    // A failed lookup for a new requirement must not retain the previous brief.
+    renderSmartPlan(null);
+    renderMission(null);
     updateResearchCoverage('pending');
     refreshStaticSearch();
     void refreshApiSearch();

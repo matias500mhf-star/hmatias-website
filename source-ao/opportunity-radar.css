@@ -152,6 +152,12 @@
 .op-next-action{max-width:230px;padding:10px 11px;border-left:2px solid #0b6fba;background:#f5f9fc;text-align:left}
 .op-next-action small{display:block;color:#728593;font-size:8px;font-weight:850;letter-spacing:.09em}
 .op-next-action strong{display:block;margin-top:4px;color:#17354d;font-size:11px;line-height:1.38;font-weight:800}
+/* Consistent readable metadata on the existing white and pale surfaces. */
+.op-control-copy>p,.op-radar-search>small,.op-filter-group>small,
+.op-sync-status small,#visibleCount,.op-score small,.op-meta span,
+.op-priority.low,.op-next-action small,.op-deadline,.op-trust-note{color:#52697b}
+.op-radar-search>small,.op-filter-group>small,.op-sync-status small,
+.op-score small,.op-next-action small,.op-deadline,.op-trust-note{font-size:11px}
 @media(max-width:980px){
   .op-radar-search{grid-template-columns:1fr;justify-content:start;max-width:620px}
   .op-filter-stack{width:100%}

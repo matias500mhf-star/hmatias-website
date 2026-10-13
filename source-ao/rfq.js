@@ -239,9 +239,11 @@ addItem({
   category:params.get('category'),
   description:(params.get('request')||'').slice(0,200),
   quantity:/^\d+(\.\d+)?$/.test(params.get('quantity')||'')?params.get('quantity'):'',
-  specification:(params.get('specification')||'').slice(0,600)
+  specification:(params.get('specification')||'').slice(0,600),
+  unit:UNITS.includes(params.get('unit'))?params.get('unit'):'un'
 });
 $('#rfqLocation').value=(params.get('location')||'Luanda').slice(0,100);
+if(params.get('alternatives')==='no')$('#rfqAlternatives').value='no';
 if(params.get('urgency')==='urgent')$('#rfqUrgency').value='urgent';
 if(/^\d{4}-\d{2}-\d{2}$/.test(params.get('needed_by')||''))$('#rfqDate').value=params.get('needed_by');
 showStep(0,false);
