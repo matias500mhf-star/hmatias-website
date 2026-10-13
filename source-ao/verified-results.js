@@ -160,7 +160,10 @@
     const rfqTitle=document.createElement('strong');rfqTitle.textContent=isPt()?'RFQ pronto para enviar':'RFQ ready to send';
     const copyBtn=document.createElement('button');copyBtn.type='button';copyBtn.className='mission-copy';copyBtn.textContent=isPt()?'Copiar RFQ':'Copy RFQ';
     rfqHead.append(rfqTitle,copyBtn);
-    const pre=document.createElement('pre');pre.textContent=isPt()?mission.rfq?.pt:mission.rfq?.en;
+    const pre=document.createElement('pre');
+    const rfqText=(isPt()?mission.rfq?.pt:mission.rfq?.en)||'';
+    // Older API responses use Portuguese defaults even in the English brief.
+    pre.textContent=isPt()?rfqText:rfqText.replace(/^(Quantity|Required): a confirmar(?=\r?$)/gm,'$1: to confirm');
     copyBtn.addEventListener('click',async()=>{
       try{
         await navigator.clipboard.writeText(pre.textContent||'');

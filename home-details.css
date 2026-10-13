@@ -1,0 +1,529 @@
+/* assistant.css */
+.hmatias-assistant{position:fixed;right:18px;bottom:72px;z-index:9999;font-family:inherit}.hmatias-assistant-toggle{display:inline-flex;align-items:center;gap:7px;min-height:44px;border:1px solid rgba(255,255,255,.16);background:#062d56;color:#fff;border-radius:999px;padding:9px 13px;box-shadow:0 10px 26px rgba(0,0,0,.18);font-weight:700;font-size:.75rem;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.hmatias-assistant-panel{display:none;width:min(360px,calc(100vw - 24px));height:min(500px,calc(100dvh - 118px));margin-bottom:9px;background:#fff;border:1px solid rgba(6,45,86,.14);border-radius:18px;box-shadow:0 22px 52px rgba(0,0,0,.22);overflow:hidden}.hmatias-assistant.is-open .hmatias-assistant-panel,.hmatias-assistant.open .hmatias-assistant-panel{display:flex;flex-direction:column}.hmatias-assistant-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:#062d56;color:#fff;padding:14px 15px}.hmatias-assistant-head strong{display:block;font-size:.875rem}.hmatias-assistant-head small{display:block;opacity:.78;font-size:.75rem;margin-top:2px}.hmatias-assistant-close{width:44px;height:44px;flex:0 0 auto;border:0;border-radius:50%;background:rgba(255,255,255,.10);color:#fff;font-size:1.25rem;line-height:1;cursor:pointer;touch-action:manipulation}.hmatias-assistant-messages{flex:1;overflow:auto;padding:14px;background:#f7f9fb;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}.hmatias-assistant-msg{max-width:88%;padding:9px 11px;margin:0 0 9px;border-radius:13px;line-height:1.45;font-size:.875rem;white-space:pre-wrap;overflow-wrap:anywhere}.hmatias-assistant-msg.assistant,.hmatias-assistant-msg.bot{background:#fff;border:1px solid #e3e9ef}.hmatias-assistant-msg.user{margin-left:auto;background:#062d56;color:#fff}.hmatias-assistant-form{display:flex;gap:7px;padding:10px;border-top:1px solid #e7ebef;background:#fff}.hmatias-assistant-form input{min-width:0;flex:1;border:1px solid #d6dde5;border-radius:11px;padding:10px 11px;font:inherit;font-size:16px;outline:none}.hmatias-assistant-form button{border:0;border-radius:11px;padding:0 13px;background:#062d56;color:#fff;font-size:.75rem;font-weight:700;cursor:pointer;min-height:44px;touch-action:manipulation}.hmatias-assistant-links{display:flex;gap:14px;padding:0 12px 10px;background:#fff}.hmatias-assistant-links a{display:inline-flex;align-items:center;min-height:40px;font-size:.75rem;text-decoration:none;font-weight:700;color:#062d56}@media(min-width:601px) and (max-width:1024px){.hmatias-assistant{right:16px;bottom:74px}.hmatias-assistant-panel{width:min(430px,calc(100vw - 32px));height:min(600px,calc(100dvh - 150px))}}@media(max-width:600px){.hmatias-assistant{right:max(14px,env(safe-area-inset-right));bottom:max(76px,calc(76px + env(safe-area-inset-bottom)))}.hmatias-assistant-toggle{width:54px;height:54px;min-height:54px;justify-content:center;padding:0;gap:0}.hmatias-assistant-toggle span{display:none}.hmatias-assistant-panel{position:fixed;left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));bottom:calc(140px + env(safe-area-inset-bottom));width:auto;height:min(520px,calc(100dvh - 154px - env(safe-area-inset-bottom)));margin:0;border-radius:16px}.hmatias-assistant-msg{font-size:.8rem}.hmatias-assistant-form{padding-bottom:calc(10px + env(safe-area-inset-bottom))}}@media(prefers-reduced-motion:reduce){.hmatias-assistant *{scroll-behavior:auto!important;transition:none!important}}
+
+/* karta-access.css */
+/* HMATIAS — KARTA product access component. Stable, isolated and position-configurable. */
+.karta-float{
+  --karta-edge:18px;
+  position:fixed;
+  z-index:58;
+  top:52%;
+  left:0;
+  width:58px;
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  overflow:hidden;
+  padding:8px 10px;
+  border:1px solid rgba(255,255,255,.2);
+  border-left:0;
+  border-radius:0 var(--karta-edge) var(--karta-edge) 0;
+  background:linear-gradient(145deg,#062d56 0%,#07477c 58%,#0b65a4 100%);
+  color:#fff!important;
+  text-decoration:none!important;
+  box-shadow:0 14px 36px rgba(6,45,86,.2);
+  transform:translateY(-50%);
+  transition:width .24s ease,transform .2s ease,box-shadow .24s ease;
+  isolation:isolate;
+}
+.karta-float::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  width:38px;
+  height:38px;
+  left:10px;
+  top:50%;
+  border:1px solid rgba(112,205,255,.7);
+  border-radius:50%;
+  transform:translateY(-50%) scale(.9);
+  opacity:.3;
+  animation:kartaSignal 2.8s ease-out infinite;
+  pointer-events:none;
+}
+.karta-float-mark{
+  position:relative;
+  z-index:1;
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:12px;
+  background:rgba(255,255,255,.1);
+  color:#fff;
+  font:800 .95rem/1 var(--font-site,'HMATIAS Inter',Arial,sans-serif);
+  letter-spacing:-.04em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
+}
+.karta-float-copy{
+  position:relative;
+  z-index:1;
+  display:grid;
+  gap:1px;
+  min-width:104px;
+  opacity:0;
+  transform:translateX(-7px);
+  transition:opacity .18s ease,transform .22s ease;
+  white-space:nowrap;
+}
+.karta-float-copy strong{
+  color:#fff!important;
+  font-size:.74rem;
+  line-height:1.15;
+  letter-spacing:.055em;
+}
+.karta-float-copy small{
+  color:#cbe8f8;
+  font-size:.59rem;
+  line-height:1.2;
+  letter-spacing:.025em;
+}
+.karta-float:hover,.karta-float:focus-visible{
+  width:172px;
+  box-shadow:0 18px 44px rgba(6,45,86,.27);
+}
+.karta-float:hover .karta-float-copy,.karta-float:focus-visible .karta-float-copy{
+  opacity:1;
+  transform:none;
+}
+.karta-float:focus-visible{outline:3px solid rgba(72,186,245,.65);outline-offset:3px}
+
+/* The component can be moved without changing markup or JavaScript. */
+.karta-float[data-position="right-center"]{
+  left:auto;
+  right:0;
+  flex-direction:row-reverse;
+  border-left:1px solid rgba(255,255,255,.2);
+  border-right:0;
+  border-radius:var(--karta-edge) 0 0 var(--karta-edge);
+}
+.karta-float[data-position="right-center"]::before{left:auto;right:10px}
+.karta-float[data-position="right-center"] .karta-float-copy{transform:translateX(7px);text-align:right}
+.karta-float[data-position="right-center"]:hover .karta-float-copy,.karta-float[data-position="right-center"]:focus-visible .karta-float-copy{transform:none}
+.karta-float[data-position="bottom-left"],.karta-float[data-position="bottom-right"]{
+  top:auto;
+  bottom:22px;
+  transform:none;
+}
+.karta-float[data-position="bottom-right"]{
+  left:auto;
+  right:0;
+  flex-direction:row-reverse;
+  border-left:1px solid rgba(255,255,255,.2);
+  border-right:0;
+  border-radius:var(--karta-edge) 0 0 var(--karta-edge);
+}
+.karta-float[data-position="bottom-right"]::before{left:auto;right:10px}
+
+@keyframes kartaSignal{
+  0%{opacity:.34;transform:translateY(-50%) scale(.82)}
+  62%,100%{opacity:0;transform:translateY(-50%) scale(1.5)}
+}
+
+@media(max-width:850px){.karta-float{display:none!important}}
+@media(prefers-reduced-motion:reduce){
+  .karta-float,.karta-float-copy{transition:none!important}
+  .karta-float::before{animation:none!important;opacity:.22}
+}
+
+/* brand-lock.css */
+/* HMATIAS brand lock — final premium colour system.
+   One dominant blue family across corporate pages, with tonal depth only. */
+:root{
+  --hm-brand:#062d56;
+  --hm-brand-deep:#052746;
+  --hm-brand-mid:#0b477c;
+  --hm-brand-accent:#0b5f9d;
+  --hm-brand-light:#dceaf5;
+  --hm-brand-soft:#f4f8fc;
+  --hm-brand-ink:#102d4d;
+  --hm-brand-muted:#607487;
+  --hm-brand-line:#d9e5ef;
+  --navy:var(--hm-brand);
+  --navy2:var(--hm-brand-mid);
+  --blue:var(--hm-brand-accent);
+  --sky:#78b9df;
+  --ink:var(--hm-brand-ink);
+  --muted:var(--hm-brand-muted);
+  --light:var(--hm-brand-soft);
+  --border:var(--hm-brand-line);
+  --unit-navy:var(--hm-brand);
+  --unit-blue:var(--hm-brand-accent);
+  --unit-sky:#78b9df;
+  --unit-ink:var(--hm-brand-ink);
+  --unit-muted:var(--hm-brand-muted);
+  --unit-line:var(--hm-brand-line);
+  --unit-soft:var(--hm-brand-soft);
+}
+
+/* Corporate colour hierarchy */
+.topbar,
+.hmatias-topbar{background:var(--hm-brand)!important}
+.hero,
+.unit-hero,
+.hmatias-home .supply,
+body.hmatias-catalogue .catalogue-hero{
+  background:linear-gradient(118deg,var(--hm-brand-deep) 0%,var(--hm-brand) 60%,var(--hm-brand-mid) 100%)!important;
+}
+body.hmatias-home #empresa.company{background:var(--hm-brand)!important}
+
+.btn-primary{
+  background:var(--hm-brand-accent)!important;
+  color:#fff!important;
+  box-shadow:0 10px 24px rgba(6,45,86,.18)!important;
+}
+.btn-primary:hover{background:var(--hm-brand-mid)!important}
+.eyebrow.blue,
+.service-card a,
+.project-caption a,
+.unit-card span,
+.catalog-summary-bar span,
+.form-consent a{color:var(--hm-brand-accent)!important}
+.smart-route-box .eyebrow{color:var(--hm-brand-mid)!important}
+
+/* Supply uses the same institutional palette as the rest of HMATIAS. */
+.hmatias-home .supply-card,
+.unit-hero-panel{
+  border-color:rgba(255,255,255,.18)!important;
+  background:rgba(255,255,255,.065)!important;
+  box-shadow:none!important;
+}
+.hmatias-home .supply-card>span,
+.unit-hero .eyebrow{color:#a9d2ea!important}
+.unit-step b,
+.business-process-card b{
+  background:#eaf3f9!important;
+  color:var(--hm-brand-accent)!important;
+}
+.unit-cta,
+.cta{background:#edf4f9!important}
+
+/* Footer: restrained corporate close, same blue family, no competing colour block. */
+footer,
+.hmatias-home .footer-pro,
+body.hmatias-catalogue footer{
+  background:var(--hm-brand-deep)!important;
+  color:#bfd2e1!important;
+  border-top:1px solid rgba(255,255,255,.08)!important;
+}
+footer strong,
+.hmatias-home .footer-pro-col strong{color:#fff!important}
+footer a,
+footer p,
+.hmatias-home .footer-pro-col a,
+.hmatias-home .footer-pro-col span,
+.hmatias-home .footer-pro-brand p{color:#b8ccdc!important}
+footer a:hover,
+.hmatias-home .footer-pro-col a:hover{color:#fff!important}
+.copyright,
+.hmatias-home .footer-pro-bottom{
+  border-top-color:rgba(255,255,255,.12)!important;
+}
+.copyright,
+.hmatias-home .footer-pro-bottom p,
+.hmatias-home .footer-pro-legal a{color:#91aabd!important}
+
+/* Product shortcuts: compact enough for mobile presentations and clearly separated. */
+footer .footer-karta-link,
+footer .footer-source-ao-link{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  max-width:max-content!important;
+  margin-top:16px!important;
+  padding:8px 9px!important;
+  vertical-align:middle!important;
+}
+footer .footer-karta-link{margin-right:18px!important}
+footer .footer-karta-mark,
+footer .footer-source-ao-mark{
+  width:30px!important;
+  height:30px!important;
+  flex:0 0 30px!important;
+  border-radius:8px!important;
+}
+footer .footer-karta-copy small,
+footer .footer-source-ao-copy small{display:none!important}
+footer .footer-karta-copy strong,
+footer .footer-source-ao-copy strong{
+  font-size:.72rem!important;
+  line-height:1.15!important;
+  letter-spacing:.01em!important;
+  white-space:nowrap!important;
+}
+
+/* Floating actions belong to HMATIAS visually; service names still identify the channel. */
+.whatsapp-float{
+  background:var(--hm-brand-accent)!important;
+  color:#fff!important;
+  box-shadow:0 12px 28px rgba(6,45,86,.2)!important;
+}
+.mobile-sticky-contact a:first-child{
+  background:var(--hm-brand-accent)!important;
+  color:#fff!important;
+}
+
+/* Premium catalogue and project treatment remain neutral so photography carries the colour. */
+body.hmatias-catalogue .work-card-copy small{color:#64798a!important}
+body.hmatias-catalogue .catalogue-grid-section{background:#fff!important}
+body.hmatias-catalogue .catalogue-note{border-top-color:var(--hm-brand-line)!important}
+
+/* Focus states use the same family and remain visible. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline-color:rgba(11,95,157,.48)!important;
+}
+
+@media(max-width:600px){
+  footer .footer-karta-link,
+  footer .footer-source-ao-link{
+    gap:6px!important;
+    padding:6px 7px!important;
+    margin-top:14px!important;
+  }
+  footer .footer-karta-link{margin-right:16px!important}
+  footer .footer-karta-mark,
+  footer .footer-source-ao-mark{
+    width:24px!important;
+    height:24px!important;
+    flex:0 0 24px!important;
+    border-radius:7px!important;
+    font-size:10px!important;
+  }
+  footer .footer-karta-copy strong,
+  footer .footer-source-ao-copy strong{
+    font-size:.66rem!important;
+    line-height:1.1!important;
+  }
+}
+
+@media(max-width:560px){
+  .mobile-sticky-contact{border-color:var(--hm-brand-line)!important}
+}
+
+/* premium-editorial.css */
+/* Stable corporate presentation for the PT/EN homepage and credibility pages.
+   Load in <head>, after the shared base. Do not inject visual layers at runtime. */
+body.site-stable{font-family:var(--font-site);color:var(--ink);overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+.site-stable .container{width:min(1180px,calc(100% - 48px))}
+.site-stable :is(h1,h2,h3){letter-spacing:-.025em;text-wrap:balance}
+.site-stable :is(.btn,.lang-switch){min-height:44px;font-size:.875rem}
+.site-stable .btn{border-radius:6px}
+.site-stable .btn:hover{transform:none}
+.site-stable .lang-switch{display:inline-flex;align-items:center;justify-content:center;min-width:44px;border:1px solid var(--border);border-radius:50%;font-weight:600}
+.site-stable .eyebrow{font-size:.75rem;line-height:1.5;letter-spacing:.09em}
+.site-stable :is(.hero-grid,.service-grid,.project-grid,.division-cards,.company-impact-grid,.contact-grid,.footer-pro-grid,.footer-grid)>*{min-width:0}
+.site-stable :is(a,button,input,select,textarea):focus-visible{outline:3px solid #48baf5;outline-offset:3px}
+.site-stable .hmatias-header .nav{gap:20px}
+.site-stable .hmatias-header .brand{width:110px;flex-basis:110px}
+.site-stable .mobile-lang-switch,.site-stable .mobile-whatsapp-link,.site-stable .mobile-karta-link{display:none}
+.site-stable footer :is(a,p,span){overflow-wrap:anywhere}
+.site-stable footer :is(a,p){font-size:.875rem;line-height:1.65}
+.site-stable .footer-logo{width:90px;height:auto;filter:none;opacity:1;background:#fff;border-radius:4px;padding:5px}
+.site-stable .footer-grid{grid-template-columns:1.4fr repeat(4,minmax(0,1fr));gap:32px}
+.site-stable footer strong{font-size:.875rem;line-height:1.5}
+.site-stable .copyright{font-size:.8125rem;line-height:1.65}
+.site-stable .footer-karta-link{display:inline-flex;align-items:center;gap:10px;margin-top:20px;color:#fff}
+.site-stable .footer-karta-mark{display:grid;place-items:center;flex:0 0 32px;height:32px;border:1px solid #78b9df;border-radius:6px;font-weight:700}
+.site-stable .footer-karta-copy{display:grid;gap:3px}
+.site-stable .footer-karta-copy small{font-size:.75rem;color:#bfd2e1}
+.site-stable .footer-karta-copy strong{font-size:.875rem;margin:0}
+.site-stable .hmatias-assistant{right:18px;bottom:84px}
+.site-stable .hmatias-assistant-toggle{min-height:48px}
+.site-stable .whatsapp-float{display:flex;align-items:center;justify-content:center;min-width:48px;min-height:48px;right:18px;bottom:20px;font-size:.875rem}
+.site-stable .whatsapp-float img{filter:brightness(0) invert(1)}
+.site-stable.hmatias-assistant-open .whatsapp-float{visibility:hidden}
+.site-stable .karta-float{width:46px;min-height:48px;padding:6px;border-radius:0 10px 10px 0}
+.site-stable .karta-float-mark{width:34px;height:34px;flex-basis:34px;border-radius:7px}
+.site-stable .karta-float:hover,.site-stable .karta-float:focus-visible{width:172px}
+
+/* Homepage: one scale for type, one spacing rhythm, real photography. */
+body.hmatias-home .hero-grid{grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);gap:56px;min-height:0;align-items:center;padding-block:64px}
+body.hmatias-home .hero-copy{padding:0}
+body.hmatias-home .hero h1{font-size:clamp(2rem,1.25rem + 2.25vw,3.25rem);line-height:1.12;max-width:22ch;margin:8px 0 22px;font-weight:700;letter-spacing:-.035em}
+body.hmatias-home .hero-copy>p{max-width:58ch;color:#e2edf6;font-size:1rem;line-height:1.7}
+body.hmatias-home .hero-actions{flex-wrap:wrap;gap:12px;margin-top:26px}
+body.hmatias-home .hero-values{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px;margin-top:30px}
+body.hmatias-home .hero-values>div,body.hmatias-home .hero-values strong{font-size:.875rem;line-height:1.5}
+body.hmatias-home .hero-visual{display:block;min-height:0;overflow:visible}
+body.hmatias-home .visual-card{position:static;inset:auto;width:100%;height:auto;background:transparent;box-shadow:none;overflow:visible}
+body.hmatias-home .visual-card::before,body.hmatias-home .visual-card::after{content:none}
+body.hmatias-home .hero-photo{display:block;position:static;aspect-ratio:4/3;overflow:hidden;border-radius:6px;background:#123c60}
+body.hmatias-home .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 56%;filter:none}
+body.hmatias-home .visual-overlay{position:static;max-width:none;display:grid;gap:2px;margin-top:12px;padding:0;background:transparent;border:0;box-shadow:none;font-size:.75rem}
+body.hmatias-home .visual-overlay strong{letter-spacing:.05em}
+body.hmatias-home .visual-overlay small{margin:0;font-size:.75rem;color:#c4d9e9}
+body.hmatias-home .proof-strip{box-shadow:none}
+body.hmatias-home .proof-grid{gap:24px;padding-block:23px}
+body.hmatias-home .proof-grid>div{padding:0 18px 0 0;border:0;border-right:1px solid var(--border);gap:6px}
+body.hmatias-home .proof-grid>div:last-child{border:0}
+body.hmatias-home .proof-grid strong{font-size:.875rem;line-height:1.5}
+body.hmatias-home .proof-grid span{font-size:.875rem;line-height:1.5}
+body.hmatias-home :is(.services,.projects,.home-divisions,.company,.contact){padding:76px 0}
+body.hmatias-home .section-heading{display:block;max-width:760px;margin:0 0 32px;text-align:left}
+body.hmatias-home :is(.section-heading h2,.company h2,.contact h2){max-width:28ch;font-size:clamp(1.75rem,1.2rem + 1.4vw,2.5rem);line-height:1.2;margin:0 0 16px;letter-spacing:-.025em}
+body.hmatias-home .section-heading p{max-width:68ch;font-size:1rem;color:var(--muted)}
+body.hmatias-home .service-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+body.hmatias-home .service-card,body.hmatias-home .service-card.featured{display:flex;flex-direction:column;padding:26px 0 0;border:0;border-top:2px solid var(--border);background:transparent;border-radius:0;box-shadow:none}
+body.hmatias-home .service-card:hover{transform:none;border-top-color:var(--blue)}
+body.hmatias-home .service-icon{width:44px;height:44px;border-radius:6px;background:var(--light);margin-bottom:20px}
+body.hmatias-home .service-icon svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+body.hmatias-home .service-card h3{font-size:1.25rem;line-height:1.35;margin-bottom:12px}
+body.hmatias-home .service-card p{font-size:1rem;min-height:0;margin-bottom:22px}
+body.hmatias-home .service-card a{font-size:.875rem;line-height:1.6;margin-top:auto;min-height:44px;display:flex;align-items:center}
+body.hmatias-home .projects{background:var(--light)}
+body.hmatias-home .project-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+body.hmatias-home .project{border:1px solid var(--border);border-radius:6px;box-shadow:none}
+body.hmatias-home .project picture{aspect-ratio:16/10}
+body.hmatias-home .project-image{width:100%;height:100%;object-fit:cover;transition:none}
+body.hmatias-home .project:hover .project-image{transform:none}
+body.hmatias-home .project-caption{padding:24px}
+body.hmatias-home .project-caption small{font-size:.75rem;color:var(--muted)}
+body.hmatias-home .project-caption h3{font-size:1.375rem;margin:6px 0 12px;line-height:1.3}
+body.hmatias-home .project-caption p{font-size:1rem;color:var(--muted)}
+body.hmatias-home .project-caption a{display:inline-flex;align-items:center;min-height:44px;margin-top:10px;font-weight:600;font-size:.875rem}
+body.hmatias-home .division-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+body.hmatias-home .division-card{padding:26px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;background:#fff}
+body.hmatias-home .division-card-kicker{font-size:.75rem;color:var(--muted);margin-bottom:10px}
+body.hmatias-home .division-card h3{font-size:1.375rem;line-height:1.3;margin-bottom:12px}
+body.hmatias-home .division-card p{margin-bottom:18px;font-size:1rem;color:var(--muted)}
+body.hmatias-home .division-card a{display:inline-flex;align-items:center;min-height:44px;margin-top:auto;font-size:.875rem;color:var(--blue);font-weight:600}
+body.hmatias-home .company{color:#fff;background:var(--navy)}
+body.hmatias-home .company-impact-grid{display:block;max-width:1180px}
+body.hmatias-home .company-impact-grid>div{max-width:900px}
+body.hmatias-home .company-overline{display:flex;align-items:baseline;flex-wrap:wrap;gap:14px;margin-bottom:10px}
+body.hmatias-home .company .eyebrow.blue{color:#bedbf0!important}
+body.hmatias-home .company-since{font-size:.875rem;color:#bedbf0}
+body.hmatias-home .company h2{color:#fff;max-width:28ch}
+body.hmatias-home .company :is(.company-lead,.company-copy){color:#e2edf6;max-width:72ch;font-size:1rem;line-height:1.7}
+body.hmatias-home .company-credibility{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:5px}
+body.hmatias-home .company-trust-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:30px;padding-top:24px;border-top:1px solid #47637e}
+body.hmatias-home .company-trust-card{display:grid;gap:8px;align-content:start}
+body.hmatias-home .company-trust-card small{font-size:.75rem;color:#bedbf0}
+body.hmatias-home .company-trust-card strong{font-size:1rem;font-weight:600;color:#fff;line-height:1.6}
+body.hmatias-home .home-partners{padding:48px 0;background:#fff}
+body.hmatias-home .partner-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:32px}
+body.hmatias-home .partner-intro{min-width:0}
+body.hmatias-home .partner-intro h2{font-size:clamp(1.5rem,1.1rem + 1.3vw,2rem);line-height:1.25;margin:0}
+body.hmatias-home .partner-link{display:flex;flex-direction:column;align-items:center;gap:16px;max-width:100%;padding:24px;border:1px solid var(--border);border-radius:6px;color:var(--navy);text-align:center}
+body.hmatias-home .partner-link img{display:block;width:283px;max-width:100%;height:auto}
+body.hmatias-home .partner-link>span{font-size:.875rem;line-height:1.5;font-weight:600;text-decoration:underline;text-underline-offset:4px}
+body.hmatias-home .partner-link:hover{border-color:var(--blue);color:var(--blue)}
+@media(max-width:600px){body.hmatias-home .partner-row{grid-template-columns:minmax(0,1fr);gap:24px}body.hmatias-home .partner-link{justify-self:start;width:100%;max-width:333px}body.hmatias-home .home-partners{padding:36px 0}}
+body.hmatias-home .cta{padding:46px 0}
+body.hmatias-home .cta-inner{gap:28px}
+body.hmatias-home .cta h2{font-size:clamp(1.5rem,1.1rem + 1.3vw,2rem);line-height:1.25}
+body.hmatias-home .cta .eyebrow{color:var(--blue)}
+body.hmatias-home .cta p{margin-top:10px;color:#465c70}
+body.hmatias-home .contact-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px}
+body.hmatias-home .contact-grid>div>p{color:var(--muted)}
+body.hmatias-home .contact-rfq{margin-top:22px}
+body.hmatias-home .contact-rfq a{font-weight:600;color:var(--blue);text-decoration:underline;text-underline-offset:4px}
+body.hmatias-home .contact-list{gap:18px}
+body.hmatias-home .contact-list :is(a,span){font-size:.9375rem;line-height:1.6;overflow-wrap:anywhere}
+body.hmatias-home .contact-list-icon{flex:0 0 18px;height:18px;object-fit:contain}
+body.hmatias-home .contact-form{padding:28px;border-radius:6px;box-shadow:none;gap:18px}
+body.hmatias-home .contact-form>*{min-width:0}
+body.hmatias-home .contact-form label{font-size:.875rem}
+body.hmatias-home .contact-form :is(input,select,textarea){min-width:0;width:100%;font-size:1rem}
+body.hmatias-home .contact-form :is(.form-wide,.form-note,.email-fallback-link){grid-column:1/-1}
+body.hmatias-home .form-note{font-size:.8125rem;line-height:1.6}
+body.hmatias-home .email-fallback-link{font-size:.875rem;color:var(--blue);font-weight:600;min-height:44px;display:flex;align-items:center}
+body.hmatias-home .footer-pro{padding:54px 0 24px}
+body.hmatias-home .footer-pro-grid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:40px;padding-bottom:36px}
+body.hmatias-home .footer-pro-brand>p{max-width:36ch;margin-top:16px}
+body.hmatias-home .footer-pro-col{display:grid;align-content:start;gap:12px}
+body.hmatias-home .footer-pro-col strong{margin-bottom:8px}
+body.hmatias-home .footer-pro-col :is(a,span){font-size:.875rem;line-height:1.65}
+body.hmatias-home .footer-socials{display:flex;gap:8px;margin-top:16px}
+body.hmatias-home .footer-socials a{display:grid;place-items:center;width:44px;height:44px;border:1px solid #47637e;border-radius:6px}
+body.hmatias-home .footer-socials img{filter:brightness(0) invert(1)}
+body.hmatias-home .footer-pro-bottom{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-top:22px;border-top:1px solid #47637e}
+body.hmatias-home .footer-pro-bottom p{margin:0;max-width:70ch;font-size:.8125rem}
+body.hmatias-home .footer-pro-legal{display:flex;flex-wrap:wrap;gap:10px 20px}
+body.hmatias-home .footer-pro-legal a{font-size:.8125rem}
+body.hmatias-home .whatsapp-float{width:48px;height:48px;padding:12px}
+body.hmatias-home .hmatias-assistant-toggle{width:48px;height:48px;padding:0;justify-content:center}
+body.hmatias-home .hmatias-assistant-toggle>span{display:none}
+body.hmatias-home.contact-in-view .whatsapp-float,body.hmatias-home.contact-in-view .hmatias-assistant:not(.is-open):not(.open){visibility:hidden}
+
+@media(max-width:1100px){
+  .site-stable .hmatias-header .nav{gap:12px}
+  .site-stable .hmatias-header .nav-menu{gap:12px}
+  .site-stable .hmatias-header .brand{width:90px;flex-basis:90px}
+  .site-stable .hmatias-header .nav-actions{gap:10px}
+  body.hmatias-home .hero-grid{gap:36px}
+  body.hmatias-home .footer-pro-grid{gap:28px}
+}
+@media(max-width:850px){
+  .site-stable .container{width:calc(100% - 40px)}
+  .site-stable .hmatias-header .nav{min-height:78px}
+  .site-stable .hmatias-header .nav-menu .mobile-lang-switch,.site-stable .hmatias-header .nav-menu .mobile-whatsapp-link,.site-stable .hmatias-header .nav-menu .mobile-karta-link{display:flex;align-items:center;gap:10px}
+  .site-stable .mobile-lang-switch{border-top:1px solid var(--border);margin-top:8px}
+  .site-stable .mobile-karta-mark{display:grid;place-items:center;width:28px;height:28px;border-radius:6px;background:var(--navy);color:#fff}
+  .site-stable .footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px}
+  .site-stable .footer-grid>div:first-child{grid-column:1/-1}
+  .site-stable .hmatias-assistant{right:12px;bottom:78px}
+  .site-stable .whatsapp-float{right:12px;bottom:16px}
+  body.hmatias-home .hero-grid{grid-template-columns:1fr;gap:32px;padding-block:40px}
+  body.hmatias-home .hero h1{max-width:24ch;font-size:clamp(2rem,1.25rem + 3vw,3rem)}
+  body.hmatias-home .hero-visual{width:100%;max-width:560px}
+  body.hmatias-home .hero-photo{aspect-ratio:16/10}
+  body.hmatias-home .proof-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  body.hmatias-home .proof-grid>div{border:0}
+  body.hmatias-home :is(.services,.projects,.home-divisions,.company,.contact){padding:56px 0}
+  body.hmatias-home .service-grid{grid-template-columns:1fr}
+  body.hmatias-home .service-card p{max-width:60ch;margin-bottom:10px}
+  body.hmatias-home .contact-grid{grid-template-columns:1fr;gap:32px}
+  body.hmatias-home .footer-pro-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px}
+  body.hmatias-home .footer-pro-brand{grid-column:1/-1}
+  body.hmatias-home .footer-pro-bottom{flex-direction:column}
+}
+@media(max-width:560px){
+  .site-stable .container{width:calc(100% - 36px)}
+  .site-stable .hmatias-header .brand{height:60px}
+  body.hmatias-home .hero h1{font-size:clamp(1.875rem,1rem + 4vw,2.4rem)}
+  body.hmatias-home .hero-actions{flex-direction:column;align-items:stretch}
+  body.hmatias-home .hero-values{gap:14px 16px}
+  body.hmatias-home .project-grid,body.hmatias-home .division-cards{grid-template-columns:1fr;gap:24px}
+  body.hmatias-home .project-caption,body.hmatias-home .division-card{padding:22px}
+  body.hmatias-home .company-trust-grid{grid-template-columns:1fr;gap:20px}
+  body.hmatias-home .contact-form{padding:20px;grid-template-columns:1fr}
+  body.hmatias-home .contact-form>*{grid-column:1/-1}
+  body.hmatias-home .footer-pro-col:last-child{grid-column:1/-1}
+}
+@media(prefers-reduced-motion:reduce){
+  .site-stable{scroll-behavior:auto}
+  .site-stable *, .site-stable *::before, .site-stable *::after{animation:none!important;transition:none!important}
+}
+
+
+/* 2026-10-02 — discreet HMATIAS → SOURCE AO bridge in the footer only. */
+body.hmatias-home .footer-source-ao{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:center;gap:12px;max-width:340px;margin-top:20px;padding:10px 12px;background:#fff;border:1px solid #47637e;border-radius:6px;color:#082f5c;text-decoration:none}
+body.hmatias-home .footer-source-ao img{display:block;width:92px;height:auto}
+body.hmatias-home .footer-source-ao span{font-size:.75rem;line-height:1.45;font-weight:700;color:#294a67}
+body.hmatias-home .footer-source-ao b{color:#0b6fba;font-size:1rem}
+body.hmatias-home .footer-source-ao:hover{border-color:#8fd0f3}
+@media(max-width:560px){body.hmatias-home .footer-source-ao{grid-template-columns:78px minmax(0,1fr);max-width:100%}body.hmatias-home .footer-source-ao img{width:78px}}
+
+/* HMATIAS has four primary business divisions, not three plus an independent Clean card. */
+body.hmatias-home .service-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+body.hmatias-home .home-anchor-alias{display:block;position:relative;top:-96px;visibility:hidden;height:0}
+@media(max-width:1050px) and (min-width:651px){body.hmatias-home .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){body.hmatias-home .service-grid{grid-template-columns:minmax(0,1fr);gap:22px}}
+
+/* Homepage partnerships: functional supplier intake, no visual redesign. */
+body.hmatias-home .partner-intro p{margin:10px 0 8px;max-width:57ch;color:#5d7180;font-size:.83rem;line-height:1.65}
+body.hmatias-home .partner-application-link{display:inline-flex;min-height:42px;align-items:center;font-size:.81rem;font-weight:700;color:#16567e;text-decoration:underline;text-underline-offset:3px}
+body.hmatias-home .partner-application-link:hover,body.hmatias-home .partner-application-link:focus-visible{color:#006ca4}
+
+/* Homepage access: clear link contrast on the deep navy company section. */
+body.hmatias-home .company a.text-link{color:#fff;text-decoration:underline;text-underline-offset:5px;font-weight:650;display:inline-flex;align-items:center;min-height:44px;line-height:1.5}
+body.hmatias-home .company a.text-link:hover{color:#cfeaff}
+body.hmatias-home .company a.text-link:focus-visible{outline:3px solid #a5d8ff;outline-offset:3px}

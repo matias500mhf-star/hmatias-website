@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {validateHomeCssBundles} from './build-home-css.mjs';
+
+validateHomeCssBundles();
 
 const read=path=>readFileSync(path,'utf8');
 const ptCatalogue=read('catalogo-obras.html');
