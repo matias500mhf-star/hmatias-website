@@ -5,6 +5,7 @@
   let apiSequence=0;
   let smartSequence=0;
   let missionSequence=0;
+  const radarRequests=new Map();
   let technical=null;
   const technicalReady=import('./technical-requirement.js?v=20261013-reference2')
     .then(module=>{technical=module;})
@@ -302,6 +303,20 @@
       :'Supplier research and search coverage');
     return root;
   }
+  function researchHandoff({query,location,quantity,neededBy}){
+    const pt=isPt();
+    const missing=pt?'A confirmar':'To confirm';
+    const body=[
+      pt?'SOURCE AO · Pedido de fornecimento':'SOURCE AO · Supply request',
+      (pt?'Material / referência: ':'Material / reference: ')+query,
+      (pt?'Quantidade: ':'Quantity: ')+(quantity||missing),
+      (pt?'Local de entrega: ':'Delivery location: ')+(location||missing),
+      (pt?'Data pretendida: ':'Target date: ')+(neededBy||missing),
+      pt?'Solicito confirmação da referência, disponibilidade, preço e prazo de entrega.'
+        :'Please confirm the reference, availability, pricing and delivery lead time.'
+    ].join('\n');
+    return 'https://wa.me/244948806673?text='+encodeURIComponent(body);
+  }
   function updateResearchCoverage(status){
     const query=$('#searchInput')?.value.trim()||'';
     if(!query||$('#resultZone')?.hidden)return;
@@ -314,9 +329,18 @@
     note.textContent=status==='online'
       ?(pt?'Consulta ao índice Source AO concluída. Os resultados referem-se a registos disponíveis; fornecedores e stock requerem confirmação comercial.':'Source AO index lookup completed. Results reflect available records; suppliers and stock require commercial confirmation.')
       :status==='offline'
-      ?(pt?'A pesquisa do backend não respondeu. Os dados apresentados podem ser apenas do índice local e não constituem confirmação de fornecedor.':'The search backend did not respond. Displayed results may come only from a local index and do not confirm a supplier.')
+      ?(pt?'Não foi possível atualizar a pesquisa neste momento. Pode preparar um pedido à HMATIAS para verificarmos a referência pretendida. As referências apresentadas ainda exigem confirmação comercial.':'We could not update the search at this time. You can prepare a request for HMATIAS to verify the required reference. Displayed references still require commercial confirmation.')
       :(pt?'A consultar o índice de referências Source AO. Não efetuamos pesquisa exaustiva ao mercado em tempo real.':'Checking the Source AO reference index. This is not an exhaustive real-time market search.');
     const links=document.createElement('div');links.className='source-research-links';
+    if(status==='offline'){
+      const direct=document.createElement('a');
+      direct.className='source-direct-request';
+      direct.href=researchHandoff({query,location:$('#locationInput')?.value.trim()||'',
+        quantity:$('#quantityInput')?.value.trim()||'',neededBy:$('#neededByInput')?.value.trim()||''});
+      direct.target='_blank';direct.rel='noopener noreferrer';
+      direct.textContent=pt?'Preparar pedido no WhatsApp ↗':'Prepare request in WhatsApp ↗';
+      links.append(direct);
+    }
     const link=(label,term)=>{
       const a=document.createElement('a');
       a.href='https://www.google.com/search?q='+encodeURIComponent(query+' '+term+' fornecedor supplier');
@@ -327,9 +351,10 @@
     link(pt?'Pesquisa pública · Namíbia':'Public research · Namibia','Namibia Windhoek');
     link(pt?'Pesquisa pública · África do Sul':'Public research · South Africa','South Africa');
     const tip=document.createElement('small');
-    tip.textContent=pt
-      ?'Os links abrem pesquisas externas. Não significam que a HMATIAS tenha validado as empresas encontradas.'
-      :'Links open external searches. They do not imply that HMATIAS has verified the companies found.';
+    tip.textContent=(status==='offline'
+      ?(pt?'O pedido abre no WhatsApp para revisão; confirme o envio na conversa. ':'The request opens in WhatsApp for review; confirm sending in the conversation. '):'')+
+      (pt?'Os links de pesquisa externa não significam que a HMATIAS tenha validado as empresas encontradas.'
+        :'External search links do not imply that HMATIAS has verified the companies found.');
     root.append(header,note,links,tip);
   }
 
@@ -386,6 +411,9 @@
 
   function refreshSearch(){
     // A failed lookup for a new requirement must not retain the previous brief.
+    ++apiSequence;
+    ++smartSequence;
+    ++missionSequence;
     renderSmartPlan(null);
     renderMission(null);
     updateResearchCoverage('pending');
@@ -417,17 +445,28 @@
       const small=row.querySelector('small');
       if(!q||!small) return;
       const loc=(small.textContent.split(' · ')[0]||'Luanda').trim();
+      const key=JSON.stringify([q,loc]);
       try{
-        const result=fromApi(await window.SourceAOAPI.search(q,loc));
+        let pending=radarRequests.get(key);
+        if(!pending){
+          pending=Promise.resolve().then(()=>window.SourceAOAPI.search(q,loc))
+            .finally(()=>{if(radarRequests.get(key)===pending)radarRequests.delete(key);});
+          radarRequests.set(key,pending);
+        }
+        const payload=await pending;
+        if(!row.isConnected)return;
+        const result=fromApi(payload);
         const best=result.best_status||'discovered';
-        small.textContent=loc+' · '+L(best==='discovered'?'awaiting':best);
+        const next=loc+' · '+L(best==='discovered'?'awaiting':best);
+        if(small.textContent!==next)small.textContent=next;
       }catch(error){
         console.warn('[Source AO Radar API fallback]',error);
       }
     }));
   }
 
-  function later(){setTimeout(()=>{refreshSearch();enrichRadar();void enrichRadarApi();},0);}
+  function laterSearch(){setTimeout(refreshSearch,0);}
+  function laterLanguage(){setTimeout(()=>{refreshSearch();enrichRadar();void enrichRadarApi();},0);}
 
   document.addEventListener('DOMContentLoaded',async()=>{
     ensureList();
@@ -438,16 +477,16 @@
     enrichRadar();
     void enrichRadarApi();
 
-    $('#searchForm')?.addEventListener('submit',later);
-    document.querySelectorAll('[data-query]').forEach(btn=>btn.addEventListener('click',later));
-    $('#langToggle')?.addEventListener('click',later);
-    $('#locationInput')?.addEventListener('change',later);
-    $('#quantityInput')?.addEventListener('change',later);
-    $('#neededByInput')?.addEventListener('change',later);
-    $('#radarForm')?.addEventListener('submit',later);
-    $('#addRadar')?.addEventListener('click',later);
+    $('#searchForm')?.addEventListener('submit',laterSearch);
+    document.querySelectorAll('[data-query]').forEach(btn=>btn.addEventListener('click',laterSearch));
+    $('#langToggle')?.addEventListener('click',laterLanguage);
+    $('#locationInput')?.addEventListener('change',laterSearch);
+    $('#quantityInput')?.addEventListener('change',laterSearch);
+    $('#neededByInput')?.addEventListener('change',laterSearch);
 
     const list=$('#radarList');
-    if(list) new MutationObserver(()=>{enrichRadar();void enrichRadarApi();}).observe(list,{childList:true,subtree:true});
+    // Status text belongs to a row, not to the list's set of requirements.
+    // Observing descendants feeds our own API updates back into more lookups.
+    if(list) new MutationObserver(()=>{enrichRadar();void enrichRadarApi();}).observe(list,{childList:true});
   });
 })();
