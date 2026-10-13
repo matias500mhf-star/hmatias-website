@@ -44,3 +44,21 @@ test('RFQ never states that stock is already confirmed',()=>{
   assert.doesNotMatch(rfq.pt,/stock confirmado/i);
   assert.match(rfq.pt,/confirmação de disponibilidade/i);
 });
+
+test('PPE search recognizes a source-checked regional supplier without assuming stock',()=>{
+  const plan=buildSmartSearchPlan({query:'EPI luvas de proteção',location:'Namibia'});
+  const esn={
+    name:'Evolution Safety Namibia',
+    categories_json:JSON.stringify(['industrial-supply','tools-equipment']),
+    capabilities_json:JSON.stringify(['PPE','EPI','luvas de proteção','Wenaas','Karam','Mechanix']),
+    email:'sales@esn.com.na'
+  };
+  const unrelated={
+    name:'Packaging Supplier',
+    categories_json:JSON.stringify(['industrial-supply']),
+    capabilities_json:JSON.stringify(['polypropylene packaging','PP strapping'])
+  };
+  assert.ok(scoreSupplierCandidate(plan,esn)>scoreSupplierCandidate(plan,unrelated));
+  assert.equal(plan.claims.stock_confirmed,false);
+  assert.equal(plan.claims.price_confirmed,false);
+});
