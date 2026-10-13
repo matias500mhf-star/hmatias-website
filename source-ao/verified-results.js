@@ -6,7 +6,7 @@
   let smartSequence=0;
   let missionSequence=0;
   let technical=null;
-  const technicalReady=import('./technical-requirement.js?v=20261013-reference1')
+  const technicalReady=import('./technical-requirement.js?v=20261013-reference2')
     .then(module=>{technical=module;})
     .catch(error=>console.warn('[Source AO technical requirement]',error));
 
@@ -90,7 +90,9 @@
     const summary=document.createElement('p');
     const label=isPt()?plan.interpretation?.label_pt:plan.interpretation?.label_en;
     const requirement=technical?.technicalRequirement(plan.query||$('#searchInput')?.value||'');
-    const specs=[...new Set([...(requirement?.specifications||[]),...(plan.interpretation?.specifications||[])])].join(', ');
+    const specValues=[...(requirement?.specifications||[]),...(plan.interpretation?.specifications||[])];
+    const specKey=value=>String(value).toLowerCase().replace(/\s+/g,'');
+    const specs=specValues.filter((value,index,all)=>all.findIndex(other=>specKey(other)===specKey(value))===index).join(', ');
     summary.textContent=[label,specs,plan.location].filter(Boolean).join(' · ');
 
     const terms=document.createElement('div');terms.className='smart-search-terms';

@@ -41,7 +41,8 @@ export function technicalRfq(requirement,{lang='pt',location='Luanda',quantity='
   const unit=inferred?.unit==='rolo'?(pt?'rolo(s)':'roll(s)'):inferred?.unit==='un'?(pt?'un':'units'):'';
   const qty=quantity!==''&&quantity!=null?String(quantity)+(unit?` ${unit}`:''):inferred?(pt?inferred.text:`${inferred.value} ${unit}`):(pt?'a confirmar':'to confirm');
   const specs=requirement.specifications.join(', ')||(pt?'conforme descrição do pedido':'as described in the request');
-  const deadline=neededBy==='urgent'?(pt?'urgente, prazo a confirmar':'urgent, lead time to confirm'):neededBy==='planned'?(pt?'programado, data a confirmar':'planned, date to confirm'):neededBy&&neededBy!=='normal'?neededBy:(pt?'a confirmar':'to confirm');
+  const deadlines={urgent:pt?'urgente, prazo a confirmar':'urgent, lead time to confirm',planned:pt?'programado, data a confirmar':'planned, date to confirm',week:pt?'esta semana, data a confirmar':'this week, date to confirm'};
+  const deadline=deadlines[neededBy==='this week'?'week':neededBy]|| (neededBy&&neededBy!=='normal'?neededBy:(pt?'a confirmar':'to confirm'));
   return pt?[
     'Boa tarde.',
     'Solicitamos confirmação de disponibilidade e cotação para:',

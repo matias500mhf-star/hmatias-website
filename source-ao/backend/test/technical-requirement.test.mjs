@@ -52,4 +52,6 @@ test('unspecified alternatives require approval and packaging quantity keeps its
   assert.equal(r.quantity.unit,'rolo');
   assert.match(technicalRfq(r,{quantity:3}),/Quantidade: 3 rolo/);
   assert.match(technicalRfq(r,{lang:'en'}),/obtain approval before substituting/);
+  assert.match(technicalRfq(r,{lang:'pt',neededBy:'this week'}),/Necessidade: esta semana, data a confirmar/);
+  assert.match(technicalRfq(r,{lang:'en',neededBy:'week'}),/Required: this week, date to confirm/);
 });

@@ -156,6 +156,7 @@
 .op-control-copy>p,.op-radar-search>small,.op-filter-group>small,
 .op-sync-status small,#visibleCount,.op-score small,.op-meta span,
 .op-priority.low,.op-next-action small,.op-deadline,.op-trust-note{color:#52697b}
+.op-body .op-control-copy>p{color:#52697b}
 .op-radar-search>small,.op-filter-group>small,.op-sync-status small,
 .op-score small,.op-next-action small,.op-deadline,.op-trust-note{font-size:11px}
 @media(max-width:980px){
