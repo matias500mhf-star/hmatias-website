@@ -408,6 +408,8 @@ button{color:inherit}
 .service-by-link:hover{color:#fff!important}
 /* Legible small labels and footer links; retain the existing brand palette. */
 .intelligence-bridge-grid small{color:#0b5f9d;font-size:11px}
+.intelligence-bridge-grid article>span{color:#718391}
+.intelligence-bridge-grid .intelligence-highlight>span{color:#83a5bf}
 .footer> .shell>p,.footer> .shell>small,.footer .footer-links{color:#c9d7e3}
 .footer .footer-links a{color:inherit}
 .footer> .shell>p,.footer> .shell>small,.footer .footer-links{font-size:12px}
