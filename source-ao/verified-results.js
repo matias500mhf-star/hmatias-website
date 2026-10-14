@@ -303,6 +303,20 @@
       :'Supplier research and search coverage');
     return root;
   }
+  function researchHandoff({query,location,quantity,neededBy}){
+    const pt=isPt();
+    const missing=pt?'A confirmar':'To confirm';
+    const body=[
+      pt?'SOURCE AO · Pedido de fornecimento':'SOURCE AO · Supply request',
+      (pt?'Material / referência: ':'Material / reference: ')+query,
+      (pt?'Quantidade: ':'Quantity: ')+(quantity||missing),
+      (pt?'Local de entrega: ':'Delivery location: ')+(location||missing),
+      (pt?'Data pretendida: ':'Target date: ')+(neededBy||missing),
+      pt?'Solicito confirmação da referência, disponibilidade, preço e prazo de entrega.'
+        :'Please confirm the reference, availability, pricing and delivery lead time.'
+    ].join('\n');
+    return 'https://wa.me/244948806673?text='+encodeURIComponent(body);
+  }
   function updateResearchCoverage(status){
     const query=$('#searchInput')?.value.trim()||'';
     if(!query||$('#resultZone')?.hidden)return;
@@ -315,9 +329,18 @@
     note.textContent=status==='online'
       ?(pt?'Consulta ao índice Source AO concluída. Os resultados referem-se a registos disponíveis; fornecedores e stock requerem confirmação comercial.':'Source AO index lookup completed. Results reflect available records; suppliers and stock require commercial confirmation.')
       :status==='offline'
-      ?(pt?'A pesquisa do backend não respondeu. Os dados apresentados podem ser apenas do índice local e não constituem confirmação de fornecedor.':'The search backend did not respond. Displayed results may come only from a local index and do not confirm a supplier.')
+      ?(pt?'Não foi possível atualizar a pesquisa neste momento. Pode preparar um pedido à HMATIAS para verificarmos a referência pretendida. As referências apresentadas ainda exigem confirmação comercial.':'We could not update the search at this time. You can prepare a request for HMATIAS to verify the required reference. Displayed references still require commercial confirmation.')
       :(pt?'A consultar o índice de referências Source AO. Não efetuamos pesquisa exaustiva ao mercado em tempo real.':'Checking the Source AO reference index. This is not an exhaustive real-time market search.');
     const links=document.createElement('div');links.className='source-research-links';
+    if(status==='offline'){
+      const direct=document.createElement('a');
+      direct.className='source-direct-request';
+      direct.href=researchHandoff({query,location:$('#locationInput')?.value.trim()||'',
+        quantity:$('#quantityInput')?.value.trim()||'',neededBy:$('#neededByInput')?.value.trim()||''});
+      direct.target='_blank';direct.rel='noopener noreferrer';
+      direct.textContent=pt?'Preparar pedido no WhatsApp ↗':'Prepare request in WhatsApp ↗';
+      links.append(direct);
+    }
     const link=(label,term)=>{
       const a=document.createElement('a');
       a.href='https://www.google.com/search?q='+encodeURIComponent(query+' '+term+' fornecedor supplier');
@@ -328,9 +351,10 @@
     link(pt?'Pesquisa pública · Namíbia':'Public research · Namibia','Namibia Windhoek');
     link(pt?'Pesquisa pública · África do Sul':'Public research · South Africa','South Africa');
     const tip=document.createElement('small');
-    tip.textContent=pt
-      ?'Os links abrem pesquisas externas. Não significam que a HMATIAS tenha validado as empresas encontradas.'
-      :'Links open external searches. They do not imply that HMATIAS has verified the companies found.';
+    tip.textContent=(status==='offline'
+      ?(pt?'O pedido abre no WhatsApp para revisão; confirme o envio na conversa. ':'The request opens in WhatsApp for review; confirm sending in the conversation. '):'')+
+      (pt?'Os links de pesquisa externa não significam que a HMATIAS tenha validado as empresas encontradas.'
+        :'External search links do not imply that HMATIAS has verified the companies found.');
     root.append(header,note,links,tip);
   }
 
