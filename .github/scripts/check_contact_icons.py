@@ -42,7 +42,7 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
 
     # Ensure dimensions are separate attributes, not accidentally absorbed into src.
     if re.search(
-        r'src="images/contact-(?:email|phone|location)\\.svg[^"]*\\s+(?:width|height)=',
+        r'src="images/contact-(?:email|phone|location)\.svg[^"]*\s+(?:width|height)=',
         html,
         re.IGNORECASE,
     ):
