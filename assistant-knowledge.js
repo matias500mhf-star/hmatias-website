@@ -14,13 +14,13 @@
   ];
 
   const kb = {
-    version: '2026-10-12.1',
-    updated: '2026-10-12',
+    version: '2026-10-18.1',
+    updated: '2026-10-18',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
       phone: '+244 948 806 673', whatsapp: '+244 948 806 673',
-      emailGeneral: 'geral@comercialhmatiasps.com', emailCommercial: 'geral@comercialhmatiasps.com',
+      emailGeneral: 'geral@comercialhmatiasps.com', emailCommercial: 'geral@comercialhmatiasps.com', emailInstitutional: 'info@comercialhmatiasps.com',
       nif: '5001578065', commercialRegistration: '24.094-23', founded: '2023-07-14'
     },
     siteState: {
@@ -28,7 +28,9 @@
       homepageEn: 'Institutional homepage built around four core areas: Construction, Facilities and Maintenance (including HMATIAS Clean), Supply and Procurement, and Business Services, with real project evidence, Smart RFQ and commercial contact.',
       sourcePlacementPt: 'O SOURCE AO é uma plataforma operacional de apoio ao procurement da HMATIAS, em evolução, com identidade visual própria. No site HMATIAS principal permanece como acesso discreto no rodapé; a experiência completa vive em /source-ao/.',
       sourcePlacementEn: 'SOURCE AO is an evolving HMATIAS procurement-support platform with its own visual identity. On the main HMATIAS site it remains a discreet footer entry; the full experience lives under /source-ao/.',
-      commercialJourneyPt: 'A jornada comercial do site orienta o visitante da informação e prova para uma ação adequada: pedido de orçamento, Smart RFQ, WhatsApp, pedido de atendimento ou SOURCE AO, conforme a necessidade.'
+      commercialJourneyPt: 'A jornada comercial do site orienta o visitante da informação e prova para uma ação adequada: pedido de orçamento, Smart RFQ, WhatsApp, pedido de atendimento ou SOURCE AO, conforme a necessidade.',
+      emailRoutingPt: 'Use info@comercialhmatiasps.com para apresentação da empresa, perfil institucional e informação empresarial. Use geral@comercialhmatiasps.com para pedidos gerais, orçamentos, obras, facilities, supply e seguimento comercial.',
+      emailRoutingEn: 'Use info@comercialhmatiasps.com for the company profile, institutional information and introductory corporate enquiries. Use geral@comercialhmatiasps.com for general enquiries, quotations, works, facilities, supply and commercial follow-up.'
     },
     pages: {
       home: '/', construction: '/construcao.html', facilities: '/facilities.html', supply: '/supply.html', rfq: '/rfq.html', worksCatalogue: '/catalogo-obras.html', credibility: '/credibilidade.html', clean: '/clean.html', karta: '/karta.html', business: '/servicos-administrativos.html', booking: '/agendamento.html', sourceAO: '/source-ao/', sourceRfq: '/source-ao/rfq.html', sourceRadar: '/source-ao/opportunity-radar.html', privacy: '/privacidade.html', terms: '/termos.html',
@@ -116,8 +118,8 @@
     const c = kb.company, p = kb.clean.featured.taurusPine;
     return [
       `KNOWLEDGE_VERSION: ${kb.version}`,
-      `EMPRESA: ${c.name}; sede ${c.location}; tel/WhatsApp ${c.phone}; email oficial ${c.emailGeneral}; NIF ${c.nif}; Registo Comercial ${c.commercialRegistration}.`,
-      `ESTADO DO SITE: ${kb.siteState.homepagePt} ${kb.siteState.sourcePlacementPt} ${kb.siteState.commercialJourneyPt}`,
+      `EMPRESA: ${c.name}; sede ${c.location}; tel/WhatsApp ${c.phone}; email geral/comercial ${c.emailGeneral}; email institucional ${c.emailInstitutional}; NIF ${c.nif}; Registo Comercial ${c.commercialRegistration}.`,
+      `ESTADO DO SITE: ${kb.siteState.homepagePt} ${kb.siteState.sourcePlacementPt} ${kb.siteState.commercialJourneyPt} ${kb.siteState.emailRoutingPt} ${kb.siteState.emailRoutingEn}`,
       `CONSTRUÇÃO: ${kb.construction.summaryPt} Capacidades: ${kb.construction.capabilitiesPt.join('; ')}. Processo: ${kb.construction.processPt.join('; ')}.`,
       `FACILITIES: ${kb.facilities.summaryPt} Capacidades: ${kb.facilities.capabilitiesPt.join('; ')}.`,
       `SUPPLY: ${kb.supply.summaryPt} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. Processo: ${kb.supply.processPt.join('; ')}. ${kb.supply.rulePt}`,
