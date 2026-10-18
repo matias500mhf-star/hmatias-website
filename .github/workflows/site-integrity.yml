@@ -450,20 +450,20 @@ jobs:
 
           cases = {
               'index.html': {
-                  'input': r'<input\\b(?=[^>]*\\bid=["\\']contact-privacy-consent["\\'])(?=[^>]*\\bname=["\\']privacy_consent["\\'])(?=[^>]*\\btype=["\\']checkbox["\\'])(?=[^>]*\\brequired(?:\\s|>|=))[^>]*>',
-                  'policy': r'<a\\b[^>]*href=["\\']privacidade\\.html["\\'][^>]*>\\s*Política de Privacidade\\s*</a>',
+                  'input': r'<input\b(?=[^>]*\bid=["\']contact-privacy-consent["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
+                  'policy': r'<a\b[^>]*href=["\']privacidade\.html["\'][^>]*>\s*Política de Privacidade\s*</a>',
                   'wording': 'Autorizo a HMATIAS',
               },
               'en.html': {
-                  'input': r'<input\\b(?=[^>]*\\bid=["\\']contact-privacy-consent["\\'])(?=[^>]*\\bname=["\\']privacy_consent["\\'])(?=[^>]*\\btype=["\\']checkbox["\\'])(?=[^>]*\\brequired(?:\\s|>|=))[^>]*>',
-                  'policy': r'<a\\b[^>]*href=["\\']privacy\\.html["\\'][^>]*>\\s*Privacy Policy\\s*</a>',
+                  'input': r'<input\b(?=[^>]*\bid=["\']contact-privacy-consent["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
+                  'policy': r'<a\b[^>]*href=["\']privacy\.html["\'][^>]*>\s*Privacy Policy\s*</a>',
                   'wording': 'I authorise HMATIAS',
               },
           }
           errors = []
           for page, expected in cases.items():
               html = Path(page).read_text(encoding='utf-8')
-              match = re.search(r'<form\\b[^>]*\\bid=["\\']contactForm["\\'][^>]*>(.*?)</form>', html, re.I | re.S)
+              match = re.search(r'<form\b[^>]*\bid=["\']contactForm["\'][^>]*>(.*?)</form>', html, re.I | re.S)
               if not match:
                   errors.append(f'{page}: contact form missing')
                   continue
