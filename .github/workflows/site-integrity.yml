@@ -17,6 +17,8 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Validate shared PT/EN responsive header
         run: python3 .github/scripts/check_header_consistency.py
+      - name: Validate modern contact and service icons
+        run: python3 .github/scripts/check_contact_icons.py
       - name: Validate national contact location routing PT/EN
         run: python3 scripts/check-national-contact-location.py
       - name: Validate indexing, multilingual signals and WhatsApp routing
