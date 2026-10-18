@@ -59,7 +59,7 @@
     if(!leadEndpoint && document.querySelector('#contactForm,#businessContactForm,#bookingRequestForm')){
       loadScript('script[data-hmatias-website-leads]','website-lead-client.js?v=20261014-lazy1','hmatiasWebsiteLeads',document.body);
     }
-    loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20260920-stable3', 'hmatiasSiteEnhancements');
+    loadScript('script[data-hmatias-site-enhancements]', 'site-enhancements.js?v=20261019-icons1', 'hmatiasSiteEnhancements');
     loadScript('script[data-hmatias-growth-intelligence]', 'growth-intelligence.js?v=20261009-email-cta1', 'hmatiasGrowthIntelligence');
   };
 
