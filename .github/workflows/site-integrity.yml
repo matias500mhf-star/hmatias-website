@@ -440,5 +440,47 @@ jobs:
           node --check source-ao/sourceao.js
           node scripts/check-commercial-audit.mjs
 
+      - name: Validate PT/EN homepage privacy consent
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          cases = {
+              'index.html': {
+                  'input': r'<input\b(?=[^>]*\bid=["\']contact-privacy-consent["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
+                  'policy': r'<a\b[^>]*href=["\']privacidade\.html["\'][^>]*>\s*Política de Privacidade\s*</a>',
+                  'wording': 'Autorizo a HMATIAS',
+              },
+              'en.html': {
+                  'input': r'<input\b(?=[^>]*\bid=["\']contact-privacy-consent["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
+                  'policy': r'<a\b[^>]*href=["\']privacy\.html["\'][^>]*>\s*Privacy Policy\s*</a>',
+                  'wording': 'I authorise HMATIAS',
+              },
+          }
+          errors = []
+          for page, expected in cases.items():
+              html = Path(page).read_text(encoding='utf-8')
+              match = re.search(r'<form\b[^>]*\bid=["\']contactForm["\'][^>]*>(.*?)</form>', html, re.I | re.S)
+              if not match:
+                  errors.append(f'{page}: contact form missing')
+                  continue
+              form = match.group(1)
+              if len(re.findall(expected['input'], form, re.I)) != 1:
+                  errors.append(f'{page}: expected one required privacy consent checkbox named privacy_consent')
+              if not re.search(expected['policy'], form, re.I):
+                  errors.append(f'{page}: consent must link to the language-appropriate privacy policy')
+              if expected['wording'] not in form:
+                  errors.append(f'{page}: explicit consent wording missing')
+          if errors:
+              print('Homepage privacy consent checks FAILED:')
+              for error in errors:
+                  print(' - ' + error)
+              sys.exit(1)
+          print('Homepage privacy consent checks passed for Portuguese and English.')
+          PY
+
       - name: Validate sitemap page assets and internal links
         run: python3 scripts/check-public-site-assets.py
