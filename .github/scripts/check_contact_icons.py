@@ -90,9 +90,9 @@ else:
     if count != 4:
         fail(f"site-enhancements.js must define four service icons; found {count}")
 
-css = read("home-base.css")
-if ".service-icon svg{" not in css or "stroke:currentColor" not in css:
-    fail("home-base.css must style inline service icons consistently")
+css = read("premium-editorial.css")
+if "body.hmatias-home .service-icon svg{" not in css or "stroke:currentColor" not in css:
+    fail("premium-editorial.css must style inline homepage service icons consistently")
 
 if ERRORS:
     print("Contact/icon QA failed:")
