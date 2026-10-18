@@ -17,3 +17,6 @@
   .hmatias-header .nav-menu{max-height:calc(100dvh - 100px);overflow-y:auto}
   .hmatias-header .nav-menu .mobile-email-link{display:flex;align-items:center;justify-content:center;min-height:44px;padding:12px 14px;white-space:normal;overflow-wrap:anywhere;font-size:.8125rem;line-height:1.4;color:var(--blue)}
 }
+
+/* Consistent, visible inline SVG service icons on the PT/EN homepages, including without JavaScript. */
+.service-icon svg{display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
