@@ -12,3 +12,4 @@ rollout=worker-internal-website-leads-desk-20261009
 rollout=website-leads-turnstile-security-deploy-20261009
 rollout=validation-retry-20261018
 rollout=production-readiness-verification-20261018-r2
+rollout=source-ao-production-verification-20261018
