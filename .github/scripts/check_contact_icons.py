@@ -39,6 +39,14 @@ for path in (
 
 for page, locale in (("index.html", "pt"), ("en.html", "en")):
     html = read(page)
+
+    # Ensure dimensions are separate attributes, not accidentally absorbed into src.
+    if re.search(
+        r'src="images/contact-(?:email|phone|location)\\.svg[^"]*\\s+(?:width|height)=',
+        html,
+        re.IGNORECASE,
+    ):
+        fail(f"{page} has malformed contact SVG src markup (width/height inside src)")
     section_match = re.search(
         r'<section\s+class="contact"[^>]*>(.*?)</section>',
         html,
