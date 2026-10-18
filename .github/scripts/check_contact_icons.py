@@ -61,7 +61,7 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
             fail(f"{page} email link {email} must include the visible contact email SVG")
 
     phone = re.search(
-        r'<a\b[^>]*href="tel:\\+244948806673"[^>]*>(.*?)</a>',
+        r'<a\b[^>]*href="tel:' + re.escape("+244948806673") + r'"[^>]*>(.*?)</a>',
         section,
         re.IGNORECASE | re.DOTALL,
     )
