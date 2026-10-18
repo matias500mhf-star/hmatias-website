@@ -87,6 +87,7 @@ jobs:
             clean clean-en \
             servicos-administrativos business-services \
             rfq rfq-en \
+            coberturas-industriais limpeza-pos-obra \
             catalogo-obras work-catalogue \
             source-ao/index source-ao/opportunity-radar source-ao/rfq
           do
