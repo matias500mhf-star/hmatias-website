@@ -40,7 +40,7 @@ for path in (
 for page, locale in (("index.html", "pt"), ("en.html", "en")):
     html = read(page)
     section_match = re.search(
-        r'<section\s+class=["\\']contact["\\'][^>]*>(.*?)</section>',
+        r'<section\s+class="contact"[^>]*>(.*?)</section>',
         html,
         re.IGNORECASE | re.DOTALL,
     )
@@ -51,7 +51,7 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
 
     for email in ("geral@comercialhmatiasps.com", "info@comercialhmatiasps.com"):
         link = re.search(
-            r'<a\b[^>]*href=["\\']mailto:' + re.escape(email) + r'["\\'][^>]*>(.*?)</a>',
+            r'<a\b[^>]*href="mailto:' + re.escape(email) + r'"[^>]*>(.*?)</a>',
             section,
             re.IGNORECASE | re.DOTALL,
         )
@@ -72,7 +72,7 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
         fail(f"{page} must show the location icon beside the office address")
 
     icon_blocks = re.findall(
-        r'<div\s+class=["\\']service-icon["\\']\s+aria-hidden=["\\']true["\\']>(.*?)</div>',
+        r'<div\s+class="service-icon"\s+aria-hidden="true">(.*?)</div>',
         html,
         re.IGNORECASE | re.DOTALL,
     )
