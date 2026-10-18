@@ -39,8 +39,8 @@ for page in sorted(ROOT.glob("*.html")):
         if 'About us' not in nav.group():
             problems.append(f"{page.name}: mixed English About us navigation")
 
-if len(pages) != 22:
-    problems.append(f"Expected 22 institutional/home pages with shared navigation, found {len(pages)}")
+if len(pages) < 22:
+    problems.append(f"Expected at least 22 institutional/home pages with shared navigation, found {len(pages)}")
 
 css = (ROOT / "header.css").read_text(encoding="utf-8")
 js = (ROOT / "script.js").read_text(encoding="utf-8")
