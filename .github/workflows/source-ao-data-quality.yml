@@ -451,7 +451,12 @@ jobs:
           test -f .staging-web/confirm.html
           test -f .staging-web/track.html
           test -f .staging-web/privacy.html
+          test -f .staging-web/privacy-en.html
           test -f .staging-web/terms.html
+          test -f .staging-web/terms-en.html
+          test -f .staging-web/partner-application.html
+          test -f .staging-web/partner-application-en.html
+          test -f .staging-web/partner-application.js
           test -f .staging-web/data/catalog.json
           test -f .staging-web/rfq.html
           test -f .staging-web/rfq-model.js
@@ -465,6 +470,9 @@ jobs:
           grep -q 'noindex,nofollow,noarchive' .staging-web/index.html
           grep -q 'noindex,nofollow,noarchive' .staging-web/privacy.html
           grep -q 'noindex,nofollow,noarchive' .staging-web/terms.html
+          grep -q 'noindex,nofollow,noarchive' .staging-web/privacy-en.html
+          grep -q 'noindex,nofollow,noarchive' .staging-web/terms-en.html
+          grep -q 'noindex,nofollow,noarchive' .staging-web/partner-application-en.html
           rm -rf .staging-web wrangler.web.staging.runtime.jsonc
       - name: Validate staging deploy remains manual-only
         shell: bash
