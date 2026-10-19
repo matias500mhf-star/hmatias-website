@@ -10,27 +10,27 @@
   <meta name="theme-color" content="#062d56">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Source AO — Confirmação de fornecedor</title>
-  <link rel="stylesheet" href="confirm.css?v=20261019-icons1">
+  <link rel="stylesheet" href="confirm.css?v=20261019-language1">
 </head>
 <body>
   <main class="confirm-shell">
     <header class="confirm-header">
-      <a class="brand" href="index.html" aria-label="Source AO">
+      <a class="brand" href="index.html?lang=pt" id="homeLink" aria-label="Source AO">
         <span class="brand-mark" aria-hidden="true"><img src="favicon.svg" width="28" height="28" alt=""></span>
         <span><strong>Source AO</strong><small>by HMATIAS</small></span>
       </a>
-      <span class="secure-label">Supplier confirmation</span>
+      <span class="secure-label" data-en="Supplier confirmation">Confirmação de fornecedor</span><button class="lang-toggle" type="button" id="langToggle" aria-label="Mudar para EN — English">EN</button>
     </header>
 
     <section class="intro">
-      <span class="eyebrow">CONFIRMAÇÃO COMERCIAL</span>
-      <h1>Confirme apenas o que pode fornecer agora.</h1>
-      <p>Esta resposta será revista pela HMATIAS antes de qualquer informação ser apresentada como confirmada no Source AO.</p>
+      <span class="eyebrow" data-en="COMMERCIAL CONFIRMATION">CONFIRMAÇÃO COMERCIAL</span>
+      <h1 data-en="Confirm only what you can supply now.">Confirme apenas o que pode fornecer agora.</h1>
+      <p data-en="HMATIAS will review this response before any information is presented as confirmed in Source AO.">Esta resposta será revista pela HMATIAS antes de qualquer informação ser apresentada como confirmada no Source AO.</p>
     </section>
 
     <section id="loadingState" class="state-card" aria-live="polite">
       <span class="spinner" aria-hidden="true"></span>
-      <div><strong>A carregar pedido…</strong><p>A validar o link de confirmação.</p></div>
+      <div><strong data-en="Loading request…">A carregar pedido…</strong><p data-en="Validating the confirmation link.">A validar o link de confirmação.</p></div>
     </section>
 
     <section id="errorState" class="state-card error" hidden aria-live="assertive">
@@ -40,60 +40,60 @@
 
     <section id="requestPanel" hidden>
       <div class="request-card">
-        <div class="request-topline"><span>Pedido</span><strong id="requestId">—</strong></div>
+        <div class="request-topline"><span data-en="Request">Pedido</span><strong id="requestId">—</strong></div>
         <h2 id="requirementText">—</h2>
         <dl class="request-grid">
-          <div><dt>Fornecedor</dt><dd id="supplierName">—</dd></div>
-          <div><dt>Especificação</dt><dd id="specification">—</dd></div>
-          <div><dt>Quantidade</dt><dd id="quantity">—</dd></div>
-          <div><dt>Local</dt><dd id="location">—</dd></div>
-          <div><dt>Válido até</dt><dd id="expiresAt">—</dd></div>
-          <div><dt>Estado</dt><dd id="requestStatus">—</dd></div>
+          <div><dt data-en="Supplier">Fornecedor</dt><dd id="supplierName">—</dd></div>
+          <div><dt data-en="Specification">Especificação</dt><dd id="specification">—</dd></div>
+          <div><dt data-en="Quantity">Quantidade</dt><dd id="quantity">—</dd></div>
+          <div><dt data-en="Location">Local</dt><dd id="location">—</dd></div>
+          <div><dt data-en="Valid until">Válido até</dt><dd id="expiresAt">—</dd></div>
+          <div><dt data-en="Status">Estado</dt><dd id="requestStatus">—</dd></div>
         </dl>
       </div>
 
       <form id="confirmationForm" class="confirm-form" novalidate>
         <fieldset>
-          <legend>Disponibilidade atual</legend>
+          <legend data-en="Current availability">Disponibilidade atual</legend>
           <div class="availability-grid">
-            <label class="choice"><input type="radio" name="available" value="true" required><span><strong>Sim</strong><small>Podemos fornecer esta necessidade.</small></span></label>
-            <label class="choice"><input type="radio" name="available" value="false" required><span><strong>Não</strong><small>Não está disponível neste momento.</small></span></label>
+            <label class="choice"><input type="radio" name="available" value="true" required><span><strong data-en="Yes">Sim</strong><small data-en="We can supply this requirement.">Podemos fornecer esta necessidade.</small></span></label>
+            <label class="choice"><input type="radio" name="available" value="false" required><span><strong data-en="No">Não</strong><small data-en="This is not available at present.">Não está disponível neste momento.</small></span></label>
           </div>
         </fieldset>
 
         <div class="form-grid">
-          <label>Quantidade disponível<input id="quantityReported" type="number" min="0" step="any" inputmode="decimal" placeholder="Opcional"></label>
-          <label>Preço informado<input id="priceReported" type="number" min="0" step="any" inputmode="decimal" placeholder="Opcional"></label>
-          <label>Moeda<input id="currency" type="text" maxlength="3" autocapitalize="characters" placeholder="AOA"></label>
-          <label>Prazo / levantamento<input id="leadTime" type="text" maxlength="120" placeholder="Ex.: imediato / 2 dias"></label>
+          <label><span data-en="Available quantity">Quantidade disponível</span><input id="quantityReported" type="number" min="0" step="any" inputmode="decimal" placeholder="Opcional" data-pt-placeholder="Opcional" data-en-placeholder="Optional"></label>
+          <label><span data-en="Reported price">Preço informado</span><input id="priceReported" type="number" min="0" step="any" inputmode="decimal" placeholder="Opcional" data-pt-placeholder="Opcional" data-en-placeholder="Optional"></label>
+          <label><span data-en="Currency">Moeda</span><input id="currency" type="text" maxlength="3" autocapitalize="characters" placeholder="AOA"></label>
+          <label><span data-en="Lead time / collection">Prazo / levantamento</span><input id="leadTime" type="text" maxlength="120" placeholder="Ex.: imediato / 2 dias" data-pt-placeholder="Ex.: imediato / 2 dias" data-en-placeholder="e.g. immediate / 2 days"></label>
         </div>
 
-        <label>Nome de quem respondeu<input id="respondedBy" type="text" maxlength="120" autocomplete="name" placeholder="Opcional"></label>
-        <label>Observação<textarea id="note" rows="4" maxlength="600" placeholder="Condições, embalagem, MOQ ou outra informação relevante."></textarea></label>
+        <label><span data-en="Respondent name">Nome de quem respondeu</span><input id="respondedBy" type="text" maxlength="120" autocomplete="name" placeholder="Opcional" data-pt-placeholder="Opcional" data-en-placeholder="Optional"></label>
+        <label><span data-en="Note">Observação</span><textarea id="note" rows="4" maxlength="600" placeholder="Condições, embalagem, MOQ ou outra informação relevante." data-pt-placeholder="Condições, embalagem, MOQ ou outra informação relevante." data-en-placeholder="Terms, packaging, MOQ or other relevant information."></textarea></label>
 
         <div class="truth-note">
-          <strong>Transparência</strong>
-          <p>Preço, quantidade e prazo são registados como informação fornecida nesta resposta e podem expirar. A HMATIAS fará a revisão antes de qualquer publicação.</p>
+          <strong data-en="Transparency">Transparência</strong>
+          <p data-en="Price, quantity and lead time are recorded as information supplied in this response and may expire. HMATIAS will review them before anything is published.">Preço, quantidade e prazo são registados como informação fornecida nesta resposta e podem expirar. A HMATIAS fará a revisão antes de qualquer publicação.</p>
         </div>
 
-        <button id="submitButton" type="submit">Enviar confirmação</button>
+        <button id="submitButton" type="submit" data-en="Submit confirmation">Enviar confirmação</button>
         <p id="formMessage" class="form-message" aria-live="polite"></p>
       </form>
     </section>
 
     <section id="successState" class="success-card" hidden aria-live="polite">
       <span class="success-mark" aria-hidden="true">✓</span>
-      <h2>Resposta recebida.</h2>
-      <p>A HMATIAS irá rever a confirmação. Nenhum dado foi publicado automaticamente.</p>
+      <h2 data-en="Response received.">Resposta recebida.</h2>
+      <p data-en="HMATIAS will review the confirmation. No data was published automatically.">A HMATIAS irá rever a confirmação. Nenhum dado foi publicado automaticamente.</p>
     </section>
 
     <footer>
-      <span>Source AO · Search. Verify. Source.</span>
+      <span data-en="Source AO · Search. Verify. Source.">Source AO · Pesquisar. Verificar. Fornecer.</span>
       <span>HMATIAS</span>
     </footer>
   </main>
 
   <script src="runtime-config.js"></script>
-  <script src="confirm.js" defer></script>
+  <script src="confirm.js?v=20261019-language1" defer></script>
 </body>
 </html>
