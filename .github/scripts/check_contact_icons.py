@@ -56,8 +56,12 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
         fail(f"{page} is missing the homepage contact section")
         continue
     section = section_match.group(1)
+    if "info@comercialhmatiasps.com" in html:
+        fail(f"{page} must not publish an unconfirmed institutional mailbox")
+    if not re.search(r"<h3>Business Service</h3>", html):
+        fail(f"{page} must keep the approved core-area label Business Service")
 
-    for email in ("geral@comercialhmatiasps.com", "info@comercialhmatiasps.com"):
+    for email in ("geral@comercialhmatiasps.com",):
         link = re.search(
             r'<a\b[^>]*href="mailto:' + re.escape(email) + r'"[^>]*>(.*?)</a>',
             section,

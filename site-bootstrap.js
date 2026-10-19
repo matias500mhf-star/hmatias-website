@@ -9,7 +9,7 @@
   const brandLockStylesheet = 'brand-lock.css?v=20260920-final1';
   const corporateCleanupStylesheet = 'corporate-cleanup.css?v=20260920-final1';
   const officialEmail = 'geral@comercialhmatiasps.com';
-  const inactiveEmails = new Set([officialEmail]);
+  const inactiveEmails = new Set(['info@comercialhmatiasps.com']);
 
   const loadStylesheet = (selector, href, datasetName) => {
     if (document.querySelector(selector) || document.querySelector('link[href*="' + href.split('?')[0] + '"]')) return;
