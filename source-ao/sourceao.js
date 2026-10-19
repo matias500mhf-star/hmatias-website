@@ -111,6 +111,7 @@
     $$('[data-i18n-aria-label]').forEach(node=>{const value=dictionary[state.lang][node.dataset.i18nAriaLabel];if(value) node.setAttribute('aria-label',value);});
     $$('[data-i18n-alt]').forEach(node=>{const value=dictionary[state.lang][node.dataset.i18nAlt];if(value) node.setAttribute('alt',value);});
     $('#langToggle').textContent=state.lang==='en'?'PT':'EN';
+    $('#langToggle').setAttribute('aria-label',state.lang==='en'?'Switch to Portuguese':'Mudar para EN — English');
     $$('a[href^="rfq.html"]').forEach(link=>link.href='rfq.html?lang='+state.lang);
     if(state.query) renderSearch(state.query,state.location,false);
     renderRadar();
