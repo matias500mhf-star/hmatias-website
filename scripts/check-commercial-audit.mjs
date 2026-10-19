@@ -67,3 +67,13 @@ assert.ok(read('growth-intelligence.js').includes('[data-hmatias-email-alternati
 assert.ok(client.includes("id:'cleanQuoteForm'"));
 assert.ok(client.includes("id:'smartRfqForm'"));
 console.log('PASS: institutional, Clean and Smart RFQ intake surfaces and consent-gated lead attribution align.');
+
+const homePt=read('index.html');
+const homeEn=read('en.html');
+assert.ok(!homePt.includes('info@comercialhmatiasps.com'),'Portuguese homepage must use only the confirmed contact mailbox');
+assert.ok(!homeEn.includes('info@comercialhmatiasps.com'),'English homepage must use only the confirmed contact mailbox');
+assert.match(homePt,/data-lang-switch href="en[.]html" hreflang="en">EN<\\/a>/,'PT language switch must link to the published EN page');
+assert.match(homeEn,/data-lang-switch href="\\/" hreflang="pt-AO">PT<\\/a>/,'EN language switch must return to the PT homepage');
+assert.ok(homePt.includes('<h3>Business Service</h3>'),'PT homepage must retain the approved Business Service area label');
+assert.ok(homeEn.includes('<h3>Business Service</h3>'),'EN homepage must retain the approved Business Service area label');
+assert.ok(!read('company-profile.json').includes('info@comercialhmatiasps.com'),'Company profile must not publish unconfirmed email addresses');
