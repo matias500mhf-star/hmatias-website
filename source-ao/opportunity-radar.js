@@ -7,7 +7,7 @@
   let query='';
   let market='AO';
   let opportunities=[];
-  let lang=new URLSearchParams(window.location.search).get('lang')==='en'?'en':'pt';
+  let lang=new URLSearchParams(window.location?.search||'').get('lang')==='en'?'en':'pt';
   let localById=new Map();
   let syncState='idle';
   let lastSyncAt=null;
@@ -297,9 +297,11 @@
 
   function applyLanguage(){
     document.documentElement.lang=lang==='pt'?'pt-AO':'en';
-    const localizedUrl=new URL(window.location.href);
-    if(lang==='en')localizedUrl.searchParams.set('lang','en');else localizedUrl.searchParams.delete('lang');
-    history.replaceState(null,'',localizedUrl.pathname+localizedUrl.search+localizedUrl.hash);
+    if(window.location?.href && window.history?.replaceState){
+      const localizedUrl=new URL(window.location.href);
+      if(lang==='en')localizedUrl.searchParams.set('lang','en');else localizedUrl.searchParams.delete('lang');
+      window.history.replaceState(null,'',localizedUrl.pathname+localizedUrl.search+localizedUrl.hash);
+    }
     const pageTitle=lang==='en'?'SOURCE AO Intelligence Radar | Opportunities in Angola':'SOURCE AO | Radar de oportunidades em Angola';
     const pageDescription=lang==='en'
       ?'Public and commercial opportunities in Angola with commercial fit, confidence, urgency and traceable sources.'
@@ -314,7 +316,7 @@
     setMeta('meta[property="og:locale"]',lang==='en'?'en_GB':'pt_AO');
     setMeta('meta[property="og:image:alt"]',lang==='en'?'SOURCE AO by HMATIAS — technical sourcing in Angola':'SOURCE AO by HMATIAS — sourcing e oportunidades em Angola');
     setMeta('meta[name="twitter:image:alt"]',lang==='en'?'SOURCE AO by HMATIAS — technical sourcing in Angola':'SOURCE AO by HMATIAS — sourcing e oportunidades em Angola');
-    setMeta('meta[property="og:url"]',window.location.origin+window.location.pathname+(lang==='en'?'?lang=en':''));
+    if(window.location?.origin && window.location?.pathname)setMeta('meta[property="og:url"]',window.location.origin+window.location.pathname+(lang==='en'?'?lang=en':''));
     $$('[data-i18n]').forEach(node=>{
       const value=copy[lang][node.dataset.i18n];
       if(!value)return;
