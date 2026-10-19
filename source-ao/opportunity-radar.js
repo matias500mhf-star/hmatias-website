@@ -297,6 +297,21 @@
 
   function applyLanguage(){
     document.documentElement.lang=lang==='pt'?'pt-AO':'en';
+    const pageTitle=lang==='en'?'SOURCE AO Intelligence Radar | Opportunities in Angola':'SOURCE AO | Radar de oportunidades em Angola';
+    const pageDescription=lang==='en'
+      ?'Public and commercial opportunities in Angola with commercial fit, confidence, urgency and traceable sources.'
+      :'Oportunidades públicas e comerciais em Angola, com adequação, confiança, urgência e fontes rastreáveis.';
+    document.title=pageTitle;
+    const setMeta=(selector,value)=>{const element=document.querySelector(selector);if(element)element.setAttribute('content',value);};
+    setMeta('meta[name="description"]',pageDescription);
+    setMeta('meta[property="og:title"]',pageTitle);
+    setMeta('meta[property="og:description"]',pageDescription);
+    setMeta('meta[name="twitter:title"]',pageTitle);
+    setMeta('meta[name="twitter:description"]',pageDescription);
+    setMeta('meta[property="og:locale"]',lang==='en'?'en_GB':'pt_AO');
+    setMeta('meta[property="og:image:alt"]',lang==='en'?'SOURCE AO by HMATIAS — technical sourcing in Angola':'SOURCE AO by HMATIAS — sourcing e oportunidades em Angola');
+    setMeta('meta[name="twitter:image:alt"]',lang==='en'?'SOURCE AO by HMATIAS — technical sourcing in Angola':'SOURCE AO by HMATIAS — sourcing e oportunidades em Angola');
+    setMeta('meta[property="og:url"]',window.location.origin+window.location.pathname+(lang==='en'?'?lang=en':'?lang=pt'));
     $$('[data-i18n]').forEach(node=>{
       const value=copy[lang][node.dataset.i18n];
       if(!value)return;
