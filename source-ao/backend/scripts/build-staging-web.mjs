@@ -22,7 +22,8 @@ const publicFiles=[
   'track.html','track.css','track.js',
   'confirm.html','confirm.css','confirm.js',
   'opportunity-radar.html','opportunity-radar.css','opportunity-radar.js',
-  'privacy.html','terms.html','legal.css'
+  'partner-application.html','partner-application-en.html','partner-application.css','partner-application.js',
+  'privacy.html','privacy-en.html','terms.html','terms-en.html','legal.css'
 ];
 
 await rm(out,{recursive:true,force:true});
