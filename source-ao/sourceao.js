@@ -109,7 +109,8 @@
     $$('[data-i18n]').forEach(node=>{const key=node.dataset.i18n;if(dictionary[state.lang][key]) node.textContent=dictionary[state.lang][key];});
     $$('[data-i18n-placeholder]').forEach(node=>{const key=node.dataset.i18nPlaceholder;if(dictionary[state.lang][key]) node.placeholder=dictionary[state.lang][key];});
     $$('[data-i18n-aria-label]').forEach(node=>{const value=dictionary[state.lang][node.dataset.i18nAriaLabel];if(value) node.setAttribute('aria-label',value);});
-    $$('[data-i18n-alt]').forEach(node=>{const value=dictionary[state.lang][node.dataset.i18nAlt];if(value) node.setAttribute('alt',value);});
+    $('[data-i18n-alt]').forEach(node=>{const value=dictionary[state.lang][node.dataset.i18nAlt];if(value) node.setAttribute('alt',value);});
+    $('[data-href-pt][data-href-en]').forEach(node=>{node.setAttribute('href',state.lang==='en'?node.dataset.hrefEn:node.dataset.hrefPt);});
     $('#langToggle').textContent=state.lang==='en'?'PT':'EN';
     $('#langToggle').setAttribute('aria-label',state.lang==='en'?'Switch to Portuguese':'Mudar para EN — English');
     $$('a[href^="rfq.html"]').forEach(link=>link.href='rfq.html?lang='+state.lang);
