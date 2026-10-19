@@ -7,7 +7,7 @@
   let query='';
   let market='AO';
   let opportunities=[];
-  let lang='pt';
+  let lang=new URLSearchParams(window.location.search).get('lang')==='en'?'en':'pt';
   let localById=new Map();
   let syncState='idle';
   let lastSyncAt=null;
@@ -16,7 +16,7 @@
 
   const copy={
     pt:{
-      live:'Intelligence live',
+      live:'Ligação em direto',
       liveUpdating:'A sincronizar',
       liveFallback:'Dados disponíveis',
       engineBadge:'Motor de inteligência Source AO',radarSummary:'Resumo do radar',areaFilterGroup:'Filtros por área de negócio',formatFilterGroup:'Filtros por formato',
@@ -29,7 +29,7 @@
       statHighFit:'Fit elevado',statHighFitNote:'score ≥ 80',
       statUrgent:'Ação urgente',statUrgentNote:'≤ 5 dias',
       statMarkets:'Mercado',statMarketsNote:'Angola',
-      currentEyebrow:'PRIORIDADE COMERCIAL',currentTitle:'Opportunity Intelligence',
+      currentEyebrow:'PRIORIDADE COMERCIAL',currentTitle:'Radar de oportunidades',
       currentLead:'Ordenado pelo prazo, pela adequação à HMATIAS e pela confiança na fonte. A participação exige análise dos documentos do procedimento.',
       marketLabel:'MERCADO',areaLabel:'ÁREA',formatLabel:'FORMATO',marketAll:'Todos',
       searchLabel:'PESQUISAR',searchPlaceholder:'Ex.: canalização, pintura, manutenção…',
@@ -50,6 +50,7 @@
       openSource:'Abrir fonte →',analyse:'Analisar oportunidade',map:'Ver no Google Maps ↗',
       signalFresh:'Fonte recente',signalAged:'Rever fonte',signalRef:'Referência',signalDeadline:'Prazo confirmado',details:'Detalhes da análise',
       serviceBy:'Um serviço da HMATIAS',
+      privacy:'Privacidade',terms:'Termos de uso',footerTagline:'Pesquisar. Verificar. Decidir. Agir.',officialSite:'Abrir o site oficial HMATIAS',footerLogo:'Logótipo SOURCE AO by HMATIAS',
       disclaimer:'Fit e confiança são sinais de triagem, não garantias de elegibilidade ou adjudicação. Confirme sempre a fonte original, os documentos do procedimento e os requisitos de qualificação.'
     },
     en:{
@@ -87,6 +88,7 @@
       openSource:'Open source →',analyse:'Analyse opportunity',map:'Open in Google Maps ↗',
       signalFresh:'Recent source',signalAged:'Recheck source',signalRef:'Reference',signalDeadline:'Deadline confirmed',details:'Analysis details',
       serviceBy:'A service by HMATIAS',
+      privacy:'Privacy',terms:'Terms of use',footerTagline:'Search. Verify. Decide. Act.',officialSite:'Open the official HMATIAS website',footerLogo:'SOURCE AO by HMATIAS logo',
       disclaimer:'Fit and confidence are triage signals, not guarantees of eligibility or award. Always verify the original source, procurement documents and qualification requirements.'
     }
   };
@@ -305,7 +307,9 @@
       const value=copy[lang][node.dataset.i18nPlaceholder];
       if(value)node.setAttribute('placeholder',value);
     });
-    $$('[data-i18n-aria-label]').forEach(node=>{
+    $('[data-i18n-alt]').forEach(node=>{const value=t(node.dataset.i18nAlt);if(value)node.setAttribute('alt',value);});
+    $('[data-href-pt][data-href-en]').forEach(node=>node.setAttribute('href',lang==='en'?node.dataset.hrefEn:node.dataset.hrefPt));
+    $('[data-i18n-aria-label]').forEach(node=>{
       const value=t(node.dataset.i18nAriaLabel);
       if(value)node.setAttribute('aria-label',value);
     });
