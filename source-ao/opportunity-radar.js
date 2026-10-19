@@ -310,6 +310,7 @@
       if(value)node.setAttribute('aria-label',value);
     });
     $('#langToggle').textContent=lang==='pt'?'EN':'PT';
+    $('#langToggle').setAttribute('aria-label',lang==='pt'?'Mudar para EN — English':'Switch to Portuguese');
     render();
     updateSyncUI();
   }
