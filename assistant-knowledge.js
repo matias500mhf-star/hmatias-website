@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: public HMATIAS content, commercial quotation conditions and SOURCE AO public capabilities, 2026-10-12. */
+   Source of truth: public HMATIAS content, commercial quotation conditions and SOURCE AO public capabilities, 2026-10-19. */
 (() => {
   'use strict';
 
@@ -14,8 +14,8 @@
   ];
 
   const kb = {
-    version: '2026-10-18.1',
-    updated: '2026-10-18',
+    version: '2026-10-19.1',
+    updated: '2026-10-19',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
@@ -33,7 +33,7 @@
       emailRoutingEn: 'Use info@comercialhmatiasps.com for the company profile, institutional information and introductory corporate enquiries. Use geral@comercialhmatiasps.com for general enquiries, quotations, works, facilities, supply and commercial follow-up.'
     },
     pages: {
-      home: '/', construction: '/construcao.html', facilities: '/facilities.html', supply: '/supply.html', rfq: '/rfq.html', worksCatalogue: '/catalogo-obras.html', credibility: '/credibilidade.html', clean: '/clean.html', karta: '/karta.html', business: '/servicos-administrativos.html', booking: '/agendamento.html', sourceAO: '/source-ao/', sourceRfq: '/source-ao/rfq.html', sourceRadar: '/source-ao/opportunity-radar.html', privacy: '/privacidade.html', terms: '/termos.html',
+      home: '/', construction: '/construcao.html', facilities: '/facilities.html', supply: '/supply.html', rfq: '/rfq.html', worksCatalogue: '/catalogo-obras.html', credibility: '/credibilidade.html', clean: '/clean.html', karta: '/karta.html', business: '/servicos-administrativos.html', booking: '/agendamento.html', sourceAO: '/source-ao/', sourceRfq: '/source-ao/rfq.html', sourceRadar: '/source-ao/opportunity-radar.html', sourcePrivacy: '/source-ao/privacy.html', sourcePrivacyEn: '/source-ao/privacy-en.html', sourceTerms: '/source-ao/terms.html', sourceTermsEn: '/source-ao/terms-en.html', sourcePartnerApplication: '/source-ao/partner-application.html', sourcePartnerApplicationEn: '/source-ao/partner-application-en.html', privacy: '/privacidade.html', terms: '/termos.html',
       homeEn: '/en.html', constructionEn: '/construction.html', facilitiesEn: '/facilities-en.html', supplyEn: '/supply-en.html', rfqEn: '/rfq-en.html', worksCatalogueEn: '/work-catalogue.html', credibilityEn: '/credibility.html', cleanEn: '/clean-en.html', kartaEn: '/karta-en.html', businessEn: '/business-services.html', bookingEn: '/booking.html', privacyEn: '/privacy.html', termsEn: '/terms.html'
     },
     construction: {
