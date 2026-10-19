@@ -307,8 +307,8 @@
       const value=copy[lang][node.dataset.i18nPlaceholder];
       if(value)node.setAttribute('placeholder',value);
     });
-    $('[data-i18n-alt]').forEach(node=>{const value=t(node.dataset.i18nAlt);if(value)node.setAttribute('alt',value);});
-    $('[data-href-pt][data-href-en]').forEach(node=>node.setAttribute('href',lang==='en'?node.dataset.hrefEn:node.dataset.hrefPt));
+    $$('[data-i18n-alt]').forEach(node=>{const value=t(node.dataset.i18nAlt);if(value)node.setAttribute('alt',value);});
+    $$('[data-href-pt][data-href-en]').forEach(node=>node.setAttribute('href',lang==='en'?node.dataset.hrefEn:node.dataset.hrefPt));
     $('[data-i18n-aria-label]').forEach(node=>{
       const value=t(node.dataset.i18nAriaLabel);
       if(value)node.setAttribute('aria-label',value);
