@@ -10,62 +10,62 @@
   <meta name="theme-color" content="#062d56">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Source AO — Acompanhar pedido</title>
-  <link rel="stylesheet" href="track.css?v=20261019-icons1">
+  <link rel="stylesheet" href="track.css?v=20261019-language1">
 </head>
 <body>
   <main class="track-shell">
     <header class="track-header">
-      <a class="brand" href="index.html"><span class="mark" aria-hidden="true"><img src="favicon.svg" width="28" height="28" alt=""></span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a>
-      <span class="private-label">Private tracking</span>
+      <a class="brand" href="index.html?lang=pt" id="homeLink"><span class="mark" aria-hidden="true"><img src="favicon.svg" width="28" height="28" alt=""></span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a>
+      <span class="private-label" data-en="Private tracking">Acompanhamento privado</span><button class="lang-toggle" type="button" id="langToggle" aria-label="Mudar para EN — English">EN</button>
     </header>
 
     <section class="track-intro">
-      <span class="eyebrow">PEDIDO DE SOURCING</span>
-      <h1>Acompanhe sem expor os seus dados.</h1>
-      <p>Este link privado mostra apenas o estado e os detalhes comerciais essenciais do seu pedido. O contacto enviado não é devolvido nesta página.</p>
+      <span class="eyebrow" data-en="SOURCING REQUEST">PEDIDO DE SOURCING</span>
+      <h1 data-en="Track your request without exposing your data.">Acompanhe sem expor os seus dados.</h1>
+      <p data-en="This private link shows only the status and essential commercial details of your request. The contact details you submitted are not returned on this page.">Este link privado mostra apenas o estado e os detalhes comerciais essenciais do seu pedido. O contacto enviado não é devolvido nesta página.</p>
     </section>
 
-    <section id="loadingState" class="state-card" aria-live="polite"><span class="spinner"></span><div><strong>A carregar pedido…</strong><p>A validar a referência privada.</p></div></section>
+    <section id="loadingState" class="state-card" aria-live="polite"><span class="spinner"></span><div><strong data-en="Loading request…">A carregar pedido…</strong><p data-en="Validating the private reference.">A validar a referência privada.</p></div></section>
     <section id="errorState" class="state-card error" hidden aria-live="assertive"><span>!</span><div><strong id="errorTitle">Não foi possível abrir o pedido.</strong><p id="errorMessage">O link pode estar incorreto.</p></div></section>
 
     <section id="requestPanel" hidden>
       <article class="request-card">
-        <div class="request-top"><span>Referência</span><strong id="publicRef">—</strong></div>
+        <div class="request-top"><span data-en="Reference">Referência</span><strong id="publicRef">—</strong></div>
         <h2 id="requirement">—</h2>
         <div class="status-row"><span id="statusBadge">—</span><small id="updatedAt">—</small></div>
         <dl>
-          <div><dt>Categoria</dt><dd id="category">—</dd></div>
-          <div><dt>Especificação</dt><dd id="specification">—</dd></div>
-          <div><dt>Quantidade</dt><dd id="quantity">—</dd></div>
-          <div><dt>Local</dt><dd id="location">—</dd></div>
-          <div><dt>Necessário até</dt><dd id="neededBy">—</dd></div>
-          <div><dt>Criado</dt><dd id="createdAt">—</dd></div>
+          <div><dt data-en="Category">Categoria</dt><dd id="category">—</dd></div>
+          <div><dt data-en="Specification">Especificação</dt><dd id="specification">—</dd></div>
+          <div><dt data-en="Quantity">Quantidade</dt><dd id="quantity">—</dd></div>
+          <div><dt data-en="Location">Local</dt><dd id="location">—</dd></div>
+          <div><dt data-en="Needed by">Necessário até</dt><dd id="neededBy">—</dd></div>
+          <div><dt data-en="Created">Criado</dt><dd id="createdAt">—</dd></div>
         </dl>
-        <div id="trackedItems" hidden><h3>Produtos do pedido</h3><ul id="trackedItemList"></ul></div>
+        <div id="trackedItems" hidden><h3 data-en="Requested items">Produtos do pedido</h3><ul id="trackedItemList"></ul></div>
       </article>
 
       <article class="timeline-card">
-        <h3>Estado do processo</h3>
+        <h3 data-en="Request timeline">Estado do processo</h3>
         <ol id="timeline">
-          <li data-stage="received"><span></span><div><strong>Recebido</strong><small>Pedido registado no Source AO.</small></div></li>
-          <li data-stage="triage"><span></span><div><strong>Triagem</strong><small>Necessidade organizada e preparada.</small></div></li>
+          <li data-stage="received"><span></span><div><strong data-en="Received">Recebido</strong><small data-en="Request registered in Source AO.">Pedido registado no Source AO.</small></div></li>
+          <li data-stage="triage"><span></span><div><strong data-en="Initial review">Triagem</strong><small data-en="Requirement organised and prepared.">Necessidade organizada e preparada.</small></div></li>
           <li data-stage="sourcing"><span></span><div><strong>Sourcing</strong><small>Pesquisa de opções e fornecedores.</small></div></li>
-          <li data-stage="verifying"><span></span><div><strong>Verificação</strong><small>Informação comercial em confirmação.</small></div></li>
-          <li data-stage="verified"><span></span><div><strong>Verificado</strong><small>Dados relevantes confirmados.</small></div></li>
-          <li data-stage="quoted"><span></span><div><strong>Cotação</strong><small>Condições comerciais preparadas.</small></div></li>
-          <li data-stage="awarded"><span></span><div><strong>Adjudicado</strong><small>Proposta aceite pelo cliente.</small></div></li>
-          <li data-stage="purchased"><span></span><div><strong>Em aquisição</strong><small>Compra em curso após adjudicação.</small></div></li>
-          <li data-stage="delivered"><span></span><div><strong>Entregue</strong><small>Entrega registada pela HMATIAS.</small></div></li>
-          <li data-stage="completed"><span></span><div><strong>Concluído</strong><small>Processo finalizado.</small></div></li>
+          <li data-stage="verifying"><span></span><div><strong data-en="Verification">Verificação</strong><small data-en="Commercial information being confirmed.">Informação comercial em confirmação.</small></div></li>
+          <li data-stage="verified"><span></span><div><strong data-en="Verified">Verificado</strong><small data-en="Relevant details confirmed.">Dados relevantes confirmados.</small></div></li>
+          <li data-stage="quoted"><span></span><div><strong data-en="Quotation">Cotação</strong><small data-en="Commercial terms prepared.">Condições comerciais preparadas.</small></div></li>
+          <li data-stage="awarded"><span></span><div><strong data-en="Awarded">Adjudicado</strong><small data-en="Proposal accepted by the customer.">Proposta aceite pelo cliente.</small></div></li>
+          <li data-stage="purchased"><span></span><div><strong data-en="Being purchased">Em aquisição</strong><small data-en="Purchase in progress following award.">Compra em curso após adjudicação.</small></div></li>
+          <li data-stage="delivered"><span></span><div><strong data-en="Delivered">Entregue</strong><small data-en="Delivery recorded by HMATIAS.">Entrega registada pela HMATIAS.</small></div></li>
+          <li data-stage="completed"><span></span><div><strong data-en="Completed">Concluído</strong><small data-en="Process completed.">Processo finalizado.</small></div></li>
         </ol>
       </article>
 
-      <p class="privacy-note"><strong>Privacidade:</strong> este endereço contém uma chave privada. Não o publique nem o coloque em grupos públicos.</p>
+      <p class="privacy-note"><strong data-en="Privacy:">Privacidade:</strong> <span data-en="This address contains a private key. Do not publish it or share it in public groups.">este endereço contém uma chave privada. Não o publique nem o coloque em grupos públicos.</span></p>
     </section>
 
-    <footer><span>Source AO · Search. Verify. Source.</span><span>HMATIAS</span></footer>
+    <footer><span data-en="Source AO · Search. Verify. Source.">Source AO · Pesquisar. Verificar. Fornecer.</span><span>HMATIAS</span></footer>
   </main>
   <script src="runtime-config.js"></script>
-  <script src="track.js" defer></script>
+  <script src="track.js?v=20261019-language1" defer></script>
 </body>
 </html>
