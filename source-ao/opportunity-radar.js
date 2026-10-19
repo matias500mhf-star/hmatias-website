@@ -19,6 +19,7 @@
       live:'Intelligence live',
       liveUpdating:'A sincronizar',
       liveFallback:'Dados disponíveis',
+      engineBadge:'Motor de inteligência Source AO',radarSummary:'Resumo do radar',areaFilterGroup:'Filtros por área de negócio',formatFilterGroup:'Filtros por formato',
       back:'← Source AO',
       eyebrow:'SOURCE AO · INTELLIGENCE RADAR',
       title:'Não veja apenas oportunidades.\nEntenda quais merecem ação.',
@@ -55,6 +56,7 @@
       live:'Intelligence live',
       liveUpdating:'Syncing',
       liveFallback:'Available data',
+      engineBadge:'Source AO Intelligence engine',radarSummary:'Radar summary',areaFilterGroup:'Filters by business area',formatFilterGroup:'Filters by format',
       back:'← Source AO',
       eyebrow:'SOURCE AO · INTELLIGENCE RADAR',
       title:'Do not just see opportunities.\nKnow which ones deserve action.',
@@ -302,6 +304,10 @@
     $$('[data-i18n-placeholder]').forEach(node=>{
       const value=copy[lang][node.dataset.i18nPlaceholder];
       if(value)node.setAttribute('placeholder',value);
+    });
+    $$('[data-i18n-aria-label]').forEach(node=>{
+      const value=t(node.dataset.i18nAriaLabel);
+      if(value)node.setAttribute('aria-label',value);
     });
     $('#langToggle').textContent=lang==='pt'?'EN':'PT';
     render();
