@@ -86,7 +86,7 @@
               </label>
               <label>
                 <span data-i18n="quantityLabel">Quantidade</span>
-                <input id="quantityInput" inputmode="decimal" type="number" min="0" step="any" placeholder="1">
+                <input id="quantityInput" inputmode="decimal" type="number" min="0.001" step="any" placeholder="1">
               </label>
               <label>
                 <span data-i18n="urgencyLabel">Prioridade</span>
@@ -109,7 +109,7 @@
 
         <aside class="hero-command" data-i18n-aria-label="sourceRules" aria-label="Regras do Source AO">
           <div class="command-head">
-            <span class="command-icon" aria-hidden="true">S</span>
+            <span class="command-icon" aria-hidden="true"><img src="favicon.svg" width="26" height="26" alt=""></span>
             <div><small data-i18n="commandEyebrow">MODO OPERACIONAL</small><strong data-i18n="commandTitle">Pesquisa estruturada</strong></div>
           </div>
           <div class="command-rule">
@@ -221,12 +221,12 @@
         <p class="section-note" data-i18n="browseNote">O Source AO expande a pesquisa por categoria sem perder a especificação original.</p>
       </div>
       <div class="category-grid">
-        <button class="category" data-query="Construction materials"><span>01</span><strong data-i18n="cat1">Materiais de construção</strong><small data-i18n="cat1s">cimento · aço · PVC · tintas</small><i>↗</i></button>
-        <button class="category" data-query="HVAC and electrical"><span>02</span><strong data-i18n="cat2">Climatização e elétrica</strong><small data-i18n="cat2s">AC · cabos · proteção · peças</small><i>↗</i></button>
-        <button class="category" data-query="Tools and equipment"><span>03</span><strong data-i18n="cat3">Ferramentas e equipamentos</strong><small data-i18n="cat3s">máquinas · ferramentas · oficina</small><i>↗</i></button>
-        <button class="category" data-query="Cleaning and facilities"><span>04</span><strong data-i18n="cat4">Limpeza e facilities</strong><small data-i18n="cat4s">consumíveis · higiene · manutenção</small><i>↗</i></button>
-        <button class="category" data-query="Services and contractors"><span>05</span><strong data-i18n="cat5">Serviços e empreiteiros</strong><small data-i18n="cat5s">instalação · reparação · execução</small><i>↗</i></button>
-        <button class="category" data-query="Industrial supply"><span>06</span><strong data-i18n="cat6">Fornecimento industrial</strong><small data-i18n="cat6s">químicos · embalagem · componentes</small><i>↗</i></button>
+        <button type="button" class="category" data-query="Construction materials"><span>01</span><strong data-i18n="cat1">Materiais de construção</strong><small data-i18n="cat1s">cimento · aço · PVC · tintas</small><i>↗</i></button>
+        <button type="button" class="category" data-query="HVAC and electrical"><span>02</span><strong data-i18n="cat2">Climatização e elétrica</strong><small data-i18n="cat2s">AC · cabos · proteção · peças</small><i>↗</i></button>
+        <button type="button" class="category" data-query="Tools and equipment"><span>03</span><strong data-i18n="cat3">Ferramentas e equipamentos</strong><small data-i18n="cat3s">máquinas · ferramentas · oficina</small><i>↗</i></button>
+        <button type="button" class="category" data-query="Cleaning and facilities"><span>04</span><strong data-i18n="cat4">Limpeza e facilities</strong><small data-i18n="cat4s">consumíveis · higiene · manutenção</small><i>↗</i></button>
+        <button type="button" class="category" data-query="Services and contractors"><span>05</span><strong data-i18n="cat5">Serviços e empreiteiros</strong><small data-i18n="cat5s">instalação · reparação · execução</small><i>↗</i></button>
+        <button type="button" class="category" data-query="Industrial supply"><span>06</span><strong data-i18n="cat6">Fornecimento industrial</strong><small data-i18n="cat6s">químicos · embalagem · componentes</small><i>↗</i></button>
       </div>
     </section>
 
@@ -320,7 +320,7 @@
           <label class="request-field request-field-full"><span data-request-pt="Especificações / referência" data-request-en="Technical specification / reference">Especificações / referência</span><input id="requestSpec" type="text" maxlength="300" data-i18n-placeholder="requestSpecPlaceholder" placeholder="Norma, dimensão, marca ou código técnico"></label>
           <label class="request-field"><span data-request-pt="Local de entrega *" data-request-en="Delivery location *">Local de entrega *</span><input id="requestLocation" type="text" value="Luanda" maxlength="100" required></label>
           <label class="request-field"><span data-request-pt="Prioridade" data-request-en="Priority">Prioridade</span><select id="requestUrgency"><option value="" data-i18n="priorityNormal">Normal</option><option value="urgent" data-i18n="priorityUrgent">Urgente</option><option value="this week" data-i18n="priorityWeek">Esta semana</option></select></label>
-          <label class="request-field request-field-full"><span data-request-pt="WhatsApp, telefone ou e-mail *" data-request-en="WhatsApp, phone or email *">WhatsApp, telefone ou e-mail *</span><input id="requestContact" type="text" autocomplete="email" maxlength="180" required placeholder="+244 … ou email@empresa.com"></label>
+          <label class="request-field request-field-full"><span data-request-pt="WhatsApp, telefone ou e-mail *" data-request-en="WhatsApp, phone or email *">WhatsApp, telefone ou e-mail *</span><input id="requestContact" type="text" autocomplete="off" maxlength="180" required placeholder="+244 … ou email@empresa.com"></label>
           <label class="request-consent request-field-full"><input id="requestConsent" type="checkbox" required><span data-request-pt="Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver" data-request-en="I authorise HMATIAS to register and use these details to respond to my request. See">Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver</span> <a href="privacy.html" data-i18n="privacyPolicy">política de privacidade</a>.</label>
           <button class="btn btn-light" type="submit" data-i18n="prepareRequest">Registar pedido de sourcing</button>
           <p class="request-disclosure request-field-full" id="requestDisclosure" role="status" aria-live="polite">O pedido só fica registado quando o sistema apresenta uma referência. O registo não confirma stock, preço nem notificação à equipa.</p>
