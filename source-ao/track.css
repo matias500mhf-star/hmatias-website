@@ -3,3 +3,6 @@
 
 /* Unified compact SOURCE AO mark */
 .mark img{display:block;width:28px;height:28px;object-fit:contain}
+
+/* Locale control for private tracking */
+.lang-toggle{border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--navy);min-height:36px;min-width:42px;padding:7px 10px;font:inherit;font-size:11px;font-weight:800;cursor:pointer}.lang-toggle:focus-visible{outline:3px solid #79b8e2;outline-offset:2px}
