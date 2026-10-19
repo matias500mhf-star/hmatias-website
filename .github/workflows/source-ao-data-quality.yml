@@ -123,7 +123,7 @@ jobs:
                   if a.get('id'):
                       self.ids.append(a['id'])
                       self.attrs_by_id[a['id']] = a
-                  if tag == 'a' and a.get('href') is not None:
+                  if tag in ('a', 'link') and a.get('href') is not None:
                       self.links.append(a['href'])
                   if tag in ('img', 'script', 'link') and a.get('src'):
                       self.links.append(a['src'])
@@ -213,7 +213,7 @@ jobs:
               failures.append('homepage must initialize PT/EN from the lang query')
           if "new URLSearchParams(window.location.search).get('lang')" not in radar_js:
               failures.append('Radar must initialize PT/EN from the lang query')
-          if 'location:o.location||\\'Angola\\',lang' not in radar_js:
+          if "location:o.location||'Angola',lang" not in radar_js:
               failures.append('Radar request action must preserve the selected language')
           if "document.querySelectorAll('[data-href-pt][data-href-en]')" not in rfq_js:
               failures.append('RFQ links must preserve the selected language')
