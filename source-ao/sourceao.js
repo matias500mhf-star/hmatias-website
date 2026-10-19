@@ -106,6 +106,21 @@
 
   function applyLanguage(){
     document.documentElement.lang=state.lang==='pt'?'pt-AO':'en';
+    const pageTitle=state.lang==='en'?'SOURCE AO | Technical Sourcing and RFQs in Angola':'SOURCE AO | Sourcing, Fornecedores e RFQ em Angola';
+    const pageDescription=state.lang==='en'
+      ?'Source AO by HMATIAS: technical research for materials and suppliers in Angola, with structured RFQ requests. Pricing, stock and delivery subject to confirmation.'
+      :'Source AO da HMATIAS: pesquisa técnica de materiais e fornecedores em Angola, com pedidos RFQ estruturados. Preço, stock e entrega sujeitos a confirmação.';
+    document.title=pageTitle;
+    const setMeta=(selector,value)=>{const element=document.querySelector(selector);if(element)element.setAttribute('content',value);};
+    setMeta('meta[name="description"]',pageDescription);
+    setMeta('meta[property="og:title"]',pageTitle);
+    setMeta('meta[property="og:description"]',pageDescription);
+    setMeta('meta[name="twitter:title"]',pageTitle);
+    setMeta('meta[name="twitter:description"]',pageDescription);
+    setMeta('meta[property="og:locale"]',state.lang==='en'?'en_GB':'pt_AO');
+    setMeta('meta[property="og:image:alt"]',state.lang==='en'?'SOURCE AO by HMATIAS — technical sourcing in Angola':'SOURCE AO by HMATIAS — sourcing e oportunidades em Angola');
+    setMeta('meta[name="twitter:image:alt"]',state.lang==='en'?'SOURCE AO by HMATIAS — technical sourcing in Angola':'SOURCE AO by HMATIAS — sourcing e oportunidades em Angola');
+    setMeta('meta[property="og:url"]',window.location.origin+window.location.pathname+(state.lang==='en'?'?lang=en':'?lang=pt'));
     $$('[data-i18n]').forEach(node=>{const key=node.dataset.i18n;if(dictionary[state.lang][key]) node.textContent=dictionary[state.lang][key];});
     $$('[data-i18n-placeholder]').forEach(node=>{const key=node.dataset.i18nPlaceholder;if(dictionary[state.lang][key]) node.placeholder=dictionary[state.lang][key];});
     $$('[data-i18n-aria-label]').forEach(node=>{const value=dictionary[state.lang][node.dataset.i18nAriaLabel];if(value) node.setAttribute('aria-label',value);});
