@@ -26,6 +26,7 @@ function staticLanguage(){
   document.querySelectorAll('[data-en]').forEach(node=>{if(!node.dataset.pt)node.dataset.pt=node.textContent;node.textContent=en?node.dataset.en:node.dataset.pt;});
   $('#rfqLanguage').textContent=en?'PT':'EN';
   $('#rfqLanguage').setAttribute('aria-label',en?'Switch to PT — Português':'Mudar para EN — English');
+  document.querySelectorAll('[data-href-pt][data-href-en]').forEach(node=>node.setAttribute('href',en?node.dataset.hrefEn:node.dataset.hrefPt));
 }
 
 function renderFields(){
