@@ -3,7 +3,7 @@
 
   const $=s=>document.querySelector(s);
   const $$=s=>[...document.querySelectorAll(s)];
-  const state={lang:'pt',query:'',location:'Luanda'};
+  const state={lang:new URLSearchParams(window.location.search).get('lang')==='en'?'en':'pt',query:'',location:'Luanda'};
   const track=(eventName,parameters={})=>window.hmatiasAnalytics?.track?.(eventName,parameters);
 
   const dictionary={
@@ -113,7 +113,8 @@
     $('[data-href-pt][data-href-en]').forEach(node=>{node.setAttribute('href',state.lang==='en'?node.dataset.hrefEn:node.dataset.hrefPt);});
     $('#langToggle').textContent=state.lang==='en'?'PT':'EN';
     $('#langToggle').setAttribute('aria-label',state.lang==='en'?'Switch to Portuguese':'Mudar para EN — English');
-    $$('a[href^="rfq.html"]').forEach(link=>link.href='rfq.html?lang='+state.lang);
+    $('a[href^="rfq.html"]').forEach(link=>link.href='rfq.html?lang='+state.lang);
+    $('a[href^="opportunity-radar.html"]').forEach(link=>link.href='opportunity-radar.html?lang='+state.lang);
     if(state.query) renderSearch(state.query,state.location,false);
     renderRadar();
   }
