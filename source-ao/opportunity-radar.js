@@ -283,7 +283,7 @@
   }
 
   function requestHref(o){
-    const params=new URLSearchParams({request:o.title||'',ref:o.reference||'',location:o.location||'Angola'});
+    const params=new URLSearchParams({request:o.title||'',ref:o.reference||'',location:o.location||'Angola',lang});
     return 'index.html?'+params.toString()+'#request';
   }
 
