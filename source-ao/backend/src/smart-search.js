@@ -71,6 +71,53 @@ const PRODUCT_FAMILIES = [
     supplier_terms:['climatização','AVAC','material elétrico','electrical supplier']
   },
   {
+    id:'ppe-industrial-safety',
+    item_id:'item-ppe-workplace-safety',
+    category:'industrial-supply',
+    name_en:'Personal protective equipment & industrial safety',
+    name_pt:'EPI e segurança industrial',
+    triggers:[
+      'EPI','EPIs','PPE','equipamento de proteção individual','equipamentos de protecao individual',
+      'personal protective equipment','capacete de segurança','safety helmet','hard hat',
+      'luvas de proteção','luvas de protecao','luvas industriais','safety gloves',
+      'óculos de proteção','oculos de protecao','safety glasses','safety eyewear',
+      'arnês','arnes','fall arrest','fall protection','linhas de vida',
+      'detetor de gases','detector de gases','gas detector',
+      'lockout tagout','lockout/tagout','sinalização industrial','sinalizacao industrial'
+    ],
+    variants:[
+      'equipamentos de proteção individual','EPI segurança industrial',
+      'personal protective equipment','industrial safety equipment',
+      'safety gloves','fall protection','gas detection','lockout tagout'
+    ],
+    supplier_terms:[
+      'fornecedor de EPI','equipamentos de segurança industrial',
+      'PPE supplier','industrial safety supplier'
+    ]
+  },
+  {
+    id:'professional-workwear',
+    item_id:'item-professional-workwear-uniforms',
+    category:'industrial-supply',
+    name_en:'Professional workwear & uniforms',
+    name_pt:'Fardamento profissional e vestuário de trabalho',
+    triggers:[
+      'fardamento profissional','fardamento industrial','uniformes profissionais',
+      'uniformes industriais','workwear','industrial uniforms',
+      'professional uniforms','vestuário ignífugo','vestuario ignifugo',
+      'flame retardant workwear','flame resistant clothing',
+      'fato de trabalho','fatos de trabalho','coveralls'
+    ],
+    variants:[
+      'fardamento industrial','uniformes profissionais',
+      'industrial workwear','flame retardant workwear','protective clothing'
+    ],
+    supplier_terms:[
+      'fornecedor fardamento industrial','vestuário de proteção',
+      'workwear supplier','protective clothing supplier'
+    ]
+  },
+  {
     id:'tools-equipment',
     item_id:'item-tools-equipment',
     category:'tools-equipment',
