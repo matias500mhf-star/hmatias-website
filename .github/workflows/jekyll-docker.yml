@@ -269,6 +269,81 @@ jobs:
           print(f'Production sitemap OK: {len(urls)} URLs')
           PY
 
+          contact_pages=(
+            "agendamento.html"
+            "booking.html"
+            "business-services.html"
+            "catalogo-obras.html"
+            "clean-en.html"
+            "clean.html"
+            "coberturas-industriais.html"
+            "construcao.html"
+            "construction.html"
+            "credibilidade.html"
+            "credibility.html"
+            "en.html"
+            "facilities-en.html"
+            "facilities.html"
+            "fornecimento-de-epi-e-fardamento.html"
+            "index.html"
+            "karta-en.html"
+            "karta.html"
+            "limpeza-pos-obra.html"
+            "privacidade.html"
+            "privacy.html"
+            "remodelacao-de-escritorios.html"
+            "rfq-en.html"
+            "rfq.html"
+            "servicos-administrativos.html"
+            "source-ao/index.html"
+            "source-ao/opportunity-radar.html"
+            "source-ao/partner-application.html"
+            "source-ao/privacy.html"
+            "source-ao/rfq.html"
+            "source-ao/terms.html"
+            "supply-en.html"
+            "supply.html"
+            "termos.html"
+            "terms.html"
+            "work-catalogue.html"
+          )
+          : > /tmp/hmatias-contact-pages.list
+          index=0
+          for page in "${contact_pages[@]}"; do
+            output="/tmp/hmatias-contact-page-${index}.html"
+            fetch "/${page}" "$output"
+            printf '%s|%s\n' "$page" "$output" >> /tmp/hmatias-contact-pages.list
+            index=$((index + 1))
+          done
+
+          fetch "/images/contact-email.svg" /tmp/hmatias-contact-email.svg
+          fetch "/images/contact-phone.svg" /tmp/hmatias-contact-phone.svg
+          grep -Fq '<svg' /tmp/hmatias-contact-email.svg
+          grep -Fq '<svg' /tmp/hmatias-contact-phone.svg
+
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          for line in Path('/tmp/hmatias-contact-pages.list').read_text().splitlines():
+              page, path = line.split('|', 1)
+              html = Path(path).read_text(encoding='utf-8')
+              if 'mailto:geral@comercialhmatiasps.com' not in html:
+                  raise SystemExit(f'Missing general email in production page: {page}')
+              if 'mailto:info@comercialhmatiasps.com' not in html:
+                  raise SystemExit(f'Missing institutional email in production page: {page}')
+              mail_links = re.finditer(r'<a\b[^>]*href="mailto:(?:geral|info)@comercialhmatiasps\.com[^"]*"[^>]*>(.*?)</a>', html, re.I | re.S)
+              for link in mail_links:
+                  if not re.search(r'contact-email\.svg', link.group(1), re.I):
+                      raise SystemExit(f'Missing email icon inside mail link in production page: {page}')
+              phone_links = re.finditer(r'<a\b[^>]*href="tel:[^"]+"[^>]*>(.*?)</a>', html, re.I | re.S)
+              for link in phone_links:
+                  if not re.search(r'contact-phone\.svg', link.group(1), re.I):
+                      raise SystemExit(f'Missing phone icon inside telephone link in production page: {page}')
+
+          print('Production contact audit OK: all 36 pages include both company emails and icons on contact links; icon assets are reachable.')
+          PY
+
           status_404="$(curl --silent --output /tmp/404-live.html --write-out '%{http_code}' \
             --location --connect-timeout 15 --max-time 30 "$base/__hmatias_missing_page_smoke__" || true)"
           if [ "$status_404" != "404" ]; then
