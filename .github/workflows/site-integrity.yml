@@ -430,6 +430,22 @@ jobs:
           print(f'HMATIAS site integrity OK: {len(sitemap_urls)} canonical URLs; {whatsapp_refs} WhatsApp routes checked.')
           PY
 
+      - name: TEMP inspect generated CSS bundles
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-home-css.mjs --write
+          for f in home-base.css home-details.css clean-base.css clean-details.css; do
+            if ! git diff --quiet -- "$f"; then
+              echo "CSS_FILE_BEGIN:$f"
+              base64 -w0 "$f"
+              echo
+              echo "CSS_FILE_END:$f"
+            fi
+          done
+          echo "CSS_DIFF_SUMMARY_BEGIN"
+          git diff --stat -- home-base.css home-details.css clean-base.css clean-details.css
+          echo "CSS_DIFF_SUMMARY_END"
       - name: Audit commercial client attribution, site copy and navigation
         run: |
           node --check analytics.js
