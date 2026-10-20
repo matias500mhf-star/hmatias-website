@@ -134,6 +134,7 @@ jobs:
           }
 
           fetch "/" /tmp/home.html
+          fetch "/construcao.html" /tmp/construcao.html
           fetch "/en.html" /tmp/en.html
           fetch "/robots.txt" /tmp/robots.txt
           fetch "/sitemap.xml" /tmp/sitemap.xml
@@ -148,6 +149,27 @@ jobs:
 
           grep -Fq "HMATIAS" /tmp/home.html
           grep -Fq "HMATIAS" /tmp/en.html
+
+          # Production contact regression checks: visible contact methods must retain their icons,
+          # and both official addresses must be present on the homepage and construction page.
+          for page in /tmp/home.html /tmp/construcao.html; do
+            grep -Fq 'images/contact-phone.svg' "$page" || {
+              echo "ERROR: phone icon missing from $page"
+              exit 1
+            }
+            grep -Fq 'images/contact-email.svg' "$page" || {
+              echo "ERROR: email icon missing from $page"
+              exit 1
+            }
+            grep -Fq 'mailto:geral@comercialhmatiasps.com' "$page" || {
+              echo "ERROR: general contact email missing from $page"
+              exit 1
+            }
+            grep -Fq 'mailto:info@comercialhmatiasps.com' "$page" || {
+              echo "ERROR: institutional contact email missing from $page"
+              exit 1
+            }
+          done
           grep -Fq "Sitemap: https://comercialhmatiasps.com/sitemap.xml" /tmp/robots.txt
           grep -Fq "SMART RFQ" /tmp/rfq.html
           grep -Fq "KARTA Wallet Mobile" /tmp/karta.html
