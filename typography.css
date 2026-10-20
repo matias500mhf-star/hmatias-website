@@ -22,3 +22,6 @@ body.hmatias-type .header-contact a{display:inline-flex;align-items:center;justi
 .contact-icon{flex:none;display:block;width:1rem;height:1rem;filter:brightness(0) invert(1)}
 @media(max-width:1100px){body.hmatias-type .hmatias-header .nav-menu{gap:12px}body.hmatias-type .hmatias-header .nav{gap:12px}}
 @media(max-width:850px){body.hmatias-type .hmatias-header .nav-menu a{font-size:1rem}body.hmatias-type .header-contact{gap:6px 14px}}
+/* Footer contact links: align email icons consistently with the text. */
+.footer-pro-col a.footer-contact-link{display:inline-flex;align-items:center;gap:7px}
+.footer-pro-col a.footer-contact-link .contact-icon{width:16px;height:16px;flex:0 0 16px}
