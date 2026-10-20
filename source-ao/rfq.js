@@ -22,10 +22,31 @@ function options(select,values){select.replaceChildren();values.forEach(([val,la
 function error(message=''){const el=$('#rfqError');el.textContent=message;el.hidden=!message;}
 function staticLanguage(){
   document.documentElement.lang=en?'en':'pt-AO';
-  document.title=copy('Pedido de Cotação / RFQ · SOURCE AO','Quotation Request / RFQ · SOURCE AO');
+  const pageTitle=copy('Pedido de Cotação / RFQ · SOURCE AO','Quotation Request / RFQ · SOURCE AO');
+  const pageDescription=copy(
+    'Peça uma cotação à HMATIAS no SOURCE AO. Selecione produtos, quantidades, especificações e prazo de entrega em Angola.',
+    'Request a quotation from HMATIAS through Source AO. Specify products, quantities, requirements and delivery timing in Angola.'
+  );
+  document.title=pageTitle;
+  const setMeta=(selector,value)=>{const element=document.querySelector(selector);if(element)element.setAttribute('content',value);};
+  setMeta('meta[name="description"]',pageDescription);
+  setMeta('meta[property="og:title"]',pageTitle);
+  setMeta('meta[property="og:description"]',pageDescription);
+  setMeta('meta[name="twitter:title"]',pageTitle);
+  setMeta('meta[name="twitter:description"]',pageDescription);
+  setMeta('meta[property="og:locale"]',en?'en_GB':'pt_AO');
+  setMeta('meta[property="og:image:alt"]',en?'SOURCE AO by HMATIAS — technical sourcing in Angola':'SOURCE AO by HMATIAS — sourcing e oportunidades em Angola');
+  setMeta('meta[name="twitter:image:alt"]',en?'SOURCE AO by HMATIAS — technical sourcing in Angola':'SOURCE AO by HMATIAS — sourcing e oportunidades em Angola');
+  if(window.location?.href && window.history?.replaceState){
+    const localizedUrl=new URL(window.location.href);
+    if(en)localizedUrl.searchParams.set('lang','en');else localizedUrl.searchParams.delete('lang');
+    window.history.replaceState(null,'',localizedUrl.pathname+localizedUrl.search+localizedUrl.hash);
+    setMeta('meta[property="og:url"]',window.location.origin+window.location.pathname+(en?'?lang=en':''));
+  }
   document.querySelectorAll('[data-en]').forEach(node=>{if(!node.dataset.pt)node.dataset.pt=node.textContent;node.textContent=en?node.dataset.en:node.dataset.pt;});
   $('#rfqLanguage').textContent=en?'PT':'EN';
   $('#rfqLanguage').setAttribute('aria-label',en?'Switch to PT — Português':'Mudar para EN — English');
+  document.querySelectorAll('[data-href-pt][data-href-en]').forEach(node=>node.setAttribute('href',en?node.dataset.hrefEn:node.dataset.hrefPt));
 }
 
 function renderFields(){

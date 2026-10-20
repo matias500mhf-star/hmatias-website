@@ -443,3 +443,6 @@ img,svg{max-width:100%}
   .hmatias-return{display:none}
   .hero-copy h1{font-size:2.35rem}
 }
+
+/* Unified compact SOURCE AO identity mark */
+.command-icon img{display:block;width:26px;height:26px;object-fit:contain}

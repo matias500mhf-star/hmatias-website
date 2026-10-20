@@ -181,3 +181,6 @@
   .op-card{grid-template-columns:minmax(0,1fr);gap:18px;padding:22px 18px}
   .op-side{grid-column:1}
 }
+
+/* Unified compact SOURCE AO identity mark */
+.op-engine-icon img{display:block;width:28px;height:28px;object-fit:contain}

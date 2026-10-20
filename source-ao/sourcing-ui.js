@@ -56,6 +56,7 @@ function privateUrl(statusPath){
   const token=endpoint.searchParams.get('token')||'';
   if(!id||!token)return '';
   const result=new URL('track.html',location.href);
+  result.searchParams.set('lang',isPt()?'pt':'en');
   result.hash=new URLSearchParams({id,token}).toString();return result.href;
 }
 async function onSubmit(event){

@@ -17,7 +17,7 @@
   <title>SOURCE AO | Sourcing, Fornecedores e RFQ em Angola</title>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"SOURCE AO","url":"https://comercialhmatiasps.com/source-ao/index.html","description":"Source AO da HMATIAS: pesquisa técnica de materiais e fornecedores em Angola, com pedidos RFQ estruturados. Preço, stock e entrega sujeitos a confirmação.","publisher":{"@type":"Organization","name":"HMATIAS – Prestação de Serviços SU, LDA","url":"https://comercialhmatiasps.com/","@id":"https://comercialhmatiasps.com/#organization"},"inLanguage":"pt-AO","@id":"https://comercialhmatiasps.com/source-ao/index.html#website"}</script>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="stylesheet" href="sourceao.css?v=20261013-legibility2">
+  <link rel="stylesheet" href="sourceao.css?v=20261019-icons1">
   <link rel="stylesheet" href="verified-results.css?v=20261014-handoff1">
   <link rel="stylesheet" href="sourcing-ui.css?v=20261009-2">
   <meta property="og:image" content="https://comercialhmatiasps.com/og-hmatias.jpg">
@@ -40,14 +40,14 @@
       <nav class="nav-links" data-i18n-aria-label="mainNavigation" aria-label="Navegação principal">
         <a href="#search" data-i18n="navSearch">Pesquisa</a>
         <a href="#radar" data-i18n="navRadar">Radar</a>
-        <a href="opportunity-radar.html" data-i18n="navOpportunities">Oportunidades</a>
+        <a href="opportunity-radar.html" data-href-pt="opportunity-radar.html?lang=pt" data-href-en="opportunity-radar.html?lang=en" data-i18n="navOpportunities">Oportunidades</a>
         <a href="#how" data-i18n="navHow">Como funciona</a>
       </nav>
       <div class="nav-actions">
         <a class="hmatias-return" href="../" data-i18n-aria-label="officialSite" aria-label="Abrir site oficial HMATIAS">HMATIAS ↗</a>
         <span class="environment-pill"><span></span><b data-i18n="angolaFirst">Foco: Angola</b></span>
-        <button class="lang" type="button" id="langToggle">EN</button>
-        <a class="btn btn-primary btn-small" href="rfq.html" data-i18n="navRequest">Pedir cotação</a>
+        <button class="lang" type="button" id="langToggle" aria-label="Mudar para EN — English">EN</button>
+        <a class="btn btn-primary btn-small" href="rfq.html" data-href-pt="rfq.html?lang=pt" data-href-en="rfq.html?lang=en" data-i18n="navRequest">Pedir cotação</a>
       </div>
     </div>
   </header>
@@ -86,7 +86,7 @@
               </label>
               <label>
                 <span data-i18n="quantityLabel">Quantidade</span>
-                <input id="quantityInput" inputmode="decimal" type="number" min="0" step="any" placeholder="1">
+                <input id="quantityInput" inputmode="decimal" type="number" min="0.001" step="any" placeholder="1">
               </label>
               <label>
                 <span data-i18n="urgencyLabel">Prioridade</span>
@@ -109,7 +109,7 @@
 
         <aside class="hero-command" data-i18n-aria-label="sourceRules" aria-label="Regras do Source AO">
           <div class="command-head">
-            <span class="command-icon" aria-hidden="true">S</span>
+            <span class="command-icon" aria-hidden="true"><img src="favicon.svg" width="26" height="26" alt=""></span>
             <div><small data-i18n="commandEyebrow">MODO OPERACIONAL</small><strong data-i18n="commandTitle">Pesquisa estruturada</strong></div>
           </div>
           <div class="command-rule">
@@ -150,7 +150,7 @@
           <p class="eyebrow" data-i18n="intelligenceEyebrow">ANÁLISE COMERCIAL</p>
           <h2 data-i18n="intelligenceTitle">Mais do que listar oportunidades.</h2>
         </div>
-        <a class="btn btn-outline" href="opportunity-radar.html" data-i18n="intelligenceLink">Abrir Intelligence Radar →</a>
+        <a class="btn btn-outline" href="opportunity-radar.html" data-href-pt="opportunity-radar.html?lang=pt" data-href-en="opportunity-radar.html?lang=en" data-i18n="intelligenceLink">Abrir Intelligence Radar →</a>
       </div>
       <div class="intelligence-bridge-grid">
         <article>
@@ -221,12 +221,12 @@
         <p class="section-note" data-i18n="browseNote">O Source AO expande a pesquisa por categoria sem perder a especificação original.</p>
       </div>
       <div class="category-grid">
-        <button class="category" data-query="Construction materials"><span>01</span><strong data-i18n="cat1">Materiais de construção</strong><small data-i18n="cat1s">cimento · aço · PVC · tintas</small><i>↗</i></button>
-        <button class="category" data-query="HVAC and electrical"><span>02</span><strong data-i18n="cat2">Climatização e elétrica</strong><small data-i18n="cat2s">AC · cabos · proteção · peças</small><i>↗</i></button>
-        <button class="category" data-query="Tools and equipment"><span>03</span><strong data-i18n="cat3">Ferramentas e equipamentos</strong><small data-i18n="cat3s">máquinas · ferramentas · oficina</small><i>↗</i></button>
-        <button class="category" data-query="Cleaning and facilities"><span>04</span><strong data-i18n="cat4">Limpeza e facilities</strong><small data-i18n="cat4s">consumíveis · higiene · manutenção</small><i>↗</i></button>
-        <button class="category" data-query="Services and contractors"><span>05</span><strong data-i18n="cat5">Serviços e empreiteiros</strong><small data-i18n="cat5s">instalação · reparação · execução</small><i>↗</i></button>
-        <button class="category" data-query="Industrial supply"><span>06</span><strong data-i18n="cat6">Fornecimento industrial</strong><small data-i18n="cat6s">químicos · embalagem · componentes</small><i>↗</i></button>
+        <button type="button" class="category" data-query="Construction materials"><span>01</span><strong data-i18n="cat1">Materiais de construção</strong><small data-i18n="cat1s">cimento · aço · PVC · tintas</small><i>↗</i></button>
+        <button type="button" class="category" data-query="HVAC and electrical"><span>02</span><strong data-i18n="cat2">Climatização e elétrica</strong><small data-i18n="cat2s">AC · cabos · proteção · peças</small><i>↗</i></button>
+        <button type="button" class="category" data-query="Tools and equipment"><span>03</span><strong data-i18n="cat3">Ferramentas e equipamentos</strong><small data-i18n="cat3s">máquinas · ferramentas · oficina</small><i>↗</i></button>
+        <button type="button" class="category" data-query="Cleaning and facilities"><span>04</span><strong data-i18n="cat4">Limpeza e facilities</strong><small data-i18n="cat4s">consumíveis · higiene · manutenção</small><i>↗</i></button>
+        <button type="button" class="category" data-query="Services and contractors"><span>05</span><strong data-i18n="cat5">Serviços e empreiteiros</strong><small data-i18n="cat5s">instalação · reparação · execução</small><i>↗</i></button>
+        <button type="button" class="category" data-query="Industrial supply"><span>06</span><strong data-i18n="cat6">Fornecimento industrial</strong><small data-i18n="cat6s">químicos · embalagem · componentes</small><i>↗</i></button>
       </div>
     </section>
 
@@ -270,7 +270,7 @@
           <p class="eyebrow" data-i18n="networkEyebrow">REDE COMERCIAL HMATIAS</p>
           <h2 data-i18n="networkTitle">Fornecedores e subempreiteiros entram por avaliação.</h2>
         </div>
-        <a class="btn btn-primary" href="partner-application.html" data-i18n="networkLink">Apresentar empresa →</a>
+        <a class="btn btn-primary" href="partner-application.html" data-href-pt="partner-application.html" data-href-en="partner-application-en.html" data-i18n="networkLink">Apresentar empresa →</a>
       </div>
       <div class="intelligence-bridge-grid">
         <article>
@@ -311,7 +311,7 @@
           <h2 data-i18n="requestTitle">Transforme a pesquisa num pedido operacional.</h2>
           <p data-i18n="requestLead">Registe a necessidade e acompanhe o estado por ligação privada. A equipa valida o mercado antes de assumir disponibilidade, preço ou prazo.</p>
           <div class="request-trust"><span>✓</span><small data-i18n="requestTrust">Contacto protegido · acompanhamento privado · sem publicação automática</small></div>
-          <a class="btn btn-light" href="rfq.html" data-i18n="fullRfq">Pedido de cotação com produtos do catálogo →</a>
+          <a class="btn btn-light" href="rfq.html" data-href-pt="rfq.html?lang=pt" data-href-en="rfq.html?lang=en" data-i18n="fullRfq">Pedido de cotação com produtos do catálogo →</a>
         </div>
         <form class="request-form request-form-structured" id="requestForm" novalidate>
           <label class="request-field request-field-full"><span data-request-pt="Material ou serviço *" data-request-en="Material or service *">Material ou serviço *</span><input id="requestItem" type="text" maxlength="240" data-i18n-placeholder="requestItemPlaceholder" placeholder="Ex.: capacete de segurança, tubo PVC" required></label>
@@ -320,8 +320,8 @@
           <label class="request-field request-field-full"><span data-request-pt="Especificações / referência" data-request-en="Technical specification / reference">Especificações / referência</span><input id="requestSpec" type="text" maxlength="300" data-i18n-placeholder="requestSpecPlaceholder" placeholder="Norma, dimensão, marca ou código técnico"></label>
           <label class="request-field"><span data-request-pt="Local de entrega *" data-request-en="Delivery location *">Local de entrega *</span><input id="requestLocation" type="text" value="Luanda" maxlength="100" required></label>
           <label class="request-field"><span data-request-pt="Prioridade" data-request-en="Priority">Prioridade</span><select id="requestUrgency"><option value="" data-i18n="priorityNormal">Normal</option><option value="urgent" data-i18n="priorityUrgent">Urgente</option><option value="this week" data-i18n="priorityWeek">Esta semana</option></select></label>
-          <label class="request-field request-field-full"><span data-request-pt="WhatsApp, telefone ou e-mail *" data-request-en="WhatsApp, phone or email *">WhatsApp, telefone ou e-mail *</span><input id="requestContact" type="text" autocomplete="email" maxlength="180" required placeholder="+244 … ou email@empresa.com"></label>
-          <label class="request-consent request-field-full"><input id="requestConsent" type="checkbox" required><span data-request-pt="Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver" data-request-en="I authorise HMATIAS to register and use these details to respond to my request. See">Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver</span> <a href="privacy.html" data-i18n="privacyPolicy">política de privacidade</a>.</label>
+          <label class="request-field request-field-full"><span data-request-pt="WhatsApp, telefone ou e-mail *" data-request-en="WhatsApp, phone or email *">WhatsApp, telefone ou e-mail *</span><input id="requestContact" type="text" autocomplete="off" maxlength="180" required placeholder="+244 … ou email@empresa.com"></label>
+          <label class="request-consent request-field-full"><input id="requestConsent" type="checkbox" required><span data-request-pt="Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver" data-request-en="I authorise HMATIAS to register and use these details to respond to my request. See">Autorizo o registo dos dados e o contacto da HMATIAS para tratar este pedido. Ver</span> <a href="privacy.html" data-href-pt="privacy.html" data-href-en="privacy-en.html" data-i18n="privacyPolicy">política de privacidade</a>.</label>
           <button class="btn btn-light" type="submit" data-i18n="prepareRequest">Registar pedido de sourcing</button>
           <p class="request-disclosure request-field-full" id="requestDisclosure" role="status" aria-live="polite">O pedido só fica registado quando o sistema apresenta uma referência. O registo não confirma stock, preço nem notificação à equipa.</p>
         </form>
@@ -333,7 +333,7 @@
     <div class="shell footer-main">
       <a class="source-brand source-brand-footer" href="#top"><img src="../images/source-ao-logo.svg" data-i18n-alt="sourceLogo" alt="SOURCE AO — pesquisa técnica de materiais e fornecedores da HMATIAS" width="760" height="360" loading="lazy"></a>
       <p data-i18n="footerLine">Search. Verify. Source.</p>
-      <div class="footer-links"><a href="#search" data-i18n="navSearch">Pesquisa</a><a href="#radar" data-i18n="navRadar">Radar</a><a href="opportunity-radar.html" data-i18n="navOpportunities">Oportunidades</a><a href="#how" data-i18n="navHow">Como funciona</a><a href="partner-application.html" data-i18n="partners">Parceiros</a><a href="privacy.html" data-i18n="privacy">Privacidade</a><a href="terms.html" data-i18n="terms">Termos</a></div>
+      <div class="footer-links"><a href="#search" data-i18n="navSearch">Pesquisa</a><a href="#radar" data-i18n="navRadar">Radar</a><a href="opportunity-radar.html" data-href-pt="opportunity-radar.html?lang=pt" data-href-en="opportunity-radar.html?lang=en" data-i18n="navOpportunities">Oportunidades</a><a href="#how" data-i18n="navHow">Como funciona</a><a href="partner-application.html" data-href-pt="partner-application.html" data-href-en="partner-application-en.html" data-i18n="partners">Parceiros</a><a href="privacy.html" data-href-pt="privacy.html" data-href-en="privacy-en.html" data-i18n="privacy">Privacidade</a><a href="terms.html" data-href-pt="terms.html" data-href-en="terms-en.html" data-i18n="terms">Termos</a></div>
       <a class="service-by service-by-link" href="../"><span data-i18n="serviceBy">Um serviço da HMATIAS</span> ↗</a>
     </div>
     <div class="shell footer-bottom"><small>© 2026 Source AO.</small><small data-i18n="footerTruth">Evidência antes de afirmações comerciais.</small></div>
@@ -342,7 +342,7 @@
   <script src="runtime-config.js" defer></script>
   <script src="sourcing-ui.js?v=20261009-2" defer></script>
   <script src="data-engine.js" defer></script>
-  <script src="sourceao.js?v=20261012-language2" defer></script>
+  <script src="sourceao.js?v=20261019-locale4" defer></script>
 <script src="verified-results.js?v=20261014-handoff1" defer></script>
 </body>
 </html>

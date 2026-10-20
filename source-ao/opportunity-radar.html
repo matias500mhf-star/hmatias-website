@@ -7,6 +7,7 @@
   <script src="/analytics.js?v=20260928-commercial1" defer data-cookieconsent="ignore"></script>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#071f34">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="description" content="Source AO Intelligence Radar: oportunidades públicas e comerciais em Angola com fit, confiança, urgência e fonte rastreável.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://comercialhmatiasps.com/source-ao/opportunity-radar.html">
@@ -16,8 +17,8 @@
   <meta property="og:url" content="https://comercialhmatiasps.com/source-ao/opportunity-radar.html">
   <title>SOURCE AO Intelligence Radar | Oportunidades em Angola</title>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"SOURCE AO Intelligence Radar","url":"https://comercialhmatiasps.com/source-ao/opportunity-radar.html","description":"Radar de oportunidades comerciais e procurement com fonte, prazo e sinais de inteligência.","isPartOf":{"@type":"WebSite","name":"SOURCE AO","url":"https://comercialhmatiasps.com/source-ao/"},"publisher":{"@type":"Organization","name":"HMATIAS – Prestação de Serviços SU, LDA","url":"https://comercialhmatiasps.com/"}}</script>
-  <link rel="stylesheet" href="sourceao.css?v=20261013-legibility2">
-  <link rel="stylesheet" href="opportunity-radar.css?v=20261013-legibility2">
+  <link rel="stylesheet" href="sourceao.css?v=20261019-icons1">
+  <link rel="stylesheet" href="opportunity-radar.css?v=20261019-icons1">
   <meta property="og:image" content="https://comercialhmatiasps.com/og-hmatias.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -32,12 +33,12 @@
 <body class="op-body">
   <header class="topbar op-topbar">
     <div class="shell nav">
-      <a class="source-brand" href="index.html" aria-label="SOURCE AO Intelligence Radar"><img src="../images/source-ao-logo.svg" alt="SOURCE AO — intelligence, sourcing e oportunidades by HMATIAS" width="760" height="360"></a>
+      <a class="source-brand" href="index.html?lang=pt" data-href-pt="index.html?lang=pt" data-href-en="index.html?lang=en" aria-label="SOURCE AO Intelligence Radar"><img src="../images/source-ao-logo.svg" data-i18n-alt="footerLogo" alt="Logótipo SOURCE AO by HMATIAS" width="760" height="360"></a>
       <div class="nav-actions">
-        <a class="hmatias-return" href="../" aria-label="Abrir site oficial HMATIAS">HMATIAS ↗</a>
+        <a class="hmatias-return" href="../" data-i18n-aria-label="officialSite" aria-label="Abrir o site oficial HMATIAS">HMATIAS ↗</a>
         <span class="op-live-pill"><i></i><span id="liveStateLabel" data-i18n="live">Intelligence live</span></span>
-        <button class="lang" type="button" id="langToggle">EN</button>
-        <a class="btn btn-outline btn-small" href="index.html" data-i18n="back">← Source AO</a>
+        <button class="lang" type="button" id="langToggle" aria-label="Mudar para EN — English">EN</button>
+        <a class="btn btn-outline btn-small" href="index.html?lang=pt" data-href-pt="index.html?lang=pt" data-href-en="index.html?lang=en" data-i18n="back">← Source AO</a>
       </div>
     </div>
   </header>
@@ -51,13 +52,13 @@
             <h1 data-i18n="title">Não veja apenas oportunidades.<br><span>Entenda quais merecem ação.</span></h1>
             <p data-i18n="lead">O Radar cruza prazo, fonte, setor, localização e compatibilidade comercial para transformar anúncios dispersos em prioridades de negócio verificáveis.</p>
           </div>
-          <div class="op-engine-badge" aria-label="Source Intelligence Core">
-            <span class="op-engine-icon">S</span>
+          <div class="op-engine-badge" data-i18n-aria-label="engineBadge" aria-label="Motor de inteligência Source AO">
+            <span class="op-engine-icon" aria-hidden="true"><img src="favicon.svg" width="28" height="28" alt=""></span>
             <div><small>SOURCE INTELLIGENCE</small><strong>CORE v1</strong><em data-i18n="engineState">Motor ativo</em></div>
           </div>
         </div>
 
-        <div class="op-stat-grid" aria-label="Resumo do radar">
+        <div class="op-stat-grid" data-i18n-aria-label="radarSummary" aria-label="Resumo do radar">
           <article><small data-i18n="statActive">Oportunidades ativas</small><strong id="activeCount">—</strong><span data-i18n="statActiveNote">com prazo válido</span></article>
           <article><small data-i18n="statHighFit">Fit elevado</small><strong id="highFitCount">—</strong><span data-i18n="statHighFitNote">score ≥ 80</span></article>
           <article><small data-i18n="statUrgent">Ação urgente</small><strong id="urgentCount">—</strong><span data-i18n="statUrgentNote">≤ 5 dias</span></article>
@@ -80,22 +81,22 @@
         </label>
         <div class="op-filter-group">
           <small data-i18n="areaLabel">ÁREA</small>
-          <div class="op-filters" aria-label="Filtros por área de negócio">
-            <button class="active" data-area="all" data-i18n="filterAll">Todas</button>
-            <button data-area="construction" data-i18n="areaConstruction">Construção</button>
-            <button data-area="facilities" data-i18n="areaFacilities">Facilities</button>
-            <button data-area="plumbing" data-i18n="areaPlumbing">Canalização</button>
-            <button data-area="electrical-hvac" data-i18n="areaElectrical">Elétrica / HVAC</button>
-            <button data-area="supply" data-i18n="areaSupply">Fornecimento</button>
-            <button data-area="subcontracting" data-i18n="areaSubcontracting">Subcontratação</button>
+          <div class="op-filters" data-i18n-aria-label="areaFilterGroup" aria-label="Filtros por área de negócio">
+            <button type="button" class="active" data-area="all" data-i18n="filterAll">Todas</button>
+            <button type="button" data-area="construction" data-i18n="areaConstruction">Construção</button>
+            <button type="button" data-area="facilities" data-i18n="areaFacilities">Facilities</button>
+            <button type="button" data-area="plumbing" data-i18n="areaPlumbing">Canalização</button>
+            <button type="button" data-area="electrical-hvac" data-i18n="areaElectrical">Elétrica / HVAC</button>
+            <button type="button" data-area="supply" data-i18n="areaSupply">Fornecimento</button>
+            <button type="button" data-area="subcontracting" data-i18n="areaSubcontracting">Subcontratação</button>
           </div>
         </div>
         <div class="op-filter-group">
           <small data-i18n="formatLabel">FORMATO</small>
-          <div class="op-filters op-format-filters" aria-label="Filtros por formato">
-            <button class="active" data-format="all" data-i18n="formatAll">Todos</button>
-            <button data-format="rfq">RFQ</button>
-            <button data-format="tender" data-i18n="filterTender">Concurso</button>
+          <div class="op-filters op-format-filters" data-i18n-aria-label="formatFilterGroup" aria-label="Filtros por formato">
+            <button type="button" class="active" data-format="all" data-i18n="formatAll">Todos</button>
+            <button type="button" data-format="rfq">RFQ</button>
+            <button type="button" data-format="tender" data-i18n="filterTender">Concurso</button>
           </div>
         </div>
       </div>
@@ -129,9 +130,9 @@
 
   <footer class="footer">
     <div class="shell footer-main">
-      <a class="source-brand source-brand-footer" href="index.html"><img src="../images/source-ao-logo.svg" alt="SOURCE AO — intelligence, sourcing e oportunidades by HMATIAS" width="760" height="360" loading="lazy"></a>
-      <p>Search. Verify. Decide. Act.</p>
-      <span></span>
+      <a class="source-brand source-brand-footer" href="index.html?lang=pt" data-href-pt="index.html?lang=pt" data-href-en="index.html?lang=en"><img src="../images/source-ao-logo.svg" alt="SOURCE AO — intelligence, sourcing e oportunidades by HMATIAS" width="760" height="360" loading="lazy"></a>
+      <p data-i18n="footerTagline">Pesquisar. Verificar. Decidir. Agir.</p>
+      <div class="footer-links"><a href="privacy.html" data-href-pt="privacy.html" data-href-en="privacy-en.html" data-i18n="privacy">Privacidade</a><a href="terms.html" data-href-pt="terms.html" data-href-en="terms-en.html" data-i18n="terms">Termos de uso</a></div>
       <a class="service-by service-by-link" href="../"><span data-i18n="serviceBy">Um serviço da HMATIAS</span> ↗</a>
     </div>
   </footer>
@@ -139,6 +140,6 @@
   <script src="runtime-config.js" defer></script>
   <script src="api-client.js" defer></script>
   <script src="data-engine.js" defer></script>
-  <script src="opportunity-radar.js?v=20261013-legibility2" defer></script>
+  <script src="opportunity-radar.js?v=20261019-locale4" defer></script>
 </body>
 </html>
