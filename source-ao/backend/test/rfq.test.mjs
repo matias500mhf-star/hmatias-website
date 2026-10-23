@@ -59,6 +59,7 @@ test('RFQ persists once, encrypts qualification and restricts disclosure to admi
   for(const status of ['quoted','awarded','purchased','delivered','completed']){
     const changed=await updateSourcingRequestStatus(admin('/x',{method:'POST',body:JSON.stringify({status})}),env,created.id);assert.equal(changed.status,200);
   }
+  assert.equal(db.prepare('SELECT count(*) n FROM sourcing_status_events WHERE sourcing_request_id=?').get(created.id).n,5);
   db.prepare("UPDATE sourcing_requests SET updated_at='2020-01-01'").run();
   const maintenance=await runMaintenance(env);assert.equal(maintenance.purged_requester_contacts,1);
   const purged=db.prepare('SELECT * FROM sourcing_requests').get();assert.equal(purged.rfq_details_encrypted,'PURGED');assert.equal(purged.contact_encrypted,'PURGED');
