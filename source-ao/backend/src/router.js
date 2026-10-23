@@ -15,6 +15,7 @@ import {websiteLeadConfig,websiteLeadCors,createWebsiteLead,listWebsiteLeads,get
 import {publicSearch} from './public-search.js';
 import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
+import {aiProcurementAssistantResponse} from './ai-procurement-assistant.js';
 import {discoverExternalSuppliers} from './external-supplier-discovery.js';
 import {collectorRoute} from './collector-route.js';
 import {processPendingDiscoveryJobs} from './collector-discovery.js';
@@ -117,6 +118,8 @@ export default {
           response=await procurementMission(request,env);
         }else if(request.method==='GET' && url.pathname==='/api/admin/procurement-mission'){
           response=await procurementMission(request,env,{privateView:true});
+        }else if(request.method==='POST' && url.pathname==='/api/admin/ai/procurement-assistant'){
+          response=await aiProcurementAssistantResponse(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
           response=await createSourcingRequest(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/partner-applications'){
