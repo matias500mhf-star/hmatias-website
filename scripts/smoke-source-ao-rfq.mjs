@@ -31,7 +31,7 @@ for (const [name, source, rule] of checks) {
 
 if (failures.length) {
   console.error("SOURCE AO RFQ smoke checks FAILED:");
-  for (const failure of failures) console.error(\` - \${failure}\`);
+  for (const failure of failures) console.error(" - " + failure);
   process.exit(1);
 }
-console.log(\`SOURCE AO RFQ smoke checks passed (\${checks.length} journey and boundary assertions).\`);
+console.log("SOURCE AO RFQ smoke checks passed (" + checks.length + " journey and boundary assertions).");
