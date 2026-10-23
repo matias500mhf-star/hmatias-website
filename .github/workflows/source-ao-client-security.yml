@@ -35,3 +35,6 @@ jobs:
         run: node scripts/smoke-source-ao-client-security.mjs
       - name: Check SOURCE AO RFQ journey
         run: node scripts/smoke-source-ao-rfq.mjs
+      - name: Run backend QA with isolated in-memory tests
+        run: npm run check
+        working-directory: source-ao/backend
