@@ -922,9 +922,15 @@
         setCardMessage(card,'Triagem e pesquisa concluídas. Confirme os fornecedores antes da verificação.','success');
         metrics();
       }catch(error){
-        setCardMessage(card,error.status===503
-          ?'A IA não está configurada ou está indisponível. O pedido permanece em triagem para nova tentativa.'
-          :'Não foi possível processar o pedido. Verifique a configuração e tente novamente.','error');
+        if(['ai_not_configured','ai_configuration_invalid','ai_provider_unreachable','ai_provider_error','ai_rate_limited','ai_invalid_response','procurement_search_failed'].includes(error.message)){
+          row.status='triage';
+          card.querySelector('.request-status').textContent='triage';
+          card.querySelector('.status-select').value='triage';
+          setCardMessage(card,'A triagem iniciou, mas a IA ou a pesquisa falhou. O pedido ficou em triagem para nova tentativa.','error');
+          metrics();
+        }else{
+          setCardMessage(card,'Não foi possível processar o pedido. Verifique a configuração e tente novamente.','error');
+        }
       }finally{
         processButton.disabled=!['received','triage'].includes(row.status);
         viewButton.disabled=!['triage','sourcing','verifying','verified','quoted','awarded','purchased','delivered','completed'].includes(row.status);
