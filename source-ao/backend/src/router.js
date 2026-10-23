@@ -126,7 +126,7 @@ export default {
           response=await createSourcingRequest(request,env);
           // Structured public RFQs enter the private workflow automatically in the background.
           // No admin credential is exposed to the browser; the internal call uses the Worker secret.
-          if(submittedBody?.rfq_version!=null && response.ok && ctx?.waitUntil &&
+          if(submittedBody?.rfq_version!=null && response.status===201 && ctx?.waitUntil &&
              env.ADMIN_API_TOKEN && env.GEMINI_API_KEY && env.PII_ENCRYPTION_KEY){
             const created=await response.clone().json().catch(()=>null);
             const requestId=created?.request?.id;
