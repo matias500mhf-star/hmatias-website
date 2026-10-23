@@ -59,7 +59,7 @@ function securityFailure(env,requestId){
 }
 
 export default {
-  async fetch(request,env){
+  async fetch(request,env,ctx){
     const started=Date.now();
     const url=new URL(request.url);
     const requestId=crypto.randomUUID();
@@ -122,7 +122,28 @@ export default {
         }else if(request.method==='POST' && url.pathname==='/api/admin/ai/procurement-assistant'){
           response=await aiProcurementAssistantResponse(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
+          const submittedBody=await request.clone().json().catch(()=>null);
           response=await createSourcingRequest(request,env);
+          // Structured public RFQs enter the private workflow automatically in the background.
+          // No admin credential is exposed to the browser; the internal call uses the Worker secret.
+          if(submittedBody?.rfq_version!=null && response.ok && ctx?.waitUntil &&
+             env.ADMIN_API_TOKEN && env.GEMINI_API_KEY && env.PII_ENCRYPTION_KEY){
+            const created=await response.clone().json().catch(()=>null);
+            const requestId=created?.request?.id;
+            if(requestId && created?.request?.status==='received'){
+              const internalRequest=new Request(
+                `https://source-ao.internal/api/admin/sourcing-requests/${requestId}/process`,
+                {method:'POST',headers:{authorization:`Bearer ${env.ADMIN_API_TOKEN}`}}
+              );
+              ctx.waitUntil(
+                processSourcingRequest(internalRequest,env,requestId)
+                  .then(async result=>{
+                    if(!result.ok) console.warn('Automatic RFQ workflow did not complete.',result.status);
+                  })
+                  .catch(()=>console.warn('Automatic RFQ workflow failed; request remains available for retry.'))
+              );
+            }
+          }
         }else if(request.method==='POST' && url.pathname==='/api/partner-applications'){
           response=await createPartnerApplication(request,env);
         }else{
