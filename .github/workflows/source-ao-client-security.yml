@@ -31,3 +31,5 @@ jobs:
           node-version: "22"
       - name: Check public client integration
         run: node scripts/smoke-source-ao-client-security.mjs
+      - name: Check SOURCE AO RFQ journey
+        run: node scripts/smoke-source-ao-rfq.mjs
