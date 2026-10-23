@@ -20,7 +20,7 @@ const checks = [
   ["RFQ offers manual WhatsApp handoff", sourcingUi, /https:\/\/wa\.me\/244948806673/],
   ["Private tracking URL validates the API origin", sourcingUi, /endpoint\.origin\s*!==\s*new URL\(apiBase\(\)\)\.origin/],
   ["Private tracking token is kept in the URL fragment", sourcingUi, /result\.hash\s*=\s*new URLSearchParams\(\{id,token\}\)\.toString\(\)/],
-  ["Public API client remains read-only", apiClient, !/method\s*:\s*['"](?:POST|PUT|PATCH|DELETE)['"]/i],
+  ["Public API client remains read-only", apiClient, !/\\bmethod\\s*:/i],
   ["Runtime uses the existing HTTPS Cloudflare Worker", runtime, /apiBase:\s*["']https:\/\/source-ao-api\.[a-z0-9-]+\.workers\.dev["']/],
 ];
 
