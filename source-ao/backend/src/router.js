@@ -139,8 +139,8 @@ export default {
             response=await listOpportunityPursuits(request,env);
           }else{
             const opportunityPursuit=url.pathname.match(/^\/api\/admin\/opportunities\/([^/]+)\/pursuit$/);
-            const workflowProcess=url.pathname.match(/^\\/api\\/admin\\/sourcing-requests\\/([^/]+)\\/process$/);
-            const workflowLatest=url.pathname.match(/^\\/api\\/admin\\/sourcing-requests\\/([^/]+)\\/workflow$/);
+                        const workflowProcess=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/process$/);
+                        const workflowLatest=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/workflow$/);
             const adminStatus=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/status$/);
             const commercialCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/commercial-case$/);
             const costOptions=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/cost-options$/);
