@@ -16,6 +16,7 @@ import {publicSearch} from './public-search.js';
 import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
 import {aiProcurementAssistantResponse} from './ai-procurement-assistant.js';
+import {processSourcingRequest,getSourcingWorkflow} from './sourcing-workflow.js';
 import {discoverExternalSuppliers} from './external-supplier-discovery.js';
 import {collectorRoute} from './collector-route.js';
 import {processPendingDiscoveryJobs} from './collector-discovery.js';
@@ -147,7 +148,7 @@ export default {
             const invoiceCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/invoice$/);
             const paymentCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/payments$/);
             const voidPaymentCase=url.pathname.match(/^\/api\/admin\/sourcing-requests\/([^/]+)\/payments\/([^/]+)\/void$/);
-            if(opportunityPursuit && request.method==='POST'){
+            if(workflowProcess && request.method==='POST'){\n              response=await processSourcingRequest(request,env,workflowProcess[1]);\n            }else if(workflowLatest && request.method==='GET'){\n              response=await getSourcingWorkflow(request,env,workflowLatest[1]);\n            }else if(opportunityPursuit && request.method==='POST'){
               response=await upsertOpportunityPursuit(request,env,opportunityPursuit[1]);
             }else if(adminStatus && request.method==='POST'){
               response=await updateSourcingRequestStatus(request,env,adminStatus[1]);
