@@ -51,9 +51,9 @@ async function interpretRequest(env,input){
 
   let response;
   try{
-    response=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(env.GEMINI_API_KEY)}`,{
+    response=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{
       method:'POST',
-      headers:{'content-type':'application/json'},
+      headers:{'content-type':'application/json','x-goog-api-key':env.GEMINI_API_KEY},
       body:JSON.stringify({
         contents:[{role:'user',parts:[{text:prompt}]}],
         generationConfig:{responseMimeType:'application/json',temperature:0.1}
