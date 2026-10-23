@@ -5,6 +5,7 @@ on:
     paths:
       - "source-ao/**"
       - "scripts/smoke-source-ao-client-security.mjs"
+      - "scripts/smoke-source-ao-rfq.mjs"
       - ".github/workflows/source-ao-client-security.yml"
   push:
     branches:
