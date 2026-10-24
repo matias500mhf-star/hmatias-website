@@ -1,4 +1,4 @@
--- Reconcile structured RFQ persistence with the columns already used by src/sourcing.js.
+-- Reconcile structured RFQ persistence with src/sourcing.js. contact_purged_at already exists in migration 0004.
 -- Additive only: existing sourcing requests and private tracking links remain valid.
 PRAGMA foreign_keys = ON;
 
