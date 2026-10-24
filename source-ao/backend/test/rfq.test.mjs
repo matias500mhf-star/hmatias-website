@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync} from 'node:fs';
 import catalog from '../../data/catalog.json' with {type:'json'};
-import {validateRfq} from '../../rfq-model.js';
+import {validateRfq,normalizeRfqCategory} from '../../rfq-model.js';
 import {createSourcingRequest,getSourcingRequest,listSourcingRequests,updateSourcingRequestStatus} from '../src/sourcing.js';
 import {runMaintenance} from '../src/maintenance.js';
 
@@ -27,6 +27,26 @@ export function rfqFixture(){return {
 };}
 const request=(data)=>new Request('https://api.test/api/sourcing-requests',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(data)});
 const admin=(url,options={})=>new Request('https://api.test'+url,{...options,headers:{authorization:'Bearer synthetic-test-admin-token','content-type':'application/json'}});
+
+
+test('RFQ category normalization maps cement aliases and rejects unknown categories', () => {
+  for (const alias of ['cimento','cimento Portland','cement','Portland cement','concrete','betão','TV Construction','tv-construction']) {
+    assert.equal(normalizeRfqCategory(alias), 'construction', alias);
+  }
+  for (const canonical of ['construction','hvac-electrical','tools-equipment','cleaning-facilities','services-contractors','industrial-supply','other']) {
+    assert.equal(normalizeRfqCategory(canonical), canonical);
+  }
+  for (const invalid of ['','Unmapped Category','unknown-category',null,42]) {
+    assert.equal(normalizeRfqCategory(invalid), null);
+  }
+  const input = rfqFixture();
+  const freeText = {...input, items:[{...input.items[0],catalog_item_id:null,category:'TV Construction'}]};
+  const result = validateRfq(freeText,catalog);
+  assert.equal(result.ok, true);
+  assert.equal(result.value.items[0].category, 'construction');
+  const unknown = {...input, items:[{...input.items[0],catalog_item_id:null,category:'A category that does not exist'}]};
+  assert.equal(validateRfq(unknown,catalog).code, 'invalid_category');
+});
 
 test('RFQ validates catalog identity, strict quantities, contact, consent and dates',()=>{
   const input=rfqFixture();const result=validateRfq(input,catalog);
