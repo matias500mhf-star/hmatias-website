@@ -1,5 +1,4 @@
--- This migration established structured RFQ fields and is retained for migration history.
--- Fresh installations apply the same schema here; follow-up additive compatibility is in 0027.
+-- Additive structured RFQ fields. This migration is the canonical source for these columns.
 PRAGMA foreign_keys = ON;
 
 ALTER TABLE sourcing_requests ADD COLUMN rfq_details_encrypted TEXT;
