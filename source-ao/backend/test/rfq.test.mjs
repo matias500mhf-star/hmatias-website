@@ -11,7 +11,8 @@ import {runMaintenance} from '../src/maintenance.js';
 export function testEnvironment(){
   const db=new DatabaseSync(':memory:');
   const migrations=new URL('../migrations/',import.meta.url);
-  for(const file of readdirSync(migrations).filter(f=>f.endsWith('.sql')).sort())db.exec(readFileSync(new URL(file,migrations),'utf8'));
+  for(const file of readdirSync(migrations).filter(f=>f.endsWith('.sql') && f !== '0015_catalog_rfq.sql').sort()) db.exec(readFileSync(new URL(file,migrations),'utf8'));
+  db.exec(readFileSync(new URL('0015_catalog_rfq.sql',migrations),'utf8'));
   const adapter={prepare(sql){return {bind(...args){return {
     async run(){const result=db.prepare(sql).run(...args);return {meta:{changes:Number(result.changes)}};},
     async first(){return db.prepare(sql).get(...args)||null;},
