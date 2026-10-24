@@ -28,7 +28,7 @@ const CATEGORY_ALIASES = new Map([
 
 export function normalizeRfqCategory(raw) {
   if (typeof raw !== 'string') return null;
-  const key = raw.trim().toLocaleLowerCase('pt-AO').replace(/\\s+/g, ' ');
+  const key = raw.trim().toLocaleLowerCase('pt-AO').replace(/\s+/g, ' ');
   if (CANONICAL_CATEGORIES.has(key)) return key;
   return CATEGORY_ALIASES.get(key) || null;
 }
