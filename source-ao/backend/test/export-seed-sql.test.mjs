@@ -21,10 +21,9 @@ test('redeployment preserves commercial pursuits, evidence links and operational
   const db=new DatabaseSync(':memory:');
   t.after(()=>db.close());
   const migrations=new URL('../migrations/',import.meta.url);
-  for(const file of readdirSync(migrations).filter(f=>f.endsWith('.sql') && f !== '0015_catalog_rfq.sql').sort()){
+  for(const file of readdirSync(migrations).filter(f=>f.endsWith('.sql')).sort()){
     db.exec(readFileSync(new URL(file,migrations),'utf8'));
   }
-  db.exec(readFileSync(new URL('0015_catalog_rfq.sql',migrations),'utf8'));
   const sql=execFileSync(process.execPath,[script],{encoding:'utf8'});
   db.exec(sql);
   const opportunity=db.prepare('SELECT id,title FROM opportunities LIMIT 1').get();
