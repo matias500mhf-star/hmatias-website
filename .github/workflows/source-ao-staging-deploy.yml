@@ -1,8 +1,7 @@
 name: Source AO Staging Deploy
 
-# This launcher lives on main so GitHub exposes the manual Run workflow action.
-# Only the reviewed Source AO commit is checked out and deployed to staging.
-# Updating the release requires a separate review of this pinned commit.
+# Staging-only candidate launcher. Run manually from ops/source-ao-staging-candidate.
+# This branch is based on the reviewed SOURCE AO candidate; production is not targeted.
 
 on:
   workflow_dispatch:
@@ -31,7 +30,7 @@ concurrency:
 
 jobs:
   deploy-staging:
-    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirm == 'DEPLOY-STAGING' }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/ops/source-ao-staging-candidate' && inputs.confirm == 'DEPLOY-STAGING' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 24
     environment: source-ao-staging
@@ -51,7 +50,7 @@ jobs:
       - name: Checkout reviewed Source AO release
         uses: actions/checkout@v5
         with:
-          ref: 1637a92ea11e792dfb1d3ebd1158c6fc24332e17
+          ref: ops/source-ao-staging-candidate
           persist-credentials: false
 
       - name: Setup Node 22
