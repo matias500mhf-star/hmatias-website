@@ -74,16 +74,16 @@ test('enforces an atomic budget before initiating external search',async()=>{
   assert.equal(third.status,429);
   assert.equal(calls,2);
 });
-test('optional GPT assessment attaches opinions only to existing sourced IDs',async()=>{
-  const e=env({OPENAI_API_KEY:'openai-secret'});
+test('optional Gemini assessment attaches opinions only to existing sourced IDs',async()=>{
+  const e=env({GEMINI_API_KEY:'gemini-secret'});
   let aiPayload;
   const fakeFetch=async(url,options)=>{
-    if(String(url).includes('openai.com')){
+    if(String(url).includes('generativelanguage.googleapis.com')){
       aiPayload=JSON.parse(options.body);
-      return {ok:true,async json(){return {output:[{content:[{type:'output_text',text:JSON.stringify({assessments:[
+      return {ok:true,async json(){return {candidates:[{content:{parts:[{text:JSON.stringify({assessments:[
         {id:'web_1',fit:'potential',reason:'O catálogo menciona fitas de embalagem.'},
         {id:'fake',fit:'potential',reason:'Inventado'}
-      ]})}]}]};}};
+      ]})}]}}]};}};
     }
     return fetchSearch(url);
   };
@@ -93,13 +93,13 @@ test('optional GPT assessment attaches opinions only to existing sourced IDs',as
   assert.equal(body.candidates.length,1);
   assert.equal(body.candidates[0].ai_assessment.fit,'potential');
   assert.equal(body.candidates[0].product_confirmed,false);
-  assert.equal(aiPayload.model,'gpt-5.4-mini');
-  assert.equal(aiPayload.store,false);
+  assert.equal(aiPayload.generationConfig.responseMimeType,'application/json');
+  assert.equal(aiPayload.generationConfig.temperature,0);
 });
 test('AI outage does not fabricate confirmation or discard sourced links',async()=>{
-  const e=env({OPENAI_API_KEY:'openai-secret'});
+  const e=env({GEMINI_API_KEY:'gemini-secret'});
   const res=await discoverExternalSuppliers(makeRequest({query:'PP strap 9 mm',markets:['ZA']}),e,{fetchFn:async(url)=>{
-    if(String(url).includes('openai.com'))return {ok:false,status:503};
+    if(String(url).includes('generativelanguage.googleapis.com'))return {ok:false,status:503};
     return fetchSearch(url);
   }});
   const body=await res.json();
