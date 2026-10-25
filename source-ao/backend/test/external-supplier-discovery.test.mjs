@@ -79,6 +79,8 @@ test('optional Gemini assessment attaches opinions only to existing sourced IDs'
   let aiPayload;
   const fakeFetch=async(url,options)=>{
     if(String(url).includes('generativelanguage.googleapis.com')){
+      assert.equal(String(url),'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent');
+      assert.equal(options.headers['x-goog-api-key'],'gemini-secret');
       aiPayload=JSON.parse(options.body);
       return {ok:true,async json(){return {candidates:[{content:{parts:[{text:JSON.stringify({assessments:[
         {id:'web_1',fit:'potential',reason:'O catálogo menciona fitas de embalagem.'},
