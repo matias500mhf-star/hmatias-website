@@ -93,8 +93,8 @@ test('optional Gemini assessment attaches opinions only to existing sourced IDs'
   assert.equal(body.candidates.length,1);
   assert.equal(body.candidates[0].ai_assessment.fit,'potential');
   assert.equal(body.candidates[0].product_confirmed,false);
-  assert.equal(aiPayload.generationConfig.responseMimeType,'application/json');
-  assert.equal(aiPayload.generationConfig.temperature,0);
+  assert.equal(aiPayload.generationConfig.responseFormat.text.mimeType,'APPLICATION_JSON');
+  assert.equal(aiPayload.generationConfig.maxOutputTokens,900);
 });
 test('AI outage does not fabricate confirmation or discard sourced links',async()=>{
   const e=env({GEMINI_API_KEY:'gemini-secret'});
