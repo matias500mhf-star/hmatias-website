@@ -54,21 +54,6 @@ async function consumeDailyBudget(env,day){
   return Boolean(row);
 }
 
-const SCHEMA={
-  type:'object',additionalProperties:false,required:['assessments'],
-  properties:{
-    assessments:{type:'array',items:{
-      type:'object',additionalProperties:false,
-      required:['id','fit','reason'],
-      properties:{
-        id:{type:'string'},
-        fit:{type:'string',enum:['potential','unclear','unrelated']},
-        reason:{type:'string'}
-      }
-    }}
-  }
-};
-
 function parseAiOutput(payload){
   const parts=payload?.candidates?.[0]?.content?.parts||[];
   const message=parts.find(part=>typeof part.text==='string');
