@@ -15,7 +15,7 @@ MAPA HMATIAS
 - PT/EN disponíveis.
 - WhatsApp comercial: +244 948 806 673
 - Email geral: geral@comercialhmatiasps.com
-- Email comercial: geral@comercialhmatiasps.com
+- Email institucional: info@comercialhmatiasps.com (perfil da empresa e informação institucional).
 - CEO & Managing Director: Henrique Matias.
 
 HMATIAS CLEAN — REGRAS COMERCIAIS
