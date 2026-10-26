@@ -102,6 +102,27 @@ css = read("premium-editorial.css")
 if "body.hmatias-home .service-icon svg{" not in css or "stroke:currentColor" not in css:
     fail("premium-editorial.css must style inline homepage service icons consistently")
 
+# SOURCE AO contact links sit on a dark footer. Guard against the low-contrast
+# inherited body text colour that made the email addresses almost unreadable.
+source_css = read("source-ao/sourceao.css")
+source_page = read("source-ao/index.html")
+if ".sitewide-contact-details a{" not in source_css:
+    fail("SOURCE AO footer must define an explicit contact-link style")
+if "color:#eaf4fb!important" not in source_css or "opacity:1!important" not in source_css:
+    fail("SOURCE AO footer email addresses must use high-contrast, fully opaque text")
+if "sourceao.css?v=20261026-contact-contrast1" not in source_page:
+    fail("SOURCE AO homepage must reference the cache-busted contact-contrast stylesheet")
+
+# The public institutional identity must match the registered company name
+# used in the company's registration publication and company profile.
+registered_name = "HMATIAS – Prestação de Serviços, (SU), LDA"
+for page in ("index.html", "en.html", "credibilidade.html", "credibility.html", "source-ao/index.html"):
+    html = read(page)
+    if registered_name not in html:
+        fail(f"{page} is missing the standard registered company name")
+    if "HMATIAS – Prestação de Serviços SU, LDA" in html:
+        fail(f"{page} contains the inconsistent company-name variant without (SU)")
+
 if ERRORS:
     print("Contact/icon QA failed:")
     for error in ERRORS:
