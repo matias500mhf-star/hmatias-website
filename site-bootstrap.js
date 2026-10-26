@@ -137,7 +137,7 @@
     const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
     document.querySelectorAll('.copyright').forEach(node => {
       node.innerHTML = node.innerHTML
-        .replace(/HMATIAS SU, LDA\./g, 'HMATIAS – Prestação de Serviços SU, LDA.')
+        .replace(/HMATIAS SU, LDA\./g, 'HMATIAS – Prestação de Serviços, (SU), LDA.')
         .replace(/\s*·\s*Matrícula:\s*24094-23\/230713\.?/gi, '');
       if (isEn) {
         node.innerHTML = node.innerHTML
