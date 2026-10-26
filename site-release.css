@@ -8,10 +8,8 @@
 .hmatias-topbar .header-contact{grid-column:2!important;display:flex!important;align-items:center!important;justify-content:center!important;justify-self:stretch!important;flex-wrap:wrap!important;gap:8px 20px!important;min-width:0;padding:6px 0!important;text-align:center!important}
 .hmatias-topbar .header-contact a{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;color:#fff!important;white-space:nowrap!important}
 .hmatias-topbar .header-contact a[href^="mailto:"]{display:inline-flex!important}
-.hmatias-topbar .header-contact a .contact-icon{display:none!important}
-.hmatias-topbar .header-contact a[href^="tel:"]::before,.hmatias-topbar .header-contact a[href^="mailto:"]::before{content:"";display:block;width:16px;height:16px;flex:0 0 16px;background-position:center;background-repeat:no-repeat;background-size:16px 16px;filter:brightness(0) invert(1);opacity:1!important}
-.hmatias-topbar .header-contact a[href^="tel:"]::before{background-image:url('images/contact-phone.svg')}
-.hmatias-topbar .header-contact a[href^="mailto:"]::before{background-image:url('images/contact-email.svg')}
+.hmatias-topbar .header-contact a .contact-icon{display:block!important;width:16px!important;height:16px!important;min-width:16px!important;flex:0 0 16px!important;object-fit:contain;visibility:visible!important;opacity:1!important;filter:brightness(0) invert(1)!important}
+.hmatias-topbar .header-contact a[href^="tel:"]::before,.hmatias-topbar .header-contact a[href^="mailto:"]::before{content:none!important;display:none!important}
 .hmatias-topbar .header-social{grid-column:3!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;justify-self:end!important;gap:4px!important}
 .hmatias-topbar .header-social a{display:grid!important;place-items:center!important;width:38px!important;height:38px!important;padding:0!important;font-size:0!important;color:#fff!important;background-color:transparent;background-position:center;background-repeat:no-repeat;background-size:19px 19px;opacity:1!important;visibility:visible!important}
 .hmatias-topbar .header-social a img{display:none!important}
