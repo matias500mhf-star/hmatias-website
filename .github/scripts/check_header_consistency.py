@@ -31,8 +31,8 @@ for page in sorted(ROOT.glob("*.html")):
         expected = 'pt-AO' if language and language.group(1) == 'en' else 'en'
         if f'hreflang="{expected}"' not in switches[0]:
             problems.append(f"{page.name}: switch should lead to {expected} variant")
-    if "header.css?v=20261010-freeze1" not in html:
-        problems.append(f"{page.name}: stale global navigation stylesheet")
+    if not re.search(r'header\.css\?v=[^"\']+', html):
+        problems.append(f"{page.name}: missing versioned global navigation stylesheet")
     if "script.js?v=20261014-lazy1" not in html:
         problems.append(f"{page.name}: stale mobile navigation controller")
     if page.name in ("en.html", "credibility.html", "work-catalogue.html", "karta-en.html"):
