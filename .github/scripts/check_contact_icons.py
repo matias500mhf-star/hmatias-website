@@ -113,6 +113,16 @@ if "color:#eaf4fb!important" not in source_css or "opacity:1!important" not in s
 if "sourceao.css?v=20261026-contact-contrast1" not in source_page:
     fail("SOURCE AO homepage must reference the cache-busted contact-contrast stylesheet")
 
+# The public institutional identity must match the registered company name
+# used in the company's registration publication and company profile.
+registered_name = "HMATIAS – Prestação de Serviços, (SU), LDA"
+for page in ("index.html", "en.html", "credibilidade.html", "credibility.html", "source-ao/index.html"):
+    html = read(page)
+    if registered_name not in html:
+        fail(f"{page} is missing the standard registered company name")
+    if "HMATIAS – Prestação de Serviços SU, LDA" in html:
+        fail(f"{page} contains the inconsistent company-name variant without (SU)")
+
 if ERRORS:
     print("Contact/icon QA failed:")
     for error in ERRORS:
