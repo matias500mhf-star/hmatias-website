@@ -77,6 +77,6 @@
 }
 
 /* Keep real contact SVGs visible across every shared header; avoid pseudo-icon fallbacks. */
-.hmatias-topbar .header-contact a .contact-icon{display:block!important;visibility:visible!important;opacity:1!important;width:16px!important;height:16px!important;min-width:16px!important;flex:0 0 16px!important;object-fit:contain;filter:brightness(0) invert(1)!important}
-.hmatias-topbar .header-contact a[href^="tel:"]::before,.hmatias-topbar .header-contact a[href^="mailto:"]::before{content:none!important;display:none!important}
-@media(max-width:850px){.hmatias-topbar .header-contact a[href^="mailto:"]{min-width:0;max-width:100%;overflow-wrap:anywhere}}
+body.hmatias-type .hmatias-topbar .header-contact a .contact-icon{display:block!important;visibility:visible!important;opacity:1!important;width:16px!important;height:16px!important;min-width:16px!important;flex:0 0 16px!important;object-fit:contain;filter:brightness(0) invert(1)!important}
+body.hmatias-type .hmatias-topbar .header-contact a[href^="tel:"]::before,body.hmatias-type .hmatias-topbar .header-contact a[href^="mailto:"]::before{content:none!important;display:none!important}
+@media(max-width:850px){body.hmatias-type .hmatias-topbar .header-contact a[href^="mailto:"]{min-width:0;max-width:100%;overflow-wrap:anywhere}}
