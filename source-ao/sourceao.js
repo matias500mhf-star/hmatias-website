@@ -67,7 +67,7 @@
       mainNavigation:'Navegação principal',officialSite:'Abrir site oficial HMATIAS',sourceLogo:'SOURCE AO — pesquisa técnica de materiais e fornecedores da HMATIAS',
       exampleSearches:'Pesquisas de exemplo',sourceRules:'Regras do Source AO',capabilities:'Capacidades',commercialNetwork:'Rede comercial Source AO',
       exampleStrapping:'Cinta PP 9 mm',exampleFormalin:'Formol 37% 1 L',exampleAC:'AC 24.000 BTU',
-      intelligenceEyebrow:'ANÁLISE COMERCIAL',intelligenceTitle:'Mais do que listar oportunidades.',intelligenceLink:'Abrir Intelligence Radar →',
+      intelligenceEyebrow:'ANÁLISE COMERCIAL',intelligenceTitle:'Avalie a oportunidade antes de avançar.',intelligenceLink:'Abrir Intelligence Radar →',
       intelligence1Label:'IDENTIFICAR',intelligence1Title:'Fonte rastreável',intelligence1Text:'Capta RFQs, concursos e sinais comerciais em Angola mantendo a ligação à origem para validação.',
       intelligence2Label:'AVALIAR',intelligence2Title:'Adequação comercial',intelligence2Text:'Organiza área de negócio, adequação, confiança da evidência, urgência e localização antes da decisão.',
       intelligence3Label:'AGIR',intelligence3Title:'Ação operacional',intelligence3Text:'Transforma a oportunidade em próxima ação: validar requisitos, localizar parceiro ou fornecedor, preparar custo, margem e candidatura.',
