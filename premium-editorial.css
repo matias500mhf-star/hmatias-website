@@ -117,7 +117,7 @@ body.hmatias-home .contact-rfq{margin-top:22px}
 body.hmatias-home .contact-rfq a{font-weight:600;color:var(--blue);text-decoration:underline;text-underline-offset:4px}
 body.hmatias-home .contact-list{gap:18px}
 body.hmatias-home .contact-list :is(a,span){font-size:.9375rem;line-height:1.6;overflow-wrap:anywhere}
-body.hmatias-home .contact-list-icon{flex:0 0 18px;height:18px;object-fit:contain}
+body.hmatias-home .contact-list-icon{display:block!important;visibility:visible!important;opacity:1!important;object-fit:contain;flex:0 0 18px;width:18px;height:18px}
 body.hmatias-home .contact-form{padding:28px;border-radius:6px;box-shadow:none;gap:18px}
 body.hmatias-home .contact-form>*{min-width:0}
 body.hmatias-home .contact-form label{font-size:.875rem}
