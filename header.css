@@ -75,3 +75,25 @@
   .hmatias-header .brand{width:150px;height:54px;flex-basis:150px}
   .hmatias-header .brand img{width:150px;height:54px;max-height:54px}
 }
+
+
+/* Contact icon rendering guard: keep inline SVG assets visible in shared headers.
+   Some global/presentation rules can otherwise suppress image children. */
+.hmatias-topbar .header-contact a .contact-icon{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:16px!important;
+  height:16px!important;
+  min-width:16px!important;
+  flex:0 0 16px!important;
+  object-fit:contain;
+  filter:brightness(0) invert(1)!important;
+}
+@media(max-width:850px){
+  .hmatias-topbar .header-contact a[href^="mailto:"]{
+    min-width:0;
+    max-width:100%;
+    overflow-wrap:anywhere;
+  }
+}
