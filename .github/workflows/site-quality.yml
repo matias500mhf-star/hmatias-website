@@ -46,7 +46,7 @@ jobs:
             for attempt in 1 2 3; do
               echo "Lighthouse attempt $attempt/3: $url"
               if [ "$preset" = "desktop" ]; then
-                if npx --yes lighthouse@latest "$url" \
+                if npx --yes lighthouse@13.5.0 "$url" \
                   --quiet --preset=desktop --chrome-flags="$chrome_flags" \
                   "${blocked_external[@]}" \
                   --only-categories=performance,accessibility,best-practices,seo \
@@ -55,7 +55,7 @@ jobs:
                   return 0
                 fi
               else
-                if npx --yes lighthouse@latest "$url" \
+                if npx --yes lighthouse@13.5.0 "$url" \
                   --quiet --chrome-flags="$chrome_flags" \
                   "${blocked_external[@]}" \
                   --only-categories=performance,accessibility,best-practices,seo \
