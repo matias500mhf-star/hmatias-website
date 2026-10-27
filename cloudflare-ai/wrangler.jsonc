@@ -9,6 +9,14 @@
   },
   "routes": [
     {
+      "pattern": "comercialhmatiasps.com/api/ai*",
+      "zone_name": "comercialhmatiasps.com"
+    },
+    {
+      "pattern": "www.comercialhmatiasps.com/api/ai*",
+      "zone_name": "comercialhmatiasps.com"
+    },
+    {
       "pattern": "api.comercialhmatiasps.com/api/ai*",
       "zone_name": "comercialhmatiasps.com"
     }
