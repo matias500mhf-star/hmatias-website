@@ -59,6 +59,37 @@ jobs:
       - name: Validate source-folder config
         working-directory: cloudflare-ai
         run: npx --yes wrangler@4 deploy --dry-run --config wrangler.jsonc
+      - name: Smoke-test deployed workers.dev health endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          response="$RUNNER_TEMP/hmatias-ai-health.json"
+          code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --retry 5 --retry-all-errors --retry-delay 2 'https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai')"
+          [ "$code" = "200" ] || { echo "::error::Worker health endpoint returned HTTP $code"; cat "$response"; exit 1; }
+          node --input-type=module - "$response" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const data=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(data.status!=='ok'||data.service!=='hmatias-ai-assistant') throw new Error('Unexpected Worker health response');
+          console.log('PASS: deployed workers.dev API health endpoint is responding.');
+          NODE
+      - name: Smoke-test real AI response from workers.dev
+        shell: bash
+        run: |
+          set -euo pipefail
+          response="$RUNNER_TEMP/hmatias-ai-chat.json"
+          code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' \
+            --request POST 'https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai' \
+            --header 'Origin: https://comercialhmatiasps.com' \
+            --header 'Content-Type: application/json' \
+            --data '{"message":"Responda apenas com OK."}')"
+          [ "$code" = "200" ] || { echo "::error::Worker chat endpoint returned HTTP $code"; cat "$response"; exit 1; }
+          node --input-type=module - "$response" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const data=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          const answer=typeof data.answer==='string'?data.answer:data.reply;
+          if(typeof answer!=='string'||!answer.trim()) throw new Error('The Worker returned no AI answer.');
+          console.log('PASS: workers.dev returned a non-empty AI answer.');
+          NODE
 
   deploy:
     name: Deploy and verify workers.dev API
