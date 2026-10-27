@@ -1,0 +1,32 @@
+name: Temporary HMATIAS AI live smoke test
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check live AI health endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --max-time 20 \
+            https://api.comercialhmatiasps.com/health | tee /tmp/health.json
+          node -e "const x=require('/tmp/health.json'); if(x.status!=='ok'||x.service!=='hmatias-ai-assistant') process.exit(1)"
+      - name: Send a harmless test prompt through the public API
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --max-time 45 \
+            -X POST 'https://api.comercialhmatiasps.com/api/ai' \
+            -H 'Origin: https://comercialhmatiasps.com' \
+            -H 'Content-Type: application/json' \
+            --data '{"message":"Indica apenas o email geral da HMATIAS."}' \
+            | tee /tmp/answer.json
+          node -e "const x=require('/tmp/answer.json'); if(typeof (x.answer||x.reply)!=='string'||!(x.answer||x.reply).trim()) process.exit(1)"
