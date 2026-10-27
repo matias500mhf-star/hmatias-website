@@ -125,3 +125,25 @@ footer .footer-pro-col {
 .sitewide-contact-details .contact-icon {
   filter: brightness(0) invert(1) !important;
 }
+
+/* Keep phone icon and number on one horizontal line on every viewport. */
+footer a[href^="tel:"],
+.sitewide-contact-details a[href^="tel:"] {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: auto !important;
+  max-width: 100%;
+  gap: 8px !important;
+  text-align: left !important;
+}
+footer a[href^="tel:"] .contact-icon,
+.sitewide-contact-details a[href^="tel:"] .contact-icon {
+  flex: 0 0 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+  align-self: center !important;
+}
