@@ -114,3 +114,14 @@ footer .footer-pro-col {
     margin-top: 2px !important;
   }
 }
+
+/* SOURCE AO footer: let each contact item size to its content instead of forcing a full row. */
+.sitewide-contact-details a[href^="tel:"],
+.sitewide-contact-details a[href^="mailto:"] {
+  width: auto !important;
+  max-width: 100%;
+  flex: 0 1 auto;
+}
+.sitewide-contact-details .contact-icon {
+  filter: brightness(0) invert(1) !important;
+}
