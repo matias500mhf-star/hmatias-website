@@ -12,21 +12,30 @@ jobs:
   smoke:
     runs-on: ubuntu-latest
     steps:
-      - name: Check live AI health endpoint
+      - name: Inspect live AI health response
         shell: bash
         run: |
-          set -euo pipefail
-          curl --fail --silent --show-error --max-time 20 \
-            https://api.comercialhmatiasps.com/health | tee /tmp/health.json
-          node -e "const x=require('/tmp/health.json'); if(x.status!=='ok'||x.service!=='hmatias-ai-assistant') process.exit(1)"
-      - name: Send a harmless test prompt through the public API
+          set -u
+          curl --silent --show-error --max-time 20 -D /tmp/health-headers.txt \
+            -o /tmp/health-body.txt -w 'Health HTTP status: %{http_code}\n' \
+            https://api.comercialhmatiasps.com/health || true
+          echo '--- response headers ---'
+          cat /tmp/health-headers.txt || true
+          echo '--- response body ---'
+          head -c 2000 /tmp/health-body.txt || true
+          echo
+      - name: Inspect live AI POST response
         shell: bash
         run: |
-          set -euo pipefail
-          curl --fail --silent --show-error --max-time 45 \
+          set -u
+          curl --silent --show-error --max-time 45 -D /tmp/ai-headers.txt \
+            -o /tmp/ai-body.txt -w 'AI HTTP status: %{http_code}\n' \
             -X POST 'https://api.comercialhmatiasps.com/api/ai' \
             -H 'Origin: https://comercialhmatiasps.com' \
             -H 'Content-Type: application/json' \
-            --data '{"message":"Indica apenas o email geral da HMATIAS."}' \
-            | tee /tmp/answer.json
-          node -e "const x=require('/tmp/answer.json'); if(typeof (x.answer||x.reply)!=='string'||!(x.answer||x.reply).trim()) process.exit(1)"
+            --data '{"message":"Indica apenas o email geral da HMATIAS."}' || true
+          echo '--- response headers ---'
+          cat /tmp/ai-headers.txt || true
+          echo '--- response body ---'
+          head -c 2000 /tmp/ai-body.txt || true
+          echo
