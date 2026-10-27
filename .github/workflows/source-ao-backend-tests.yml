@@ -1,0 +1,45 @@
+name: SOURCE AO Backend Tests
+
+on:
+  pull_request:
+    paths:
+      - 'source-ao/backend/**'
+      - '.github/workflows/source-ao-backend-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-ao-backend-tests-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend-tests:
+    name: Backend syntax and test suite
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: source-ao/backend
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          package-manager-cache: false
+
+      - name: Check JavaScript syntax without executing application code
+        shell: bash
+        run: |
+          set -euo pipefail
+          find src test scripts -type f \\( -name '*.js' -o -name '*.mjs' \\) -print0 |
+            xargs -0 -r -n 1 node --check
+
+      - name: Run complete backend test suite
+        run: node --test test/*.test.mjs
