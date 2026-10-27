@@ -1,4 +1,4 @@
-name: HMATIAS AI Worker Configuration
+name: HMATIAS AI Worker Deploy
 
 on:
   pull_request:
@@ -17,7 +17,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: hmatias-ai-worker-validation
+  group: hmatias-ai-worker
   cancel-in-progress: false
 
 jobs:
@@ -38,3 +38,79 @@ jobs:
       - name: Validate source-folder config
         working-directory: cloudflare-ai
         run: npx --yes wrangler@4 deploy --dry-run --config wrangler.jsonc
+
+  deploy:
+    name: Deploy and verify same-origin API
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: source-ao-staging
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Check Cloudflare credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          missing=()
+          [ -n "${CLOUDFLARE_API_TOKEN:-}" ] || missing+=("CLOUDFLARE_API_TOKEN")
+          [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ] || missing+=("CLOUDFLARE_ACCOUNT_ID")
+          if [ "${#missing[@]}" -gt 0 ]; then
+            printf '::error title=Missing Cloudflare configuration::Missing secret or variable: %s\n' "${missing[*]}"
+            exit 2
+          fi
+          case "$CLOUDFLARE_API_TOKEN" in Bearer\ *|bearer\ *) echo "::error::CLOUDFLARE_API_TOKEN must be the raw token value."; exit 2;; esac
+          if [[ "$CLOUDFLARE_API_TOKEN" =~ [[:space:]] ]]; then
+            echo "::error::CLOUDFLARE_API_TOKEN contains whitespace."
+            exit 2
+          fi
+      - name: Deploy Worker and host routes
+        run: npx --yes wrangler@4 deploy --config wrangler.jsonc
+      - name: Verify same-origin API health
+        shell: bash
+        run: |
+          set -euo pipefail
+          response="$RUNNER_TEMP/hmatias-ai-health.json"
+          code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --retry 10 --retry-all-errors --retry-delay 3 'https://comercialhmatiasps.com/api/ai')"
+          if [ "$code" != "200" ]; then
+            echo "::error title=AI health check failed::GET same-origin /api/ai returned HTTP $code."
+            cat "$response"
+            exit 1
+          fi
+          node --input-type=module - "$response" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const data=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(data.status!=='ok'||data.service!=='hmatias-ai-assistant') throw new Error('Unexpected AI health response');
+          console.log('PASS: same-origin HMATIAS AI API health endpoint is responding.');
+          NODE
+      - name: Verify real AI chat response
+        shell: bash
+        run: |
+          set -euo pipefail
+          response="$RUNNER_TEMP/hmatias-ai-chat.json"
+          code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' \
+            --request POST 'https://comercialhmatiasps.com/api/ai' \
+            --header 'Origin: https://comercialhmatiasps.com' \
+            --header 'Content-Type: application/json' \
+            --data '{"message":"Responda apenas com OK."}')"
+          if [ "$code" != "200" ]; then
+            echo "::error title=AI chat smoke test failed::POST same-origin /api/ai returned HTTP $code."
+            cat "$response"
+            exit 1
+          fi
+          node --input-type=module - "$response" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const data=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          const answer=typeof data.answer==='string'?data.answer:data.reply;
+          if(typeof answer!=='string'||!answer.trim()) throw new Error('The AI API returned no answer.');
+          console.log('PASS: HMATIAS AI chat returned a non-empty answer.');
+          NODE
