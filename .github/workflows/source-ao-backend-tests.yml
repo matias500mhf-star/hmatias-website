@@ -38,7 +38,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          find src test scripts -type f \\( -name '*.js' -o -name '*.mjs' \\) -print0 |
+          find src test scripts -type f \( -name '*.js' -o -name '*.mjs' \) -print0 |
             xargs -0 -r -n 1 node --check
 
       - name: Run complete backend test suite
