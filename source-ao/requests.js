@@ -838,6 +838,45 @@
     }finally{button.disabled=false;}
   }
 
+  function renderWorkflowResult(card,payload){
+    const panel=card.querySelector('.workflow-result');
+    panel.replaceChildren();panel.hidden=false;
+    const heading=document.createElement('h4');heading.textContent='Resultado da triagem e pesquisa';panel.append(heading);
+    const results=payload?.results||payload?.result?.results||[];
+    if(!results.length){
+      const note=document.createElement('p');
+      note.textContent=payload?.run?.error_code
+        ?'Última execução: '+payload.run.status+' ('+payload.run.error_code+').'
+        :'Ainda não há resultados guardados para esta execução.';
+      panel.append(note);return;
+    }
+    for(const item of results){
+      const section=document.createElement('article');section.className='workflow-item';
+      const title=document.createElement('strong');title.textContent=item.requested_item?.description||item.interpretation?.search_query||'Produto';
+      const detail=document.createElement('p');detail.textContent=[
+        item.interpretation?.category||'Categoria por confirmar',
+        item.mission?.status||'Pesquisa sem estado',
+        item.mission?.supplier_candidates?.length+' fornecedor(es) candidato(s)'
+      ].filter(Boolean).join(' · ');
+      section.append(title,detail);
+      const candidates=item.mission?.supplier_candidates||[];
+      const list=document.createElement('ul');
+      if(candidates.length){
+        for(const candidate of candidates.slice(0,8)){
+          const li=document.createElement('li');
+          li.textContent=(candidate.name||'Fornecedor sem nome')+' — candidato; disponibilidade não confirmada.';
+          list.append(li);
+        }
+      }else{
+        const li=document.createElement('li');li.textContent='Não foram encontrados fornecedores candidatos nesta pesquisa.';list.append(li);
+      }
+      section.append(list);panel.append(section);
+    }
+    const truth=document.createElement('p');truth.className='workflow-truth';
+    truth.textContent='A pesquisa não confirma stock, preço ou prazo. É necessária verificação com o fornecedor antes de marcar como verificado.';
+    panel.append(truth);
+  }
+
   function renderRequest(row){
     const card=$('#requestTemplate').content.firstElementChild.cloneNode(true);
     card.dataset.requestId=row.id;
@@ -864,6 +903,49 @@
     }
 
     card.querySelector('.open-commercial-case').addEventListener('click',()=>loadCommercialCase(card,row));
+    const processButton=card.querySelector('.process-sourcing');
+    const viewButton=card.querySelector('.view-sourcing-workflow');
+    const workflowPanel=card.querySelector('.workflow-result');
+    processButton.disabled=!['received','triage'].includes(row.status);
+    viewButton.disabled=!['triage','sourcing','verifying','verified','quoted','awarded','purchased','delivered','completed'].includes(row.status);
+    processButton.addEventListener('click',async()=>{
+      processButton.disabled=true;viewButton.disabled=true;
+      setCardMessage(card,'A executar triagem e pesquisa de fornecedores…');
+      try{
+        const payload=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/process',{
+          method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({})
+        });
+        row.status=payload?.request?.status||row.status;
+        card.querySelector('.request-status').textContent=row.status.replaceAll('_',' ');
+        card.querySelector('.status-select').value=row.status;
+        renderWorkflowResult(card,payload);
+        setCardMessage(card,'Triagem e pesquisa concluídas. Confirme os fornecedores antes da verificação.','success');
+        metrics();
+      }catch(error){
+        if(['ai_not_configured','ai_configuration_invalid','ai_provider_unreachable','ai_provider_error','ai_rate_limited','ai_invalid_response','procurement_search_failed'].includes(error.message)){
+          row.status='triage';
+          card.querySelector('.request-status').textContent='triage';
+          card.querySelector('.status-select').value='triage';
+          setCardMessage(card,'A triagem iniciou, mas a IA ou a pesquisa falhou. O pedido ficou em triagem para nova tentativa.','error');
+          metrics();
+        }else{
+          setCardMessage(card,'Não foi possível processar o pedido. Verifique a configuração e tente novamente.','error');
+        }
+      }finally{
+        processButton.disabled=!['received','triage'].includes(row.status);
+        viewButton.disabled=!['triage','sourcing','verifying','verified','quoted','awarded','purchased','delivered','completed'].includes(row.status);
+      }
+    });
+    viewButton.addEventListener('click',async()=>{
+      viewButton.disabled=true;
+      try{
+        const payload=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/workflow');
+        renderWorkflowResult(card,payload);
+      }catch{
+        setCardMessage(card,'Não foi possível carregar a última execução do fluxo.','error');
+      }finally{viewButton.disabled=false;}
+    });
+
 
     card.querySelector('.copy-contact').addEventListener('click',async()=>{
       const value=row.contact||'';

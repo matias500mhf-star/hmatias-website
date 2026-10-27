@@ -293,7 +293,7 @@ export async function updateSourcingRequestStatus(request,env,requestId){
   const assigned=strictText(data.assigned_to,100);
   const notes=strictText(data.internal_notes,1000);
   if(!assigned.ok||!notes.ok) return fail(env,400,'field_too_long','Assignment or notes exceed the allowed length.');
-  const existing=await env.SOURCE_AO_DB.prepare('SELECT id FROM sourcing_requests WHERE id=?').bind(requestId).first();
+  const existing=await env.SOURCE_AO_DB.prepare('SELECT id,status FROM sourcing_requests WHERE id=?').bind(requestId).first();
   if(!existing) return fail(env,404,'request_not_found','Sourcing request does not exist.');
   const now=iso();
   await env.SOURCE_AO_DB.prepare(`
@@ -301,6 +301,12 @@ export async function updateSourcingRequestStatus(request,env,requestId){
     SET status=?,assigned_to=COALESCE(?,assigned_to),internal_notes=COALESCE(?,internal_notes),updated_at=?
     WHERE id=?
   `).bind(status,assigned.value||null,notes.value||null,now,requestId).run();
+  if(existing.status!==status){
+    await env.SOURCE_AO_DB.prepare(`
+      INSERT INTO sourcing_status_events(id,sourcing_request_id,from_status,to_status,actor,note,created_at)
+      VALUES(?,?,?,?,?,?,?)
+    `).bind(id('sse'),requestId,existing.status,status,'admin',notes.value||'Admin status update.',now).run();
+  }
   return json(env,{ok:true,request:{id:requestId,status,updated_at:now}});
 }
 

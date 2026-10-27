@@ -30,7 +30,7 @@ function validateInput(data){
   return {query,location,needed_by:neededBy||'',quantity};
 }
 
-async function interpretRequest(env,input){
+export async function interpretSourcingRequest(env,input){
   if(!env.GEMINI_API_KEY)return {error:'ai_not_configured'};
   const model=cleanText(env.GEMINI_MODEL||'gemini-2.5-flash',80);
   if(!model||!/^[a-zA-Z0-9._-]+$/.test(model))return {error:'ai_configuration_invalid'};
@@ -98,7 +98,7 @@ export async function aiProcurementAssistantResponse(request,env){
   const input=validateInput(data);
   if(!input)return fail(env,400,'invalid_input','Provide a query (2–180 characters), valid location, needed_by and optional non-negative quantity.');
 
-  const interpretation=await interpretRequest(env,input);
+  const interpretation=await interpretSourcingRequest(env,input);
   if(interpretation.error){
     const status=interpretation.error==='ai_not_configured'||interpretation.error==='ai_configuration_invalid'?503:
       interpretation.error==='ai_rate_limited'?429:502;
