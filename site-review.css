@@ -139,3 +139,47 @@ body.hmatias-type .footer-pro-legal{display:flex;flex-wrap:wrap;gap:10px 18px}
   body.hmatias-type .footer-pro-legal{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important}
   body.hmatias-type .footer-pro-legal a{font-size:.8rem!important}
 }
+
+
+/* 2026-10-27 — unify the legacy institutional/RFQ footer with the responsive footer system. */
+body.hmatias-type .footer-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  align-items:start;
+}
+body.hmatias-type .footer-grid>div{min-width:0;display:flex;flex-direction:column;align-items:stretch;gap:10px}
+body.hmatias-type .footer-grid>div:first-child{gap:8px}
+body.hmatias-type .footer-grid>div>a{max-width:100%;overflow-wrap:anywhere}
+body.hmatias-type .footer-grid>div>a[href^="tel:"],
+body.hmatias-type .footer-grid>div>a[href^="mailto:"]{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:9px!important;
+  width:100%;
+  min-width:0;
+  white-space:normal!important;
+  overflow-wrap:anywhere;
+}
+body.hmatias-type .footer-grid>div>a[href^="tel:"] .contact-icon,
+body.hmatias-type .footer-grid>div>a[href^="mailto:"] .contact-icon{
+  margin:0!important;
+  flex:0 0 18px!important;
+  width:18px!important;
+  height:18px!important;
+  object-fit:contain;
+}
+body.hmatias-type .footer-grid .footer-logo{display:block;width:min(245px,100%);height:auto;object-fit:contain}
+@media(max-width:850px){
+  body.hmatias-type .footer-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:28px 22px!important}
+}
+@media(max-width:520px){
+  body.hmatias-type .footer-grid{grid-template-columns:minmax(0,1fr)!important;gap:0!important}
+  body.hmatias-type .footer-grid>div{padding:18px 0;border-top:1px solid rgba(255,255,255,.14);gap:11px}
+  body.hmatias-type .footer-grid>div:first-child{padding-top:0;border-top:0}
+  body.hmatias-type .footer-grid>div>a,
+  body.hmatias-type .footer-grid>div>p{font-size:.84rem!important;line-height:1.65!important}
+  body.hmatias-type .footer-grid>div>a[href^="tel:"],
+  body.hmatias-type .footer-grid>div>a[href^="mailto:"]{align-items:flex-start!important;gap:10px!important}
+  body.hmatias-type .footer-grid .copyright{margin-top:18px}
+}
