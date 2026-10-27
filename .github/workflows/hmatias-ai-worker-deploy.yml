@@ -12,6 +12,7 @@ on:
     paths:
       - 'wrangler.jsonc'
       - 'cloudflare-ai/**'
+      - 'assistant-api-bridge.js'
       - '.github/workflows/hmatias-ai-worker-deploy.yml'
 
 permissions:
