@@ -5,6 +5,7 @@ on:
     paths:
       - 'wrangler.jsonc'
       - 'cloudflare-ai/**'
+      - 'assistant-api-bridge.js'
       - '.github/workflows/hmatias-ai-worker-deploy.yml'
   push:
     branches: [main]
@@ -22,7 +23,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate root and source Worker configs
+    name: Validate Worker code, config and bridge
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -33,6 +34,25 @@ jobs:
         with:
           node-version: '22'
           package-manager-cache: false
+      - name: Check assistant API bridge syntax
+        run: node --check assistant-api-bridge.js
+      - name: Validate assistant bridge loads before assistant
+        run: |
+          node --input-type=module <<'NODE'
+          import {readdirSync,readFileSync} from 'node:fs';
+          const pages=readdirSync('.').filter(name=>name.endsWith('.html'));
+          const checked=[];
+          for(const page of pages){
+            const html=readFileSync(page,'utf8');
+            const assistant=html.indexOf('assistant.js?v=20261026-contact-quote-routing1');
+            if(assistant<0) continue;
+            const bridge=html.indexOf('assistant-api-bridge.js?v=20261027-workers-dev-api1');
+            if(bridge<0||bridge>assistant) throw new Error('AI API bridge missing or ordered after assistant.js in '+page);
+            checked.push(page);
+          }
+          if(checked.length<20) throw new Error('Unexpectedly few assistant pages validated: '+checked.length);
+          console.log('PASS: API bridge precedes assistant.js on '+checked.length+' pages.');
+          NODE
       - name: Validate root config used by Cloudflare Builds
         run: npx --yes wrangler@4 deploy --dry-run --config wrangler.jsonc
       - name: Validate source-folder config
@@ -40,7 +60,7 @@ jobs:
         run: npx --yes wrangler@4 deploy --dry-run --config wrangler.jsonc
 
   deploy:
-    name: Deploy and verify same-origin API
+    name: Deploy and verify workers.dev API
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: validate
     runs-on: ubuntu-24.04
@@ -73,9 +93,9 @@ jobs:
             echo "::error::CLOUDFLARE_API_TOKEN contains whitespace."
             exit 2
           fi
-      - name: Deploy Worker and host routes
+      - name: Deploy Worker to workers.dev
         run: npx --yes wrangler@4 deploy --config wrangler.jsonc
-      - name: Verify same-origin API health
+      - name: Verify workers.dev API health
         shell: bash
         run: |
           set -euo pipefail
