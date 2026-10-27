@@ -1,0 +1,116 @@
+/* HMATIAS — footer/contact layout patch. Loaded explicitly by every public HTML entry. */
+footer .footer-grid,
+footer .footer-pro-grid {
+  align-items: start;
+}
+footer .footer-grid > div,
+footer .footer-pro-col,
+footer .footer-pro-brand {
+  min-width: 0;
+}
+footer a[href^="tel:"],
+footer a[href^="mailto:"],
+.sitewide-contact-details a[href^="tel:"],
+.sitewide-contact-details a[href^="mailto:"] {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-height: 1.6 !important;
+  text-align: left !important;
+  color: #fff !important;
+}
+footer a[href^="tel:"] .contact-icon,
+footer a[href^="mailto:"] .contact-icon,
+.sitewide-contact-details a[href^="tel:"] .contact-icon,
+.sitewide-contact-details a[href^="mailto:"] .contact-icon,
+.sitewide-contact-details .contact-icon {
+  display: block !important;
+  position: static !important;
+  float: none !important;
+  flex: 0 0 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  max-width: 18px !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  align-self: center !important;
+}
+footer .footer-grid {
+  grid-template-columns: minmax(0,1.35fr) repeat(4,minmax(0,1fr)) !important;
+}
+footer .footer-pro-grid {
+  grid-template-columns: minmax(0,1.35fr) repeat(3,minmax(0,1fr)) !important;
+}
+footer .footer-grid > div:not(:first-child),
+footer .footer-pro-col {
+  min-width: 0;
+}
+@media (max-width: 850px) {
+  footer .footer-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+    gap: 28px 22px !important;
+  }
+  footer .footer-pro-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+    gap: 28px 22px !important;
+  }
+  footer .footer-pro-brand {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 520px) {
+  footer .footer-grid {
+    grid-template-columns: minmax(0,1fr) !important;
+    gap: 0 !important;
+  }
+  footer .footer-grid > div:first-child {
+    grid-column: auto !important;
+  }
+  footer .footer-grid > div {
+    min-width: 0;
+    padding: 18px 0;
+    border-top: 1px solid rgba(255,255,255,.14);
+  }
+  footer .footer-grid > div:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+  footer .footer-pro-grid {
+    grid-template-columns: minmax(0,1fr) !important;
+    gap: 24px !important;
+  }
+  footer .footer-pro-brand {
+    grid-column: auto;
+  }
+  footer .footer-pro-col {
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,.14);
+  }
+  footer a[href^="tel:"],
+  footer a[href^="mailto:"],
+  .sitewide-contact-details a[href^="tel:"],
+  .sitewide-contact-details a[href^="mailto:"] {
+    align-items: flex-start !important;
+    gap: 10px !important;
+    padding-block: 2px;
+  }
+  footer a[href^="tel:"] .contact-icon,
+  footer a[href^="mailto:"] .contact-icon,
+  .sitewide-contact-details a[href^="tel:"] .contact-icon,
+  .sitewide-contact-details a[href^="mailto:"] .contact-icon,
+  .sitewide-contact-details .contact-icon {
+    align-self: flex-start !important;
+    margin-top: 2px !important;
+  }
+}
