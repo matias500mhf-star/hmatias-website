@@ -215,7 +215,7 @@ $('#addItem').addEventListener('click',()=>{addItem();rows().at(-1).querySelecto
 $('#rfqLanguage').addEventListener('click',()=>{
   if(busy||registered)return;
   const items=readItems();const saved={};document.querySelectorAll('#deliveryFields input,#deliveryFields select,#deliveryFields textarea,#contactFields input,#contactFields select').forEach(input=>{saved[input.id]=input.value;});
-  en=!en;staticLanguage();renderFields();Object.entries(saved).forEach(([id,val])=>{$('#'+id).value=val;});syncContact();$('#rfqItems').replaceChildren();items.forEach(addItem);showStep(step,false);}
+  en=!en;staticLanguage();renderFields();Object.entries(saved).forEach(([id,val])=>{$('#'+id).value=val;});syncContact();$('#rfqItems').replaceChildren();items.forEach(addItem);showStep(step,false);updateCatalogNotice();
 });
 let catalogLoaded=false;
 function updateCatalogNotice(){
