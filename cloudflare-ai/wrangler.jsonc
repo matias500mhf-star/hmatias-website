@@ -7,6 +7,12 @@
   "ai": {
     "binding": "AI"
   },
+  "routes": [
+    {
+      "pattern": "api.comercialhmatiasps.com/api/ai*",
+      "zone_name": "comercialhmatiasps.com"
+    }
+  ],
   "observability": {
     "enabled": true
   }
