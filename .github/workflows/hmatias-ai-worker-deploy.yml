@@ -80,9 +80,9 @@ jobs:
         run: |
           set -euo pipefail
           response="$RUNNER_TEMP/hmatias-ai-health.json"
-          code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --retry 10 --retry-all-errors --retry-delay 3 'https://comercialhmatiasps.com/api/ai')"
+          code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --retry 10 --retry-all-errors --retry-delay 3 'https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai')"
           if [ "$code" != "200" ]; then
-            echo "::error title=AI health check failed::GET same-origin /api/ai returned HTTP $code."
+            echo "::error title=AI health check failed::GET workers.dev /api/ai returned HTTP $code."
             cat "$response"
             exit 1
           fi
@@ -90,7 +90,7 @@ jobs:
           import {readFileSync} from 'node:fs';
           const data=JSON.parse(readFileSync(process.argv[2],'utf8'));
           if(data.status!=='ok'||data.service!=='hmatias-ai-assistant') throw new Error('Unexpected AI health response');
-          console.log('PASS: same-origin HMATIAS AI API health endpoint is responding.');
+          console.log('PASS: workers.dev HMATIAS AI API health endpoint is responding.');
           NODE
       - name: Verify real AI chat response
         shell: bash
@@ -98,12 +98,12 @@ jobs:
           set -euo pipefail
           response="$RUNNER_TEMP/hmatias-ai-chat.json"
           code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' \
-            --request POST 'https://comercialhmatiasps.com/api/ai' \
+            --request POST 'https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai' \
             --header 'Origin: https://comercialhmatiasps.com' \
             --header 'Content-Type: application/json' \
             --data '{"message":"Responda apenas com OK."}')"
           if [ "$code" != "200" ]; then
-            echo "::error title=AI chat smoke test failed::POST same-origin /api/ai returned HTTP $code."
+            echo "::error title=AI chat smoke test failed::POST workers.dev /api/ai returned HTTP $code."
             cat "$response"
             exit 1
           fi
