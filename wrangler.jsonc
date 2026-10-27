@@ -4,23 +4,10 @@
   "main": "cloudflare-ai/src/index.js",
   "compatibility_date": "2026-08-28",
   "workers_dev": true,
+  "preview_urls": false,
   "ai": {
     "binding": "AI"
   },
-  "routes": [
-    {
-      "pattern": "comercialhmatiasps.com/api/ai*",
-      "zone_name": "comercialhmatiasps.com"
-    },
-    {
-      "pattern": "www.comercialhmatiasps.com/api/ai*",
-      "zone_name": "comercialhmatiasps.com"
-    },
-    {
-      "pattern": "api.comercialhmatiasps.com/api/ai*",
-      "zone_name": "comercialhmatiasps.com"
-    }
-  ],
   "observability": {
     "enabled": true
   }
