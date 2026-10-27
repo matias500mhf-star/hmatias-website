@@ -5,12 +5,14 @@ on:
     paths:
       - 'wrangler.jsonc'
       - 'cloudflare-ai/**'
+      - 'assistant-api-bridge.js'
       - '.github/workflows/hmatias-ai-worker-deploy.yml'
   push:
     branches: [main]
     paths:
       - 'wrangler.jsonc'
       - 'cloudflare-ai/**'
+      - 'assistant-api-bridge.js'
       - '.github/workflows/hmatias-ai-worker-deploy.yml'
 
 permissions:
@@ -22,7 +24,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate root and source Worker configs
+    name: Validate Worker code, config and bridge
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -33,14 +35,64 @@ jobs:
         with:
           node-version: '22'
           package-manager-cache: false
+      - name: Check assistant API bridge syntax
+        run: node --check assistant-api-bridge.js
+      - name: Validate assistant bridge loads before assistant
+        run: |
+          node --input-type=module <<'NODE'
+          import {readdirSync,readFileSync} from 'node:fs';
+          const pages=readdirSync('.').filter(name=>name.endsWith('.html'));
+          const checked=[];
+          for(const page of pages){
+            const html=readFileSync(page,'utf8');
+            const assistant=html.indexOf('assistant.js?v=20261026-contact-quote-routing1');
+            if(assistant<0) continue;
+            const bridge=html.indexOf('assistant-api-bridge.js?v=20261027-workers-dev-api1');
+            if(bridge<0||bridge>assistant) throw new Error('AI API bridge missing or ordered after assistant.js in '+page);
+            checked.push(page);
+          }
+          if(checked.length<20) throw new Error('Unexpectedly few assistant pages validated: '+checked.length);
+          console.log('PASS: API bridge precedes assistant.js on '+checked.length+' pages.');
+          NODE
       - name: Validate root config used by Cloudflare Builds
         run: npx --yes wrangler@4 deploy --dry-run --config wrangler.jsonc
       - name: Validate source-folder config
         working-directory: cloudflare-ai
         run: npx --yes wrangler@4 deploy --dry-run --config wrangler.jsonc
+      - name: Smoke-test deployed workers.dev health endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          response="$RUNNER_TEMP/hmatias-ai-health.json"
+          code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --retry 5 --retry-all-errors --retry-delay 2 'https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai')"
+          [ "$code" = "200" ] || { echo "::error::Worker health endpoint returned HTTP $code"; cat "$response"; exit 1; }
+          node --input-type=module - "$response" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const data=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          if(data.status!=='ok'||data.service!=='hmatias-ai-assistant') throw new Error('Unexpected Worker health response');
+          console.log('PASS: deployed workers.dev API health endpoint is responding.');
+          NODE
+      - name: Smoke-test real AI response from workers.dev
+        shell: bash
+        run: |
+          set -euo pipefail
+          response="$RUNNER_TEMP/hmatias-ai-chat.json"
+          code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' \
+            --request POST 'https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai' \
+            --header 'Origin: https://comercialhmatiasps.com' \
+            --header 'Content-Type: application/json' \
+            --data '{"message":"Responda apenas com OK."}')"
+          [ "$code" = "200" ] || { echo "::error::Worker chat endpoint returned HTTP $code"; cat "$response"; exit 1; }
+          node --input-type=module - "$response" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const data=JSON.parse(readFileSync(process.argv[2],'utf8'));
+          const answer=typeof data.answer==='string'?data.answer:data.reply;
+          if(typeof answer!=='string'||!answer.trim()) throw new Error('The Worker returned no AI answer.');
+          console.log('PASS: workers.dev returned a non-empty AI answer.');
+          NODE
 
   deploy:
-    name: Deploy and verify same-origin API
+    name: Deploy and verify workers.dev API
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: validate
     runs-on: ubuntu-24.04
@@ -73,16 +125,16 @@ jobs:
             echo "::error::CLOUDFLARE_API_TOKEN contains whitespace."
             exit 2
           fi
-      - name: Deploy Worker and host routes
+      - name: Deploy Worker to workers.dev
         run: npx --yes wrangler@4 deploy --config wrangler.jsonc
-      - name: Verify same-origin API health
+      - name: Verify workers.dev API health
         shell: bash
         run: |
           set -euo pipefail
           response="$RUNNER_TEMP/hmatias-ai-health.json"
-          code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --retry 10 --retry-all-errors --retry-delay 3 'https://comercialhmatiasps.com/api/ai')"
+          code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --retry 10 --retry-all-errors --retry-delay 3 'https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai')"
           if [ "$code" != "200" ]; then
-            echo "::error title=AI health check failed::GET same-origin /api/ai returned HTTP $code."
+            echo "::error title=AI health check failed::GET workers.dev /api/ai returned HTTP $code."
             cat "$response"
             exit 1
           fi
@@ -90,7 +142,7 @@ jobs:
           import {readFileSync} from 'node:fs';
           const data=JSON.parse(readFileSync(process.argv[2],'utf8'));
           if(data.status!=='ok'||data.service!=='hmatias-ai-assistant') throw new Error('Unexpected AI health response');
-          console.log('PASS: same-origin HMATIAS AI API health endpoint is responding.');
+          console.log('PASS: workers.dev HMATIAS AI API health endpoint is responding.');
           NODE
       - name: Verify real AI chat response
         shell: bash
@@ -98,12 +150,12 @@ jobs:
           set -euo pipefail
           response="$RUNNER_TEMP/hmatias-ai-chat.json"
           code="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' \
-            --request POST 'https://comercialhmatiasps.com/api/ai' \
+            --request POST 'https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai' \
             --header 'Origin: https://comercialhmatiasps.com' \
             --header 'Content-Type: application/json' \
             --data '{"message":"Responda apenas com OK."}')"
           if [ "$code" != "200" ]; then
-            echo "::error title=AI chat smoke test failed::POST same-origin /api/ai returned HTTP $code."
+            echo "::error title=AI chat smoke test failed::POST workers.dev /api/ai returned HTTP $code."
             cat "$response"
             exit 1
           fi
