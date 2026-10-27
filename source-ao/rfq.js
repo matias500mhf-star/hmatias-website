@@ -28,21 +28,28 @@ function staticLanguage(){
   $('#rfqLanguage').setAttribute('aria-label',en?'Switch to PT — Português':'Mudar para EN — English');
 }
 
+function setAccessibleLabel(input, labelText) {
+  if (!input || !labelText) return input;
+  input.setAttribute('aria-label', labelText);
+  return input;
+}
+
 function renderFields(){
   $('#deliveryFields').innerHTML=`
-    <label class="full">${copy('Local de entrega em Angola *','Delivery location in Angola *')}<input id="rfqLocation" required maxlength="100" autocomplete="address-level2" placeholder="${copy('Ex.: Viana, Luanda','e.g. Viana, Luanda')}"></label>
-    <label>${copy('Prioridade *','Priority *')}<select id="rfqUrgency"><option value="normal">${copy('Prazo normal','Standard')}</option><option value="urgent">${copy('Urgente','Urgent')}</option><option value="planned">${copy('Compra programada','Planned purchase')}</option></select></label>
-    <label>${copy('Data pretendida (opcional)','Target date (optional)')}<input id="rfqDate" type="date" min="${today()}"></label>
-    <label>${copy('Finalidade do pedido *','Purpose of request *')}<select id="rfqIntent"><option value="ready">${copy('Comprar após aprovação da proposta','Buy after proposal approval')}</option><option value="budgeting">${copy('Preparar orçamento / comparar opções','Budget / compare options')}</option><option value="recurring">${copy('Fornecimento recorrente','Recurring supply')}</option></select></label>
-    <label>${copy('Aceita alternativas equivalentes?','Accept equivalent alternatives?')}<select id="rfqAlternatives"><option value="discuss">${copy('Consultar antes de substituir','Discuss before substituting')}</option><option value="yes">${copy('Sim, se cumprirem a especificação','Yes, if specifications are met')}</option><option value="no">${copy('Não, referência exata','No, exact reference only')}</option></select></label>
-    <label class="full">${copy('Orçamento indicativo em Kz (opcional)','Indicative budget in Kz (optional)')}<input id="rfqBudget" type="number" min="0" max="1000000000000" step="0.01" inputmode="decimal" placeholder="${copy('Pode deixar por confirmar','Leave blank if not confirmed')}"></label>
-    <label class="full">${copy('Condições de entrega / notas (opcional)','Delivery conditions / notes (optional)')}<textarea id="rfqNotes" rows="3" maxlength="1500" placeholder="${copy('Ex.: frequência mensal, acesso à obra, documentação técnica necessária.','e.g. monthly frequency, site access, required technical documents.')}"></textarea></label>`;
+    <label class="full">${copy('Local de entrega em Angola *','Delivery location in Angola *')}<input id="rfqLocation" required maxlength="100" autocomplete="address-level2" placeholder="${copy('Ex.: Luanda, Talatona','Ex.: Luanda, Talatona')}" aria-label="${copy('Local de entrega em Angola','Delivery location in Angola')}" /></label>
+    <label>${copy('Prioridade *','Priority *')}<select id="rfqUrgency" aria-label="${copy('Prioridade','Priority')}"><option value="normal">${copy('Prazo normal','Standard')}</option><option value="urgent">${copy('Urgente','Urgent')}</option><option value="flexible">${copy('Flexível','Flexible')}</option></select></label>
+    <label>${copy('Data pretendida (opcional)','Target date (optional)')}<input id="rfqDate" type="date" min="${today()}" aria-label="${copy('Data pretendida','Target date')}" /></label>
+    <label>${copy('Finalidade do pedido *','Purpose of request *')}<select id="rfqIntent" aria-label="${copy('Finalidade do pedido','Purpose of request')}"><option value="ready">${copy('Comprar após aprovação da proposta','Buy after proposal approval')}</option><option value="project">${copy('Para projecto / instalação','For project / installation')}</option><option value="stock">${copy('Reabastecimento regular','Regular restocking')}</option></select></label>
+    <label>${copy('Aceita alternativas equivalentes?','Accept equivalent alternatives?')}<select id="rfqAlternatives" aria-label="${copy('Aceita alternativas equivalentes','Accept equivalent alternatives')}"><option value="discuss">${copy('Consultar antes de substituir','Discuss before replacing')}</option><option value="yes">${copy('Sim, aceito alternativas equivalentes','Yes, equivalent alternatives are fine')}</option><option value="no">${copy('Não, preciso do mesmo produto','No, I need the same product')}</option></select></label>
+    <label class="full">${copy('Orçamento indicativo em Kz (opcional)','Indicative budget in Kz (optional)')}<input id="rfqBudget" type="number" min="0" max="1000000000000" step="0.01" inputmode="decimal" aria-label="${copy('Orçamento indicativo em Kz','Indicative budget in Kz')}" /></label>
+    <label class="full">${copy('Condições de entrega / notas (opcional)','Delivery conditions / notes (optional)')}<textarea id="rfqNotes" rows="3" maxlength="1500" placeholder="${copy('Ex.: entrega em Luanda, requisitos técnicos, embalagem, documentos','Ex.: delivery in Luanda, technical requirements, packaging, documents')}" aria-label="${copy('Condições de entrega e notas','Delivery conditions and notes')}"></textarea></label>
+  `;
   $('#contactFields').innerHTML=`
-    <label>${copy('Nome do contacto *','Contact name *')}<input id="rfqName" required maxlength="120" autocomplete="name"></label>
-    <label>${copy('Tipo de cliente *','Customer type *')}<select id="rfqBuyer"><option value="company">${copy('Empresa','Company')}</option><option value="individual">${copy('Particular','Individual')}</option><option value="institution">${copy('Instituição','Institution')}</option></select></label>
-    <label class="full">${copy('Empresa / instituição (opcional)','Company / institution (optional)')}<input id="rfqCompany" maxlength="160" autocomplete="organization"></label>
-    <label>${copy('Contacto preferencial *','Preferred channel *')}<select id="rfqChannel"><option value="whatsapp">WhatsApp</option><option value="phone">${copy('Telefone','Phone')}</option><option value="email">E-mail</option></select></label>
-    <label><span id="contactLabel">WhatsApp *</span><input id="rfqContact" required type="tel" maxlength="180" autocomplete="tel" placeholder="+244 …"></label>`;
+    <label>${copy('Nome do contacto *','Contact name *')}<input id="rfqName" required maxlength="120" autocomplete="name" aria-label="${copy('Nome do contacto','Contact name')}" /></label>
+    <label>${copy('Tipo de cliente *','Customer type *')}<select id="rfqBuyer" aria-label="${copy('Tipo de cliente','Customer type')}" ><option value="company">${copy('Empresa','Company')}</option><option value="individual">${copy('Particular','Individual')}</option><option value="public">${copy('Entidade pública / estatal','Public entity')}</option></select></label>
+    <label class="full">${copy('Empresa / instituição (opcional)','Company / institution (optional)')}<input id="rfqCompany" maxlength="160" autocomplete="organization" aria-label="${copy('Empresa ou instituição','Company or institution')}" /></label>
+    <label>${copy('Contacto preferencial *','Preferred channel *')}<select id="rfqChannel" aria-label="${copy('Contacto preferencial','Preferred channel')}"><option value="whatsapp">WhatsApp</option><option value="phone">${copy('Telefone','Phone')}</option><option value="email">${copy('E-mail','Email')}</option></select></label>
+    <label><span id="contactLabel">WhatsApp *</span><input id="rfqContact" required type="tel" maxlength="180" autocomplete="tel" placeholder="+244 …" aria-label="${copy('Contacto telefónico ou WhatsApp','Phone or WhatsApp contact')}" /></label>`;
   $('#rfqChannel').addEventListener('change',syncContact);
   $('#rfqContact').addEventListener('input',()=>$('#rfqContact').setCustomValidity(''));
 }
@@ -50,19 +57,21 @@ function syncContact(){
   const email=value('rfqChannel')==='email';
   $('#contactLabel').textContent=email?'E-mail *':copy('Telefone / WhatsApp *','Phone / WhatsApp *');
   const input=$('#rfqContact');input.type=email?'email':'tel';input.autocomplete=email?'email':'tel';input.placeholder=email?'nome@empresa.com':'+244 …';input.setCustomValidity('');
+  input.setAttribute('aria-label', email ? copy('E-mail do contacto','Contact email') : copy('Telefone ou WhatsApp do contacto','Phone or WhatsApp contact'));
 }
 
 function addItem(initial={}){
   if(rows().length>=MAX_ITEMS)return;
   const id=++rowNumber;
   const row=document.createElement('article');row.className='rfq-item';row.dataset.row=String(id);
-  row.innerHTML=`<div class="item-heading"><h2></h2><button class="item-remove" type="button">${copy('Remover','Remove')}</button></div><div class="field-grid">
-    <label>${copy('Categoria *','Category *')}<select class="item-category" required></select></label>
-    <label>${copy('Família do catálogo','Catalogue family')}<select class="item-product"></select></label>
-    <label class="full">${copy('Produto / material / serviço *','Product / material / service *')}<input class="item-description" required maxlength="200" placeholder="${copy('Ex.: luvas de proteção, tamanho L','e.g. protective gloves, size L')}"></label>
-    <label>${copy('Quantidade *','Quantity *')}<input class="item-quantity" type="number" required min="0.000001" max="1000000000" step="any" inputmode="decimal"></label>
-    <label>${copy('Unidade *','Unit *')}<select class="item-unit" required></select></label>
-    <label class="full">${copy('Especificação / referência (opcional)','Specification / reference (optional)')}<textarea class="item-specification" rows="2" maxlength="600" placeholder="${copy('Marca, dimensão, norma, modelo ou certificação exigida.','Brand, dimensions, standard, model or required certification.')}"></textarea></label></div>`;
+  row.innerHTML=`<div class="item-heading"><h2></h2><button class="item-remove" type="button" aria-label="${copy('Remover produto','Remove product')}">${copy('Remover','Remove')}</button></div><div class="field-grid">
+    <label>${copy('Categoria *','Category *')}<select class="item-category" required aria-label="${copy('Categoria do produto','Product category')}"></select></label>
+    <label>${copy('Família do catálogo','Catalogue family')}<select class="item-product" aria-label="${copy('Família do catálogo','Catalogue family')}"></select></label>
+    <label class="full">${copy('Produto / material / serviço *','Product / material / service *')}<input class="item-description" required maxlength="200" placeholder="${copy('Ex.: luvas de proteção, cimento, tinta','Ex.: protective gloves, cement, paint')}" aria-label="${copy('Descrição do produto','Product description')}" /></label>
+    <label>${copy('Quantidade *','Quantity *')}<input class="item-quantity" type="number" required min="0.000001" max="1000000000" step="any" inputmode="decimal" aria-label="${copy('Quantidade','Quantity')}" /></label>
+    <label>${copy('Unidade *','Unit *')}<select class="item-unit" required aria-label="${copy('Unidade','Unit')}"></select></label>
+    <label class="full">${copy('Especificação / referência (opcional)','Specification / reference (optional)')}<textarea class="item-specification" rows="2" maxlength="600" placeholder="${copy('Ex.: referência, norma, cor, dimensão','Ex.: reference, standard, colour, size')}" aria-label="${copy('Especificação ou referência','Specification or reference')}"></textarea></label>
+  </div>`;
   const category=row.querySelector('.item-category');
   options(category,[['',copy('Selecionar categoria','Select category')],...Object.keys(CATEGORY_LABELS).map(key=>[key,categoryLabel(key,en)])]);
   options(row.querySelector('.item-unit'),UNITS.map(unit=>[unit,unit==='serviço'?copy('serviço','service'):unit]));
@@ -95,8 +104,8 @@ function readItems(){return rows().map(row=>({
 function summary(){
   const items=readItems();
   $('#itemCount').textContent=items.length+' '+copy(items.length===1?'produto':'produtos',items.length===1?'product':'products');
-  $('#categorySummary').textContent=[...new Set(items.map(item=>item.category).filter(Boolean))].map(id=>categoryLabel(id,en)).join(' · ')||copy('Escolha uma categoria para começar.','Choose a category to get started.');
-  rows().forEach((row,index)=>{row.querySelector('h2').textContent=copy('Produto ','Product ')+(index+1);row.querySelector('.item-remove').hidden=items.length===1;});
+  $('#categorySummary').textContent=[...new Set(items.map(item=>item.category).filter(Boolean))].map(id=>categoryLabel(id,en)).join(' · ')||copy('Escolha uma categoria para começar.','Choose a category to begin.');
+  rows().forEach((row,index)=>{row.querySelector('h2').textContent=copy('Produto ','Product ')+(index+1);row.querySelector('.item-remove').hidden=items.length===1; row.querySelector('.item-remove').setAttribute('aria-label', `${copy('Remover produto','Remove product')} ${index + 1}`);});
   $('#addItem').disabled=items.length>=MAX_ITEMS;
 }
 function payload(){return {
@@ -110,10 +119,11 @@ function review(){
   const box=$('#rfqReview');box.replaceChildren();
   const title=document.createElement('h2');title.textContent=copy('Rever antes de enviar','Review before sending');box.append(title);
   const list=document.createElement('ul');
-  readItems().forEach(item=>{const li=document.createElement('li');li.textContent=`${item.quantity} ${item.unit} · ${item.description} · ${categoryLabel(item.category,en)}${item.specification?' — '+item.specification:''}`;list.append(li);});
+  readItems().forEach(item=>{const li=document.createElement('li');li.textContent=`${item.quantity} ${item.unit} · ${item.description} · ${categoryLabel(item.category,en)}${item.specification?' · '+item.specification:''}`;list.append(li);});
   box.append(list);
   const info=document.createElement('p');
-  info.textContent=[value('rfqLocation'),value('rfqDate')||copy('Data a confirmar','Date to confirm'),$('#rfqUrgency option:checked').textContent,$('#rfqIntent option:checked').textContent,$('#rfqAlternatives option:checked').textContent,value('rfqBudget')?Number(value('rfqBudget')).toLocaleString(en?'en':'pt-AO')+' Kz':copy('Orçamento a confirmar','Budget to confirm')].join(' · ');box.append(info);
+  info.textContent=[value('rfqLocation'),value('rfqDate')||copy('Data a confirmar','Date to confirm'),$('#rfqUrgency option:checked').textContent,$('#rfqIntent option:checked').textContent,$('#rfqAlternatives option:checked').textContent].join(' · ');
+  box.append(info);
   if(value('rfqNotes')){const note=document.createElement('p');note.textContent=value('rfqNotes');box.append(note);}
 }
 function validateStep(index){
@@ -142,29 +152,32 @@ function link(label,href,primary=false){const a=document.createElement('a');a.te
 function paragraph(parent,text){const p=document.createElement('p');p.textContent=text;parent.append(p);return p;}
 function whatsapp(message){return 'https://wa.me/244948806673?text='+encodeURIComponent(message);}
 function message(data){
-  return ['SOURCE AO · Pedido de cotação / RFQ',...data.items.map((item,i)=>`${i+1}. ${item.description} | ${item.quantity} ${item.unit}${item.specification?' | '+item.specification:''}`),`Local: ${data.location}`,`Prazo: ${data.needed_by||'A confirmar'} | ${data.urgency}`,`Finalidade: ${data.intent} | Alternativas: ${data.alternatives}`,`Orçamento: ${data.budget||'A confirmar'} Kz`,`Notas: ${data.notes||'—'}`,`Contacto: ${data.requester_name} | ${data.company||'—'} | ${data.requester_contact}`].join('\n');
+  return ['SOURCE AO · Pedido de cotação / RFQ',...data.items.map((item,i)=>`${i+1}. ${item.description} | ${item.quantity} ${item.unit}${item.specification?' | '+item.specification:''}`),`Local: ${data.location}`,`Necessário até: ${data.needed_by||copy('a confirmar','to confirm')}`].join('\n');
 }
 function showSuccess(request,path){
   registered=true;$('#rfqForm').hidden=true;$('#catalogStatus').hidden=true;
   const box=$('#rfqResult');box.replaceChildren();box.hidden=false;
   const ref=document.createElement('span');ref.className='reference';ref.textContent=request.reference;box.append(ref);
   const h=document.createElement('h2');h.textContent=copy('Pedido registado.','Request registered.');box.append(h);
-  paragraph(box,copy('O pedido ficou registado na plataforma Source AO. Guarde o link privado e utilize o WhatsApp para dar conhecimento imediato à equipa comercial. A gravação não confirma notificação entregue, proposta, stock ou prazo.','Your request is stored on the Source AO platform. Keep your private tracking link and use WhatsApp for immediate follow-up. Storage does not confirm staff notification, quotation, stock or lead time.'));
+  paragraph(box,copy('O pedido ficou registado na plataforma Source AO. Guarde o link privado e utilize o WhatsApp para dar conhecimento imediato à equipa comercial. A gravação não confirma stock ou disponibilidade até revisão da HMATIAS.','The request was registered on the Source AO platform. Save the private link and use WhatsApp to notify the commercial team immediately. Registration does not confirm stock or availability until HMATIAS review.'));
   const actions=document.createElement('div');actions.className='result-actions';actions.append(link(copy('Acompanhar pedido','Track request'),path,true));
   const save=document.createElement('button');save.type='button';save.className='secondary';save.textContent=copy('Copiar link privado','Copy private link');
-  save.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(path);save.textContent=copy('Link copiado','Link copied');}catch{const input=document.createElement('textarea');input.readOnly=true;input.value=path;input.setAttribute('aria-label',copy('Link privado','Private link'));box.append(input);input.focus();input.select();}});actions.append(save);box.append(actions);
-  const notify=link(copy('Continuar com a HMATIAS no WhatsApp','Continue with HMATIAS on WhatsApp'),whatsapp(`SOURCE AO · RFQ ${request.reference}\n${copy('Pedido registado. Gostaria de dar seguimento à cotação.','Request registered. I would like to follow up on the quotation.')}`));notify.target='_blank';notify.rel='noopener noreferrer';box.append(notify);
+  save.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(path);save.textContent=copy('Link copiado','Link copied');}catch{const input=document.createElement('textarea');input.value=path;document.body.append(input);input.select();document.execCommand('copy');input.remove();save.textContent=copy('Link copiado','Link copied');}});
+  actions.append(save);
+  const notify=link(copy('Continuar com a HMATIAS no WhatsApp','Continue with HMATIAS on WhatsApp'),whatsapp(`SOURCE AO · RFQ ${request.reference}\n${copy('Pedido registado. Gostaria de dar seguimento ao pedido.','Request registered. I would like to continue with the request.')}`));
+  actions.append(notify);
+  box.append(actions);
   paragraph(box,copy('Pode enviar fichas técnicas ou fotografias à HMATIAS no WhatsApp, indicando esta referência.','You can send technical sheets or photos to HMATIAS on WhatsApp, quoting this reference.'));
   box.append(link(copy('Criar outro pedido','Create another request'),'rfq.html'+(en?'?lang=en':'')));
   box.focus();
 }
 function showFailure(data,status){
   const box=$('#rfqResult');box.replaceChildren();box.hidden=false;
-  paragraph(box,status===429?copy('Limite temporário de pedidos. Aguarde alguns minutos antes de tentar novamente.','Temporary request limit. Wait a few minutes before retrying.'):copy('Não conseguimos confirmar o registo. Os campos continuam preenchidos: tente novamente ou contacte a HMATIAS com a lista abaixo.','We could not confirm registration. Your fields are still filled in: retry or contact HMATIAS with the list below.'));
-  const full=message(data);const text=document.createElement('textarea');text.readOnly=true;text.rows=5;text.value=full;text.setAttribute('aria-label',copy('Lista para enviar à HMATIAS','List to send to HMATIAS'));box.append(text);
-  const a=link(copy('Abrir WhatsApp e enviar o pedido','Open WhatsApp and send the request'),whatsapp(full.length<6000?full:copy('Preciso de uma cotação no SOURCE AO. Vou enviar a minha lista de produtos nesta conversa.','I need a SOURCE AO quotation. I will send my product list in this conversation.')),true);a.target='_blank';a.rel='noopener noreferrer';
-  box.append(a);if(full.length>=6000)paragraph(box,copy('Copie a lista acima e cole-a na conversa.','Copy the list above and paste it into the conversation.'));
-  paragraph(box,copy('Abrir o WhatsApp não envia a mensagem. Confirme o envio na conversa.','Opening WhatsApp does not send the message. Confirm sending in the conversation.'));
+  paragraph(box,status===429?copy('Limite temporário de pedidos. Aguarde alguns minutos antes de tentar novamente.','Temporary request limit. Wait a few minutes before retrying.'):copy('Não foi possível registar o seu pedido no momento. Pode continuar pela conversa no WhatsApp e enviar a lista abaixo.','The request could not be registered at the moment. You can continue via WhatsApp and send the list below.'));
+  const full=message(data);const text=document.createElement('textarea');text.readOnly=true;text.rows=5;text.value=full;text.setAttribute('aria-label',copy('Lista para enviar à HMATIAS','List to send to HMATIAS'));
+  const a=link(copy('Abrir WhatsApp e enviar o pedido','Open WhatsApp and send the request'),whatsapp(full.length<6000?full:copy('Preciso de uma cotação no SOURCE AO. Vou enviar a minha lista de produtos abaixo.','I need a quote in SOURCE AO. I will send my product list below.')));
+  box.append(text,a);if(full.length>=6000)paragraph(box,copy('Copie a lista acima e cole-a na conversa.','Copy the list above and paste it into the conversation.'));
+  paragraph(box,copy('Abrir o WhatsApp não envia a mensagem. Confirme o envio na conversa.','Opening WhatsApp does not send the message. Confirm the send in the conversation.'));
 }
 
 async function submit(event){
@@ -176,16 +189,8 @@ async function submit(event){
   data.client_token=clientToken;
   const validation=validateRfq(data,catalog,new Date(Date.now()+3600000));
   if(!validation.ok){error(copy('Verifique os campos e a data pretendida antes de enviar.','Check the fields and target date before sending.'));return;}
-  track('source_rfq_submit_attempt',{
-    item_count:data.items.length,
-    buyer_type:data.buyer_type,
-    urgency:data.urgency,
-    purchase_intent:data.intent,
-    contact_channel:data.contact_channel,
-    source_origin:data.origin,
-    source_language:data.language
-  });
-  busy=true;$('#rfqSubmit').disabled=true;$('#rfqBack').disabled=true;$('#rfqLanguage').disabled=true;$('#rfqSubmit').textContent=copy('A registar…','Registering…');$('#rfqResult').hidden=true;
+  track('source_rfq_submit_attempt',{item_count:data.items.length,buyer_type:data.buyer_type,urgency:data.urgency,purchase_intent:data.intent,contact_channel:data.contact_channel,source_origin:data.origin,source_language:data.language});
+  busy=true;$('#rfqSubmit').disabled=true;$('#rfqBack').disabled=true;$('#rfqLanguage').disabled=true;$('#rfqSubmit').textContent=copy('A registar…','Registering…');$('#rfqResult').hidden=true;error();
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
   try{
     if(!/^https:\/\//.test(apiBase()))throw new Error('unconfigured');
@@ -193,15 +198,7 @@ async function submit(event){
     const result=await response.json().catch(()=>null);
     if(!response.ok)throw Object.assign(new Error('registration_failed'),{status:response.status});
     if(result?.ok!==true || result.request?.rfq_version!==1 || !result.request.reference || !result.request.status_path)throw new Error('unconfirmed');
-    track('source_rfq_registered',{
-      item_count:data.items.length,
-      buyer_type:data.buyer_type,
-      urgency:data.urgency,
-      purchase_intent:data.intent,
-      contact_channel:data.contact_channel,
-      source_origin:data.origin,
-      source_language:data.language
-    });
+    track('source_rfq_registered',{item_count:data.items.length,buyer_type:data.buyer_type,urgency:data.urgency,purchase_intent:data.intent,contact_channel:data.contact_channel,source_origin:data.origin,source_language:data.language});
     window.hmatiasAnalytics?.confirmLead?.('source_rfq','website');
     showSuccess(result.request,trackingUrl(result.request.status_path));
   }catch(failure){
@@ -217,39 +214,27 @@ $('#rfqForm').addEventListener('submit',submit);
 $('#addItem').addEventListener('click',()=>{addItem();rows().at(-1).querySelector('select').focus();});
 $('#rfqLanguage').addEventListener('click',()=>{
   if(busy||registered)return;
-  const items=readItems();const saved={};document.querySelectorAll('#deliveryFields input,#deliveryFields select,#deliveryFields textarea,#contactFields input,#contactFields select').forEach(input=>saved[input.id]=input.value);
-  en=!en;staticLanguage();renderFields();Object.entries(saved).forEach(([id,val])=>{$('#'+id).value=val;});syncContact();$('#rfqItems').replaceChildren();items.forEach(addItem);showStep(step,false);updateCatalogNotice();
+  const items=readItems();const saved={};document.querySelectorAll('#deliveryFields input,#deliveryFields select,#deliveryFields textarea,#contactFields input,#contactFields select').forEach(input=>{saved[input.id]=input.value;});
+  en=!en;staticLanguage();renderFields();Object.entries(saved).forEach(([id,val])=>{$('#'+id).value=val;});syncContact();$('#rfqItems').replaceChildren();items.forEach(addItem);showStep(step,false);}
 });
 let catalogLoaded=false;
 function updateCatalogNotice(){
   const node=$('#catalogStatus');
-  // Keep the same visible guidance region when the catalogue loads, preventing a
-  // page-wide upward shift as a remote request finishes on a slow connection.
   node.hidden=false;
-  node.textContent=catalogLoaded
-    ?copy('Categorias disponíveis. Se não encontrar a referência, descreva o produto no campo abaixo.','Categories available. If the reference is not listed, describe the product below.')
-    :copy('O catálogo não está disponível neste momento. Pode descrever os produtos e selecionar a categoria manualmente.','The catalogue is temporarily unavailable. Describe your products and select their categories manually.');
+  node.textContent=catalogLoaded?
+    copy('Categorias disponíveis. Se não encontrar a referência, descreva o produto no campo abaixo.','Categories available. If the reference is not listed, describe the product below.'):
+    copy('O catálogo não está disponível neste momento. Pode descrever os produtos e selecionar a categoria manualmente.','The catalogue is temporarily unavailable. Describe your products and choose the category manually.');
 }
 
-// Present the first usable product form immediately. A catalogue network call must
-// never be a prerequisite for the customer to start describing the requirement.
 staticLanguage();
 renderFields();
-addItem({
-  category:params.get('category'),
-  description:(params.get('request')||'').slice(0,200),
-  quantity:/^\d+(\.\d+)?$/.test(params.get('quantity')||'')?params.get('quantity'):'',
-  specification:(params.get('specification')||'').slice(0,600),
-  unit:UNITS.includes(params.get('unit'))?params.get('unit'):'un'
-});
+addItem({category:params.get('category'),description:(params.get('request')||'').slice(0,200),quantity:/^\d+(\.\d+)?$/.test(params.get('quantity')||'')?params.get('quantity'):'',specification:(params.get('specification')||'').slice(0,600),unit:UNITS.includes(params.get('unit'))?params.get('unit'):'un'});
 $('#rfqLocation').value=(params.get('location')||'Luanda').slice(0,100);
 if(params.get('alternatives')==='no')$('#rfqAlternatives').value='no';
 if(params.get('urgency')==='urgent')$('#rfqUrgency').value='urgent';
 if(/^\d{4}-\d{2}-\d{2}$/.test(params.get('needed_by')||''))$('#rfqDate').value=params.get('needed_by');
 showStep(0,false);
 
-// Enrich available catalogue choices after the form is already visible. Preserve
-// any typing/category selections made while the catalogue was loading.
 const controller=new AbortController();
 const timeout=setTimeout(()=>controller.abort(),8000);
 try{
