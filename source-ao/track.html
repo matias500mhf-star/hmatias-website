@@ -12,23 +12,23 @@
   <link rel="stylesheet" href="track.css">
 </head>
 <body>
-  <main class="track-shell">
+  <main class="track-shell" aria-label="Acompanhar pedido Source AO">
     <header class="track-header">
-      <a class="brand" href="index.html"><span class="mark">S·AO</span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a>
-      <span class="private-label">Private tracking</span>
+      <a class="brand" href="index.html" aria-label="Source AO"><span class="mark" aria-hidden="true">S·AO</span><span><strong>Source AO</strong><small>by HMATIAS</small></span></a>
+      <span class="private-label" aria-label="Pedido privado">Private tracking</span>
     </header>
 
-    <section class="track-intro">
+    <section class="track-intro" aria-label="Informação do pedido privado">
       <span class="eyebrow">PEDIDO DE SOURCING</span>
       <h1>Acompanhe sem expor os seus dados.</h1>
       <p>Este link privado mostra apenas o estado e os detalhes comerciais essenciais do seu pedido. O contacto enviado não é devolvido nesta página.</p>
     </section>
 
-    <section id="loadingState" class="state-card" aria-live="polite"><span class="spinner"></span><div><strong>A carregar pedido…</strong><p>A validar a referência privada.</p></div></section>
-    <section id="errorState" class="state-card error" hidden aria-live="assertive"><span>!</span><div><strong id="errorTitle">Não foi possível abrir o pedido.</strong><p id="errorMessage">O link pode estar incorreto.</p></div></section>
+    <section id="loadingState" class="state-card" aria-live="polite" aria-label="Estado de carregamento do pedido"><span class="spinner" aria-hidden="true"></span><div><strong>A carregar pedido…</strong><p>A validar a referência privada.</p></div></section>
+    <section id="errorState" class="state-card error" hidden aria-live="assertive" aria-label="Erro ao abrir o pedido"><span aria-hidden="true">!</span><div><strong id="errorTitle">Não foi possível abrir o pedido.</strong><p id="errorMessage">O link pode ter expirado ou ser inválido.</p></div></section>
 
-    <section id="requestPanel" hidden>
-      <article class="request-card">
+    <section id="requestPanel" hidden aria-label="Detalhes do pedido registado">
+      <article class="request-card" aria-label="Resumo do pedido">
         <div class="request-top"><span>Referência</span><strong id="publicRef">—</strong></div>
         <h2 id="requirement">—</h2>
         <div class="status-row"><span id="statusBadge">—</span><small id="updatedAt">—</small></div>
@@ -43,7 +43,7 @@
         <div id="trackedItems" hidden><h3>Produtos do pedido</h3><ul id="trackedItemList"></ul></div>
       </article>
 
-      <article class="timeline-card">
+      <article class="timeline-card" aria-label="Estado do processo do pedido">
         <h3>Estado do processo</h3>
         <ol id="timeline">
           <li data-stage="received"><span></span><div><strong>Recebido</strong><small>Pedido registado no Source AO.</small></div></li>
