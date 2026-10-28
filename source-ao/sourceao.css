@@ -453,3 +453,9 @@ img,svg{max-width:100%}
 .workflow-item li{margin:5px 0;font-size:.9rem}
 .workflow-truth{margin:12px 0 0;padding-top:10px;border-top:1px solid var(--line,#d8e1ea);font-size:.85rem;font-weight:600}
 .process-sourcing:disabled,.view-sourcing-workflow:disabled{opacity:.55;cursor:not-allowed}
+
+/* Contact details on the dark footer must remain high-contrast and readable. */
+.sitewide-contact-details{color:#eaf4fb}
+.sitewide-contact-details a{display:inline-flex;align-items:center;gap:0;color:#eaf4fb!important;opacity:1!important;font-size:12px;line-height:1.6;text-decoration:none;overflow-wrap:anywhere}
+.sitewide-contact-details a:hover,.sitewide-contact-details a:focus-visible{color:#fff!important;text-decoration:underline;text-underline-offset:3px}
+.sitewide-contact-details .contact-icon{display:block!important;visibility:visible!important;opacity:1!important;flex:0 0 16px;width:16px;height:16px;filter:brightness(0) invert(1)!important}
