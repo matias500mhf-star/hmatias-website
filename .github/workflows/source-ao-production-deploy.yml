@@ -249,6 +249,36 @@ jobs:
           NODE
           rm -f "$RUNNER_TEMP/source-ao-ready.json" "$RUNNER_TEMP/source-ao-search.json"
 
+      - name: Diagnose Gemini integration with safe status only
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$RUNNER_TEMP/source-ao-gemini-diagnostic.json"
+          status="$(curl -sS --max-time 20 -o "$output" -w '%{http_code}' \
+            -H "Authorization: Bearer $SOURCE_AO_ADMIN_API_TOKEN" \
+            "$SOURCE_AO_PRODUCTION_API_BASE/api/search-intelligence?q=HVAC%20split&location=Luanda" || true)"
+          node --input-type=module - "$output" "$status" <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const [file,httpStatus]=process.argv.slice(2);
+          let response=null;
+          try{response=JSON.parse(readFileSync(file,'utf8'))}catch{}
+          const d=response?.diagnostics?.gemini||{};
+          const safe=x=>typeof x==='string'&&/^[A-Z0-9_]{1,64}$/.test(x)?x:null;
+          const summary={
+            http_status:/^\d{3}$/.test(httpStatus)?Number(httpStatus):null,
+            engine:response?.engine==='source-ao-gemini-free-v1'?'gemini':'fallback',
+            code:safe(d.code),
+            upstream_http_status:Number.isInteger(d.http_status)?d.http_status:null,
+            api_status:safe(d.api_status),
+            finish_reason:safe(d.finish_reason)
+          };
+          console.log('Source AO Gemini diagnostic: '+JSON.stringify(summary));
+          if(summary.engine!=='gemini'){
+            console.log('::warning title=Source AO Gemini is using fallback::Review the sanitized Gemini diagnostic fields above; no key, prompt, or response body was logged.');
+          }
+          NODE
+          rm -f "$output"
+
       - name: Verify institutional website lead intake is protected and disabled by default
         run: node scripts/smoke-website-leads.mjs
 
