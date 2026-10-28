@@ -1,4 +1,4 @@
-import {normalizeSearch} from './index.js';
+import {isAdmin,normalizeSearch} from './index.js';
 
 const PRODUCT_FAMILIES = [
   {
@@ -235,24 +235,38 @@ function headers(env){
 function json(env,data,status=200){return new Response(JSON.stringify(data),{status,headers:headers(env)});}
 
 function safeGeminiVariants(payload){
-  const text=payload?.candidates?.[0]?.content?.parts
+  const candidate=payload?.candidates?.[0];
+  const text=candidate?.content?.parts
     ?.map(part=>typeof part?.text==='string'?part.text:'')
     .join('')||'';
-  if(!text||text.length>8192) return [];
-  try{
-    const parsed=JSON.parse(text);
-    const values=parsed?.variants;
-    if(!Array.isArray(values)) return [];
-    return [...new Set(values
-      .filter(value=>typeof value==='string')
-      .map(value=>value.replace(/[\u0000-\u001f\u007f]/g,' ').trim())
-      .filter(value=>value.length>=2&&value.length<=180))].slice(0,8);
-  }catch{return [];}
+  const finishReason=typeof candidate?.finishReason==='string'&&/^[A-Z0-9_]{1,40}$/.test(candidate.finishReason)
+    ?candidate.finishReason:null;
+  if(!text) return {variants:[],diagnostic:{code:candidate?'empty_output':'no_candidate',finish_reason:finishReason}};
+  if(text.length>8192) return {variants:[],diagnostic:{code:'output_too_large',finish_reason:finishReason}};
+  let parsed;
+  try{parsed=JSON.parse(text)}catch{
+    return {variants:[],diagnostic:{code:'invalid_output_json',finish_reason:finishReason}};
+  }
+  const values=parsed?.variants;
+  if(!Array.isArray(values)) return {variants:[],diagnostic:{code:'invalid_output_schema',finish_reason:finishReason}};
+  const variants=[...new Set(values
+    .filter(value=>typeof value==='string')
+    .map(value=>value.replace(/[\u0000-\u001f\u007f]/g,' ').trim())
+    .filter(value=>value.length>=2&&value.length<=180))].slice(0,8);
+  return {
+    variants,
+    diagnostic:{code:variants.length?'ok':'no_valid_variants',finish_reason:finishReason}
+  };
+}
+
+function safeApiStatus(payload){
+  const value=payload?.error?.status;
+  return typeof value==='string'&&/^[A-Z][A-Z0-9_]{1,63}$/.test(value)?value:null;
 }
 
 async function callGeminiVariants(env,{query}){
   const apiKey=String(env.GEMINI_API_KEY||'').trim();
-  if(!apiKey) return [];
+  if(!apiKey) return {variants:[],diagnostic:{code:'missing_api_key'}};
   const url='https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent';
   const controller=new AbortController();
   const timeout=setTimeout(()=>controller.abort(),8500);
@@ -270,12 +284,31 @@ async function callGeminiVariants(env,{query}){
       redirect:'error',
       signal:controller.signal
     });
-    if(!response.ok||!String(response.headers.get('content-type')||'').includes('application/json')) return [];
+    const contentType=String(response.headers.get('content-type')||'');
+    if(!response.ok){
+      let apiStatus=null;
+      try{apiStatus=safeApiStatus(await response.json())}catch{}
+      return {variants:[],diagnostic:{code:'upstream_http_error',http_status:response.status,api_status:apiStatus}};
+    }
+    if(!contentType.includes('application/json')){
+      return {variants:[],diagnostic:{code:'unexpected_content_type',http_status:response.status}};
+    }
     const raw=await response.text();
-    if(raw.length>65536) return [];
-    return safeGeminiVariants(JSON.parse(raw));
-  }catch{
-    return [];
+    if(raw.length>65536) return {variants:[],diagnostic:{code:'response_too_large',http_status:response.status}};
+    let payload;
+    try{payload=JSON.parse(raw)}catch{
+      return {variants:[],diagnostic:{code:'invalid_response_json',http_status:response.status}};
+    }
+    const result=safeGeminiVariants(payload);
+    return {
+      ...result,
+      diagnostic:{...result.diagnostic,http_status:response.status}
+    };
+  }catch(error){
+    return {
+      variants:[],
+      diagnostic:{code:error?.name==='AbortError'?'timeout':'fetch_error'}
+    };
   }finally{
     clearTimeout(timeout);
   }
@@ -289,12 +322,14 @@ export async function smartSearchPlan(request,env){
   const quantity=url.searchParams.get('quantity');
   try{
     const plan=buildSmartSearchPlan({query,location,neededBy,quantity});
-    const modelVariants=await callGeminiVariants(env,{query:plan.query});
-    if(modelVariants.length){
-      plan.query_variants=[...new Set([plan.query,...modelVariants,...plan.query_variants])].slice(0,24);
-      return json(env,{ok:true,engine:'source-ao-gemini-free-v1',plan});
+    const gemini=await callGeminiVariants(env,{query:plan.query});
+    const engine=gemini.variants.length?'source-ao-gemini-free-v1':'source-ao-smart-search-v2';
+    if(gemini.variants.length){
+      plan.query_variants=[...new Set([plan.query,...gemini.variants,...plan.query_variants])].slice(0,24);
     }
-    return json(env,{ok:true,engine:'source-ao-smart-search-v2',plan});
+    const result={ok:true,engine,plan};
+    if(isAdmin(request,env)) result.diagnostics={gemini:gemini.diagnostic};
+    return json(env,result);
   }catch(error){
     const code=error instanceof Error?error.message:'invalid_query';
     return json(env,{ok:false,error:{code,message:code==='invalid_location'?'Location is too long.':'Search query must contain 2 to 180 characters.'}},400);
