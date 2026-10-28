@@ -263,7 +263,7 @@ jobs:
           let response=null;
           try{response=JSON.parse(readFileSync(file,'utf8'))}catch{}
           const d=response?.diagnostics?.gemini||{};
-          const safe=x=>typeof x==='string'&&/^[A-Z0-9_]{1,64}$/.test(x)?x:null;
+          const safe=x=>typeof x==='string'&&/^[A-Za-z0-9_]{1,64}$/.test(x)?x:null;
           const summary={
             http_status:/^\d{3}$/.test(httpStatus)?Number(httpStatus):null,
             engine:response?.engine==='source-ao-gemini-free-v1'?'gemini':'fallback',
