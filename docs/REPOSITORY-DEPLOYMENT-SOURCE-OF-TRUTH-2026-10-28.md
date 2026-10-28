@@ -39,13 +39,28 @@ This appears to be a separate Cloudflare Workers Builds integration. Its live da
 
 This distinction is central to avoiding accidental deployment of the assistant under the wrong Worker name.
 
-## 4. Other separate services
+## 4. Vercel project — test deployment and domain-assignment mismatch
+
+The Vercel team has a Git-linked project `hmatias-site-test` connected to this same repository. It is not part of the GitHub Pages or dedicated assistant release workflows.
+
+Verified on 2026-10-28:
+- The latest Vercel build for `main` (commit `726db445`) failed at `npm run build` with **Missing script: "build"**. The root `package.json` on `main` includes `"dev": "vite"` but does not include `"build"`.
+- A successful Vercel deployment with target `production` was built from branch `vercel-test` at commit `8671a874`, and Vercel's deployment alias inventory associates `comercialhmatiasps.com` and `www.comercialhmatiasps.com` with it.
+- The public homepage HTML and public `assistant.js` fetched from `https://comercialhmatiasps.com/` match the corresponding current `main` files byte-for-byte. The Vercel test subdomain did not serve `/assistant.js` at the same path (HTTP 404).
+
+These facts mean Vercel is a **conflicting/ambiguous deployment integration**, but the Vercel API's domain assignment does not prove that public DNS currently routes traffic to Vercel. The live page's exact match to `main` confirms the delivered content, not the DNS provider/origin.
+
+- Do not add a root Vite `build` script just to make the Vercel check green. That could enable new Vercel production builds against the project's custom-domain configuration and create a second publisher.
+- Do not delete the Vercel project or detach its custom domains until the authoritative DNS records/Cloudflare routing and active traffic are confirmed.
+- Once DNS/routing is verified to use the intended GitHub Pages/CDN path, retire `hmatias-site-test` as a Git-linked deployment or remove the custom-domain assignments deliberately. Until then, preserve it but treat its failed builds as non-authoritative noise.
+
+## 5. Other separate services
 
 - **Source AO API:** `source-ao/backend/wrangler.jsonc`, with its own backend, D1 configuration and guarded staging/production workflows.
 - **Lead intake:** `lead-intake/wrangler.jsonc`, a separate Worker configuration. Confirm its live Cloudflare resources before decommissioning anything.
 - These are not interchangeable with the website assistant Worker. Keep their QA and deployment controls until resource use is verified.
 
-## 5. The dependency-install error
+## 6. The dependency-install error
 
 The supplied log from **2026-10-27 22:11:08 UTC** stops at `npm clean-install` with `EUSAGE`, before deployment. That log predates the dedicated deployment corrections merged on **2026-10-28** (PRs [#270](https://github.com/matias500mhf-star/hmatias-website/pull/270) and [#271](https://github.com/matias500mhf-star/hmatias-website/pull/271)).
 
@@ -53,7 +68,7 @@ The repository currently tracks both a root `package-lock.json` and `cloudflare-
 
 Cloudflare documents that the Workers Builds root directory determines where build/deploy commands execute, and settings apply to the next build: [Workers Builds configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
 
-## 6. Repository hygiene snapshot
+## 7. Repository hygiene snapshot
 
 At the time of the audit the repository had **293 branches and 31 open pull requests**. Several branches are explicitly temporary, dated experiments or old release candidates. That amount of unfinished work is a real maintenance problem, but branches do not publish the site by themselves: the main website publisher runs from `main`; merging a change or manually dispatching a deployment is what can affect production.
 
@@ -67,7 +82,7 @@ The following obsolete **push triggers** were removed in this cleanup while pres
 
 No production publisher, assistant deployment, Source AO staging/production launcher, security baseline, site-integrity gate or Lighthouse gate was removed.
 
-## 7. Safe cleanup sequence
+## 8. Safe cleanup sequence
 
 1. Confirm the native `hmatias-website1` Builds project in Cloudflare: connected repository, watched branch, root directory, latest commit SHA, routes and traffic.
 2. Keep the dedicated assistant deployment on `cloudflare-ai/wrangler.jsonc` unless that Worker is intentionally replaced.
