@@ -270,7 +270,10 @@ jobs:
             code:safe(d.code),
             upstream_http_status:Number.isInteger(d.http_status)?d.http_status:null,
             api_status:safe(d.api_status),
-            finish_reason:safe(d.finish_reason)
+            finish_reason:safe(d.finish_reason),
+            error_type:safe(d.error_type),
+            cause_code:safe(d.cause_code),
+            duration_ms:Number.isInteger(d.duration_ms)?Math.min(30000,Math.max(0,d.duration_ms)):null
           };
           console.log('Source AO Gemini diagnostic: '+JSON.stringify(summary));
           if(summary.engine!=='gemini'){
