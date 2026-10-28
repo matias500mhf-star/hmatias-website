@@ -19,3 +19,4 @@ rollout=gemini-low-thinking-response-budget-20261028
 rollout=gemini-diagnostics2-20261028
 rollout=gemini-diagnostics-detail-20261028
 rollout=gemini-cloudflare-redirect-mode-20261028
+rollout=gemini-unavailable-retry-20261028
