@@ -2,7 +2,7 @@
 (()=>{
 'use strict';
 const API=['https://api.comercialhmatiasps.com/api/ai','/api/ai'];
-const WA='https://wa.me/244948806673',KB_SRC='assistant-knowledge.js?v=20261026-contact-quote-routing1';
+const WA='https://wa.me/244948806673',KB_SRC='assistant-knowledge.js?v=20261028-nif-word-boundary1';
 const pageEn=(document.documentElement.lang||'').toLowerCase().startsWith('en');
 window.HMATIAS_ASSISTANT_VERSION='2026-10-28-nif-word-boundary1';
 const getKB=()=>window.HMATIAS_KNOWLEDGE||null;
