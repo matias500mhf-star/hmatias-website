@@ -289,7 +289,7 @@ async function callGeminiVariants(env,{query}){
     };
     let response;
     for(let attempt=0;attempt<2;attempt++){
-      if(attempt===1) modelId='gemini-3.6-flash';
+      if(attempt===1) modelId='gemini-3.1-flash-lite';
       const requestUrl=attempt===0
         ?url
         :url.replace('gemini-3.5-flash-lite:generateContent','gemini-3.1-flash-lite:generateContent');
