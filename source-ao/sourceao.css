@@ -286,6 +286,8 @@ body.source-home .request-section{padding:68px 0}
 .footer .source-brand{padding:7px 10px;background:#fff;border:1px solid rgba(255,255,255,.18)}
 .footer> .shell>p,.footer> .shell>small,.footer .footer-links{color:#c9d7e3;font-size:12px}
 .footer .footer-links a{color:inherit}
+.sitewide-contact-details a{color:#c9d7e3;font-size:12px;line-height:1.5;min-height:24px}
+.sitewide-contact-details a:hover{color:#fff}
 .service-by-link{color:#dbeaf5;font-weight:700;white-space:nowrap}
 .service-by-link:hover{color:#fff}
 html,body{max-width:100%;overflow-x:hidden}
