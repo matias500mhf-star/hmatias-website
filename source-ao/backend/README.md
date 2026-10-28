@@ -49,6 +49,12 @@ Public search can return catalog/service matches and approved, unexpired observa
 
 Both public search and procurement use explicit response projections. They retain product specifications, evidence status and dates, but do not return supplier/provider identities, contacts, shortlists or purchase prices. Service results describe categories, not named providers. The legacy core search entry point uses the same projection.
 
+### Google AI Studio search expansion (production)
+
+`GET /api/search-intelligence` keeps the local, deterministic search plan as its fallback. When the production Google service is enabled, the Worker sends only the search query, location, priority and quantity to the configured Google Cloud Run origin. The browser never receives the API key. The upstream response may contribute up to 12 plain-text query variants; Source AO keeps the local evidence, safety claims and sourcing rules.
+
+Enable this optional integration only after the Google AI Studio API has a stable production Cloud Run deployment with the documented `x-api-key` header and a compatible `GET /api/search-intelligence` response containing `plan.query_variants` (or `plan.variants`). Configure GitHub production environment variable `SOURCE_AO_GOOGLE_STUDIO_API_BASE` with the HTTPS `*.run.app` origin and secret `SOURCE_AO_GOOGLE_STUDIO_API_KEY` with a restricted key. The release workflow rejects non-production/dev/staging origins, transfers the key only to a Cloudflare Worker secret, and leaves local search active if the integration is absent or unavailable. Never place the key in the website runtime config, frontend scripts, or commits.
+
 Only `catalog.json`, `opportunities.json` and `source-registry.json` are copied into public production/staging assets. Offline search uses catalogue families without asserting stock. Supplier, service, observation and verification queue data remain excluded from those artifacts.
 
 This boundary does not conceal files or history in a public Git repository. Repository visibility/history and hosting support require separate review; do not commit new confidential sourcing relationships or contacts to seed files.

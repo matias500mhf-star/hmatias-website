@@ -81,6 +81,27 @@
     }
   };
 
+  Object.assign(dictionary.pt,{
+    heroTitle:'Pesquise materiais e fornecedores em Angola.',
+    heroLead:'Organize especificações e peça uma cotação. Preço, stock e prazo só são confirmados após validação comercial.',
+    browseNote:'Escolha uma categoria ou descreva a necessidade na pesquisa.',
+    whatLooking:'Pesquise por categoria.',
+    radarTitle:'Acompanhe pedidos que aguardam confirmação.',
+    requestTitle:'Peça apoio da HMATIAS para validar o fornecimento.',
+    navCategories:'Categorias',
+    menuLabel:'Abrir navegação'
+  });
+  Object.assign(dictionary.en,{
+    heroTitle:'Find materials and suppliers in Angola.',
+    heroLead:'Organise specifications and request a quotation. Price, stock and delivery are confirmed after commercial review.',
+    browseNote:'Choose a category or describe what you need in the search.',
+    whatLooking:'Search by category.',
+    radarTitle:'Track requests awaiting confirmation.',
+    requestTitle:'Ask HMATIAS to validate the supply request.',
+    navCategories:'Categories',
+    menuLabel:'Open navigation'
+  });
+
   const categories=[
     {name:'Construction materials',pt:'Materiais de construção',terms:['cement','cimento','concrete','betão','betao','block','bloco','brick','tijolo','sand','areia','steel','ferro','rebar','varão','varao','sheet','chapa','tile','telha','paint','tinta','mortar','argamassa','pvc','pipe','tubo']},
     {name:'HVAC & electrical',pt:'Climatização e elétrica',terms:['air conditioner','ar condicionado','btu','hvac','split','compressor','refrigerant','r410','r32','cable','cabo','breaker','disjuntor','electrical','elétrica','eletrica','generator','gerador']},
@@ -183,6 +204,24 @@
   });
   $('#radarForm').addEventListener('submit',e=>{e.preventDefault();addRadarItem($('#radarInput').value,$('#locationInput').value);$('#radarInput').value=''});
   $('#langToggle').addEventListener('click',()=>{state.lang=state.lang==='en'?'pt':'en';applyLanguage()});
+  const menuToggle=$('#navMenuToggle');
+  const mainNavigation=$('#mainNavigation');
+  const closeMobileMenu=()=>{
+    mainNavigation?.classList.remove('open');
+    menuToggle?.setAttribute('aria-expanded','false');
+  };
+  menuToggle?.addEventListener('click',()=>{
+    const open=menuToggle.getAttribute('aria-expanded')!=='true';
+    mainNavigation?.classList.toggle('open',open);
+    menuToggle.setAttribute('aria-expanded',String(open));
+  });
+  mainNavigation?.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMobileMenu));
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&menuToggle?.getAttribute('aria-expanded')==='true'){
+      closeMobileMenu();
+      menuToggle.focus();
+    }
+  });
   $('#requestForm').addEventListener('submit',e=>{
     e.preventDefault();
     const item=$('#requestItem').value.trim();

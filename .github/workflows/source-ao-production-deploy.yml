@@ -35,6 +35,8 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
       SOURCE_AO_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_ADMIN_API_TOKEN }}
       SOURCE_AO_RESEND_API_KEY: ${{ secrets.SOURCE_AO_RESEND_API_KEY }}
+      SOURCE_AO_GOOGLE_STUDIO_API_KEY: ${{ secrets.SOURCE_AO_GOOGLE_STUDIO_API_KEY }}
+      SOURCE_AO_GOOGLE_STUDIO_API_BASE: ${{ vars.SOURCE_AO_GOOGLE_STUDIO_API_BASE }}
       SOURCE_AO_ALERT_FROM: ${{ vars.SOURCE_AO_ALERT_FROM || 'HMATIAS Source AO <geral@comercialhmatiasps.com>' }}
       SOURCE_AO_ALERT_TO: ${{ vars.SOURCE_AO_ALERT_TO || 'geral@comercialhmatiasps.com' }}
 
@@ -74,6 +76,14 @@ jobs:
           case "$CLOUDFLARE_API_TOKEN" in Bearer\ *|bearer\ *) echo "Cloudflare token must be the raw token value." >&2; exit 2;; esac
           if [[ "$CLOUDFLARE_API_TOKEN" =~ [[:space:]] ]]; then
             echo "Cloudflare token contains whitespace." >&2
+            exit 2
+          fi
+          if [ -n "${SOURCE_AO_GOOGLE_STUDIO_API_BASE:-}" ] && [ -z "${SOURCE_AO_GOOGLE_STUDIO_API_KEY:-}" ]; then
+            echo "SOURCE_AO_GOOGLE_STUDIO_API_BASE requires the SOURCE_AO_GOOGLE_STUDIO_API_KEY secret." >&2
+            exit 2
+          fi
+          if [ -z "${SOURCE_AO_GOOGLE_STUDIO_API_BASE:-}" ] && [ -n "${SOURCE_AO_GOOGLE_STUDIO_API_KEY:-}" ]; then
+            echo "SOURCE_AO_GOOGLE_STUDIO_API_KEY requires SOURCE_AO_GOOGLE_STUDIO_API_BASE." >&2
             exit 2
           fi
 
@@ -183,6 +193,15 @@ jobs:
             echo "Source AO internal notification credentials configured (sender/recipient not printed)."
           else
             echo "::notice title=Source AO email not activated::Set GitHub secret SOURCE_AO_RESEND_API_KEY with a sending-only token. Verified-domain sender and HMATIAS commercial recipient have safe defaults; email remains disabled until a valid token is provided."
+          fi
+
+          # Optional Google AI Studio API key stays in the production Worker secret store.
+          if [ -n "${SOURCE_AO_GOOGLE_STUDIO_API_BASE:-}" ] && [ -n "${SOURCE_AO_GOOGLE_STUDIO_API_KEY:-}" ]; then
+            echo "::add-mask::$SOURCE_AO_GOOGLE_STUDIO_API_KEY"
+            printf '%s' "$SOURCE_AO_GOOGLE_STUDIO_API_KEY" | npx wrangler secret put SOURCE_AO_GOOGLE_STUDIO_API_KEY --config wrangler.production.runtime.jsonc
+            echo "Source AO Google search integration configured through the Worker secret store."
+          else
+            echo "::notice title=Google search integration disabled::Set the production Cloud Run origin variable and matching API key secret to enable Google query expansion."
           fi
           rm -f "$secret_file"
 

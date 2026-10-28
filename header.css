@@ -56,7 +56,6 @@
   .hmatias-header .nav-menu .mobile-whatsapp-link{justify-content:center;margin:8px 10px 0;padding:12px 14px;color:#126b39;background:#eefaf2;border:1px solid #bfe8cf;border-radius:9px;font-weight:700}
   .hmatias-header .nav-menu .mobile-email-link{justify-content:center;padding:12px 14px;font-size:.8125rem;line-height:1.4;text-align:center}
   .hmatias-header .nav-menu .mobile-quote-link{justify-content:center;margin:8px 10px 0;padding:12px 14px;background:#0065cc;color:#fff;border-radius:9px;font-weight:700}
-  .hmatias-header .nav-menu .mobile-quote-link{display:flex!important;justify-content:center;margin:8px;color:#fff;background:#0065cc;border-radius:9px}
 }
 
 @media(max-width:560px){

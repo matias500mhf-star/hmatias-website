@@ -234,6 +234,52 @@ function headers(env){
 
 function json(env,data,status=200){return new Response(JSON.stringify(data),{status,headers:headers(env)});}
 
+function googleStudioOrigin(env){
+  const raw=String(env.SOURCE_AO_GOOGLE_STUDIO_API_BASE||'').trim();
+  if(!raw||!env.SOURCE_AO_GOOGLE_STUDIO_API_KEY) return null;
+  try{
+    const url=new URL(raw);
+    const host=url.hostname.toLowerCase();
+    if(url.protocol!=='https:'||url.username||url.password||url.pathname!=='/'||url.search||url.hash) return null;
+    if(!host.endsWith('.run.app')||/^ais-(dev|pre)-/i.test(host)) return null;
+    if(/(^|[-.])(dev|development|stage|staging|preview|pre)([-.]|$)/i.test(host)) return null;
+    return url.origin;
+  }catch{return null;}
+}
+
+function safeGoogleVariants(payload){
+  const plan=payload?.plan||payload?.data?.plan||payload?.data||payload;
+  const values=plan?.query_variants||plan?.variants;
+  if(!Array.isArray(values)) return [];
+  return [...new Set(values
+    .filter(value=>typeof value==='string')
+    .map(value=>value.replace(/[\u0000-\u001f\u007f]/g,' ').trim())
+    .filter(value=>value.length>=2&&value.length<=180))].slice(0,12);
+}
+
+async function googleStudioVariants(env,{query,location,neededBy,quantity}){
+  const origin=googleStudioOrigin(env);
+  if(!origin) return [];
+  const url=new URL('/api/search-intelligence',origin);
+  url.searchParams.set('q',query);
+  url.searchParams.set('location',location);
+  if(neededBy) url.searchParams.set('needed_by',String(neededBy).slice(0,80));
+  if(quantity!=null&&quantity!==''&&Number.isFinite(Number(quantity))&&Number(quantity)>=0) url.searchParams.set('quantity',String(Number(quantity)));
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),4500);
+  try{
+    const response=await fetch(url,{method:'GET',headers:{accept:'application/json','x-api-key':env.SOURCE_AO_GOOGLE_STUDIO_API_KEY},cache:'no-store',redirect:'error',signal:controller.signal});
+    if(!response.ok||!String(response.headers.get('content-type')||'').includes('application/json')) return [];
+    const raw=await response.text();
+    if(raw.length>65536) return [];
+    return safeGoogleVariants(JSON.parse(raw));
+  }catch{
+    return [];
+  }finally{
+    clearTimeout(timeout);
+  }
+}
+
 export async function smartSearchPlan(request,env){
   const url=new URL(request.url);
   const query=(url.searchParams.get('q')||'').trim();
@@ -242,6 +288,11 @@ export async function smartSearchPlan(request,env){
   const quantity=url.searchParams.get('quantity');
   try{
     const plan=buildSmartSearchPlan({query,location,neededBy,quantity});
+    const googleVariants=await googleStudioVariants(env,{query:plan.query,location:plan.location,neededBy,quantity});
+    if(googleVariants.length){
+      plan.query_variants=[...new Set([plan.query,...googleVariants,...plan.query_variants])].slice(0,24);
+      return json(env,{ok:true,engine:'source-ao-google-studio-v1',plan});
+    }
     return json(env,{ok:true,engine:'source-ao-smart-search-v2',plan});
   }catch(error){
     const code=error instanceof Error?error.message:'invalid_query';
