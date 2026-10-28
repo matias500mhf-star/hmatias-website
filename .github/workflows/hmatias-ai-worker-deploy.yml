@@ -9,7 +9,6 @@ on:
   push:
     branches: [main]
     paths:
-      - 'wrangler.jsonc'
       - 'cloudflare-ai/**'
       - 'assistant-api-bridge.js'
       - '.github/workflows/hmatias-ai-worker-deploy.yml'
@@ -114,7 +113,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          package-manager-cache: false
       - name: Check Cloudflare credentials
         shell: bash
         run: |
