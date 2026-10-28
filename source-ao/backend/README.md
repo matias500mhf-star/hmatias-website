@@ -49,6 +49,12 @@ Public search can return catalog/service matches and approved, unexpired observa
 
 Both public search and procurement use explicit response projections. They retain product specifications, evidence status and dates, but do not return supplier/provider identities, contacts, shortlists or purchase prices. Service results describe categories, not named providers. The legacy core search entry point uses the same projection.
 
+### Gemini free-tier search expansion (production)
+
+`GET /api/search-intelligence` keeps the local, deterministic search plan as its fallback. When the optional Gemini integration is enabled, the Worker sends only the search query to the Gemini Developer API using `gemini-3.8-flash`. Location, urgency, quantity, RFQ fields and contact details are not sent. The browser never receives the API key. The model may contribute up to 8 plain-text query variants; Source AO keeps the local evidence, safety claims and sourcing rules.
+
+To enable it, use a Gemini API key from a project whose AI Studio billing tier is explicitly `Free`, then configure GitHub production environment secret `GEMINI_API_KEY`. The release workflow transfers the key only to a Cloudflare Worker secret. Never place the key in website runtime config, frontend scripts, or commits. The free tier is subject to project eligibility, model availability and changing quotas; errors, quota limits, or a missing secret leave local search active. Google states that content submitted through the free tier may be used to improve its products, so do not submit personal data or confidential sourcing requirements.
+
 Only `catalog.json`, `opportunities.json` and `source-registry.json` are copied into public production/staging assets. Offline search uses catalogue families without asserting stock. Supplier, service, observation and verification queue data remain excluded from those artifacts.
 
 This boundary does not conceal files or history in a public Git repository. Repository visibility/history and hosting support require separate review; do not commit new confidential sourcing relationships or contacts to seed files.

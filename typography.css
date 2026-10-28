@@ -19,7 +19,8 @@ body.hmatias-type .copyright{font-size:var(--type-small);line-height:1.6}
 body.hmatias-type .hmatias-header .nav-menu a{font-size:var(--type-ui);font-weight:600;letter-spacing:normal}
 body.hmatias-type .header-contact{gap:8px 18px}
 body.hmatias-type .header-contact a{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:var(--type-small);font-weight:500;line-height:1.5}
-.contact-icon{flex:none;display:block;width:1rem;height:1rem;filter:brightness(0) invert(1)}
+.contact-icon{display:inline-block;flex:none;width:1rem;height:1rem;object-fit:contain;vertical-align:middle}
+footer .contact-icon{filter:brightness(0) invert(1)}
 @media(max-width:1100px){body.hmatias-type .hmatias-header .nav-menu{gap:12px}body.hmatias-type .hmatias-header .nav{gap:12px}}
 @media(max-width:850px){body.hmatias-type .hmatias-header .nav-menu a{font-size:1rem}body.hmatias-type .header-contact{gap:6px 14px}}
 /* Footer contact links: align email icons consistently with the text. */

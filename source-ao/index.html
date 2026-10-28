@@ -10,6 +10,7 @@
   <meta name="description" content="Source AO da HMATIAS: pesquisa técnica de materiais e fornecedores em Angola, com pedidos RFQ estruturados. Preço, stock e entrega sujeitos a confirmação.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://comercialhmatiasps.com/source-ao/index.html">
+  <link rel="preload" href="../fonts/inter-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
   <meta property="og:title" content="SOURCE AO | Sourcing, Fornecedores e RFQ em Angola">
   <meta property="og:description" content="Source AO da HMATIAS: pesquisa técnica de materiais e fornecedores em Angola, com pedidos RFQ estruturados. Preço, stock e entrega sujeitos a confirmação.">
   <meta property="og:type" content="website">
@@ -17,7 +18,7 @@
   <title>SOURCE AO | Sourcing, Fornecedores e RFQ em Angola</title>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"SOURCE AO","url":"https://comercialhmatiasps.com/source-ao/index.html","description":"Source AO da HMATIAS: pesquisa técnica de materiais e fornecedores em Angola, com pedidos RFQ estruturados. Preço, stock e entrega sujeitos a confirmação.","publisher":{"@type":"Organization","name":"HMATIAS – Prestação de Serviços SU, LDA","url":"https://comercialhmatiasps.com/","@id":"https://comercialhmatiasps.com/#organization"},"inLanguage":"pt-AO","@id":"https://comercialhmatiasps.com/source-ao/index.html#website"}</script>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="stylesheet" href="sourceao.css?v=20261013-legibility2">
+  <link rel="stylesheet" href="sourceao.css?v=20261028-footer-contrast1">
   <link rel="stylesheet" href="verified-results.css?v=20261014-handoff1">
   <link rel="stylesheet" href="sourcing-ui.css?v=20261009-2">
   <meta property="og:image" content="https://comercialhmatiasps.com/og-hmatias.jpg">
@@ -31,23 +32,24 @@
   <meta name="twitter:image" content="https://comercialhmatiasps.com/og-hmatias.jpg">
   <meta name="twitter:image:alt" content="SOURCE AO by HMATIAS — sourcing e oportunidades em Angola">
 </head>
-<body>
+<body class="source-home">
   <header class="topbar">
     <div class="shell nav">
       <a class="source-brand" href="#top" aria-label="SOURCE AO by HMATIAS">
         <img src="../images/source-ao-logo.svg" data-i18n-alt="sourceLogo" alt="SOURCE AO — pesquisa técnica de materiais e fornecedores da HMATIAS" width="760" height="360">
       </a>
-      <nav class="nav-links" data-i18n-aria-label="mainNavigation" aria-label="Navegação principal">
+      <nav class="nav-links" id="mainNavigation" data-i18n-aria-label="mainNavigation" aria-label="Navegação principal">
         <a href="#search" data-i18n="navSearch">Pesquisa</a>
+        <a href="#categories" data-i18n="navCategories">Categorias</a>
         <a href="#radar" data-i18n="navRadar">Radar</a>
         <a href="opportunity-radar.html" data-i18n="navOpportunities">Oportunidades</a>
-        <a href="#how" data-i18n="navHow">Como funciona</a>
       </nav>
       <div class="nav-actions">
         <a class="hmatias-return" href="../" data-i18n-aria-label="officialSite" aria-label="Abrir site oficial HMATIAS">HMATIAS ↗</a>
         <span class="environment-pill"><span></span><b data-i18n="angolaFirst">Foco: Angola</b></span>
         <button class="lang" type="button" id="langToggle">EN</button>
         <a class="btn btn-primary btn-small" href="rfq.html" data-i18n="navRequest">Pedir cotação</a>
+        <button class="nav-menu-toggle" type="button" id="navMenuToggle" aria-controls="mainNavigation" aria-expanded="false" data-i18n-aria-label="menuLabel" aria-label="Abrir menu"><span></span><span></span><span></span></button>
       </div>
     </div>
   </header>
@@ -107,70 +109,6 @@
           </div>
         </div>
 
-        <aside class="hero-command" data-i18n-aria-label="sourceRules" aria-label="Regras do Source AO">
-          <div class="command-head">
-            <span class="command-icon" aria-hidden="true">S</span>
-            <div><small data-i18n="commandEyebrow">MODO OPERACIONAL</small><strong data-i18n="commandTitle">Pesquisa estruturada</strong></div>
-          </div>
-          <div class="command-rule">
-            <span>01</span>
-            <div><strong data-i18n="cmd1t">Interpretar</strong><small data-i18n="cmd1s">Produto, aliases, especificação, quantidade e urgência.</small></div>
-          </div>
-          <div class="command-rule">
-            <span>02</span>
-            <div><strong data-i18n="cmd2t">Descobrir</strong><small data-i18n="cmd2s">Referências indexadas e fontes identificadas para pesquisa comercial.</small></div>
-          </div>
-          <div class="command-rule">
-            <span>03</span>
-            <div><strong data-i18n="cmd3t">Verificar</strong><small data-i18n="cmd3s">Separar evidência, fornecedor potencial e confirmação comercial.</small></div>
-          </div>
-          <div class="command-rule">
-            <span>04</span>
-            <div><strong data-i18n="cmd4t">Agir</strong><small data-i18n="cmd4s">Contactar, enviar RFQ, acompanhar e preparar cotação.</small></div>
-          </div>
-          <div class="command-truth">
-            <span class="shield-mark" aria-hidden="true">✓</span>
-            <p data-i18n="commandTruth">Stock e preço só são apresentados como confirmados quando existe evidência comercial atual.</p>
-          </div>
-        </aside>
-      </div>
-
-      <div class="shell capability-strip" data-i18n-aria-label="capabilities" aria-label="Capacidades">
-        <div><span>01</span><p><strong data-i18n="cap1t">Pesquisa técnica</strong><small data-i18n="cap1s">Termos PT/EN e especificações</small></p></div>
-        <div><span>02</span><p><strong data-i18n="cap2t">Pesquisa de fornecedores</strong><small data-i18n="cap2s">Angola e Luanda primeiro</small></p></div>
-        <div><span>03</span><p><strong data-i18n="cap3t">Estados de evidência</strong><small data-i18n="cap3s">Fonte ≠ stock confirmado</small></p></div>
-        <div><span>04</span><p><strong data-i18n="cap4t">Smart RFQ</strong><small data-i18n="cap4s">Pedido estruturado para contacto</small></p></div>
-      </div>
-    </section>
-
-
-    <section class="intelligence-bridge shell" aria-label="Source AO Intelligence">
-      <div class="intelligence-bridge-head">
-        <div>
-          <p class="eyebrow" data-i18n="intelligenceEyebrow">ANÁLISE COMERCIAL</p>
-          <h2 data-i18n="intelligenceTitle">Mais do que listar oportunidades.</h2>
-        </div>
-        <a class="btn btn-outline" href="opportunity-radar.html" data-i18n="intelligenceLink">Abrir Intelligence Radar →</a>
-      </div>
-      <div class="intelligence-bridge-grid">
-        <article>
-          <span aria-hidden="true">01</span>
-          <small data-i18n="intelligence1Label">IDENTIFICAR</small>
-          <strong data-i18n="intelligence1Title">Fonte rastreável</strong>
-          <p data-i18n="intelligence1Text">Capta RFQs, concursos e sinais comerciais em Angola mantendo a ligação à origem para validação.</p>
-        </article>
-        <article>
-          <span aria-hidden="true">02</span>
-          <small data-i18n="intelligence2Label">AVALIAR</small>
-          <strong data-i18n="intelligence2Title">Adequação comercial</strong>
-          <p data-i18n="intelligence2Text">Organiza área de negócio, adequação, confiança da evidência, urgência e localização antes da decisão.</p>
-        </article>
-        <article class="intelligence-highlight">
-          <span aria-hidden="true">03</span>
-          <small data-i18n="intelligence3Label">AGIR</small>
-          <strong data-i18n="intelligence3Title">Ação operacional</strong>
-          <p data-i18n="intelligence3Text">Transforma a oportunidade em próxima ação: validar requisitos, localizar parceiro ou fornecedor, preparar custo, margem e candidatura.</p>
-        </article>
       </div>
     </section>
 
@@ -212,7 +150,7 @@
       </div>
     </section>
 
-    <section class="categories shell">
+    <section class="categories shell" id="categories">
       <div class="section-heading">
         <div>
           <p class="eyebrow" data-i18n="browse">ENTRADAS RÁPIDAS</p>
@@ -264,46 +202,6 @@
       </div>
     </section>
 
-    <section class="intelligence-bridge shell" data-i18n-aria-label="commercialNetwork" aria-label="Rede comercial Source AO">
-      <div class="intelligence-bridge-head">
-        <div>
-          <p class="eyebrow" data-i18n="networkEyebrow">REDE COMERCIAL HMATIAS</p>
-          <h2 data-i18n="networkTitle">Fornecedores e subempreiteiros entram por avaliação.</h2>
-        </div>
-        <a class="btn btn-primary" href="partner-application.html" data-i18n="networkLink">Apresentar empresa →</a>
-      </div>
-      <div class="intelligence-bridge-grid">
-        <article>
-          <span aria-hidden="true">01</span><small data-i18n="network1Label">IDENTIFICAR</small><strong data-i18n="network1Title">Identidade empresarial</strong>
-          <p data-i18n="network1Text">Nome legal, registo, localização, contacto profissional e presença digital quando disponível.</p>
-        </article>
-        <article>
-          <span aria-hidden="true">02</span><small data-i18n="network2Label">QUALIFICAR</small><strong data-i18n="network2Title">Capacidade real</strong>
-          <p data-i18n="network2Text">Construção, facilities, canalização, eletricidade, HVAC, fornecimento e outras capacidades comprováveis.</p>
-        </article>
-        <article class="intelligence-highlight">
-          <span aria-hidden="true">03</span><small data-i18n="network3Label">REVER</small><strong data-i18n="network3Title">Ativação controlada</strong>
-          <p data-i18n="network3Text">A candidatura entra em revisão privada. Nenhuma empresa é apresentada como parceira aprovada automaticamente.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="how shell" id="how">
-      <div class="section-heading compact">
-        <div>
-          <p class="eyebrow" data-i18n="howEyebrow">FLUXO OPERACIONAL</p>
-          <h2 data-i18n="howTitle">Da necessidade à decisão comercial.</h2>
-        </div>
-        <p class="section-note" data-i18n="howNote">A tecnologia acelera a procura; a confirmação comercial continua explícita.</p>
-      </div>
-      <div class="steps">
-        <article><span aria-hidden="true">01</span><h3 data-i18n="step1t">Descrever</h3><p data-i18n="step1p">Produto, especificação, quantidade, local e prioridade.</p></article>
-        <article><span aria-hidden="true">02</span><h3 data-i18n="step2t">Descobrir</h3><p data-i18n="step2p">Pesquisar fornecedores, catálogos e fontes relevantes.</p></article>
-        <article><span aria-hidden="true">03</span><h3 data-i18n="step3t">Verificar</h3><p data-i18n="step3p">Separar correspondência, evidência e confirmação atual.</p></article>
-        <article><span>04</span><h3 data-i18n="step4t">Executar</h3><p data-i18n="step4p">Contactar, enviar RFQ, comparar e preparar a cotação.</p></article>
-      </div>
-    </section>
-
     <section class="request-section" id="request">
       <div class="shell request-grid">
         <div>
@@ -333,7 +231,7 @@
     <div class="shell footer-main">
       <a class="source-brand source-brand-footer" href="#top"><img src="../images/source-ao-logo.svg" data-i18n-alt="sourceLogo" alt="SOURCE AO — pesquisa técnica de materiais e fornecedores da HMATIAS" width="760" height="360" loading="lazy"></a>
       <p data-i18n="footerLine">Search. Verify. Source.</p>
-      <div class="footer-links"><a href="#search" data-i18n="navSearch">Pesquisa</a><a href="#radar" data-i18n="navRadar">Radar</a><a href="opportunity-radar.html" data-i18n="navOpportunities">Oportunidades</a><a href="#how" data-i18n="navHow">Como funciona</a><a href="partner-application.html" data-i18n="partners">Parceiros</a><a href="privacy.html" data-i18n="privacy">Privacidade</a><a href="terms.html" data-i18n="terms">Termos</a></div>
+      <div class="footer-links"><a href="#search" data-i18n="navSearch">Pesquisa</a><a href="#categories" data-i18n="navCategories">Categorias</a><a href="#radar" data-i18n="navRadar">Radar</a><a href="opportunity-radar.html" data-i18n="navOpportunities">Oportunidades</a><a href="partner-application.html" data-i18n="partners">Parceiros</a><a href="privacy.html" data-i18n="privacy">Privacidade</a><a href="terms.html" data-i18n="terms">Termos</a></div>
       <a class="service-by service-by-link" href="../"><span data-i18n="serviceBy">Um serviço da HMATIAS</span> ↗</a>
     </div>
     <div class="shell footer-bottom"><small>© 2026 Source AO.</small><small data-i18n="footerTruth">Evidência antes de afirmações comerciais.</small></div><div class="sitewide-contact-details" style="display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;justify-content:center;padding:10px 0"><a href="mailto:geral@comercialhmatiasps.com" style="display:inline-flex;align-items:center;gap:0"><img class="contact-icon" src="../images/contact-email.svg" width="16" height="16" alt="" aria-hidden="true" style="width:16px;height:16px;flex:0 0 16px;vertical-align:middle;margin-right:7px;filter:brightness(0) invert(1);">geral@comercialhmatiasps.com</a><a href="mailto:info@comercialhmatiasps.com" style="display:inline-flex;align-items:center;gap:0"><img class="contact-icon" src="../images/contact-email.svg" width="16" height="16" alt="" aria-hidden="true" style="width:16px;height:16px;flex:0 0 16px;vertical-align:middle;margin-right:7px;filter:brightness(0) invert(1);">info@comercialhmatiasps.com · Informação institucional</a></div></footer>
@@ -341,7 +239,7 @@
   <script src="runtime-config.js" defer></script>
   <script src="sourcing-ui.js?v=20261009-2" defer></script>
   <script src="data-engine.js" defer></script>
-  <script src="sourceao.js?v=20261012-language2" defer></script>
+  <script src="sourceao.js?v=20261028-mobile-nav1" defer></script>
 <script src="verified-results.js?v=20261014-handoff1" defer></script>
 </body>
 </html>

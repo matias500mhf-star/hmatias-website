@@ -35,6 +35,7 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
       SOURCE_AO_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_ADMIN_API_TOKEN }}
       SOURCE_AO_RESEND_API_KEY: ${{ secrets.SOURCE_AO_RESEND_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       SOURCE_AO_ALERT_FROM: ${{ vars.SOURCE_AO_ALERT_FROM || 'HMATIAS Source AO <geral@comercialhmatiasps.com>' }}
       SOURCE_AO_ALERT_TO: ${{ vars.SOURCE_AO_ALERT_TO || 'geral@comercialhmatiasps.com' }}
 
@@ -183,6 +184,15 @@ jobs:
             echo "Source AO internal notification credentials configured (sender/recipient not printed)."
           else
             echo "::notice title=Source AO email not activated::Set GitHub secret SOURCE_AO_RESEND_API_KEY with a sending-only token. Verified-domain sender and HMATIAS commercial recipient have safe defaults; email remains disabled until a valid token is provided."
+          fi
+
+          # Optional free-tier Gemini API key stays in the production Worker secret store.
+          if [ -n "${GEMINI_API_KEY:-}" ]; then
+            echo "::add-mask::$GEMINI_API_KEY"
+            printf '%s' "$GEMINI_API_KEY" | npx wrangler secret put GEMINI_API_KEY --config wrangler.production.runtime.jsonc
+            echo "Source AO Gemini search expansion configured through the Worker secret store."
+          else
+            echo "::notice title=Gemini search expansion disabled::Set the optional GEMINI_API_KEY GitHub secret to enable Gemini query expansion. The local deterministic search remains available."
           fi
           rm -f "$secret_file"
 

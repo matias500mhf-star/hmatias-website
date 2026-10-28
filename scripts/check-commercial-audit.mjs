@@ -20,9 +20,9 @@ for(const path of ['karta.html','karta-en.html']){
 
 const source=read('source-ao/index.html');
 assert.ok(source.includes('Pesquisa técnica de materiais e fornecedores.'));
-assert.ok(source.includes('Referências indexadas e fontes identificadas para pesquisa comercial.'));
+assert.ok(source.includes('Organize especificações, consulte referências disponíveis e registe pedidos de cotação.'));
 assert.ok(!source.includes('<strong data-i18n="cap2t">Supplier Discovery</strong>'));
-assert.ok(source.includes('sourceao.js?v=20261012-language2'));
+assert.match(source,/sourceao[.]js[?]v=[a-zA-Z0-9._-]+/);
 
 const events=read('analytics-events.js');
 assert.ok(events.includes("form.dataset.hmatiasWebsiteIntake!=='true'"));
