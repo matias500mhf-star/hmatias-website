@@ -3,14 +3,12 @@ name: HMATIAS AI Worker Deploy
 on:
   pull_request:
     paths:
-      - 'wrangler.jsonc'
       - 'cloudflare-ai/**'
       - 'assistant-api-bridge.js'
       - '.github/workflows/hmatias-ai-worker-deploy.yml'
   push:
     branches: [main]
     paths:
-      - 'wrangler.jsonc'
       - 'cloudflare-ai/**'
       - 'assistant-api-bridge.js'
       - '.github/workflows/hmatias-ai-worker-deploy.yml'
@@ -19,7 +17,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: hmatias-ai-worker
+  group: hmatias-ai-assistant-worker
   cancel-in-progress: false
 
 jobs:
@@ -34,7 +32,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          package-manager-cache: false
       - name: Check assistant API bridge syntax
         run: node --check assistant-api-bridge.js
       - name: Validate assistant bridge loads before assistant
@@ -54,8 +51,16 @@ jobs:
           if(checked.length<20) throw new Error('Unexpectedly few assistant pages validated: '+checked.length);
           console.log('PASS: API bridge precedes assistant.js on '+checked.length+' pages.');
           NODE
-      - name: Validate root config used by Cloudflare Builds
-        run: npx --yes wrangler@4 deploy --dry-run --config wrangler.jsonc
+      - name: Confirm the separate root Wrangler config is not the assistant target
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          const config = JSON.parse(readFileSync('wrangler.jsonc', 'utf8'));
+          if (config.name !== 'hmatias-website1') {
+            throw new Error(`Unexpected root Worker name: ${config.name}`);
+          }
+          console.log('PASS: root Wrangler config remains separate from the assistant Worker.');
+          NODE
       - name: Validate source-folder config
         working-directory: cloudflare-ai
         run: npx --yes wrangler@4 deploy --dry-run --config wrangler.jsonc
@@ -108,7 +113,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          package-manager-cache: false
       - name: Check Cloudflare credentials
         shell: bash
         run: |

@@ -1,36 +1,35 @@
 # HMATIAS AI Assistant — Cloudflare Worker
 
-This folder contains the backend for the HMATIAS website assistant.
+## Current architecture
 
-## Current status
+- The public website is published through GitHub Pages by `.github/workflows/jekyll-docker.yml` (workflow display name: **HMATIAS Pages Deploy**).
+- The browser assistant is loaded by the public pages. `assistant-api-bridge.js` routes the legacy API URL to `https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai`.
+- The assistant Worker source is `cloudflare-ai/src/index.js`.
+- Its authoritative Wrangler configuration is `cloudflare-ai/wrangler.jsonc`, with Worker name `hmatias-ai-assistant` and entry point `src/index.js`.
+- The deployment and post-deploy smoke tests for that Worker are owned by `.github/workflows/hmatias-ai-worker-deploy.yml`. Changes under `cloudflare-ai/**` or to `assistant-api-bridge.js` trigger the validation workflow; pushes to `main` deploy the dedicated assistant Worker and test both its health endpoint and a real AI response.
 
-The Worker code is prepared in `cloudflare-ai/src/index.js` and uses the active Cloudflare Workers AI model `@cf/meta/llama-3.1-8b-instruct-fast`.
+## Separate root Wrangler configuration
 
-The Worker is intentionally **not** loaded by the public GitHub Pages site yet. This keeps the live site unchanged until the Cloudflare Worker is deployed and routed.
+The repository-root `wrangler.jsonc` is named `hmatias-website1` and points at the same source file using a different Worker identity. It belongs to a separate Cloudflare Workers Builds integration and is **not** the authoritative deployment configuration for the website assistant.
 
-## Cloudflare setup
+Do not deploy the assistant with the root config. Use the config inside this folder. If the separate `hmatias-website1` Cloudflare Git integration is no longer intended, disconnect that integration in the Cloudflare dashboard before removing its root configuration from the repository. Do not delete a Worker or route until confirming that it has no production traffic.
 
-1. In Cloudflare Workers & Pages, create/deploy a Worker from this folder.
-2. Keep the Workers AI binding named `AI` as defined in `wrangler.jsonc`.
-3. Add a route for the Worker, ideally:
-   - `comercialhmatiasps.com/api/ai`
-4. Add a Cloudflare rate-limiting rule for `/api/ai` before public launch.
-5. Enable Bot Fight Mode for the zone.
-6. Use AI Crawl Control in monitor mode first; block individual AI crawlers only after reviewing traffic.
-7. When the Worker is live, add the small chat interface to the website and point it to `/api/ai`.
+## Cloudflare setup for the assistant
 
-## Security already built into the Worker
+1. Use `cloudflare-ai` as the Root directory if configuring this Worker in Cloudflare Workers Builds.
+2. Keep the AI binding named `AI` as declared in `wrangler.jsonc`.
+3. The assistant endpoint is `https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai`.
+4. Keep a suitable rate limit for the public API before expanding traffic.
+5. Never expose Cloudflare API tokens or other secrets in this repository.
 
-- Allows only HMATIAS website origins.
-- Accepts POST JSON only.
-- Rejects empty and oversized messages.
-- Limits chat history length and per-message history size.
-- Uses `Cache-Control: no-store`.
-- Sends `X-Content-Type-Options: nosniff`.
-- Uses `Referrer-Policy: strict-origin-when-cross-origin`.
-- Does not request passwords, banking information, identity documents or other unnecessary sensitive information.
-- System instructions explicitly forbid inventing prices, contracts, certifications, clients or exclusivity.
+## Security and answer-quality controls
 
-## Important
+The Worker:
+- allows the HMATIAS website origins;
+- accepts POST JSON only for chat requests;
+- rejects empty and oversized messages and limits history length;
+- uses `Cache-Control: no-store`, `X-Content-Type-Options: nosniff` and a restrictive referrer policy;
+- instructs the assistant not to invent prices, stock, contracts, certifications, partnerships or guarantees;
+- does not ask visitors for passwords, banking information or unnecessary sensitive data.
 
-The Cloudflare account must supply the actual Worker route and account configuration. Do not expose Cloudflare API tokens or secrets in this repository.
+The website bridge and Worker are separately validated by the GitHub Actions workflow. A successful GitHub Actions run confirms the dedicated assistant deployment; it does not prove that the separate `hmatias-website1` native Cloudflare Builds project is healthy.
