@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: public HMATIAS content, commercial quotation conditions and SOURCE AO public capabilities, 2026-10-12. */
+   Source of truth: current public HMATIAS content, commercial quotation rules and SOURCE AO public capabilities. Reviewed on 2026-10-28. */
 (() => {
   'use strict';
 
@@ -14,10 +14,10 @@
   ];
 
   const kb = {
-    version: '2026-10-18.1',
-    updated: '2026-10-18',
+    version: '2026-10-28.1',
+    updated: '2026-10-28',
     company: {
-      name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
+      name: 'HMATIAS – Prestação de Serviços, (SU), LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
       phone: '+244 948 806 673', whatsapp: '+244 948 806 673',
       emailGeneral: 'geral@comercialhmatiasps.com', emailCommercial: 'geral@comercialhmatiasps.com', emailInstitutional: 'info@comercialhmatiasps.com',
