@@ -46,7 +46,7 @@
     await technicalReady;
     try{
       if(!window.SOURCE_AO_RUNTIME) await loadScript('runtime-config.js');
-      if(!window.SourceAOAPI) await loadScript('api-client.js');
+      if(!window.SourceAOAPI) await loadScript('api-client.js?v=20261028-gemini-request-budget1');
     }catch(error){
       console.warn('[Source AO API bootstrap]',error);
     }

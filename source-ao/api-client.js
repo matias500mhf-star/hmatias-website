@@ -4,10 +4,10 @@
   const base=()=>String(config().apiBase||'').replace(/\/$/,'');
   const isConfigured=()=>/^https?:\/\//i.test(base());
 
-  async function request(path){
+  async function request(path,timeoutMs=6000){
     if(!isConfigured()) throw new Error('Source AO API is not configured');
     const controller=new AbortController();
-    const timeout=setTimeout(()=>controller.abort(),6000);
+    const timeout=setTimeout(()=>controller.abort(),timeoutMs);
     try{
       const res=await fetch(base()+path,{headers:{accept:'application/json'},cache:'no-store',signal:controller.signal});
       if(!res.ok) throw new Error(`Source AO API HTTP ${res.status}`);
@@ -25,7 +25,7 @@
     const params=new URLSearchParams({q:query,location});
     if(options.neededBy) params.set('needed_by',options.neededBy);
     if(options.quantity!=null&&options.quantity!=='') params.set('quantity',String(options.quantity));
-    return request('/api/search-intelligence?'+params.toString());
+    return request('/api/search-intelligence?'+params.toString(),10000);
   }
 
   async function procurementMission(query,location='Luanda',options={}){

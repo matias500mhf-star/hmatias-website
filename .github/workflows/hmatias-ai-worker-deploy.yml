@@ -42,7 +42,7 @@ jobs:
           const checked=[];
           for(const page of pages){
             const html=readFileSync(page,'utf8');
-            const assistant=html.indexOf('assistant.js?v=20261026-contact-quote-routing1');
+            const assistant=html.indexOf('assistant.js?v=20261028-nif-word-boundary1');
             if(assistant<0) continue;
             const bridge=html.indexOf('assistant-api-bridge.js?v=20261027-workers-dev-api1');
             if(bridge<0||bridge>assistant) throw new Error('AI API bridge missing or ordered after assistant.js in '+page);

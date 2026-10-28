@@ -15,3 +15,4 @@ rollout=production-readiness-verification-20261018-r2
 rollout=source-ao-production-verification-20261018
 rollout=gemini-query-expansion-20261028
 rollout=gemini-query-expansion-secret-configured-20261028
+rollout=gemini-low-thinking-response-budget-20261028
