@@ -282,10 +282,13 @@ async function callGeminiVariants(env,{query}){
         generationConfig:{responseMimeType:'application/json',thinkingConfig:{thinkingLevel:'low'},maxOutputTokens:1024}
       }),
       cache:'no-store',
-      redirect:'error',
+      redirect:'manual',
       signal:controller.signal
     });
     const contentType=String(response.headers.get('content-type')||'');
+    if(response.status>=300&&response.status<400){
+      return {variants:[],diagnostic:{code:'redirect_blocked',http_status:response.status}};
+    }
     if(!response.ok){
       let apiStatus=null;
       try{apiStatus=safeApiStatus(await response.json())}catch{}
