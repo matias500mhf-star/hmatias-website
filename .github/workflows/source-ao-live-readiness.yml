@@ -1,10 +1,5 @@
 name: Source AO Production Read-only Diagnostic
 on:
-  push:
-    branches:
-      - ops/source-ao-delivery-readiness-20261009
-    paths:
-      - '.github/workflows/source-ao-live-readiness.yml'
   workflow_dispatch:
 permissions:
   contents: read
