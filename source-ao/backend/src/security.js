@@ -20,6 +20,9 @@ export function rateLimitPolicy(request, pathname='') {
   if (request.method === 'GET' && pathname === '/api/search') {
     return {bucket:'public-search', limit:90, windowSeconds:60};
   }
+  if (request.method === 'GET' && pathname === '/api/search-intelligence') {
+    return {bucket:'search-intelligence', limit:4, windowSeconds:60};
+  }
   if (request.method === 'GET' && pathname === '/api/opportunities') {
     return {bucket:'public-opportunities', limit:60, windowSeconds:60};
   }

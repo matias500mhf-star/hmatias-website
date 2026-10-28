@@ -2,30 +2,10 @@ import {writeFile} from 'node:fs/promises';
 
 const d1=(process.env.SOURCE_AO_PRODUCTION_D1_ID||'').trim();
 const release=(process.env.GITHUB_SHA||process.env.SOURCE_AO_RELEASE||'source-ao-v1').trim();
-const googleStudioBase=(process.env.SOURCE_AO_GOOGLE_STUDIO_API_BASE||'').trim();
-const googleStudioKey=(process.env.SOURCE_AO_GOOGLE_STUDIO_API_KEY||'').trim();
 
 if(!/^[0-9a-f-]{32,40}$/i.test(d1)){
   console.error('SOURCE_AO_PRODUCTION_D1_ID is missing or invalid');
   process.exit(2);
-}
-
-if(Boolean(googleStudioBase)!==Boolean(googleStudioKey)){
-  console.error('SOURCE_AO_GOOGLE_STUDIO_API_BASE and SOURCE_AO_GOOGLE_STUDIO_API_KEY must be configured together');
-  process.exit(2);
-}
-
-let googleStudioOrigin='';
-if(googleStudioBase){
-  try{
-    const url=new URL(googleStudioBase);
-    const host=url.hostname.toLowerCase();
-    if(url.protocol!=='https:'||url.username||url.password||url.pathname!=='/'||url.search||url.hash||!host.endsWith('.run.app')||/^ais-(dev|pre)-/i.test(host)||/(^|[-.])(dev|development|stage|staging|preview|pre)([-.]|$)/i.test(host)) throw new Error();
-    googleStudioOrigin=url.origin;
-  }catch{
-    console.error('SOURCE_AO_GOOGLE_STUDIO_API_BASE must be a stable HTTPS production Cloud Run origin');
-    process.exit(2);
-  }
 }
 
 const config={
@@ -46,8 +26,7 @@ const config={
     SOURCE_AO_ENV:'production',
     SOURCE_AO_RELEASE:release,
     CONTACT_RETENTION_DAYS:'180',
-    WEBSITE_LEAD_INTAKE_ENABLED:'false',
-    ...(googleStudioOrigin?{SOURCE_AO_GOOGLE_STUDIO_API_BASE:googleStudioOrigin}:{})
+    WEBSITE_LEAD_INTAKE_ENABLED:'false'
   }
 };
 
