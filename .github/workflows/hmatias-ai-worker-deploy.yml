@@ -125,7 +125,24 @@ jobs:
             echo "::error::CLOUDFLARE_API_TOKEN contains whitespace."
             exit 2
           fi
+      - name: Assert assistant Worker deployment target
+        working-directory: cloudflare-ai
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          const config = JSON.parse(readFileSync('wrangler.jsonc', 'utf8'));
+          if (config.name !== 'hmatias-ai-assistant') {
+            throw new Error(`Refusing to deploy unexpected Worker name: ${config.name}`);
+          }
+          if (config.main !== 'src/index.js') {
+            throw new Error(`Unexpected assistant entry point: ${config.main}`);
+          }
+          console.log('PASS: deployment target is hmatias-ai-assistant from cloudflare-ai/wrangler.jsonc.');
+          NODE
       - name: Deploy Worker to workers.dev
+        working-directory: cloudflare-ai
         run: npx --yes wrangler@4 deploy --config wrangler.jsonc
       - name: Verify workers.dev API health
         shell: bash
