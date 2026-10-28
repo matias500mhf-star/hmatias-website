@@ -14,20 +14,6 @@ on:
       - 'source-ao/data-contract.json'
       - 'source-ao/validate-data.mjs'
       - '.github/workflows/source-ao-staging-deploy.yml'
-  push:
-    branches:
-      - source-ao-v1
-    paths:
-      - 'source-ao/data/**'
-      - 'source-ao/schemas/**'
-      - 'source-ao/backend/**'
-      - 'source-ao/docs/**'
-      - 'source-ao/*.js'
-      - 'source-ao/*.html'
-      - 'source-ao/*.css'
-      - 'source-ao/data-contract.json'
-      - 'source-ao/validate-data.mjs'
-      - '.github/workflows/source-ao-staging-deploy.yml'
 
 permissions:
   contents: read
