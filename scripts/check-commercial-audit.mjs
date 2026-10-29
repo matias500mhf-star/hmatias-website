@@ -28,7 +28,7 @@ assert.ok(sourceJs.includes("publicSearch:'Abrir pesquisa pública (Google)'"));
 assert.ok(sourceJs.includes("publicSearch:'Open public search (Google)'"));
 assert.ok(!source.includes('<strong data-i18n="cap2t">Supplier Discovery</strong>'));
 assert.match(source,/sourceao[.]js[?]v=[a-zA-Z0-9._-]+/);
-assert.match(source,/source-header-email[\\s\\S]*?contact-email[.]svg/);
+assert.ok(source.includes('class="source-header-email"') && source.includes('../images/contact-email.svg'));
 for(const country of ['PT','CN']){
   assert.ok(partnerForm.includes('value="'+country+'"'),'Partner country option missing: '+country);
   assert.ok(partnerApi.includes("'"+country+"'"),'Partner API country not allowed: '+country);
