@@ -104,4 +104,6 @@ for(const [path,anchors,labels] of [
 assert.ok(read('index.html').includes('Alterações de escopo comunicadas antes de avançar'));
 assert.ok(read('en.html').includes('Scope changes are communicated before work proceeds'));
 
+assert.ok(!read('credibilidade.html').includes('orientados pela nossa missão, visão e valores.'));
+assert.ok(!read('credibility.html').includes('guided by our mission, vision and values.'));
 console.log('PASS: credibility, institutional, Clean and Smart RFQ surfaces and consent-gated lead attribution align.');
