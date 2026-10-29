@@ -106,4 +106,7 @@ assert.ok(read('en.html').includes('Scope changes are communicated before work p
 
 assert.ok(!read('credibilidade.html').includes('orientados pela nossa missão, visão e valores.'));
 assert.ok(!read('credibility.html').includes('guided by our mission, vision and values.'));
+const credibilityCss=read('credibility-page.css');
+assert.ok(credibilityCss.includes('minmax(230px,1.65fr)'),'Desktop credibility footer needs room for contact addresses');
+assert.ok(credibilityCss.includes('.hmatias-credibility footer .footer-grid>div:nth-child(4){grid-column:1/-1}'),'Tablet credibility footer contact must span the row');
 console.log('PASS: credibility, institutional, Clean and Smart RFQ surfaces and consent-gated lead attribution align.');
