@@ -12,3 +12,5 @@
 .source-header-email:hover{background:#f3f8fc;border-color:#b9cddd}
 .source-header-email:focus-visible{outline:3px solid #8ab8e5;outline-offset:2px}
 .source-header-email img{display:block;width:18px;height:18px;object-fit:contain}
+.rfq-header nav a.source-header-email{display:inline-flex;max-width:none;padding:0}
+@media(max-width:580px){.rfq-header nav a.source-header-email{display:inline-flex;max-width:none;align-items:center;justify-content:center}}
