@@ -173,7 +173,7 @@ jobs:
           grep -Fq "Sitemap: https://comercialhmatiasps.com/sitemap.xml" /tmp/robots.txt
           grep -Fq "SMART RFQ" /tmp/rfq.html
           grep -Fq "KARTA Wallet Mobile" /tmp/karta.html
-          grep -Fq "Missão, visão e valores" /tmp/credibilidade.html
+          grep -Fq "Como assumimos cada trabalho." /tmp/credibilidade.html
           grep -Fq "../images/source-ao-logo.svg" /tmp/source-ao.html
           grep -Fq "https://comercialhmatiasps.com/source-ao/index.html" /tmp/procura-alias.html
           grep -Fq "/source-ao/index.html" /tmp/procura-alias.html
