@@ -23,3 +23,4 @@ rollout=gemini-unavailable-retry-20261028
 rollout=gemini-free-model-failover-20261028
 rollout=gemini-flash-lite-free-tier-20261028
 rollout=gemini-latency-cap-6000ms-20261028
+rollout=gemini-free-search-timeout-9000ms-visible-api-status-20261029
