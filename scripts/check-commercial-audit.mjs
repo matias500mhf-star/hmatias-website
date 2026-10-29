@@ -91,4 +91,17 @@ assert.ok(read('script.js').includes('const existing=target.querySelector'));
 assert.ok(read('growth-intelligence.js').includes('[data-hmatias-email-alternative]'));
 assert.ok(client.includes("id:'cleanQuoteForm'"));
 assert.ok(client.includes("id:'smartRfqForm'"));
-console.log('PASS: institutional, Clean and Smart RFQ intake surfaces and consent-gated lead attribution align.');
+
+for(const [path,anchors,labels] of [
+  ['credibilidade.html',['orientacao-institucional','projetos-digitais'],['Capacidades apresentadas com limites claros.','Escopo explícito','Stock, preço, origem, prazo e logística requerem confirmação.']],
+  ['credibility.html',['institutional-direction','digital-projects'],['Capabilities presented with clear limits.','Defined scope','Stock, price, origin, lead time and logistics require confirmation.']]
+]){
+  const html=read(path);
+  assert.ok(html.includes('credibility-page.css?v=20261029-1'),'Credibility layout stylesheet missing: '+path);
+  for(const anchor of anchors) assert.ok(html.includes('id="'+anchor+'"'),'Credibility anchor missing: '+path+'#'+anchor);
+  for(const label of labels) assert.ok(html.includes(label),'Evidence-led credibility copy missing: '+path+' / '+label);
+}
+assert.ok(read('index.html').includes('Alterações de escopo comunicadas antes de avançar'));
+assert.ok(read('en.html').includes('Scope changes are communicated before work proceeds'));
+
+console.log('PASS: credibility, institutional, Clean and Smart RFQ surfaces and consent-gated lead attribution align.');
