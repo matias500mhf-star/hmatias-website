@@ -97,7 +97,7 @@ for(const [path,anchors,labels] of [
   ['credibility.html',['institutional-direction','digital-projects'],['Capabilities presented with clear limits.','Defined scope','Stock, price, origin, lead time and logistics require confirmation.']]
 ]){
   const html=read(path);
-  assert.ok(html.includes('credibility-page.css?v=20261029-1'),'Credibility layout stylesheet missing: '+path);
+  assert.ok(html.includes('credibility-page.css?v=20261029-2'),'Credibility layout stylesheet missing: '+path);
   for(const anchor of anchors) assert.ok(html.includes('id="'+anchor+'"'),'Credibility anchor missing: '+path+'#'+anchor);
   for(const label of labels) assert.ok(html.includes(label),'Evidence-led credibility copy missing: '+path+' / '+label);
 }
