@@ -29,10 +29,9 @@ assert.ok(sourceJs.includes("publicSearch:'Open public search (Google)'"));
 assert.ok(!source.includes('<strong data-i18n="cap2t">Supplier Discovery</strong>'));
 assert.match(source,/sourceao[.]js[?]v=[a-zA-Z0-9._-]+/);
 assert.ok(source.includes('class="source-header-email"') && source.includes('../images/contact-email.svg'));
-for(const country of ['PT','CN']){
-  assert.ok(partnerForm.includes('value="'+country+'"'),'Partner country option missing: '+country);
-  assert.ok(partnerApi.includes("'"+country+"'"),'Partner API country not allowed: '+country);
-}
+assert.ok(partnerForm.includes('empresas de outros mercados, incluindo Portugal e China'));
+assert.ok(partnerForm.includes('mailto:geral@comercialhmatiasps.com'));
+assert.ok(partnerApi.includes("const COUNTRIES=new Set(['AO','NA','ZA']);"));
 for(const path of ['index.html','en.html']){
   const home=read(path);
   assert.ok(home.includes('class="home-proof"'),'Homepage proof row missing: '+path);
