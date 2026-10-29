@@ -2,7 +2,7 @@ import {isAdmin,normalizeSearch} from './index.js';
 import {encryptPrivateText,decryptPrivateText,sha256Hex} from './sourcing.js';
 
 const PARTNER_TYPES=new Set(['supplier','subcontractor','service_provider','technical_partner','strategic_partner']);
-const COUNTRIES=new Set(['AO','NA','ZA']);
+const COUNTRIES=new Set(['AO','NA','ZA','PT','CN']);
 const STATUSES=new Set(['pending_review','under_review','accepted','rejected']);
 const enc=new TextEncoder();
 
