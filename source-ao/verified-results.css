@@ -82,3 +82,5 @@
 @media(max-width:620px){.source-research-panel{padding:16px}.source-research-links{display:grid;grid-template-columns:1fr}.source-research-links a{width:100%}}
 
 .source-research-links a.source-direct-request,.source-research-links a.source-direct-request:hover,.source-research-links a.source-direct-request:focus-visible{background:#0b5f9d;color:#fff;border-color:#0b5f9d}
+
+.smart-search-head .data-badge{flex:0 0 auto}
