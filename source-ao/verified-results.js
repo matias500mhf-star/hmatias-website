@@ -46,7 +46,7 @@
     await technicalReady;
     try{
       if(!window.SOURCE_AO_RUNTIME) await loadScript('runtime-config.js');
-      if(!window.SourceAOAPI) await loadScript('api-client.js?v=20261028-gemini-request-budget1');
+      if(!window.SourceAOAPI) await loadScript('api-client.js?v=20261029-sourceao-api-status1');
     }catch(error){
       console.warn('[Source AO API bootstrap]',error);
     }
@@ -84,8 +84,8 @@
     panel.replaceChildren();
 
     const head=document.createElement('div');head.className='smart-search-head';
-    const title=document.createElement('strong');title.textContent=isPt()?'Plano de pesquisa':'Search plan';
-    const badge=document.createElement('span');badge.className='data-badge data-source_checked';badge.textContent=plan.urgency==='urgent'?(isPt()?'URGENTE':'URGENT'):(isPt()?'PLANO':'PLAN');
+    const title=document.createElement('strong');title.textContent=isPt()?'Pesquisa do SOURCE AO':'SOURCE AO search';
+    const badge=document.createElement('span');badge.className='data-badge data-source_checked';badge.textContent=payload.engine==='source-ao-gemini-free-v1'?(isPt()?'IA ATIVA':'AI ACTIVE'):(isPt()?'MODO LOCAL':'LOCAL MODE');
     head.append(title,badge);
 
     const summary=document.createElement('p');
@@ -102,9 +102,14 @@
     });
 
     const note=document.createElement('small');
+    const aiActive=payload.engine==='source-ao-gemini-free-v1';
     note.textContent=isPt()
-      ?'O plano organiza termos equivalentes e especificações para consultar as referências disponíveis. Stock, preço e prazo exigem confirmação comercial.'
-      :'The plan organises equivalent terms and specifications to consult the available references. Stock, pricing and delivery require commercial confirmation.';
+      ?(aiActive
+        ?'O Gemini está a organizar termos de pesquisa. Isto não confirma fornecedor, stock, preço nem prazo; valide as fontes públicas antes de decidir.'
+        :'Pesquisa local ativa; o Gemini não respondeu nesta consulta. Use os links de pesquisa pública abaixo ou envie um pedido à HMATIAS.')
+      :(aiActive
+        ?'Gemini is expanding the search terms. This does not confirm a supplier, stock, price or lead time; verify public sources before deciding.'
+        :'Local search is active; Gemini did not respond to this request. Use the public search links below or send a request to HMATIAS.');
 
     panel.append(head,summary,terms,note);
   }
@@ -324,7 +329,7 @@
     const pt=isPt();
     root.replaceChildren();
     const header=document.createElement('strong');
-    header.textContent=pt?'COBERTURA DA PESQUISA':'SEARCH COVERAGE';
+    header.textContent=pt?'API SOURCE AO · PESQUISA':'SOURCE AO API · SEARCH';
     const note=document.createElement('p');
     note.textContent=status==='online'
       ?(pt?'Consulta ao índice Source AO concluída. Os resultados referem-se a registos disponíveis; fornecedores e stock requerem confirmação comercial.':'Source AO index lookup completed. Results reflect available records; suppliers and stock require commercial confirmation.')
@@ -347,9 +352,9 @@
       a.target='_blank';a.rel='noopener noreferrer';a.textContent=label+' ↗';
       links.append(a);
     };
-    link(pt?'Pesquisa pública · Angola':'Public research · Angola','Angola');
-    link(pt?'Pesquisa pública · Namíbia':'Public research · Namibia','Namibia Windhoek');
-    link(pt?'Pesquisa pública · África do Sul':'Public research · South Africa','South Africa');
+    link(pt?'Pesquisar fornecedores no Google · Angola':'Search suppliers on Google · Angola','Angola');
+    link(pt?'Pesquisar fornecedores no Google · Namíbia':'Search suppliers on Google · Namibia','Namibia Windhoek');
+    link(pt?'Pesquisar fornecedores no Google · África do Sul':'Search suppliers on Google · South Africa','South Africa');
     const tip=document.createElement('small');
     tip.textContent=(status==='offline'
       ?(pt?'O pedido abre no WhatsApp para revisão; confirme o envio na conversa. ':'The request opens in WhatsApp for review; confirm sending in the conversation. '):'')+
