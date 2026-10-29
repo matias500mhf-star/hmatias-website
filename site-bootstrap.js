@@ -97,7 +97,18 @@
       const [address, suffix = ''] = raw.split(/(?=[?])/);
       if (!inactiveEmails.has(address.toLowerCase())) return;
       link.setAttribute('href', 'mailto:' + officialEmail + suffix);
-      if ((link.textContent || '').trim().toLowerCase() === address.toLowerCase()) link.textContent = officialEmail;
+      if ((link.textContent || '').trim().toLowerCase() === address.toLowerCase()) {
+        const textNodes = document.createTreeWalker(link, NodeFilter.SHOW_TEXT);
+        while (textNodes.nextNode()) {
+          const textNode = textNodes.currentNode;
+          const visibleText = textNode.textContent.trim();
+          if (visibleText.toLowerCase() !== address.toLowerCase()) continue;
+          const leadingWhitespace = (textNode.textContent.match(/^\s*/) || [''])[0];
+          const trailingWhitespace = (textNode.textContent.match(/\s*$/) || [''])[0];
+          textNode.textContent = leadingWhitespace + officialEmail + trailingWhitespace;
+          break;
+        }
+      }
     });
 
     /* Earlier contact normalization can leave the same operational mailbox twice.

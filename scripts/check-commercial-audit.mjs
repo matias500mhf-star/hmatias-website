@@ -76,6 +76,17 @@ assert.ok(read('rfq.js').includes("getElementById('rfqEmailSend')"));
 const bootstrap=read('site-bootstrap.js');
 assert.match(bootstrap,/website-lead-client[.]js[?]v=[a-zA-Z0-9._-]+/);
 assert.ok(bootstrap.includes('growth-intelligence.js?v=20261009-email-cta1'));
+assert.ok(bootstrap.includes('document.createTreeWalker(link, NodeFilter.SHOW_TEXT)'),
+  'Official email normalization must preserve icon markup');
+assert.ok(!bootstrap.includes('link.textContent = officialEmail'),
+  'Official email normalization must not replace child icon markup');
+for(const path of ['index.html','en.html','credibilidade.html','credibility.html']){
+  const html=read(path);
+  assert.match(html,/href="mailto:geral@comercialhmatiasps[.]com"><img[^>]+contact-email[.]svg/,
+    'Official email icon missing from shared contact surface: '+path);
+  assert.ok(html.includes('site-bootstrap.js?v=20261029-email-icon-preserve1'),
+    'Cache-busted email icon normalizer missing: '+path);
+}
 assert.ok(read('script.js').includes('const existing=target.querySelector'));
 assert.ok(read('growth-intelligence.js').includes('[data-hmatias-email-alternative]'));
 assert.ok(client.includes("id:'cleanQuoteForm'"));
