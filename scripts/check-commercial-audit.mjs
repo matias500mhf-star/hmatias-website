@@ -19,10 +19,25 @@ for(const path of ['karta.html','karta-en.html']){
 }
 
 const source=read('source-ao/index.html');
-assert.ok(source.includes('Pesquisa técnica de materiais e fornecedores.'));
-assert.ok(source.includes('Organize especificações, consulte referências disponíveis e registe pedidos de cotação.'));
+const sourceJs=read('source-ao/sourceao.js');
+const partnerForm=read('source-ao/partner-application.html');
+const partnerApi=read('source-ao/backend/src/partner-applications.js');
+assert.ok(source.includes('Transforme a necessidade de compra numa cotação validada.'));
+assert.ok(source.includes('A pesquisa pública é uma referência, não uma confirmação de fornecimento.'));
+assert.ok(sourceJs.includes("publicSearch:'Abrir pesquisa pública (Google)'"));
+assert.ok(sourceJs.includes("publicSearch:'Open public search (Google)'"));
 assert.ok(!source.includes('<strong data-i18n="cap2t">Supplier Discovery</strong>'));
 assert.match(source,/sourceao[.]js[?]v=[a-zA-Z0-9._-]+/);
+assert.match(source,/source-header-email[\\s\\S]*?contact-email[.]svg/);
+for(const country of ['PT','CN']){
+  assert.ok(partnerForm.includes('value="'+country+'"'),'Partner country option missing: '+country);
+  assert.ok(partnerApi.includes("'"+country+"'"),'Partner API country not allowed: '+country);
+}
+for(const path of ['index.html','en.html']){
+  const home=read(path);
+  assert.ok(home.includes('class="home-proof"'),'Homepage proof row missing: '+path);
+  assert.ok(home.includes('site-improvements.css'),'Responsive homepage refinements missing: '+path);
+}
 
 const events=read('analytics-events.js');
 assert.ok(events.includes("form.dataset.hmatiasWebsiteIntake!=='true'"));
