@@ -79,3 +79,11 @@
 body.hmatias-type .hmatias-topbar .header-contact a .contact-icon{display:block!important;visibility:visible!important;opacity:1!important;width:16px!important;height:16px!important;min-width:16px!important;flex:0 0 16px!important;object-fit:contain;filter:brightness(0) invert(1)!important}
 body.hmatias-type .hmatias-topbar .header-contact a[href^="tel:"]::before,body.hmatias-type .hmatias-topbar .header-contact a[href^="mailto:"]::before{content:none!important;display:none!important}
 @media(max-width:850px){body.hmatias-type .hmatias-topbar .header-contact a[href^="mailto:"]{min-width:0;max-width:100%;overflow-wrap:anywhere}}
+
+
+/* Consistent, high-contrast contact icons across desktop and mobile. */
+body.hmatias-type .hmatias-topbar .header-contact a .contact-icon{display:block!important;visibility:visible!important;opacity:1!important;width:18px!important;height:18px!important;min-width:18px!important;flex:0 0 18px!important;object-fit:contain;filter:brightness(0) invert(1)!important}
+body.hmatias-type footer a[href^="mailto:"]{display:inline-flex!important;align-items:center;gap:8px;min-width:0;max-width:100%;line-height:1.5;overflow-wrap:anywhere}
+body.hmatias-type footer a[href^="mailto:"] .contact-icon{display:block!important;visibility:visible!important;opacity:1!important;width:18px!important;height:18px!important;min-width:18px!important;flex:0 0 18px!important;object-fit:contain;filter:brightness(0) invert(1)!important}
+body.hmatias-type .institutional-contact a[href^="mailto:"]{display:flex;align-items:flex-start;gap:8px;min-width:0;overflow-wrap:anywhere}
+body.hmatias-type .institutional-contact a[href^="mailto:"] .contact-icon{width:18px!important;height:18px!important;min-width:18px!important;flex:0 0 18px!important;margin:2px 0 0!important;filter:none!important}
