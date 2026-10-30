@@ -38,7 +38,7 @@ Se o visitante perguntar por um destes produtos, confirme que consta do catálog
 BUSINESS SERVICES — SERVIÇOS SUJEITOS A ORÇAMENTO
 - Apoio administrativo, redação institucional, CV profissional, gestão e organização documental, propostas comerciais, apresentações empresariais e apoio PME, mediante avaliação do pedido.
 - Não existe tabela pública de preços do Business Services. Valor, escopo, volume e prazo devem ser definidos por cotação individual.
-- Apoio a vistos e assuntos consulares é apenas administrativo/documental. A HMATIAS não vende vagas, não garante agendamentos/vistos nem tem acesso privilegiado às plataformas oficiais. Taxas oficiais são separadas, salvo proposta expressa.
+- Não apresentar apoio a vistos, agendamentos ou assuntos consulares como serviço da HMATIAS. Se perguntarem, esclarecer que esse serviço não integra a oferta pública atual.
 - Serviços administrativos não incluem atos reservados a profissões legalmente regulamentadas.
 
 SOURCE AO — FUNCIONAMENTO E LIMITAÇÕES
