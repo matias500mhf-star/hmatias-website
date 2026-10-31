@@ -8,9 +8,9 @@ import {readFileSync,readdirSync} from 'node:fs';
 
 const here=path.dirname(fileURLToPath(import.meta.url));
 const script=path.resolve(here,'../scripts/export-seed-sql.mjs');
+const sql=execFileSync(process.execPath,[script],{encoding:'utf8'});
 
 test('D1 seed export avoids unsupported explicit SQL transactions',()=>{
-  const sql=execFileSync(process.execPath,[script],{encoding:'utf8'});
   assert.match(sql,/PRAGMA foreign_keys = ON;/);
   assert.doesNotMatch(sql,/\bBEGIN\s+TRANSACTION\b/i);
   assert.doesNotMatch(sql,/\bSAVEPOINT\b/i);
@@ -32,7 +32,6 @@ test('redeployment preserves existing commercial rows, evidence and operational 
   for(const file of readdirSync(migrations).filter(f=>f.endsWith('.sql')).sort()){
     db.exec(readFileSync(new URL(file,migrations),'utf8'));
   }
-  const sql=execFileSync(process.execPath,[script],{encoding:'utf8'});
   db.exec(sql);
   const opportunity=db.prepare('SELECT id,title FROM opportunities LIMIT 1').get();
   db.prepare(`UPDATE opportunities SET title='Outdated seed title',fit_score=87,
