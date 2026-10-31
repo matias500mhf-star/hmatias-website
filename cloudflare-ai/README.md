@@ -44,3 +44,5 @@ If the native Cloudflare Workers Builds integration remains connected to `hmatia
 - **Worker configuration:** `wrangler.jsonc` inside this directory
 
 Do not leave the root directory at the repository root: the root-level `wrangler.jsonc` targets the separate Worker `hmatias-website1`. The dedicated GitHub Actions workflow remains the controlled deployment and smoke-test path for the assistant; a native Workers Builds check is a separate integration status and must not be mistaken for the SOURCE AO backend status.
+
+Cloudflare applies saved build settings to the next build or retry. After changing the Root directory, build command, deploy command, or build token, retry the failed build or push a new commit to the connected branch so the new settings are exercised.
