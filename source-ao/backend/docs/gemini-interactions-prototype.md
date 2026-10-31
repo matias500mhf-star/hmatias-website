@@ -64,4 +64,4 @@ Reference: https://ai.google.dev/gemini-api/docs/interactions-overview
 
 ## Current status
 
-This file documents the isolated experiment boundary and acceptance criteria. No endpoint, UI, migration, secret, deployment, or production behavior has been changed.
+The isolated prototype module and mocked regression tests now exist under `source-ao/backend/prototypes/` and `source-ao/backend/test/`. They are not imported by the production router. The prototype has not yet been executed in a writable checkout or against Google's live API. No UI, migration, secret, deployment, or production behavior has been changed.
