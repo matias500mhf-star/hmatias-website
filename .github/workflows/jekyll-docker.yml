@@ -262,7 +262,7 @@ jobs:
                   raise SystemExit(f'About navigation does not reach corporate information: {path}')
 
           credibility = open('/tmp/credibilidade.html', encoding='utf-8').read()
-          card = credibility.partition('<aside class="institutional-card institutional-contact">')[2].partition('</aside>')[0]
+          card = credibility.partition('<section class="cred-contact">')[2].partition('</section>')[0]
           if not card or card.count('mailto:geral@comercialhmatiasps.com') != 1:
               raise SystemExit('Production credibility contact block is duplicated or malformed')
 
