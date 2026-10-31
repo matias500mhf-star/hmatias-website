@@ -14,13 +14,23 @@ The repository-root `wrangler.jsonc` is named `hmatias-website1` and points at t
 
 Do not deploy the assistant with the root config. Use the config inside this folder. If the separate `hmatias-website1` Cloudflare Git integration is no longer intended, disconnect that integration in the Cloudflare dashboard before removing its root configuration from the repository. Do not delete a Worker or route until confirming that it has no production traffic.
 
+## Cloudflare Workers Builds settings
+
+For the `hmatias-ai-assistant` Workers Builds connection:
+
+- Keep `main` as the production branch.
+- Set the production root directory to `cloudflare-ai` and the deploy command to `npx wrangler@4 deploy --config wrangler.jsonc`.
+- Set the preview root directory to `cloudflare-ai` and the preview command to `npx wrangler preview`.
+- Preview builds are isolated from production. Keep the Workers AI binding available to previews through the `previews.ai.binding` configuration below.
+
+A root directory of `/` selects the unrelated repository-level Wrangler configuration and causes preview builds to target the wrong Worker.
+
 ## Cloudflare setup for the assistant
 
-1. Use `cloudflare-ai` as the Root directory if configuring this Worker in Cloudflare Workers Builds.
-2. Keep the AI binding named `AI` as declared in `wrangler.jsonc`.
-3. The assistant endpoint is `https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai`.
-4. Keep a suitable rate limit for the public API before expanding traffic.
-5. Never expose Cloudflare API tokens or other secrets in this repository.
+1. Keep the AI binding named `AI` as declared in `wrangler.jsonc`.
+2. The assistant endpoint is `https://hmatias-ai-assistant.matias500-mhf.workers.dev/api/ai`.
+3. Keep a suitable rate limit for the public API before expanding traffic.
+4. Never expose Cloudflare API tokens or other secrets in this repository.
 
 ## Security and answer-quality controls
 
