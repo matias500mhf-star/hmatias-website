@@ -20,10 +20,10 @@ For the `hmatias-ai-assistant` Workers Builds connection:
 
 - Keep `main` as the production branch.
 - Set the production root directory to `cloudflare-ai` and the deploy command to `npx wrangler@4 deploy --config wrangler.jsonc`.
-- Set the preview root directory to `cloudflare-ai` and the preview command to `npx wrangler preview`.
-- Preview builds are isolated from production. Keep the Workers AI binding available to previews through the `previews.ai.binding` configuration below.
+- For preview builds from the repository root, set the preview command to `npx wrangler preview --config cloudflare-ai/wrangler.jsonc`. This explicitly selects the assistant config even if the build root is `/`.
+- Preview builds are isolated from production. Keep the Workers AI binding available to previews through the `previews.ai.binding` configuration in `wrangler.jsonc`.
 
-A root directory of `/` selects the unrelated repository-level Wrangler configuration and causes preview builds to target the wrong Worker.
+The root-level Wrangler file is named `hmatias-website1`; never let a preview build select it implicitly for the assistant.
 
 ## Cloudflare setup for the assistant
 
