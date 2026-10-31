@@ -85,4 +85,4 @@ for(const o of opportunities){
   ]);
 }
 
-process.stdout.write(sql.join('\\n')+'\\n');
+process.stdout.write(sql.join('\n')+'\n');
