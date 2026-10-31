@@ -17,6 +17,14 @@ test('D1 seed export avoids unsupported explicit SQL transactions',()=>{
   assert.doesNotMatch(sql,/\bCOMMIT\s*;/i);
 });
 
+
+test('seed export retains URL-based supplier evidence classifications',()=>{
+  const sourceRows=sql.split('\\n').filter(line=>line.startsWith('INSERT INTO supplier_sources'));
+  assert.ok(sourceRows.some(line=>line.includes("'catalog'")),'PDF supplier sources should retain catalog classification');
+  assert.ok(sourceRows.some(line=>line.includes("'supplier_website'")),'official supplier domains should retain supplier_website classification');
+  assert.ok(sourceRows.some(line=>line.includes("'directory'")),'directory sources should retain directory classification');
+});
+
 test('redeployment preserves existing commercial rows, evidence and operational metadata',t=>{
   const db=new DatabaseSync(':memory:');
   t.after(()=>db.close());
