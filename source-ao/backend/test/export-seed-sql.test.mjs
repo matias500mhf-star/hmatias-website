@@ -17,7 +17,7 @@ test('D1 seed export avoids unsupported explicit SQL transactions',()=>{
   assert.doesNotMatch(sql,/\bCOMMIT\s*;/i);
 });
 
-test('redeployment preserves commercial pursuits, evidence links and operational metadata',t=>{
+test('redeployment preserves existing commercial rows, evidence and operational metadata',t=>{
   const db=new DatabaseSync(':memory:');
   t.after(()=>db.close());
   const migrations=new URL('../migrations/',import.meta.url);
@@ -44,12 +44,12 @@ test('redeployment preserves commercial pursuits, evidence links and operational
     VALUES('seed-test-additional-source',?,'https://example.invalid/additional','other')`).run(source.supplier_id);
   const countSources=db.prepare('SELECT count(*) n FROM supplier_sources').get().n;
 
-  // Repeating a deployment must update seed-owned fields without deleting rows.
+  // Repeating a deployment must not rewrite any row that already exists.
   db.exec(sql);
   db.exec(sql);
   assert.deepEqual(db.prepare('SELECT * FROM opportunity_pursuits WHERE opportunity_id=?').get(opportunity.id),pursuit);
   const refreshed=db.prepare('SELECT title,fit_score,fit_tags_json,created_at FROM opportunities WHERE id=?').get(opportunity.id);
-  assert.equal(refreshed.title,opportunity.title);
+  assert.equal(refreshed.title,'Outdated seed title');
   assert.equal(refreshed.fit_score,87);
   assert.equal(refreshed.fit_tags_json,'["synthetic-fit"]');
   assert.equal(refreshed.created_at,'2020-01-01');
