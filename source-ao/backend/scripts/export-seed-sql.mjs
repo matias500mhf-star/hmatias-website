@@ -7,14 +7,14 @@ const dataDir=path.resolve(here,'../../data');
 const read=name=>JSON.parse(fs.readFileSync(path.join(dataDir,name),'utf8'));
 const esc=value=>value==null?'NULL':`'${String(value).replaceAll("'","''")}'`;
 const json=value=>esc(JSON.stringify(value??[]));
-const normalize=value=>(value||'').toString().toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+const normalize=value=>(value||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
 
 const sourceTypeForSupplierUrl=(supplier,url)=>{
   try{
     const source=new URL(url);
     const website=supplier.website?new URL(supplier.website):null;
-    if(/\\.pdf(?:$|[?#])/i.test(source.pathname)) return 'catalog';
-    if(website && source.hostname.replace(/^www\\./,'')===website.hostname.replace(/^www\\./,'')) return 'supplier_website';
+    if(/\.pdf(?:$|[?#])/i.test(source.pathname)) return 'catalog';
+    if(website && source.hostname.replace(/^www\./,'')===website.hostname.replace(/^www\./,'')) return 'supplier_website';
     if(/(?:waze|yellowmega|agroportal)/i.test(source.hostname)) return 'directory';
     return 'other';
   }catch{
