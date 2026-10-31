@@ -104,3 +104,5 @@ body.hmatias-clean .commerce-products .section-heading p{max-width:76ch;margin-l
  body.hmatias-clean .clean-feature-card .product-buy-actions{flex-direction:column;align-items:stretch}
  body.hmatias-clean .clean-feature-card .product-buy-actions .btn{width:100%}
 }
+
+@media(max-width:620px){body.hmatias-facilities .unit-hero h1{font-size:clamp(1.8rem,7vw,2.2rem);line-height:1.08}body.hmatias-facilities .unit-hero p{font-size:.93rem;line-height:1.58}}
