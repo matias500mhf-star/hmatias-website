@@ -14,3 +14,72 @@
 .source-header-email img{display:block;width:18px;height:18px;object-fit:contain}
 .rfq-header nav a.source-header-email{display:inline-flex;max-width:none;padding:0}
 @media(max-width:580px){.rfq-header nav a.source-header-email{display:inline-flex;max-width:none;align-items:center;justify-content:center}}
+
+
+/* HMATIAS homepage — development projects, kept separate from the executed works portfolio. */
+body.hmatias-home .development-projects{padding:76px 0;background:#fff}
+body.hmatias-home .development-projects .section-heading{margin-bottom:28px}
+body.hmatias-home .development-project-card{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
+  overflow:hidden;border:1px solid #d8e2ea;border-radius:8px;
+  background:#f2f6f9;box-shadow:0 12px 30px rgba(7,35,59,.07)
+}
+body.hmatias-home .development-project-copy{
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+  padding:clamp(26px,4vw,44px);background:#082b4b;color:#fff
+}
+body.hmatias-home .development-project-status{
+  display:inline-flex;align-items:center;padding:7px 11px;border-left:3px solid #e98b2a;
+  background:rgba(255,255,255,.09);color:#ffd19e;font-family:var(--hm-editorial-body);
+  font-size:.74rem;font-weight:800;letter-spacing:.07em;line-height:1.35
+}
+body.hmatias-home .development-project-copy h3{
+  margin:18px 0 12px;color:#fff;font-family:var(--hm-editorial-display);
+  font-size:clamp(1.65rem,2.7vw,2.35rem);font-weight:700;letter-spacing:-.025em;line-height:1.16
+}
+body.hmatias-home .development-project-copy p{
+  max-width:58ch;margin:0 0 22px;color:#edf4f9;font-family:var(--hm-editorial-body);
+  font-size:1rem;font-weight:500;line-height:1.7;letter-spacing:0
+}
+body.hmatias-home .development-project-copy a{
+  display:inline-flex;align-items:center;justify-content:center;min-height:46px;
+  padding:11px 17px;border-radius:4px;background:#e98b2a;color:#fff;
+  font-family:var(--hm-editorial-body);font-size:.9rem;font-weight:800;line-height:1.4
+}
+body.hmatias-home .development-project-copy a:hover{background:#c96f1c}
+body.hmatias-home .development-project-facts{
+  display:flex;flex-direction:column;justify-content:center;gap:20px;padding:clamp(24px,3.4vw,38px)
+}
+body.hmatias-home .development-project-site{
+  display:grid;grid-template-columns:auto 1fr;align-items:baseline;column-gap:14px;row-gap:4px;
+  padding-bottom:16px;border-bottom:1px solid #d5e0e8
+}
+body.hmatias-home .development-project-site small{
+  grid-column:1/-1;color:#5a7184;font-size:.73rem;font-weight:800;letter-spacing:.08em
+}
+body.hmatias-home .development-project-site strong{
+  color:#082b4b;font-family:var(--hm-editorial-display);font-size:2rem;font-weight:700;letter-spacing:-.025em
+}
+body.hmatias-home .development-project-site span{
+  color:#607589;font-family:var(--hm-editorial-body);font-size:.84rem;font-weight:650
+}
+body.hmatias-home .development-project-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+body.hmatias-home .development-project-options>div{
+  display:flex;flex-direction:column;align-items:flex-start;gap:5px;
+  padding:16px;border:1px solid #d7e2ea;border-radius:6px;background:#fff
+}
+body.hmatias-home .development-project-options small{color:#63798b;font-size:.7rem;font-weight:850;letter-spacing:.07em;line-height:1.4}
+body.hmatias-home .development-project-options strong{
+  color:#082b4b;font-family:var(--hm-editorial-display);font-size:1.85rem;font-weight:700;letter-spacing:-.025em
+}
+body.hmatias-home .development-project-options span{color:#536c80;font-family:var(--hm-editorial-body);font-size:.8rem;font-weight:650;line-height:1.45}
+body.hmatias-home .development-project-facts>p{margin:0;color:#697d8c;font-family:var(--hm-editorial-body);font-size:.78rem;font-weight:600;line-height:1.55}
+@media(max-width:760px){
+  body.hmatias-home .development-project-card{grid-template-columns:1fr}
+  body.hmatias-home .development-project-copy{padding:25px}
+  body.hmatias-home .development-project-facts{padding:22px}
+}
+@media(max-width:420px){
+  body.hmatias-home .development-project-options{grid-template-columns:1fr}
+  body.hmatias-home .development-project-site{grid-template-columns:1fr}
+}
