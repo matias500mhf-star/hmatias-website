@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="1188" viewBox="0 0 1680 1188" role="img" aria-labelledby="title desc">
+<title id="title">HMATIAS Estaleiro Integrado — Planta de implantação, Alternativa A</title>
+<desc id="desc">Planta profissional vectorial de estudo conceptual, terreno 15,141 por 25 metros; armazém 8 por 12 metros; cobertura lateral 2,2 por 12 metros; escritório 4 por 3,5 metros; apoio técnico 3 por 2,5 metros.</desc>
+<defs>
+ <pattern id="yardDots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.2" fill="#b9c8d3"/></pattern>
+ <pattern id="canopyHatch" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0 12L12 0" stroke="#4a98c9" stroke-width="1.2" opacity=".48"/></pattern>
+ <pattern id="warehouseHatch" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M0 18L18 0" stroke="#d7e1e8" stroke-width="1" opacity=".5"/></pattern>
+ <marker id="dimArrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#173b59"/></marker>
+ <marker id="flowArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#e18a2d"/></marker>
+ <style>
+  text{font-family:Inter,Arial,sans-serif;fill:#17344e}
+  .white{fill:#fff}
+  .muted{fill:#63798a}
+  .navy{fill:#092b4b}
+  .orange{fill:#df8428}
+  .title{font-size:27px;font-weight:800;letter-spacing:.4px}
+  .subtitle{font-size:14px;fill:#dce7ef}
+  .label{font-size:15px;font-weight:700}
+  .small{font-size:12px}
+  .tiny{font-size:10px}
+  .dim{font-size:13px;font-weight:700}
+  .tableHead{font-size:15px;font-weight:800;fill:#fff}
+  .tableText{font-size:13px}
+  .tableValue{font-size:13px;font-weight:800;text-anchor:end}
+  .sectionHead{font-size:14px;font-weight:800;letter-spacing:.7px;fill:#092b4b}
+  .fine{stroke:#c8d4dd;stroke-width:1}
+  .wall{stroke:#17344e;stroke-width:4;fill:none;stroke-linejoin:round}
+  .room{stroke:#17344e;stroke-width:2.5;fill:#eef3f6}
+  .dimLine{stroke:#173b59;stroke-width:1.4;fill:none}
+ </style>
+</defs>
+<rect x="0" y="0" width="1680" height="1188" fill="#f5f8fa"/>
+ <rect x="28" y="28" width="1624" height="1132" rx="8" fill="#fff" stroke="#b8c8d4" stroke-width="2"/>
+ <rect x="28" y="28" width="1624" height="124" rx="8" fill="#082b4b"/>
+ <rect x="28" y="143" width="1624" height="9" fill="#df8428"/>
+ <text x="66" y="82" class="white" font-size="34" font-weight="800" letter-spacing="1">HMATIAS</text>
+ <text x="68" y="112" class="white" font-size="12" letter-spacing="1.1">PRESTAÇÃO DE SERVIÇOS SU, LDA.</text>
+ <path d="M300 52V120" stroke="#6f8da5" stroke-width="1.5"/>
+ <text x="330" y="78" class="white" font-size="25" font-weight="800">ESTALEIRO INTEGRADO DE MATERIAIS</text>
+ <text x="330" y="108" class="subtitle">VIANA – CAPALANGA, LUANDA, ANGOLA</text>
+ <text x="1612" y="75" class="white" font-size="14" font-weight="800" text-anchor="end">ESTUDO CONCEPTUAL</text>
+ <text x="1612" y="104" class="subtitle" text-anchor="end">ALTERNATIVA A  |  FOLHA 01 / 02</text>
+ <rect x="66" y="176" width="205" height="38" rx="5" fill="#df8428"/>
+ <text x="84" y="202" class="white" font-size="16" font-weight="800">ALTERNATIVA A</text>
+ <text x="292" y="201" font-size="20" font-weight="800">Armazém compacto com cobertura lateral</text>
+ <text x="1610" y="199" class="muted small" text-anchor="end">96 m² DE ARMAZÉM • 143,90 m² COBERTOS INDICATIVOS</text>
+<!-- plan zone -->
+<text x="75" y="254" class="sectionHead">PLANTA DE IMPLANTAÇÃO / PAVIMENTO TÉRREO</text>
+<text x="75" y="277" class="small muted">Lote de referência • acesso principal pela frente do terreno</text>
+<!-- lot drawing exact 15.141 x 25 at 26.4 px/m -->
+<rect x="145" y="300" width="399.7224" height="660" fill="#fbfcfd" stroke="#17344e" stroke-width="4"/>
+<rect x="149" y="304" width="391" height="652" fill="url(#yardDots)"/>
+<path d="M145 286H544.7224" class="dimLine" marker-start="url(#dimArrow)" marker-end="url(#dimArrow)"/>
+ <path d="M145 294V321M544.7224 294V321" class="dimLine"/>
+ <text x="344.8612" y="276" class="dim" text-anchor="middle">15,141 m</text>
+<path d="M111 300V960" class="dimLine" marker-start="url(#dimArrow)" marker-end="url(#dimArrow)"/>
+  <path d="M119 300H151M119 960H151" class="dimLine"/>
+  <text x="93" y="630" class="dim" text-anchor="middle" transform="rotate(-90 93 630)">25,000 m</text>
+<!-- rear open stock zone -->
+<rect x="160" y="312" width="238" height="132" rx="3" fill="#f3f6f8" stroke="#9fb3c2" stroke-width="1.5" stroke-dasharray="7 5"/>
+<text x="279" y="335" class="label" text-anchor="middle">STOCK EXTERIOR</text>
+<text x="279" y="354" class="small muted" text-anchor="middle">Materiais de alta rotação</text>
+<!-- pallet bays -->
+<rect x="176" y="370" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="225" y="370" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="274" y="370" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="323" y="370" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="176" y="390" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="225" y="390" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="274" y="390" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="323" y="390" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="176" y="410" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="225" y="410" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="274" y="410" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/><rect x="323" y="410" width="34" height="12" rx="1" fill="#d8e2e9" stroke="#8298a9" stroke-width="1"/>
+<!-- technical support room in rear -->
+<rect x="412" y="315" width="79.2" height="66" class="room"/>
+<text x="451.6" y="341" class="small" text-anchor="middle" font-weight="800">APOIO</text>
+<text x="451.6" y="357" class="tiny" text-anchor="middle">3,00 × 2,50 m</text>
+<text x="451.6" y="371" class="tiny" text-anchor="middle">7,50 m²</text>
+<!-- main warehouse, 8 x12 -->
+<rect x="160.8" y="470" width="211.2" height="316.8" fill="#edf3f7" stroke="#092b4b" stroke-width="5"/>
+<rect x="165" y="474" width="203" height="309" fill="url(#warehouseHatch)"/>
+<!-- indicative racks -->
+<g fill="#d9e3ea" stroke="#617e94" stroke-width="1.5">
+ <rect x="174" y="492" width="25" height="265"/><rect x="333" y="492" width="25" height="265"/>
+ <rect x="214" y="500" width="106" height="22"/><rect x="214" y="548" width="106" height="22"/>
+ <rect x="214" y="596" width="106" height="22"/><rect x="214" y="644" width="106" height="22"/>
+ <rect x="214" y="692" width="106" height="22"/>
+</g>
+<g stroke="#9bb0bf" stroke-width="1">
+ <path d="M174 506h25M333 506h25"/><path d="M174 538h25M333 538h25"/><path d="M174 570h25M333 570h25"/><path d="M174 602h25M333 602h25"/><path d="M174 634h25M333 634h25"/><path d="M174 666h25M333 666h25"/><path d="M174 698h25M333 698h25"/><path d="M174 730h25M333 730h25"/>
+</g>
+<rect x="215" y="590" width="102" height="64" rx="4" fill="#fff" stroke="#9bb0bf" stroke-width="1.5"/>
+<text x="266" y="614" class="label" text-anchor="middle">ARMAZÉM</text>
+<text x="266" y="634" class="small" text-anchor="middle">8,00 × 12,00 m</text>
+<text x="266" y="649" class="small" text-anchor="middle" font-weight="800">96,00 m²</text>
+<!-- side canopy -->
+<rect x="372" y="470" width="58.08" height="316.8" fill="url(#canopyHatch)" stroke="#2f83b8" stroke-width="2.5"/>
+<g transform="translate(402 628) rotate(-90)">
+ <text x="0" y="0" class="small" text-anchor="middle" font-weight="800">COBERTURA LATERAL</text>
+ <text x="0" y="17" class="tiny" text-anchor="middle">2,20 × 12,00 m • 26,40 m²</text>
+</g>
+<!-- clear lane -->
+<rect x="438" y="392" width="97" height="564" fill="#e8f0f5" stroke="#6f92aa" stroke-width="1.8" stroke-dasharray="6 5"/>
+<text x="486.5" y="450" class="small" text-anchor="middle" font-weight="800">ACESSO DE</text>
+<text x="486.5" y="467" class="small" text-anchor="middle" font-weight="800">VIATURAS</text>
+<text x="486.5" y="486" class="tiny muted" text-anchor="middle">3,70 m livres</text>
+<g stroke="#df8428" stroke-width="3" fill="none" marker-end="url(#flowArrow)">
+ <path d="M486 535V575"/><path d="M486 625V665"/><path d="M486 715V755"/><path d="M486 805V845"/>
+</g>
+<!-- office / customer service at frontage -->
+<rect x="160.8" y="822" width="105.6" height="92.4" class="room"/>
+<path d="M160.8 869H266.4M213.6 822V914" stroke="#a4b8c6" stroke-width="1.3"/>
+<text x="213.6" y="849" class="small" font-weight="800" text-anchor="middle">ESCRITÓRIO</text>
+<text x="213.6" y="884" class="tiny" text-anchor="middle">4,00 × 3,50 m</text>
+<text x="213.6" y="900" class="small" font-weight="800" text-anchor="middle">14,00 m²</text>
+<!-- front loading yard -->
+<rect x="276" y="822" width="145" height="124" fill="#f4f7f9" stroke="#9fb3c2" stroke-width="1.5" stroke-dasharray="7 5"/>
+<text x="348.5" y="866" class="small" font-weight="800" text-anchor="middle">PÁTIO FRONTAL</text>
+<text x="348.5" y="886" class="tiny muted" text-anchor="middle">Carga / descarga</text>
+<path d="M302 923h94" stroke="#e0aa62" stroke-width="3" stroke-dasharray="12 7"/>
+<!-- gate -->
+<path d="M429 960H540" stroke="#df8428" stroke-width="8"/>
+<path d="M429 960V944M540 960V944" stroke="#17344e" stroke-width="2"/>
+<text x="484.5" y="991" class="small" font-weight="800" text-anchor="middle">PORTÃO 4,20 m • CONCEPTUAL</text>
+<text x="344" y="1022" class="label" text-anchor="middle">VIA PÚBLICA / FRENTE DE ACESSO</text>
+<!-- graphic scale -->
+<text x="75" y="1047" class="tiny muted">ESCALA GRÁFICA (m)</text>
+<rect x="75" y="1060" width="26.4" height="9" fill="#092b4b"/><rect x="101.4" y="1060" width="26.4" height="9" fill="#fff" stroke="#092b4b"/><rect x="127.8" y="1060" width="26.4" height="9" fill="#092b4b"/><rect x="154.2" y="1060" width="26.4" height="9" fill="#fff" stroke="#092b4b"/><rect x="180.6" y="1060" width="26.4" height="9" fill="#092b4b"/>
+<text x="75" y="1083" class="tiny">0</text><text x="101.4" y="1083" class="tiny">1</text><text x="127.8" y="1083" class="tiny">2</text><text x="154.2" y="1083" class="tiny">3</text><text x="180.6" y="1083" class="tiny">4</text><text x="207" y="1083" class="tiny">5 m</text>
+<!-- dimension callouts for footprints -->
+<path d="M160.8 453V435H372V453" class="dimLine"/>
+<text x="266.4" y="428" class="dim" text-anchor="middle">8,00 m</text>
+<path d="M144 470H126M144 786H126" class="dimLine"/>
+<path d="M126 470V786" class="dimLine" marker-start="url(#dimArrow)" marker-end="url(#dimArrow)"/>
+<text x="107" y="628" class="small" text-anchor="middle" transform="rotate(-90 107 628)">12,00 m</text>
+<!-- right panel -->
+<rect x="615" y="258" width="990" height="38" rx="5" fill="#082b4b"/><text x="633" y="283" class="tableHead">QUADRO DE ÁREAS</text>
+<g>
+ <text x="640" y="318" class="tableText">Armazém principal</text><text x="1030" y="318" class="small muted">8,00 × 12,00 m</text><text x="1575" y="318" class="tableValue">96,00 m²</text><path d="M640 332H1575" class="fine"/>
+ <text x="640" y="365" class="tableText">Cobertura lateral</text><text x="1030" y="365" class="small muted">2,20 × 12,00 m</text><text x="1575" y="365" class="tableValue">26,40 m²</text><path d="M640 379H1575" class="fine"/>
+ <text x="640" y="412" class="tableText">Escritório / atendimento</text><text x="1030" y="412" class="small muted">4,00 × 3,50 m</text><text x="1575" y="412" class="tableValue">14,00 m²</text><path d="M640 426H1575" class="fine"/>
+ <text x="640" y="459" class="tableText">Apoio técnico</text><text x="1030" y="459" class="small muted">3,00 × 2,50 m</text><text x="1575" y="459" class="tableValue">7,50 m²</text>
+</g>
+<rect x="615" y="484" width="990" height="54" rx="5" fill="#e9f2f7"/>
+<text x="640" y="517" font-size="15" font-weight="800">ÁREA COBERTA INDICATIVA TOTAL</text><text x="1575" y="518" font-size="21" font-weight="900" text-anchor="end" fill="#0b5e95">143,90 m²</text>
+<rect x="615" y="566" width="990" height="38" rx="5" fill="#082b4b"/><text x="633" y="591" class="tableHead">ORGANIZAÇÃO FUNCIONAL</text>
+<g>
+ <circle cx="650" cy="634" r="15" fill="#df8428"/><text x="650" y="639" class="white small" text-anchor="middle" font-weight="800">01</text>
+ <text x="680" y="630" class="label">Armazém fechado</text><text x="680" y="650" class="small muted">Stock protegido; disposição das estantes apenas indicativa.</text>
+ <circle cx="650" cy="694" r="15" fill="#df8428"/><text x="650" y="699" class="white small" text-anchor="middle" font-weight="800">02</text>
+ <text x="680" y="690" class="label">Cobertura lateral</text><text x="680" y="710" class="small muted">Faixa coberta de recepção, preparação e movimentação de materiais.</text>
+ <circle cx="650" cy="754" r="15" fill="#df8428"/><text x="650" y="759" class="white small" text-anchor="middle" font-weight="800">03</text>
+ <text x="680" y="750" class="label">Stock exterior</text><text x="680" y="770" class="small muted">Materiais de alta rotação; zonamento final a definir.</text>
+ <circle cx="650" cy="814" r="15" fill="#df8428"/><text x="650" y="819" class="white small" text-anchor="middle" font-weight="800">04</text>
+ <text x="680" y="810" class="label">Atendimento e apoio técnico</text><text x="680" y="830" class="small muted">Escritório frontal e compartimento técnico independente.</text>
+</g>
+<rect x="615" y="866" width="990" height="38" rx="5" fill="#082b4b"/><text x="633" y="891" class="tableHead">NOTAS DE PROJECTO</text>
+<g class="small">
+ <text x="640" y="924">• Dimensões do lote: 15,141 × 25,000 m (378,53 m²), conforme informação disponibilizada.</text>
+ <text x="640" y="952">• Faixa de acesso para viaturas: 3,70 m livres; portão de 4,20 m conceptual.</text>
+ <text x="640" y="980">• Confirmar levantamento topográfico, limites, afastamentos, servidões e orientação do acesso.</text>
+ <text x="640" y="1008">• Dimensionar estrutura metálica, fundações, piso, drenagem e instalações técnicas.</text>
+ <text x="640" y="1036">• A disposição de estantes e o zonamento interior são indicativos, não executivos.</text>
+</g>
+<rect x="615" y="1060" width="990" height="34" rx="4" fill="#fff3e7" stroke="#e9c59f"/>
+<text x="630" y="1082" class="small" font-weight="800" fill="#8a5426">ESTUDO PRELIMINAR — sujeito a levantamento e validação por técnicos habilitados.</text>
+<rect x="28" y="1113" width="1624" height="47" fill="#082b4b"/>
+ <text x="64" y="1142" class="white" font-size="11" font-weight="700">HM-IY-A-001  |  PLANTA GERAL DE IMPLANTAÇÃO  |  DIMENSÕES EM METROS</text>
+ <text x="1610" y="1142" class="white" font-size="11" text-anchor="end">PRELIMINAR • NÃO UTILIZAR PARA CONSTRUÇÃO • SUJEITO A VALIDAÇÃO PROFISSIONAL</text>
+</svg>

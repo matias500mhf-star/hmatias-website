@@ -1,0 +1,79 @@
+/* HMATIAS | Estaleiro Integrado — public project showcase */
+.yard-page{background:#f7f9fb}
+.yard-page main{overflow:hidden}
+.yard-hero{position:relative;isolation:isolate;overflow:hidden;padding:76px 0 54px;color:#fff;background:linear-gradient(118deg,#061f39 0%,#082f54 55%,#13527d 100%)}
+.yard-hero:before{content:"";position:absolute;z-index:-1;right:-90px;top:-230px;width:640px;height:640px;border:1px solid rgba(255,255,255,.12);border-radius:50%;box-shadow:0 0 0 65px rgba(255,255,255,.025),0 0 0 130px rgba(255,255,255,.018)}
+.yard-hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(250px,.7fr);gap:42px;align-items:center}
+.yard-kicker{display:inline-flex;align-items:center;gap:10px;color:#ffbd78;font-size:.75rem;font-weight:750;letter-spacing:.13em;text-transform:uppercase}
+.yard-kicker:before{content:"";width:27px;height:2px;background:#e98b2a}
+.yard-hero h1{max-width:780px;color:#fff;margin:16px 0 18px;font-size:clamp(2.2rem,4.6vw,4rem);line-height:1.06;letter-spacing:-.035em}
+.yard-hero p{max-width:740px;color:#dbe7f0;font-size:1.05rem;line-height:1.72;margin:0}
+.yard-hero-panel{padding:24px;border:1px solid rgba(255,255,255,.2);border-radius:16px;background:rgba(255,255,255,.065)}
+.yard-hero-panel img{display:block;width:185px;height:auto;max-height:90px;object-fit:contain;object-position:left center;padding:8px 12px;background:#fff;border-radius:8px;margin-bottom:18px}
+.yard-hero-panel strong{display:block;color:#fff;margin-bottom:9px;font-size:1rem}
+.yard-hero-panel span{display:block;color:#dce7f0;font-size:.88rem;margin:7px 0;line-height:1.5}
+.yard-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:30px;max-width:820px}
+.yard-fact{border-left:2px solid #e98b2a;padding:3px 12px}
+.yard-fact b{display:block;color:#fff;font-size:1.35rem;line-height:1.25}
+.yard-fact small{display:block;color:#cbd9e4;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;margin-top:5px}
+.yard-section{padding:66px 0}
+.yard-section.soft{background:#eef3f7}
+.yard-heading{max-width:820px;margin-bottom:28px}
+.yard-heading .eyebrow{color:#2677a9}
+.yard-heading h2{color:#082b4c;margin:9px 0 12px}
+.yard-heading p{color:#607487;margin:0}
+.yard-options{display:grid;grid-template-columns:1fr;gap:24px;align-items:stretch}
+.yard-option{background:#fff;border:1px solid #d9e2ea;border-radius:17px;overflow:hidden;box-shadow:0 12px 32px rgba(8,43,76,.07)}
+.yard-option-visual{position:relative;background:#dbe7ef}
+.yard-option-visual img{display:block;width:100%;height:auto;aspect-ratio:1680/1188;object-fit:contain;background:#f5f8fa}
+.yard-option-tag{position:absolute;left:18px;top:17px;padding:8px 12px;border-radius:6px;background:#082b4c;color:#fff;font-size:.73rem;letter-spacing:.07em;font-weight:800;text-transform:uppercase}
+.yard-option-copy{padding:23px 24px 25px}
+.yard-option-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+.yard-option h3{margin:0 0 6px;color:#082b4c;font-size:1.32rem}
+.yard-option .yard-sub{margin:0;color:#687b8a;font-size:.88rem;line-height:1.5}
+.yard-option-letter{display:flex;align-items:center;justify-content:center;flex:0 0 40px;height:40px;border-radius:50%;background:#fff0e1;color:#c96f1c;font-weight:850;font-size:1.05rem}
+.yard-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:18px}
+.yard-metric{background:#f2f6f9;border:1px solid #e8eef3;border-radius:9px;padding:11px 12px}
+.yard-metric small{display:block;color:#667b8c;font-size:.72rem;line-height:1.35}
+.yard-metric b{display:block;color:#082b4c;font-size:1.04rem;margin-top:3px}
+.yard-option-note{margin:17px 0 0;padding:12px 14px;border-left:3px solid #e98b2a;background:#fff7ee;color:#6b4a2a;font-size:.82rem;line-height:1.55}
+.yard-comparison{background:#fff;border:1px solid #dbe4eb;border-radius:14px;overflow:hidden}
+.yard-comparison table{width:100%;border-collapse:collapse;min-width:620px}
+.yard-comparison th,.yard-comparison td{padding:14px 16px;border-bottom:1px solid #e8edf1;text-align:left;font-size:.9rem;vertical-align:top}
+.yard-comparison thead th{background:#082b4c;color:#fff;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase}
+.yard-comparison tbody th{color:#082b4c;font-weight:700;width:32%}
+.yard-comparison tbody td{color:#536a7c}
+.yard-comparison tr:last-child th,.yard-comparison tr:last-child td{border-bottom:0}
+.yard-comparison .yard-unknown{color:#a55c20;font-weight:700}
+.yard-purpose-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.yard-purpose{padding:20px;background:#fff;border:1px solid #dbe4eb;border-radius:12px}
+.yard-purpose .num{display:block;color:#e98b2a;font-size:.77rem;font-weight:850;letter-spacing:.1em}
+.yard-purpose h3{color:#082b4c;font-size:1rem;margin:8px 0 7px}
+.yard-purpose p{color:#64788a;font-size:.86rem;line-height:1.55;margin:0}
+.yard-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+.yard-gallery figure{margin:0;overflow:hidden;border-radius:12px;background:#dfe8ef}
+.yard-gallery img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.yard-gallery figcaption{padding:10px 12px;background:#fff;color:#526a7c;font-size:.78rem;font-weight:650}
+.yard-disclaimer{margin-top:23px;padding:18px 20px;border:1px solid #f0d5b8;border-left:4px solid #e98b2a;border-radius:9px;background:#fff7ed;color:#684821;font-size:.88rem;line-height:1.65}
+.yard-cta{padding:44px 0;background:#082b4c;color:#fff}
+.yard-cta-inner{display:flex;align-items:center;justify-content:space-between;gap:25px}
+.yard-cta h2{color:#fff;font-size:1.55rem;margin:0 0 8px}
+.yard-cta p{max-width:720px;color:#d5e2eb;margin:0}
+.yard-cta .btn{flex:0 0 auto}
+.yard-entry{padding:38px 0}
+.yard-entry-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:27px 31px;border-radius:15px;background:linear-gradient(115deg,#082b4c,#11517e);color:#fff}
+.yard-entry-inner h2{color:#fff;font-size:1.45rem;margin:5px 0 8px}
+.yard-entry-inner p{max-width:720px;color:#dbe7f0;margin:0;font-size:.91rem}
+.yard-entry-inner .eyebrow{color:#ffbd78}
+.yard-entry-inner .btn{flex:0 0 auto}
+@media(max-width:850px){.yard-hero{padding:55px 0 44px}.yard-hero-grid{grid-template-columns:1fr;gap:25px}.yard-hero-panel{max-width:520px}.yard-options{grid-template-columns:1fr}.yard-purpose-grid{grid-template-columns:1fr}.yard-cta-inner,.yard-entry-inner{align-items:flex-start;flex-direction:column}.yard-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.yard-section{padding:48px 0}.yard-facts{grid-template-columns:1fr;gap:10px}.yard-fact{display:flex;align-items:baseline;gap:12px}.yard-fact b{font-size:1.18rem}.yard-option-copy{padding:18px}.yard-metrics{gap:7px}.yard-comparison{overflow-x:auto}.yard-gallery{grid-template-columns:1fr}.yard-entry-inner{padding:22px}}
+@media(print){.yard-page .topbar,.yard-page .hmatias-header,.yard-page footer,.yard-hero,.yard-cta,.yard-entry{display:none!important}.yard-section{padding:12px 0}.yard-option{box-shadow:none;break-inside:avoid}}
+
+.yard-plan-option .yard-option-visual{padding:10px;background:#f5f8fa}
+.yard-plan-option .yard-option-visual a{display:block;line-height:0}
+.yard-plan-option .yard-option-copy{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 24px}
+.yard-plan-option .yard-option-head{margin:0}
+.yard-open-plan{display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;padding:11px 15px;border:1px solid #b7c9d8;border-radius:6px;color:#0b5e95;font-size:.85rem;font-weight:750;text-decoration:none;background:#f8fbfd}
+.yard-open-plan:hover{background:#eaf3f8;text-decoration:underline}
+@media(max-width:680px){.yard-plan-option .yard-option-copy{align-items:flex-start;flex-direction:column;gap:14px}.yard-plan-option .yard-option-visual{padding:4px}}
