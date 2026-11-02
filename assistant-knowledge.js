@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: public HMATIAS content, commercial quotation conditions and SOURCE AO public capabilities, 2026-10-12. */
+   Source of truth: public website, project status, service pages and commercial rules, 2026-11-02. */
 (() => {
   'use strict';
 
@@ -14,8 +14,8 @@
   ];
 
   const kb = {
-    version: '2026-10-18.1',
-    updated: '2026-10-18',
+    version: '2026-11-02.1',
+    updated: '2026-11-02',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
@@ -24,27 +24,34 @@
       nif: '5001578065', commercialRegistration: '24.094-23', founded: '2023-07-14'
     },
     siteState: {
-      homepagePt: 'Homepage institucional centrada em quatro áreas principais: Construção, Facilities e Manutenção (inclui HMATIAS Clean), Supply e Procurement e Business Services. Portfólio real, Smart RFQ e contacto comercial.',
-      homepageEn: 'Institutional homepage built around four core areas: Construction, Facilities and Maintenance (including HMATIAS Clean), Supply and Procurement, and Business Services, with real project evidence, Smart RFQ and commercial contact.',
+      homepagePt: 'Homepage institucional com quatro áreas principais: Construção, Facilities e Manutenção (inclui HMATIAS Clean), Supply e Procurement e Business Services. Apresenta o portfólio de obras executadas numa secção própria e, separadamente, a secção Projectos em Desenvolvimento, que inclui o Estaleiro Integrado HMATIAS.',
+      homepageEn: 'Institutional homepage built around four core areas: Construction, Facilities and Maintenance (including HMATIAS Clean), Supply and Procurement, and Business Services. The completed-works portfolio is separate from Projects in Development, which includes the HMATIAS Integrated Yard.',
       sourcePlacementPt: 'O SOURCE AO é uma plataforma operacional de apoio ao procurement da HMATIAS, em evolução, com identidade visual própria. No site HMATIAS principal permanece como acesso discreto no rodapé; a experiência completa vive em /source-ao/.',
       sourcePlacementEn: 'SOURCE AO is an evolving HMATIAS procurement-support platform with its own visual identity. On the main HMATIAS site it remains a discreet footer entry; the full experience lives under /source-ao/.',
       commercialJourneyPt: 'A jornada comercial do site orienta o visitante da informação e prova para uma ação adequada: pedido de orçamento, Smart RFQ, WhatsApp, pedido de atendimento ou SOURCE AO, conforme a necessidade.',
       emailRoutingPt: 'Use info@comercialhmatiasps.com para apresentação da empresa, perfil institucional e informação empresarial. Use geral@comercialhmatiasps.com para pedidos gerais, orçamentos, obras, facilities, supply e seguimento comercial.',
-      emailRoutingEn: 'Use info@comercialhmatiasps.com for the company profile, institutional information and introductory corporate enquiries. Use geral@comercialhmatiasps.com for general enquiries, quotations, works, facilities, supply and commercial follow-up.'
+      emailRoutingEn: 'Use info@comercialhmatiasps.com for the company profile, institutional information and introductory corporate enquiries. Use geral@comercialhmatiasps.com for general enquiries, quotations, works, facilities, supply and commercial follow-up.',
+      developmentProjectsPt: 'A homepage apresenta a secção Projectos em Desenvolvimento separada do portfólio real. Esta secção mostra iniciativas em estudo, propostas ou preparação; não significa obra concluída, adjudicada ou iniciada.',
+      developmentProjectsEn: 'The homepage has a Projects in Development section separate from the completed-works portfolio. It shows initiatives under study, proposal or preparation and does not mean work is completed, awarded or under construction.'
     },
     pages: {
       home: '/', construction: '/construcao.html', facilities: '/facilities.html', supply: '/supply.html', rfq: '/rfq.html', worksCatalogue: '/catalogo-obras.html', credibility: '/credibilidade.html', clean: '/clean.html', karta: '/karta.html', business: '/servicos-administrativos.html', booking: '/agendamento.html', sourceAO: '/source-ao/', sourceRfq: '/source-ao/rfq.html', sourceRadar: '/source-ao/opportunity-radar.html', privacy: '/privacidade.html', terms: '/termos.html',
-      homeEn: '/en.html', constructionEn: '/construction.html', facilitiesEn: '/facilities-en.html', supplyEn: '/supply-en.html', rfqEn: '/rfq-en.html', worksCatalogueEn: '/work-catalogue.html', credibilityEn: '/credibility.html', cleanEn: '/clean-en.html', kartaEn: '/karta-en.html', businessEn: '/business-services.html', bookingEn: '/booking.html', privacyEn: '/privacy.html', termsEn: '/terms.html'
+      developmentProjects: '/#projectos-em-desenvolvimento', yard: '/estaleiro-integrado.html', industrialRoofs: '/coberturas-industriais.html', postConstructionCleaning: '/limpeza-pos-obra.html', ppeUniforms: '/fornecimento-de-epi-e-fardamento.html', officeRemodelling: '/remodelacao-de-escritorios.html',
+      homeEn: '/en.html', constructionEn: '/construction.html', facilitiesEn: '/facilities-en.html', supplyEn: '/supply-en.html', rfqEn: '/rfq-en.html', worksCatalogueEn: '/work-catalogue.html', credibilityEn: '/credibility.html', cleanEn: '/clean-en.html', kartaEn: '/karta-en.html', businessEn: '/business-services.html', bookingEn: '/booking.html', privacyEn: '/privacy.html', termsEn: '/terms.html', developmentProjectsEn: '/en.html#projects-in-development', yardEn: '/integrated-yard.html'
     },
     construction: {
       summaryPt: 'Construção civil, remodelação e infraestrutura em Angola, com base operacional em Viana, Luanda. Pedidos de outras províncias dependem de avaliação do local, escopo e mobilização. Orçamento e prazo são definidos após levantamento técnico, antes do início dos trabalhos.',
       summaryEn: 'Civil construction, refurbishment and infrastructure in Angola, with an operating base in Viana, Luanda. Enquiries from other provinces are subject to site, scope and mobilisation assessment. Quotations and timeframes follow a technical assessment before work starts.',
       capabilitiesPt: ['Betonagem e pavimentação','Infraestrutura e estruturas','Estruturas e coberturas','Remodelação de escritórios, instalações, espaços residenciais e áreas empresariais','Revestimentos e acabamentos','Adaptação de espaços'],
+      specialistPagesPt: ['Coberturas industriais: avaliação visual, reparação localizada e manutenção programada, sempre após análise do local, acesso e condições técnicas.','Remodelação de escritórios e espaços comerciais: avaliação da organização, compartimentação, acabamentos, reparações e coordenação da intervenção; o escopo depende do estado do imóvel, área, acesso e objectivo do cliente.'],
+      specialistPagesEn: ['Industrial roofing: visual assessment, localised repairs and scheduled maintenance after reviewing site access and technical conditions.','Office and commercial-space refurbishment: assessment of layouts, partitions, finishes, repairs and work coordination; scope depends on the property condition, area, access and client requirements.'],
       processPt: ['Pedido com província, município, fotografias, medidas, tipo de intervenção e prazo pretendido; indicar projeto ou levantamento de quantidades quando disponível','Levantamento técnico, avaliação de acesso, mobilização e condições de execução','Proposta com escopo, quantidades, materiais, prazo e condições antes do início dos trabalhos','Execução e acompanhamento até à entrega']
     },
     facilities: {
       summaryPt: 'Manutenção, limpeza/conservação e apoio operacional para instalações empresariais, com frequência, áreas, recursos e responsabilidades definidos em escopo.',
       summaryEn: 'Maintenance, cleaning/upkeep and operational support for business facilities under an agreed scope and frequency.',
+      specialistPagesPt: ['Limpeza pós-obra: limpeza de escritórios, lojas e instalações empresariais após construção ou remodelação; área, resíduos, acessos, materiais e prazo são avaliados para a cotação.'],
+      specialistPagesEn: ['Post-construction cleaning: cleaning of offices, shops and business facilities after construction or refurbishment; area, debris, access, materials and timing are assessed before quotation.'],
       capabilitiesPt: ['Manutenção de instalações','Intervenções pontuais','Limpeza e conservação','Rotinas conforme frequência acordada','Apoio operacional','Levantamento e acompanhamento de necessidades'],
       processPt: ['Diagnóstico da necessidade e prioridade','Plano de serviço com escopo, responsabilidades, recursos e frequência','Execução ou coordenação e acompanhamento']
     },
@@ -53,7 +60,9 @@
       summaryEn: 'Procurement, sourcing and business supply in Angola, with no own stock. We accept enquiries from across Angola and international buyers seeking supply into Angola. Supplier availability, transport, lead time and documentation are confirmed per request and defined in the proposal before order award.',
       capabilitiesPt: ['Sourcing nacional','Pesquisa regional na África Austral','Consultas de compradores internacionais para fornecimentos em Angola','Materiais, consumíveis, produtos e equipamentos','Pesquisa e comparação de alternativas'],
       processPt: ['Referência ou descrição técnica, norma e dimensões quando aplicável, quantidade e unidade de medida, local de entrega e prazo; indicar certificados exigidos e juntar fotografias, fichas técnicas ou códigos do catálogo quando disponíveis','Pesquisa e comparação de opções, disponibilidade, origem, logística e documentos técnicos aplicáveis','Cotação com preço, custos de transporte, prazo, documentação, condições e validade antes da adjudicação'],
-      rulePt: 'Marcas, fornecedores e contactos de terceiros são referenciados apenas quando relevantes; isso não implica representação, exclusividade ou parceria institucional.'
+      rulePt: 'Marcas, fornecedores e contactos de terceiros são referenciados apenas quando relevantes; isso não implica representação, exclusividade ou parceria institucional.',
+      specialistPagesPt: ['EPI e fardamento: pedidos empresariais avaliados com base em artigos, normas exigidas, modelos, tamanhos, quantidades, local de entrega e prazo; preço, disponibilidade e logística são confirmados por pedido.'],
+      specialistPagesEn: ['PPE and uniforms: business enquiries are assessed by item, required standards, model, sizes, quantities, delivery location and lead time; price, availability and logistics are confirmed per request.']
     },
     clean: {
       summaryPt: 'Produtos de limpeza e higiene para utilização doméstica e profissional. Produtos fornecidos sob encomenda; stock, prazo e entrega ficam sujeitos a confirmação comercial.',
@@ -83,7 +92,7 @@
       statusPt: 'Estado: desenvolvimento Alpha. Não apresentar a aplicação como disponível para download público, nem como produto de segurança certificado.',
       currentPt: ['Interface Flutter/Android em evolução','Organização e visualização de documentos em teste','Acesso e autenticação sujeitos a validação','Biometria, backup, assinatura, QR e partilha pendentes de testes e implementação','Experiência móvel ainda em fase Alpha'],
       roadmapPt: ['OCR/MRZ para apoio à leitura de documentos','Partilha seletiva e verificação por QR','KARTA Verify e API para fases posteriores'],
-      rulePt: 'Itens de roadmap são objetivos futuros e não devem ser descritos como funcionalidades já disponíveis, certificadas ou lançadas.'
+      rulePt: 'Itens de roadmap são objetivos futuros e não devem ser descritos como funcionalidades já disponíveis, certificadas ou lançadas.',
     },
     sourceAO: {
       name: 'SOURCE AO',
@@ -109,7 +118,31 @@
     },
     projects: {
       publicExamplesPt:['Galpão com Estrutura Metálica','Preparação de Terreno','Substituição de Cobertura Metálica','Pavilhões Rurais Concluídos','Alvenaria, Vãos & Reforços','Reservatório Compartimentado','Alumínio & Vidro Fumado'],
-      disclosurePt:'Cliente, data e localização de projetos são identificados publicamente apenas quando a divulgação é adequada ou autorizada.'
+      disclosurePt:'Cliente, data e localização de projetos são identificados publicamente apenas quando a divulgação é adequada ou autorizada.',
+      distinctionPt:'O Catálogo de Obras apresenta apenas registos de trabalhos executados. Projectos em Desenvolvimento é uma secção separada para iniciativas em estudo, preparação ou avaliação. O assistente nunca deve apresentar uma proposta futura como obra concluída.',
+      distinctionEn:'The Works Catalogue contains records of work already carried out. Projects in Development is a separate section for initiatives under study, preparation or assessment. The assistant must never describe a future proposal as completed work.',
+      developmentYard: {
+        name: 'Estaleiro Integrado HMATIAS',
+        location: 'Viana–Capalanga, Luanda, Angola',
+        statusPt: 'Projecto em desenvolvimento, em fase de estudo preliminar de implantação. Duas alternativas estão em avaliação; não há configuração final nem data de início da construção anunciada.',
+        statusEn: 'Project in development at preliminary site-layout study stage. Two alternatives are under review; there is no announced final configuration or construction start date.',
+        summaryPt: 'Nova base operacional prevista para armazenamento de materiais, distribuição e apoio administrativo e logístico às operações e projectos da HMATIAS. Está apresentada na secção Projectos em Desenvolvimento, não no Catálogo de Obras Executadas.',
+        summaryEn: 'Planned operational base for materials storage, distribution and administrative and logistics support to HMATIAS operations and projects. It is listed under Projects in Development, not in the completed Works Catalogue.',
+        plot: {dimensions: '15,141 × 25,000 m', area: '378,53 m²'},
+        alternativeA: {warehouse: '8,00 × 12,00 m', warehouseArea: '96,00 m²', canopy: '2,20 × 12,00 m', canopyArea: '26,40 m²', office: '4,00 × 3,50 m', officeArea: '14,00 m²', technicalSupport: '3,00 × 2,50 m', technicalSupportArea: '7,50 m²', indicativeCoveredTotal: '143,90 m²', clearVehicleLane: '3,70 m', conceptualGate: '4,20 m'},
+        alternativeB: {warehouse: '10,00 × 14,00 m', warehouseArea: '140,00 m²', office: '3,00 × 4,00 m', officeArea: '12,00 m²', clearSideCorridor: '4,14 m', frontManeuverYard: 'aprox. 9,00 m de profundidade', rearClearance: '2,00 m indicativo', coveredTotal: 'Não consolidado no estudo-base; não estimar.'},
+        validationPt: 'As plantas são estudos conceptuais dimensionados, não projecto de execução nem licenciamento aprovado. Antes da construção são necessários levantamento topográfico, confirmação de limites e afastamentos, projecto de arquitectura e especialidades, cálculos estruturais, fundações, piso, drenagem, segurança contra incêndios e instalações técnicas.',
+        validationEn: 'The plans are dimensioned concept studies, not execution drawings or an approved permit. Before construction, the project requires a topographic survey, confirmation of plot boundaries and setbacks, architectural and engineering designs, structural calculations, foundations, floor and drainage design, fire safety and building services.',
+        pagePt: '/estaleiro-integrado.html', pageEn: '/integrated-yard.html',
+        homepageSectionPt: 'A homepage apresenta um cartão do Estaleiro Integrado na secção Projectos em Desenvolvimento, separado do portfólio de obras executadas.',
+        homepageSectionEn: 'The homepage features the Integrated Yard under Projects in Development, separate from the completed-works portfolio.'
+      }
+    },
+    siteDirectory: {
+      corePt: ['Homepage: quatro áreas institucionais, contacto e ligações para serviços, trabalhos executados e projectos em desenvolvimento.','Construção: construção civil, infraestrutura, pavimentação, coberturas, estruturas e remodelação.','Facilities: manutenção, limpeza profissional, conservação, apoio operacional e HMATIAS Clean.','Supply: sourcing, procurement e fornecimento sob consulta, sem stock próprio.','Business Services: apoio administrativo, documental, CV, propostas e apresentações empresariais.','Catálogo de Obras: registos fotográficos de trabalhos executados, não projectos futuros.','Projectos em Desenvolvimento: iniciativas em estudo; inclui o Estaleiro Integrado HMATIAS.','Smart RFQ: organiza um pedido comercial, não calcula preços ou disponibilidade.','SOURCE AO: pesquisa técnica, descoberta de fornecedores e RFQ com distinção entre candidato e confirmação comercial.','KARTA: projecto digital em fase Alpha.','Agendamento: pedido de atendimento sujeito a confirmação da equipa.','Credibilidade: informação institucional e dados oficiais publicados.'],
+      specialistPt: ['Coberturas industriais: /coberturas-industriais.html.','Limpeza pós-obra: /limpeza-pos-obra.html.','EPI e fardamento: /fornecimento-de-epi-e-fardamento.html.','Remodelação de escritórios: /remodelacao-de-escritorios.html.'],
+      coreEn: ['The homepage presents four institutional service areas, contact routes, executed works and projects in development.','Construction covers civil works, infrastructure, paving, roofing, steel structures and refurbishment.','Facilities covers maintenance, professional cleaning, upkeep, operational support and HMATIAS Clean.','Supply covers sourcing, procurement and order-based supply, with no own stock.','Business Services covers administrative and document support, CVs, proposals and company presentations.','The Works Catalogue contains records of completed work, not future proposals.','Projects in Development lists initiatives under study, including the HMATIAS Integrated Yard.','Smart RFQ structures an enquiry; it does not calculate prices or live availability.','SOURCE AO separates technical research, supplier discovery and commercial confirmation.','KARTA is an Alpha-stage digital project.','Appointments are requests subject to team confirmation.','Credibility pages publish company and institutional information.'],
+      specialistEn: ['Industrial roofing: Portuguese page /coberturas-industriais.html.','Post-construction cleaning: /limpeza-pos-obra.html.','PPE and uniforms: /fornecimento-de-epi-e-fardamento.html.','Office refurbishment: /remodelacao-de-escritorios.html.']
     },
     safetyAndTruth: {rulesPt:['Nunca inventar preço, stock, disponibilidade, prazo, parceria, representação, garantia ou capacidade não publicada.','Quando um preço não está publicado, dizer “sob consulta” e indicar o contacto comercial.','Para obras, facilities e supply, explicar que escopo/preço dependem de levantamento, especificação e cotação.','Não pedir nem incentivar envio de passaporte, BI, palavras-passe, dados bancários ou outros documentos sensíveis no assistente.','Não apresentar apoio consular como serviço público da HMATIAS. Não confirmar horários, pagamentos ou contratação sem resposta expressa da equipa.','No SOURCE AO, nunca transformar fornecedor potencial, fonte pública ou oportunidade descoberta em stock, preço, adjudicação, elegibilidade ou disponibilidade confirmados.','Nunca divulgar dados privados de parceiros, fornecedores, contactos de clientes, tokens, rotas administrativas, prioridades internas ou inteligência comercial não publicada.','Na KARTA, distinguir rigorosamente capacidades Alpha atuais de itens de roadmap.','Responder no idioma do utilizador sempre que possível; PT e EN são suportados.']}
   };
@@ -119,20 +152,23 @@
     return [
       `KNOWLEDGE_VERSION: ${kb.version}`,
       `EMPRESA: ${c.name}; sede ${c.location}; tel/WhatsApp ${c.phone}; email geral/comercial ${c.emailGeneral}; email institucional ${c.emailInstitutional}; NIF ${c.nif}; Registo Comercial ${c.commercialRegistration}.`,
-      `ESTADO DO SITE: ${kb.siteState.homepagePt} ${kb.siteState.sourcePlacementPt} ${kb.siteState.commercialJourneyPt} ${kb.siteState.emailRoutingPt} ${kb.siteState.emailRoutingEn}`,
-      `CONSTRUÇÃO: ${kb.construction.summaryPt} Capacidades: ${kb.construction.capabilitiesPt.join('; ')}. Processo: ${kb.construction.processPt.join('; ')}.`,
-      `FACILITIES: ${kb.facilities.summaryPt} Capacidades: ${kb.facilities.capabilitiesPt.join('; ')}.`,
-      `SUPPLY: ${kb.supply.summaryPt} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. Processo: ${kb.supply.processPt.join('; ')}. ${kb.supply.rulePt}`,
-      `CLEAN: ${kb.clean.summaryPt} 123 Pine Gel 500 ml: preço sob consulta. Taurus Pine Gel T563P: ${p.descriptionPt} ${p.featuresPt} Formato, preço, stock e prazo sujeitos a confirmação comercial. Aplicações: ${p.applicationsPt.join(', ')}. Diluições: ${p.dilutionsPt.join('; ')}. Aviso: ${p.warningPt} ${kb.clean.brandNotePt}`,
+      `ESTADO DO SITE: ${kb.siteState.homepagePt} ${kb.siteState.homepageEn} ${kb.siteState.developmentProjectsPt} ${kb.siteState.developmentProjectsEn} ${kb.siteState.sourcePlacementPt} ${kb.siteState.commercialJourneyPt} ${kb.siteState.emailRoutingPt} ${kb.siteState.emailRoutingEn}`,
+      `PROJECTOS EM DESENVOLVIMENTO / PROJECTS IN DEVELOPMENT: ${kb.projects.distinctionPt} ${kb.projects.distinctionEn} ${kb.projects.developmentYard.summaryPt} ${kb.projects.developmentYard.summaryEn} Estado: ${kb.projects.developmentYard.statusEn}. Local: ${kb.projects.developmentYard.location}. Terreno: ${kb.projects.developmentYard.plot.dimensions} = ${kb.projects.developmentYard.plot.area}. Estado: ${kb.projects.developmentYard.statusPt} Alternativa A: armazém ${kb.projects.developmentYard.alternativeA.warehouseArea}; cobertura lateral ${kb.projects.developmentYard.alternativeA.canopyArea}; escritório ${kb.projects.developmentYard.alternativeA.officeArea}; apoio técnico ${kb.projects.developmentYard.alternativeA.technicalSupportArea}; área coberta indicativa total ${kb.projects.developmentYard.alternativeA.indicativeCoveredTotal}; acesso livre ${kb.projects.developmentYard.alternativeA.clearVehicleLane}; portão conceptual ${kb.projects.developmentYard.alternativeA.conceptualGate}. Alternativa B: armazém ${kb.projects.developmentYard.alternativeB.warehouseArea}; escritório ${kb.projects.developmentYard.alternativeB.officeArea}; corredor lateral ${kb.projects.developmentYard.alternativeB.clearSideCorridor}; pátio frontal ${kb.projects.developmentYard.alternativeB.frontManeuverYard}; afastamento traseiro ${kb.projects.developmentYard.alternativeB.rearClearance}. Área coberta total B: ${kb.projects.developmentYard.alternativeB.coveredTotal} ${kb.projects.developmentYard.validationPt} Páginas: ${kb.projects.developmentYard.pagePt} e ${kb.projects.developmentYard.pageEn}.`,
+      `DIRECTÓRIO DO SITE / WEBSITE DIRECTORY: ${kb.siteDirectory.corePt.join(' ')} ${kb.siteDirectory.specialistPt.join(' ')} ${kb.siteDirectory.coreEn.join(' ')} ${kb.siteDirectory.specialistEn.join(' ')}`,
+      `CONSTRUÇÃO / CONSTRUCTION: ${kb.construction.summaryPt} ${kb.construction.summaryEn} Capacidades: ${kb.construction.capabilitiesPt.join('; ')}. Processo: ${kb.construction.processPt.join('; ')}. Páginas especializadas: ${kb.construction.specialistPagesPt.join(' ')} ${kb.construction.specialistPagesEn.join(' ')}`,
+      `FACILITIES: ${kb.facilities.summaryPt} ${kb.facilities.summaryEn} Capacidades: ${kb.facilities.capabilitiesPt.join('; ')}. Páginas especializadas: ${kb.facilities.specialistPagesPt.join(' ')} ${kb.facilities.specialistPagesEn.join(' ')}.`,
+      `SUPPLY: ${kb.supply.summaryPt} ${kb.supply.summaryEn} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. Processo: ${kb.supply.processPt.join('; ')}. ${kb.supply.rulePt} ${kb.supply.specialistPagesPt.join(' ')} ${kb.supply.specialistPagesEn.join(' ')}`,
+      `CLEAN: ${kb.clean.summaryPt} ${kb.clean.summaryEn} 123 Pine Gel 500 ml: preço sob consulta. Taurus Pine Gel T563P: ${p.descriptionPt} ${p.featuresPt} Formato, preço, stock e prazo sujeitos a confirmação comercial. Aplicações: ${p.applicationsPt.join(', ')}. Diluições: ${p.dilutionsPt.join('; ')}. Aviso: ${p.warningPt} ${kb.clean.brandNotePt}`,
       `CATÁLOGO CLEAN: ${cleanCatalog.map(x=>`${x[0]} ${x[1]} [${x[2]}]`).join('; ')}. Para estes itens, se não houver preço publicado, confirmar com equipa comercial.`,
       `BUSINESS SERVICES: ${kb.businessServices.servicesPt.join('; ')}. ${kb.businessServices.pricingRulePt}`,
-      `SMART RFQ: ${kb.smartRfq.summaryPt} ${kb.smartRfq.limitsPt} ${kb.smartRfq.privacyPt}`,
+      `SMART RFQ: ${kb.smartRfq.summaryPt} ${kb.smartRfq.summaryEn} ${kb.smartRfq.limitsPt} ${kb.smartRfq.privacyPt}`,
       `AGENDAMENTO HMATIAS: ${kb.booking.summaryPt} ${kb.booking.rulesPt.join('; ')}.`,
-      `KARTA: ${kb.karta.summaryPt} ${kb.karta.statusPt} Capacidades atuais: ${kb.karta.currentPt.join('; ')}. Roadmap: ${kb.karta.roadmapPt.join('; ')}. ${kb.karta.rulePt}`,
-      `SOURCE AO: ${kb.sourceAO.positioningPt} Mercados: ${kb.sourceAO.marketsPt.join('; ')}. ${kb.sourceAO.marketRulePt} ${kb.sourceAO.coreRulePt} ${kb.sourceAO.searchTruthPt} ${kb.sourceAO.intakeTruthPt} ${kb.sourceAO.commercialFlowPt} Capacidades públicas: ${kb.sourceAO.publicCapabilitiesPt.join('; ')}. ${kb.sourceAO.rfqPt} ${kb.sourceAO.lifecyclePt} ${kb.sourceAO.opportunityPt} ${kb.sourceAO.refreshPt} ${kb.sourceAO.privacyPt} ${kb.sourceAO.architecturePt} ${kb.sourceAO.brandPt}`,
-      `PROJETOS PÚBLICOS: ${kb.projects.publicExamplesPt.join('; ')}. ${kb.projects.disclosurePt}`,
+      `KARTA: ${kb.karta.summaryPt} ${kb.karta.summaryEn} ${kb.karta.statusPt} Capacidades atuais: ${kb.karta.currentPt.join('; ')}. Roadmap: ${kb.karta.roadmapPt.join('; ')}. ${kb.karta.rulePt}`,
+      `SOURCE AO: ${kb.sourceAO.positioningPt} ${kb.sourceAO.positioningEn} Mercados: ${kb.sourceAO.marketsPt.join('; ')}. ${kb.sourceAO.marketRulePt} ${kb.sourceAO.coreRulePt} ${kb.sourceAO.searchTruthPt} ${kb.sourceAO.intakeTruthPt} ${kb.sourceAO.commercialFlowPt} Capacidades públicas: ${kb.sourceAO.publicCapabilitiesPt.join('; ')}. ${kb.sourceAO.rfqPt} ${kb.sourceAO.lifecyclePt} ${kb.sourceAO.opportunityPt} ${kb.sourceAO.refreshPt} ${kb.sourceAO.privacyPt} ${kb.sourceAO.architecturePt} ${kb.sourceAO.brandPt}`,
+      `OBRAS EXECUTADAS: ${kb.projects.publicExamplesPt.join('; ')}. ${kb.projects.disclosurePt} ${kb.projects.distinctionPt}`,
+      `PÁGINAS ESPECIALIZADAS: ${kb.construction.specialistPagesPt.join(' ')} ${kb.facilities.specialistPagesPt.join(' ')} ${kb.supply.specialistPagesPt.join(' ')}`,
       `REGRAS DE VERDADE: ${kb.safetyAndTruth.rulesPt.join(' ')}.`,
-      `PÁGINAS: construção ${kb.pages.construction}; facilities ${kb.pages.facilities}; supply ${kb.pages.supply}; Smart RFQ ${kb.pages.rfq}; catálogo ${kb.pages.worksCatalogue}; credibilidade ${kb.pages.credibility}; clean ${kb.pages.clean}; KARTA ${kb.pages.karta}; business ${kb.pages.business}; agendamento ${kb.pages.booking}; SOURCE AO ${kb.pages.sourceAO}; Intelligence Radar ${kb.pages.sourceRadar}.`
+      `PÁGINAS: início ${kb.pages.home}; construção ${kb.pages.construction}; facilities ${kb.pages.facilities}; supply ${kb.pages.supply}; Smart RFQ ${kb.pages.rfq}; catálogo ${kb.pages.worksCatalogue}; projectos em desenvolvimento ${kb.pages.developmentProjects}; estaleiro ${kb.pages.yard}; coberturas ${kb.pages.industrialRoofs}; limpeza pós-obra ${kb.pages.postConstructionCleaning}; EPI e fardamento ${kb.pages.ppeUniforms}; remodelação de escritórios ${kb.pages.officeRemodelling}; credibilidade ${kb.pages.credibility}; clean ${kb.pages.clean}; KARTA ${kb.pages.karta}; business ${kb.pages.business}; agendamento ${kb.pages.booking}; SOURCE AO ${kb.pages.sourceAO}; Intelligence Radar ${kb.pages.sourceRadar}; versões inglesas: homepage ${kb.pages.homeEn}; construction ${kb.pages.constructionEn}; facilities ${kb.pages.facilitiesEn}; supply ${kb.pages.supplyEn}; works catalogue ${kb.pages.worksCatalogueEn}; integrated yard ${kb.pages.yardEn}.`
     ].join('\n');
   };
 

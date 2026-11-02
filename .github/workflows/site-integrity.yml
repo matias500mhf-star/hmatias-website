@@ -378,6 +378,8 @@ jobs:
                   'SOURCE AO': 'sourceAO: {',
                   'KARTA': 'karta: {',
                   'Smart RFQ': 'smartRfq: {',
+                  'Projectos em Desenvolvimento': 'developmentYard: {',
+                  'Directório de páginas do site': 'siteDirectory: {',
               }
               for label, needle in required_knowledge.items():
                   if needle not in knowledge_text:

@@ -343,3 +343,60 @@ body.yard-page .copyright{
   body.yard-page .yard-metric b{font-size:18px}
   body.yard-page .yard-cta h2{font-size:25px}
 }
+
+/* Homepage feature card typography — crisp, readable and scoped to Construction pages. */
+body.hmatias-construction .yard-entry-inner,
+body.hmatias-construction .yard-entry-inner *{
+  text-shadow:none!important;
+  filter:none!important;
+  opacity:1;
+}
+body.hmatias-construction .yard-entry-inner{
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+body.hmatias-construction .yard-entry-inner .eyebrow{
+  display:inline-block;
+  color:#ffd19e!important;
+  font-family:"Manrope","Helvetica Neue",Arial,sans-serif!important;
+  font-size:13px!important;
+  font-weight:800!important;
+  letter-spacing:.055em!important;
+  line-height:1.45!important;
+  text-transform:uppercase;
+  margin:0 0 5px;
+}
+body.hmatias-construction .yard-entry-inner h2{
+  color:#fff!important;
+  font-family:"Instrument Sans","Helvetica Neue",Arial,sans-serif!important;
+  font-size:clamp(27px,2.5vw,33px)!important;
+  font-weight:700!important;
+  letter-spacing:-.018em!important;
+  line-height:1.18!important;
+  margin:6px 0 10px!important;
+  max-width:28ch;
+}
+body.hmatias-construction .yard-entry-inner p{
+  color:#f0f5f9!important;
+  font-family:"Manrope","Helvetica Neue",Arial,sans-serif!important;
+  font-size:16px!important;
+  font-weight:500!important;
+  letter-spacing:0!important;
+  line-height:1.7!important;
+  max-width:66ch!important;
+  margin:0!important;
+}
+body.hmatias-construction .yard-entry-inner .btn{
+  color:#fff!important;
+  font-family:"Manrope","Helvetica Neue",Arial,sans-serif!important;
+  font-size:15px!important;
+  font-weight:800!important;
+  letter-spacing:0!important;
+  line-height:1.4!important;
+  filter:none!important;
+  text-shadow:none!important;
+}
+@media(max-width:850px){
+  body.hmatias-construction .yard-entry-inner h2{font-size:27px!important}
+  body.hmatias-construction .yard-entry-inner p{font-size:15px!important}
+}
