@@ -83,3 +83,14 @@ body.hmatias-home .development-project-facts>p{margin:0;color:#697d8c;font-famil
   body.hmatias-home .development-project-options{grid-template-columns:1fr}
   body.hmatias-home .development-project-site{grid-template-columns:1fr}
 }
+
+body.hmatias-home .development-projects .section-heading .eyebrow{
+  color:#176292;
+  font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.45;
+  letter-spacing:.055em;
+  text-shadow:none;
+  filter:none;
+}
