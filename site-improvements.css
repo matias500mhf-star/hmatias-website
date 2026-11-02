@@ -17,7 +17,7 @@
 
 
 /* HMATIAS homepage — development projects, kept separate from the executed works portfolio. */
-body.hmatias-home .development-projects{padding:76px 0;background:#fff}
+body.hmatias-home .development-projects{--hm-editorial-display:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;--hm-editorial-body:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;padding:76px 0;background:#fff}
 body.hmatias-home .development-projects .section-heading{margin-bottom:28px}
 body.hmatias-home .development-project-card{
   display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
