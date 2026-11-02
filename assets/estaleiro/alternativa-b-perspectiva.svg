@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+<title id="title">Perspectiva conceptual — Alternativa B</title><desc id="desc">Vista arquitectónica conceptual de um armazém ampliado com escritório frontal e corredor lateral de acesso e carga.</desc>
+<defs>
+ <linearGradient id="skyB" x2="0" y2="1"><stop stop-color="#dcebf5"/><stop offset="1" stop-color="#f8fafc"/></linearGradient>
+ <linearGradient id="metalB" x2="0" y2="1"><stop stop-color="#244d70"/><stop offset="1" stop-color="#0b2947"/></linearGradient>
+ <linearGradient id="sideB" x2="1" y2="1"><stop stop-color="#1e4262"/><stop offset="1" stop-color="#081f37"/></linearGradient>
+ <linearGradient id="glassB" x2="0" y2="1"><stop stop-color="#90bed4"/><stop offset=".4" stop-color="#315d7a"/><stop offset="1" stop-color="#112f4c"/></linearGradient>
+ <linearGradient id="floorB" x2="0" y2="1"><stop stop-color="#d9e1e6"/><stop offset="1" stop-color="#aebdc7"/></linearGradient>
+ <filter id="shadowB" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="13"/></filter>
+ <pattern id="ribsB" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M2 0V18" stroke="#708a9c" stroke-opacity=".36" stroke-width="2"/></pattern>
+</defs>
+<rect width="1200" height="680" fill="url(#skyB)"/>
+<circle cx="1000" cy="95" r="58" fill="#fff" opacity=".4"/>
+<path d="M0 360Q150 315 320 347T650 338T1200 340V480H0Z" fill="#c4d8d9"/>
+<g fill="#719a83" opacity=".75"><circle cx="60" cy="318" r="58"/><circle cx="115" cy="300" r="46"/><circle cx="1140" cy="285" r="60"/><circle cx="1085" cy="305" r="45"/></g>
+<g stroke="#5e806e" stroke-width="7"><path d="M88 320V386M1127 300V386M1055 325V390"/></g>
+<path d="M0 425L1200 398V680H0Z" fill="url(#floorB)"/>
+<path d="M0 500L1200 460M0 590L1200 529" stroke="#fff" stroke-opacity=".48" stroke-width="3"/>
+<ellipse cx="620" cy="490" rx="520" ry="46" fill="#102f49" opacity=".2" filter="url(#shadowB)"/>
+<!-- deeper side access lane -->
+<path d="M980 314L1192 357V622L980 570Z" fill="#c5d3dc"/>
+<path d="M1018 340L1190 377" stroke="#f6b33a" stroke-width="7"/>
+<path d="M1038 372L1182 405M1050 442L1188 478M1060 520L1190 548" stroke="#fff" stroke-width="4" opacity=".55"/>
+<!-- larger warehouse side wall -->
+<path d="M880 156L1060 221V481L880 446Z" fill="url(#sideB)" stroke="#071f38" stroke-width="3"/>
+<path d="M880 156L1060 221L1110 189L930 124Z" fill="#183d5f" stroke="#071f38" stroke-width="3"/>
+<path d="M895 173L1044 226V460L895 430Z" fill="url(#ribsB)"/>
+<!-- main front, larger span -->
+<path d="M160 220L880 156V446L160 485Z" fill="url(#metalB)" stroke="#071f38" stroke-width="3"/>
+<path d="M160 220L880 156V446L160 485Z" fill="url(#ribsB)"/>
+<path d="M145 210L883 143L935 171L160 247Z" fill="#294f70" stroke="#0a2743" stroke-width="3"/>
+<path d="M160 247L935 171" stroke="#e98a32" stroke-width="8"/>
+<!-- front office, compact -->
+<path d="M190 297L356 282V449L190 460Z" fill="#e5ebee" stroke="#0b2947" stroke-width="7"/>
+<path d="M205 312L341 300V433L205 444Z" fill="url(#glassB)"/>
+<path d="M205 312L341 300V433L205 444Z" fill="none" stroke="#f7fafb" stroke-width="5"/>
+<path d="M252 308V440M302 304V437M205 372L341 361" stroke="#e6edf2" stroke-width="5"/>
+<path d="M344 291V450" stroke="#e98a32" stroke-width="9"/>
+<!-- large roller shutter opening -->
+<path d="M405 270L845 230V439L405 467Z" fill="#071b2e" stroke="#e6edf2" stroke-width="5"/>
+<path d="M426 289L824 253V423L426 450Z" fill="#0d2236"/>
+<g stroke="#97aebd" stroke-width="2" opacity=".85"><path d="M426 311L824 275M426 337L824 301M426 363L824 327M426 389L824 353M426 415L824 379"/></g>
+<!-- storage racks -->
+<g stroke="#e98b32" stroke-width="7" fill="none"><path d="M446 300V432M480 296V430M446 334H480M446 369H480M446 404H480"/><path d="M760 266V427M795 262V424M760 302H795M760 339H795M760 376H795"/></g>
+<g fill="#cfa06b"><rect x="451" y="310" width="24" height="20"/><rect x="451" y="344" width="24" height="20"/><rect x="451" y="380" width="24" height="20"/><rect x="765" y="275" width="24" height="22"/><rect x="765" y="314" width="24" height="22"/><rect x="765" y="352" width="24" height="22"/></g>
+<!-- interior pallets -->
+<g fill="#c69256" stroke="#825c35" stroke-width="2"><rect x="545" y="404" width="48" height="27"/><rect x="550" y="382" width="44" height="22"/><rect x="608" y="400" width="45" height="29"/><rect x="613" y="378" width="38" height="22"/></g>
+<!-- office roof fascia -->
+<path d="M180 286L370 268L397 283L190 305Z" fill="#e98a32"/>
+<!-- side access corridor canopy / lane remains open -->
+<path d="M1000 260L1165 318" stroke="#e98a32" stroke-width="8"/>
+<path d="M1003 270V458M1163 325V500" stroke="#0b2947" stroke-width="8"/>
+<!-- paved front manoeuvring yard -->
+<path d="M210 520L870 478" stroke="#fff" stroke-width="8" opacity=".7"/>
+<path d="M210 520L870 478" stroke="#f5b333" stroke-width="3"/>
+<path d="M310 520L440 513L478 592L345 600Z" fill="none" stroke="#f5b333" stroke-width="6"/>
+<path d="M505 508L665 499L702 579L542 588Z" fill="none" stroke="#f5b333" stroke-width="6"/>
+<!-- landscaping -->
+<g><path d="M95 447V474M110 443V469M125 440V466" stroke="#6f8c55" stroke-width="5"/><path d="M92 449q-16-19-25-7q8 18 25 7M108 448q14-24 24-9q-8 19-24 9M123 446q16-18 25-3q-13 17-25 3" fill="#4c8766"/></g>
+<g><path d="M890 453V475M904 450V475M918 448V474" stroke="#6f8c55" stroke-width="5"/><path d="M887 455q-16-19-25-7q8 18 25 7M902 454q14-24 24-9q-8 19-24 9M917 452q16-18 25-3q-13 17-25 3" fill="#4c8766"/></g>
+</svg>
