@@ -34,6 +34,8 @@ jobs:
           node-version: '22'
       - name: Check assistant API bridge syntax
         run: node --check assistant-api-bridge.js
+      - name: Check assistant client syntax
+        run: node --check assistant.js
       - name: Validate assistant bridge loads before assistant
         run: |
           node --input-type=module <<'NODE'
@@ -42,7 +44,7 @@ jobs:
           const checked=[];
           for(const page of pages){
             const html=readFileSync(page,'utf8');
-            const assistant=html.indexOf('assistant.js?v=20261028-nif-boundary2');
+            const assistant=html.indexOf('assistant.js?v=20261030-handoff1');
             if(assistant<0) continue;
             const bridge=html.indexOf('assistant-api-bridge.js?v=20261027-workers-dev-api1');
             if(bridge<0||bridge>assistant) throw new Error('AI API bridge missing or ordered after assistant.js in '+page);

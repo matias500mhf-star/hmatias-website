@@ -11,6 +11,15 @@ export const homeCssBundles = {
   'clean-details.css': ['typography.css', 'site-review.css', 'premium-typography.css', 'institutional-premium.css', 'facilities-clean.css', 'clean-cart.css'],
 };
 
+export const pageCssBundles = {
+  'clean-page.css': ['clean-base.css', 'header.css', 'clean-details.css', 'assistant-handoff.css'],
+  'facilities-page.css': [
+    'style.css', 'premium.css', 'division.css', 'assistant.css', 'header.css',
+    'typography.css', 'site-review.css', 'premium-typography.css',
+    'institutional-premium.css', 'facilities-clean.css', 'assistant-handoff.css',
+  ],
+};
+
 export const homeCssSource = sources => sources
   .map(source => `/* ${source} */\n${readFileSync(new URL(source, root), 'utf8').trimEnd()}\n`)
   .join('\n');
@@ -44,12 +53,20 @@ export function validateHomeCssBundles() {
       throw new Error(`${bundle} is stale. Run node scripts/build-home-css.mjs --write after editing its source stylesheets.`);
     }
   }
+  for (const [bundle, sources] of Object.entries(pageCssBundles)) {
+    if (readFileSync(new URL(bundle, root), 'utf8') !== homeCssSource(sources)) {
+      throw new Error(`${bundle} is stale. Run node scripts/build-home-css.mjs --write after editing its source stylesheets.`);
+    }
+  }
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   if (process.argv.includes('--write')) {
     for (const [bundle, sources] of Object.entries(homeCssBundles)) {
       writeFileSync(new URL(bundle, root), homeCssContent(sources));
+    }
+    for (const [bundle, sources] of Object.entries(pageCssBundles)) {
+      writeFileSync(new URL(bundle, root), homeCssSource(sources));
     }
   }
   validateHomeCssBundles();

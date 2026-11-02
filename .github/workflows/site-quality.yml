@@ -133,6 +133,27 @@ jobs:
                   metric_parts.append(f"{label}={value} (score={score})")
               print('Performance metrics: ' + ' | '.join(metric_parts))
 
+              if path.name in {
+                  'lighthouse-clean-mobile.json',
+                  'lighthouse-clean-en-mobile.json',
+                  'lighthouse-facilities-mobile.json',
+                  'lighthouse-facilities-en-mobile.json',
+              }:
+                  for audit_id in (
+                      'largest-contentful-paint-element',
+                      'lcp-discovery-insight',
+                      'lcp-breakdown-insight',
+                  ):
+                      audit = data.get('audits', {}).get(audit_id, {})
+                      if not audit:
+                          continue
+                      details = audit.get('details') or {}
+                      print(f"LCP diagnostic ({audit_id}) for {path.name}:")
+                      print(f" - {audit.get('displayValue') or audit.get('title') or audit_id}")
+                      for item in (details.get('items') or [])[:3]:
+                          print('   ' + json.dumps(item, ensure_ascii=False)[:2200])
+
+
               print(f"Accessibility findings for {path.name}:")
               seen = set()
               for ref in cats['accessibility'].get('auditRefs', []):
