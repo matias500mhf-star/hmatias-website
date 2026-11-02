@@ -1,0 +1,65 @@
+/* Estaleiro Integrado HMATIAS - project page and construction-page feature card */
+.yard-page{background:#f7f9fb}
+.yard-page main{overflow:hidden}
+.yard-hero{background:linear-gradient(120deg,#062b4d 0%,#0b3c67 72%,#174e78 100%);color:#fff;padding:76px 0 64px;position:relative}
+.yard-hero:after{content:"";position:absolute;right:-70px;top:-110px;width:480px;height:480px;border:1px solid rgba(255,255,255,.11);border-radius:50%;box-shadow:0 0 0 55px rgba(255,255,255,.025),0 0 0 110px rgba(255,255,255,.02);pointer-events:none}
+.yard-hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.8fr);gap:42px;align-items:center;position:relative;z-index:1}
+.yard-kicker{display:inline-flex;align-items:center;gap:9px;color:#ffbf79;font-weight:700;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase}
+.yard-kicker:before{content:"";width:25px;height:2px;background:#e98b2a}
+.yard-hero h1{color:#fff;max-width:780px;margin:16px 0 18px;font-size:clamp(2.2rem,4.8vw,4.1rem);line-height:1.08}
+.yard-hero p{max-width:760px;color:#dce7ef;font-size:1.05rem;line-height:1.75}
+.yard-hero-panel{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);border-radius:16px;padding:24px;backdrop-filter:blur(6px)}
+.yard-hero-panel strong{display:block;color:#fff;font-size:1.05rem;margin-bottom:14px}
+.yard-hero-panel span{display:block;color:#e0e9f0;font-size:.92rem;margin:6px 0}
+.yard-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:30px;max-width:820px}
+.yard-fact{border-left:2px solid #e98b2a;padding:4px 12px}
+.yard-fact b{display:block;color:#fff;font-size:1.4rem;line-height:1.25}
+.yard-fact small{display:block;color:#cbd9e4;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;margin-top:5px}
+.yard-section{padding:68px 0}
+.yard-section.soft{background:#f0f4f7}
+.yard-heading{max-width:820px;margin-bottom:28px}
+.yard-heading .eyebrow{color:#2f79b7}
+.yard-heading h2{color:#082b4c;margin:10px 0 12px}
+.yard-heading p{color:#5d7080}
+.yard-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.yard-option{background:#fff;border:1px solid #dbe3ea;border-radius:16px;padding:25px;box-shadow:0 12px 30px rgba(8,43,76,.06)}
+.yard-option-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px}
+.yard-option h3{color:#082b4c;margin:0 0 5px}
+.yard-option .yard-sub{color:#65798b;font-size:.86rem;margin:0}
+.yard-number{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:42px;border-radius:50%;background:#fff1e4;color:#c86d1b;font-weight:800;font-size:1rem}
+.yard-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.yard-metric{background:#f4f7f9;border-radius:9px;padding:12px}
+.yard-metric small{display:block;color:#65798b;font-size:.72rem;line-height:1.4}
+.yard-metric b{display:block;color:#082b4c;font-size:1.12rem;margin-top:3px}
+.yard-plan-card{margin-top:25px;background:#fff;border:1px solid #dbe3ea;border-radius:16px;padding:18px;box-shadow:0 12px 30px rgba(8,43,76,.05)}
+.yard-plan-card img{display:block;width:100%;height:auto;border:1px solid #e2e8ee;border-radius:8px;background:#fff}
+.yard-plan-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.yard-plan-actions a{display:inline-flex;align-items:center;gap:8px;color:#0b5f98;font-weight:700;font-size:.88rem;text-decoration:none}
+.yard-plan-actions a:hover{text-decoration:underline}
+.yard-table-wrap{overflow-x:auto;border:1px solid #dce4eb;border-radius:14px;background:#fff}
+.yard-table{width:100%;border-collapse:collapse;min-width:600px}
+.yard-table th,.yard-table td{padding:16px 18px;border-bottom:1px solid #e7edf2;text-align:left;font-size:.91rem}
+.yard-table thead th{background:#082b4c;color:#fff;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase}
+.yard-table tbody th{color:#082b4c;font-weight:700;width:33%}
+.yard-table tbody td{color:#52697c}
+.yard-table tbody tr:last-child th,.yard-table tbody tr:last-child td{border-bottom:0}
+.yard-table .yard-emphasis{color:#0b2c4a;font-weight:800}
+.yard-validation{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.yard-validation article{background:#fff;border:1px solid #dbe3ea;border-radius:13px;padding:20px}
+.yard-validation h3{color:#082b4c;font-size:1rem;margin:0 0 8px}
+.yard-validation p{color:#65798b;font-size:.88rem;margin:0}
+.yard-disclaimer{background:#fff7ed;border:1px solid #f2d5b6;border-left:4px solid #e98b2a;border-radius:10px;padding:18px 20px;color:#68451f;font-size:.9rem;line-height:1.65;margin-top:24px}
+.yard-cta{background:#082b4c;color:#fff;padding:46px 0}
+.yard-cta-inner{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.yard-cta h2{color:#fff;margin:0 0 8px;font-size:1.6rem}
+.yard-cta p{color:#d5e2ec;margin:0;max-width:720px}
+.yard-cta .btn{flex:0 0 auto}
+.yard-entry{padding:40px 0}
+.yard-entry-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;background:linear-gradient(115deg,#082b4c,#10476f);border-radius:16px;padding:28px 32px;color:#fff}
+.yard-entry-inner h2{margin:5px 0 8px;color:#fff;font-size:1.55rem}
+.yard-entry-inner p{margin:0;color:#dbe7f0;max-width:730px;font-size:.92rem}
+.yard-entry-inner .eyebrow{color:#ffbf79}
+.yard-entry-inner .btn{flex:0 0 auto}
+@media(max-width:850px){.yard-hero{padding:55px 0 46px}.yard-hero-grid{grid-template-columns:1fr;gap:26px}.yard-hero-panel{max-width:560px}.yard-options{grid-template-columns:1fr}.yard-cta-inner,.yard-entry-inner{align-items:flex-start;flex-direction:column}.yard-validation{grid-template-columns:1fr}}
+@media(max-width:560px){.yard-section{padding:48px 0}.yard-facts{grid-template-columns:1fr;gap:10px}.yard-fact{display:flex;align-items:baseline;gap:12px}.yard-fact b{font-size:1.2rem}.yard-option{padding:18px}.yard-metrics{gap:8px}.yard-plan-card{padding:9px}.yard-plan-actions{flex-direction:column}.yard-entry-inner{padding:23px}}
+@media print{.yard-page .topbar,.yard-page .hmatias-header,.yard-page footer,.yard-hero,.yard-cta,.yard-plan-actions{display:none!important}.yard-section{padding:12px 0}.yard-plan-card{box-shadow:none;break-inside:avoid}}
