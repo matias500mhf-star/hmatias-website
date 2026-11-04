@@ -141,6 +141,8 @@ jobs:
           fetch "/rfq.html" /tmp/rfq.html
           fetch "/karta.html" /tmp/karta.html
           fetch "/credibilidade.html" /tmp/credibilidade.html
+          fetch "/servicos-administrativos.html" /tmp/business-services-pt.html
+          fetch "/business-services.html" /tmp/business-services-en.html
           fetch "/source-ao/index.html" /tmp/source-ao.html
           fetch "/source-ao/opportunity-radar.html" /tmp/source-ao-radar.html
           fetch "/source-ao/runtime-config.js" /tmp/source-ao-runtime.js
@@ -174,6 +176,12 @@ jobs:
           grep -Fq "SMART RFQ" /tmp/rfq.html
           grep -Fq "KARTA Wallet Mobile" /tmp/karta.html
           grep -Fq "Como assumimos cada trabalho." /tmp/credibilidade.html
+          grep -Fq 'mailto:geral@comercialhmatiasps.com' /tmp/business-services-pt.html
+          grep -Fq 'mailto:geral@comercialhmatiasps.com' /tmp/business-services-en.html
+          if grep -Fq 'href="mailto:info@comercialhmatiasps.com"' /tmp/business-services-pt.html /tmp/business-services-en.html; then
+            echo "ERROR: Business Services manual email CTA still points to the institutional inbox"
+            exit 1
+          fi
           grep -Fq "../images/source-ao-logo.svg" /tmp/source-ao.html
           grep -Fq "https://comercialhmatiasps.com/source-ao/index.html" /tmp/procura-alias.html
           grep -Fq "/source-ao/index.html" /tmp/procura-alias.html
@@ -262,9 +270,9 @@ jobs:
                   raise SystemExit(f'About navigation does not reach corporate information: {path}')
 
           credibility = open('/tmp/credibilidade.html', encoding='utf-8').read()
-          card = credibility.partition('<aside class="institutional-card institutional-contact">')[2].partition('</aside>')[0]
-          if not card or card.count('mailto:geral@comercialhmatiasps.com') != 1:
-              raise SystemExit('Production credibility contact block is duplicated or malformed')
+          contact = credibility.partition('<section class="cred-contact">')[2].partition('</section>')[0]
+          if not contact or credibility.count('<section class="cred-contact">') != 1 or contact.count('mailto:geral@comercialhmatiasps.com') != 1:
+              raise SystemExit('Production credibility contact section is duplicated or malformed')
 
           print(f'Production sitemap OK: {len(urls)} URLs')
           PY
