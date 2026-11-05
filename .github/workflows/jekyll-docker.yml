@@ -178,10 +178,23 @@ jobs:
           grep -Fq "Como assumimos cada trabalho." /tmp/credibilidade.html
           grep -Fq 'mailto:geral@comercialhmatiasps.com' /tmp/business-services-pt.html
           grep -Fq 'mailto:geral@comercialhmatiasps.com' /tmp/business-services-en.html
-          if grep -Fq 'href="mailto:info@comercialhmatiasps.com"' /tmp/business-services-pt.html /tmp/business-services-en.html; then
-            echo "ERROR: Business Services manual email CTA still points to the institutional inbox"
-            exit 1
-          fi
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          for page in ("/tmp/business-services-pt.html", "/tmp/business-services-en.html"):
+              html = Path(page).read_text(encoding="utf-8")
+              match = re.search(r'<section class="business-contact"[^>]*>.*?</section>', html, re.S)
+              if not match:
+                  raise SystemExit(f"Business Services contact section not found: {page}")
+              contact = match.group(0)
+              if 'href="mailto:geral@comercialhmatiasps.com"' not in contact:
+                  raise SystemExit(f"Business Services commercial CTA is missing the general inbox: {page}")
+              if 'href="mailto:info@comercialhmatiasps.com"' in contact:
+                  raise SystemExit(f"Business Services commercial CTA points to the institutional inbox: {page}")
+
+          print("Business Services commercial CTA routing OK: PT/EN use geral@; institutional footer contact remains permitted.")
+          PY
           grep -Fq "../images/source-ao-logo.svg" /tmp/source-ao.html
           grep -Fq "https://comercialhmatiasps.com/source-ao/index.html" /tmp/procura-alias.html
           grep -Fq "/source-ao/index.html" /tmp/procura-alias.html
