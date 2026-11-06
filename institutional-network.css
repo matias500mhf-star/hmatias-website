@@ -70,3 +70,11 @@ body.hmatias-network-page{--net-ink:#102a43;--net-navy:#062d56;--net-blue:#17639
 .network-footer a{color:#fff;text-decoration:none}
 @media(max-width:760px){.network-hero-grid,.network-heading{grid-template-columns:1fr}.network-hero-note{max-width:520px}.partners-grid,.catalogue-grid,.team-grid{grid-template-columns:1fr}.profile-specimen{grid-template-columns:1fr}.specimen-photo{min-height:250px}.network-process{grid-template-columns:repeat(2,minmax(0,1fr))}.network-process article:nth-child(3){border-left:0;padding-left:0;border-top:1px solid #d9e3ea}.network-process article:nth-child(4){border-top:1px solid #d9e3ea}.network-cta-inner{align-items:flex-start;flex-direction:column}}
 @media(max-width:420px){.network-hero{padding-top:66px}.network-hero h1{font-size:2.55rem}.network-process{grid-template-columns:1fr}.network-process article+article{border-left:0;border-top:1px solid #d9e3ea;padding-left:0}.profile-specimen{padding:14px}.network-empty{padding:28px}}
+
+
+.team-card{display:flex;flex-direction:column;gap:18px}
+.team-card-photo{min-height:210px;display:grid;place-items:center;overflow:hidden;background:#edf2f5;color:#48657b}
+.team-card-photo img{width:100%;height:260px;object-fit:cover;display:block}
+.team-card-photo-placeholder{background:linear-gradient(145deg,#e5edf2,#f4f7f9);border:1px solid #dce5ec}
+.team-card-photo-placeholder span{font-size:2.8rem;font-weight:600;letter-spacing:.08em;color:#315a78}
+.team-card-copy h3{margin:10px 0 4px;font-size:1.35rem;letter-spacing:-.025em;color:#102a43}
