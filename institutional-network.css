@@ -81,3 +81,18 @@ body.hmatias-network-page{--net-ink:#102a43;--net-navy:#062d56;--net-blue:#17639
 
 /* Official partner marks: never substitute invented typographic logos. */
 .partner-logo{height:112px;margin:30px 0 16px;display:flex;align-items:center;justify-content:flex-start;overflow:hidden}.partner-logo-img{display:block;max-width:min(100%,250px);max-height:100px;width:auto;height:auto;object-fit:contain;object-position:left center}.partner-logo-pending{font-size:.72rem;letter-spacing:.06em;color:#81919e;border-bottom:1px solid #dce5ec;padding:10px 0}.partner-card .partner-logo+ .partner-region{display:block}
+
+
+/* Supply catalogue: visual evidence is mandatory for product cards. */
+.supply-catalogue-card{overflow:hidden;gap:16px}
+.supply-catalogue-cover{display:block;width:100%;height:auto;max-height:420px;object-fit:cover;object-position:center;background:#edf2f5;border:1px solid var(--net-line)}
+.supply-products-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:10px 0}
+.supply-product{display:flex;flex-direction:column;min-width:0;border:1px solid var(--net-line);background:#fff}
+.supply-product>img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:#f4f6f7;padding:12px}
+.supply-product>div{padding:14px 14px 4px}
+.supply-product h4{margin:0 0 8px;color:#173b57;font-size:1rem}
+.supply-product p{margin:5px 0;color:#617487;font-size:.8rem;line-height:1.6}
+.supply-product>a{margin:auto 14px 14px;color:#145b8c;font-size:.8rem;font-weight:650;text-decoration:none}
+.supply-catalogue-actions{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0}
+.supply-catalogue-empty{grid-column:1/-1}
+@media(max-width:560px){.supply-products-grid{grid-template-columns:1fr}.supply-catalogue-cover{max-height:300px}}
