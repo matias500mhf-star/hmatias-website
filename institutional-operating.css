@@ -1,0 +1,142 @@
+/* HMATIAS Operating System — substantive internal-page redesign, 2026-11 */
+body.hmatias-institutional{
+ --op-ink:#10283d;--op-navy:#071d32;--op-blue:#17658d;--op-sky:#dcecf3;
+ --op-muted:#637584;--op-line:#d8e1e6;--op-paper:#f4f7f8;--op-white:#fff;
+ background:#fff;color:var(--op-ink);font-family:Inter,"Helvetica Neue",Arial,sans-serif;
+}
+body.hmatias-institutional .container{width:min(1200px,calc(100% - 64px));margin-inline:auto}
+body.hmatias-institutional :is(h1,h2,h3){letter-spacing:-.045em;text-wrap:balance}
+body.hmatias-institutional p{line-height:1.72}
+body.hmatias-institutional a{transition:color .2s ease,background .2s ease,border-color .2s ease}
+body.hmatias-institutional .hmatias-topbar{display:none!important}
+body.hmatias-institutional .hmatias-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);border-bottom:1px solid var(--op-line);box-shadow:0 8px 28px rgba(7,29,50,.045);backdrop-filter:blur(14px)}
+body.hmatias-institutional .hmatias-header .nav{min-height:86px;display:flex;align-items:center;gap:34px}
+body.hmatias-institutional .hmatias-header .brand img{width:76px;height:72px;object-fit:contain}
+body.hmatias-institutional .hmatias-header .nav-menu{display:flex;align-items:center;gap:clamp(16px,2.2vw,30px);margin-left:auto}
+body.hmatias-institutional .hmatias-header .nav-menu a{font-size:13px;font-weight:650;letter-spacing:.01em;color:#31485a;text-decoration:none;padding:12px 0;position:relative}
+body.hmatias-institutional .hmatias-header .nav-menu a:after{content:"";position:absolute;left:0;right:100%;bottom:5px;height:2px;background:var(--op-blue);transition:right .2s ease}
+body.hmatias-institutional .hmatias-header .nav-menu a:hover:after{right:0}
+body.hmatias-institutional .hmatias-header .nav-actions{display:flex;align-items:center;gap:16px}
+body.hmatias-institutional .hmatias-header .lang-switch{font-size:12px;font-weight:750;letter-spacing:.12em;color:var(--op-blue)}
+body.hmatias-institutional .hmatias-header .btn{border-radius:2px;padding:14px 19px;font-size:12px;letter-spacing:.04em;text-transform:uppercase;font-weight:750}
+body.hmatias-institutional .menu-toggle{border:1px solid var(--op-line);border-radius:2px;background:#fff}
+body.hmatias-institutional .unit-hero,body.hmatias-institutional .cred-hero{
+ position:relative;isolation:isolate;overflow:hidden;color:#fff;
+ background:linear-gradient(112deg,#071d32 0%,#0c3450 58%,#155b7b 100%);
+ padding:clamp(76px,9vw,128px) 0 clamp(78px,9vw,126px);
+}
+body.hmatias-institutional .unit-hero:before,body.hmatias-institutional .cred-hero:before{
+ content:"";position:absolute;z-index:-1;width:min(56vw,760px);aspect-ratio:1;border:1px solid rgba(255,255,255,.12);border-radius:50%;right:-13%;top:-62%;
+ box-shadow:0 0 0 64px rgba(255,255,255,.025),0 0 0 128px rgba(255,255,255,.02);
+}
+body.hmatias-institutional .unit-hero:after,body.hmatias-institutional .cred-hero:after{
+ content:"";position:absolute;z-index:-1;inset:auto 0 0;height:5px;background:linear-gradient(90deg,#5bb2d3 0 24%,rgba(255,255,255,.14) 24% 100%);
+}
+body.hmatias-institutional .unit-hero-grid,body.hmatias-institutional .cred-hero-grid{
+ display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.72fr);gap:clamp(38px,7vw,104px);align-items:end;
+}
+body.hmatias-institutional .unit-hero .eyebrow,body.hmatias-institutional .cred-hero .eyebrow{display:inline-flex;color:#a8d9ed;font-size:11px;font-weight:800;letter-spacing:.19em;text-transform:uppercase;margin-bottom:24px}
+body.hmatias-institutional .unit-hero h1,body.hmatias-institutional .cred-hero h1{max-width:850px;font-size:clamp(42px,6.3vw,78px);line-height:.99;font-weight:650;margin:0 0 25px;color:#fff}
+body.hmatias-institutional .unit-hero p,body.hmatias-institutional .cred-hero p{max-width:740px;color:#d5e2e9;font-size:clamp(16px,1.45vw,19px);line-height:1.75;margin:0}
+body.hmatias-institutional .unit-hero .hero-actions,body.hmatias-institutional .cred-hero .cred-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+body.hmatias-institutional .unit-hero .btn,body.hmatias-institutional .cred-hero .btn{min-height:48px;border-radius:2px;padding:15px 20px;font-size:12px;letter-spacing:.055em;text-transform:uppercase;font-weight:800}
+body.hmatias-institutional .unit-hero .btn-light{background:#fff;color:var(--op-navy);border:1px solid #fff}
+body.hmatias-institutional .unit-hero .btn-outline-light{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.45)}
+body.hmatias-institutional .unit-hero .btn-outline-light:hover{background:rgba(255,255,255,.1);border-color:#fff}
+body.hmatias-institutional .unit-hero-panel,body.hmatias-institutional .cred-identity{
+ padding:30px 30px 32px;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.22);
+ border-top:3px solid #74c4e2;backdrop-filter:blur(8px);display:flex;flex-direction:column;gap:14px;
+}
+body.hmatias-institutional .unit-hero-panel strong,body.hmatias-institutional .cred-identity h2{font-size:19px;line-height:1.25;color:#fff;font-weight:700}
+body.hmatias-institutional .unit-hero-panel span,body.hmatias-institutional .cred-identity :is(dt,dd,a){color:#d3e2e9;font-size:13px;line-height:1.65}
+body.hmatias-institutional .cred-identity{gap:18px}
+body.hmatias-institutional .cred-identity dl{display:grid;gap:13px;margin:0}
+body.hmatias-institutional .cred-identity dl div{border-top:1px solid rgba(255,255,255,.18);padding-top:10px}
+body.hmatias-institutional .cred-identity dt{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:#9fc5d6}
+body.hmatias-institutional .cred-identity dd{margin:3px 0 0;color:#fff;font-weight:650}
+body.hmatias-institutional .cred-identity .cred-label{font-size:10px;letter-spacing:.16em;color:#a8d9ed;font-weight:800}
+body.hmatias-institutional .unit-main,body.hmatias-institutional .cred-section{padding:clamp(66px,8vw,108px) 0;background:#fff}
+body.hmatias-institutional .unit-main.soft,body.hmatias-institutional .cred-section-soft{background:var(--op-paper)}
+body.hmatias-institutional .unit-heading,body.hmatias-institutional .cred-heading{max-width:780px;margin:0 0 38px}
+body.hmatias-institutional .unit-heading .eyebrow,body.hmatias-institutional .cred-heading .eyebrow{font-size:10px;letter-spacing:.18em;font-weight:800;color:var(--op-blue);text-transform:uppercase}
+body.hmatias-institutional .unit-heading h2,body.hmatias-institutional .cred-heading h2{font-size:clamp(30px,4vw,48px);line-height:1.07;margin:14px 0 15px;font-weight:650;color:var(--op-ink)}
+body.hmatias-institutional .unit-heading p,body.hmatias-institutional .cred-heading p{font-size:16px;color:var(--op-muted);max-width:700px}
+body.hmatias-institutional .unit-grid,body.hmatias-institutional .cred-services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+body.hmatias-institutional .unit-card,body.hmatias-institutional .cred-service{
+ position:relative;display:flex;flex-direction:column;align-items:flex-start;min-height:240px;padding:28px 27px 30px;
+ background:#fff;border:1px solid var(--op-line);border-top:3px solid #b9d4e0;box-shadow:0 14px 36px rgba(7,29,50,.035);
+}
+body.hmatias-institutional .unit-card>span,body.hmatias-institutional .cred-service>span{font-size:11px;letter-spacing:.16em;font-weight:800;color:var(--op-blue);margin-bottom:28px}
+body.hmatias-institutional .unit-card h3,body.hmatias-institutional .cred-service h3{font-size:21px;line-height:1.18;color:var(--op-ink);margin:0 0 12px;font-weight:700}
+body.hmatias-institutional .unit-card p,body.hmatias-institutional .cred-service p{font-size:14px;color:var(--op-muted);margin:0 0 14px}
+body.hmatias-institutional .unit-card ul{padding-left:18px;color:var(--op-muted);font-size:13px}
+body.hmatias-institutional .cred-service{text-decoration:none;min-height:275px}
+body.hmatias-institutional .cred-service b{margin-top:auto;padding-top:15px;color:var(--op-blue);font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+body.hmatias-institutional .unit-card:hover,body.hmatias-institutional .cred-service:hover{border-top-color:var(--op-blue);box-shadow:0 18px 45px rgba(7,29,50,.09);transform:translateY(-2px)}
+body.hmatias-institutional .hm-evidence{padding:clamp(62px,8vw,100px) 0;background:#eef3f5}
+body.hmatias-institutional .hm-evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+body.hmatias-institutional .hm-evidence-item{margin:0;background:#fff;border:1px solid var(--op-line);overflow:hidden}
+body.hmatias-institutional .hm-evidence-item img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .5s ease}
+body.hmatias-institutional .hm-evidence-item:hover img{transform:scale(1.025)}
+body.hmatias-institutional .hm-evidence-item figcaption{padding:18px 20px 21px;display:grid;gap:6px}
+body.hmatias-institutional .hm-evidence-item figcaption small{font-size:9px;letter-spacing:.16em;color:var(--op-blue);font-weight:800}
+body.hmatias-institutional .hm-evidence-item figcaption strong{font-size:15px;color:var(--op-ink)}
+body.hmatias-institutional .network-section{padding:clamp(65px,8vw,104px) 0;background:#fff}
+body.hmatias-institutional .network-heading{max-width:780px;margin-bottom:36px}
+body.hmatias-institutional .network-heading h2{font-size:clamp(30px,4vw,46px);line-height:1.08}
+body.hmatias-institutional .network-heading p{color:var(--op-muted)}
+body.hmatias-institutional .unit-cta{padding:62px 0;background:var(--op-navy);color:#fff}
+body.hmatias-institutional .unit-cta :is(h2,p){color:#fff}
+body.hmatias-institutional .unit-cta .btn{background:#fff;color:var(--op-navy);border-radius:2px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+body.hmatias-institutional .catalog-page-head{padding:clamp(76px,9vw,118px) 0 60px;background:linear-gradient(112deg,#071d32,#155b7b);color:#fff;position:relative;overflow:hidden}
+body.hmatias-institutional .catalog-page-head .eyebrow{color:#a8d9ed;font-size:10px;letter-spacing:.18em;font-weight:800}
+body.hmatias-institutional .catalog-page-head h1{max-width:850px;font-size:clamp(40px,6vw,72px);line-height:1.02;color:#fff;margin:18px 0}
+body.hmatias-institutional .catalog-page-head p{max-width:760px;color:#d5e2e9;font-size:18px}
+body.hmatias-institutional .catalog-summary-bar{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+body.hmatias-institutional .catalog-summary-bar span{border:1px solid rgba(255,255,255,.28);padding:10px 13px;color:#e5eff4;font-size:11px;letter-spacing:.04em}
+body.hmatias-institutional .service-table{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+body.hmatias-institutional .service-row{padding:25px 26px;background:#fff;border:1px solid var(--op-line);border-left:3px solid #a9cbd9}
+body.hmatias-institutional .service-row h3{font-size:18px;color:var(--op-ink);margin:0 0 8px}
+body.hmatias-institutional .service-row p{font-size:14px;color:var(--op-muted);margin:0}
+body.hmatias-institutional .business-services-next-step{margin-top:30px;padding:28px;background:var(--op-paper);display:flex;justify-content:space-between;align-items:center;gap:20px}
+body.hmatias-institutional .business-contact{padding:clamp(65px,8vw,100px) 0;background:#eaf0f3}
+body.hmatias-institutional .business-contact-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(35px,7vw,90px)}
+body.hmatias-institutional .business-contact-copy h2{font-size:clamp(30px,4vw,46px);line-height:1.08}
+body.hmatias-institutional :is(.business-contact-form,.supply-request-form,.contact-form){background:#fff;padding:30px;border:1px solid var(--op-line);box-shadow:0 18px 44px rgba(7,29,50,.05)}
+body.hmatias-institutional :is(input,select,textarea){border:1px solid #cbd7de;border-radius:2px;min-height:46px}
+body.hmatias-institutional :is(input,select,textarea):focus{border-color:var(--op-blue);box-shadow:0 0 0 3px rgba(23,101,141,.1)}
+body.hmatias-institutional .cred-contact{padding:65px 0;background:var(--op-navy);color:#fff}
+body.hmatias-institutional .cred-contact :is(h2,p){color:#fff}
+body.hmatias-institutional :is(.footer,.site-footer,footer){background:#061827;color:#e7eef2}
+body.hmatias-institutional footer a{color:#d8e6ec}
+body.hmatias-institutional .whatsapp-float{box-shadow:0 10px 30px rgba(7,29,50,.2)}
+@media(max-width:900px){
+ body.hmatias-institutional .hmatias-header .nav{gap:16px;min-height:76px}
+ body.hmatias-institutional .hmatias-header .nav-menu{gap:14px}
+ body.hmatias-institutional .hmatias-header .nav-menu a{font-size:12px}
+ body.hmatias-institutional .unit-hero-grid,body.hmatias-institutional .cred-hero-grid{grid-template-columns:1fr;gap:34px}
+ body.hmatias-institutional .unit-hero-panel,body.hmatias-institutional .cred-identity{max-width:580px}
+ body.hmatias-institutional .unit-grid,body.hmatias-institutional .cred-services{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.hmatias-institutional .business-contact-grid{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+ body.hmatias-institutional .container{width:calc(100% - 36px)}
+ body.hmatias-institutional .hmatias-header .nav{min-height:68px}
+ body.hmatias-institutional .hmatias-header .brand img{width:62px;height:60px}
+ body.hmatias-institutional .hmatias-header .nav-menu{display:none;position:absolute;top:100%;left:0;right:0;margin:0;padding:18px 22px 24px;background:#fff;border-bottom:1px solid var(--op-line);box-shadow:0 18px 25px rgba(7,29,50,.1);flex-direction:column;align-items:stretch;gap:0}
+ body.hmatias-institutional .hmatias-header .nav-menu.open{display:flex}
+ body.hmatias-institutional .hmatias-header .nav-menu a{padding:14px 0;border-bottom:1px solid #edf1f3;font-size:14px}
+ body.hmatias-institutional .hmatias-header .nav-actions{margin-left:auto;gap:10px}
+ body.hmatias-institutional .hmatias-header .nav-actions .btn{padding:11px 12px;font-size:10px}
+ body.hmatias-institutional .unit-hero,body.hmatias-institutional .cred-hero{padding:66px 0 70px}
+ body.hmatias-institutional .unit-hero h1,body.hmatias-institutional .cred-hero h1{font-size:clamp(38px,11vw,56px)}
+ body.hmatias-institutional .unit-hero p,body.hmatias-institutional .cred-hero p{font-size:15px}
+ body.hmatias-institutional .unit-hero-panel,body.hmatias-institutional .cred-identity{padding:23px}
+ body.hmatias-institutional .unit-grid,body.hmatias-institutional .cred-services,body.hmatias-institutional .hm-evidence-grid,body.hmatias-institutional .service-table{grid-template-columns:1fr}
+ body.hmatias-institutional .unit-card,body.hmatias-institutional .cred-service{min-height:0;padding:24px}
+ body.hmatias-institutional .unit-card>span,body.hmatias-institutional .cred-service>span{margin-bottom:18px}
+ body.hmatias-institutional .business-services-next-step{align-items:flex-start;flex-direction:column}
+ body.hmatias-institutional :is(.business-contact-form,.supply-request-form,.contact-form){padding:20px}
+ body.hmatias-institutional .catalog-page-head{padding:66px 0 48px}
+ body.hmatias-institutional .catalog-page-head h1{font-size:clamp(38px,10vw,54px)}
+}
