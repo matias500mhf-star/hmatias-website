@@ -3,7 +3,7 @@ body.hmatias-institutional{--hm-u-ink:#102a40;--hm-u-navy:#071d33;--hm-u-blue:#1
 body.hmatias-institutional :is(h1,h2,h3,h4){letter-spacing:-.035em;text-wrap:balance}
 body.hmatias-institutional :is(p,li){line-height:1.72}
 body.hmatias-institutional :is(a,button,input,select,textarea):focus-visible{outline:3px solid #48baf5;outline-offset:3px}
-body.hmatias-institutional :is(.container,.wrap,.content-wrap,.page-container){width:min(1180px,calc(100% - 48px));margin-inline:auto}
+body.hmatias-institutional .container{width:min(1180px,calc(100% - 48px));margin-inline:auto}
 body.hmatias-institutional :is(.hmatias-header,.site-header){background:#fff;border-bottom:1px solid var(--hm-u-line);box-shadow:none}
 body.hmatias-institutional .hmatias-topbar{background:var(--hm-u-navy)}
 body.hmatias-institutional .hmatias-header .nav{min-height:82px}
@@ -20,5 +20,5 @@ body.hmatias-institutional footer a,body.hmatias-institutional .site-footer a{co
 body.hmatias-institutional footer a:hover,body.hmatias-institutional .site-footer a:hover{color:#9bd8f6}
 body.hmatias-institutional footer :is(p,li,a),body.hmatias-institutional .site-footer :is(p,li,a){overflow-wrap:anywhere}
 body.hmatias-institutional img{max-width:100%}
-@media(max-width:850px){body.hmatias-institutional :is(.container,.wrap,.content-wrap,.page-container){width:min(calc(100% - 32px),1180px)}body.hmatias-institutional .hmatias-header .nav{min-height:72px}body.hmatias-institutional :is(.section,.unit-main){padding-block:clamp(52px,9vw,82px)}body.hmatias-institutional :is(.grid,.cards-grid,.service-grid,.project-grid){grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){body.hmatias-institutional :is(.container,.wrap,.content-wrap,.page-container){width:calc(100% - 28px)}body.hmatias-institutional :is(.grid,.cards-grid,.service-grid,.project-grid,.unit-hero-grid){grid-template-columns:minmax(0,1fr)}body.hmatias-institutional :is(h1,.unit-hero h1){font-size:clamp(2.15rem,10vw,3.2rem);line-height:1.04}body.hmatias-institutional :is(.hero-actions,.actions,.cta-row){flex-wrap:wrap}body.hmatias-institutional :is(.card,.service-card,.project-card,.feature-card){min-width:0}}
+@media(max-width:850px){body.hmatias-institutional .container{width:min(calc(100% - 32px),1180px)}body.hmatias-institutional .hmatias-header .nav{min-height:72px}body.hmatias-institutional :is(.section,.unit-main){padding-block:clamp(52px,9vw,82px)}}
+@media(max-width:560px){body.hmatias-institutional .container{width:calc(100% - 28px)}body.hmatias-institutional :is(h1,.unit-hero h1){font-size:clamp(2.15rem,10vw,3.2rem);line-height:1.04}body.hmatias-institutional :is(.hero-actions,.actions,.cta-row){flex-wrap:wrap}body.hmatias-institutional :is(.card,.service-card,.project-card,.feature-card){min-width:0}}
