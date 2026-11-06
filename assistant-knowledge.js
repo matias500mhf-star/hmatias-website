@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: public website, project status, service pages and commercial rules, 2026-11-02. */
+   Source of truth: public website, approved partner records, project status, service pages and commercial rules, 2026-11-06. */
 (() => {
   'use strict';
 
@@ -14,8 +14,8 @@
   ];
 
   const kb = {
-    version: '2026-11-02.1',
-    updated: '2026-11-02',
+    version: '2026-11-06.1',
+    updated: '2026-11-06',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
@@ -63,6 +63,19 @@
       rulePt: 'Marcas, fornecedores e contactos de terceiros são referenciados apenas quando relevantes; isso não implica representação, exclusividade ou parceria institucional.',
       specialistPagesPt: ['EPI e fardamento: pedidos empresariais avaliados com base em artigos, normas exigidas, modelos, tamanhos, quantidades, local de entrega e prazo; preço, disponibilidade e logística são confirmados por pedido.'],
       specialistPagesEn: ['PPE and uniforms: business enquiries are assessed by item, required standards, model, sizes, quantities, delivery location and lead time; price, availability and logistics are confirmed per request.']
+    },
+    partners: {
+      summaryPt: 'A rede pública de parceiros HMATIAS inclui Kent Offshore, SYNVOR Industrial, TELEWISE, D&WOOD, FRANSGA, LDA e Miliart. A inclusão descreve relações comerciais ou de colaboração aprovadas, sem implicar exclusividade, representação legal, stock reservado ou disponibilidade automática.',
+      summaryEn: 'The public HMATIAS partner network includes Kent Offshore, SYNVOR Industrial, TELEWISE, D&WOOD, FRANSGA, LDA and Miliart. Listing describes approved commercial or collaboration relationships and does not imply exclusivity, legal agency, reserved stock or automatic availability.',
+      entriesPt: [
+        'Kent Offshore: colaboração estratégica para sourcing de soluções industriais, preservação de activos, protecção anticorrosiva, manutenção, inspecção e ensaios não destrutivos.',
+        'SYNVOR Industrial: fornecimento especializado de ferramentas diamantadas e consumíveis de corte e perfuração; catálogo inclui referências Carbodiam e Samedia. Referências, ficha técnica, preço e disponibilidade devem ser confirmados por pedido.',
+        'TELEWISE: colaboração técnica e comercial não exclusiva em AVAC, refrigeração industrial, manutenção eléctrica e hidráulica, Facility Management e mão de obra especializada.',
+        'D&WOOD: mobiliário empresarial, residencial e contract, carpintaria, concepção, visualização 3D, produção, fornecimento e instalação.',
+        'FRANSGA, LDA: apoio logístico integrado, engenharia para instalações e equipamentos do sector de petróleo e gás e fornecimento de equipamentos industriais, EPI e combate a incêndios.',
+        'Miliart: estores e cortinados, mobiliário empresarial, residencial e hoteleiro, divisórias, pavimentos, tectos técnicos, soluções acústicas, revestimentos e automação de espaços.'
+      ],
+      rulePt: 'O cliente deve dirigir consultas e pedidos de fornecimento à HMATIAS. Não divulgar contactos directos, preços internos, margens ou condições privadas de fornecedores. Não afirmar exclusividade, representação ou disponibilidade sem prova específica.'
     },
     clean: {
       summaryPt: 'Produtos de limpeza e higiene para utilização doméstica e profissional. Produtos fornecidos sob encomenda; stock, prazo e entrega ficam sujeitos a confirmação comercial.',
@@ -158,6 +171,7 @@
       `CONSTRUÇÃO / CONSTRUCTION: ${kb.construction.summaryPt} ${kb.construction.summaryEn} Capacidades: ${kb.construction.capabilitiesPt.join('; ')}. Processo: ${kb.construction.processPt.join('; ')}. Páginas especializadas: ${kb.construction.specialistPagesPt.join(' ')} ${kb.construction.specialistPagesEn.join(' ')}`,
       `FACILITIES: ${kb.facilities.summaryPt} ${kb.facilities.summaryEn} Capacidades: ${kb.facilities.capabilitiesPt.join('; ')}. Páginas especializadas: ${kb.facilities.specialistPagesPt.join(' ')} ${kb.facilities.specialistPagesEn.join(' ')}.`,
       `SUPPLY: ${kb.supply.summaryPt} ${kb.supply.summaryEn} Capacidades: ${kb.supply.capabilitiesPt.join('; ')}. Processo: ${kb.supply.processPt.join('; ')}. ${kb.supply.rulePt} ${kb.supply.specialistPagesPt.join(' ')} ${kb.supply.specialistPagesEn.join(' ')}`,
+      `REDE DE PARCEIROS / PARTNER NETWORK: ${kb.partners.summaryPt} ${kb.partners.summaryEn} ${kb.partners.entriesPt.join(' ')} ${kb.partners.rulePt}`,
       `CLEAN: ${kb.clean.summaryPt} ${kb.clean.summaryEn} 123 Pine Gel 500 ml: preço sob consulta. Taurus Pine Gel T563P: ${p.descriptionPt} ${p.featuresPt} Formato, preço, stock e prazo sujeitos a confirmação comercial. Aplicações: ${p.applicationsPt.join(', ')}. Diluições: ${p.dilutionsPt.join('; ')}. Aviso: ${p.warningPt} ${kb.clean.brandNotePt}`,
       `CATÁLOGO CLEAN: ${cleanCatalog.map(x=>`${x[0]} ${x[1]} [${x[2]}]`).join('; ')}. Para estes itens, se não houver preço publicado, confirmar com equipa comercial.`,
       `BUSINESS SERVICES: ${kb.businessServices.servicesPt.join('; ')}. ${kb.businessServices.pricingRulePt}`,
