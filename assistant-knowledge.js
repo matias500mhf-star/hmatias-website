@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: public website, project status, service pages and commercial rules, 2026-11-02. */
+   Source of truth: public website, project status, service pages and commercial rules, reviewed 2026-11-06. */
 (() => {
   'use strict';
 
@@ -15,7 +15,7 @@
 
   const kb = {
     version: '2026-11-02.1',
-    updated: '2026-11-02',
+    updated: '2026-11-06',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
