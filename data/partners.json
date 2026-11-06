@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "last_reviewed": "2026-11-06",
+  "publication_rule": "A listing describes only the evidenced relationship. It does not imply exclusivity, agency, stock reservation, current availability or endorsement unless separately documented.",
+  "partners": [
+    {
+      "id": "kent-offshore",
+      "name": "Kent Offshore",
+      "website": "https://kentoffshore.com",
+      "region": "Namíbia",
+      "relationship_type": "Relação de colaboração e sourcing industrial",
+      "status_label": "Colaboração confirmada",
+      "status": "confirmed_collaboration",
+      "public": true,
+      "logo": null,
+      "summary": "Relação de colaboração para identificação e sourcing de soluções e produtos industriais, incluindo áreas de preservação de activos, protecção anticorrosiva, manutenção, inspecção e ensaios não destrutivos.",
+      "capabilities": ["Protecção anticorrosiva", "Manutenção industrial", "Inspecção e NDT", "Soluções industriais, energia e offshore"],
+      "commercial_note": "Produtos, fichas técnicas, stock, preço entregue, prazo e documentação são confirmados por referência e por pedido.",
+      "contact_person_public": null,
+      "internal_note": "A gerência confirmou a relação e experiência prévia com produtos. Não apresentar como exclusividade nem afirmar stock actual. Utilização de logótipo depende de ficheiro oficial correcto e autorização."
+    },
+    {
+      "id": "synvor-industrial",
+      "name": "SYNVOR Industrial",
+      "website": "https://synvor-industrial.com",
+      "region": "Portugal · apoio a Angola",
+      "relationship_type": "Fornecedor especializado",
+      "status_label": "Relação comercial em desenvolvimento",
+      "status": "commercial_development",
+      "public": true,
+      "logo": null,
+      "summary": "Fornecedor especializado em consumíveis de corte e perfuração, ferramentas diamantadas e soluções abrasivas para construção, pavimentos, pedra e aplicações industriais.",
+      "capabilities": ["Discos diamantados", "Coroas de perfuração", "Discos de corte e desbaste", "Consumíveis abrasivos"],
+      "commercial_note": "Desconto comercial de 35% foi indicado como sujeito a confirmação. Preços, disponibilidade, prazo, expedição e condições finais carecem de confirmação por RFQ.",
+      "contact_person_public": null,
+      "internal_note": "Contacto comercial com Sara Ferreira. Oferta de desconto de 35% sujeita a confirmação. Proposta de colaboração para Estaleiro Integrado enviada; não há compromisso formal concluído demonstrado. Não rotular como parceria formal."
+    },
+    {
+      "id": "telewise",
+      "name": "TELEWISE",
+      "website": null,
+      "region": "Angola",
+      "relationship_type": "Colaboração técnica e comercial não exclusiva",
+      "status_label": "Colaboração aceite · condições em definição",
+      "status": "accepted_pending_terms",
+      "public": true,
+      "logo": null,
+      "summary": "Colaboração para resposta a necessidades de AVAC, refrigeração industrial, manutenção eléctrica e hidráulica, Facility Management e mão de obra especializada.",
+      "capabilities": ["AVAC e refrigeração industrial", "Manutenção eléctrica", "Manutenção hidráulica", "Facility Management", "Mão de obra especializada"],
+      "commercial_note": "Tabela de preços, escopo de mobilização e condições por intervenção ainda carecem de definição.",
+      "contact_person_public": null,
+      "internal_note": "Colaboração técnica/comercial não exclusiva aceite. Tabela de preços e reunião pendentes. Não sugerir exclusividade nem capacidade mobilizada sem confirmação."
+    }
+  ],
+  "internal_pipeline": [
+    {
+      "name": "Grupo Joesangola",
+      "status": "Em qualificação",
+      "reason": "Brochura recebida; capacidades e habilitações carecem de validação independente."
+    },
+    {
+      "name": "MILIART",
+      "status": "Em desenvolvimento comercial",
+      "reason": "Relação e reunião em preparação; colaboração efectiva por confirmar."
+    },
+    {
+      "name": "ADY-FERRAZ / MATEANA",
+      "status": "Fornecedores em avaliação",
+      "reason": "EPI, consumíveis e fardamento; amostras, conformidade, preços e prazos por validar."
+    }
+  ]
+}
