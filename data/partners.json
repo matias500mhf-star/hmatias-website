@@ -81,8 +81,8 @@
       "commercial_note": "Âmbito, responsabilidades e condições são definidos por oportunidade e formalizados por escrito."
     },
     {
-      "id": "french-guy",
-      "name": "French Guy",
+      "id": "fransga",
+      "name": "Fransga",
       "website": null,
       "region": "A confirmar",
       "relationship_type": "Parceiro aprovado",
@@ -90,7 +90,7 @@
       "status": "approved_partnership",
       "public": true,
       "logo": null,
-      "summary": "Parceria aprovada pela gerência da HMATIAS. A identificação legal, áreas de actuação e âmbito de colaboração serão preenchidos a partir da documentação institucional já existente, após validação do registo correspondente.",
+      "summary": "Parceria aprovada pela gerência da HMATIAS. A identificação legal, áreas de actuação e âmbito de colaboração serão preenchidos a partir da documentação institucional correspondente, após validação do registo.",
       "capabilities": [],
       "commercial_note": "Não publicar logótipo ou descrição técnica até associar o ficheiro institucional correcto."
     }
