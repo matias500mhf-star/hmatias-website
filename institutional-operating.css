@@ -140,3 +140,80 @@ body.hmatias-institutional .whatsapp-float{box-shadow:0 10px 30px rgba(7,29,50,.
  body.hmatias-institutional .catalog-page-head{padding:66px 0 48px}
  body.hmatias-institutional .catalog-page-head h1{font-size:clamp(38px,10vw,54px)}
 }
+
+
+/* 2026-11-06 — align every institutional inner page with the approved HMATIAS homepage system.
+   Shared brand tokens are taken from home-base.css; page-specific layouts remain intact. */
+body.hmatias-institutional{
+ --op-ink:#102d4d;
+ --op-navy:#062d56;
+ --op-blue:#0065cc;
+ --op-sky:#48baf5;
+ --op-muted:#5d6d7d;
+ --op-line:#dce6f0;
+ --op-paper:#f4f8fc;
+ --op-white:#fff;
+ color:var(--op-ink);
+}
+body.hmatias-institutional .hmatias-header .nav{min-height:92px;gap:22px}
+body.hmatias-institutional .hmatias-header .brand{width:220px;height:78px;flex:0 0 220px}
+body.hmatias-institutional .hmatias-header .brand img{width:220px;height:78px;max-height:78px;object-fit:contain;object-position:left center}
+body.hmatias-institutional .hmatias-header .nav-menu{gap:22px}
+body.hmatias-institutional .hmatias-header .nav-menu a{font-size:.875rem;font-weight:700;letter-spacing:0;color:#334c5d}
+body.hmatias-institutional .hmatias-header .nav-menu a:after{background:var(--op-blue);height:3px}
+body.hmatias-institutional .hmatias-header .nav-actions .btn,
+body.hmatias-institutional .hmatias-header .btn{border-radius:9px;background:#0065cc;border:1px solid #0065cc;padding:13px 17px;font-size:.875rem;letter-spacing:0;text-transform:none;font-weight:700;box-shadow:0 10px 25px #0065cc33}
+body.hmatias-institutional .hmatias-header .lang-switch{color:#0065cc;font-size:.78rem;letter-spacing:.06em}
+body.hmatias-institutional .unit-hero,
+body.hmatias-institutional .cred-hero,
+body.hmatias-institutional .catalog-page-head{
+ background:linear-gradient(115deg,#032a51 0%,#073c70 52%,#0d66a8 100%);
+}
+body.hmatias-institutional .unit-hero:before,
+body.hmatias-institutional .cred-hero:before{
+ width:min(56vw,760px);border-color:rgba(72,186,245,.2);
+ box-shadow:0 0 0 64px rgba(72,186,245,.035),0 0 0 128px rgba(72,186,245,.02);
+}
+body.hmatias-institutional .unit-hero:after,
+body.hmatias-institutional .cred-hero:after{
+ background:linear-gradient(90deg,#48baf5 0 24%,rgba(255,255,255,.14) 24% 100%);
+}
+body.hmatias-institutional .unit-hero .eyebrow,
+body.hmatias-institutional .cred-hero .eyebrow,
+body.hmatias-institutional .catalog-page-head .eyebrow{color:#b9dcf5}
+body.hmatias-institutional .unit-hero .btn,
+body.hmatias-institutional .cred-hero .btn{border-radius:9px;text-transform:none;letter-spacing:0}
+body.hmatias-institutional .unit-hero .btn-light{color:#062d56}
+body.hmatias-institutional .unit-main.soft,
+body.hmatias-institutional .cred-section-soft,
+body.hmatias-institutional .business-contact{background:#f4f8fc}
+body.hmatias-institutional .unit-card,
+body.hmatias-institutional .cred-service,
+body.hmatias-institutional .service-row{
+ border-color:#dce6f0;
+}
+body.hmatias-institutional .unit-card>span,
+body.hmatias-institutional .cred-service>span,
+body.hmatias-institutional .unit-heading .eyebrow,
+body.hmatias-institutional .cred-heading .eyebrow{color:#0065cc}
+body.hmatias-institutional .unit-cta,
+body.hmatias-institutional .cred-contact{background:#062d56}
+body.hmatias-institutional .unit-cta .btn{border-radius:9px}
+body.hmatias-institutional :is(.business-contact-form,.supply-request-form,.contact-form){border-color:#dce6f0;border-radius:9px}
+body.hmatias-institutional :is(input,select,textarea){border-color:#dce6f0;border-radius:8px}
+@media(max-width:1100px){
+ body.hmatias-institutional .hmatias-header .nav{gap:14px}
+ body.hmatias-institutional .hmatias-header .brand{width:175px;height:68px;flex-basis:175px}
+ body.hmatias-institutional .hmatias-header .brand img{width:175px;height:68px;max-height:68px}
+ body.hmatias-institutional .hmatias-header .nav-menu{gap:14px}
+}
+@media(max-width:850px){
+ body.hmatias-institutional .hmatias-header .nav{min-height:78px;gap:12px}
+ body.hmatias-institutional .hmatias-header .brand{width:180px;height:62px;flex-basis:180px}
+ body.hmatias-institutional .hmatias-header .brand img{width:180px;height:62px;max-height:62px}
+ body.hmatias-institutional .hmatias-header .nav-menu{top:78px}
+}
+@media(max-width:560px){
+ body.hmatias-institutional .hmatias-header .brand{width:168px;height:58px;flex-basis:168px}
+ body.hmatias-institutional .hmatias-header .brand img{width:168px;height:58px;max-height:58px}
+}
