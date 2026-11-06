@@ -22,3 +22,41 @@ body.hmatias-institutional footer :is(p,li,a),body.hmatias-institutional .site-f
 body.hmatias-institutional img{max-width:100%}
 @media(max-width:850px){body.hmatias-institutional .container{width:min(calc(100% - 32px),1180px)}body.hmatias-institutional .hmatias-header .nav{min-height:72px}body.hmatias-institutional :is(.section,.unit-main){padding-block:clamp(52px,9vw,82px)}}
 @media(max-width:560px){body.hmatias-institutional .container{width:calc(100% - 28px)}body.hmatias-institutional :is(h1,.unit-hero h1){font-size:clamp(2.15rem,10vw,3.2rem);line-height:1.04}body.hmatias-institutional :is(.hero-actions,.actions,.cta-row){flex-wrap:wrap}body.hmatias-institutional :is(.card,.service-card,.project-card,.feature-card){min-width:0}}
+
+
+/* Premium navigation and page rhythm — applied only to institutional inner pages. */
+body.hmatias-institutional .hmatias-topbar{display:none}
+body.hmatias-institutional .hmatias-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid #dce3e7}
+body.hmatias-institutional .hmatias-header .nav{min-height:88px;gap:clamp(12px,2vw,28px)}
+body.hmatias-institutional .hmatias-header .nav-menu{display:flex;align-items:center;justify-content:center;gap:clamp(12px,2.1vw,30px);flex:1}
+body.hmatias-institutional .hmatias-header .nav-menu a{position:relative;padding:12px 0;color:#334c5d;font-size:.79rem;font-weight:620;letter-spacing:-.01em}
+body.hmatias-institutional .hmatias-header .nav-menu a:after{content:"";position:absolute;left:0;right:100%;bottom:5px;height:1px;background:#17618f;transition:right .2s ease}
+body.hmatias-institutional .hmatias-header .nav-menu a:hover:after,body.hmatias-institutional .hmatias-header .nav-menu a:focus-visible:after{right:0}
+body.hmatias-institutional .hmatias-header .nav-actions .btn{border-radius:0;padding:13px 18px;font-size:.78rem;letter-spacing:.01em}
+body.hmatias-institutional .hmatias-header .lang-switch{border-radius:0;border-color:#cbd5da;font-size:.72rem}
+body.hmatias-institutional .unit-hero{padding:clamp(76px,8vw,116px) 0 clamp(68px,7vw,96px)}
+body.hmatias-institutional .unit-hero-grid{gap:clamp(32px,5vw,72px)}
+body.hmatias-institutional .unit-hero h1{max-width:14ch;font-size:clamp(2.8rem,5.4vw,5.4rem);line-height:.98;letter-spacing:-.067em}
+body.hmatias-institutional .unit-hero-panel{max-width:380px}
+body.hmatias-institutional .network-section{padding:clamp(64px,8vw,104px) 0;background:#f5f6f3}
+body.hmatias-institutional .network-heading{align-items:end;gap:40px;margin-bottom:38px}
+body.hmatias-institutional .network-heading h2{max-width:17ch;font-size:clamp(2rem,3.8vw,3.6rem);line-height:1.02;letter-spacing:-.06em}
+body.hmatias-institutional .network-heading>p{max-width:48ch;color:#627483;font-size:.92rem;line-height:1.8}
+body.hmatias-institutional footer{padding-top:58px}
+body.hmatias-institutional .whatsapp-float{border-radius:2px;box-shadow:0 8px 22px rgba(7,29,51,.16)}
+@media(max-width:850px){
+ body.hmatias-institutional .hmatias-header .nav{min-height:74px}
+ body.hmatias-institutional .hmatias-header .nav-menu{top:74px;display:none;position:absolute;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;padding:10px 16px 18px;background:#fff;border-top:1px solid #dce3e7;box-shadow:0 18px 28px rgba(7,29,51,.10)}
+ body.hmatias-institutional .hmatias-header .nav-menu a{padding:14px 8px;border-bottom:1px solid #edf0f1}
+ body.hmatias-institutional .hmatias-header .nav-menu a:after{display:none}
+ body.hmatias-institutional .hmatias-header .nav-menu.is-open{display:flex}
+ body.hmatias-institutional .network-heading{display:block}
+ body.hmatias-institutional .network-heading>p{margin-top:18px}
+}
+@media(max-width:560px){
+ body.hmatias-institutional .unit-hero{padding:64px 0 58px}
+ body.hmatias-institutional .unit-hero-grid{grid-template-columns:1fr;gap:28px}
+ body.hmatias-institutional .unit-hero-panel{max-width:none}
+ body.hmatias-institutional .unit-hero h1{font-size:clamp(2.45rem,11vw,3.55rem)}
+ body.hmatias-institutional footer{padding-top:42px}
+}
