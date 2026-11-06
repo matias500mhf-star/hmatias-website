@@ -6,7 +6,6 @@
     {
       "id": "kent-offshore",
       "name": "Kent Offshore",
-      "website": "https://kentoffshore.com",
       "region": "Namíbia",
       "relationship_type": "Parceiro estratégico",
       "status_label": "Parceria aprovada",
@@ -19,13 +18,11 @@
         "Manutenção industrial",
         "Inspecção e NDT",
         "Soluções industriais, energia e offshore"
-      ],
-      "commercial_note": "Produtos, fichas técnicas, stock, preço entregue, prazo e documentação são confirmados por referência e por pedido."
+      ]
     },
     {
       "id": "synvor-industrial",
       "name": "SYNVOR Industrial",
-      "website": "https://synvor-industrial.com",
       "region": "Portugal · apoio a Angola",
       "relationship_type": "Parceiro estratégico de fornecimento",
       "status_label": "Parceria aprovada",
@@ -38,13 +35,11 @@
         "Coroas de perfuração",
         "Discos de corte e desbaste",
         "Consumíveis abrasivos"
-      ],
-      "commercial_note": "Referências, preços, disponibilidade, prazo, expedição e condições de fornecimento são confirmados por pedido."
+      ]
     },
     {
       "id": "telewise",
       "name": "TELEWISE",
-      "website": "https://www.telewise.ao",
       "region": "Angola",
       "relationship_type": "Parceiro de colaboração técnica e comercial",
       "status_label": "Parceria aprovada · não exclusiva",
@@ -58,13 +53,11 @@
         "Manutenção hidráulica",
         "Facility Management",
         "Mão de obra especializada"
-      ],
-      "commercial_note": "O âmbito, a equipa mobilizada, os prazos e as condições comerciais são definidos para cada intervenção."
+      ]
     },
     {
       "id": "dewood",
       "name": "D&WOOD",
-      "website": null,
       "region": "Angola",
       "relationship_type": "Parceiro institucional",
       "status_label": "Parceria aprovada",
@@ -77,13 +70,11 @@
         "Mobiliário residencial e contract",
         "Carpintaria e soluções complementares",
         "Concepção e visualização 3D"
-      ],
-      "commercial_note": "Âmbito, responsabilidades e condições são definidos por oportunidade e formalizados por escrito."
+      ]
     },
     {
       "id": "fransga",
       "name": "FRANSGA, LDA",
-      "website": "https://www.fransga.com",
       "region": "Angola",
       "relationship_type": "Parceiro estratégico",
       "status_label": "Parceria aprovada",
@@ -98,16 +89,7 @@
         "Soldadura industrial",
         "Equipamentos de protecção individual (EPI)",
         "Equipamentos de combate a incêndios"
-      ],
-      "contact": {
-        "email": "geral@fransga.com",
-        "phones": [
-          "+244 947 029 447",
-          "+244 926 823 569"
-        ],
-        "address": "Estrada direita do Zango, Luanda, Angola",
-        "nif": "5001000160"
-      }
+      ]
     }
   ]
 }
