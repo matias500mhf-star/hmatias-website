@@ -82,17 +82,33 @@
     },
     {
       "id": "fransga",
-      "name": "Fransga",
-      "website": null,
-      "region": "A confirmar",
-      "relationship_type": "Parceiro aprovado",
+      "name": "FRANSGA, LDA",
+      "website": "https://www.fransga.com",
+      "region": "Angola",
+      "relationship_type": "Parceiro estratégico",
       "status_label": "Parceria aprovada",
       "status": "approved_partnership",
       "public": true,
       "logo": null,
-      "summary": "Parceria aprovada pela gerência da HMATIAS. A identificação legal, áreas de actuação e âmbito de colaboração serão preenchidos a partir da documentação institucional correspondente, após validação do registo.",
-      "capabilities": [],
-      "commercial_note": "Não publicar logótipo ou descrição técnica até associar o ficheiro institucional correcto."
+      "summary": "Empresa angolana sediada em Luanda, com actividade de apoio logístico integrado e serviços de engenharia para instalações e equipamentos utilizados na exploração e produção de petróleo e gás, incluindo operações em campos marítimos. O portfólio institucional apresenta também fornecimentos de equipamentos de hidráulica, soldadura industrial, equipamentos de protecção individual e combate a incêndios.",
+      "capabilities": [
+        "Apoio logístico integrado",
+        "Engenharia para instalações e equipamentos do sector de petróleo e gás",
+        "Equipamentos de hidráulica",
+        "Soldadura industrial",
+        "Equipamentos de protecção individual (EPI)",
+        "Equipamentos de combate a incêndios"
+      ],
+      "commercial_note": "Não publicar logótipo ou descrição técnica até associar o ficheiro institucional correcto.",
+      "contact": {
+        "email": "geral@fransga.com",
+        "phones": [
+          "+244 947 029 447",
+          "+244 926 823 569"
+        ],
+        "address": "Estrada direita do Zango, Luanda, Angola",
+        "nif": "5001000160"
+      }
     }
   ]
 }
