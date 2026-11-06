@@ -8,12 +8,12 @@
       "name": "Kent Offshore",
       "website": "https://kentoffshore.com",
       "region": "Namíbia",
-      "relationship_type": "Relação de colaboração e sourcing industrial",
-      "status_label": "Colaboração confirmada",
-      "status": "confirmed_collaboration",
+      "relationship_type": "Parceiro estratégico",
+      "status_label": "Parceria aprovada",
+      "status": "approved_partnership",
       "public": true,
       "logo": null,
-      "summary": "Relação de colaboração para identificação e sourcing de soluções e produtos industriais, incluindo áreas de preservação de activos, protecção anticorrosiva, manutenção, inspecção e ensaios não destrutivos.",
+      "summary": "Colaboração estratégica para identificação e sourcing de soluções e produtos industriais, incluindo áreas de preservação de activos, protecção anticorrosiva, manutenção, inspecção e ensaios não destrutivos.",
       "capabilities": [
         "Protecção anticorrosiva",
         "Manutenção industrial",
@@ -27,12 +27,12 @@
       "name": "SYNVOR Industrial",
       "website": "https://synvor-industrial.com",
       "region": "Portugal · apoio a Angola",
-      "relationship_type": "Fornecedor especializado",
-      "status_label": "Relação comercial em desenvolvimento",
-      "status": "commercial_development",
+      "relationship_type": "Parceiro estratégico de fornecimento",
+      "status_label": "Parceria aprovada",
+      "status": "approved_partnership",
       "public": true,
       "logo": null,
-      "summary": "Fornecedor especializado em consumíveis de corte e perfuração, ferramentas diamantadas e soluções abrasivas para construção, pavimentos, pedra e aplicações industriais.",
+      "summary": "Colaboração de fornecimento especializado em consumíveis de corte e perfuração, ferramentas diamantadas e soluções abrasivas para construção, pavimentos, pedra e aplicações industriais.",
       "capabilities": [
         "Discos diamantados",
         "Coroas de perfuração",
@@ -46,12 +46,12 @@
       "name": "TELEWISE",
       "website": null,
       "region": "Angola",
-      "relationship_type": "Colaboração técnica e comercial não exclusiva",
-      "status_label": "Colaboração aceite · condições em definição",
-      "status": "accepted_pending_terms",
+      "relationship_type": "Parceiro de colaboração técnica e comercial",
+      "status_label": "Parceria aprovada · não exclusiva",
+      "status": "approved_partnership",
       "public": true,
       "logo": null,
-      "summary": "Colaboração para resposta a necessidades de AVAC, refrigeração industrial, manutenção eléctrica e hidráulica, Facility Management e mão de obra especializada.",
+      "summary": "Colaboração técnica e comercial não exclusiva para resposta a necessidades de AVAC, refrigeração industrial, manutenção eléctrica e hidráulica, Facility Management e mão de obra especializada.",
       "capabilities": [
         "AVAC e refrigeração industrial",
         "Manutenção eléctrica",
@@ -60,6 +60,20 @@
         "Mão de obra especializada"
       ],
       "commercial_note": "O âmbito, a equipa mobilizada, os prazos e as condições comerciais são definidos para cada intervenção."
+    },
+    {
+      "id": "dewood",
+      "name": "DEWOOD",
+      "website": null,
+      "region": "Angola",
+      "relationship_type": "Parceiro institucional",
+      "status_label": "Parceria aprovada",
+      "status": "approved_partnership",
+      "public": true,
+      "logo": null,
+      "summary": "Relação de parceria aprovada pela gerência da HMATIAS. A apresentação das áreas de actuação e do âmbito de colaboração será completada após validação dos dados institucionais.",
+      "capabilities": [],
+      "commercial_note": "Âmbito, responsabilidades e condições são definidos por oportunidade e formalizados por escrito."
     }
   ]
 }
