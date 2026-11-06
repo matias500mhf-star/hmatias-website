@@ -19,13 +19,13 @@
 4. Não usar logótipos sem ficheiro oficial correcto e autorização.
 5. Não afirmar stock, preço, exclusividade, representação ou disponibilidade sem confirmação actual.
 6. As categorias gerais de sourcing não equivalem a produtos homologados ou stock próprio.
-7. Manter os contactos pessoais dos representantes fora da página pública sem autorização.
+7. Não divulgar contactos pessoais, descontos negociados ou notas internas no website ou nos dados públicos.
 
 ## Estado dos registos iniciais
 - Kent Offshore: relação de colaboração e sourcing industrial confirmada pela gerência; sem exclusividade ou stock actual garantido.
-- SYNVOR Industrial: fornecedor especializado; relação comercial em desenvolvimento; desconto de 35% sujeito a confirmação; não classificar como parceria formal concluída.
-- TELEWISE: colaboração técnica/comercial não exclusiva aceite; tabela de preços e reunião ainda pendentes.
-- Grupo Joesangola, MILIART, ADY-FERRAZ/MATEANA: pipeline interno, não publicado como parceiros confirmados.
+- SYNVOR Industrial: fornecedor especializado; relação comercial em desenvolvimento; não classificar como parceria formal concluída.
+- TELEWISE: colaboração técnica/comercial não exclusiva aceite; escopo e condições são definidos por intervenção.
+- Outras relações comerciais permanecem fora da página até existir base documental e autorização adequadas.
 
 ## Catálogo
 A primeira família técnica detalhada usa o catálogo comercial SYNVOR 2026 como referência documental para Carbodiam/Samedia, Red Line 17, Spyrostar, PRO BF1 e coroas diamantadas. Todos os itens permanecem sujeitos a RFQ e confirmação actual.
