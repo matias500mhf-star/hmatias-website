@@ -78,3 +78,6 @@ body.hmatias-network-page{--net-ink:#102a43;--net-navy:#062d56;--net-blue:#17639
 .team-card-photo-placeholder{background:linear-gradient(145deg,#e5edf2,#f4f7f9);border:1px solid #dce5ec}
 .team-card-photo-placeholder span{font-size:2.8rem;font-weight:600;letter-spacing:.08em;color:#315a78}
 .team-card-copy h3{margin:10px 0 4px;font-size:1.35rem;letter-spacing:-.025em;color:#102a43}
+
+/* Official partner marks: never substitute invented typographic logos. */
+.partner-logo{height:112px;margin:30px 0 16px;display:flex;align-items:center;justify-content:flex-start;overflow:hidden}.partner-logo-img{display:block;max-width:min(100%,250px);max-height:100px;width:auto;height:auto;object-fit:contain;object-position:left center}.partner-logo-pending{font-size:.72rem;letter-spacing:.06em;color:#81919e;border-bottom:1px solid #dce5ec;padding:10px 0}.partner-card .partner-logo+ .partner-region{display:block}
