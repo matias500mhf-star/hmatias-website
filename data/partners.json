@@ -90,6 +90,19 @@
         "Equipamentos de protecção individual (EPI)",
         "Equipamentos de combate a incêndios"
       ]
+    },
+    {
+      "id": "miliart",
+      "name": "Miliart",
+      "region": "Angola",
+      "relationship_type": "Parceiro comercial",
+      "status_label": "Parceiro HMATIAS",
+      "status": "approved_partnership",
+      "public": true,
+      "logo": "images/partners/miliart-logo.jpg",
+      "summary": "Empresa integrada na rede de parceiros comerciais da HMATIAS.",
+      "capabilities": [],
+      "commercial_note": "Informação de actividade e condições de colaboração apresentada mediante validação comercial."
     }
   ]
 }
