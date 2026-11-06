@@ -100,9 +100,17 @@
       "status": "approved_partnership",
       "public": true,
       "logo": "images/partners/miliart-logo.jpg",
-      "summary": "Empresa integrada na rede de parceiros comerciais da HMATIAS.",
-      "capabilities": [],
-      "commercial_note": "Informação de actividade e condições de colaboração apresentada mediante validação comercial."
+      "summary": "Empresa angolana com actividade em estores e cortinados, mobiliário para espaços empresariais, residenciais e hoteleiros, divisórias, pavimentos, tectos técnicos, soluções acústicas, revestimentos e automação de espaços.",
+      "capabilities": [
+        "Estores e cortinados",
+        "Mobiliário empresarial, residencial e hoteleiro",
+        "Divisórias e sistemas integrados",
+        "Pavimentos vinílicos, alcatifa e pavimentos técnicos",
+        "Tectos falsos metálicos",
+        "Soluções acústicas e revestimentos",
+        "Cozinhas, roupeiros e automação de espaços"
+      ],
+      "commercial_note": "Soluções a consultar através da HMATIAS, mediante projecto, especificação e confirmação comercial."
     }
   ]
 }
