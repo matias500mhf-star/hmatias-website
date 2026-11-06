@@ -44,7 +44,7 @@
     {
       "id": "telewise",
       "name": "TELEWISE",
-      "website": null,
+      "website": "https://www.telewise.ao",
       "region": "Angola",
       "relationship_type": "Parceiro de colaboração técnica e comercial",
       "status_label": "Parceria aprovada · não exclusiva",
@@ -63,17 +63,36 @@
     },
     {
       "id": "dewood",
-      "name": "DEWOOD",
-      "website": null,
+      "name": "D&WOOD",
+      "website": "https://dwood-ao.com",
       "region": "Angola",
       "relationship_type": "Parceiro institucional",
       "status_label": "Parceria aprovada",
       "status": "approved_partnership",
       "public": true,
       "logo": null,
-      "summary": "Relação de parceria aprovada pela gerência da HMATIAS. A apresentação das áreas de actuação e do âmbito de colaboração será completada após validação dos dados institucionais.",
-      "capabilities": [],
+      "summary": "D&WOOD — Comércio e Indústria, S.A., empresa angolana de concepção, produção, fornecimento e instalação de mobiliário para os segmentos empresarial, residencial e contract, incluindo carpintaria e soluções personalizadas. Parceria aprovada pela gerência da HMATIAS.",
+      "capabilities": [
+        "Mobiliário de escritório e institucional",
+        "Mobiliário residencial e contract",
+        "Carpintaria e soluções complementares",
+        "Concepção e visualização 3D"
+      ],
       "commercial_note": "Âmbito, responsabilidades e condições são definidos por oportunidade e formalizados por escrito."
+    },
+    {
+      "id": "french-guy",
+      "name": "French Guy",
+      "website": null,
+      "region": "A confirmar",
+      "relationship_type": "Parceiro aprovado",
+      "status_label": "Parceria aprovada",
+      "status": "approved_partnership",
+      "public": true,
+      "logo": null,
+      "summary": "Parceria aprovada pela gerência da HMATIAS. A identificação legal, áreas de actuação e âmbito de colaboração serão preenchidos a partir da documentação institucional já existente, após validação do registo correspondente.",
+      "capabilities": [],
+      "commercial_note": "Não publicar logótipo ou descrição técnica até associar o ficheiro institucional correcto."
     }
   ]
 }
