@@ -14,10 +14,13 @@
       "public": true,
       "logo": null,
       "summary": "Relação de colaboração para identificação e sourcing de soluções e produtos industriais, incluindo áreas de preservação de activos, protecção anticorrosiva, manutenção, inspecção e ensaios não destrutivos.",
-      "capabilities": ["Protecção anticorrosiva", "Manutenção industrial", "Inspecção e NDT", "Soluções industriais, energia e offshore"],
-      "commercial_note": "Produtos, fichas técnicas, stock, preço entregue, prazo e documentação são confirmados por referência e por pedido.",
-      "contact_person_public": null,
-      "internal_note": "A gerência confirmou a relação e experiência prévia com produtos. Não apresentar como exclusividade nem afirmar stock actual. Utilização de logótipo depende de ficheiro oficial correcto e autorização."
+      "capabilities": [
+        "Protecção anticorrosiva",
+        "Manutenção industrial",
+        "Inspecção e NDT",
+        "Soluções industriais, energia e offshore"
+      ],
+      "commercial_note": "Produtos, fichas técnicas, stock, preço entregue, prazo e documentação são confirmados por referência e por pedido."
     },
     {
       "id": "synvor-industrial",
@@ -30,10 +33,13 @@
       "public": true,
       "logo": null,
       "summary": "Fornecedor especializado em consumíveis de corte e perfuração, ferramentas diamantadas e soluções abrasivas para construção, pavimentos, pedra e aplicações industriais.",
-      "capabilities": ["Discos diamantados", "Coroas de perfuração", "Discos de corte e desbaste", "Consumíveis abrasivos"],
-      "commercial_note": "Desconto comercial de 35% foi indicado como sujeito a confirmação. Preços, disponibilidade, prazo, expedição e condições finais carecem de confirmação por RFQ.",
-      "contact_person_public": null,
-      "internal_note": "Contacto comercial com Sara Ferreira. Oferta de desconto de 35% sujeita a confirmação. Proposta de colaboração para Estaleiro Integrado enviada; não há compromisso formal concluído demonstrado. Não rotular como parceria formal."
+      "capabilities": [
+        "Discos diamantados",
+        "Coroas de perfuração",
+        "Discos de corte e desbaste",
+        "Consumíveis abrasivos"
+      ],
+      "commercial_note": "Referências, preços, disponibilidade, prazo, expedição e condições de fornecimento são confirmados por pedido."
     },
     {
       "id": "telewise",
@@ -46,10 +52,14 @@
       "public": true,
       "logo": null,
       "summary": "Colaboração para resposta a necessidades de AVAC, refrigeração industrial, manutenção eléctrica e hidráulica, Facility Management e mão de obra especializada.",
-      "capabilities": ["AVAC e refrigeração industrial", "Manutenção eléctrica", "Manutenção hidráulica", "Facility Management", "Mão de obra especializada"],
-      "commercial_note": "Tabela de preços, escopo de mobilização e condições por intervenção ainda carecem de definição.",
-      "contact_person_public": null,
-      "internal_note": "Colaboração técnica/comercial não exclusiva aceite. Tabela de preços e reunião pendentes. Não sugerir exclusividade nem capacidade mobilizada sem confirmação."
+      "capabilities": [
+        "AVAC e refrigeração industrial",
+        "Manutenção eléctrica",
+        "Manutenção hidráulica",
+        "Facility Management",
+        "Mão de obra especializada"
+      ],
+      "commercial_note": "O âmbito, a equipa mobilizada, os prazos e as condições comerciais são definidos para cada intervenção."
     }
   ],
   "internal_pipeline": [
