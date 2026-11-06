@@ -101,3 +101,24 @@
 @media(max-width:800px){.credibility-band{padding:60px 20px;grid-template-columns:1fr;gap:22px}.contact-premium{padding:68px 20px}.contact-premium-grid{grid-template-columns:1fr;gap:35px}.premium-footer-grid{grid-template-columns:1fr 1fr;gap:32px 22px}.premium-footer-bottom{display:grid}.premium-footer-bottom div{gap:12px 18px}}
 @media(max-width:520px){.premium-contact-form{grid-template-columns:1fr;padding:20px}.premium-contact-form label{grid-column:1/-1}.premium-footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}.premium-whatsapp{right:15px;bottom:15px;padding:12px 15px}.premium-whatsapp .wa-label{display:inline}}
 @media(prefers-reduced-motion:reduce){.wa-pulse{animation:none}}
+
+/* Partner showcase and fixed assistant / WhatsApp controls */
+.partner-showcase{padding:100px 9%;background:#f0f2ef}
+.partner-showcase-head{display:grid;grid-template-columns:1.1fr .9fr;gap:8%;align-items:end;margin-bottom:42px}
+.partner-showcase-head h2{font-size:clamp(36px,4vw,58px);line-height:1.04;letter-spacing:-.065em;font-weight:560;margin:16px 0 0}
+.partner-showcase-head h2 em{font-style:normal;color:#68889b}
+.partner-showcase-head>p{max-width:460px;color:var(--muted);font-size:13px;line-height:1.9;margin:0}
+.partner-logo-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #bdc9c9;border-bottom:1px solid #bdc9c9}
+.partner-logo-grid article{min-height:180px;padding:25px 18px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;background:#fff;border-right:1px solid #e0e5e2}
+.partner-logo-grid article:last-child{border-right:0}
+.partner-wordmark{display:flex;align-items:center;min-height:52px;margin:0 0 18px;font-size:clamp(17px,2vw,25px);font-weight:800;letter-spacing:-.06em;color:var(--navy)}
+.partner-wordmark.kent{letter-spacing:.12em}.partner-wordmark.synvor{letter-spacing:.05em;color:#17618f}.partner-wordmark.telewise{letter-spacing:.02em;color:#e47c31}.partner-wordmark.dewood{letter-spacing:-.04em}.partner-wordmark.fransga{letter-spacing:.08em}
+.partner-logo-grid strong{font-size:11px;font-weight:650}.partner-logo-grid small{font-size:9px;line-height:1.5;color:#71818b;margin-top:7px}
+.partner-disclaimer{font-size:9px;line-height:1.7;color:#7b8a91;margin:18px 0 8px}
+.partner-showcase>.text-link{margin-top:14px}
+.hmatias-assistant{position:fixed!important;right:22px!important;left:auto!important;bottom:82px!important;z-index:90!important}
+.hmatias-assistant-toggle{background:#071d33!important;border:1px solid #ffffff26!important}
+.hmatias-assistant-panel{margin-bottom:10px!important}
+.premium-whatsapp{z-index:85!important;right:22px!important;bottom:20px!important}
+@media(max-width:900px){.partner-logo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.partner-logo-grid article:nth-child(3){border-right:0}.partner-logo-grid article:nth-child(n+4){border-top:1px solid #e0e5e2}}
+@media(max-width:650px){.partner-showcase{padding:68px 20px}.partner-showcase-head{grid-template-columns:1fr;gap:20px}.partner-logo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.partner-logo-grid article{min-height:145px;padding:18px 14px}.partner-logo-grid article:nth-child(3){border-right:1px solid #e0e5e2}.partner-logo-grid article:nth-child(2n){border-right:0}.partner-logo-grid article:nth-child(n+3){border-top:1px solid #e0e5e2}.hmatias-assistant{right:15px!important;bottom:82px!important}.premium-whatsapp{right:15px!important;bottom:15px!important}}
