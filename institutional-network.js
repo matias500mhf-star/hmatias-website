@@ -32,7 +32,7 @@
       root.innerHTML = partners.map((partner, index) => `
         <article class="partner-card">
           <div class="partner-card-top"><span class="partner-number">0${index + 1}</span><span class="partner-status">${safe(partner.status_label)}</span></div>
-          <div class="partner-wordmark">${safe(partner.name)}</div>
+          <div class="partner-logo">${partner.logo ? `<img class="partner-logo-img" src="${safe(partner.logo)}" alt="Logótipo oficial de ${safe(partner.name)}" loading="lazy">` : `<span class="partner-logo-pending">Logótipo oficial em validação</span>`}</div>
           <span class="partner-region">${safe(partner.region)}</span>
           <h3>${safe(partner.relationship_type)}</h3>
           <p>${safe(partner.summary)}</p>
