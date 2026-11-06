@@ -61,22 +61,5 @@
       ],
       "commercial_note": "O âmbito, a equipa mobilizada, os prazos e as condições comerciais são definidos para cada intervenção."
     }
-  ],
-  "internal_pipeline": [
-    {
-      "name": "Grupo Joesangola",
-      "status": "Em qualificação",
-      "reason": "Brochura recebida; capacidades e habilitações carecem de validação independente."
-    },
-    {
-      "name": "MILIART",
-      "status": "Em desenvolvimento comercial",
-      "reason": "Relação e reunião em preparação; colaboração efectiva por confirmar."
-    },
-    {
-      "name": "ADY-FERRAZ / MATEANA",
-      "status": "Fornecedores em avaliação",
-      "reason": "EPI, consumíveis e fardamento; amostras, conformidade, preços e prazos por validar."
-    }
   ]
 }
