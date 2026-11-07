@@ -31,14 +31,18 @@
       if (!partners.length) return;
       root.innerHTML = partners.map((partner, index) => `
         <article class="partner-card">
-          <div class="partner-card-top"><span class="partner-number">0${index + 1}</span><span class="partner-status">${safe(partner.status_label)}</span></div>
-          <div class="partner-logo">${partner.logo ? `<img class="partner-logo-img" src="${safe(partner.logo)}" alt="Logótipo oficial de ${safe(partner.name)}" loading="lazy">` : `<span class="partner-logo-pending">Logótipo oficial em validação</span>`}</div>
+          <div class="partner-card-top"><span class="partner-number">REDE · 0${String(index + 1).padStart(2, "0")}</span><span class="partner-status">${safe(partner.status_label)}</span></div>
+          <div class="partner-logo">${partner.logo ? `<img class="partner-logo-img" src="${safe(partner.logo)}" alt="Logótipo oficial de ${safe(partner.name)}" loading="lazy" decoding="async">` : `<span class="partner-logo-pending">Identidade visual oficial em validação</span>`}</div>
           <span class="partner-region">${safe(partner.region)}</span>
-          <h3>${safe(partner.relationship_type)}</h3>
-          <p>${safe(partner.summary)}</p>
-          <ul class="partner-capabilities">${(partner.capabilities || []).map((item) => `<li>${safe(item)}</li>`).join("")}</ul>
-          <p class="partner-commercial-note">${safe(partner.commercial_note)}</p>
-          <div class="partner-card-footer">${partner.website ? `<a href="${safe(partner.website)}" target="_blank" rel="noopener noreferrer">Website oficial ↗</a>` : "<span>Informação comercial sob consulta</span>"}<span>${safe(partner.region)}</span></div>
+          <h3 class="partner-wordmark">${safe(partner.name)}</h3>
+          <p class="partner-relationship">${safe(partner.relationship_type)}</p>
+          <p class="partner-summary">${safe(partner.summary)}</p>
+          <details class="partner-details">
+            <summary>Áreas de capacidade e colaboração</summary>
+            <ul class="partner-capabilities">${(partner.capabilities || []).map((item) => `<li>${safe(item)}</li>`).join("")}</ul>
+            ${partner.commercial_note ? `<p class="partner-commercial-note">${safe(partner.commercial_note)}</p>` : ""}
+          </details>
+          <div class="partner-card-footer">${partner.website ? `<a href="${safe(partner.website)}" target="_blank" rel="noopener noreferrer">Website oficial ↗</a>` : "<span>Informação comercial sob consulta</span>"}</div>
         </article>`).join("");
     } catch (error) { console.warn("[HMATIAS] Partner network unavailable.", error); }
   };
