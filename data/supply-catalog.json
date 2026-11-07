@@ -1,64 +1,178 @@
 {
   "schema_version": 1,
-  "last_reviewed": "2026-11-06",
-  "catalogue_rule": "This is a sourcing catalogue, not a stock list. Every quote must reconfirm exact reference, availability, price, lead time, origin, documents and delivery terms.",
+  "last_reviewed": "2026-11-07",
+  "catalogue_rule": "Catálogo de referência e sourcing, não é lista de stock. Cada proposta confirma código de fábrica, referência, compatibilidade com máquina/material, disponibilidade, preço, prazo, origem, documentação e logística. Os preços PVP e condições comerciais internas não são publicados.",
   "categories": [
     {
-      "id": "diamond-tools",
-      "title": "Ferramentas diamantadas e consumíveis de corte",
-      "source": "SYNVOR Industrial",
-      "source_status": "commercial_development",
-      "status_label": "Sob consulta",
-      "description": "Discos diamantados, coroas de perfuração e consumíveis para betão armado, alvenaria, pavimentos, pedra natural e cerâmica.",
+      "id": "diamond-discs",
+      "title": "Discos diamantados e corte de materiais",
+      "source": "SYNVOR Industrial · Carbodiam",
+      "source_status": "catalogue_reference",
+      "status_label": "Referências de catálogo · sob consulta",
+      "description": "Ferramentas para corte de betão armado e materiais duros, pavimentos, pedra natural, cerâmica e serras de mesa. A seleção depende do material, máquina, diâmetro, furo central e corte a seco ou com água.",
       "brands": [
-        "Carbodiam",
-        "Samedia"
+        "Carbodiam"
       ],
       "items": [
         {
           "name": "Red Line 17",
           "type": "Disco diamantado para corte intensivo",
-          "specification": "Diâmetros documentados: 230, 300, 350 e 400 mm; segmento 17 mm.",
+          "specification": "Segmento de 17 mm. Diâmetros indicados no catálogo: 230, 300, 350 e 400 mm.",
           "application": "Betão e betão armado.",
-          "source_url": "https://synvor-industrial.com/discos-diamantados"
+          "image": "images/synvor/synvor-four-product-sprite.webp",
+          "image_position": "0% 0%",
+          "image_alt": "Disco diamantado Carbodiam Red Line 17 fotografado no catálogo SYNVOR 2026."
         },
         {
           "name": "Spyrostar",
-          "type": "Disco diamantado de corte fino",
-          "specification": "Diâmetros documentados: 125, 230, 350 e 400 mm.",
+          "type": "Disco diamantado de corte fino e precisão",
+          "specification": "Diâmetros indicados no catálogo: 125, 230, 350 e 400 mm.",
           "application": "Corte de precisão em materiais duros.",
-          "source_url": "https://synvor-industrial.com/discos-diamantados"
+          "image": "images/synvor/synvor-four-product-sprite.webp",
+          "image_position": "100% 0%",
+          "image_alt": "Disco diamantado Carbodiam Spyrostar fotografado no catálogo SYNVOR 2026."
         },
         {
           "name": "PRO BF1",
-          "type": "Disco para serra de chão",
-          "specification": "Diâmetros documentados: 300 e 350 mm.",
+          "type": "Disco diamantado para serra de chão",
+          "specification": "Diâmetros indicados no catálogo: 300 e 350 mm.",
           "application": "Pavimentos industriais duros.",
-          "source_url": "https://synvor-industrial.com/discos-diamantados"
+          "image": "images/synvor/synvor-four-product-sprite.webp",
+          "image_position": "0% 100%",
+          "image_alt": "Disco diamantado Carbodiam PRO BF1 fotografado no catálogo SYNVOR 2026."
         },
         {
-          "name": "Coroas diamantadas",
-          "type": "Coroas de perfuração",
-          "specification": "Gama de catálogo: Ø 6–500 mm; encaixes e aplicação a confirmar.",
-          "application": "Perfuração em betão e materiais de construção.",
-          "source_url": "https://synvor-industrial.com/discos-diamantados"
+          "name": "Incisor e Pantera",
+          "type": "Gamas Carbodiam para corte",
+          "specification": "Concentração de diamante, velocidade e desempenho variam conforme a gama; diâmetros e furo confirmados por referência.",
+          "application": "Corte de alta velocidade e materiais duros."
+        },
+        {
+          "name": "Ultra Tiles · Ceram+ · Ceram Top",
+          "type": "Gamas para cerâmica e grés porcelânico",
+          "specification": "Coroa contínua e opções de corte a seco conforme a referência.",
+          "application": "Cerâmica, grés, mosaico e pedra natural."
+        },
+        {
+          "name": "Bluestone / Mármore",
+          "type": "Ferramentas e acessórios para acabamento de pedra",
+          "specification": "Flange e tiras diamantadas; confirmar configuração por máquina.",
+          "application": "Pedra azul e mármore."
+        },
+        {
+          "name": "Universal Table / Concrete Table",
+          "type": "Discos para serras de mesa",
+          "specification": "Gamas para utilização versátil e corte de betão; especificação exacta por referência.",
+          "application": "Serras de mesa e materiais de construção."
         }
       ],
-      "quote_note": "Referências de catálogo Carbodiam/SYNVOR. Consulte imagens e fichas técnicas no catálogo oficial; referência exacta, compatibilidade, disponibilidade, preço e prazo são reconfirmados antes da proposta.",
       "source_url": "https://synvor-industrial.com/discos-diamantados",
-      "catalog_url": "https://synvor-industrial.com/"
+      "catalog_url": "https://synvor-industrial.com/discos-diamantados",
+      "quote_note": "Fotografias dos três produtos principais extraídas do catálogo comercial SYNVOR 2026 fornecido à HMATIAS. Diâmetro, furo, máquina compatível, modo de corte, disponibilidade e preço são reconfirmados na proposta."
     },
     {
-      "id": "industrial-corrosion",
-      "title": "Soluções industriais e anticorrosivas",
-      "source": "Rede de sourcing Kent Offshore",
-      "source_status": "confirmed_collaboration",
-      "status_label": "Consulta técnica",
-      "description": "Pesquisa de produtos e soluções para preservação de activos, protecção contra corrosão, manutenção e inspecção industrial.",
-      "brands": [],
-      "items": [],
-      "quote_note": "A selecção de produtos, fabricante, ficha técnica, stock e condições de fornecimento é feita por especificação. Não existe declaração de stock permanente.",
-      "source_url": "https://synvor-industrial.com/"
+      "id": "diamond-coring",
+      "title": "Coroas diamantadas e perfuração",
+      "source": "SYNVOR Industrial · Carbodiam / SAMEDIA",
+      "source_status": "catalogue_reference",
+      "status_label": "Referências de catálogo · consulta técnica",
+      "description": "Coroas para caroteadoras de coluna e ferramentas de perfuração para betão armado, alvenaria, materiais duros, cerâmica e aplicações a seco ou a água.",
+      "brands": [
+        "Carbodiam",
+        "SAMEDIA"
+      ],
+      "items": [
+        {
+          "name": "Rocket Line",
+          "type": "Coroa diamantada profissional intensiva",
+          "specification": "Segmento indicado de 3–5 mm; ligação 5/4″; diâmetro e comprimento útil dependem do código e da configuração.",
+          "application": "Betão duro e fortemente armado; caroteadoras de coluna.",
+          "image": "images/synvor/synvor-four-product-sprite.webp",
+          "image_position": "100% 100%",
+          "image_alt": "Coroa diamantada Carbodiam Rocket Line fotografada no catálogo SYNVOR 2026."
+        },
+        {
+          "name": "Score · Speedor · Falcor",
+          "type": "Famílias de coroas Carbodiam",
+          "specification": "Soluções para caroteadoras ligeiras, materiais ligeiros e perfuração a seco/micro-percussão; encaixe e fixação confirmados por referência.",
+          "application": "Perfuração técnica em materiais de construção."
+        },
+        {
+          "name": "SAMEDIA SHOXX DBX / DBW",
+          "type": "Coroas diamantadas para perfuração a húmido",
+          "specification": "DBX: gama de catálogo Ø32–400 mm; DBW: Ø32–600 mm. Encaixe e comprimento útil variam por referência.",
+          "application": "Betão armado e alvenaria."
+        },
+        {
+          "name": "SAMEDIA MASTER DBK",
+          "type": "Coroas diamantadas para caroteadoras",
+          "specification": "Gama de catálogo Ø32–400 mm; confirmar comprimento útil e encaixe.",
+          "application": "Perfuração a húmido."
+        },
+        {
+          "name": "SAMEDIA DAX / DAX-L / DAM",
+          "type": "Coroas para perfuração a seco e cerâmica",
+          "specification": "Variantes de catálogo com encaixe M16; diâmetros e comprimento útil dependem do modelo.",
+          "application": "Cerâmica, grés porcelânico, ladrilho e alvenaria."
+        },
+        {
+          "name": "SAMEDIA DBV / DBV-E",
+          "type": "Coroas e ferramentas de perfuração",
+          "specification": "Variantes de catálogo com encaixe M14; confirmar modelo, diâmetro e comprimento útil.",
+          "application": "Perfuração a seco e aplicações específicas."
+        },
+        {
+          "name": "SAMEDIA DMP 500 / DMP 800",
+          "type": "Sistemas híbridos de caroteamento",
+          "specification": "DMP 500 portátil e DMP 800 de maior capacidade com coluna; especificações completas sob consulta.",
+          "application": "Perfuração a seco, a água e com micro-percussão."
+        }
+      ],
+      "source_url": "https://synvor-industrial.com/coroas-diamantadas",
+      "catalog_url": "https://synvor-industrial.com/coroas-diamantadas",
+      "quote_note": "A página 5 do PDF indica Ø51–499 mm para Rocket Line, enquanto a página 6 apresenta Ø51–526 mm. Por isso o intervalo não é publicado como especificação fechada. A referência exacta e o diâmetro são confirmados com o fabricante antes da proposta."
+    },
+    {
+      "id": "concrete-finishing",
+      "title": "Desbaste, polimento e tratamento de betão",
+      "source": "SYNVOR Industrial · Carbodiam / HG Hyper Grinder / Convergent",
+      "source_status": "catalogue_reference",
+      "status_label": "Soluções de catálogo · sob consulta",
+      "description": "Ferramentas diamantadas para desbaste de superfícies, máquinas de pavimento e soluções químicas de cura, endurecimento e densificação de betão.",
+      "brands": [
+        "Carbodiam",
+        "HG Hyper Grinder",
+        "Convergent"
+      ],
+      "items": [
+        {
+          "name": "Placas e copos diamantados",
+          "type": "Ferramentas de desbaste",
+          "specification": "O catálogo apresenta segmentos de grão 16 a 150; medidas e adaptação à máquina sob consulta.",
+          "application": "Desbaste industrial de betão, pedra e revestimentos.",
+          "image": "images/synvor/synvor-four-product-sprite.webp",
+          "image_position": "0% 100%",
+          "image_alt": "Ferramenta diamantada de desbaste apresentada no catálogo SYNVOR 2026."
+        },
+        {
+          "name": "RTK 280 VS",
+          "type": "Máquina compacta de desbaste de pavimentos",
+          "specification": "Velocidade variável; ficha técnica completa e configuração sob consulta.",
+          "application": "Desbaste de pavimentos.",
+          "image": "images/synvor/synvor-four-product-sprite.webp",
+          "image_position": "100% 100%",
+          "image_alt": "Máquina de desbaste de pavimentos RTK 280 VS apresentada no catálogo SYNVOR 2026."
+        },
+        {
+          "name": "Pentra-Sil NL/HD+C",
+          "type": "Tratamento de betão 3 em 1",
+          "specification": "Produto para cura, endurecimento e densificação; embalagem e ficha técnica sob consulta.",
+          "application": "Pavimentos de betão."
+        }
+      ],
+      "source_url": "https://synvor-industrial.com/desbaste-e-polimento",
+      "catalog_url": "https://synvor-industrial.com/desbaste-e-polimento",
+      "quote_note": "As soluções constam do catálogo SYNVOR 2026. Fichas técnicas, sistema de aplicação, embalagem, compatibilidade e disponibilidade devem ser confirmados para cada pedido."
     },
     {
       "id": "ppe-workwear",
@@ -66,10 +180,10 @@
       "source": "Rede de fornecedores sob qualificação",
       "source_status": "supplier_network",
       "status_label": "Sob consulta",
-      "description": "Calçado de segurança, vestuário profissional, equipamentos de protecção e consumíveis de segurança para equipas e projectos.",
+      "description": "Calçado de segurança, vestuário profissional, capacetes, luvas, protecção ocular, auditiva e respiratória e equipamentos de protecção para equipas e projectos.",
       "brands": [],
       "items": [],
-      "quote_note": "Modelos, certificações, tamanhos, personalização, amostras e prazos devem ser aprovados antes da proposta."
+      "quote_note": "Modelos, normas, certificações, tamanhos, personalização, amostras e prazos são confirmados antes da proposta."
     },
     {
       "id": "construction-materials",
@@ -80,7 +194,18 @@
       "description": "Aço, varões, tubos quadrados, rectangulares e redondos, perfis galvanizados, chapas, vigas, cantoneiras, redes e guardas metálicas.",
       "brands": [],
       "items": [],
-      "quote_note": "Espessura, classe, norma, acabamento, dimensões, quantidade e local de entrega obrigatórios para cotação."
+      "quote_note": "Espessura, classe, norma, acabamento, dimensões, quantidade, origem e local de entrega obrigatórios para cotação."
+    },
+    {
+      "id": "industrial-corrosion",
+      "title": "Soluções industriais e anticorrosivas",
+      "source": "Rede de sourcing Kent Offshore",
+      "source_status": "confirmed_collaboration",
+      "status_label": "Consulta técnica",
+      "description": "Pesquisa de produtos e soluções para preservação de activos, protecção contra corrosão, manutenção industrial, inspecção e ensaios não destrutivos.",
+      "brands": [],
+      "items": [],
+      "quote_note": "Fabricante, sistema, ficha técnica, preparação de superfície, stock e condições são definidos por especificação. Não existe declaração de stock permanente."
     },
     {
       "id": "industrial-equipment",
@@ -88,10 +213,10 @@
       "source": "Sourcing por pedido",
       "source_status": "supplier_network",
       "status_label": "Sob consulta",
-      "description": "Equipamentos, peças, filtros, componentes eléctricos e instrumentação industrial conforme marca, modelo e especificação técnica.",
+      "description": "Equipamentos, peças, filtros, componentes eléctricos, instrumentação, ferramentas e consumíveis industriais conforme marca, modelo e especificação técnica.",
       "brands": [],
       "items": [],
-      "quote_note": "Não apresentar referências de oportunidades históricas como stock disponível. A disponibilidade deve ser reconfirmada."
+      "quote_note": "Não apresentar referências de oportunidades históricas como stock disponível. Disponibilidade, fabricante, compatibilidade e prazo são reconfirmados."
     },
     {
       "id": "lubricants",
