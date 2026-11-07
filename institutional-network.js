@@ -74,7 +74,7 @@
           : "";
         const productCards = products.map((item) => `
           <article class="supply-product">
-            ${item.image ? `<img src="${safe(item.image)}" alt="${safe(item.image_alt || item.name)}" loading="lazy" decoding="async">` : `<div class="supply-product-reference" aria-hidden="true"><span>REFERÊNCIA DE CATÁLOGO</span><strong>${safe(item.name)}</strong></div>`}
+            ${item.image_position && item.image ? `<div class="supply-product-photo" role="img" aria-label="${safe(item.image_alt || item.name)}" style="background-position:${["0% 0%","100% 0%","0% 100%","100% 100%"].includes(item.image_position) ? item.image_position : "0% 0%"}"></div>` : item.image ? `<img src="${safe(item.image)}" alt="${safe(item.image_alt || item.name)}" loading="lazy" decoding="async">` : `<div class="supply-product-reference" aria-hidden="true"><span>REFERÊNCIA DE CATÁLOGO</span><strong>${safe(item.name)}</strong></div>`}
             <div><h4>${safe(item.name)}</h4><p><strong>${safe(item.type)}</strong></p>
             <p>${safe(item.specification)}</p><p>${safe(item.application)}</p></div>
             <a href="mailto:geral@comercialhmatiasps.com?subject=${encodeURIComponent("Consulta HMATIAS — " + item.name)}">Consultar referência ↗</a>
