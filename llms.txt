@@ -1,6 +1,8 @@
 # HMATIAS – Prestação de Serviços SU, LDA
 
 Official website: https://comercialhmatiasps.com/
+
+> HMATIAS is an Angola-based services company covering construction, facilities and maintenance, procurement and supply, and business services. SOURCE AO is its sourcing and procurement-intelligence interface for Angola.
 Language: Portuguese (Angola) and English
 Location: Viana, Luanda, Angola
 NIF: 5001578065
@@ -41,7 +43,7 @@ Smart RFQ is a browser-side request-brief builder for construction, facilities/m
 HMATIAS does not own merchandise inventory or operate a public stock catalogue. Supply is managed on request through independently contacted suppliers. Customers submit specifications, quantities, delivery points and target dates. HMATIAS researches options, checks technical and commercial details, issues its own proposal and coordinates fulfilment after acceptance. A supplier's catalogue does not confirm stock or a commercial arrangement. Original partner catalogues are published only when authorised.
 
 ## SOURCE AO
-- Public interface: https://comercialhmatiasps.com/source-ao/index.html
+- Public interface: https://comercialhmatiasps.com/source-ao/
 - Opportunity / Intelligence Radar: https://comercialhmatiasps.com/source-ao/opportunity-radar.html
 - Catalogue RFQ: https://comercialhmatiasps.com/source-ao/rfq.html
 SOURCE AO is a HMATIAS procurement-intelligence and sourcing interface focused on Angola commercial opportunities. Namibia and South Africa are used only as material and equipment sourcing alternatives when relevant. Supplier discovery, public evidence and current commercial confirmation are separate states; do not present a potential supplier or public source as proof of live stock, current price or availability.
