@@ -25,3 +25,37 @@ Estado: pré-produção; não publicada
 
 ## Resultado
 A correcção de navegação móvel foi gravada nesta branch. Não houve alteração da homepage pública, merge para `main`, deploy ou alteração de DNS.
+
+
+## Auditoria geral de navegação e integridade — 07-11-2026
+
+Branch: `feat/institutional-operating-phase-20261106`
+Commit testado: `d6d3cf99baba442eeb2b5fa6dd889ed8c1403755`
+
+### Navegação e recursos
+- Analisadas 56 referências de ligação na pré-visualização premium (36 destinos únicos).
+- Verificadas a existência dos ficheiros locais, destinos de âncora e os principais percursos entre a pré-visualização e as páginas internas.
+- Nenhum ficheiro local em falta ou âncora estática quebrada foi encontrado nas 12 páginas representativas verificadas.
+- O destino `#pedido-supply` é criado pelo `supply-request.js` em tempo de execução e carregado a partir do `script.js`; foi validado por leitura do código, não por clique real no browser.
+- O sitemap contém 37 URLs, sem duplicados nem referências a ficheiros inexistentes. As novas páginas de equipa, parceiros, catálogo de fornecimentos e a pré-visualização permanecem fora do sitemap.
+- As sete imagens da pré-visualização têm texto alternativo e todos os campos do formulário premium têm labels correspondentes.
+
+### Formulários
+- O formulário premium `contactForm` tem validação HTML, consentimento obrigatório e fluxo de preparação para WhatsApp/e-mail.
+- O formulário não grava automaticamente o pedido num CRM ou backend; a pessoa tem de concluir o envio na aplicação escolhida.
+- O construtor de Supply e o Smart RFQ têm código de tratamento de submissão e validação; os fluxos não foram submetidos com dados reais nem testados ponta a ponta nesta auditoria.
+
+### Deploy de pré-visualização
+- Vercel `hmatias-site-test`: estado `READY`.
+- Build concluído para o commit acima, na branch de desenvolvimento.
+- A homepage pública de `main`, domínio e DNS não foram alterados.
+- A tentativa de leitura da URL de pré-visualização pelo leitor web não foi autorizada; por isso, não se declara validação visual ou clique real no browser.
+
+### Limitações e bloqueios
+- Os workflows de Lighthouse e integridade estão configurados para `pull_request` dirigido a `main` ou `workflow_call`; não há execução desses testes associada ao commit testado. Lighthouse, Core Web Vitals e teste em Android real permanecem por executar.
+- A branch está divergente de `main` (161 commits à frente e 4 atrás no momento da auditoria); reconciliar antes de qualquer pull request/integração.
+- Existe contradição documental sobre a SYNVOR Industrial: `data/partners.json` classifica como "Parceria aprovada", enquanto este documento de fase classifica a relação como em desenvolvimento e não formalizada. Não publicar a classificação até validação expressa da gerência.
+- As fotografias e respectivas legendas devem ser validadas documentalmente antes de publicação; a presença do ficheiro não prova autoria, autorização ou correspondência do trabalho.
+
+### Correcção aplicada
+- O CTA "Conhecer a HMATIAS" foi redireccionado da própria secção para `credibilidade.html`.
