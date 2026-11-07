@@ -125,3 +125,18 @@
 
 /* Partner identity marks: use only supplied official artwork. */
 .partner-mark-pending{min-height:74px;display:flex;align-items:center;color:#a9c4d5;font:600 9px/1.5 InterHM,Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.2);margin-bottom:18px}.partner-real-logo{display:block;width:min(100%,240px);height:74px;object-fit:contain;object-position:left center;margin-bottom:18px;background:#fff;padding:8px}
+
+
+/* Partner identities: text-only marks until approved official artwork is supplied. */
+.partner-logo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.partner-logo-grid article{min-height:164px;padding:26px 24px}
+.partner-wordmark{display:flex;align-items:center;min-height:62px;margin:0 0 18px;padding-bottom:14px;border-bottom:1px solid var(--line);font-size:clamp(16px,1.7vw,22px);line-height:1.1;font-weight:760;letter-spacing:-.045em;color:var(--navy)}
+.partner-wordmark.kent{letter-spacing:.13em;font-size:16px}
+.partner-wordmark.synvor{letter-spacing:.06em;color:#17618f}
+.partner-wordmark.telewise{letter-spacing:.08em;color:#b56a32}
+.partner-wordmark.dewood{letter-spacing:-.035em}
+.partner-wordmark.fransga{letter-spacing:.1em;font-size:18px}
+.partner-logo-grid article strong{font-size:11px}
+@media(max-width:900px){.partner-logo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.partner-logo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.partner-logo-grid article{min-height:142px;padding:18px 14px}}
+@media(max-width:420px){.partner-logo-grid{grid-template-columns:1fr}.partner-logo-grid article{min-height:120px}}
