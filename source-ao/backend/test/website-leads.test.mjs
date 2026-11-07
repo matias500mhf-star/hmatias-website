@@ -6,6 +6,7 @@ import {
 } from '../src/website-leads.js';
 import {rateLimitPolicy} from '../src/security.js';
 import {websiteLeadDesk} from '../src/website-lead-desk.js';
+import {encryptPrivateText} from '../src/sourcing.js';
 
 const body={
   kind:'contact',nonce:'550e8400-e29b-41d4-a716-446655440000',
@@ -29,6 +30,8 @@ test('accepts only explicit consent and valid business contact fields',()=>{
   assert.equal(validateWebsiteLead({...body,website:'spam bot'}),null);
   assert.equal(validateWebsiteLead({...body,phone:'',email:''}),null);
   assert.equal(validateWebsiteLead({...body,kind:'test'}),null);
+  assert.equal(validateWebsiteLead({...body,locale:'en'})?.locale,'en');
+  assert.equal(validateWebsiteLead({...body,locale:'xx'}),null);
   assert.equal(validateWebsiteLead({...body,email:'not-an-email'}),null);
   assert.equal(validateWebsiteLead({...body,nonce:'too short'}),null);
 });
@@ -84,7 +87,8 @@ test('admin listing rejects missing or incorrect tokens',async()=>{
 test('delivery cannot claim acceptance without configured Resend secrets',async()=>{
   assert.equal(websiteDeliveryReady({SOURCE_AO_DB:{}}),false);
   assert.deepEqual(await deliverWebsiteLeadAlerts({SOURCE_AO_DB:{}}),{
-    configured:false,processed:0,accepted:0,failed:0
+    configured:false,processed:0,accepted:0,failed:0,
+    receiptsAccepted:0,receiptsSkipped:0,receiptsFailed:0
   });
 });
 test('preserves idempotent submissions and stores only ciphertext',async()=>{
@@ -190,4 +194,53 @@ test('new lead cannot be stored before the server validates Turnstile',async()=>
   assert.equal(r.status,403);
   assert.equal((await r.json()).error.code,'turnstile_verification_failed');
   assert.equal(writes,0);
+});
+
+
+test('visitor receipt is sent separately and tracked with an idempotent Resend key',async()=>{
+  const key='test-visitor-receipt-encryption-key';
+  const reference='HM-20261108-AB12CD34';
+  const encrypted=await encryptPrivateText(JSON.stringify({
+    name:'Cliente Teste',email:'cliente@example.invalid',locale:'pt'
+  }),key);
+  const row={
+    id:'wl_00000000-0000-4000-8000-000000000001',reference,
+    kind:'contact',service:'Construção',encrypted_payload:encrypted,
+    alert_state:'accepted',alert_attempts:1,receipt_state:'pending',receipt_attempts:0
+  };
+  const writes=[];
+  const db={
+    prepare(sql){
+      let values=[];
+      return {
+        bind(...args){values=args;return this;},
+        async all(){return {results:[row]};},
+        async run(){writes.push({sql,values});return {success:true};}
+      };
+    }
+  };
+  const sent=[];
+  const env={
+    SOURCE_AO_DB:db,PII_ENCRYPTION_KEY:key,RESEND_API_KEY:'test-resend-key',
+    SOURCE_AO_ALERT_FROM:'HMATIAS <geral@comercialhmatiasps.com>',
+    SOURCE_AO_ALERT_TO:'geral@comercialhmatiasps.com'
+  };
+  const outcome=await deliverWebsiteLeadAlerts(env,{
+    limit:1,reference,now:new Date('2026-11-08T00:00:00.000Z'),
+    fetchFn:async(url,options)=>{
+      sent.push({url,options,body:JSON.parse(options.body)});
+      return new Response(JSON.stringify({id:'email_receipt_test'}),{status:200});
+    }
+  });
+  assert.equal(outcome.receiptsAccepted,1);
+  assert.equal(outcome.accepted,0);
+  assert.equal(sent.length,1);
+  assert.equal(sent[0].url,'https://api.resend.com/emails');
+  assert.deepEqual(sent[0].body.to,['cliente@example.invalid']);
+  assert.equal(sent[0].body.from,env.SOURCE_AO_ALERT_FROM);
+  assert.match(sent[0].body.subject,new RegExp(reference));
+  assert.match(sent[0].body.text,new RegExp(reference));
+  assert.equal(sent[0].options.headers['Idempotency-Key'],'hmatias-website-receipt-'+reference);
+  assert.deepEqual(sent[0].body.reply_to,[env.SOURCE_AO_ALERT_TO]);
+  assert.ok(writes.some(x=>x.sql.includes("receipt_state='accepted'")));
 });

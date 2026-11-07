@@ -4,7 +4,7 @@
   // Shared UI/bootstrap must remain independent from analytics/ad-blocking rules.
   if(!document.querySelector('script[data-hmatias-site-bootstrap]')){
     const bootstrap=document.createElement('script');
-    bootstrap.src='site-bootstrap.js?v=20261029-email-icon-preserve1';
+    bootstrap.src='site-bootstrap.js?v=20261108-footer-contact1';
     bootstrap.defer=true;
     bootstrap.dataset.hmatiasSiteBootstrap='true';
     document.head.appendChild(bootstrap);
@@ -218,27 +218,6 @@
     });
   }
 
-  const footerForm=document.getElementById('footerContactForm');
-  if(footerForm){
-    footerForm.addEventListener('submit',e=>{
-      e.preventDefault();
-      if(!footerForm.reportValidity())return;
-      const d=new FormData(footerForm);
-      const clean=value=>String(value||'').trim();
-      const name=clean(d.get('nome'));
-      const company=clean(d.get('empresa'))||(pageEnglish?'Not provided':'Não indicada');
-      const email=clean(d.get('email'))||(pageEnglish?'Not provided':'Não indicado');
-      const phone=clean(d.get('telefone'))||(pageEnglish?'Not provided':'Não indicado');
-      const service=clean(d.get('servico'));
-      const location=clean(d.get('location'))||(pageEnglish?'Not provided':'Não indicada');
-      const message=clean(d.get('mensagem'));
-      const body=pageEnglish
-        ?`Hello HMATIAS.\n\nName: ${name}\nCompany: ${company}\nE-mail: ${email}\nPhone / WhatsApp: ${phone}\nService: ${service}\nLocation: ${location}\n\nRequest:\n${message}`
-        :`Olá HMATIAS.\n\nNome: ${name}\nEmpresa: ${company}\nE-mail: ${email}\nTelefone / WhatsApp: ${phone}\nServiço: ${service}\nLocalização: ${location}\n\nPedido:\n${message}`;
-      presentManualHandoff(footerForm,body,pageEnglish?'HMATIAS footer enquiry':'Pedido de contacto HMATIAS');
-    });
-  }
-
   const businessForm=document.getElementById('businessContactForm');
   if(businessForm){
     const status=document.getElementById('businessFormStatus');
@@ -326,10 +305,6 @@
     {id:'contactForm',subject:'Pedido comercial HMATIAS',fields:[
       ['Nome','nome'],['Empresa','empresa'],['E-mail','email'],
       ['Telefone','telefone'],['Serviço','servico'],['Pedido','mensagem']
-    ]},
-    {id:'footerContactForm',subject:'Pedido de contacto HMATIAS',fields:[
-      ['Nome','nome'],['Empresa','empresa'],['E-mail','email'],
-      ['Telefone','telefone'],['Serviço','servico'],['Localização','location'],['Pedido','mensagem']
     ]},
     {id:'businessContactForm',subject:'Pedido HMATIAS Business Services',fields:[
       ['Nome / Entidade','client_name'],['Telefone / WhatsApp','contact'],
