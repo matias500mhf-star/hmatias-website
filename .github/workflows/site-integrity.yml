@@ -234,7 +234,7 @@ jobs:
           source_logo = ROOT / 'images' / 'source-ao-logo.svg'
           source_page = ROOT / 'source-ao' / 'index.html'
           source_alias = ROOT / 'procura.html'
-          source_canonical = 'https://comercialhmatiasps.com/source-ao/index.html'
+          source_canonical = 'https://comercialhmatiasps.com/source-ao/'
           if not source_logo.exists():
               fail('SOURCE AO sub-logo is missing')
           if not source_page.exists():
@@ -253,7 +253,7 @@ jobs:
                   fail('SOURCE AO legacy alias must stay noindex,follow')
               if source_canonical not in alias_html:
                   fail('SOURCE AO legacy alias must canonicalize to the official SOURCE AO page')
-              if '/source-ao/index.html' not in alias_html:
+              if '/source-ao/' not in alias_html:
                   fail('SOURCE AO legacy alias must redirect to the official SOURCE AO page')
 
           # SOURCE AO access model: public discovery stays public; operational desks stay private-by-design.
