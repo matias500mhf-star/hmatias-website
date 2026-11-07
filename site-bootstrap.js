@@ -51,7 +51,7 @@
     const leadEndpoint=document.documentElement.dataset.hmatiasLeadsEndpoint||'';
     const leadSiteKey=document.documentElement.dataset.hmatiasTurnstileSiteKey||'';
     if(/^https:\/\/[^\s]+\/v1\/leads$/.test(leadEndpoint)&&leadSiteKey&&
-       document.querySelector('#contactForm,#businessContactForm,#bookingRequestForm')){
+       document.querySelector('#contactForm,#businessContactForm,#bookingRequestForm,#footerContactForm')){
       loadScript('script[data-hmatias-lead-intake]','lead-intake-client.js?v=20261008-1','hmatiasLeadIntake',document.body);
     }
     // Opt-in to persisted institutional leads after the Worker capability check.
