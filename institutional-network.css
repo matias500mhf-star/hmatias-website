@@ -120,3 +120,24 @@ body.hmatias-network-page .partner-commercial-note{margin:12px 0 0!important;pad
 body.hmatias-network-page .partner-card-footer{margin-top:auto;padding-top:14px;font-size:.72rem}
 @media(max-width:1050px){body.hmatias-network-page .partners-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){body.hmatias-network-page .partners-grid{grid-template-columns:1fr;gap:12px}body.hmatias-network-page .partner-card{padding:20px}body.hmatias-network-page .partner-logo{height:58px;margin:14px 0 9px}}
+
+
+/* 2026-11-07: compact partner and supply catalogue presentation */
+body.hmatias-network-page .partners-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+body.hmatias-network-page .partner-card{padding:22px;min-height:0}
+body.hmatias-network-page .partner-logo{min-height:76px;max-height:92px;display:flex;align-items:center;justify-content:flex-start;margin:20px 0 8px}
+body.hmatias-network-page .partner-logo-img{max-width:150px;max-height:72px;object-fit:contain}
+body.hmatias-network-page .partner-logo-pending{font-size:.64rem;line-height:1.45;letter-spacing:.04em;color:#7b8d9b}
+body.hmatias-network-page .partner-wordmark{font-size:clamp(1.25rem,1.65vw,1.8rem);margin:14px 0 4px}
+body.hmatias-network-page .partner-summary{font-size:.84rem;line-height:1.65}
+body.hmatias-network-page .partner-card h3{font-size:.96rem;margin:16px 0 8px}
+body.hmatias-network-page .partner-capabilities{gap:6px 10px;padding:13px 0;margin-top:8px}
+body.hmatias-network-page .partner-capabilities li{font-size:.72rem}
+body.hmatias-network-page .supply-catalogue-card{padding:22px;gap:12px}
+body.hmatias-network-page .supply-product-reference{min-height:130px;display:flex;flex-direction:column;justify-content:space-between;padding:18px;background:linear-gradient(145deg,#eef3f7,#fff);border:1px solid #dce5ec;color:#183c59}
+body.hmatias-network-page .supply-product-reference span{font-size:.62rem;letter-spacing:.12em;color:#6a8193}
+body.hmatias-network-page .supply-product-reference strong{font-size:1.35rem;letter-spacing:-.035em}
+body.hmatias-network-page .supply-official-catalogue{display:inline-flex;align-self:flex-start;margin:4px 0 8px;color:#145b8c;font-weight:700;font-size:.82rem;text-decoration:none}
+body.hmatias-network-page .supply-official-catalogue:hover{text-decoration:underline}
+@media(max-width:980px){body.hmatias-network-page .partners-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){body.hmatias-network-page .partners-grid{grid-template-columns:1fr}body.hmatias-network-page .partner-card{padding:20px}body.hmatias-network-page .supply-catalogue-card{padding:18px}}
