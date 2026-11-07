@@ -70,7 +70,7 @@
       root.innerHTML = categories.map((category) => {
         const products = (category.items || []);
         const cover = category.cover_image
-          ? `<img class="supply-catalogue-cover" src="${safe(category.cover_image)}" alt="${safe(category.cover_alt || ("Catálogo " + category.source))}" loading="lazy" decoding="async">`
+          ? `<img class="supply-catalogue-cover" src="${safe(category.cover_image)}" alt="${safe(category.cover_alt || ("Imagem da família " + category.title))}" loading="lazy" decoding="async">`
           : "";
         const productCards = products.map((item) => `
           <article class="supply-product">
@@ -79,11 +79,6 @@
             <p>${safe(item.specification)}</p><p>${safe(item.application)}</p></div>
             <a href="mailto:geral@comercialhmatiasps.com?subject=${encodeURIComponent("Consulta HMATIAS — " + item.name)}">Consultar referência ↗</a>
           </article>`).join("");
-        const pdfActions = category.pdf_url ? `
-          <div class="supply-catalogue-actions">
-            <a class="btn btn-primary" href="${safe(category.pdf_url)}" target="_blank" rel="noopener noreferrer">Abrir catálogo PDF ↗</a>
-            <a class="btn btn-outline" href="${safe(category.pdf_url)}" download>Descarregar PDF ↓</a>
-          </div>` : "";
         return `
           <article class="supply-card supply-catalogue-card">
             ${cover}
@@ -91,7 +86,6 @@
             <h3>${safe(category.title)}</h3><p>${safe(category.description)}</p>
             ${category.brands?.length ? `<div class="supply-brands">${category.brands.map((brand) => `<span>${safe(brand)}</span>`).join("")}</div>` : ""}
             ${productCards ? `<div class="supply-products-grid">${productCards}</div>` : ""}
-            ${pdfActions}
             
             <p class="supply-note">${safe(category.quote_note || "Preço, disponibilidade, prazo e condições são confirmados por pedido.")}</p>
             <a class="supply-enquire" href="mailto:geral@comercialhmatiasps.com?subject=${encodeURIComponent("Consulta de fornecimento HMATIAS — " + category.title)}">Pedir cotação à HMATIAS ↗</a>
