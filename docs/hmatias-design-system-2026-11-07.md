@@ -94,5 +94,9 @@ Medição matemática dos valores hexadecimais actuais:
 
 Estes valores verificam apenas os pares indicados, não todos os textos e fundos existentes nas páginas.
 
-## 11. Limitações desta fase
+## 11. Primeira correcção de legibilidade na homepage de preview
+Em `premium-preview.css` foram escurecidos os cinzentos de texto secundário demasiado claros para `#52697B`, preservando o azul institucional e a composição existente. Foram também aumentados alguns tamanhos de texto funcional: descrições de secção, descrições de capacidades, labels e campos do formulário, notas legais e ligações do rodapé. A pilha tipográfica passou a declarar kerning e a desactivar síntese artificial de pesos.
+Esta alteração melhora a leitura sem introduzir uma nova identidade. A confirmação visual em browser, zoom 200% e dispositivos reais continua pendente.
+
+## 12. Limitações desta fase
 A análise de páginas externas é uma avaliação de padrões observáveis e documentação pública, não uma auditoria técnica interna desses sites. A inspecção HMATIAS foi estática via ficheiros da branch; não substitui browser QA, Lighthouse ou teste real de submissões.
