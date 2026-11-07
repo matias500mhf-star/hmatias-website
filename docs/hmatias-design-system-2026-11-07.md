@@ -80,5 +80,19 @@ Inspecção estática da branch de desenvolvimento em 7 Nov 2026:
 7. Verificar teclado, foco, contraste WCAG AA, reduced motion, links, formulários, imagens, consola e Core Web Vitals.
 8. Não fazer merge/deploy de produção sem aprovação explícita.
 
-## 10. Limitações desta fase
+## 10. Aplicação da fundação
+O ficheiro `hm-design-system.css` foi ligado no fim do `<head>` das seguintes páginas de desenvolvimento: `index.html` (preview noindex), `premium-preview.html`, `construcao.html`, `facilities.html`, `supply.html`, `credibilidade.html`, `parceiros.html`, `servicos-administrativos.html`, `catalogo-obras.html`, `rfq.html` e `catalogo-fornecimentos.html`.
+A folha centraliza tokens, foco visível de teclado e preferência de movimento reduzido. Não substitui nem apaga os CSS actuais; a adopção das variáveis nos componentes será gradual para evitar regressões.
+
+### Verificação de contraste de pares de cor (texto normal em branco)
+Medição matemática dos valores hexadecimais actuais:
+- `#0065CC` sobre `#FFFFFF`: **5.62:1** — cumpre WCAG AA.
+- `#062D56` sobre `#FFFFFF`: **13.84:1** — cumpre WCAG AAA.
+- `#0B477C` sobre `#FFFFFF`: **9.52:1** — cumpre WCAG AAA.
+- `#5D6D7D` sobre `#FFFFFF`: **5.32:1** — cumpre WCAG AA.
+- `#48BAF5` sobre `#FFFFFF`: **2.18:1** — não usar para texto normal nem texto grande; reservar para detalhe decorativo ou fundos escuros após teste.
+
+Estes valores verificam apenas os pares indicados, não todos os textos e fundos existentes nas páginas.
+
+## 11. Limitações desta fase
 A análise de páginas externas é uma avaliação de padrões observáveis e documentação pública, não uma auditoria técnica interna desses sites. A inspecção HMATIAS foi estática via ficheiros da branch; não substitui browser QA, Lighthouse ou teste real de submissões.
