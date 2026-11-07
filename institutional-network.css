@@ -96,3 +96,27 @@ body.hmatias-network-page{--net-ink:#102a43;--net-navy:#062d56;--net-blue:#17639
 .supply-catalogue-actions{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0}
 .supply-catalogue-empty{grid-column:1/-1}
 @media(max-width:560px){.supply-products-grid{grid-template-columns:1fr}.supply-catalogue-cover{max-height:300px}}
+
+
+/* Premium partner network refinement — names first, capabilities on demand. */
+body.hmatias-network-page .partners-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+body.hmatias-network-page .partner-card{padding:22px 23px 20px;min-height:0;border-color:#dce5ec;box-shadow:0 8px 26px rgba(6,45,86,.035)}
+body.hmatias-network-page .partner-card-top{align-items:flex-start;min-height:30px}
+body.hmatias-network-page .partner-status{max-width:62%;padding:6px 8px;font-size:.64rem;letter-spacing:.035em;text-align:right}
+body.hmatias-network-page .partner-logo{height:66px;margin:18px 0 10px;align-items:center}
+body.hmatias-network-page .partner-logo-img{max-width:190px;max-height:62px}
+body.hmatias-network-page .partner-logo-pending{font-size:.68rem}
+body.hmatias-network-page .partner-wordmark{margin:0 0 4px;font-size:1.45rem;line-height:1.15;letter-spacing:-.04em}
+body.hmatias-network-page .partner-relationship{margin:0 0 12px!important;color:#6b8294!important;font-size:.72rem!important;line-height:1.45!important}
+body.hmatias-network-page .partner-summary{margin:0;color:#526a7d;font-size:.84rem;line-height:1.65}
+body.hmatias-network-page .partner-details{margin-top:16px;border-top:1px solid var(--net-line);padding-top:12px}
+body.hmatias-network-page .partner-details summary{cursor:pointer;color:#145b8c;font-size:.76rem;font-weight:650;list-style:none}
+body.hmatias-network-page .partner-details summary::-webkit-details-marker{display:none}
+body.hmatias-network-page .partner-details summary:after{content:"＋";float:right;color:#6b8294}
+body.hmatias-network-page .partner-details[open] summary:after{content:"−"}
+body.hmatias-network-page .partner-details .partner-capabilities{padding:12px 0 0;margin:10px 0 0;gap:7px 12px}
+body.hmatias-network-page .partner-details .partner-capabilities li{font-size:.74rem;line-height:1.5}
+body.hmatias-network-page .partner-commercial-note{margin:12px 0 0!important;padding:10px 0 0!important;border-top:1px solid #edf1f4;color:#6c7f8d!important;font-size:.74rem!important;line-height:1.55!important}
+body.hmatias-network-page .partner-card-footer{margin-top:auto;padding-top:14px;font-size:.72rem}
+@media(max-width:1050px){body.hmatias-network-page .partners-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){body.hmatias-network-page .partners-grid{grid-template-columns:1fr;gap:12px}body.hmatias-network-page .partner-card{padding:20px}body.hmatias-network-page .partner-logo{height:58px;margin:14px 0 9px}}
