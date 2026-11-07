@@ -1,4 +1,4 @@
-:root{--premium-blue:#075fb8;--premium-navy:#062d56;--premium-ink:#102d4d;--premium-muted:#627387;--premium-line:#e4ebf2}
+:root{--premium-blue:#0065cc;--premium-navy:#062d56;--premium-ink:#102d4d;--premium-muted:#627387;--premium-line:#e4ebf2}
 body{letter-spacing:-.01em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 .header{box-shadow:0 6px 24px rgba(6,45,86,.06)}
 .nav-menu{gap:24px}.nav-menu a{font-size:0.75rem;letter-spacing:.02em}
