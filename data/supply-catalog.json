@@ -10,14 +10,43 @@
       "source_status": "commercial_development",
       "status_label": "Sob consulta",
       "description": "Discos diamantados, coroas de perfuração e consumíveis para betão armado, alvenaria, pavimentos, pedra natural e cerâmica.",
-      "brands": ["Carbodiam", "Samedia"],
-      "items": [
-        {"name":"Red Line 17","type":"Disco diamantado para corte intensivo","specification":"Diâmetros documentados: 230, 300, 350 e 400 mm; segmento 17 mm.","application":"Betão e betão armado."},
-        {"name":"Spyrostar","type":"Disco diamantado de corte fino","specification":"Diâmetros documentados: 125, 230, 350 e 400 mm.","application":"Corte de precisão em materiais duros."},
-        {"name":"PRO BF1","type":"Disco para serra de chão","specification":"Diâmetros documentados: 300 e 350 mm.","application":"Pavimentos industriais duros."},
-        {"name":"Coroas diamantadas","type":"Coroas de perfuração","specification":"Gama de catálogo: Ø 6–500 mm; encaixes e aplicação a confirmar.","application":"Perfuração em betão e materiais de construção."}
+      "brands": [
+        "Carbodiam",
+        "Samedia"
       ],
-      "quote_note": "Referências transcritas do catálogo comercial SYNVOR 2026; confirmar a ficha técnica e disponibilidade da referência exacta."
+      "items": [
+        {
+          "name": "Red Line 17",
+          "type": "Disco diamantado para corte intensivo",
+          "specification": "Diâmetros documentados: 230, 300, 350 e 400 mm; segmento 17 mm.",
+          "application": "Betão e betão armado.",
+          "source_url": "https://synvor-industrial.com/discos-diamantados"
+        },
+        {
+          "name": "Spyrostar",
+          "type": "Disco diamantado de corte fino",
+          "specification": "Diâmetros documentados: 125, 230, 350 e 400 mm.",
+          "application": "Corte de precisão em materiais duros.",
+          "source_url": "https://synvor-industrial.com/discos-diamantados"
+        },
+        {
+          "name": "PRO BF1",
+          "type": "Disco para serra de chão",
+          "specification": "Diâmetros documentados: 300 e 350 mm.",
+          "application": "Pavimentos industriais duros.",
+          "source_url": "https://synvor-industrial.com/discos-diamantados"
+        },
+        {
+          "name": "Coroas diamantadas",
+          "type": "Coroas de perfuração",
+          "specification": "Gama de catálogo: Ø 6–500 mm; encaixes e aplicação a confirmar.",
+          "application": "Perfuração em betão e materiais de construção.",
+          "source_url": "https://synvor-industrial.com/discos-diamantados"
+        }
+      ],
+      "quote_note": "Referências de catálogo Carbodiam/SYNVOR. Consulte imagens e fichas técnicas no catálogo oficial; referência exacta, compatibilidade, disponibilidade, preço e prazo são reconfirmados antes da proposta.",
+      "source_url": "https://synvor-industrial.com/discos-diamantados",
+      "catalog_url": "https://synvor-industrial.com/"
     },
     {
       "id": "industrial-corrosion",
@@ -28,7 +57,8 @@
       "description": "Pesquisa de produtos e soluções para preservação de activos, protecção contra corrosão, manutenção e inspecção industrial.",
       "brands": [],
       "items": [],
-      "quote_note": "A selecção de produtos, fabricante, ficha técnica, stock e condições de fornecimento é feita por especificação. Não existe declaração de stock permanente."
+      "quote_note": "A selecção de produtos, fabricante, ficha técnica, stock e condições de fornecimento é feita por especificação. Não existe declaração de stock permanente.",
+      "source_url": "https://synvor-industrial.com/"
     },
     {
       "id": "ppe-workwear",
