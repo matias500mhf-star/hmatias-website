@@ -229,6 +229,7 @@ export async function deliverWebsiteLeadAlerts(env,{limit=5,now=new Date(),fetch
         },
         body:JSON.stringify({
           from:env.SOURCE_AO_ALERT_FROM,to:[env.SOURCE_AO_ALERT_TO],
+          ...(details.email?{reply_to:details.email}:{}),
           subject:'Novo pedido HMATIAS · '+row.reference,text:lines.join('\n')
         }),signal:AbortSignal.timeout(10000)
       });
