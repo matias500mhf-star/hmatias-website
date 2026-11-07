@@ -36,6 +36,8 @@ for(const path of ['index.html','en.html']){
   const home=read(path);
   assert.ok(home.includes('class="home-proof"'),'Homepage proof row missing: '+path);
   assert.ok(home.includes('site-improvements.css'),'Responsive homepage refinements missing: '+path);
+  assert.ok(home.includes('id="footerContactForm"'),'Secure footer contact form missing: '+path);
+  assert.ok(home.includes('footer-contact-form.css?v=20261107-1'),'Footer contact styles missing: '+path);
 }
 
 const events=read('analytics-events.js');
@@ -43,6 +45,8 @@ assert.ok(events.includes("form.dataset.hmatiasWebsiteIntake!=='true'"));
 assert.ok(events.includes("track('generate_lead'"));
 const loader=read('website-lead-client.js');
 assert.ok(loader.includes('website-lead-intake.js?v='));
+assert.ok(loader.includes("'footerContactForm'"));
+assert.ok(client.includes("id:'footerContactForm'"));
 const client=read('website-lead-intake.js');
 assert.ok(client.includes("window.hmatiasAnalytics?.confirmLead?.("));
 assert.ok(client.includes("if(!response.ok||result?.saved!==true"));
