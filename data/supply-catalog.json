@@ -6,7 +6,6 @@
     {
       "id": "diamond-discs",
       "title": "Discos diamantados e corte de materiais",
-      "source_status": "catalogue_reference",
       "status_label": "Referências de produto · sob consulta",
       "description": "Discos e ferramentas diamantadas para corte de betão armado e materiais duros, pavimentos, pedra natural, cerâmica e serras de mesa. A selecção depende do material, máquina, diâmetro, furo central e corte a seco ou com água.",
       "brands": [
@@ -70,7 +69,6 @@
     {
       "id": "diamond-coring",
       "title": "Coroas diamantadas e perfuração",
-      "source_status": "catalogue_reference",
       "status_label": "Referências de produto · sob consulta",
       "description": "Coroas diamantadas e sistemas de perfuração para betão armado, alvenaria, cerâmica e materiais duros. Soluções para caroteadoras de coluna e equipamentos manuais, a seco ou a água.",
       "brands": [
@@ -129,7 +127,6 @@
     {
       "id": "concrete-finishing",
       "title": "Desbaste, polimento e tratamento de betão",
-      "source_status": "catalogue_reference",
       "status_label": "Referências de produto · sob consulta",
       "description": "Ferramentas de desbaste, polimento e soluções de tratamento para pavimentos e superfícies de betão, incluindo equipamentos e consumíveis especializados.",
       "brands": [
