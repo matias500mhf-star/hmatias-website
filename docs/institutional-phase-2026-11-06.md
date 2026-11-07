@@ -4,7 +4,7 @@
 - Branch: `feat/institutional-operating-phase-20261106`
 - Base: `main`
 - Estado: preparação não publicada; páginas com `noindex,nofollow`.
-- A homepage não foi alterada.
+- A homepage pública de `main` não foi alterada. Nesta branch de pré-visualização, `index.html` serve a versão experimental premium no ambiente de teste; não deve ser integrada/publicada em produção sem aprovação.
 - Nenhuma alteração foi feita em `main`, domínio, DNS ou configuração de publicação.
 
 ## Novas áreas
