@@ -87,3 +87,64 @@ body.hmatias-type footer a[href^="mailto:"]{display:inline-flex!important;align-
 body.hmatias-type footer a[href^="mailto:"] .contact-icon{display:block!important;visibility:visible!important;opacity:1!important;width:18px!important;height:18px!important;min-width:18px!important;flex:0 0 18px!important;object-fit:contain;filter:brightness(0) invert(1)!important}
 body.hmatias-type .institutional-contact a[href^="mailto:"]{display:flex;align-items:flex-start;gap:8px;min-width:0;overflow-wrap:anywhere}
 body.hmatias-type .institutional-contact a[href^="mailto:"] .contact-icon{width:18px!important;height:18px!important;min-width:18px!important;flex:0 0 18px!important;margin:2px 0 0!important;filter:none!important}
+
+
+/* HMATIAS mobile header — shared correction for every page using the corporate header. */
+@media(max-width:850px){
+  .hmatias-header{overflow:visible!important}
+  .hmatias-header .nav{
+    width:calc(100% - 32px)!important;min-height:0!important;
+    padding:9px 0 10px!important;display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:52px auto!important;
+    align-items:center!important;column-gap:12px!important;row-gap:8px!important;
+  }
+  .hmatias-header .brand{
+    grid-column:1!important;grid-row:1!important;
+    width:112px!important;height:52px!important;min-width:0!important;flex:none!important;
+  }
+  .hmatias-header .brand img{
+    width:112px!important;height:52px!important;max-height:52px!important;object-fit:contain!important;
+  }
+  .hmatias-header .menu-toggle{
+    grid-column:2!important;grid-row:1!important;display:inline-flex!important;
+    align-items:center!important;justify-content:center!important;
+    width:44px!important;height:44px!important;min-width:44px!important;
+    margin:0!important;justify-self:end!important;
+  }
+  .hmatias-header .nav-actions{
+    grid-column:1/-1!important;grid-row:2!important;
+    display:flex!important;align-items:stretch!important;flex-wrap:wrap!important;
+    gap:8px!important;min-width:0!important;
+  }
+  .hmatias-header .nav-actions .lang-switch{
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    flex:0 0 42px!important;min-width:42px!important;min-height:42px!important;
+    padding:8px!important;border:1px solid #d7dedf!important;background:#fff!important;
+    font-size:11px!important;white-space:nowrap!important;
+  }
+  .hmatias-header .nav-actions .btn{
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    flex:1 1 120px!important;min-width:0!important;min-height:42px!important;height:auto!important;
+    padding:9px 8px!important;margin:0!important;font-size:10px!important;
+    line-height:1.25!important;letter-spacing:.015em!important;white-space:normal!important;
+    text-align:center!important;overflow-wrap:anywhere!important;
+  }
+  .hmatias-header .nav-menu{
+    position:absolute!important;top:100%!important;left:0!important;right:0!important;
+    z-index:110!important;display:none!important;max-height:calc(100dvh - 150px)!important;
+    overflow-y:auto!important;background:#f5f5f1!important;padding:10px 18px 18px!important;
+    border-top:1px solid #d7dedf!important;box-shadow:0 18px 28px rgba(7,29,51,.12)!important;
+  }
+  .hmatias-header .nav-menu.open{display:flex!important;flex-direction:column!important}
+  .hmatias-header .nav-menu a{
+    display:flex!important;align-items:center!important;min-height:46px!important;
+    padding:12px 4px!important;border-bottom:1px solid #d7dedf!important;
+    font-size:13px!important;white-space:normal!important;
+  }
+}
+@media(max-width:380px){
+  .hmatias-header .nav{width:calc(100% - 24px)!important;column-gap:8px!important}
+  .hmatias-header .nav-actions{gap:6px!important}
+  .hmatias-header .nav-actions .btn{font-size:9px!important;padding:8px 5px!important}
+}
