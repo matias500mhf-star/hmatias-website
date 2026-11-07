@@ -11,7 +11,7 @@ import {readinessResponse} from './health.js';
 import {runMaintenance} from './maintenance.js';
 import {sendPendingIntakeAlerts,intakeAlertStatus} from './intake-alerts.js';
 import {websiteLeadDesk} from './website-lead-desk.js';
-import {websiteLeadConfig,websiteLeadCors,createWebsiteLead,listWebsiteLeads,getWebsiteLead,updateWebsiteLeadStatus,deliverWebsiteLeadAlerts,pruneWebsiteLeads} from './website-leads.js';
+import {websiteLeadConfig,websiteLeadCors,createWebsiteLead,listWebsiteLeads,getWebsiteLead,updateWebsiteLeadStatus,websiteDeliveryReady,deliverWebsiteLeadAlerts,pruneWebsiteLeads} from './website-leads.js';
 import {publicSearch} from './public-search.js';
 import {smartSearchPlan} from './smart-search.js';
 import {procurementMission} from './procurement-mission.js';
@@ -57,7 +57,7 @@ function securityFailure(env,requestId){
 }
 
 export default {
-  async fetch(request,env){
+  async fetch(request,env,ctx){
     const started=Date.now();
     const url=new URL(request.url);
     const requestId=crypto.randomUUID();
@@ -101,6 +101,13 @@ export default {
           response=websiteLeadCors(request);
         }else if(request.method==='POST' && url.pathname==='/api/website-leads'){
           response=await createWebsiteLead(request,env);
+          if(response.status>=200&&response.status<300&&ctx?.waitUntil&&websiteDeliveryReady(env)){
+            ctx.waitUntil(deliverWebsiteLeadAlerts(env,{limit:5}).then(result=>{
+              console.log(JSON.stringify({type:'hmatias_website_lead_immediate_notification',...result}));
+            }).catch(()=>{
+              console.error(JSON.stringify({type:'hmatias_website_lead_immediate_notification',failed:1}));
+            }));
+          }
         }else if(request.method==='GET' && url.pathname==='/api/admin/website-leads'){
           response=await listWebsiteLeads(request,env);
         }else if(request.method==='GET' && /^\/api\/admin\/website-leads\/wl_[0-9a-f-]{36}$/.test(url.pathname)){
