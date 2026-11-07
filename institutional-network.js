@@ -51,10 +51,7 @@
     if (!root) return;
     try {
       const data = await readJson("data/supply-catalog.json");
-      const categories = (data.categories || []).filter((category) =>
-        category.public !== false && (category.cover_image || category.pdf_url ||
-          (category.items || []).some((item) => item.image))
-      );
+      const categories = (data.categories || []).filter((category) => category.public !== false);
       if (!categories.length) {
         const isEnglish = document.documentElement.lang.toLowerCase().startsWith("en");
         const formTarget = isEnglish ? "#supply-request" : "#pedido-supply";
@@ -71,13 +68,13 @@
         return;
       }
       root.innerHTML = categories.map((category) => {
-        const products = (category.items || []).filter((item) => item.image);
+        const products = (category.items || []);
         const cover = category.cover_image
           ? `<img class="supply-catalogue-cover" src="${safe(category.cover_image)}" alt="${safe(category.cover_alt || ("Catálogo " + category.source))}" loading="lazy" decoding="async">`
           : "";
         const productCards = products.map((item) => `
           <article class="supply-product">
-            <img src="${safe(item.image)}" alt="${safe(item.image_alt || item.name)}" loading="lazy" decoding="async">
+            ${item.image ? `<img src="${safe(item.image)}" alt="${safe(item.image_alt || item.name)}" loading="lazy" decoding="async">` : `<div class="supply-product-reference" aria-hidden="true"><span>REFERÊNCIA DE CATÁLOGO</span><strong>${safe(item.name)}</strong></div>`}
             <div><h4>${safe(item.name)}</h4><p><strong>${safe(item.type)}</strong></p>
             <p>${safe(item.specification)}</p><p>${safe(item.application)}</p></div>
             <a href="mailto:geral@comercialhmatiasps.com?subject=${encodeURIComponent("Consulta HMATIAS — " + item.name)}">Consultar referência ↗</a>
@@ -95,6 +92,7 @@
             ${category.brands?.length ? `<div class="supply-brands">${category.brands.map((brand) => `<span>${safe(brand)}</span>`).join("")}</div>` : ""}
             ${productCards ? `<div class="supply-products-grid">${productCards}</div>` : ""}
             ${pdfActions}
+            ${category.source_url ? `<a class="supply-official-catalogue" href="${safe(category.source_url)}" target="_blank" rel="noopener noreferrer">Ver imagens e fichas no catálogo oficial ↗</a>` : ""}
             <p class="supply-note">${safe(category.quote_note || "Preço, disponibilidade, prazo e condições são confirmados por pedido.")}</p>
             <a class="supply-enquire" href="mailto:geral@comercialhmatiasps.com?subject=${encodeURIComponent("Consulta de fornecimento HMATIAS — " + category.title)}">Pedir cotação à HMATIAS ↗</a>
           </article>`;
