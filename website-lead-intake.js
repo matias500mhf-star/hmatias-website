@@ -10,6 +10,8 @@
   const configs=[
     {id:'contactForm',kind:'contact',name:'nome',company:'empresa',phone:'telefone',
       email:'email',service:'servico',location:'location',details:'mensagem'},
+    {id:'footerContactForm',kind:'contact',name:'nome',company:'empresa',phone:'telefone',
+      email:'email',service:'servico',location:'location',details:'mensagem'},
     {id:'businessContactForm',kind:'business',name:'client_name',phone:'contact',
       email:'email',service:'service_type',details:'details',location:'location'},
     {id:'bookingRequestForm',kind:'appointment',name:'client_name',phone:'contact',
@@ -184,7 +186,7 @@
       const fd=new FormData(form);
       const get=key=>key?String(fd.get(key)||'').trim():'';
       const payload={
-        kind:config.kind,nonce,consent:input.checked,website:'',turnstileToken:challengeToken,
+        kind:config.kind,nonce,consent:input.checked,website:get('website'),turnstileToken:challengeToken,
         attribution:campaignAttribution(),
         name:get(config.name),company:get(config.company),phone:get(config.phone),
         email:get(config.email),service:config.kind==='clean'?'HMATIAS Clean':
