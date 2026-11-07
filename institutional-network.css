@@ -143,3 +143,15 @@ body.hmatias-network-page .supply-official-catalogue:hover{text-decoration:under
 @media(max-width:620px){body.hmatias-network-page .partners-grid{grid-template-columns:1fr}body.hmatias-network-page .partner-card{padding:20px}body.hmatias-network-page .supply-catalogue-card{padding:18px}}
 
 body.hmatias-network-page .partner-monogram{display:grid;place-items:center;width:64px;height:64px;border:1px solid #d9e4eb;background:linear-gradient(145deg,#f0f5f8,#fff);color:#174b70;font-size:1.15rem;font-weight:750;letter-spacing:-.06em;border-radius:10px}
+
+
+/* Authentic product photography extracted from the supplier's 2026 catalogue. */
+body.hmatias-network-page .supply-product-photo{display:block;width:100%;aspect-ratio:4/3;min-height:150px;background-image:url("images/synvor/synvor-four-product-sprite.webp");background-size:200% 200%;background-repeat:no-repeat;background-color:#fff;border:1px solid #edf1f4;background-origin:border-box}
+body.hmatias-network-page .supply-product{min-width:0;overflow:hidden}
+body.hmatias-network-page .supply-products-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+body.hmatias-network-page .supply-product>div:not(.supply-product-photo):not(.supply-product-reference){padding-top:12px}
+body.hmatias-network-page .supply-product h4{font-size:.95rem;line-height:1.3;margin:0 0 7px;color:#183c59}
+body.hmatias-network-page .supply-product p{font-size:.78rem;line-height:1.55;color:#637789;margin:4px 0}
+body.hmatias-network-page .supply-product>a{display:inline-flex;margin:10px 0 0;font-size:.75rem;font-weight:700;color:#145b8c}
+@media(max-width:760px){body.hmatias-network-page .supply-products-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){body.hmatias-network-page .supply-products-grid{grid-template-columns:1fr}}
