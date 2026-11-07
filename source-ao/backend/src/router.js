@@ -101,14 +101,6 @@ export default {
           response=websiteLeadCors(request);
         }else if(request.method==='POST' && url.pathname==='/api/website-leads'){
           response=await createWebsiteLead(request,env);
-          if(ctx?.waitUntil&&response.status<300){
-            try{
-              const saved=await response.clone().json();
-              if(saved?.ok===true&&saved.saved===true&&typeof saved.reference==='string'){
-                ctx.waitUntil(deliverWebsiteLeadAlerts(env,{limit:1,reference:saved.reference}));
-              }
-            }catch{}
-          }
           if(response.status>=200&&response.status<300&&ctx?.waitUntil&&websiteDeliveryReady(env)){
             ctx.waitUntil(deliverWebsiteLeadAlerts(env,{limit:5}).then(result=>{
               console.log(JSON.stringify({type:'hmatias_website_lead_immediate_notification',...result}));
