@@ -32,7 +32,7 @@
       root.innerHTML = partners.map((partner, index) => `
         <article class="partner-card">
           <div class="partner-card-top"><span class="partner-number">REDE · 0${String(index + 1).padStart(2, "0")}</span><span class="partner-status">${safe(partner.status_label)}</span></div>
-          <div class="partner-logo">${partner.logo ? `<img class="partner-logo-img" src="${safe(partner.logo)}" alt="Logótipo oficial de ${safe(partner.name)}" loading="lazy" decoding="async">` : `<span class="partner-logo-pending">Identidade visual oficial em validação</span>`}</div>
+          <div class="partner-logo">${partner.logo ? `<img class="partner-logo-img" src="${safe(partner.logo)}" alt="Logótipo oficial de ${safe(partner.name)}" loading="lazy" decoding="async">` : `<span class="partner-monogram" aria-label="Identificação tipográfica, não é o logótipo oficial">${safe(String(partner.name || "HM").split(/\\s+/).filter(Boolean).slice(0,2).map(part => part.charAt(0)).join("").toUpperCase())}</span>`}</div>
           <span class="partner-region">${safe(partner.region)}</span>
           <h3 class="partner-wordmark">${safe(partner.name)}</h3>
           <p class="partner-relationship">${safe(partner.relationship_type)}</p>
