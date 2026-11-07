@@ -100,7 +100,7 @@ jobs:
                   continue
 
               rel = parsed.path.lstrip('/')
-              html_path = ROOT / ('index.html' if not rel else rel)
+              html_path = ROOT / ('index.html' if not rel else (rel + 'index.html' if rel.endswith('/') else rel))
               if not html_path.exists():
                   fail(f'sitemap URL has no matching file: {url}')
                   continue
