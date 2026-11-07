@@ -58,8 +58,8 @@
         root.innerHTML = `
           <article class="network-empty supply-catalogue-empty">
             <span class="eyebrow blue">${isEnglish ? "CATALOGUE UNDER REVIEW" : "CATÁLOGO EM VALIDAÇÃO"}</span>
-            <h3>${isEnglish ? "Only documented products with real images are displayed." : "Só apresentamos produtos documentados e com imagens reais."}</h3>
-            <p>${isEnglish ? "The product images and catalogue file are being prepared for publication. Until they are available, we do not display generic product cards or imply stock. You can still submit a specific supply requirement to HMATIAS." : "As imagens dos produtos e o ficheiro do catálogo estão a ser preparados para publicação. Até estarem disponíveis, não apresentamos cartões genéricos nem sugerimos existência de stock. Pode, entretanto, enviar à HMATIAS um pedido de fornecimento específico."}</p>
+            <h3>${isEnglish ? "Only documented product families and references are displayed." : "Apresentamos apenas famílias e referências de produtos documentadas."}</h3>
+            <p>${isEnglish ? "The product selection is being updated. You can still submit a specific supply requirement to HMATIAS." : "A selecção comercial está em actualização. Pode enviar à HMATIAS um pedido de fornecimento específico."}</p>
             <div class="supply-catalogue-actions">
               <a class="btn btn-primary" href="${formTarget}">${isEnglish ? "Submit a supply enquiry" : "Enviar pedido de fornecimento"} ↗</a>
               <a class="btn btn-outline" href="source-ao/rfq.html${isEnglish ? "?lang=en" : ""}">${isEnglish ? "Register a tracked RFQ" : "Registar pedido de cotação"} ↗</a>
