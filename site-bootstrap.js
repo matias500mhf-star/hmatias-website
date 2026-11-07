@@ -49,7 +49,7 @@
       service:'Service required',choose:'Select a service',location:'Location',
       message:'How can we help?',messageHint:'Briefly describe your request, quantities or technical requirements.',
       consent:'I authorise HMATIAS to use these details to respond to this request, as described in the',
-      privacy:'Privacy Policy',submit:'Send message →',note:'An automatic confirmation will be requested to the e-mail address provided.',
+      privacy:'Privacy Policy',submit:'Send message →',note:'When automatic intake is enabled, a receipt confirmation will be requested to the e-mail address provided.',
       honeypot:'Leave this field empty'
     } : {
       eyebrow:'CONTACTO DIRECTO',title:'Envie uma mensagem à HMATIAS.',
@@ -58,7 +58,7 @@
       service:'Serviço pretendido',choose:'Seleccione um serviço',location:'Localização',
       message:'Como podemos ajudar?',messageHint:'Descreva brevemente o pedido, quantidades ou requisitos técnicos.',
       consent:'Autorizo a HMATIAS a utilizar estes dados para responder ao pedido, nos termos da',
-      privacy:'Política de Privacidade',submit:'Enviar mensagem →',note:'Será solicitada uma confirmação automática para o e-mail indicado.',
+      privacy:'Política de Privacidade',submit:'Enviar mensagem →',note:'Quando a recepção automática estiver activa, será solicitada uma confirmação para o e-mail indicado.',
       honeypot:'Deixe este campo vazio'
     };
     const panel=document.createElement('section');
