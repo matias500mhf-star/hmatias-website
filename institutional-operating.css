@@ -1,6 +1,6 @@
 /* HMATIAS Operating System — substantive internal-page redesign, 2026-11 */
 body.hmatias-institutional{
- --op-ink:#10283d;--op-navy:#071d32;--op-blue:#17658d;--op-sky:#dcecf3;
+ --op-ink:#10283d;--op-navy:#062d56;--op-blue:#0b477c;--op-sky:#dcecf3;
  --op-muted:#637584;--op-line:#d8e1e6;--op-paper:#f4f7f8;--op-white:#fff;
  background:#fff;color:var(--op-ink);font-family:Inter,"Helvetica Neue",Arial,sans-serif;
 }
@@ -22,7 +22,7 @@ body.hmatias-institutional .hmatias-header .btn{border-radius:2px;padding:14px 1
 body.hmatias-institutional .menu-toggle{border:1px solid var(--op-line);border-radius:2px;background:#fff}
 body.hmatias-institutional .unit-hero,body.hmatias-institutional .cred-hero{
  position:relative;isolation:isolate;overflow:hidden;color:#fff;
- background:linear-gradient(112deg,#071d32 0%,#0c3450 58%,#155b7b 100%);
+ background:linear-gradient(112deg,#062d56 0%,#0c3450 58%,#155b7b 100%);
  padding:clamp(76px,9vw,128px) 0 clamp(78px,9vw,126px);
 }
 body.hmatias-institutional .unit-hero:before,body.hmatias-institutional .cred-hero:before{
@@ -88,7 +88,7 @@ body.hmatias-institutional .network-heading p{color:var(--op-muted)}
 body.hmatias-institutional .unit-cta{padding:62px 0;background:var(--op-navy);color:#fff}
 body.hmatias-institutional .unit-cta :is(h2,p){color:#fff}
 body.hmatias-institutional .unit-cta .btn{background:#fff;color:var(--op-navy);border-radius:2px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
-body.hmatias-institutional .catalog-page-head{padding:clamp(76px,9vw,118px) 0 60px;background:linear-gradient(112deg,#071d32,#155b7b);color:#fff;position:relative;overflow:hidden}
+body.hmatias-institutional .catalog-page-head{padding:clamp(76px,9vw,118px) 0 60px;background:linear-gradient(112deg,#062d56,#155b7b);color:#fff;position:relative;overflow:hidden}
 body.hmatias-institutional .catalog-page-head .eyebrow{color:#a8d9ed;font-size:10px;letter-spacing:.18em;font-weight:800}
 body.hmatias-institutional .catalog-page-head h1{max-width:850px;font-size:clamp(40px,6vw,72px);line-height:1.02;color:#fff;margin:18px 0}
 body.hmatias-institutional .catalog-page-head p{max-width:760px;color:#d5e2e9;font-size:18px}
@@ -223,8 +223,8 @@ body.hmatias-institutional :is(input,select,textarea){border-color:#dce6f0;borde
    Editorial palette and typography, not the former bright-blue operating palette. */
 body.hmatias-institutional{
  --op-ink:#102a40;--op-navy:#071d33;--op-blue:#17618f;--op-sky:#a9cfe3;
- --op-muted:#667783;--op-line:#d7dedf;--op-paper:#f5f5f1;--op-white:#fff;
- color:#102a40;background:#f5f5f1;
+ --op-muted:#667783;--op-line:#d7dedf;--op-paper:#f4f8fc;--op-white:#fff;
+ color:#102a40;background:#f4f8fc;
  font-family:InterHM,Inter,"Helvetica Neue",Arial,sans-serif;
 }
 body.hmatias-institutional .hmatias-header{background:rgba(245,245,241,.97);border-color:#d7dedf}
@@ -251,7 +251,7 @@ body.hmatias-institutional .catalog-page-head .eyebrow{color:#a9cfe3}
 body.hmatias-institutional .unit-main{background:#fff}
 body.hmatias-institutional .unit-main.soft,
 body.hmatias-institutional .cred-section-soft,
-body.hmatias-institutional .business-contact{background:#f0f2ef}
+body.hmatias-institutional .business-contact{background:#f4f8fc}
 body.hmatias-institutional .unit-heading .eyebrow,
 body.hmatias-institutional .cred-heading .eyebrow,
 body.hmatias-institutional .unit-card>span{color:#17618f}
@@ -259,7 +259,7 @@ body.hmatias-institutional .unit-card{border-color:#d7dedf}
 body.hmatias-institutional .unit-cta,
 body.hmatias-institutional .cred-contact{background:#071d33;color:#fff}
 body.hmatias-institutional .unit-cta .btn{background:#17618f;border-color:#17618f}
-body.hmatias-institutional :is(.business-contact-form,.supply-request-form,.contact-form){background:#f4f5f1;border-color:#d7dedf;border-radius:0}
+body.hmatias-institutional :is(.business-contact-form,.supply-request-form,.contact-form){background:#f4f8fc;border-color:#d7dedf;border-radius:0}
 body.hmatias-institutional :is(input,select,textarea){border-color:#d7dedf;border-radius:0}
 body.hmatias-institutional :is(footer,.site-footer){background:#061727;color:#a8bac5}
 body.hmatias-institutional :is(footer,.site-footer) a{color:#fff}
