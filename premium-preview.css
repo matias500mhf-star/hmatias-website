@@ -151,3 +151,88 @@
 .premium-whatsapp .wa-icon{width:20px;height:20px;object-fit:contain;filter:brightness(0) invert(1)}
 
 /* Preview build marker: restored complete institutional premium route. */
+
+
+/* HMATIAS premium usability pass — clear hierarchy, consistent actions, calm navigation. */
+:root{
+  --hm-action:#0b5f9d;
+  --hm-action-hover:#0b477c;
+  --hm-focus:#78b9df;
+}
+.masthead{
+  box-shadow:0 5px 24px rgba(6,45,86,.045);
+}
+.masthead nav a{
+  position:relative;
+  padding:10px 0;
+  transition:color .2s ease;
+}
+.masthead nav a:after{
+  content:"";
+  position:absolute;
+  left:0;right:100%;bottom:2px;
+  height:2px;background:var(--hm-action);
+  transition:right .22s ease;
+}
+.masthead nav a:hover:after,.masthead nav a:focus-visible:after{right:0}
+.header-cta,.link-primary,.closing-cta,.premium-contact-form button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  min-height:48px;
+  border-radius:8px;
+  font-weight:700;
+  letter-spacing:.005em;
+  transition:background .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.header-cta{padding:12px 17px;border:1px solid #c9d9e6;background:#fff;color:var(--navy)}
+.header-cta:hover{background:#f4f8fc;border-color:var(--hm-action);color:var(--hm-action);box-shadow:0 8px 20px rgba(6,45,86,.09)}
+.link-primary,.closing-cta,.premium-contact-form button{
+  background:var(--navy);
+  color:#fff;
+  padding:15px 21px;
+  box-shadow:0 8px 22px rgba(6,45,86,.16);
+}
+.link-primary:hover,.closing-cta:hover,.premium-contact-form button:hover{
+  background:var(--hm-action-hover);
+  color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 12px 26px rgba(6,45,86,.2);
+}
+.link-primary span,.closing-cta span,.premium-contact-form button span{color:#9bc9e3}
+.link-secondary,.text-link{
+  color:var(--navy);
+  border-color:#9eb4c5;
+  transition:color .2s ease,border-color .2s ease;
+}
+.link-secondary:hover,.text-link:hover{color:var(--hm-action);border-color:var(--hm-action)}
+.capability{border-radius:4px}
+.capability:focus-visible,.masthead a:focus-visible,.hero-links a:focus-visible,.closing a:focus-visible{
+  outline:3px solid var(--hm-focus);outline-offset:4px
+}
+.premium-contact-form{
+  border-radius:10px;
+  box-shadow:0 14px 38px rgba(6,45,86,.07);
+}
+.premium-contact-form input,.premium-contact-form select,.premium-contact-form textarea{
+  border-radius:6px;
+  min-height:46px;
+}
+.premium-contact-form textarea{min-height:112px}
+.premium-contact-form button{width:100%;text-align:center;border:0;cursor:pointer}
+.premium-contact-form button span{margin-left:auto}
+.hero-image{overflow:visible}
+.hero-image img{border-radius:3px}
+.closing{background:#e8f1f8}
+@media(max-width:650px){
+  .masthead nav{gap:20px;padding:0 0 10px}
+  .masthead nav a{padding:8px 0;font-size:11px}
+  .header-cta{min-height:42px;padding:10px 12px;border-radius:7px;font-size:10px}
+  .hero-links{align-items:flex-start;gap:18px}
+  .link-primary{min-height:46px;padding:14px 16px}
+  .premium-whatsapp{box-shadow:0 8px 24px rgba(6,45,86,.24)}
+}
+@media(prefers-reduced-motion:reduce){
+  .masthead nav a:after{transition:none}
+}
