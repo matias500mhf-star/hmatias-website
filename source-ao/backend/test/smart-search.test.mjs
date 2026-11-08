@@ -36,3 +36,19 @@ test('keeps unknown product as general sourcing without fabricating availability
 test('rejects invalid short queries',()=>{
   assert.throws(()=>buildSmartSearchPlan({query:'x'}),/invalid_query/);
 });
+
+test('recognizes PPE and fall-protection requests without claiming stock',()=>{
+  const ppe=buildSmartSearchPlan({query:'EPI luvas de proteção e arnês',location:'Luanda'});
+  assert.equal(ppe.interpretation.family_id,'ppe-industrial-safety');
+  assert.equal(ppe.interpretation.item_id,'item-ppe-workplace-safety');
+  assert.equal(ppe.interpretation.category,'industrial-supply');
+  assert.ok(ppe.query_variants.some(q=>q.includes('personal protective equipment')));
+  assert.equal(ppe.claims.stock_confirmed,false);
+});
+
+test('maps workwear and protective clothing to the correct RFQ catalogue family',()=>{
+  const plan=buildSmartSearchPlan({query:'fardamento industrial ignífugo',location:'Luanda'});
+  assert.equal(plan.interpretation.family_id,'professional-workwear');
+  assert.equal(plan.interpretation.item_id,'item-professional-workwear-uniforms');
+  assert.ok(plan.query_variants.some(q=>q.includes('flame retardant workwear')));
+});
