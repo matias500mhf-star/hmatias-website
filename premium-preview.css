@@ -434,3 +434,34 @@
 
 /* Contact-only wrapper on the Portuguese editorial home; keep the editorial block as the visual surface. */
 #contacto.contact{padding:0!important;background:#fff!important}
+
+
+/* Language control and final responsive header alignment. */
+.preview-language{
+  display:inline-flex;align-items:center;gap:7px;justify-content:center;
+  min-width:48px;padding:10px 11px;border:1px solid #d9e5ef;border-radius:7px;
+  color:#0b477c;background:#f4f8fc;font:700 10px/1 InterHM,Arial;
+  letter-spacing:.08em;transition:background .2s,border-color .2s,transform .2s;
+}
+.preview-language span{font-size:12px}
+.preview-language:hover{background:#eaf4fd;border-color:#8fb2ca;transform:translateY(-1px)}
+.preview-language:focus-visible{outline:3px solid #78b9df;outline-offset:3px}
+.premium-whatsapp{min-height:48px;padding:13px 18px;background:#062d56;color:#fff;border:1px solid #0b477c}
+.premium-whatsapp .wa-icon{width:21px;height:21px;object-fit:contain;filter:brightness(0) invert(1)}
+.premium-whatsapp .wa-label{font-size:11px;letter-spacing:.01em}
+.premium-whatsapp:hover{background:#0b477c;transform:translateY(-2px)}
+.premium-whatsapp:focus-visible{outline:3px solid #78b9df;outline-offset:4px}
+@media(max-width:760px){
+  .masthead{grid-template-columns:minmax(0,1fr) auto 44px;column-gap:9px}
+  .wordmark{grid-column:1;grid-row:1}
+  .preview-language{grid-column:2;grid-row:1;min-width:42px;padding:9px 8px}
+  .menu-toggle{grid-column:3;grid-row:1}
+  .masthead nav{z-index:25}
+  .premium-whatsapp{right:14px;bottom:14px;min-height:46px;padding:12px 15px}
+  .premium-whatsapp .wa-label{display:inline}
+}
+@media(max-width:360px){
+  .masthead{padding-left:12px;padding-right:12px;column-gap:6px}
+  .wordmark{width:116px}
+  .preview-language{min-width:38px;font-size:9px}
+}
