@@ -341,10 +341,19 @@
   };
 
   const refreshInstitutionalBlueLayer = () => {
+    // Apply one shared institutional layer to every inner page that opts into
+    // the HMATIAS institutional body class. The homepage remains untouched.
     if (!document.body.classList.contains('hmatias-institutional')) return;
-    const link = [...document.querySelectorAll('link[rel="stylesheet"]')]
-      .find(node => /hm-blue-institutional\\.css(?:\\?|$)/.test(node.getAttribute('href') || ''));
-    if (link) link.href = '/hm-blue-institutional.css?v=20261108-brand-blue3';
+    const selector = 'link[data-hmatias-institutional-blue]';
+    let link = document.querySelector(selector) || [...document.querySelectorAll('link[rel="stylesheet"]')]
+      .find(node => /hm-blue-institutional\.css(?:\?|$)/.test(node.getAttribute('href') || ''));
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+    link.dataset.hmatiasInstitutionalBlue = 'true';
+    link.href = '/hm-blue-institutional.css?v=20261108-brand-blue4';
   };
 
   const run = () => {
