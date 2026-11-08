@@ -330,3 +330,10 @@ body.hmatias-institutional :focus-visible{outline:3px solid #1685dc!important;ou
     transition:none!important
   }
 }
+
+/* Service capability pictograms — consistent across all institutional division pages. */
+body.hmatias-institutional .unit-card-icon{
+  display:grid;width:42px;height:42px;place-items:center;margin:0 0 14px;
+  border:1px solid #c8dceb;border-radius:10px;color:#0065cc;background:#f0f6fb;
+}
+body.hmatias-institutional .unit-card-icon svg{display:block;width:22px;height:22px}
