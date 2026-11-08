@@ -224,3 +224,32 @@ body .hm-contact-whatsapp>span{
 @media(max-width:850px){
   body .hm-contact-whatsapp{width:50px!important;height:50px!important;min-width:50px!important;min-height:50px!important;flex-basis:50px!important;padding:0!important}
 }
+
+
+/* Compact floating WhatsApp button on every shared page. */
+body a.hm-contact-whatsapp,
+body a.premium-whatsapp,
+body a.whatsapp-float,
+body a[data-hmatias-contact-whatsapp]{
+  width:54px!important;height:54px!important;min-width:54px!important;min-height:54px!important;
+  flex:0 0 54px!important;padding:0!important;gap:0!important;border-radius:50%!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+}
+body a.premium-whatsapp .wa-label,
+body a.hm-contact-whatsapp>span,
+body a.whatsapp-float>span,
+body a[data-hmatias-contact-whatsapp]>span:not(.wa-pulse){
+  position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+  overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
+}
+body a.premium-whatsapp .wa-icon,
+body a.hm-contact-whatsapp>img,
+body a.whatsapp-float>img,
+body a[data-hmatias-contact-whatsapp]>img{
+  width:23px!important;height:23px!important;flex:0 0 23px!important;object-fit:contain!important
+}
+@media(max-width:850px){
+  body a.hm-contact-whatsapp,body a.premium-whatsapp,body a.whatsapp-float,body a[data-hmatias-contact-whatsapp]{
+    width:50px!important;height:50px!important;min-width:50px!important;min-height:50px!important;flex-basis:50px!important
+  }
+}
