@@ -253,3 +253,25 @@ body a[data-hmatias-contact-whatsapp]>img{
     width:50px!important;height:50px!important;min-width:50px!important;min-height:50px!important;flex-basis:50px!important
   }
 }
+
+
+/* Floating WhatsApp: compact icon-only control, including legacy text-node markup. */
+body a.whatsapp-float{
+  width:54px!important;height:54px!important;min-width:54px!important;min-height:54px!important;
+  padding:0!important;gap:0!important;border-radius:50%!important;font-size:0!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  background:#0065cc!important;border:1px solid #0065cc!important;
+  box-shadow:0 12px 30px rgba(6,45,86,.25)!important;
+}
+body a.whatsapp-float>span{display:none!important}
+body a.whatsapp-float::after{
+  content:"";display:block;width:24px;height:24px;flex:0 0 24px;
+  background:#fff;
+  -webkit-mask:url('/images/social-whatsapp.svg') center/contain no-repeat;
+  mask:url('/images/social-whatsapp.svg') center/contain no-repeat;
+}
+body a.whatsapp-float:hover{background:#0b477c!important;border-color:#0b477c!important}
+@media(max-width:850px){
+  body a.whatsapp-float{width:50px!important;height:50px!important;min-width:50px!important;min-height:50px!important}
+  body a.whatsapp-float::after{width:22px;height:22px;flex-basis:22px}
+}
