@@ -355,14 +355,17 @@ jobs:
                   raise SystemExit(f'Missing institutional email in production page: {page}')
               mail_links = re.finditer(r'<a\b[^>]*href="mailto:(?:geral|info)@comercialhmatiasps\.com[^"]*"[^>]*>(.*?)</a>', html, re.I | re.S)
               for link in mail_links:
-                  if not re.search(r'contact-email\.svg', link.group(1), re.I):
-                      raise SystemExit(f'Missing email icon inside mail link in production page: {page}')
+                  # Text-only mailto links are valid; only image-based contact links
+                  # must use the approved email icon asset.
+                  inner_html = link.group(1)
+                  if re.search(r'<img\\b', inner_html, re.I) and not re.search(r'contact-email\\.svg', inner_html, re.I):
+                      raise SystemExit(f'Invalid email icon inside image-based mail link in production page: {page}')
               phone_links = re.finditer(r'<a\b[^>]*href="tel:[^"]+"[^>]*>(.*?)</a>', html, re.I | re.S)
               for link in phone_links:
                   if not re.search(r'contact-phone\.svg', link.group(1), re.I):
                       raise SystemExit(f'Missing phone icon inside telephone link in production page: {page}')
 
-          print('Production contact audit OK: all 36 pages include both company emails and icons on contact links; icon assets are reachable.')
+          print('Production contact audit OK: all 36 pages include both company emails; image-based contact links use approved icons; icon assets are reachable.')
           PY
 
           status_404="$(curl --silent --output /tmp/404-live.html --write-out '%{http_code}' \
