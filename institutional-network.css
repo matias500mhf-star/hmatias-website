@@ -1,0 +1,182 @@
+/* HMATIAS institutional network — editorial system, restrained and evidence-led. */
+body.hmatias-network-page{--net-ink:#102a43;--net-navy:#062d56;--net-blue:#0b477c;--net-muted:#647789;--net-line:#dce5ec;--net-paper:#f5f7f9;color:var(--net-ink)}
+.network-hero{position:relative;overflow:hidden;background:linear-gradient(115deg,#061f3b 0%,#0b3d68 58%,#14547d 100%);color:#fff;padding:clamp(76px,10vw,132px) 0 clamp(68px,8vw,100px)}
+.network-hero:after{content:"";position:absolute;inset:0 0 0 auto;width:40%;opacity:.16;background:linear-gradient(135deg,transparent 48%,#fff 49%,transparent 50%);pointer-events:none}
+.network-hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.7fr);gap:clamp(32px,6vw,88px);align-items:end}
+.network-hero .eyebrow{color:#b9d7ed;letter-spacing:.16em}
+.network-hero h1{max-width:850px;margin:20px 0 22px;color:#fff;font-size:clamp(2.6rem,5.6vw,5.1rem);line-height:1.02;letter-spacing:-.055em;font-weight:650}
+.network-hero p{max-width:720px;color:#dce9f3;font-size:clamp(1rem,1.4vw,1.18rem);line-height:1.8}
+.network-hero-meta{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:30px;color:#d2e3ef;font-size:.78rem;letter-spacing:.07em;text-transform:uppercase}
+.network-hero-meta span:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#8dc0df;margin:0 10px 2px 0}
+.network-hero-note{padding:26px 28px;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.07);backdrop-filter:blur(8px)}
+.network-index{display:block;color:#b9d7ed;font-size:.72rem;letter-spacing:.16em;margin-bottom:30px}
+.network-hero-note strong{display:block;color:#fff;font-size:1.2rem;line-height:1.4;font-weight:600}
+.network-hero-note p{margin:12px 0 0;font-size:.9rem;color:#d0e0ec;line-height:1.7}
+.network-section{padding:clamp(64px,8vw,104px) 0;background:#fff}
+.network-section-muted{background:#f4f7f9}
+.network-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.7fr);gap:38px;align-items:end;margin-bottom:38px}
+.network-heading h2{font-size:clamp(1.9rem,3vw,3rem);line-height:1.12;letter-spacing:-.04em;margin:12px 0 0;color:#102a43}
+.network-heading>p{margin:0;color:#607486;line-height:1.8;font-size:.96rem}
+.network-empty{grid-column:1/-1;padding:44px;border:1px solid var(--net-line);background:linear-gradient(135deg,#f7f9fb,#fff)}
+.network-empty h3{font-size:1.5rem;margin:12px 0;color:var(--net-ink)}
+.network-empty p{max-width:660px;margin:0;color:var(--net-muted);line-height:1.8}
+.profile-specimen{display:grid;grid-template-columns:minmax(220px,.72fr) minmax(0,1.3fr);gap:clamp(24px,5vw,64px);max-width:920px;margin:48px auto 0;padding:24px;border:1px solid var(--net-line);background:#fff;box-shadow:0 18px 55px rgba(13,42,66,.07)}
+.specimen-photo{min-height:300px;display:grid;place-items:center;background:linear-gradient(145deg,#dce5eb,#eef2f5);color:#718596;text-align:center;font-size:.72rem;letter-spacing:.18em;line-height:1.8}
+.specimen-copy{align-self:center;padding:18px 8px}
+.specimen-copy h3{font-size:2rem;letter-spacing:-.04em;margin:12px 0 4px}
+.specimen-copy p{color:#617487;line-height:1.8}
+.specimen-role,.team-role{font-weight:600;color:#245b80!important}
+.specimen-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.specimen-tags span,.supply-brands span{padding:7px 10px;border:1px solid #dce5ec;color:#476174;font-size:.72rem;letter-spacing:.04em}
+.partners-grid,.catalogue-grid,.team-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.partner-card,.supply-card,.team-card{border:1px solid var(--net-line);background:#fff;padding:clamp(22px,3vw,32px);min-width:0}
+.partner-card{display:flex;flex-direction:column;min-height:100%}
+.partner-card-top,.supply-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.partner-number{font-size:.72rem;letter-spacing:.14em;color:#8395a4}
+.partner-status{display:inline-flex;padding:7px 10px;background:#edf4f8;color:#245b80;font-size:.68rem;line-height:1.25;letter-spacing:.06em;text-transform:uppercase}
+.partner-wordmark{margin:38px 0 5px;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:650;letter-spacing:-.045em;color:#0a3156}
+.partner-region{font-size:.75rem;color:#8293a1;letter-spacing:.1em;text-transform:uppercase}
+.partner-card h3{font-size:1.05rem;margin:24px 0 10px;color:#183c59}
+.partner-card>p,.supply-card>p,.team-card p{font-size:.91rem;line-height:1.8;color:#637789}
+.partner-capabilities{display:flex;flex-wrap:wrap;gap:8px 16px;padding:18px 0;margin:12px 0 0;border-top:1px solid var(--net-line);list-style:none}
+.partner-capabilities li{font-size:.78rem;color:#34566f}
+.partner-capabilities li:before{content:"—";margin-right:7px;color:#6b9ab9}
+.partner-card .partner-commercial-note{margin-top:auto;padding:16px 0 0;font-size:.8rem;color:#788a98}
+.partner-card-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--net-line);padding-top:18px;margin-top:18px;font-size:.76rem;color:#81919e}
+.partner-card-footer a,.supply-enquire{color:#0b477c;text-decoration:none;font-weight:650}
+.partner-card-footer a:hover,.supply-enquire:hover{text-decoration:underline}
+.network-process{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid #d9e3ea;border-bottom:1px solid #d9e3ea}
+.network-process article{padding:25px 24px 26px 0}
+.network-process article+article{padding-left:24px;border-left:1px solid #d9e3ea}
+.network-process article>span{font-size:.72rem;color:#7c95a8;letter-spacing:.14em}
+.network-process h3{font-size:1.08rem;margin:22px 0 8px}
+.network-process p{font-size:.84rem;color:#657a8b;line-height:1.7;margin:0}
+.supply-card{display:flex;flex-direction:column}
+.supply-card>.eyebrow{display:block;margin-top:28px;font-size:.68rem}
+.supply-card h3{font-size:1.35rem;line-height:1.2;letter-spacing:-.025em;margin:10px 0}
+.supply-brands{display:flex;gap:8px;margin:8px 0 16px}
+.supply-items{margin:12px 0}
+.supply-items details{border-top:1px solid var(--net-line);padding:12px 0}
+.supply-items summary{cursor:pointer;font-size:.85rem;font-weight:650;color:#214b69}
+.supply-items details p{font-size:.78rem;line-height:1.7;color:#657a8b}
+.supply-card .supply-note{margin-top:auto;padding-top:18px;border-top:1px solid var(--net-line);font-size:.77rem;color:#7a8b98}
+.supply-enquire{display:inline-block;margin-top:14px;font-size:.8rem}
+.network-cta{background:#eaf0f4;padding:54px 0}
+.network-cta-inner{display:flex;justify-content:space-between;align-items:center;gap:32px}
+.network-cta h2{font-size:clamp(1.7rem,2.8vw,2.5rem);letter-spacing:-.04em;margin:10px 0}
+.network-cta p{color:#607486;margin:0;line-height:1.7}
+.network-footer{background:#061f3b;color:#c8d8e4;padding:24px 0;font-size:.76rem}
+.network-footer .container{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.network-footer a{color:#fff;text-decoration:none}
+@media(max-width:760px){.network-hero-grid,.network-heading{grid-template-columns:1fr}.network-hero-note{max-width:520px}.partners-grid,.catalogue-grid,.team-grid{grid-template-columns:1fr}.profile-specimen{grid-template-columns:1fr}.specimen-photo{min-height:250px}.network-process{grid-template-columns:repeat(2,minmax(0,1fr))}.network-process article:nth-child(3){border-left:0;padding-left:0;border-top:1px solid #d9e3ea}.network-process article:nth-child(4){border-top:1px solid #d9e3ea}.network-cta-inner{align-items:flex-start;flex-direction:column}}
+@media(max-width:420px){.network-hero{padding-top:66px}.network-hero h1{font-size:2.55rem}.network-process{grid-template-columns:1fr}.network-process article+article{border-left:0;border-top:1px solid #d9e3ea;padding-left:0}.profile-specimen{padding:14px}.network-empty{padding:28px}}
+
+
+.team-card{display:flex;flex-direction:column;gap:18px}
+.team-card-photo{min-height:210px;display:grid;place-items:center;overflow:hidden;background:#edf2f5;color:#48657b}
+.team-card-photo img{width:100%;height:260px;object-fit:cover;display:block}
+.team-card-photo-placeholder{background:linear-gradient(145deg,#e5edf2,#f4f7f9);border:1px solid #dce5ec}
+.team-card-photo-placeholder span{font-size:2.8rem;font-weight:600;letter-spacing:.08em;color:#315a78}
+.team-card-copy h3{margin:10px 0 4px;font-size:1.35rem;letter-spacing:-.025em;color:#102a43}
+
+/* Official partner marks: never substitute invented typographic logos. */
+.partner-logo{height:112px;margin:30px 0 16px;display:flex;align-items:center;justify-content:flex-start;overflow:hidden}.partner-logo-img{display:block;max-width:min(100%,250px);max-height:100px;width:auto;height:auto;object-fit:contain;object-position:left center}.partner-logo-pending{font-size:.72rem;letter-spacing:.06em;color:#81919e;border-bottom:1px solid #dce5ec;padding:10px 0}.partner-card .partner-logo+ .partner-region{display:block}
+
+
+/* Supply catalogue: visual evidence is mandatory for product cards. */
+.supply-catalogue-card{overflow:hidden;gap:16px}
+.supply-catalogue-cover{display:block;width:100%;height:auto;max-height:420px;object-fit:cover;object-position:center;background:#edf2f5;border:1px solid var(--net-line)}
+.supply-products-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:10px 0}
+.supply-product{display:flex;flex-direction:column;min-width:0;border:1px solid var(--net-line);background:#fff}
+.supply-product>img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:#f4f6f7;padding:12px}
+.supply-product>div{padding:14px 14px 4px}
+.supply-product h4{margin:0 0 8px;color:#173b57;font-size:1rem}
+.supply-product p{margin:5px 0;color:#617487;font-size:.8rem;line-height:1.6}
+.supply-product>a{margin:auto 14px 14px;color:#0b477c;font-size:.8rem;font-weight:650;text-decoration:none}
+.supply-catalogue-actions{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0}
+.supply-catalogue-empty{grid-column:1/-1}
+@media(max-width:560px){.supply-products-grid{grid-template-columns:1fr}.supply-catalogue-cover{max-height:300px}}
+
+
+/* Premium partner network refinement — names first, capabilities on demand. */
+body.hmatias-network-page .partners-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+body.hmatias-network-page .partner-card{padding:22px 23px 20px;min-height:0;border-color:#dce5ec;box-shadow:0 8px 26px rgba(6,45,86,.035)}
+body.hmatias-network-page .partner-card-top{align-items:flex-start;min-height:30px}
+body.hmatias-network-page .partner-status{max-width:62%;padding:6px 8px;font-size:.64rem;letter-spacing:.035em;text-align:right}
+body.hmatias-network-page .partner-logo{height:66px;margin:18px 0 10px;align-items:center}
+body.hmatias-network-page .partner-logo-img{max-width:190px;max-height:62px}
+body.hmatias-network-page .partner-logo-pending{font-size:.68rem}
+body.hmatias-network-page .partner-wordmark{margin:0 0 4px;font-size:1.45rem;line-height:1.15;letter-spacing:-.04em}
+body.hmatias-network-page .partner-relationship{margin:0 0 12px!important;color:#6b8294!important;font-size:.72rem!important;line-height:1.45!important}
+body.hmatias-network-page .partner-summary{margin:0;color:#526a7d;font-size:.84rem;line-height:1.65}
+body.hmatias-network-page .partner-details{margin-top:16px;border-top:1px solid var(--net-line);padding-top:12px}
+body.hmatias-network-page .partner-details summary{cursor:pointer;color:#0b477c;font-size:.76rem;font-weight:650;list-style:none}
+body.hmatias-network-page .partner-details summary::-webkit-details-marker{display:none}
+body.hmatias-network-page .partner-details summary:after{content:"＋";float:right;color:#6b8294}
+body.hmatias-network-page .partner-details[open] summary:after{content:"−"}
+body.hmatias-network-page .partner-details .partner-capabilities{padding:12px 0 0;margin:10px 0 0;gap:7px 12px}
+body.hmatias-network-page .partner-details .partner-capabilities li{font-size:.74rem;line-height:1.5}
+body.hmatias-network-page .partner-commercial-note{margin:12px 0 0!important;padding:10px 0 0!important;border-top:1px solid #edf1f4;color:#6c7f8d!important;font-size:.74rem!important;line-height:1.55!important}
+body.hmatias-network-page .partner-card-footer{margin-top:auto;padding-top:14px;font-size:.72rem}
+@media(max-width:1050px){body.hmatias-network-page .partners-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){body.hmatias-network-page .partners-grid{grid-template-columns:1fr;gap:12px}body.hmatias-network-page .partner-card{padding:20px}body.hmatias-network-page .partner-logo{height:58px;margin:14px 0 9px}}
+
+
+/* 2026-11-07: compact partner and supply catalogue presentation */
+body.hmatias-network-page .partners-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+body.hmatias-network-page .partner-card{padding:22px;min-height:0}
+body.hmatias-network-page .partner-logo{min-height:76px;max-height:92px;display:flex;align-items:center;justify-content:flex-start;margin:20px 0 8px}
+body.hmatias-network-page .partner-logo-img{max-width:150px;max-height:72px;object-fit:contain}
+body.hmatias-network-page .partner-logo-pending{font-size:.64rem;line-height:1.45;letter-spacing:.04em;color:#7b8d9b}
+body.hmatias-network-page .partner-wordmark{font-size:clamp(1.25rem,1.65vw,1.8rem);margin:14px 0 4px}
+body.hmatias-network-page .partner-summary{font-size:.84rem;line-height:1.65}
+body.hmatias-network-page .partner-card h3{font-size:.96rem;margin:16px 0 8px}
+body.hmatias-network-page .partner-capabilities{gap:6px 10px;padding:13px 0;margin-top:8px}
+body.hmatias-network-page .partner-capabilities li{font-size:.72rem}
+body.hmatias-network-page .supply-catalogue-card{padding:22px;gap:12px}
+body.hmatias-network-page .supply-product-reference{min-height:130px;display:flex;flex-direction:column;justify-content:space-between;padding:18px;background:linear-gradient(145deg,#eef3f7,#fff);border:1px solid #dce5ec;color:#183c59}
+body.hmatias-network-page .supply-product-reference span{font-size:.62rem;letter-spacing:.12em;color:#6a8193}
+body.hmatias-network-page .supply-product-reference strong{font-size:1.35rem;letter-spacing:-.035em}
+body.hmatias-network-page .supply-official-catalogue{display:inline-flex;align-self:flex-start;margin:4px 0 8px;color:#0b477c;font-weight:700;font-size:.82rem;text-decoration:none}
+body.hmatias-network-page .supply-official-catalogue:hover{text-decoration:underline}
+@media(max-width:980px){body.hmatias-network-page .partners-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){body.hmatias-network-page .partners-grid{grid-template-columns:1fr}body.hmatias-network-page .partner-card{padding:20px}body.hmatias-network-page .supply-catalogue-card{padding:18px}}
+
+body.hmatias-network-page .partner-monogram{display:grid;place-items:center;width:64px;height:64px;border:1px solid #d9e4eb;background:linear-gradient(145deg,#f0f5f8,#fff);color:#174b70;font-size:1.15rem;font-weight:750;letter-spacing:-.06em;border-radius:10px}
+
+
+/* Authentic product photography extracted from the supplier's 2026 catalogue. */
+body.hmatias-network-page .supply-product-photo{display:block;width:100%;aspect-ratio:4/3;min-height:150px;background-image:url("images/synvor/synvor-four-product-sprite.webp");background-size:200% 200%;background-repeat:no-repeat;background-color:#fff;border:1px solid #edf1f4;background-origin:border-box}
+body.hmatias-network-page .supply-product{min-width:0;overflow:hidden}
+body.hmatias-network-page .supply-products-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+body.hmatias-network-page .supply-product>div:not(.supply-product-photo):not(.supply-product-reference){padding-top:12px}
+body.hmatias-network-page .supply-product h4{font-size:.95rem;line-height:1.3;margin:0 0 7px;color:#183c59}
+body.hmatias-network-page .supply-product p{font-size:.78rem;line-height:1.55;color:#637789;margin:4px 0}
+body.hmatias-network-page .supply-product>a{display:inline-flex;margin:10px 0 0;font-size:.75rem;font-weight:700;color:#0b477c}
+@media(max-width:760px){body.hmatias-network-page .supply-products-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){body.hmatias-network-page .supply-products-grid{grid-template-columns:1fr}}
+
+/* HMATIAS curated commercial catalogue — compact editorial product grid */
+body.hmatias-network-page .catalogue-grid{grid-template-columns:1fr;gap:22px}
+body.hmatias-network-page .supply-catalogue-card{padding:clamp(20px,2.5vw,30px);border:1px solid #dce5ec;background:#fff;box-shadow:0 12px 32px rgba(12,39,63,.055)}
+body.hmatias-network-page .supply-card-top{align-items:center;gap:12px}
+body.hmatias-network-page .supply-card-top .partner-number{font-size:.66rem;letter-spacing:.12em;color:#49677e}
+body.hmatias-network-page .supply-catalogue-card>h3{font-size:clamp(1.35rem,2vw,1.85rem);letter-spacing:-.035em;margin:5px 0}
+body.hmatias-network-page .supply-catalogue-card>p{max-width:900px;font-size:.92rem;line-height:1.7;color:#596e80}
+body.hmatias-network-page .supply-brands{display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 10px}
+body.hmatias-network-page .supply-brands span{padding:6px 10px;background:#f1f5f8;border:1px solid #e1e9ef;color:#254a67;font-size:.7rem;font-weight:700;letter-spacing:.04em}
+body.hmatias-network-page .supply-products-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:12px 0}
+body.hmatias-network-page .supply-product{border:1px solid #e2e9ee;border-radius:3px;transition:transform .18s ease,border-color .18s ease}
+body.hmatias-network-page .supply-product:hover{transform:translateY(-2px);border-color:#b8cbd9}
+body.hmatias-network-page .supply-product-photo{aspect-ratio:5/4;min-height:120px;border:0;border-bottom:1px solid #edf1f4;background-color:#f7f9fa}
+body.hmatias-network-page .supply-product-reference{min-height:120px;background:linear-gradient(145deg,#f4f7f9,#fff);border:0;border-bottom:1px solid #e7edf1}
+body.hmatias-network-page .supply-product-reference strong{font-size:1.12rem}
+body.hmatias-network-page .supply-product>div:not(.supply-product-photo):not(.supply-product-reference){padding:12px 13px 4px}
+body.hmatias-network-page .supply-product h4{font-size:.91rem}
+body.hmatias-network-page .supply-product p{font-size:.74rem;line-height:1.55}
+body.hmatias-network-page .supply-product>a{margin:10px 13px 13px}
+body.hmatias-network-page .supply-note{padding:12px 14px;background:#f6f8fa;border-left:2px solid #8ba9bd;font-size:.78rem;color:#5c7182}
+body.hmatias-network-page .supply-enquire{display:inline-flex;margin-top:4px;font-size:.83rem;font-weight:750;color:#125b8d;text-decoration:none}
+@media(max-width:1020px){body.hmatias-network-page .supply-products-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){body.hmatias-network-page .supply-products-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){body.hmatias-network-page .supply-products-grid{grid-template-columns:1fr}body.hmatias-network-page .supply-product-photo,body.hmatias-network-page .supply-product-reference{min-height:150px}}
