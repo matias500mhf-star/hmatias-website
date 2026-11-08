@@ -431,3 +431,6 @@
   .contact-premium .contact-detail{gap:10px}
   .contact-premium .contact-detail strong{font-size:12px}
 }
+
+/* Contact-only wrapper on the Portuguese editorial home; keep the editorial block as the visual surface. */
+#contacto.contact{padding:0!important;background:#fff!important}
