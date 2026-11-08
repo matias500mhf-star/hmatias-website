@@ -31,3 +31,12 @@ body.hmatias-supply .supply-surfaces-note .supply-product-link{margin:0;border-c
 body.hmatias-supply .supply-products-disclaimer{margin:18px 0 0;color:#667c8e;font-size:.75rem;line-height:1.65}
 @media(max-width:1050px){body.hmatias-supply .supply-products-grid{grid-template-columns:repeat(2,minmax(0,1fr))}body.hmatias-supply .supply-product-ranges{grid-template-columns:1fr}body.hmatias-supply .supply-surfaces-note{grid-template-columns:1fr 1.5fr}body.hmatias-supply .supply-surfaces-note .supply-product-link{grid-column:1/-1;justify-self:start}}
 @media(max-width:600px){body.hmatias-supply .supply-products{padding:52px 0}body.hmatias-supply .supply-products-grid{grid-template-columns:1fr}body.hmatias-supply .supply-product-card>p{min-height:0}body.hmatias-supply .supply-product-ranges{padding:20px 17px;gap:18px}body.hmatias-supply .supply-range-table>div{align-items:flex-start;flex-direction:column;gap:4px}body.hmatias-supply .supply-range-table span{text-align:left}body.hmatias-supply .supply-surfaces-note{grid-template-columns:1fr;padding:19px}body.hmatias-supply .supply-surfaces-note .supply-product-link{grid-column:auto;width:100%;white-space:normal}}
+
+body.hmatias-supply .supply-product-image{
+  display:grid;place-items:center;height:150px;margin:0 0 14px;
+  padding:9px;background:#f7f9fb;border:1px solid #edf2f6;border-radius:8px;overflow:hidden
+}
+body.hmatias-supply .supply-product-image img{
+  display:block;max-width:100%;max-height:132px;width:auto;height:auto;
+  object-fit:contain;mix-blend-mode:multiply
+}
