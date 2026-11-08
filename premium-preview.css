@@ -348,3 +348,86 @@
 @media(prefers-reduced-motion:reduce){
   .masthead nav a::after,.menu-toggle *,.header-cta,.link-primary,.closing-cta,.premium-contact-form button{transition:none!important}
 }
+
+
+/* Unified homepage contact rows: visible icon, clear action label, registered location. */
+.contact-premium .contact-detail{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  min-height:64px;
+  padding:13px 0;
+  border-top:1px solid var(--line);
+  color:var(--ink);
+  text-decoration:none;
+}
+.contact-premium .contact-detail .contact-list-icon,
+.contact-premium .contact-location .contact-list-icon{
+  display:block;
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+  object-fit:contain;
+}
+.contact-premium .contact-detail span{
+  display:block;
+  min-width:0;
+  color:var(--blue);
+  font-size:8px;
+  letter-spacing:.14em;
+  line-height:1.4;
+}
+.contact-premium .contact-detail strong{
+  display:block;
+  margin-top:4px;
+  color:var(--ink);
+  font-size:13px;
+  letter-spacing:0;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.contact-premium .contact-detail:hover strong{color:#0065cc}
+.contact-premium .contact-location{
+  display:flex;
+  align-items:flex-start;
+  gap:13px;
+  margin:14px 0 20px!important;
+  padding:15px 16px;
+  border:1px solid #dce6f0;
+  border-radius:10px;
+  background:#f4f8fc;
+  color:#102d4d!important;
+  text-decoration:none;
+  font-size:12px!important;
+  line-height:1.55;
+}
+.contact-premium .contact-location>span{
+  display:block;
+  min-width:0;
+  color:#5d6d7d;
+  overflow-wrap:anywhere;
+}
+.contact-premium .contact-location strong{
+  display:block;
+  color:#062d56;
+  font-size:9px;
+  letter-spacing:.12em;
+  margin-bottom:5px;
+}
+.contact-premium .contact-location small{
+  display:block;
+  margin-top:6px;
+  color:#0065cc;
+  font-size:10px;
+  font-weight:700;
+}
+.contact-premium .contact-location:hover{border-color:#8dbce2}
+.contact-premium .contact-detail:focus-visible,
+.contact-premium .contact-location:focus-visible{
+  outline:3px solid rgba(72,186,245,.55);
+  outline-offset:3px;
+}
+@media(max-width:520px){
+  .contact-premium .contact-detail{gap:10px}
+  .contact-premium .contact-detail strong{font-size:12px}
+}
