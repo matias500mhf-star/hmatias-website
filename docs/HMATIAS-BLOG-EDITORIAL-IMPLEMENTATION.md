@@ -5,11 +5,20 @@ Status: implementation in progress; not published.
 ## Purpose
 Build a bilingual Portuguese (Angola) and English editorial section that demonstrates practical expertise, explains business and technical topics relevant to Angola, and creates qualified enquiries for HMATIAS services.
 
-## Editorial sections
+## Editorial areas (future taxonomy)
+The editorial plan covers four areas:
 1. Construção Civil e Engenharia em Angola — Construction & Engineering in Angola
 2. Procurement e Supply — Procurement & Supply
 3. Facilities e Manutenção — Facilities & Maintenance
 4. Mercado Empresarial e Oportunidades em Angola — Business Market & Opportunities in Angola
+
+Do not display empty category lists or non-functional category controls. Introduce visible category navigation only when each category has enough published content to support useful browsing. At launch, keep the landing page focused on the publication introduction and one featured article.
+
+## Visual and reading standard
+- Preserve the approved HMATIAS navy/blue palette and Inter typography; the blog is an editorial adaptation of the institutional identity, not a separate brand.
+- Use light backgrounds, restrained accents, generous whitespace, readable type sizes and a clear title/body hierarchy.
+- Prioritise one strong editorial feature and direct navigation over empty modules, decorative panels or excessive image galleries.
+- Keep article reading width comfortable and responsive on desktop and mobile.
 
 ## First article
 PT: Como estruturar um pedido de cotação de fornecimento para empresas em Angola
@@ -39,6 +48,6 @@ The article must explain, in practical terms:
 - Do not redesign or edit the homepage.
 - Do not change existing approved service-page content or navigation until the blog pages and links are validated.
 - Work on this isolated feature branch; do not publish to production directly.
-- Include PT and EN listing pages, article pages, category filtering/navigation, sitemap entries, internal links to relevant HMATIAS service pages and automated integrity checks.
+- Include PT and EN listing pages and articles, sitemap entries, internal links to relevant HMATIAS service pages and automated integrity checks. Add category navigation only when it points to populated, useful destinations.
 - Review existing open PRs #303, #304 and #305 before integrating any overlapping sitemap or shared-site changes. Do not merge or duplicate those PRs as part of this work.
 - Publication requires desktop/mobile, accessibility, metadata, canonical/hreflang, sitemap, internal-link and performance checks.
