@@ -92,3 +92,106 @@ body.hmatias-home .section-soft,body.hmatias-home .home-band-light{background:#f
   min-height:48px!important;border-bottom:1px solid #e6eef5!important;color:#29465f!important;
  }
 }
+
+
+/* Premium preview — exact HMATIAS corporate blue palette, matching the published homepage. */
+body.hm-preview{
+  --hm-blue-950:#032a51;
+  --hm-blue-900:#062d56;
+  --hm-blue-800:#0b477c;
+  --hm-blue-700:#0065cc;
+  --hm-blue-600:#1685dc;
+  --hm-blue-100:#eaf4fd;
+  --hm-blue-050:#f4f8fc;
+  --hm-blue-line:#dce6f0;
+  --ink:#102d4d;
+  --navy:#062d56;
+  --brand-mid:#0b477c;
+  --brand-deep:#032a51;
+  --blue:#0065cc;
+  --sky:#48baf5;
+  --paper:#f4f8fc;
+  --line:#dce6f0;
+  --muted:#5d6d7d;
+}
+body.hm-preview .preview-bar{background:#062d56!important;color:#dfeaf5!important}
+body.hm-preview .masthead{border-bottom-color:#dce6f0!important}
+body.hm-preview .masthead nav a:hover,
+body.hm-preview .masthead nav a:focus-visible{color:#0065cc!important}
+body.hm-preview .header-cta:hover{border-color:#0065cc!important;color:#0065cc!important}
+
+/* Hero returns to the recognisable HMATIAS blue gradient and white typography. */
+body.hm-preview .hero-editorial{
+  background:linear-gradient(115deg,#032a51 0%,#073c70 52%,#0d66a8 100%)!important;
+  color:#fff!important;
+}
+body.hm-preview .hero-index,
+body.hm-preview .hero-bottom{color:#dceafa!important}
+body.hm-preview .hero-index i{background:#8abfe5!important}
+body.hm-preview .hero-copy h1{color:#fff!important}
+body.hm-preview .hero-copy h1 em{color:#48baf5!important}
+body.hm-preview .hero-copy .kicker{color:#b9dcf5!important}
+body.hm-preview .hero-intro{color:#dceafa!important}
+body.hm-preview .hero-links .link-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff!important;color:#062d56!important;
+  border:1px solid #fff;border-radius:9px;
+  box-shadow:0 10px 25px rgba(0,0,0,.16);
+  transition:transform .2s ease,background .2s ease;
+}
+body.hm-preview .hero-links .link-primary:hover{
+  background:#eaf4fd!important;transform:translateY(-2px);
+}
+body.hm-preview .hero-links .link-primary span{color:#0065cc!important}
+body.hm-preview .hero-links .link-secondary{color:#fff!important;border-bottom-color:#9fc8e7!important}
+body.hm-preview .hero-footnote{border-top-color:rgba(255,255,255,.25)!important}
+body.hm-preview .hero-footnote span{color:#48baf5!important}
+body.hm-preview .hero-footnote p{color:#dceafa!important}
+body.hm-preview .hero-image{background:#0b477c!important}
+body.hm-preview .hero-image:before{border-color:#48baf5!important}
+body.hm-preview .hero-bottom{border-top-color:rgba(255,255,255,.25)!important}
+
+/* Core links, section accents, controls and calls to action use the official blue. */
+body.hm-preview :is(.kicker,.eyebrow,.section-marker span:first-child,
+  .cap-arrow,.work-item figcaption span,.contact-detail span){color:#0065cc!important}
+body.hm-preview :is(.hero-editorial .kicker,.hero-editorial .eyebrow){color:#b9dcf5!important}
+body.hm-preview :is(.hero-copy h1 em,.intro-grid h2 em,.network-band h2 em,
+  .closing h2 em,.credibility-band h2 em,.contact-premium h2 em,
+  .partner-showcase-head h2 em){color:#48baf5!important}
+body.hm-preview .capability:hover{background:#eaf4fd!important}
+body.hm-preview :is(.text-link,.work-more a,.partner-showcase>.text-link){color:#0065cc!important}
+body.hm-preview .closing{background:#eaf4fd!important}
+body.hm-preview .closing-cta{
+  background:#0065cc!important;color:#fff!important;
+  box-shadow:0 10px 25px rgba(0,101,204,.22)!important;
+}
+body.hm-preview .closing-cta:hover{background:#0b477c!important}
+body.hm-preview .network-band{background:linear-gradient(115deg,#032a51 0%,#062d56 62%,#0b477c 100%)!important}
+body.hm-preview :is(.premium-footer,.preview-footer){background:#032a51!important}
+body.hm-preview .premium-contact-form button{
+  background:#062d56!important;border-radius:6px;
+  transition:background .2s ease,transform .2s ease;
+}
+body.hm-preview .premium-contact-form button:hover{
+  background:#0065cc!important;transform:translateY(-1px);
+}
+body.hm-preview :is(.premium-contact-form input,.premium-contact-form select,
+  .premium-contact-form textarea){border-color:#c9d9e7!important}
+body.hm-preview :is(.premium-contact-form input,.premium-contact-form select,
+  .premium-contact-form textarea):focus{
+  border-color:#0065cc!important;outline:0!important;
+  box-shadow:0 0 0 3px rgba(0,101,204,.12)!important;
+}
+body.hm-preview .partner-wordmark.synvor{color:#0065cc!important}
+body.hm-preview .menu-toggle{
+  color:#062d56!important;background:#f4f8fc!important;
+  border:1px solid #c9d9e7!important;border-radius:6px;
+}
+body.hm-preview .menu-toggle .menu-glyph i,
+body.hm-preview .menu-toggle .menu-glyph:before,
+body.hm-preview .menu-toggle .menu-glyph:after{background:#062d56!important}
+body.hm-preview .masthead nav.is-open{border-top-color:#0065cc!important}
+@media(prefers-reduced-motion:reduce){
+  body.hm-preview .hero-links .link-primary,
+  body.hm-preview .premium-contact-form button{transition:none!important}
+}
