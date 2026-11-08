@@ -278,8 +278,8 @@
 
   const ensureWhatsAppShortcut = () => {
     const candidates = [...document.querySelectorAll('a.whatsapp-float, a.premium-whatsapp, a[data-hmatias-contact-whatsapp]')];
-    let button = candidates.shift();
-    candidates.forEach(node => node.remove());
+    let button = candidates.find(node => node.matches('a.premium-whatsapp')) || candidates.shift();
+    candidates.forEach(node => { if (node !== button) node.remove(); });
     if (!button) button = document.createElement('a');
 
     button.classList.remove('whatsapp-float', 'premium-whatsapp');
@@ -289,6 +289,27 @@
     const greeting = isEn
       ? 'Hello HMATIAS. I would like more information about your services.'
       : 'Olá HMATIAS. Gostaria de obter mais informações sobre os vossos serviços.';
+
+    // The editorial preview has its own pulse element and branded structure.
+    // Update the destination and accessible label without replacing its children.
+    if (button.classList.contains('premium-whatsapp')) {
+      button.href = 'https://wa.me/244948806673?text=' + encodeURIComponent(greeting);
+      button.target = '_blank';
+      button.rel = 'noopener noreferrer';
+      button.setAttribute('aria-label', isEn
+        ? 'Contact HMATIAS through WhatsApp'
+        : 'Falar com a HMATIAS pelo WhatsApp');
+      const premiumLabel = button.querySelector('.wa-label');
+      if (premiumLabel) premiumLabel.textContent = isEn ? 'WhatsApp · Contact us' : 'WhatsApp · Falar connosco';
+      if (!button.querySelector('.wa-pulse')) {
+        const pulse = document.createElement('span');
+        pulse.className = 'wa-pulse';
+        pulse.setAttribute('aria-hidden', 'true');
+        button.prepend(pulse);
+      }
+      return;
+    }
+
     button.href = 'https://wa.me/244948806673?text=' + encodeURIComponent(greeting);
     button.target = '_blank';
     button.rel = 'noopener noreferrer';

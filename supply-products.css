@@ -1,0 +1,33 @@
+/* HMATIAS Supply product selection — catalogue-aligned and responsive. */
+body.hmatias-supply .supply-products{padding:76px 0;background:#f4f8fc;border-top:1px solid #dce6f0;border-bottom:1px solid #dce6f0}
+body.hmatias-supply .supply-products-heading{max-width:800px;margin:0 0 34px}
+body.hmatias-supply .supply-products-heading h2{margin:10px 0 14px;color:#062d56;font-size:clamp(1.9rem,3.2vw,2.7rem);line-height:1.12;letter-spacing:-.035em}
+body.hmatias-supply .supply-products-heading p{color:#52697b;line-height:1.75;max-width:78ch}
+body.hmatias-supply .supply-products-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
+body.hmatias-supply .supply-product-card{display:flex;flex-direction:column;min-width:0;padding:22px 20px 18px;background:#fff;border:1px solid #d6e4f0;border-radius:12px;box-shadow:0 8px 24px rgba(6,45,86,.045)}
+body.hmatias-supply .supply-product-top{display:flex;justify-content:space-between;gap:8px;align-items:center;padding-bottom:13px;border-bottom:2px solid #e4edf5}
+body.hmatias-supply .supply-product-top span{color:#0b5f9d;font-size:.68rem;font-weight:850;letter-spacing:.12em}
+body.hmatias-supply .supply-product-top small{color:#75899a;font-size:.62rem;font-weight:750;letter-spacing:.06em}
+body.hmatias-supply .supply-product-card h3{margin:17px 0 8px;color:#062d56;font-size:1.2rem;line-height:1.25}
+body.hmatias-supply .supply-product-card>p{color:#536b7e;font-size:.86rem;line-height:1.65;margin:0 0 14px;min-height:84px}
+body.hmatias-supply .supply-product-card dl{display:grid;gap:0;margin:0 0 18px}
+body.hmatias-supply .supply-product-card dl div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid #edf2f6}
+body.hmatias-supply .supply-product-card dt{color:#718596;font-size:.68rem;font-weight:650}
+body.hmatias-supply .supply-product-card dd{margin:0;color:#28465f;font-size:.7rem;font-weight:750;text-align:right}
+body.hmatias-supply .supply-product-link{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding:11px 12px;min-height:44px;border-radius:7px;border:1px solid #cbddea;color:#075c9c;background:#f7fbff;font-size:.74rem;font-weight:800;text-decoration:none}
+body.hmatias-supply .supply-product-link:hover{border-color:#7faed0;background:#eaf4fd;color:#062d56}
+body.hmatias-supply .supply-product-ranges{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:28px;margin-top:26px;padding:26px 28px;background:#fff;border:1px solid #d6e4f0;border-radius:12px}
+body.hmatias-supply .supply-product-ranges h3{margin:8px 0;color:#062d56;font-size:1.2rem}
+body.hmatias-supply .supply-product-ranges p{margin:0;color:#536b7e;font-size:.84rem;line-height:1.65}
+body.hmatias-supply .supply-range-table{display:grid;gap:0}
+body.hmatias-supply .supply-range-table>div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #e8eff5;font-size:.78rem}
+body.hmatias-supply .supply-range-table strong{color:#244660}
+body.hmatias-supply .supply-range-table span{color:#60768a;text-align:right}
+body.hmatias-supply .supply-range-table .supply-product-link{margin-top:13px}
+body.hmatias-supply .supply-surfaces-note{display:grid;grid-template-columns:minmax(0,.65fr) minmax(0,1.35fr) auto;gap:18px;align-items:center;margin-top:16px;padding:20px 24px;background:#062d56;color:#fff;border-radius:10px}
+body.hmatias-supply .supply-surfaces-note strong{color:#a8d5f3;font-size:.72rem;letter-spacing:.09em}
+body.hmatias-supply .supply-surfaces-note span{font-size:.8rem;line-height:1.65;color:#e5eef7}
+body.hmatias-supply .supply-surfaces-note .supply-product-link{margin:0;border-color:#88b9db;background:#fff;white-space:nowrap}
+body.hmatias-supply .supply-products-disclaimer{margin:18px 0 0;color:#667c8e;font-size:.75rem;line-height:1.65}
+@media(max-width:1050px){body.hmatias-supply .supply-products-grid{grid-template-columns:repeat(2,minmax(0,1fr))}body.hmatias-supply .supply-product-ranges{grid-template-columns:1fr}body.hmatias-supply .supply-surfaces-note{grid-template-columns:1fr 1.5fr}body.hmatias-supply .supply-surfaces-note .supply-product-link{grid-column:1/-1;justify-self:start}}
+@media(max-width:600px){body.hmatias-supply .supply-products{padding:52px 0}body.hmatias-supply .supply-products-grid{grid-template-columns:1fr}body.hmatias-supply .supply-product-card>p{min-height:0}body.hmatias-supply .supply-product-ranges{padding:20px 17px;gap:18px}body.hmatias-supply .supply-range-table>div{align-items:flex-start;flex-direction:column;gap:4px}body.hmatias-supply .supply-range-table span{text-align:left}body.hmatias-supply .supply-surfaces-note{grid-template-columns:1fr;padding:19px}body.hmatias-supply .supply-surfaces-note .supply-product-link{grid-column:auto;width:100%;white-space:normal}}

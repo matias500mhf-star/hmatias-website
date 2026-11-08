@@ -187,3 +187,27 @@ body .hm-contact-whatsapp:focus-visible,
 @media(prefers-reduced-motion:reduce){
   .hm-contact-action,.hm-contact-map-link,body .hm-contact-whatsapp{transition:none!important}
 }
+
+
+/* Consistent heartbeat pulse for the shared floating WhatsApp action. */
+body .hm-contact-whatsapp{isolation:isolate}
+body .hm-contact-whatsapp::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-5px;
+  border:1px solid rgba(72,186,245,.68);
+  border-radius:inherit;
+  pointer-events:none;
+  animation:hmContactWhatsappPulse 2.2s ease-out infinite;
+}
+@keyframes hmContactWhatsappPulse{
+  0%{transform:scale(.96);opacity:.78}
+  18%{transform:scale(1.06);opacity:.3}
+  30%{transform:scale(1);opacity:.58}
+  48%{transform:scale(1.12);opacity:0}
+  100%{transform:scale(1.12);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  body .hm-contact-whatsapp::before{animation:none}
+}
