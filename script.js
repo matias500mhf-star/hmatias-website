@@ -4,7 +4,7 @@
   // Shared UI/bootstrap must remain independent from analytics/ad-blocking rules.
   if(!document.querySelector('script[data-hmatias-site-bootstrap]')){
     const bootstrap=document.createElement('script');
-    bootstrap.src='site-bootstrap.js?v=20261108-whatsapp-compact2';
+    bootstrap.src='site-bootstrap.js?v=20261108-whatsapp-compact3';
     bootstrap.defer=true;
     bootstrap.dataset.hmatiasSiteBootstrap='true';
     document.head.appendChild(bootstrap);
