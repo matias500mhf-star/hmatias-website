@@ -285,10 +285,16 @@
     button.classList.remove('whatsapp-float', 'premium-whatsapp');
     button.classList.add('hm-contact-whatsapp');
     button.dataset.hmatiasContactWhatsapp = 'true';
-    button.href = 'https://wa.me/244948806673';
+    const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
+    const greeting = isEn
+      ? 'Hello HMATIAS. I would like more information about your services.'
+      : 'Olá HMATIAS. Gostaria de obter mais informações sobre os vossos serviços.';
+    button.href = 'https://wa.me/244948806673?text=' + encodeURIComponent(greeting);
     button.target = '_blank';
     button.rel = 'noopener noreferrer';
-    button.setAttribute('aria-label', 'Falar com a HMATIAS pelo WhatsApp');
+    button.setAttribute('aria-label', isEn
+      ? 'Contact HMATIAS through WhatsApp'
+      : 'Falar com a HMATIAS pelo WhatsApp');
     button.replaceChildren();
 
     const icon = document.createElement('img');
@@ -298,7 +304,7 @@
     icon.alt = '';
     icon.setAttribute('aria-hidden', 'true');
     const label = document.createElement('span');
-    label.textContent = 'WhatsApp';
+    label.textContent = isEn ? 'WhatsApp · Contact us' : 'WhatsApp · Falar connosco';
     button.append(icon, label);
     if (!button.isConnected) document.body.appendChild(button);
   };
