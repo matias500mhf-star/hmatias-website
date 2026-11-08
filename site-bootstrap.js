@@ -282,8 +282,13 @@
     candidates.forEach(node => { if (node !== button) node.remove(); });
     if (!button) button = document.createElement('a');
 
-    button.classList.remove('whatsapp-float', 'premium-whatsapp');
-    button.classList.add('hm-contact-whatsapp');
+    const isPremiumButton = button.classList.contains('premium-whatsapp');
+    if (isPremiumButton) {
+      button.classList.remove('whatsapp-float');
+    } else {
+      button.classList.remove('whatsapp-float', 'premium-whatsapp');
+      button.classList.add('hm-contact-whatsapp');
+    }
     button.dataset.hmatiasContactWhatsapp = 'true';
     const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
     const greeting = isEn
@@ -292,7 +297,7 @@
 
     // The editorial preview has its own pulse element and branded structure.
     // Update the destination and accessible label without replacing its children.
-    if (button.classList.contains('premium-whatsapp')) {
+    if (isPremiumButton) {
       button.href = 'https://wa.me/244948806673?text=' + encodeURIComponent(greeting);
       button.target = '_blank';
       button.rel = 'noopener noreferrer';
