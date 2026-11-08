@@ -192,7 +192,7 @@
 
   const ensureSiteContactPanel = () => {
     const footer = document.querySelector('footer');
-    if (!footer || document.querySelector('[data-hmatias-contact-panel]')) return;
+    if (!footer || document.querySelector('[data-hmatias-contact-panel]') || document.querySelector('main .contact-premium, main .contact-list')) return;
 
     const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
     const address = 'Bairro 1 de Maio, Casa n.º 31, Viana, Luanda, Angola';
