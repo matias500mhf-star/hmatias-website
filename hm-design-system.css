@@ -1,0 +1,81 @@
+/* HMATIAS Design System — Foundation 1.0
+   Shared design tokens and accessibility baseline.
+   Intentionally non-destructive: existing page layouts and brand styling remain page-owned.
+   Adopt tokens progressively after page-by-page visual QA.
+*/
+:root{
+  /* Existing HMATIAS blue identity — retained, not rebranded. */
+  --hm-brand-navy:#062d56;
+  --hm-brand-blue:#0065cc;
+  --hm-brand-blue-deep:#0b477c;
+  --hm-brand-sky:#48baf5;
+  --hm-brand-ink:#071d33;
+  --hm-brand-text:#102d4d;
+  --hm-brand-muted:#5d6d7d;
+  --hm-brand-muted-strong:#52697b;
+  --hm-brand-surface:#ffffff;
+  --hm-brand-surface-soft:#f4f8fc;
+  --hm-brand-surface-blue:#edf4f8;
+  --hm-brand-border:#dce6f0;
+  --hm-brand-border-strong:#b9cedd;
+
+  /* Semantic roles. */
+  --hm-color-primary:var(--hm-brand-blue);
+  --hm-color-primary-hover:var(--hm-brand-blue-deep);
+  --hm-color-primary-contrast:#ffffff;
+  --hm-color-heading:var(--hm-brand-ink);
+  --hm-color-body:var(--hm-brand-text);
+  --hm-color-secondary:var(--hm-brand-muted);
+  --hm-color-focus:#0b6aab;
+  --hm-color-link:var(--hm-brand-blue);
+
+  /* Typography — use locally hosted fonts already present in the project. */
+  --hm-font-display:"Instrument Sans","Inter",Arial,sans-serif;
+  --hm-font-body:"Manrope","Inter",Arial,sans-serif;
+  --hm-font-interface:"Inter","Manrope",Arial,sans-serif;
+  --hm-font-technical:"IBM Plex Mono",Consolas,monospace;
+
+  /* Layout rhythm and component geometry. */
+  --hm-space-1:.25rem;
+  --hm-space-2:.5rem;
+  --hm-space-3:.75rem;
+  --hm-space-4:1rem;
+  --hm-space-5:1.25rem;
+  --hm-space-6:1.5rem;
+  --hm-space-8:2rem;
+  --hm-space-10:2.5rem;
+  --hm-space-12:3rem;
+  --hm-space-16:4rem;
+  --hm-content-width:1180px;
+  --hm-page-gutter:clamp(1rem,3.5vw,2.5rem);
+  --hm-radius-control:3px;
+  --hm-radius-card:5px;
+  --hm-radius-panel:8px;
+  --hm-shadow-soft:0 8px 28px rgba(6,45,86,.06);
+  --hm-shadow-elevated:0 18px 48px rgba(6,45,86,.12);
+  --hm-motion-fast:160ms;
+  --hm-motion-standard:240ms;
+  --hm-motion-slow:360ms;
+  --hm-ease-standard:cubic-bezier(.2,.7,.2,1);
+}
+
+/* Keyboard visibility is consistent without changing normal pointer behaviour. */
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:3px solid var(--hm-color-focus);
+  outline-offset:3px;
+}
+
+/* Respect operating-system reduced-motion preferences. */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+
+/* Prevent long technical labels from forcing horizontal overflow. */
+:where(.container,main,section,article,nav,footer){min-width:0}
+:where(h1,h2,h3,p,a,button,li){overflow-wrap:break-word}
