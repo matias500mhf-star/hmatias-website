@@ -236,3 +236,115 @@
 @media(prefers-reduced-motion:reduce){
   .masthead nav a:after{transition:none}
 }
+
+
+/* HMATIAS signature interaction system — refined actions and compact mobile navigation. */
+:root{
+  --hm-action:#0b5f9d;
+  --hm-action-hover:#0b477c;
+  --hm-action-soft:#e8f2f9;
+  --hm-focus:#78b9df;
+}
+.masthead{box-shadow:0 6px 26px rgba(6,45,86,.055)}
+.masthead nav{align-items:center;gap:clamp(17px,2.2vw,32px)}
+.masthead nav a{
+  position:relative;padding:12px 0;color:#40576b;
+  font-size:11px;font-weight:680;letter-spacing:.012em;
+  transition:color .2s ease;
+}
+.masthead nav a::after{
+  content:"";position:absolute;left:0;right:100%;bottom:4px;height:2px;
+  background:var(--hm-action);transition:right .24s cubic-bezier(.2,.7,.2,1);
+}
+.masthead nav a:hover,.masthead nav a[aria-current="page"]{color:var(--navy)}
+.masthead nav a:hover::after,.masthead nav a:focus-visible::after{right:0}
+.header-cta,.link-primary,.closing-cta,.premium-contact-form button{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  gap:13px;min-height:48px;border-radius:7px;font-weight:720;
+  letter-spacing:.005em;transition:background .22s ease,color .22s ease,
+  border-color .22s ease,box-shadow .22s ease,transform .22s ease;
+}
+.header-cta{
+  padding:11px 16px;border:1px solid #b9cede;background:#fff;color:var(--navy);
+  box-shadow:0 3px 10px rgba(6,45,86,.035);
+}
+.header-cta:hover{background:var(--hm-action-soft);border-color:#7fa9c6;color:var(--brand-mid);box-shadow:0 9px 22px rgba(6,45,86,.10);transform:translateY(-1px)}
+.link-primary,.closing-cta,.premium-contact-form button{
+  background:linear-gradient(112deg,#062d56 0%,#0b477c 100%);color:#fff;
+  padding:15px 21px;border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 9px 24px rgba(6,45,86,.17),inset 0 1px 0 rgba(255,255,255,.12);
+}
+.link-primary::before,.closing-cta::before{
+  content:"";position:absolute;left:0;top:10px;bottom:10px;width:2px;
+  background:#78b9df;opacity:.9;transition:top .22s ease,bottom .22s ease;
+}
+.link-primary:hover,.closing-cta:hover,.premium-contact-form button:hover{
+  background:linear-gradient(112deg,#0b477c 0%,#0b5f9d 100%);color:#fff;
+  transform:translateY(-2px);box-shadow:0 13px 28px rgba(6,45,86,.22),inset 0 1px 0 rgba(255,255,255,.16);
+}
+.link-primary:hover::before,.closing-cta:hover::before{top:5px;bottom:5px}
+.link-primary span,.closing-cta span,.premium-contact-form button span{color:#a8d5ee;transition:transform .22s ease}
+.link-primary:hover span,.closing-cta:hover span{transform:translate(3px,-2px)}
+.link-secondary,.text-link{
+  color:var(--navy);border-color:#9eb4c5;transition:color .2s ease,border-color .2s ease;
+}
+.link-secondary:hover,.text-link:hover{color:var(--hm-action);border-color:var(--hm-action)}
+.capability{transition:background .22s ease,padding .22s ease,box-shadow .22s ease}
+.capability:hover{box-shadow:inset 3px 0 0 var(--hm-action)}
+.premium-contact-form{border-radius:9px;box-shadow:0 14px 38px rgba(6,45,86,.075)}
+.premium-contact-form input,.premium-contact-form select,.premium-contact-form textarea{border-radius:5px;min-height:47px;transition:border-color .18s ease,box-shadow .18s ease}
+.premium-contact-form input:focus,.premium-contact-form select:focus,.premium-contact-form textarea:focus{outline:0;border-color:#0b5f9d;box-shadow:0 0 0 3px rgba(120,185,223,.25)}
+.premium-contact-form button{width:100%;min-height:52px;text-align:center;border:0;cursor:pointer}
+.premium-contact-form button span{margin-left:auto}
+:where(.masthead a,.masthead button,.hero-links a,.closing a,.premium-contact-form button):focus-visible{outline:3px solid var(--hm-focus);outline-offset:4px}
+
+/* Accessible compact mobile menu — no sideways scrolling or hidden destinations. */
+.menu-toggle{display:none}
+@media(max-width:760px){
+  .masthead{height:72px;padding:0 18px;display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:12px}
+  .wordmark{width:140px;grid-column:1;grid-row:1}
+  .wordmark img{height:56px}
+  .menu-toggle{
+    grid-column:2;grid-row:1;display:flex;align-items:center;justify-content:center;
+    width:44px;height:44px;padding:0;border:1px solid #c8d9e6;border-radius:7px;
+    background:#fff;color:var(--navy);cursor:pointer;
+    transition:background .2s ease,border-color .2s ease,box-shadow .2s ease;
+  }
+  .menu-toggle:hover{background:var(--hm-action-soft);border-color:#8fb2ca;box-shadow:0 5px 14px rgba(6,45,86,.08)}
+  .menu-toggle .menu-glyph{width:18px;height:14px;position:relative;display:block}
+  .menu-toggle .menu-glyph::before,.menu-toggle .menu-glyph::after,.menu-toggle .menu-glyph i{
+    content:"";position:absolute;left:0;width:18px;height:2px;border-radius:2px;background:currentColor;
+    transition:transform .2s ease,top .2s ease,opacity .2s ease;
+  }
+  .menu-toggle .menu-glyph::before{top:0}
+  .menu-toggle .menu-glyph i{top:6px}
+  .menu-toggle .menu-glyph::after{top:12px}
+  .menu-toggle[aria-expanded="true"] .menu-glyph::before{top:6px;transform:rotate(45deg)}
+  .menu-toggle[aria-expanded="true"] .menu-glyph i{opacity:0}
+  .menu-toggle[aria-expanded="true"] .menu-glyph::after{top:6px;transform:rotate(-45deg)}
+  .masthead nav{
+    position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;align-items:stretch;
+    gap:0;padding:10px 20px 18px;background:rgba(255,255,255,.985);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    box-shadow:0 18px 32px rgba(6,45,86,.12);backdrop-filter:blur(14px);
+  }
+  .masthead nav.is-open{display:flex}
+  .masthead nav a{display:flex;align-items:center;min-height:48px;padding:10px 2px;border-bottom:1px solid #e5edf3;font-size:13px}
+  .masthead nav a::after{bottom:0}
+  .masthead nav a:last-child{border-bottom:0}
+  .header-cta{grid-column:1/-1;grid-row:2;display:none}
+  .masthead.menu-open{height:72px}
+  .masthead nav a:focus-visible{outline-offset:-2px}
+  .hero-links{gap:14px}
+  .link-primary{min-height:48px;padding:14px 18px}
+}
+@media(max-width:420px){
+  .masthead{padding:0 15px}
+  .wordmark{width:128px}
+  .hero-links{align-items:stretch;flex-direction:column}
+  .hero-links .link-primary{align-self:flex-start}
+  .hero-links .link-secondary{align-self:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  .masthead nav a::after,.menu-toggle *,.header-cta,.link-primary,.closing-cta,.premium-contact-form button{transition:none!important}
+}
