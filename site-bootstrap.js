@@ -305,7 +305,7 @@
         ? 'Contact HMATIAS through WhatsApp'
         : 'Falar com a HMATIAS pelo WhatsApp');
       const premiumLabel = button.querySelector('.wa-label');
-      if (premiumLabel) premiumLabel.textContent = isEn ? 'WhatsApp · Contact us' : 'WhatsApp · Falar connosco';
+      if (premiumLabel) premiumLabel.textContent = 'WhatsApp';
       if (!button.querySelector('.wa-pulse')) {
         const pulse = document.createElement('span');
         pulse.className = 'wa-pulse';
