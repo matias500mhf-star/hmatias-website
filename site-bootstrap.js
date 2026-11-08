@@ -330,7 +330,7 @@
     icon.alt = '';
     icon.setAttribute('aria-hidden', 'true');
     const label = document.createElement('span');
-    label.textContent = isEn ? 'WhatsApp · Contact us' : 'WhatsApp · Falar connosco';
+    label.textContent = 'WhatsApp';
     button.append(icon, label);
     if (!button.isConnected) document.body.appendChild(button);
   };
