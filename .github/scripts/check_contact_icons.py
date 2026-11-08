@@ -80,7 +80,7 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
         fail(f"{page} must show the location icon beside the office address")
 
     icon_blocks = re.findall(
-        r'<div\s+class="service-icon"\s+aria-hidden="true">(.*?)</div>',
+        r'<div\b(?=[^>]*\bclass="[^"]*\bservice-icon\b[^"]*")(?=[^>]*\baria-hidden="true")[^>]*>(.*?)</div>',
         html,
         re.IGNORECASE | re.DOTALL,
     )
