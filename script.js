@@ -114,7 +114,7 @@
     mobileWhatsApp.href='https://wa.me/244948806673';
     mobileWhatsApp.target='_blank';
     mobileWhatsApp.rel='noopener noreferrer';
-    mobileWhatsApp.textContent=pageEnglish?'WhatsApp — Contact HMATIAS':'WhatsApp — Falar com a HMATIAS';
+    mobileWhatsApp.textContent='WhatsApp';
     mobileWhatsApp.setAttribute('aria-label',mobileWhatsApp.textContent);
     navMenu.appendChild(mobileWhatsApp);
   }
