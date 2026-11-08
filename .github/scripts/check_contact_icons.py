@@ -84,10 +84,24 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
         html,
         re.IGNORECASE | re.DOTALL,
     )
-    if len(icon_blocks) != 4:
+    if len(icon_blocks) == 4:
+        if any("<svg" not in block or 'stroke="currentColor"' not in block for block in icon_blocks):
+            fail(f"{page} service icons must have modern inline SVG fallbacks")
+    elif page == "index.html":
+        # The current Portuguese editorial homepage intentionally uses a numbered
+        # capability list instead of the older four-card icon grid.
+        capability_blocks = re.findall(
+            r'<a\s+class="capability"[^>]*>(.*?)</a>',
+            html,
+            re.IGNORECASE | re.DOTALL,
+        )
+        if len(capability_blocks) != 4 or any(
+            'class="cap-title"' not in block or 'class="cap-desc"' not in block
+            for block in capability_blocks
+        ):
+            fail(f"{page} must provide four complete, labelled capability links")
+    else:
         fail(f"{page} must provide four service icons; found {len(icon_blocks)}")
-    elif any("<svg" not in block or 'stroke="currentColor"' not in block for block in icon_blocks):
-        fail(f"{page} service icons must have modern inline SVG fallbacks")
 
 enhancements = read("site-enhancements.js")
 icon_array = re.search(r"const icons = \[(.*?)\n\s*\];", enhancements, re.DOTALL)
