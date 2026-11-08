@@ -340,7 +340,15 @@
     loadScript('script[data-hmatias-portfolio]', 'portfolio.js?v=20260920-premium2', 'hmatiasPortfolio', document.body);
   };
 
+  const refreshInstitutionalBlueLayer = () => {
+    if (!document.body.classList.contains('hmatias-institutional')) return;
+    const link = [...document.querySelectorAll('link[rel="stylesheet"]')]
+      .find(node => /hm-blue-institutional\\.css(?:\\?|$)/.test(node.getAttribute('href') || ''));
+    if (link) link.href = '/hm-blue-institutional.css?v=20261108-brand-blue3';
+  };
+
   const run = () => {
+    refreshInstitutionalBlueLayer();
     ensureCatalogueIdentity();
     addInstagramLink();
     normalizeOfficialEmail();
