@@ -44,7 +44,7 @@
       loadStylesheet('link[data-hmatias-premium-typography]', premiumTypographyStylesheet, 'hmatiasPremiumTypography');
     }
     loadStylesheet('link[data-hmatias-brand-lock]', brandLockStylesheet, 'hmatiasBrandLock');
-    loadStylesheet('link[data-hmatias-contact-system]', 'site-contact-system.css?v=20261108-contact-unified1', 'hmatiasContactSystem');
+    loadStylesheet('link[data-hmatias-contact-system]', 'site-contact-system.css?v=20261108-contact-compact2', 'hmatiasContactSystem');
     loadStylesheet('link[data-hmatias-mobile-contact]', 'mobile-contact-layout.css?v=20261008-1', 'hmatiasMobileContact');
     if (!stablePresentation) loadStylesheet('link[data-hmatias-corporate-cleanup]', corporateCleanupStylesheet, 'hmatiasCorporateCleanup');
     // This is an opt-in integration: no request, storage or browser-side CRM calls
