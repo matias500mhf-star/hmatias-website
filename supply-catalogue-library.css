@@ -1,0 +1,17 @@
+/* Compact QR-first commercial catalogue shelf. */
+body.hmatias-supply .supply-catalogue-library{padding:34px 0;background:#f5f8fb;border-top:1px solid #dce6f0;border-bottom:1px solid #dce6f0}
+body.hmatias-supply .supply-catalogue-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;max-width:980px}
+body.hmatias-supply .supply-catalogue-copy{min-width:0}
+body.hmatias-supply .supply-catalogue-copy h2{margin:7px 0 8px;color:#062d56;font-size:clamp(1.35rem,2.4vw,1.85rem);line-height:1.2}
+body.hmatias-supply .supply-catalogue-copy p{margin:0 0 7px;color:#52697b;font-size:.9rem;line-height:1.65}
+body.hmatias-supply .supply-catalogue-copy small{color:#6a7d8d;font-size:.72rem}
+body.hmatias-supply .supply-catalogue-qr-wrap{display:flex;flex:0 0 116px;flex-direction:column;align-items:center;gap:6px;padding:10px;border:1px solid #b9cedd;border-radius:10px;background:#fff;box-shadow:0 6px 18px rgba(6,45,86,.06)}
+body.hmatias-supply .supply-catalogue-qr-label{color:#0065cc;font-size:.58rem;font-weight:850;letter-spacing:.12em}
+body.hmatias-supply .supply-catalogue-qr-pending{display:grid;width:74px;height:74px;place-items:center;border:1px dashed #9bb6ca;border-radius:6px;color:#062d56;background:repeating-linear-gradient(135deg,#f4f8fc 0 6px,#eaf2f8 6px 12px);font-size:.65rem;font-weight:900;letter-spacing:.12em}
+body.hmatias-supply .supply-catalogue-qr-wrap>small{color:#52697b;font-size:.57rem;text-align:center;line-height:1.35}
+body.hmatias-institutional .unit-card-icon{display:grid;width:42px;height:42px;place-items:center;margin:0 0 14px;border:1px solid #c8dceb;border-radius:10px;color:#0065cc;background:#f0f6fb}
+body.hmatias-institutional .unit-card-icon svg{width:22px;height:22px}
+body.hmatias-home .service-icon--refined{display:grid;place-items:center}
+body.hmatias-home .service-icon--refined svg{width:30px;height:30px;stroke-width:1.7}
+@media(max-width:600px){body.hmatias-supply .supply-catalogue-library{padding:24px 0}body.hmatias-supply .supply-catalogue-inner{align-items:flex-start;gap:14px}body.hmatias-supply .supply-catalogue-qr-wrap{flex-basis:94px;padding:7px}body.hmatias-supply .supply-catalogue-qr-pending{width:64px;height:64px}}
+@media(max-width:360px){body.hmatias-supply .supply-catalogue-inner{flex-wrap:wrap}body.hmatias-supply .supply-catalogue-qr-wrap{margin-left:auto}}

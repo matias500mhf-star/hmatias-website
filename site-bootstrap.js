@@ -44,6 +44,7 @@
       loadStylesheet('link[data-hmatias-premium-typography]', premiumTypographyStylesheet, 'hmatiasPremiumTypography');
     }
     loadStylesheet('link[data-hmatias-brand-lock]', brandLockStylesheet, 'hmatiasBrandLock');
+    loadStylesheet('link[data-hmatias-contact-system]', 'site-contact-system.css?v=20261108-contact-compact3', 'hmatiasContactSystem');
     loadStylesheet('link[data-hmatias-mobile-contact]', 'mobile-contact-layout.css?v=20261008-1', 'hmatiasMobileContact');
     if (!stablePresentation) loadStylesheet('link[data-hmatias-corporate-cleanup]', corporateCleanupStylesheet, 'hmatiasCorporateCleanup');
     // This is an opt-in integration: no request, storage or browser-side CRM calls
@@ -189,17 +190,181 @@
     footerBrand.appendChild(link);
   };
 
+  const ensureSiteContactPanel = () => {
+    const footer = document.querySelector('footer');
+    if (!footer || document.querySelector('[data-hmatias-contact-panel]') || document.querySelector('main .contact-premium, main .contact-list')) return;
+
+    const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
+    const address = 'Bairro 1 de Maio, Casa n.º 31, Viana, Luanda, Angola';
+    const mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
+    const section = document.createElement('section');
+    section.className = 'hm-contact-panel';
+    section.dataset.hmatiasContactPanel = 'true';
+    section.setAttribute('aria-labelledby', 'hm-contact-panel-title');
+
+    const inner = document.createElement('div');
+    inner.className = 'hm-contact-panel-inner';
+
+    const intro = document.createElement('div');
+    intro.className = 'hm-contact-panel-intro';
+    const eyebrow = document.createElement('span');
+    eyebrow.className = 'hm-contact-eyebrow';
+    eyebrow.textContent = isEn ? 'DIRECT CONTACT' : 'CONTACTO DIRECTO';
+    const heading = document.createElement('h2');
+    heading.id = 'hm-contact-panel-title';
+    heading.textContent = isEn ? 'Contact HMATIAS' : 'Fale com a HMATIAS';
+    const description = document.createElement('p');
+    description.textContent = isEn
+      ? 'Choose the channel that best suits your enquiry. Our institutional base is in Viana, Luanda.'
+      : 'Escolha o canal mais adequado ao seu pedido. A nossa base institucional fica em Viana, Luanda.';
+    intro.append(eyebrow, heading, description);
+
+    const grid = document.createElement('div');
+    grid.className = 'hm-contact-actions';
+
+    const makeAction = (kind, label, value, href, icon, external = false) => {
+      const link = document.createElement('a');
+      link.className = 'hm-contact-action hm-contact-action-' + kind;
+      link.href = href;
+      if (external) {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+      }
+      const image = document.createElement('img');
+      image.src = icon;
+      image.alt = '';
+      image.width = 20;
+      image.height = 20;
+      image.setAttribute('aria-hidden', 'true');
+      const copy = document.createElement('span');
+      copy.className = 'hm-contact-action-copy';
+      const strong = document.createElement('strong');
+      strong.textContent = label;
+      const small = document.createElement('small');
+      small.textContent = value;
+      copy.append(strong, small);
+      link.append(image, copy);
+      return link;
+    };
+
+    grid.append(
+      makeAction('whatsapp', 'WhatsApp', isEn ? 'Send a direct message' : 'Enviar mensagem directa', 'https://wa.me/244948806673', '/images/social-whatsapp.svg', true),
+      makeAction('phone', isEn ? 'Call / Mobile' : 'Ligar / Telemóvel', '+244 948 806 673', 'tel:+244948806673', '/images/contact-phone.svg'),
+      makeAction('email', isEn ? 'General email' : 'E-mail geral', 'geral@comercialhmatiasps.com', 'mailto:geral@comercialhmatiasps.com', '/images/contact-email.svg'),
+      makeAction('institutional', isEn ? 'Institutional information' : 'Informação institucional', 'info@comercialhmatiasps.com', 'mailto:info@comercialhmatiasps.com', '/images/contact-email.svg')
+    );
+
+    const location = document.createElement('div');
+    location.className = 'hm-contact-location';
+    const addressCopy = document.createElement('div');
+    addressCopy.className = 'hm-contact-location-copy';
+    const addressLabel = document.createElement('strong');
+    addressLabel.textContent = isEn ? 'Registered address' : 'Endereço institucional';
+    const addressText = document.createElement('span');
+    addressText.textContent = address;
+    addressCopy.append(addressLabel, addressText);
+    const mapLink = document.createElement('a');
+    mapLink.href = mapUrl;
+    mapLink.target = '_blank';
+    mapLink.rel = 'noopener noreferrer';
+    mapLink.className = 'hm-contact-map-link';
+    mapLink.textContent = isEn ? 'Open in Google Maps ↗' : 'Abrir no Google Maps ↗';
+    location.append(addressCopy, mapLink);
+
+    inner.append(intro, grid, location);
+    section.appendChild(inner);
+    footer.parentNode.insertBefore(section, footer);
+  };
+
+  const ensureWhatsAppShortcut = () => {
+    const candidates = [...document.querySelectorAll('a.whatsapp-float, a.premium-whatsapp, a[data-hmatias-contact-whatsapp]')];
+    let button = candidates.find(node => node.matches('a.premium-whatsapp')) || candidates.shift();
+    candidates.forEach(node => { if (node !== button) node.remove(); });
+    if (!button) button = document.createElement('a');
+
+    const isPremiumButton = button.classList.contains('premium-whatsapp');
+    if (isPremiumButton) {
+      button.classList.remove('whatsapp-float');
+    } else {
+      button.classList.remove('whatsapp-float', 'premium-whatsapp');
+      button.classList.add('hm-contact-whatsapp');
+    }
+    button.dataset.hmatiasContactWhatsapp = 'true';
+    const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
+    const greeting = isEn
+      ? 'Hello HMATIAS. I would like more information about your services.'
+      : 'Olá HMATIAS. Gostaria de obter mais informações sobre os vossos serviços.';
+
+    // The editorial preview has its own pulse element and branded structure.
+    // Update the destination and accessible label without replacing its children.
+    if (isPremiumButton) {
+      button.href = 'https://wa.me/244948806673?text=' + encodeURIComponent(greeting);
+      button.target = '_blank';
+      button.rel = 'noopener noreferrer';
+      button.setAttribute('aria-label', isEn
+        ? 'Contact HMATIAS through WhatsApp'
+        : 'Falar com a HMATIAS pelo WhatsApp');
+      const premiumLabel = button.querySelector('.wa-label');
+      if (premiumLabel) premiumLabel.textContent = 'WhatsApp';
+      if (!button.querySelector('.wa-pulse')) {
+        const pulse = document.createElement('span');
+        pulse.className = 'wa-pulse';
+        pulse.setAttribute('aria-hidden', 'true');
+        button.prepend(pulse);
+      }
+      return;
+    }
+
+    button.href = 'https://wa.me/244948806673?text=' + encodeURIComponent(greeting);
+    button.target = '_blank';
+    button.rel = 'noopener noreferrer';
+    button.setAttribute('aria-label', isEn
+      ? 'Contact HMATIAS through WhatsApp'
+      : 'Falar com a HMATIAS pelo WhatsApp');
+    button.replaceChildren();
+
+    const icon = document.createElement('img');
+    icon.src = '/images/social-whatsapp.svg';
+    icon.width = 22;
+    icon.height = 22;
+    icon.alt = '';
+    icon.setAttribute('aria-hidden', 'true');
+    const label = document.createElement('span');
+    label.textContent = 'WhatsApp';
+    button.append(icon, label);
+    if (!button.isConnected) document.body.appendChild(button);
+  };
+
   const loadPortfolioLayer = () => {
     if (stablePresentation || !document.body.classList.contains('hmatias-home')) return;
     loadScript('script[data-hmatias-portfolio]', 'portfolio.js?v=20260920-premium2', 'hmatiasPortfolio', document.body);
   };
 
+  const refreshInstitutionalBlueLayer = () => {
+    // Apply one shared institutional layer to every inner page that opts into
+    // the HMATIAS institutional body class. The homepage remains untouched.
+    if (!document.body.classList.contains('hmatias-institutional')) return;
+    const selector = 'link[data-hmatias-institutional-blue]';
+    let link = document.querySelector(selector) || [...document.querySelectorAll('link[rel="stylesheet"]')]
+      .find(node => /hm-blue-institutional\.css(?:\?|$)/.test(node.getAttribute('href') || ''));
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+    link.dataset.hmatiasInstitutionalBlue = 'true';
+    link.href = '/hm-blue-institutional.css?v=20261108-brand-blue4';
+  };
+
   const run = () => {
+    refreshInstitutionalBlueLayer();
     ensureCatalogueIdentity();
     addInstagramLink();
     normalizeOfficialEmail();
     normaliseSharedLinks();
     ensureSourceAOAccess();
+    ensureSiteContactPanel();
+    ensureWhatsAppShortcut();
     loadPortfolioLayer();
   };
 

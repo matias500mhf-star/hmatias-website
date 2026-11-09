@@ -1,0 +1,339 @@
+/* HMATIAS institutional blue system — production-safe visual layer */
+:root{
+ --hm-blue-950:#032a51;--hm-blue-900:#062d56;--hm-blue-800:#0b477c;
+ --hm-blue-700:#0065cc;--hm-blue-600:#1685dc;--hm-blue-100:#eaf4fd;
+ --hm-blue-050:#f4f8fc;--hm-blue-line:#d6e4f0;--hm-ink:#102d4d;
+}
+body.hmatias-institutional,body.hmatias-home{
+ --hm-u-ink:var(--hm-ink);--hm-u-navy:var(--hm-blue-900);
+ --hm-u-blue:var(--hm-blue-700);--hm-u-muted:#52697b;
+ --hm-u-line:var(--hm-blue-line);color:var(--hm-ink);
+}
+body.hmatias-institutional .hmatias-header,
+body.hmatias-home .hmatias-header{
+ background:rgba(255,255,255,.985)!important;
+ border-bottom:1px solid var(--hm-blue-line)!important;
+ box-shadow:0 7px 24px rgba(6,45,86,.065)!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .nav-menu a{
+ color:#29465f;
+}
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .nav-menu a:hover,
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .nav-menu a:focus-visible{
+ color:var(--hm-blue-700)!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .nav-menu a:after{
+ background:var(--hm-blue-700)!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .nav-actions .btn,
+:is(body.hmatias-institutional,body.hmatias-home) .btn-primary,
+:is(body.hmatias-institutional,body.hmatias-home) .button-primary{
+ background:var(--hm-blue-900)!important;border-color:var(--hm-blue-900)!important;
+ color:#fff!important;box-shadow:0 5px 14px rgba(6,45,86,.13)!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .nav-actions .btn:hover,
+:is(body.hmatias-institutional,body.hmatias-home) .btn-primary:hover,
+:is(body.hmatias-institutional,body.hmatias-home) .button-primary:hover{
+ background:var(--hm-blue-700)!important;border-color:var(--hm-blue-700)!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .lang-switch,
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .menu-toggle{
+ color:var(--hm-blue-800)!important;border-color:#bfd3e4!important;background:#f7fbff!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .menu-toggle span{
+ background:var(--hm-blue-900)!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .nav-menu{
+ background:#fff;
+}
+:is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .nav-menu a{
+ border-bottom-color:#e6eef5;
+}
+:is(body.hmatias-institutional,body.hmatias-home) :is(.eyebrow.blue,.text-link,.unit-card a,.partner-card a){
+ color:var(--hm-blue-700);
+}
+body.hmatias-institutional :is(.unit-hero,.cred-hero,.network-hero,.division-hero){
+ background:linear-gradient(118deg,var(--hm-blue-950),var(--hm-blue-900) 58%,#0b568d)!important;
+}
+body.hmatias-institutional :is(.unit-main.soft,.cred-section-soft,.network-section,.hm-evidence,.unit-cta){
+ background:var(--hm-blue-050)!important;
+}
+body.hmatias-institutional :is(.unit-card,.partner-card,.clean-feature-card,.cred-service,.service-card,.project-card,.feature-card){
+ border-color:var(--hm-blue-line)!important;box-shadow:0 5px 18px rgba(6,45,86,.045)!important;
+}
+body.hmatias-institutional :is(.unit-card,.partner-card,.clean-feature-card,.cred-service):hover{
+ border-color:#9fc5e3!important;box-shadow:0 12px 28px rgba(6,45,86,.085)!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) :is(input,select,textarea){
+ border-color:#c9d9e7!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) :is(input,select,textarea):focus{
+ border-color:var(--hm-blue-700)!important;box-shadow:0 0 0 3px rgba(0,101,204,.12)!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) :is(footer,.site-footer){
+ background:var(--hm-blue-950)!important;color:#eaf3fb!important;
+}
+:is(body.hmatias-institutional,body.hmatias-home) :is(footer,.site-footer) a:hover{color:#8fd0fa!important}
+:is(body.hmatias-institutional,body.hmatias-home) :focus-visible{outline-color:#1685dc!important;outline-offset:3px!important}
+body.hmatias-home .hero{
+ background:linear-gradient(115deg,#032a51 0%,#062d56 55%,#0b477c 100%)!important;
+}
+body.hmatias-home .hero .eyebrow{color:#c8e5fb!important}
+body.hmatias-home .btn-primary{background:#fff!important;color:#062d56!important;border-color:#fff!important}
+body.hmatias-home .btn-primary:hover{background:#eaf4fd!important;color:#032a51!important}
+body.hmatias-home .section-soft,body.hmatias-home .home-band-light{background:#f4f8fc!important}
+@media(max-width:850px){
+ :is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .nav-menu{
+  background:#fff!important;border-top:2px solid var(--hm-blue-700)!important;
+  box-shadow:0 18px 34px rgba(6,45,86,.16)!important;
+  max-height:calc(100dvh - 90px);overflow-y:auto;
+ }
+ :is(body.hmatias-institutional,body.hmatias-home) .hmatias-header .nav-menu a{
+  min-height:48px!important;border-bottom:1px solid #e6eef5!important;color:#29465f!important;
+ }
+}
+
+
+/* Premium preview — exact HMATIAS corporate blue palette, matching the published homepage. */
+body.hm-preview{
+  --hm-blue-950:#032a51;
+  --hm-blue-900:#062d56;
+  --hm-blue-800:#0b477c;
+  --hm-blue-700:#0065cc;
+  --hm-blue-600:#1685dc;
+  --hm-blue-100:#eaf4fd;
+  --hm-blue-050:#f4f8fc;
+  --hm-blue-line:#dce6f0;
+  --ink:#102d4d;
+  --navy:#062d56;
+  --brand-mid:#0b477c;
+  --brand-deep:#032a51;
+  --blue:#0065cc;
+  --sky:#48baf5;
+  --paper:#f4f8fc;
+  --line:#dce6f0;
+  --muted:#5d6d7d;
+}
+body.hm-preview .preview-bar{background:#062d56!important;color:#dfeaf5!important}
+body.hm-preview .masthead{border-bottom-color:#dce6f0!important}
+body.hm-preview .masthead nav a:hover,
+body.hm-preview .masthead nav a:focus-visible{color:#0065cc!important}
+body.hm-preview .header-cta:hover{border-color:#0065cc!important;color:#0065cc!important}
+
+/* Hero returns to the recognisable HMATIAS blue gradient and white typography. */
+body.hm-preview .hero-editorial{
+  background:linear-gradient(115deg,#032a51 0%,#073c70 52%,#0d66a8 100%)!important;
+  color:#fff!important;
+}
+body.hm-preview .hero-index,
+body.hm-preview .hero-bottom{color:#dceafa!important}
+body.hm-preview .hero-index i{background:#8abfe5!important}
+body.hm-preview .hero-copy h1{color:#fff!important}
+body.hm-preview .hero-copy h1 em{color:#48baf5!important}
+body.hm-preview .hero-copy .kicker{color:#b9dcf5!important}
+body.hm-preview .hero-intro{color:#dceafa!important}
+body.hm-preview .hero-links .link-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff!important;color:#062d56!important;
+  border:1px solid #fff;border-radius:9px;
+  box-shadow:0 10px 25px rgba(0,0,0,.16);
+  transition:transform .2s ease,background .2s ease;
+}
+body.hm-preview .hero-links .link-primary:hover{
+  background:#eaf4fd!important;transform:translateY(-2px);
+}
+body.hm-preview .hero-links .link-primary span{color:#0065cc!important}
+body.hm-preview .hero-links .link-secondary{color:#fff!important;border-bottom-color:#9fc8e7!important}
+body.hm-preview .hero-footnote{border-top-color:rgba(255,255,255,.25)!important}
+body.hm-preview .hero-footnote span{color:#48baf5!important}
+body.hm-preview .hero-footnote p{color:#dceafa!important}
+body.hm-preview .hero-image{background:#0b477c!important}
+body.hm-preview .hero-image:before{border-color:#48baf5!important}
+body.hm-preview .hero-bottom{border-top-color:rgba(255,255,255,.25)!important}
+
+/* Core links, section accents, controls and calls to action use the official blue. */
+body.hm-preview :is(.kicker,.eyebrow,.section-marker span:first-child,
+  .cap-arrow,.work-item figcaption span,.contact-detail span){color:#0065cc!important}
+body.hm-preview :is(.hero-editorial .kicker,.hero-editorial .eyebrow){color:#b9dcf5!important}
+body.hm-preview :is(.hero-copy h1 em,.intro-grid h2 em,.network-band h2 em,
+  .closing h2 em,.credibility-band h2 em,.contact-premium h2 em,
+  .partner-showcase-head h2 em){color:#48baf5!important}
+body.hm-preview .capability:hover{background:#eaf4fd!important}
+body.hm-preview :is(.text-link,.work-more a,.partner-showcase>.text-link){color:#0065cc!important}
+body.hm-preview .closing{background:#eaf4fd!important}
+body.hm-preview .closing-cta{
+  background:#0065cc!important;color:#fff!important;
+  box-shadow:0 10px 25px rgba(0,101,204,.22)!important;
+}
+body.hm-preview .closing-cta:hover{background:#0b477c!important}
+body.hm-preview .network-band{background:linear-gradient(115deg,#032a51 0%,#062d56 62%,#0b477c 100%)!important}
+body.hm-preview :is(.premium-footer,.preview-footer){background:#032a51!important}
+body.hm-preview .premium-contact-form button{
+  background:#062d56!important;border-radius:6px;
+  transition:background .2s ease,transform .2s ease;
+}
+body.hm-preview .premium-contact-form button:hover{
+  background:#0065cc!important;transform:translateY(-1px);
+}
+body.hm-preview :is(.premium-contact-form input,.premium-contact-form select,
+  .premium-contact-form textarea){border-color:#c9d9e7!important}
+body.hm-preview :is(.premium-contact-form input,.premium-contact-form select,
+  .premium-contact-form textarea):focus{
+  border-color:#0065cc!important;outline:0!important;
+  box-shadow:0 0 0 3px rgba(0,101,204,.12)!important;
+}
+body.hm-preview .partner-wordmark.synvor{color:#0065cc!important}
+body.hm-preview .menu-toggle{
+  color:#062d56!important;background:#f4f8fc!important;
+  border:1px solid #c9d9e7!important;border-radius:6px;
+}
+body.hm-preview .menu-toggle .menu-glyph i,
+body.hm-preview .menu-toggle .menu-glyph:before,
+body.hm-preview .menu-toggle .menu-glyph:after{background:#062d56!important}
+body.hm-preview .masthead nav.is-open{border-top-color:#0065cc!important}
+@media(prefers-reduced-motion:reduce){
+  body.hm-preview .hero-links .link-primary,
+  body.hm-preview .premium-contact-form button{transition:none!important}
+}
+
+
+/* HMATIAS cross-page design system — same identity, page-specific information architecture. */
+body.hmatias-institutional{
+  --hm-system-navy:#062d56;
+  --hm-system-deep:#032a51;
+  --hm-system-blue:#0065cc;
+  --hm-system-sky:#48baf5;
+  --hm-system-ink:#102d4d;
+  --hm-system-muted:#52697b;
+  --hm-system-line:#d6e4f0;
+  --hm-system-surface:#f4f8fc;
+  color:var(--hm-system-ink);
+  background:#fff;
+  font-family:"Manrope","Inter",Arial,sans-serif;
+  font-synthesis:none;
+  font-kerning:normal;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+body.hmatias-institutional :is(h1,h2,h3,h4){
+  font-family:"Instrument Sans","Inter",Arial,sans-serif;
+  font-weight:600;
+  letter-spacing:-.045em;
+  text-wrap:balance;
+}
+body.hmatias-institutional :is(p,li){line-height:1.72}
+body.hmatias-institutional .container{width:min(1180px,calc(100% - 48px));margin-inline:auto}
+body.hmatias-institutional .hmatias-topbar{display:none}
+body.hmatias-institutional .hmatias-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.975)!important;
+  border-bottom:1px solid var(--hm-system-line)!important;
+  box-shadow:0 7px 24px rgba(6,45,86,.055)!important;
+  backdrop-filter:blur(14px);
+}
+body.hmatias-institutional .hmatias-header .nav{
+  min-height:82px;gap:clamp(12px,2vw,28px)
+}
+body.hmatias-institutional .hmatias-header .nav-menu{
+  align-items:center;gap:clamp(12px,1.9vw,26px)
+}
+body.hmatias-institutional .hmatias-header .nav-menu a{
+  color:#29465f!important;font-family:"Manrope","Inter",Arial,sans-serif;
+  font-size:.82rem;font-weight:700;letter-spacing:-.01em;
+  transition:color .18s ease,opacity .18s ease;
+}
+body.hmatias-institutional .hmatias-header .nav-menu a:hover,
+body.hmatias-institutional .hmatias-header .nav-menu a:focus-visible{color:var(--hm-system-blue)!important}
+body.hmatias-institutional .hmatias-header .nav-menu a:after{background:var(--hm-system-blue)!important}
+body.hmatias-institutional .hmatias-header .nav-actions{gap:10px}
+body.hmatias-institutional .hmatias-header .nav-actions .btn,
+body.hmatias-institutional .hmatias-header .lang-switch,
+body.hmatias-institutional .hmatias-header .menu-toggle{
+  min-height:42px;border-radius:8px!important;font-family:"Manrope","Inter",Arial,sans-serif;
+  font-size:.78rem;font-weight:800;letter-spacing:0;
+}
+body.hmatias-institutional .hmatias-header .nav-actions .btn{
+  padding:11px 16px!important;background:var(--hm-system-navy)!important;
+  border:1px solid var(--hm-system-navy)!important;
+  box-shadow:0 5px 15px rgba(6,45,86,.12)!important;
+}
+body.hmatias-institutional .hmatias-header .nav-actions .btn:hover{
+  background:var(--hm-system-blue)!important;border-color:var(--hm-system-blue)!important;
+  transform:translateY(-1px);
+}
+body.hmatias-institutional .hmatias-header .lang-switch{
+  min-width:42px;padding:10px 12px!important;border:1px solid #bfd3e4!important;
+  background:#f7fbff!important;color:var(--hm-system-navy)!important;
+}
+body.hmatias-institutional .hmatias-header .menu-toggle{
+  width:44px;height:44px;padding:0!important;border:1px solid #bfd3e4!important;
+  background:#f7fbff!important;color:var(--hm-system-navy)!important;
+}
+body.hmatias-institutional .hmatias-header .menu-toggle span{background:var(--hm-system-navy)!important}
+body.hmatias-institutional :is(.btn,.button,[class*="btn-"]){
+  border-radius:8px;box-shadow:none;
+  font-family:"Manrope","Inter",Arial,sans-serif;font-weight:750;
+  transition:transform .18s ease,background-color .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+body.hmatias-institutional :is(.btn-primary,.button-primary){
+  background:var(--hm-system-navy)!important;border-color:var(--hm-system-navy)!important;color:#fff!important;
+}
+body.hmatias-institutional :is(.btn-primary,.button-primary):hover{
+  background:var(--hm-system-blue)!important;border-color:var(--hm-system-blue)!important;
+  box-shadow:0 8px 20px rgba(0,101,204,.18);transform:translateY(-1px);
+}
+body.hmatias-institutional :is(.unit-card,.service-card,.project-card,.feature-card,.partner-card,
+  .clean-feature-card,.cred-service,.business-service-card,.business-process-card,.booking-card){
+  border-color:var(--hm-system-line)!important;border-radius:12px!important;
+  box-shadow:0 7px 22px rgba(6,45,86,.055)!important;
+}
+body.hmatias-institutional :is(.unit-card,.service-card,.project-card,.feature-card,.partner-card,
+  .clean-feature-card,.cred-service,.business-service-card,.booking-card){
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+body.hmatias-institutional :is(.unit-card,.service-card,.project-card,.feature-card,.partner-card,
+  .clean-feature-card,.cred-service,.business-service-card,.booking-card):hover{
+  border-color:#9fc5e3!important;box-shadow:0 13px 30px rgba(6,45,86,.10)!important;
+  transform:translateY(-2px);
+}
+body.hmatias-institutional :is(input,select,textarea){
+  min-height:46px;border:1px solid #cbdbe8!important;border-radius:8px!important;
+  background:#fff;color:var(--hm-system-ink);font-family:"Manrope","Inter",Arial,sans-serif;
+}
+body.hmatias-institutional textarea{min-height:120px;padding:12px 14px}
+body.hmatias-institutional :is(input,select,textarea):focus{
+  border-color:var(--hm-system-blue)!important;
+  box-shadow:0 0 0 3px rgba(0,101,204,.12)!important;outline:0;
+}
+body.hmatias-institutional :is(.eyebrow.blue,.text-link,.unit-card a,.partner-card a){color:var(--hm-system-blue)}
+body.hmatias-institutional :is(footer,.site-footer,.network-footer){
+  background:var(--hm-system-deep)!important;color:#eaf3fb!important;
+}
+body.hmatias-institutional :is(footer,.site-footer,.network-footer) a{color:#eaf3fb}
+body.hmatias-institutional :is(footer,.site-footer,.network-footer) a:hover{color:#9bd8f6}
+body.hmatias-institutional :focus-visible{outline:3px solid #1685dc!important;outline-offset:3px!important}
+@media(max-width:850px){
+  body.hmatias-institutional .container{width:min(calc(100% - 32px),1180px)}
+  body.hmatias-institutional .hmatias-header .nav{min-height:72px}
+  body.hmatias-institutional .hmatias-header .nav-menu{
+    background:#fff!important;border-top:2px solid var(--hm-system-blue)!important;
+    box-shadow:0 18px 34px rgba(6,45,86,.16)!important;
+  }
+}
+@media(max-width:560px){
+  body.hmatias-institutional .container{width:calc(100% - 28px)}
+  body.hmatias-institutional :is(.hero-actions,.actions,.cta-row){flex-wrap:wrap}
+  body.hmatias-institutional :is(.unit-card,.service-card,.project-card,.feature-card,.partner-card){min-width:0}
+}
+@media(prefers-reduced-motion:reduce){
+  body.hmatias-institutional :is(.btn,.button,[class*="btn-"],.unit-card,.service-card,.project-card,.feature-card,.partner-card){
+    transition:none!important
+  }
+}
+
+/* Service capability pictograms — consistent across all institutional division pages. */
+body.hmatias-institutional .unit-card-icon{
+  display:grid;width:42px;height:42px;place-items:center;margin:0 0 14px;
+  border:1px solid #c8dceb;border-radius:10px;color:#0065cc;background:#f0f6fb;
+}
+body.hmatias-institutional .unit-card-icon svg{display:block;width:22px;height:22px}

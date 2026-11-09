@@ -19,53 +19,6 @@
   let gtmLoaded = false;
   let metaPixelLoaded = false;
   let metaConsentGranted = false;
-  let clarityLoaded = false;
-  const clarityProjectId = 'zap72qe2xw';
-
-  function ensureClarity() {
-    if (clarityLoaded || document.querySelector('script[data-hmatias-clarity]')) {
-      clarityLoaded = true;
-      return;
-    }
-
-    const clarity = window.clarity = window.clarity || function () {
-      (clarity.q = clarity.q || []).push(arguments);
-    };
-    clarityLoaded = true;
-
-    const tag = document.createElement('script');
-    tag.async = true;
-    tag.src = 'https://www.clarity.ms/tag/' + encodeURIComponent(clarityProjectId) + '?ref=bwt';
-    tag.dataset.hmatiasClarity = clarityProjectId;
-    const firstScript = document.getElementsByTagName('script')[0];
-    if (firstScript && firstScript.parentNode) firstScript.parentNode.insertBefore(tag, firstScript);
-    else document.head.appendChild(tag);
-  }
-
-  function syncClarityConsent() {
-    const statisticsGranted = statisticsAllowed();
-    const marketingGranted = marketingAllowed();
-    const pathname = window.location.pathname;
-    const robots = document.querySelector('meta[name="robots"]');
-    const noindex = Boolean(robots && /\bnoindex\b/i.test(robots.content || ''));
-    const privateSurface = /^\/source-ao\/(?:ops|review|requests|confirm|track)\.html$/i.test(pathname)
-      || /^\/source-ao\/(?:backend|docs)\//i.test(pathname)
-      || /^\/admin\//i.test(pathname);
-
-    // Never record noindex or operational/private pages, even after consent.
-    if (noindex || privateSurface) return;
-
-    // Do not load Clarity until the visitor has accepted the Statistics category.
-    if (!statisticsGranted && !clarityLoaded) return;
-    if (statisticsGranted) ensureClarity();
-
-    if (typeof window.clarity === 'function') {
-      window.clarity('consentv2', {
-        analytics_Storage: statisticsGranted ? 'granted' : 'denied',
-        ad_Storage: marketingGranted ? 'granted' : 'denied'
-      });
-    }
-  }
 
   function statisticsAllowed() {
     return Boolean(window.Cookiebot && window.Cookiebot.consent && window.Cookiebot.consent.statistics);
@@ -154,7 +107,6 @@
   function syncConsent() {
     if (updateGoogleConsent()) loadTagManager();
     syncMetaConsent();
-    syncClarityConsent();
   }
 
   window.hmatiasMetaPixel = Object.freeze({
