@@ -342,6 +342,14 @@ jobs:
                   fail('tag-manager.js does not declare metaPixelId')
               elif meta_id.group(1) and not re.fullmatch(r'\d{10,25}', meta_id.group(1)):
                   fail('configured Meta Pixel ID must be numeric')
+              if 'zap72qe2xw' not in tag_manager_text:
+                  fail('Microsoft Clarity project ID is missing')
+              if 'consentv2' not in tag_manager_text or 'analytics_Storage' not in tag_manager_text or 'ad_Storage' not in tag_manager_text:
+                  fail('Microsoft Clarity Consent Mode signals are missing')
+              if 'if (!statisticsGranted && !clarityLoaded) return;' not in tag_manager_text:
+                  fail('Microsoft Clarity must wait for Cookiebot Statistics consent')
+              if 'if (noindex || privateSurface) return;' not in tag_manager_text:
+                  fail('Microsoft Clarity must exclude noindex and private operational pages')
 
           # Keep the website assistant synchronized with the public site.
           assistant_path = ROOT / 'assistant.js'
@@ -434,6 +442,7 @@ jobs:
 
       - name: Audit commercial client attribution, site copy and navigation
         run: |
+          node --check tag-manager.js
           node --check analytics.js
           node --check analytics-events.js
           node --check website-lead-client.js
