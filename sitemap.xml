@@ -259,4 +259,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://comercialhmatiasps.com/explore.html" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://comercialhmatiasps.com/explorar.html" />
   </url>
+  <url>
+    <loc>https://comercialhmatiasps.com/insights/</loc>
+    <lastmod>2026-11-09</lastmod><changefreq>weekly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="pt-AO" href="https://comercialhmatiasps.com/insights/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://comercialhmatiasps.com/insights/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://comercialhmatiasps.com/insights/" />
+  </url>
+  <url>
+    <loc>https://comercialhmatiasps.com/insights/en/</loc>
+    <lastmod>2026-11-09</lastmod><changefreq>weekly</changefreq><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="pt-AO" href="https://comercialhmatiasps.com/insights/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://comercialhmatiasps.com/insights/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://comercialhmatiasps.com/insights/" />
+  </url>
 </urlset>
