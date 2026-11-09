@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#062d56">
+  <title>Serviços | HMATIAS — Design Lab</title>
+  <meta name="description" content="Conheça as áreas de atuação da HMATIAS: construção, facilities, supply e business services.">
+  <link rel="preload" href="../fonts/inter-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="services.css">
+</head>
+<body>
+  <div class="prototype-banner"><span>HMATIAS · DESIGN LAB</span><span>Conceito em avaliação — não publicado</span></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="HMATIAS — início"><img src="../images/logo-hmatias.png" alt="HMATIAS"></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Abrir navegação"><span></span><span></span></button>
+    <nav id="primary-nav" class="primary-nav" aria-label="Navegação principal">
+      <a class="active" href="services.html">Serviços</a><a href="../catalogo-obras.html">Trabalhos</a><a href="../credibilidade.html">Empresa</a><a href="mailto:geral@comercialhmatiasps.com">Contactos</a>
+    </nav>
+    <a class="header-cta" href="mailto:geral@comercialhmatiasps.com">Falar com a HMATIAS <span>↗</span></a>
+  </header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow">O QUE FAZEMOS</p>
+      <h1>Serviços que respondem<br>às necessidades <em>reais.</em></h1>
+      <p class="intro-copy">A HMATIAS reúne competências em construção, manutenção, fornecimento e apoio empresarial. Conheça as nossas áreas de atuação e encontre o ponto de partida para o seu projeto.</p>
+      <a class="scroll-link" href="#areas">Explorar áreas <span>↓</span></a>
+      <div class="intro-aside"><span>HMATIAS</span><span>ANGOLA · 2026</span></div>
+    </section>
+    <section class="areas" id="areas">
+      <div class="section-heading"><p class="eyebrow">AS NOSSAS ÁREAS</p><p>Quatro áreas de atuação.<br>Uma abordagem coordenada.</p></div>
+      <article class="service-row">
+        <div class="service-number">01</div>
+        <div class="service-content"><p class="service-kicker">OBRAS · REMODELAÇÃO · INTERVENÇÕES TÉCNICAS</p><h2>Construção<br><em>& Infraestruturas</em></h2><p>Intervenções de construção civil, remodelação e trabalhos complementares, enquadrados no âmbito e nas necessidades de cada projeto.</p><a href="../construcao.html" class="service-link">Conhecer Construção <span>↗</span></a></div>
+        <a class="service-image" href="../construcao.html" aria-label="Conhecer Construção"><img src="../images/catalogue/instalacoes-embutidas-construcao.webp" alt="Registo de instalações técnicas numa obra HMATIAS" loading="lazy"></a>
+      </article>
+      <article class="service-row">
+        <div class="service-number">02</div>
+        <div class="service-content"><p class="service-kicker">MANUTENÇÃO · CONSERVAÇÃO · OPERAÇÕES</p><h2>Facilities<br><em>& Manutenção</em></h2><p>Apoio à conservação e ao funcionamento de instalações, com serviços definidos de acordo com as condições de cada espaço.</p><a href="../facilities.html" class="service-link">Conhecer Facilities <span>↗</span></a></div>
+        <div class="service-visual visual-facilities"><span>02 / OPERAÇÕES</span><p>Manter espaços<br>funcionais.</p></div>
+      </article>
+      <article class="service-row">
+        <div class="service-number">03</div>
+        <div class="service-content"><p class="service-kicker">SOURCING · APROVISIONAMENTO · FORNECIMENTO</p><h2>Supply<br><em>& Procurement</em></h2><p>Pesquisa e fornecimento de materiais, equipamentos e produtos, com atenção às especificações, disponibilidade e condições de entrega.</p><a href="../supply.html" class="service-link">Conhecer Supply <span>↗</span></a></div>
+        <div class="service-visual visual-supply"><span>03 / FORNECIMENTO</span><p>Encontrar.<br>Verificar. Fornecer.</p></div>
+      </article>
+      <article class="service-row">
+        <div class="service-number">04</div>
+        <div class="service-content"><p class="service-kicker">APOIO ADMINISTRATIVO · DOCUMENTAL · EMPRESARIAL</p><h2>Business<br><em>Services</em></h2><p>Serviços de suporte administrativo e documental para apoiar processos e necessidades operacionais das organizações.</p><a href="../servicos-administrativos.html" class="service-link">Conhecer Business Services <span>↗</span></a></div>
+        <div class="service-visual visual-business"><span>04 / APOIO EMPRESARIAL</span><p>Organização para<br>o dia a dia.</p></div>
+      </article>
+    </section>
+    <section class="approach">
+      <div><p class="eyebrow">A NOSSA ABORDAGEM</p><h2>Primeiro, compreender.<br><em>Depois, propor.</em></h2></div>
+      <p>Começamos por compreender o pedido, clarificar o âmbito e alinhar as condições de execução ou fornecimento. Cada proposta deve corresponder à necessidade concreta do cliente.</p>
+    </section>
+    <section class="contact-band"><div><p class="eyebrow">VAMOS CONVERSAR</p><h2>Tem uma necessidade<br><em>para resolver?</em></h2></div><a class="button-light" href="mailto:geral@comercialhmatiasps.com">Apresentar um pedido <span>↗</span></a></section>
+  </main>
+  <footer><img src="../images/logo-hmatias.png" alt="HMATIAS"><span>Construção · Facilities · Supply · Business Services</span><small>Protótipo de exploração visual · 2026</small></footer>
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.primary-nav');
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      toggle.setAttribute('aria-expanded', String(open));
+      nav.classList.toggle('is-open', open);
+    });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      nav.classList.remove('is-open');
+    }));
+  </script>
+</body>
+</html>
