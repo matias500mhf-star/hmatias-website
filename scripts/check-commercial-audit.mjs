@@ -106,8 +106,9 @@ for(const [path,anchors,labels] of [
   for(const anchor of anchors) assert.ok(html.includes('id="'+anchor+'"'),'Credibility anchor missing: '+path+'#'+anchor);
   for(const label of labels) assert.ok(html.includes(label),'Evidence-led credibility copy missing: '+path+' / '+label);
 }
-assert.ok(read('index.html').includes('Alterações de escopo comunicadas antes de avançar'));
-assert.ok(read('en.html').includes('Scope changes are communicated before work proceeds'));
+assert.ok(read('index.html').includes('ÂMBITO E CONDIÇÕES DEFINIDOS'));
+assert.ok(read('en.html').includes('SCOPE AND TERMS DEFINED'));
+assert.ok(read('en.html').includes('SERVICE FOLLOW-UP'));
 
 assert.ok(!read('credibilidade.html').includes('orientados pela nossa missão, visão e valores.'));
 assert.ok(!read('credibility.html').includes('guided by our mission, vision and values.'));
