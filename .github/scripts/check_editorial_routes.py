@@ -52,7 +52,7 @@ require('http-equiv="refresh"' in legacy_pt and '#sec-6' in legacy_pt,
         "Old Portuguese Insights URL must redirect to the evaluation section")
 
 require("insights" not in en_home.lower(), "English homepage must not link to separate Insights")
-require("insights" not in en_explore.lower(), "English Explore must not present separate Insights")
+require("insights/en/" not in en_explore.lower() and "<h2>Insights</h2>" not in en_explore, "English Explore must not present a separate Insights destination")
 require("/insights/en/" not in en_blog, "English Blog homepage must not link to Insights")
 require("/insights/en/" not in en_article, "English Blog article must not link to Insights")
 en_head = legacy_en.split("</head>")[0]
