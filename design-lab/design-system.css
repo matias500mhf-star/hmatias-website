@@ -36,9 +36,10 @@ button{font:inherit}
 .button.outline{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff}
 .button.outline:hover{border-color:#fff;background:rgba(255,255,255,.1)}
 .menu-toggle{display:none;width:44px;height:44px;border:1px solid var(--line);background:#fff;color:var(--navy);align-items:center;justify-content:center}
-.menu-toggle span,.menu-toggle:before,.menu-toggle:after{content:"";display:block;width:17px;height:1.5px;background:currentColor;position:absolute;transition:.2s}
-.menu-toggle:before{transform:translateY(-5px)}
-.menu-toggle:after{transform:translateY(5px)}
+.menu-toggle span,.menu-toggle:before,.menu-toggle:after{content:"";display:block;width:17px;height:1.5px;background:currentColor;position:absolute;top:50%;left:50%;transition:.2s}
+.menu-toggle span{transform:translate(-50%,-50%)}
+.menu-toggle:before{transform:translate(-50%,calc(-50% - 5px))}
+.menu-toggle:after{transform:translate(-50%,calc(-50% + 5px))}
 .hero{position:relative;overflow:hidden;background:var(--navy);color:#fff}
 .hero:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(3,26,46,.98) 0%,rgba(5,43,76,.92) 48%,rgba(5,43,76,.2) 100%);z-index:1}
 .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,.92fr) minmax(430px,1.08fr);min-height:650px;align-items:center;gap:5vw;padding-top:68px;padding-bottom:72px}
