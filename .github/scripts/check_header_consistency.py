@@ -20,7 +20,7 @@ for page in sorted(ROOT.glob("*.html")):
         problems.append(f"{page.name}: missing shared navigation/action structure")
         continue
     labels = [re.sub(r"<[^>]+>", "", item).strip() for item in re.findall(r"<a\b[^>]*>(.*?)</a>", nav.group(), re.S)]
-    expected_labels = ["Home", "About us", "Services", "Projects"] if re.search(r'<html\b[^>]*lang="en"', html) else ["Início", "Sobre nós", "Serviços", "Projetos"]
+    expected_labels = ["Home", "Company", "Services", "Projects", "Catalogues", "Contact"] if re.search(r'<html\b[^>]*lang="en"', html) else ["Início", "Empresa", "Serviços", "Projectos", "Catálogos", "Contactos"]
     if labels != expected_labels:
         problems.append(f"{page.name}: inconsistent corporate navigation {labels!r}; expected {expected_labels!r}")
     switches = re.findall(r'<a\b[^>]*class="lang-switch"[^>]*>', actions.group())
