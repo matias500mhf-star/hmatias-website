@@ -24,8 +24,18 @@ try {
         } else {
           const evidence=page.locator('.facility-evidence .hm-evidence-item img');
           if(await evidence.count()!==3)throw Error('Three documented facilities photographs missing');
-          const broken=await evidence.evaluateAll(imgs=>imgs.filter(img=>!img.complete||img.naturalWidth===0).map(img=>img.getAttribute('src')));
-          if(broken.length)throw Error('Facilities evidence images failed to load: '+broken.join(', '));
+          for(let i=0;i<await evidence.count();i++){
+            const image=evidence.nth(i);
+            await image.scrollIntoViewIfNeeded();
+            await image.evaluate(async img=>{
+              if(!img.complete)await new Promise((resolve,reject)=>{
+                img.addEventListener('load',resolve,{once:true});
+                img.addEventListener('error',reject,{once:true});
+              });
+              await img.decode();
+              if(img.naturalWidth===0)throw Error('Image has no intrinsic width: '+img.getAttribute('src'));
+            });
+          }
         }
         const width=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,inner:window.innerWidth}));
         if(width.scroll-width.inner>8)throw Error('Horizontal page overflow: '+JSON.stringify(width));
