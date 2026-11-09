@@ -12,20 +12,27 @@ try {
       try{
         const r=await page.goto('http://127.0.0.1:8080/'+path,{waitUntil:'domcontentloaded',timeout:25000});
         if(!r||!r.ok())throw Error('Page HTTP status '+r?.status());
-        const product=page.locator('img[data-hmatias-product-photo="taurus"]');
-        if(await product.count()!==1)throw Error('Expected exactly one Taurus product picture');
-        await product.scrollIntoViewIfNeeded();
-        await product.evaluate(async img => {if(!img.complete)await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject});await img.decode()});
-        const actual=await product.evaluate(img=>({width:img.naturalWidth,height:img.naturalHeight,src:img.getAttribute('src'),rect:img.getBoundingClientRect().toJSON()}));
-        if(actual.width<350||actual.height<350||!actual.src.includes('taurus-pine-gel-t563p-official.jpg'))throw Error('Taurus picture did not load as the official image: '+JSON.stringify(actual));
-        if(actual.rect.width<120||actual.rect.height<120)throw Error('Taurus product photograph is too small visually');
+        let actual=null;
+        if(path.startsWith('clean')){
+          const product=page.locator('img[data-hmatias-product-photo="taurus"]');
+          if(await product.count()!==1)throw Error('Expected exactly one Taurus product picture on the HMATIAS Clean catalogue page');
+          await product.scrollIntoViewIfNeeded();
+          await product.evaluate(async img => {if(!img.complete)await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject});await img.decode()});
+          actual=await product.evaluate(img=>({width:img.naturalWidth,height:img.naturalHeight,src:img.getAttribute('src'),rect:img.getBoundingClientRect().toJSON()}));
+          if(actual.width<350||actual.height<350||!actual.src.includes('taurus-pine-gel-t563p-official.jpg'))throw Error('Taurus picture did not load as the official image: '+JSON.stringify(actual));
+          if(actual.rect.width<120||actual.rect.height<120)throw Error('Taurus product photograph is too small visually');
+        } else {
+          const evidence=page.locator('.facility-evidence .hm-evidence-item img');
+          if(await evidence.count()!==3)throw Error('Three documented facilities photographs missing');
+          const broken=await evidence.evaluateAll(imgs=>imgs.filter(img=>!img.complete||img.naturalWidth===0).map(img=>img.getAttribute('src')));
+          if(broken.length)throw Error('Facilities evidence images failed to load: '+broken.join(', '));
+        }
         const width=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,inner:window.innerWidth}));
         if(width.scroll-width.inner>8)throw Error('Horizontal page overflow: '+JSON.stringify(width));
-        const productCards=path.startsWith('facilities')?'.facilities-clean-card':'.clean-feature-card';
-        if(await page.locator(productCards).count()!==2)throw Error('Two product reference cards missing');
+        if(path.startsWith('clean') && await page.locator('.clean-feature-card').count()!==2)throw Error('Two HMATIAS Clean product reference cards missing');
         const file='facilities-previews/'+path.replace('.html','')+'-'+view.name+'.png';
         await page.screenshot({path:file,fullPage:true,animations:'disabled',timeout:25000});
-        console.log('PASS',path,view.name,actual.width+'x'+actual.height,'overflow=',width.scroll-width.inner,'screenshot',file);
+        console.log('PASS',path,view.name,actual?actual.width+'x'+actual.height:'three evidence photos','overflow=',width.scroll-width.inner,'screenshot',file);
       }catch(err){
         errors.push({path,viewport:view.name,error:String(err)});
         console.error('FAIL',path,view.name,String(err));
