@@ -60,11 +60,16 @@ try {
           for(let i=0;i<await evidence.count();i++){
             const image=evidence.nth(i);
             await image.scrollIntoViewIfNeeded();
+            await image.evaluate(img=>{img.loading='eager';});
             await image.evaluate(async img=>{
-              if(!img.complete)await new Promise((resolve,reject)=>{
-                img.addEventListener('load',resolve,{once:true});
-                img.addEventListener('error',reject,{once:true});
-              });
+              if(img.naturalWidth===0){
+                await new Promise((resolve,reject)=>{
+                  const timer=setTimeout(()=>reject(new Error('Timed out loading image: '+img.getAttribute('src'))),8000);
+                  img.addEventListener('load',()=>{clearTimeout(timer);resolve();},{once:true});
+                  img.addEventListener('error',()=>{clearTimeout(timer);reject(new Error('Image request failed: '+img.getAttribute('src')));},{once:true});
+                  if(img.complete && img.naturalWidth>0){clearTimeout(timer);resolve();}
+                });
+              }
               await img.decode();
               if(img.naturalWidth===0)throw Error('Image has no intrinsic width: '+img.getAttribute('src'));
             });
