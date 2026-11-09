@@ -18,7 +18,11 @@ try {
             return {
               title:title?getComputedStyle(title).color:null,
               copy:copy?getComputedStyle(copy).color:null,
-              cta:cta?getComputedStyle(cta).color:null
+              cta:cta?getComputedStyle(cta).color:null,
+              background:getComputedStyle(el).backgroundColor,
+              backgroundImage:getComputedStyle(el).backgroundImage,
+              beforeContent:getComputedStyle(el,'::before').content,
+              beforeBackground:getComputedStyle(el,'::before').background
             };
           });
           if(heroColors.title!=='rgb(8, 47, 87)'||heroColors.copy!=='rgb(96, 116, 135)'||heroColors.cta!=='rgb(8, 47, 87)')throw Error('Facilities hero contrast is incorrect: '+JSON.stringify(heroColors));
