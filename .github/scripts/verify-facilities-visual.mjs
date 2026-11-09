@@ -12,6 +12,17 @@ try {
       try{
         const r=await page.goto('http://127.0.0.1:8080/'+path,{waitUntil:'domcontentloaded',timeout:25000});
         if(!r||!r.ok())throw Error('Page HTTP status '+r?.status());
+        if(path.startsWith('facilities')){
+          const heroColors=await page.locator('.unit-hero').evaluate(el=>{
+            const title=el.querySelector('h1'),copy=el.querySelector('p'),cta=el.querySelector('.btn-outline-light');
+            return {
+              title:title?getComputedStyle(title).color:null,
+              copy:copy?getComputedStyle(copy).color:null,
+              cta:cta?getComputedStyle(cta).color:null
+            };
+          });
+          if(heroColors.title!=='rgb(8, 47, 87)'||heroColors.copy!=='rgb(96, 116, 135)'||heroColors.cta!=='rgb(8, 47, 87)')throw Error('Facilities hero contrast is incorrect: '+JSON.stringify(heroColors));
+        }
         let actual=null;
         if(path.startsWith('clean')){
           const product=page.locator('img[data-hmatias-product-photo="taurus"]');
