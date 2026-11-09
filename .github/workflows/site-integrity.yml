@@ -470,12 +470,12 @@ jobs:
 
           cases = {
               'index.html': {
-                  'input': r'<input\b(?=[^>]*\bid=["\']contact-privacy-consent["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
+                  'input': r'<input\b(?=[^>]*\bid=["\'](?:contact-privacy-consent|pv-consent)["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
                   'policy': r'<a\b[^>]*href=["\']privacidade\.html["\'][^>]*>\s*Política de Privacidade\s*</a>',
                   'wording': 'Autorizo a HMATIAS',
               },
               'en.html': {
-                  'input': r'<input\b(?=[^>]*\bid=["\']contact-privacy-consent["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
+                  'input': r'<input\b(?=[^>]*\bid=["\'](?:contact-privacy-consent|pv-consent)["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
                   'policy': r'<a\b[^>]*href=["\']privacy\.html["\'][^>]*>\s*Privacy Policy\s*</a>',
                   'wording': 'I authorise HMATIAS',
               },
