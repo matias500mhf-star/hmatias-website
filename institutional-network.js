@@ -28,15 +28,27 @@
     try {
       const data = await readJson("data/partners.json");
       const partners = (data.partners || []).filter((partner) => partner.public === true && partner.name && partner.logo);
+      const isEnglish = document.documentElement.lang.toLowerCase().startsWith("en");
       if (!partners.length) {
         root.innerHTML = '<div class="network-empty"><h3>Registos de parceiros em actualização</h3><p>A informação será apresentada quando estiver confirmada.</p></div>';
         return;
       }
-      root.innerHTML = partners.map((partner) => `
-        <article class="partner-card partner-card--logo">
-          <div class="partner-logo"><img class="partner-logo-img" src="${safe(partner.logo)}" alt="Logótipo oficial de ${safe(partner.name)}" loading="lazy" decoding="async"></div>
-          <h3 class="partner-wordmark">${safe(partner.name)}</h3>
-        </article>`).join("");
+      root.innerHTML = partners.map((partner, index) => {
+        const summary = isEnglish ? (partner.summary_en || partner.summary || "") : (partner.summary || "");
+        const status = isEnglish ? (partner.status_label_en || partner.status_label || "Approved partner") : (partner.status_label || "Parceria aprovada");
+        const capabilities = isEnglish ? (partner.capabilities_en || partner.capabilities || []) : (partner.capabilities || []);
+        const region = partner.region ? safe(partner.region) : "";
+        return `
+          <article class="partner-card partner-card--detail">
+            <div class="partner-card-top"><span class="partner-number">HMATIAS · 0${String(index + 1).padStart(2, "0")}</span><span class="partner-status">${safe(status)}</span></div>
+            <div class="partner-logo"><img class="partner-logo-img" src="${safe(partner.logo)}" alt="${isEnglish ? "Official logo of " : "Logótipo oficial de "}${safe(partner.name)}" loading="lazy" decoding="async"></div>
+            <h3 class="partner-wordmark">${safe(partner.name)}</h3>
+            ${region ? `<p class="partner-region">${region}</p>` : ""}
+            <p class="partner-summary">${safe(summary)}</p>
+            ${capabilities.length ? `<div class="partner-capabilities" aria-label="${isEnglish ? "Areas of expertise" : "Áreas de especialização"}">${capabilities.map((tag) => `<span>${safe(tag)}</span>`).join("")}</div>` : ""}
+            <div class="partner-card-footer"><span>${isEnglish ? "Commercial coordination" : "Coordenação comercial"}</span><strong>HMATIAS</strong></div>
+          </article>`;
+      }).join("");
     } catch (error) {
       root.innerHTML = '<div class="network-empty"><h3>Não foi possível carregar a rede de parceiros.</h3><p>Contacte a HMATIAS para informação institucional.</p></div>';
       console.warn("[HMATIAS] Partner network unavailable.", error);

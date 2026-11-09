@@ -193,3 +193,16 @@ body.hmatias-network-page .partners-grid{grid-template-columns:repeat(3,minmax(0
 body.hmatias-network-page .partners-disclaimer{max-width:850px;margin:0 0 28px;color:#637789;font-size:.88rem;line-height:1.75}
 @media(max-width:760px){body.hmatias-network-page .partners-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:430px){body.hmatias-network-page .partners-grid{grid-template-columns:1fr}}
+
+/* 2026-11-09 — richer institutional partner profiles */
+body.hmatias-network-page .partner-card--detail{align-items:stretch;text-align:left;justify-content:flex-start;min-height:100%;padding:24px}
+body.hmatias-network-page .partner-card--detail .partner-logo{height:92px;min-height:92px;max-height:92px;width:100%;justify-content:flex-start;margin:18px 0 12px}
+body.hmatias-network-page .partner-card--detail .partner-logo-img{max-width:220px;max-height:88px;object-position:left center}
+body.hmatias-network-page .partner-card--detail .partner-wordmark{margin:8px 0 2px;font-size:1.08rem}
+body.hmatias-network-page .partner-card--detail .partner-region{margin:0 0 10px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#8192a0}
+body.hmatias-network-page .partner-card--detail .partner-summary{font-size:.87rem;line-height:1.75;color:#526b7f;margin:8px 0 16px}
+body.hmatias-network-page .partner-capabilities{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}
+body.hmatias-network-page .partner-capabilities span{display:inline-flex;padding:6px 9px;border:1px solid #dce5ec;background:#f8fafc;color:#456176;font-size:.68rem;line-height:1.35}
+body.hmatias-network-page .partner-card--detail .partner-card-footer{width:100%;margin-top:auto;padding-top:14px;border-top:1px solid #e2e9ef;color:#6f8291}
+body.hmatias-network-page .partner-card--detail .partner-card-footer strong{color:#0b477c;font-size:.72rem;letter-spacing:.08em}
+@media(max-width:760px){body.hmatias-network-page .partner-card--detail{padding:21px}}

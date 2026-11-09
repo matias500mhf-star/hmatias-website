@@ -517,3 +517,16 @@ body.hm-preview .premium-whatsapp .wa-label{
   overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important
 }
 body.hm-preview .premium-whatsapp .wa-icon{width:23px!important;height:23px!important;flex:0 0 23px!important}
+
+/* 2026-11-09 — premium homepage partner and footer refinement */
+.partner-logo-grid.partner-logo-grid--approved{grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+.partner-logo-grid--approved article{min-height:176px;align-items:flex-start;justify-content:center;padding:24px 26px;border-right:1px solid #d9e5ef;border-bottom:1px solid #d9e5ef}
+.partner-logo-grid--approved article:nth-child(3n){border-right:0}
+.partner-logo-grid--approved article:nth-last-child(-n+3){border-bottom:0}
+.partner-logo-grid--approved .partner-real-logo{width:100%;max-width:220px;height:72px;max-height:72px;object-fit:contain;object-position:left center;background:transparent;padding:0;margin:0 0 15px}
+.partner-logo-grid--approved article strong{font-size:12px;letter-spacing:-.01em;color:#102d4d}
+.partner-logo-grid--approved article small{font-size:10px;line-height:1.6;color:#607487;margin-top:7px}
+.premium-footer-grid{grid-template-columns:1.45fr repeat(4,minmax(0,1fr));gap:28px}
+@media(max-width:900px){.partner-logo-grid.partner-logo-grid--approved{grid-template-columns:repeat(2,minmax(0,1fr))}.partner-logo-grid--approved article:nth-child(3n){border-right:1px solid #d9e5ef}.partner-logo-grid--approved article:nth-child(2n){border-right:0}.partner-logo-grid--approved article:nth-last-child(-n+3){border-bottom:1px solid #d9e5ef}.partner-logo-grid--approved article:nth-last-child(-n+2){border-bottom:0}.premium-footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.partner-logo-grid.partner-logo-grid--approved{grid-template-columns:repeat(2,minmax(0,1fr))}.partner-logo-grid--approved article{min-height:148px;padding:18px 14px}.partner-logo-grid--approved .partner-real-logo{height:60px;max-height:60px}.premium-footer-grid{grid-template-columns:1fr 1fr;gap:26px 18px}}
+@media(max-width:390px){.partner-logo-grid.partner-logo-grid--approved{grid-template-columns:1fr}.partner-logo-grid--approved article{border-right:0!important;border-bottom:1px solid #d9e5ef!important}.partner-logo-grid--approved article:last-child{border-bottom:0!important}}
