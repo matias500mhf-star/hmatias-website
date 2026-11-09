@@ -34,8 +34,11 @@ assert.ok(partnerForm.includes('mailto:geral@comercialhmatiasps.com'));
 assert.ok(partnerApi.includes("const COUNTRIES=new Set(['AO','NA','ZA']);"));
 for(const path of ['index.html','en.html']){
   const home=read(path);
-  assert.ok(home.includes('class="home-proof"'),'Homepage proof row missing: '+path);
-  assert.ok(home.includes('site-improvements.css'),'Responsive homepage refinements missing: '+path);
+  // The approved premium homepage uses the compact hero-bottom proof row
+  // and the HMATIAS design-system stylesheets instead of the legacy home-proof block.
+  assert.ok(home.includes('class="hero-bottom"'),'Homepage proof row missing: '+path);
+  assert.ok(home.includes('hm-design-system.css') && home.includes('hm-blue-institutional.css'),
+    'Approved HMATIAS design system is missing: '+path);
 }
 
 const events=read('analytics-events.js');
