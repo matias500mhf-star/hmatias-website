@@ -11,6 +11,12 @@ This directory is an isolated, non-production visual prototype. It does not repl
 - Keep motion subtle, purposeful, accessible and respectful of reduced-motion preferences.
 - Prioritize mobile performance, accessibility, clear calls to action and SEO structure.
 
+## Content direction
+- Remove repeated institutional language, generic promises and duplicated explanations.
+- Keep each page focused on what HMATIAS does, concrete service scope, verifiable work and one clear contact action.
+- Prefer short descriptions and real evidence over long methodology or FAQ blocks.
+- Keep forms only where they collect information needed to prepare a real quotation or service request.
+
 ## Review scope
 1. Header and navigation behavior.
 2. Hero composition and visual hierarchy.
