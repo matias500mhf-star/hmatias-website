@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: public website, project status, service pages and commercial rules, reviewed 2026-11-06. */
+   Source of truth: public website, project status, service pages, commercial rules and partner directory, reviewed 2026-11-09. */
 (() => {
   'use strict';
 
@@ -14,14 +14,20 @@
   ];
 
   const kb = {
-    version: '2026-11-02.1',
-    updated: '2026-11-06',
+    version: '2026-11-09.1',
+    updated: '2026-11-09',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
       phone: '+244 948 806 673', whatsapp: '+244 948 806 673',
       emailGeneral: 'geral@comercialhmatiasps.com', emailCommercial: 'geral@comercialhmatiasps.com', emailInstitutional: 'info@comercialhmatiasps.com',
       nif: '5001578065', commercialRegistration: '24.094-23', founded: '2023-07-14'
+    },
+    partners: {
+      names: ['FRANSGA', 'Kent Offshore', 'D&Wood', 'SYNVOR Industrial', 'MILIART'],
+      pagePt: '/parceiros.html', pageEn: '/partners.html',
+      rulePt: 'Os logótipos identificam empresas apresentadas como parceiras pela HMATIAS; não implicam exclusividade, representação legal ou disponibilidade permanente. O âmbito e as condições são confirmados caso a caso.',
+      ruleEn: 'Logos identify companies presented as HMATIAS partners; they do not imply exclusivity, legal representation or permanent availability. Scope and conditions are confirmed case by case.'
     },
     siteState: {
       homepagePt: 'Homepage institucional com quatro áreas principais: Construção, Facilities e Manutenção (inclui HMATIAS Clean), Supply e Procurement e Business Services. Apresenta o portfólio de obras executadas numa secção própria e, separadamente, a secção Projectos em Desenvolvimento, que inclui o Estaleiro Integrado HMATIAS.',
@@ -152,6 +158,7 @@
     return [
       `KNOWLEDGE_VERSION: ${kb.version}`,
       `EMPRESA: ${c.name}; sede ${c.location}; tel/WhatsApp ${c.phone}; email geral/comercial ${c.emailGeneral}; email institucional ${c.emailInstitutional}; NIF ${c.nif}; Registo Comercial ${c.commercialRegistration}.`,
+      `PARCEIROS HMATIAS: ${kb.partners.names.join(', ')}. Página PT ${kb.partners.pagePt}; página EN ${kb.partners.pageEn}. ${kb.partners.rulePt} ${kb.partners.ruleEn}`,
       `ESTADO DO SITE: ${kb.siteState.homepagePt} ${kb.siteState.homepageEn} ${kb.siteState.developmentProjectsPt} ${kb.siteState.developmentProjectsEn} ${kb.siteState.sourcePlacementPt} ${kb.siteState.commercialJourneyPt} ${kb.siteState.emailRoutingPt} ${kb.siteState.emailRoutingEn}`,
       `PROJECTOS EM DESENVOLVIMENTO / PROJECTS IN DEVELOPMENT: ${kb.projects.distinctionPt} ${kb.projects.distinctionEn} ${kb.projects.developmentYard.summaryPt} ${kb.projects.developmentYard.summaryEn} Estado: ${kb.projects.developmentYard.statusEn}. Local: ${kb.projects.developmentYard.location}. Terreno: ${kb.projects.developmentYard.plot.dimensions} = ${kb.projects.developmentYard.plot.area}. Estado: ${kb.projects.developmentYard.statusPt} Alternativa A: armazém ${kb.projects.developmentYard.alternativeA.warehouseArea}; cobertura lateral ${kb.projects.developmentYard.alternativeA.canopyArea}; escritório ${kb.projects.developmentYard.alternativeA.officeArea}; apoio técnico ${kb.projects.developmentYard.alternativeA.technicalSupportArea}; área coberta indicativa total ${kb.projects.developmentYard.alternativeA.indicativeCoveredTotal}; acesso livre ${kb.projects.developmentYard.alternativeA.clearVehicleLane}; portão conceptual ${kb.projects.developmentYard.alternativeA.conceptualGate}. Alternativa B: armazém ${kb.projects.developmentYard.alternativeB.warehouseArea}; escritório ${kb.projects.developmentYard.alternativeB.officeArea}; corredor lateral ${kb.projects.developmentYard.alternativeB.clearSideCorridor}; pátio frontal ${kb.projects.developmentYard.alternativeB.frontManeuverYard}; afastamento traseiro ${kb.projects.developmentYard.alternativeB.rearClearance}. Área coberta total B: ${kb.projects.developmentYard.alternativeB.coveredTotal} ${kb.projects.developmentYard.validationPt} Páginas: ${kb.projects.developmentYard.pagePt} e ${kb.projects.developmentYard.pageEn}.`,
       `DIRECTÓRIO DO SITE / WEBSITE DIRECTORY: ${kb.siteDirectory.corePt.join(' ')} ${kb.siteDirectory.specialistPt.join(' ')} ${kb.siteDirectory.coreEn.join(' ')} ${kb.siteDirectory.specialistEn.join(' ')}`,
