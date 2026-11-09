@@ -180,3 +180,16 @@ body.hmatias-network-page .supply-enquire{display:inline-flex;margin-top:4px;fon
 @media(max-width:1020px){body.hmatias-network-page .supply-products-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:720px){body.hmatias-network-page .supply-products-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){body.hmatias-network-page .supply-products-grid{grid-template-columns:1fr}body.hmatias-network-page .supply-product-photo,body.hmatias-network-page .supply-product-reference{min-height:150px}}
+
+
+/* Compact partner directory using supplied official marks only. */
+body.hmatias-network-page .network-hero-grid--single{grid-template-columns:minmax(0,1fr)}
+body.hmatias-network-page .network-hero-grid--single>div{max-width:900px}
+body.hmatias-network-page .partner-card--logo{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:210px;padding:26px;text-align:center}
+body.hmatias-network-page .partner-card--logo .partner-logo{width:100%;height:112px;margin:0 0 12px;justify-content:center;overflow:visible}
+body.hmatias-network-page .partner-card--logo .partner-logo-img{width:auto;max-width:100%;max-height:110px;object-fit:contain;object-position:center}
+body.hmatias-network-page .partner-card--logo .partner-wordmark{margin:0;font-size:1.08rem;letter-spacing:-.02em}
+body.hmatias-network-page .partners-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+body.hmatias-network-page .partners-disclaimer{max-width:850px;margin:0 0 28px;color:#637789;font-size:.88rem;line-height:1.75}
+@media(max-width:760px){body.hmatias-network-page .partners-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){body.hmatias-network-page .partners-grid{grid-template-columns:1fr}}
