@@ -45,6 +45,15 @@
   function syncClarityConsent() {
     const statisticsGranted = statisticsAllowed();
     const marketingGranted = marketingAllowed();
+    const pathname = window.location.pathname;
+    const robots = document.querySelector('meta[name="robots"]');
+    const noindex = Boolean(robots && /\\bnoindex\\b/i.test(robots.content || ''));
+    const privateSurface = /^\\/source-ao\\/(?:ops|review|requests|confirm|track)\\.html$/i.test(pathname)
+      || /^\\/source-ao\\/(?:backend|docs)\\//i.test(pathname)
+      || /^\\/admin\\//i.test(pathname);
+
+    // Never record noindex or operational/private pages, even after consent.
+    if (noindex || privateSurface) return;
 
     // Do not load Clarity until the visitor has accepted the Statistics category.
     if (!statisticsGranted && !clarityLoaded) return;
