@@ -799,3 +799,8 @@
     transition: none;
   }
 }
+
+/* Text-only editorial layouts: documentary portfolio images are intentionally excluded until new editorial photography is approved. */
+.blog-hero .container.blog-hero-grid-no-media{grid-template-columns:minmax(0,1fr);max-width:980px}
+.blog-featured-card-no-media{grid-template-columns:minmax(0,1fr)}
+.blog-article-hero .container.blog-article-hero-grid-no-media{grid-template-columns:minmax(0,1fr);max-width:980px}
