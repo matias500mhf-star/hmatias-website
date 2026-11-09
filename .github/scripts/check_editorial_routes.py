@@ -27,6 +27,8 @@ en_home = read("en.html")
 en_explore = read("explore.html")
 en_blog = read("blog/en/index.html")
 en_article = read("blog/en/how-to-prepare-a-supply-rfq-angola/index.html")
+pt_about = read("credibilidade.html")
+en_about = read("credibility.html")
 
 require('href="blog/index.html"' in explore, "Portuguese Explore must link to the Blog")
 require('href="source-ao/index.html"' in explore, "Portuguese Explore must retain Source AO")
@@ -52,6 +54,8 @@ require('http-equiv="refresh"' in legacy_pt and '#sec-6' in legacy_pt,
         "Old Portuguese Insights URL must redirect to the evaluation section")
 
 require("insights" not in en_home.lower(), "English homepage must not link to separate Insights")
+require("insights" not in pt_about.lower(), "Portuguese company profile must not link to separate Insights")
+require("insights" not in en_about.lower(), "English company profile must not link to separate Insights")
 require("insights/en/" not in en_explore.lower() and "<h2>Insights</h2>" not in en_explore, "English Explore must not present a separate Insights destination")
 require("/insights/en/" not in en_blog, "English Blog homepage must not link to Insights")
 require("/insights/en/" not in en_article, "English Blog article must not link to Insights")
