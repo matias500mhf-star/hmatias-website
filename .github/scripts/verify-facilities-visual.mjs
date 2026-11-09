@@ -17,8 +17,9 @@ try {
           const cleanLink=page.locator('#hmatias-clean a[href*="clean"]');
           if(await cleanLink.count()!==1)throw Error('Expected one clear HMATIAS Clean destination');
           if(await page.locator('img[data-hmatias-product-photo="taurus"]').count()!==0)throw Error('Product photo duplicated on Facilities service page');
-          const sectionText=(await page.locator('#hmatias-clean').innerText()).toLowerCase();
-          if(!sectionText.includes('higiene')&&!sectionText.includes('produtos')&&!sectionText.includes('products'))throw Error('HMATIAS Clean product handoff text missing');
+          const expectedClean=path.endsWith('-en.html')?'clean-en.html':'clean.html';
+          if(await cleanLink.getAttribute('href')!==expectedClean)throw Error('HMATIAS Clean link points to the wrong language destination');
+          if(await page.locator('#hmatias-clean h2').count()!==1)throw Error('HMATIAS Clean handoff heading missing');
         }else{
           const productCards=page.locator('.clean-feature-card');
           if(await productCards.count()!==2)throw Error('Two HMATIAS Clean product reference cards missing');
