@@ -11,10 +11,11 @@ body.hmatias-institutional .hmatias-header{box-shadow:none;border-bottom:1px sol
 body.hmatias-institutional .btn{border-radius:3px;box-shadow:none}
 body.hmatias-institutional .btn-primary{background:var(--hm-blue)}
 body.hmatias-institutional .unit-hero{
-  padding:clamp(66px,7vw,94px) 0;background:#f1f6fa;color:var(--hm-ink);overflow:hidden
+  padding:clamp(66px,7vw,94px) 0;background:#f1f6fa!important;background-image:none!important;color:var(--hm-ink);overflow:hidden
 }
 body.hmatias-institutional .unit-hero:before,
 body.hmatias-institutional .unit-hero:after{content:none}
+body.hmatias-institutional .unit-hero:before,body.hmatias-institutional .unit-hero:after{display:none!important;content:none!important;background:none!important}
 body.hmatias-institutional .unit-hero-grid{gap:clamp(34px,5vw,68px)}
 body.hmatias-institutional .unit-hero .eyebrow{color:var(--hm-blue)}
 body.hmatias-institutional .unit-hero h1{max-width:15ch;color:var(--hm-navy);font-size:clamp(2.7rem,5vw,4.8rem);line-height:1.02;letter-spacing:-.06em}
