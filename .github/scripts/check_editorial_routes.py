@@ -74,6 +74,29 @@ try:
 except (OSError, ET.ParseError) as exc:
     errors.append(f"main sitemap cannot be checked: {exc}")
 
+
+# Premium-site regression checks: one editorial destination, clean markup and navigation.
+internal_pages = (
+    "construcao.html", "construction.html", "facilities.html", "facilities-en.html",
+    "supply.html", "supply-en.html", "servicos-administrativos.html", "business-services.html",
+)
+for page in internal_pages:
+    content = read(page)
+    footer = content.split('<footer class="hm-global-footer"', 1)[-1].split("</footer>", 1)[0]
+    require("Insights" not in footer, f"{page} footer must not show a retired Insights destination")
+    require("blog/" in footer, f"{page} footer must retain the Blog destination")
+for page in ("supply.html", "supply-en.html", "explorar.html", "explore.html"):
+    require(r"\\n" not in read(page), f"{page} must not contain literal \\n escape tokens")
+for page in ("explorar.html", "explore.html"):
+    content = read(page)
+    require('class="hmatias-header"' in content, f"{page} must use the shared institutional header")
+    require('class="menu-toggle"' in content and 'class="nav-menu"' in content,
+            f"{page} must retain the responsive navigation controls")
+    require("<span><h2>" not in content, f"{page} must not wrap block headings in inline span elements")
+    require("<div><h2>" in content, f"{page} must use block containers for card content")
+    require('href="blog/' in content and 'href="source-ao/index.html"' in content,
+            f"{page} must link to Blog and Source AO")
+
 if errors:
     print("Blog consolidation QA failed:")
     for error in errors:
