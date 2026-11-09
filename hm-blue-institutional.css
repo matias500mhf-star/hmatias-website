@@ -337,3 +337,45 @@ body.hmatias-institutional .unit-card-icon{
   border:1px solid #c8dceb;border-radius:10px;color:#0065cc;background:#f0f6fb;
 }
 body.hmatias-institutional .unit-card-icon svg{display:block;width:22px;height:22px}
+
+
+/* Premium finish pass — internal corporate pages only; approved homepage excluded. */
+body.hmatias-institutional:not(.hm-preview){
+  --hm-premium-line:#d6e4f0;--hm-premium-surface:#f4f8fc;
+  --hm-premium-ink:#102d4d;--hm-premium-muted:#52697b;
+}
+body.hmatias-institutional:not(.hm-preview) :is(h1,h2,h3,h4){text-wrap:balance;font-optical-sizing:auto}
+body.hmatias-institutional:not(.hm-preview) :is(main,section[id]){scroll-margin-top:104px}
+body.hmatias-institutional:not(.hm-preview) :is(.unit-hero,.catalog-page-head,.cred-hero,.catalogue-hero,.network-hero){isolation:isolate}
+body.hmatias-institutional:not(.hm-preview) .unit-hero-grid{align-items:center}
+body.hmatias-institutional:not(.hm-preview) .unit-hero p,
+body.hmatias-institutional:not(.hm-preview) .catalog-page-head p,
+body.hmatias-institutional:not(.hm-preview) .unit-heading p{max-width:68ch}
+body.hmatias-institutional:not(.hm-preview) :is(.unit-heading,.network-heading){text-wrap:pretty}
+body.hmatias-institutional:not(.hm-preview) :is(.unit-grid,.unit-process,.business-process-grid,.hm-evidence-grid){min-width:0}
+body.hmatias-institutional:not(.hm-preview) :is(.hero-actions,.facility-request-actions,.supply-rfq-choice,.form-actions){display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+body.hmatias-institutional:not(.hm-preview) :is(.hero-actions,.facility-request-actions,.supply-rfq-choice) .btn{min-height:46px;justify-content:center}
+body.hmatias-institutional:not(.hm-preview) :is(.business-contact-form,.business-contact-form .form-grid),
+body.hmatias-institutional:not(.hm-preview) .business-contact-form .form-field{min-width:0}
+body.hmatias-institutional:not(.hm-preview) .business-contact-form :is(input,select,textarea){width:100%;max-width:100%}
+body.hmatias-institutional:not(.hm-preview) .hm-evidence-item img{display:block}
+body.hmatias-institutional:not(.hm-preview) .hm-evidence-item figcaption{min-width:0}
+body.hmatias-institutional:not(.hm-preview) :is(.btn,.button,[class*="btn-"]){min-height:44px}
+@media(max-width:850px){
+ body.hmatias-institutional:not(.hm-preview) :is(.unit-hero,.catalog-page-head,.cred-hero,.catalogue-hero,.network-hero){padding-top:76px;padding-bottom:64px}
+ body.hmatias-institutional:not(.hm-preview) .unit-hero-grid{grid-template-columns:minmax(0,1fr);gap:34px}
+ body.hmatias-institutional:not(.hm-preview) .unit-hero-panel{max-width:680px}
+ body.hmatias-institutional:not(.hm-preview) :is(.hero-actions,.facility-request-actions,.supply-rfq-choice,.form-actions){gap:10px}
+}
+@media(max-width:620px){
+ body.hmatias-institutional:not(.hm-preview) .unit-hero h1{font-size:clamp(2.45rem,10vw,3.55rem);line-height:.98}
+ body.hmatias-institutional:not(.hm-preview) .unit-heading h2{font-size:clamp(1.9rem,8vw,2.75rem);line-height:1.04}
+ body.hmatias-institutional:not(.hm-preview) :is(.hero-actions,.facility-request-actions,.supply-rfq-choice,.form-actions){align-items:stretch}
+ body.hmatias-institutional:not(.hm-preview) :is(.hero-actions,.facility-request-actions,.supply-rfq-choice) .btn{flex:1 1 100%;width:100%}
+ body.hmatias-institutional:not(.hm-preview) .business-contact-grid{grid-template-columns:minmax(0,1fr)}
+ body.hmatias-institutional:not(.hm-preview) .business-contact-copy{padding:30px 24px}
+ body.hmatias-institutional:not(.hm-preview) .business-contact-form{padding:22px 18px}
+}
+@media(prefers-reduced-motion:reduce){
+ body.hmatias-institutional:not(.hm-preview) :is(a,button,.btn,.unit-card,.service-row){transition:none!important}
+}

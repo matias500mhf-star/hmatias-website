@@ -1,5 +1,5 @@
 /* HMATIAS shared institutional footer */
-.hm-global-footer{background:#071b35;color:#fff;padding:52px 0 20px;margin-top:64px}
+.hm-global-footer{background:#071b35;color:#fff;padding:52px 0 20px;margin-top:0}
 .hm-global-footer .hm-footer-grid{display:grid;grid-template-columns:1.35fr repeat(4,minmax(0,1fr));gap:30px}
 .hm-global-footer .hm-footer-grid>div{display:flex;flex-direction:column;align-items:flex-start;gap:11px;min-width:0}
 .hm-global-footer strong{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:#a9c5e4;margin-bottom:5px}
