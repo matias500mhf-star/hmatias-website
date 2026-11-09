@@ -47,3 +47,12 @@ This review is based on the repository's `main` tree and source inspection of th
 3. Agree a small shared token layer (color, typography, spacing, content width, focus and motion) before refactoring CSS.
 4. Refactor one internal page family at a time, preserving the homepage.
 5. Run link, mobile, accessibility and form tests before preparing a production pull request.
+
+
+## Light institutional page system — 10 November 2026
+- Added `internal-pages-premium.css` as a shared visual layer for the five core Portuguese corporate pages and their English equivalents.
+- The layer keeps the institutional navy/blue palette but moves internal-page heroes to a pale blue field, uses white/light content areas, flat editorial service rows, restrained borders and shorter vertical spacing.
+- Real project imagery remains sourced from existing repository assets; the stylesheet does not add or fabricate photography.
+- The stylesheet is explicitly excluded from the approved homepage and all Source AO screens.
+- The page-level stylesheet is loaded after the existing legacy stack so the new visual rules take precedence without rewriting existing functional styles.
+- Visual review is still required on the Netlify preview at desktop and mobile widths before production approval.
