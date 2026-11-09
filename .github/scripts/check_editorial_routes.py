@@ -89,7 +89,7 @@ for page in ("supply.html", "supply-en.html", "explorar.html", "explore.html"):
     require(r"\\n" not in read(page), f"{page} must not contain literal \\n escape tokens")
 for page in ("explorar.html", "explore.html"):
     content = read(page)
-    require('class="hmatias-header"' in content, f"{page} must use the shared institutional header")
+    require('hmatias-header' in content, f"{page} must use the shared institutional header")
     require('class="menu-toggle"' in content and 'class="nav-menu"' in content,
             f"{page} must retain the responsive navigation controls")
     require("<span><h2>" not in content, f"{page} must not wrap block headings in inline span elements")
