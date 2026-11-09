@@ -36,8 +36,8 @@ for page in sorted(ROOT.glob("*.html")):
     if not re.search(r"script\.js\?v=.+", html):
         problems.append(f"{page.name}: stale mobile navigation controller")
     if page.name in ("en.html", "credibility.html", "work-catalogue.html", "karta-en.html"):
-        if 'About us' not in nav.group():
-            problems.append(f"{page.name}: mixed English About us navigation")
+        if 'Company' not in nav.group():
+            problems.append(f"{page.name}: mixed English Company navigation")
 
 if len(pages) < 22:
     problems.append(f"Expected at least 22 institutional/home pages with shared navigation, found {len(pages)}")
