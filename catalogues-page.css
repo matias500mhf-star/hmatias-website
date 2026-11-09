@@ -1,0 +1,46 @@
+/* HMATIAS catalogue hub — shared institutional palette and responsive rhythm. */
+.catalogues-hero{color:#fff;background:linear-gradient(112deg,#03284d 0%,#073d70 58%,#0a5e98 100%);position:relative;overflow:hidden}
+.catalogues-hero:after{content:"";position:absolute;width:520px;height:520px;border:1px solid #ffffff18;border-radius:50%;right:-180px;top:-260px;box-shadow:0 0 0 48px #ffffff08,0 0 0 100px #ffffff05;pointer-events:none}
+.catalogues-hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,.7fr);gap:64px;align-items:center;min-height:420px;padding-top:76px;padding-bottom:76px}
+.catalogues-hero-copy{max-width:760px}
+.catalogues-hero-copy h1{max-width:760px;margin:0 0 20px;font-size:clamp(2.6rem,5.2vw,4.45rem);line-height:1.02;letter-spacing:-.045em;color:#fff}
+.catalogues-hero-copy>p{max-width:700px;color:#d7e7f5;font-size:1.03rem;line-height:1.75}
+.catalogues-hero-copy .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.catalogues-hero-note{padding:27px;border:1px solid #ffffff42;border-radius:18px;background:#ffffff0d;backdrop-filter:blur(10px)}
+.catalogues-note-label,.catalogues-card-kicker{display:block;font-size:.68rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.catalogues-note-label{margin-bottom:15px;color:#9fd6ff}
+.catalogues-hero-note strong{display:block;font-size:1.25rem;line-height:1.35;color:#fff}
+.catalogues-hero-note p{margin-top:12px;color:#d0e2f1;font-size:.9rem;line-height:1.65}
+.catalogues-categories,.catalogues-available{padding:86px 0}
+.catalogues-categories{background:#f5f8fb}
+.catalogues-section-heading{display:flex;justify-content:space-between;align-items:end;gap:38px;margin-bottom:30px}
+.catalogues-section-heading h2{margin-top:6px;color:#102d4d;font-size:clamp(1.85rem,3vw,2.65rem);line-height:1.12;letter-spacing:-.035em}
+.catalogues-section-heading>p{max-width:475px;color:#5d6d7d;font-size:.94rem;line-height:1.7}
+.catalogues-category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.catalogues-category-card{display:grid;grid-template-columns:58px minmax(0,1fr);gap:19px;min-height:230px;padding:27px;border:1px solid #dce6f0;border-radius:15px;background:#fff;box-shadow:0 12px 36px #062d5609;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.catalogues-category-card:hover{transform:translateY(-3px);border-color:#a9c7e2;box-shadow:0 20px 42px #062d5614}
+.catalogues-card-number{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:12px;background:#edf4fa;color:#075b9e;font-size:.9rem;font-weight:800}
+.catalogues-card-kicker{color:#54718c}
+.catalogues-category-card h3{margin:8px 0 10px;color:#0c2f52;font-size:1.35rem;letter-spacing:-.02em}
+.catalogues-category-card p{max-width:490px;color:#5d6d7d;font-size:.91rem;line-height:1.7}
+.catalogues-category-card a,.catalogues-document-copy a{display:inline-flex;align-items:center;gap:8px;margin-top:18px;color:#0065cc;font-size:.88rem;font-weight:800}
+.catalogues-category-card a:hover,.catalogues-document-copy a:hover{text-decoration:underline;text-underline-offset:4px}
+.catalogues-document-card{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:24px;align-items:center;padding:30px;border:1px solid #dce6f0;border-radius:16px;background:#fff;box-shadow:0 14px 38px #062d560b}
+.catalogues-document-mark{display:flex;align-items:center;justify-content:center;width:58px;height:64px;border-radius:10px;background:#edf4fa;color:#075b9e;font-size:.82rem;font-weight:900;letter-spacing:.06em}
+.catalogues-document-copy h3{margin:7px 0 8px;color:#0c2f52;font-size:1.3rem}
+.catalogues-document-copy p{max-width:720px;color:#5d6d7d;font-size:.91rem;line-height:1.7}
+.catalogues-document-copy a{margin-top:12px}
+.catalogues-document-meta{display:flex;flex-direction:column;gap:7px;min-width:150px;color:#6c7e90;font-size:.75rem;text-align:right}
+.catalogues-editorial-note{max-width:920px;margin:18px 0 0;color:#66788a;font-size:.82rem;line-height:1.7}
+.catalogues-request{padding:66px 0;background:#082f56;color:#fff}
+.catalogues-request-inner{display:flex;align-items:center;justify-content:space-between;gap:50px}
+.catalogues-request-inner>div:first-child{max-width:730px}
+.catalogues-request-inner h2{margin:6px 0 12px;color:#fff;font-size:clamp(1.8rem,3.2vw,2.7rem);line-height:1.12;letter-spacing:-.035em}
+.catalogues-request-inner p{max-width:700px;color:#d5e4f1;font-size:.93rem;line-height:1.7}
+.catalogues-request-actions{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:220px}
+.catalogues-secondary-link{color:#dceaf6;font-size:.86rem;font-weight:700}
+.catalogues-secondary-link:hover{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:900px){.catalogues-hero-grid{grid-template-columns:minmax(0,1fr) minmax(230px,.7fr);gap:26px}.catalogues-document-card{grid-template-columns:58px minmax(0,1fr)}.catalogues-document-meta{grid-column:2;flex-direction:row;text-align:left;flex-wrap:wrap}.catalogues-request-inner{gap:28px}}
+@media(max-width:700px){.catalogues-hero-grid{grid-template-columns:1fr;min-height:0;padding-top:58px;padding-bottom:58px}.catalogues-hero-note{max-width:520px}.catalogues-categories,.catalogues-available{padding:62px 0}.catalogues-section-heading{display:block;margin-bottom:24px}.catalogues-section-heading>p{margin-top:13px}.catalogues-category-grid{grid-template-columns:1fr}.catalogues-category-card{min-height:0;padding:22px}.catalogues-document-card{grid-template-columns:48px minmax(0,1fr);gap:16px;padding:20px}.catalogues-document-mark{width:46px;height:52px}.catalogues-request-inner{display:block}.catalogues-request-actions{margin-top:24px}}
+@media(max-width:420px){.catalogues-hero-copy h1{font-size:2.35rem}.catalogues-category-card{grid-template-columns:42px minmax(0,1fr);gap:13px}.catalogues-card-number{width:40px;height:40px}.catalogues-document-card{grid-template-columns:1fr}.catalogues-document-meta{grid-column:1}}
+@media(prefers-reduced-motion:reduce){.catalogues-category-card{transition:none}.catalogues-category-card:hover{transform:none}}
