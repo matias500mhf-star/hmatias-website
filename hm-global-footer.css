@@ -12,3 +12,5 @@
 .hm-global-footer .hm-footer-bottom span{margin-left:auto}
 @media(max-width:900px){.hm-global-footer .hm-footer-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:25px}}
 @media(max-width:600px){.hm-global-footer{padding:38px 0 18px}.hm-global-footer .hm-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 18px}.hm-global-footer .hm-footer-brand{grid-column:1/-1}.hm-global-footer .hm-footer-bottom{gap:12px}.hm-global-footer .hm-footer-bottom span{width:100%;margin-left:0}}
+
+/* Netlify deploy-preview refresh: 2026-11-09 */
