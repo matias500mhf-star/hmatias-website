@@ -19,7 +19,7 @@ jobs:
         run: python3 .github/scripts/check_header_consistency.py
       - name: Validate modern contact and service icons
         run: python3 .github/scripts/check_contact_icons.py
-      - name: Validate distinct bilingual Blog and Insights routes
+      - name: Validate Portuguese Blog consolidation and legacy Insights redirect
         run: python3 .github/scripts/check_editorial_routes.py
       - name: Validate national contact location routing PT/EN
         run: python3 scripts/check-national-contact-location.py
