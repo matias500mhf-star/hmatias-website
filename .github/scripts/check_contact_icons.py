@@ -48,7 +48,7 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
     ):
         fail(f"{page} has malformed contact SVG src markup (width/height inside src)")
     section_match = re.search(
-        r'<section\s+class="contact"[^>]*>(.*?)</section>',
+        r'<section\s+class="contact(?:\s+contact-premium)?"[^>]*>(.*?)</section>',
         html,
         re.IGNORECASE | re.DOTALL,
     )
