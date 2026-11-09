@@ -87,9 +87,9 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
     if len(icon_blocks) == 4:
         if any("<svg" not in block or 'stroke="currentColor"' not in block for block in icon_blocks):
             fail(f"{page} service icons must have modern inline SVG fallbacks")
-    elif page == "index.html":
-        # The current Portuguese editorial homepage intentionally uses a numbered
-        # capability list instead of the older four-card icon grid.
+    elif page in ("index.html", "en.html"):
+        # The current bilingual editorial homepages intentionally use numbered
+        # capability lists instead of the older four-card icon grid.
         capability_blocks = re.findall(
             r'<a\s+class="capability"[^>]*>(.*?)</a>',
             html,
