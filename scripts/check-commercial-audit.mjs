@@ -62,7 +62,9 @@ for(const path of allForms){
   assert.match(html,/analytics[.]js[?]v=[a-zA-Z0-9._-]+/,
     'Analytics script must be versioned: '+path);
   if(path==='index.html'||path==='en.html'){
-    assert.match(html,/site-bootstrap[.]js[?]v=[a-zA-Z0-9._-]+/);
+    // Premium homepages load the versioned site bootstrap dynamically from script.js.
+    assert.match(html,/script[.]js[?]v=[a-zA-Z0-9._-]+/);
+    assert.match(read('script.js'),/site-bootstrap[.]js[?]v=[a-zA-Z0-9._-]+/);
   }else{
     assert.match(html,/website-lead-client[.]js[?]v=[a-zA-Z0-9._-]+/,
       'Secure versioned client not loaded: '+path);
