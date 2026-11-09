@@ -215,7 +215,7 @@ jobs:
               nav = home.partition('<nav class="nav-menu"')[2].partition('</nav>')[0]
               if re.search(r'>\s*(?:Credibilidade|Credibility|Trust Center)\s*</a>', nav, re.I):
                   fail(f'credibility label must not appear in primary navigation: {home_name}')
-              if not re.search(r'href="' + re.escape(credibility_name) + r'"[^>]*>(?:Sobre nós|About us)</a>', nav):
+              if not re.search(r'href="' + re.escape(credibility_name) + r'"[^>]*>(?:Empresa|Company)</a>', nav):
                   fail(f'About navigation must reach corporate information: {home_name}')
               footer = re.search(r'<footer\b[^>]*>(.*?)</footer>', home, re.S)
               if not footer or credibility_name not in footer.group(1):
