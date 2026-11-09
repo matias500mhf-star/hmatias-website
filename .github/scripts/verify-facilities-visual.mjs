@@ -22,10 +22,13 @@ try {
               background:getComputedStyle(el).backgroundColor,
               backgroundImage:getComputedStyle(el).backgroundImage,
               beforeContent:getComputedStyle(el,'::before').content,
-              beforeBackground:getComputedStyle(el,'::before').background
+              beforeBackground:getComputedStyle(el,'::before').background,
+              beforeDisplay:getComputedStyle(el,'::before').display
             };
           });
-          if(heroColors.title!=='rgb(8, 47, 87)'||heroColors.copy!=='rgb(96, 116, 135)'||heroColors.cta!=='rgb(8, 47, 87)')throw Error('Facilities hero contrast is incorrect: '+JSON.stringify(heroColors));
+          if(heroColors.title!=='rgb(8, 47, 87)'||heroColors.copy!=='rgb(96, 116, 135)'||heroColors.cta!=='rgb(8, 47, 87)'||heroColors.background!=='rgb(241, 246, 250)'||heroColors.backgroundImage!=='none'||heroColors.beforeContent!=='none'||heroColors.beforeDisplay!=='none')throw Error('Facilities hero contrast/background is incorrect: '+JSON.stringify(heroColors));
+          const cardState=await page.locator('.unit-grid .unit-card').evaluateAll(cards=>cards.map(card=>({height:card.getBoundingClientRect().height,display:getComputedStyle(card).display,visibility:getComputedStyle(card).visibility,opacity:getComputedStyle(card).opacity})));
+          if(cardState.length!==3||cardState.some(card=>card.height<80||card.display==='none'||card.visibility==='hidden'||Number(card.opacity)<0.5))throw Error('Facilities service rows are not visible: '+JSON.stringify(cardState));
         }
         let actual=null;
         if(path.startsWith('clean')){
