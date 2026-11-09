@@ -22,6 +22,16 @@ body.hmatias-institutional .unit-hero p{max-width:62ch;color:var(--hm-copy);font
 body.hmatias-institutional .unit-hero-panel{padding:24px;border:1px solid var(--hm-line);border-radius:4px;background:#fff;color:var(--hm-ink)}
 body.hmatias-institutional .unit-hero-panel strong{color:var(--hm-navy)}
 body.hmatias-institutional .unit-hero-panel span{color:var(--hm-copy)}
+/* Lock readable contrast after legacy dark-hero rules on the pale internal-page hero. */
+body.hmatias-institutional .unit-hero h1{color:var(--hm-navy)!important}
+body.hmatias-institutional .unit-hero p{color:var(--hm-copy)!important}
+body.hmatias-institutional .unit-hero .eyebrow{color:var(--hm-blue)!important}
+body.hmatias-institutional .unit-hero .btn-outline-light{
+  color:var(--hm-navy)!important;border-color:#91a8ba!important;background:transparent!important
+}
+body.hmatias-institutional .unit-hero-panel{color:var(--hm-ink)!important}
+body.hmatias-institutional .unit-hero-panel strong{color:var(--hm-navy)!important}
+body.hmatias-institutional .unit-hero-panel span{color:var(--hm-copy)!important}
 body.hmatias-institutional .unit-main{padding:clamp(62px,6vw,82px) 0;background:#fff}
 body.hmatias-institutional .unit-main.soft{background:#f7f9fb}
 body.hmatias-institutional .unit-heading{margin-bottom:30px}
