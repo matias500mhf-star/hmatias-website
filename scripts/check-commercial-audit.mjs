@@ -84,7 +84,7 @@ for(const path of ['index.html','en.html','credibilidade.html','credibility.html
   const html=read(path);
   assert.match(html,/href="mailto:geral@comercialhmatiasps[.]com"><img[^>]+contact-email[.]svg/,
     'Official email icon missing from shared contact surface: '+path);
-  assert.ok(html.includes('site-bootstrap.js?v=20261029-email-icon-preserve1'),
+  assert.ok(html.includes('site-bootstrap.js?v=20261108-whatsapp-bilingual1'),
     'Cache-busted email icon normalizer missing: '+path);
 }
 assert.ok(read('script.js').includes('const existing=target.querySelector'));

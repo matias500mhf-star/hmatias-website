@@ -1,0 +1,29 @@
+{
+  "partners": [
+    {
+      "name": "FRANSGA",
+      "logo": "images/partners/fransga-logo.webp",
+      "public": true
+    },
+    {
+      "name": "Kent Offshore",
+      "logo": "images/partners/kent-offshore-logo.webp",
+      "public": true
+    },
+    {
+      "name": "D&Wood",
+      "logo": "images/partners/d-wood-logo.webp",
+      "public": true
+    },
+    {
+      "name": "SYNVOR Industrial",
+      "logo": "images/partners/synvor-industrial-logo.webp",
+      "public": true
+    },
+    {
+      "name": "MILIART",
+      "logo": "images/partners/miliart-logo.webp",
+      "public": true
+    }
+  ]
+}
