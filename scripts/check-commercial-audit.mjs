@@ -98,7 +98,7 @@ assert.ok(client.includes("id:'cleanQuoteForm'"));
 assert.ok(client.includes("id:'smartRfqForm'"));
 
 for(const [path,anchors,labels] of [
-  ['credibilidade.html',['orientacao-institucional','projetos-digitais'],['Capacidades apresentadas com limites claros.','Escopo explícito','Stock, preço, origem, prazo e logística requerem confirmação.']],
+  ['credibilidade.html',['orientacao-institucional'],['Missão, visão e valores.','MISSÃO','VISÃO','Integridade','Responsabilidade','Rigor','Respeito e confidencialidade']],
   ['credibility.html',['institutional-direction','digital-projects'],['Capabilities presented with clear limits.','Defined scope','Stock, price, origin, lead time and logistics require confirmation.']]
 ]){
   const html=read(path);
