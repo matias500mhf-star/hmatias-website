@@ -9,8 +9,12 @@ const ptCatalogue=read('catalogo-obras.html');
 const enCatalogue=read('work-catalogue.html');
 assert.ok(!ptCatalogue.includes('<a href="karta.html">KARTA Wallet</a>'));
 assert.ok(!enCatalogue.includes('<a href="karta-en.html">KARTA Wallet</a>'));
-assert.ok(ptCatalogue.includes('href="credibilidade.html#projetos-digitais"'));
-assert.ok(enCatalogue.includes('href="credibility.html#digital-projects"'));
+assert.ok(ptCatalogue.includes('href="explorar.html#karta-wallet">KARTA Wallet</a>'));
+assert.ok(enCatalogue.includes('href="explore.html#karta-wallet">KARTA Wallet</a>'));
+assert.ok(read('explorar.html').includes('id="karta-wallet" href="karta.html"'));
+assert.ok(read('explore.html').includes('id="karta-wallet" href="karta-en.html"'));
+assert.ok(!read('karta.html').includes('credibilidade.html#projetos-digitais'));
+assert.ok(!read('karta-en.html').includes('credibility.html#digital-projects'));
 
 for(const path of ['karta.html','karta-en.html']){
   const html=read(path);
@@ -39,6 +43,21 @@ for(const path of ['index.html','en.html']){
   assert.ok(home.includes('class="hero-bottom"'),'Homepage proof row missing: '+path);
   assert.ok(home.includes('hm-design-system.css') && home.includes('hm-blue-institutional.css'),
     'Approved HMATIAS design system is missing: '+path);
+
+  const mainStart=home.indexOf('<main');
+  const mainEnd=home.indexOf('</main>',mainStart);
+  const main=mainStart>=0&&mainEnd>mainStart?home.slice(mainStart,mainEnd):'';
+  assert.ok(main,'Homepage main content missing: '+path);
+  for(const phrase of ['HMATIAS BLOG','CONHECIMENTO PRÁTICO','PRACTICAL KNOWLEDGE','INFORMAÇÃO INSTITUCIONAL','INSTITUTIONAL INFORMATION','credibility-band'])
+    assert.ok(!main.includes(phrase),'Removed generic or duplicated homepage content returned: '+path+' / '+phrase);
+  assert.equal((main.match(/class="intro-band"/g)||[]).length,1,'Homepage must have one company introduction: '+path);
+  const contactStart=home.indexOf('<section class="contact contact-premium"');
+  const contactEnd=home.indexOf('</section>',contactStart);
+  const contact=contactStart>=0&&contactEnd>contactStart?home.slice(contactStart,contactEnd):'';
+  assert.ok(contact.includes('id="smart-rfq"'),'Smart RFQ must be inside the contact section: '+path);
+  assert.equal((home.match(/id="smart-rfq"/g)||[]).length,1,'Smart RFQ should appear once: '+path);
+  for(const href of path==='index.html'?['construcao.html','facilities.html','supply.html']:['construction.html','facilities-en.html','supply-en.html'])
+    assert.ok(contact.includes('href="'+href+'"'),'Smart RFQ service link missing: '+path+' / '+href);
 }
 
 const events=read('analytics-events.js');
@@ -97,21 +116,31 @@ assert.ok(read('growth-intelligence.js').includes('[data-hmatias-email-alternati
 assert.ok(client.includes("id:'cleanQuoteForm'"));
 assert.ok(client.includes("id:'smartRfqForm'"));
 
-for(const [path,anchors,labels] of [
-  ['credibilidade.html',['orientacao-institucional'],['Missão, visão e valores.','MISSÃO','VISÃO','Integridade','Responsabilidade','Rigor','Respeito e confidencialidade']],
-  ['credibility.html',['institutional-direction','digital-projects'],['Capabilities presented with clear limits.','Defined scope','Stock, price, origin, lead time and logistics require confirmation.']]
+for(const [path,anchor,labels] of [
+  ['credibilidade.html','como-trabalhamos',['DADOS DA EMPRESA','Do pedido à proposta.','Pedido','Avaliação','Proposta']],
+  ['credibility.html','how-we-work',['COMPANY DETAILS','From enquiry to proposal.','Enquiry','Assessment','Proposal']]
 ]){
   const html=read(path);
-  assert.ok(html.includes('credibility-page.css?v=20261029-2'),'Credibility layout stylesheet missing: '+path);
-  for(const anchor of anchors) assert.ok(html.includes('id="'+anchor+'"'),'Credibility anchor missing: '+path+'#'+anchor);
-  for(const label of labels) assert.ok(html.includes(label),'Evidence-led credibility copy missing: '+path+' / '+label);
+  assert.ok(html.includes('credibility-page.css?v=20261110-minimal-profile1'),'Credibility layout stylesheet missing: '+path);
+  assert.ok(html.includes('id="'+anchor+'"'),'Credibility process anchor missing: '+path+'#'+anchor);
+  for(const label of labels) assert.ok(html.includes(label),'Company profile copy missing: '+path+' / '+label);
+  const panelStart=html.indexOf('<aside class="cred-identity"');
+  const panelEnd=html.indexOf('</aside>',panelStart);
+  const identity=panelStart>=0&&panelEnd>=0?html.slice(panelStart,panelEnd+8):'';
+  assert.equal((identity.match(/geral@comercialhmatiasps[.]com/g)||[]).length,1,'Official company email must appear once in the identity panel: '+path);
 }
-assert.ok(read('index.html').includes('ÂMBITO E CONDIÇÕES DEFINIDOS'));
-assert.ok(read('en.html').includes('SCOPE AND TERMS DEFINED'));
-assert.ok(read('en.html').includes('SERVICE FOLLOW-UP'));
+assert.ok(read('index.html').includes('EMPRESAS · INSTITUIÇÕES · PARTICULARES'));
+assert.ok(read('index.html').includes('ÂMBITO AVALIADO POR PEDIDO'));
+assert.ok(read('index.html').includes('PROPOSTA DA EQUIPA COMERCIAL'));
+assert.ok(read('en.html').includes('BUSINESSES · INSTITUTIONS · PRIVATE CLIENTS'));
+assert.ok(read('en.html').includes('SCOPE REVIEWED PER REQUEST'));
+assert.ok(read('en.html').includes('COMMERCIAL PROPOSAL'));
 
 assert.ok(!read('credibilidade.html').includes('orientados pela nossa missão, visão e valores.'));
 assert.ok(!read('credibility.html').includes('guided by our mission, vision and values.'));
+assert.ok(!read('credibilidade.html').includes('MISSÃO') && !read('credibilidade.html').includes('VISÃO'));
+assert.ok(!read('credibility.html').includes('MISSION') && !read('credibility.html').includes('VISION'));
+assert.ok(!read('credibilidade.html').includes('projetos-digitais') && !read('credibility.html').includes('digital-projects'));
 const credibilityCss=read('credibility-page.css');
 assert.ok(credibilityCss.includes('minmax(230px,1.65fr)'),'Desktop credibility footer needs room for contact addresses');
 assert.ok(credibilityCss.includes('.hmatias-credibility footer .footer-grid>div:nth-child(4){grid-column:1/-1}'),'Tablet credibility footer contact must span the row');

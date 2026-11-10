@@ -21,3 +21,6 @@ body.hm-explore-page .hm-explore-card:hover .hm-explore-link{color:#0065cc}
  body.hm-explore-page .hm-explore-card,body.hm-explore-page .hm-explore-card:nth-child(even){min-height:230px;padding:28px 0;border-left:0}
 }
 @media(prefers-reduced-motion:reduce){body.hm-explore-page .hm-explore-card{transition:none}}
+
+/* Full-width project row balances the three-resource directory. */
+body.hm-explore-page .hm-explore-card--project{grid-column:1/-1;min-height:230px;padding-right:0}
