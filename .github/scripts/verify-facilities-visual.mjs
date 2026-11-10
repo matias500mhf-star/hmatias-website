@@ -12,20 +12,84 @@ try {
       try{
         const r=await page.goto('http://127.0.0.1:8080/'+path,{waitUntil:'domcontentloaded',timeout:25000});
         if(!r||!r.ok())throw Error('Page HTTP status '+r?.status());
-        const product=page.locator('img[data-hmatias-product-photo="taurus"]');
-        if(await product.count()!==1)throw Error('Expected exactly one Taurus product picture');
-        await product.scrollIntoViewIfNeeded();
-        await product.evaluate(async img => {if(!img.complete)await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject});await img.decode()});
-        const actual=await product.evaluate(img=>({width:img.naturalWidth,height:img.naturalHeight,src:img.getAttribute('src'),rect:img.getBoundingClientRect().toJSON()}));
-        if(actual.width<350||actual.height<350||!actual.src.includes('taurus-pine-gel-t563p-official.jpg'))throw Error('Taurus picture did not load as the official image: '+JSON.stringify(actual));
-        if(actual.rect.width<120||actual.rect.height<120)throw Error('Taurus product photograph is too small visually');
+        if(path.startsWith('facilities')){
+          const heroColors=await page.locator('.unit-hero').evaluate(el=>{
+            const title=el.querySelector('h1'),copy=el.querySelector('p'),cta=el.querySelector('.btn-outline-light');
+            return {
+              title:title?getComputedStyle(title).color:null,
+              copy:copy?getComputedStyle(copy).color:null,
+              cta:cta?getComputedStyle(cta).color:null,
+              background:getComputedStyle(el).backgroundColor,
+              backgroundImage:getComputedStyle(el).backgroundImage,
+              beforeContent:getComputedStyle(el,'::before').content,
+              beforeBackground:getComputedStyle(el,'::before').background,
+              beforeDisplay:getComputedStyle(el,'::before').display
+            };
+          });
+          if(heroColors.title!=='rgb(6, 45, 86)'||heroColors.copy!=='rgb(89, 108, 125)'||heroColors.cta!=='rgb(6, 45, 86)'||heroColors.background!=='rgb(241, 246, 250)'||heroColors.backgroundImage!=='none'||heroColors.beforeContent!=='none'||heroColors.beforeDisplay!=='none')throw Error('Facilities hero contrast/background is incorrect: '+JSON.stringify(heroColors));
+          const cards=page.locator('.unit-grid .unit-card');
+          if(await cards.count()!==3)throw Error('Expected three Facilities service rows');
+          const cardState=[];
+          for(let index=0;index<await cards.count();index++){
+            const card=cards.nth(index);
+            const element=await card.elementHandle();
+            await card.evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));
+            await page.waitForFunction(el=>Number(getComputedStyle(el).opacity)>=0.5,element,{timeout:5000});
+            cardState.push(await card.evaluate(el=>({height:el.getBoundingClientRect().height,display:getComputedStyle(el).display,visibility:getComputedStyle(el).visibility,opacity:getComputedStyle(el).opacity})));
+          }
+          if(cardState.some(card=>card.height<80||card.display==='none'||card.visibility==='hidden'||Number(card.opacity)<0.5))throw Error('Facilities service rows are not visible after scrolling: '+JSON.stringify(cardState));
+        }
+        let actual=null;
+        if(path.startsWith('clean')){
+          const product=page.locator('img[data-hmatias-product-photo="taurus"]');
+          if(await product.count()!==1)throw Error('Expected exactly one Taurus product picture on the HMATIAS Clean catalogue page');
+          await product.scrollIntoViewIfNeeded();
+          await product.evaluate(async img => {if(!img.complete)await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject});await img.decode()});
+          actual=await product.evaluate(img=>({width:img.naturalWidth,height:img.naturalHeight,src:img.getAttribute('src'),rect:img.getBoundingClientRect().toJSON()}));
+          if(actual.width<350||actual.height<350||!actual.src.includes('taurus-pine-gel-t563p-official.jpg'))throw Error('Taurus picture did not load as the official image: '+JSON.stringify(actual));
+          if(actual.rect.width<120||actual.rect.height<120)throw Error('Taurus product photograph is too small visually');
+          const pinePhotos=page.locator('img[data-hmatias-product-photo="123"]');
+          if(await pinePhotos.count()!==2)throw Error('Expected the local 123 Pine Gel photo in the hero and product card');
+          for(let i=0;i<await pinePhotos.count();i++){
+            const photo=pinePhotos.nth(i);
+            await photo.scrollIntoViewIfNeeded();
+            await photo.evaluate(async img=>{
+              if(!img.complete)await new Promise((resolve,reject)=>{
+                img.addEventListener('load',resolve,{once:true});
+                img.addEventListener('error',reject,{once:true});
+              });
+              await img.decode();
+              if(img.naturalWidth===0||!img.currentSrc.includes('pine-gel-500ml-final.webp'))throw Error('Local 123 Pine Gel photo did not load');
+            });
+          }
+        } else {
+          if(path==='facilities-en.html' && await page.locator('section.facilities-clean').count()!==0)throw Error('English Facilities page still duplicates the HMATIAS Clean catalogue');
+          const evidence=page.locator('.facility-evidence .hm-evidence-item img');
+          if(await evidence.count()!==3)throw Error('Three documented facilities photographs missing');
+          for(let i=0;i<await evidence.count();i++){
+            const image=evidence.nth(i);
+            await image.scrollIntoViewIfNeeded();
+            await image.evaluate(img=>{img.loading='eager';});
+            await image.evaluate(async img=>{
+              if(img.naturalWidth===0){
+                await new Promise((resolve,reject)=>{
+                  const timer=setTimeout(()=>reject(new Error('Timed out loading image: '+img.getAttribute('src'))),8000);
+                  img.addEventListener('load',()=>{clearTimeout(timer);resolve();},{once:true});
+                  img.addEventListener('error',()=>{clearTimeout(timer);reject(new Error('Image request failed: '+img.getAttribute('src')));},{once:true});
+                  if(img.complete && img.naturalWidth>0){clearTimeout(timer);resolve();}
+                });
+              }
+              await img.decode();
+              if(img.naturalWidth===0)throw Error('Image has no intrinsic width: '+img.getAttribute('src'));
+            });
+          }
+        }
         const width=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,inner:window.innerWidth}));
         if(width.scroll-width.inner>8)throw Error('Horizontal page overflow: '+JSON.stringify(width));
-        const productCards=path.startsWith('facilities')?'.facilities-clean-card':'.clean-feature-card';
-        if(await page.locator(productCards).count()!==2)throw Error('Two product reference cards missing');
+        if(path.startsWith('clean') && await page.locator('.clean-feature-card').count()!==2)throw Error('Two HMATIAS Clean product reference cards missing');
         const file='facilities-previews/'+path.replace('.html','')+'-'+view.name+'.png';
         await page.screenshot({path:file,fullPage:true,animations:'disabled',timeout:25000});
-        console.log('PASS',path,view.name,actual.width+'x'+actual.height,'overflow=',width.scroll-width.inner,'screenshot',file);
+        console.log('PASS',path,view.name,actual?actual.width+'x'+actual.height:'three evidence photos','overflow=',width.scroll-width.inner,'screenshot',file);
       }catch(err){
         errors.push({path,viewport:view.name,error:String(err)});
         console.error('FAIL',path,view.name,String(err));

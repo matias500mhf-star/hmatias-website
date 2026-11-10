@@ -215,8 +215,10 @@ jobs:
               nav = home.partition('<nav class="nav-menu"')[2].partition('</nav>')[0]
               if re.search(r'>\s*(?:Credibilidade|Credibility|Trust Center)\s*</a>', nav, re.I):
                   fail(f'credibility label must not appear in primary navigation: {home_name}')
-              if not re.search(r'href="' + re.escape(credibility_name) + r'"[^>]*>(?:Sobre nós|About us)</a>', nav):
-                  fail(f'About navigation must reach corporate information: {home_name}')
+              expected_home_links = (("/", "HMATIAS"), ("construcao.html", "Construção"), ("facilities.html", "Facilities"), ("supply.html", "Supply"), ("servicos-administrativos.html", "Business Services")) if home_name == "index.html" else (("en.html", "HMATIAS"), ("construction.html", "Construction"), ("facilities-en.html", "Facilities"), ("supply-en.html", "Supply"), ("business-services.html", "Business Services"))
+              for href, label in expected_home_links:
+                  if not re.search(r'href="' + re.escape(href) + r'"[^>]*>' + re.escape(label) + r'</a>', nav):
+                      fail(f'Homepage service navigation missing {label}: {home_name}')
               footer = re.search(r'<footer\b[^>]*>(.*?)</footer>', home, re.S)
               if not footer or credibility_name not in footer.group(1):
                   fail(f'credibility footer link missing from homepage: {home_name}')
