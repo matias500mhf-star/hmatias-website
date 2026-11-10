@@ -1,6 +1,6 @@
 /* HMATIAS internal pages — lighter institutional system inspired by the approved reference. Homepage and Source AO are intentionally excluded. */
 body.hmatias-institutional{
-  --hm-navy:#082f57;--hm-blue:#176ca5;--hm-sky:#8fc5e8;--hm-ink:#17344d;--hm-copy:#607487;
+  --hm-navy:#082f57;--hm-blue:#176ca5;--hm-sky:#8fc5e8;--hm-ink:#17344d;--hm-copy:#596c7d;
   --hm-line:#dce6ee;--hm-soft:#f3f7fa;--hm-display:"Inter",Arial,sans-serif;--hm-body:"Inter",Arial,sans-serif;
   color:var(--hm-ink);font-family:var(--hm-body);background:#fff;
 }
