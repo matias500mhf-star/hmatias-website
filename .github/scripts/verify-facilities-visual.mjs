@@ -27,8 +27,17 @@ try {
             };
           });
           if(heroColors.title!=='rgb(6, 45, 86)'||heroColors.copy!=='rgb(89, 108, 125)'||heroColors.cta!=='rgb(6, 45, 86)'||heroColors.background!=='rgb(241, 246, 250)'||heroColors.backgroundImage!=='none'||heroColors.beforeContent!=='none'||heroColors.beforeDisplay!=='none')throw Error('Facilities hero contrast/background is incorrect: '+JSON.stringify(heroColors));
-          const cardState=await page.locator('.unit-grid .unit-card').evaluateAll(cards=>cards.map(card=>({height:card.getBoundingClientRect().height,display:getComputedStyle(card).display,visibility:getComputedStyle(card).visibility,opacity:getComputedStyle(card).opacity})));
-          if(cardState.length!==3||cardState.some(card=>card.height<80||card.display==='none'||card.visibility==='hidden'||Number(card.opacity)<0.5))throw Error('Facilities service rows are not visible: '+JSON.stringify(cardState));
+          const cards=page.locator('.unit-grid .unit-card');
+          if(await cards.count()!==3)throw Error('Expected three Facilities service rows');
+          const cardState=[];
+          for(let index=0;index<await cards.count();index++){
+            const card=cards.nth(index);
+            const element=await card.elementHandle();
+            await card.evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));
+            await page.waitForFunction(el=>Number(getComputedStyle(el).opacity)>=0.5,element,{timeout:5000});
+            cardState.push(await card.evaluate(el=>({height:el.getBoundingClientRect().height,display:getComputedStyle(el).display,visibility:getComputedStyle(el).visibility,opacity:getComputedStyle(el).opacity})));
+          }
+          if(cardState.some(card=>card.height<80||card.display==='none'||card.visibility==='hidden'||Number(card.opacity)<0.5))throw Error('Facilities service rows are not visible after scrolling: '+JSON.stringify(cardState));
         }
         let actual=null;
         if(path.startsWith('clean')){
