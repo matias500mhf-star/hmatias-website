@@ -1,23 +1,26 @@
-/* HMATIAS phase two — navigation, Smart RFQ and Explore refinements. */
+/* HMATIAS phase two — clean navigation, contact RFQ and footer layout. */
 .masthead nav{gap:clamp(12px,1.45vw,21px)}
 .masthead nav a{white-space:nowrap;text-decoration:none!important}
 body.hm-preview .masthead nav a::after{content:none!important;display:none!important}
-.smart-rfq-feature{padding:clamp(54px,7vw,88px) 4.5%;background:#f4f8fc;border-top:1px solid #d9e5ef;border-bottom:1px solid #d9e5ef}
-.smart-rfq-inner{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(240px,.85fr);gap:clamp(28px,6vw,84px);align-items:end;max-width:1400px;margin:0 auto}
-.smart-rfq-copy{max-width:760px}
-.smart-rfq-copy h2{margin:18px 0 16px;color:#062d56;font-size:clamp(31px,4vw,54px);line-height:1.05;letter-spacing:-.06em;font-weight:560}
-.smart-rfq-copy>p{max-width:680px;margin:0;color:#607487;font-size:14px;line-height:1.8}
-.smart-rfq-action{display:flex;flex-direction:column;align-items:flex-start;gap:22px}
-.smart-rfq-cta{display:inline-flex;align-items:center;justify-content:space-between;gap:14px;min-height:52px;white-space:nowrap}
-.smart-rfq-services{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid #cbd9e4;padding-top:13px;width:100%}
-.smart-rfq-services a{color:#062d56;font-size:11px;font-weight:650;white-space:nowrap}
-.smart-rfq-services a+a{margin-left:12px;padding-left:12px;border-left:1px solid #cbd9e4}
-.smart-rfq-services a:hover,.smart-rfq-services a:focus-visible{color:#0065cc}
-.smart-rfq-feature :focus-visible{outline:3px solid #1685dc;outline-offset:4px}
+
+.contact-rfq-card{margin:28px 0 24px;padding:21px 22px;border:1px solid #d9e5ef;border-left:3px solid #0065cc;background:#f4f8fc}
+.contact-rfq-card>.eyebrow{color:#0065cc}
+.contact-rfq-card h3{margin:12px 0 8px;color:#062d56;font-size:clamp(19px,2vw,24px);line-height:1.2;letter-spacing:-.035em;font-weight:600}
+.contact-rfq-card>p{margin:0 0 18px;color:#607487;font-size:12px;line-height:1.7}
+.contact-rfq-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.contact-rfq-services{display:flex;flex-wrap:wrap;gap:0}
+.contact-rfq-services a{color:#062d56;font-size:10px;font-weight:650;white-space:nowrap}
+.contact-rfq-services a+a{margin-left:10px;padding-left:10px;border-left:1px solid #cbd9e4}
+.contact-rfq-services a:hover,.contact-rfq-services a:focus-visible{color:#0065cc}
+.contact-rfq-link{display:inline-flex;align-items:center;gap:10px;color:#0065cc;font-size:11px;font-weight:750;white-space:nowrap}
+.contact-rfq-link span{color:#0065cc;transition:transform .18s ease}
+.contact-rfq-link:hover span{transform:translate(2px,-2px)}
+.contact-rfq-card :focus-visible{outline:3px solid #1685dc;outline-offset:4px}
+
 .premium-footer-grid{grid-template-columns:minmax(210px,1.55fr) repeat(3,minmax(125px,1fr)) minmax(180px,1.3fr);gap:clamp(18px,2.5vw,34px)}
 .premium-footer-grid>div:not(:first-child){min-width:0}
 @media(max-width:1050px){.premium-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.premium-footer-grid .footer-brand{grid-column:1/-1}}
-@media(max-width:820px){.smart-rfq-inner{grid-template-columns:1fr;gap:25px}.smart-rfq-action{flex-direction:row;align-items:center;justify-content:space-between;gap:20px}}
-@media(max-width:700px){.smart-rfq-feature{padding:54px 6%}.smart-rfq-inner{gap:24px}.smart-rfq-action{align-items:flex-start;flex-direction:column}.premium-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}.premium-footer-grid .footer-brand{grid-column:1/-1}.premium-footer-grid>div:not(:first-child){grid-column:auto}}
+@media(max-width:820px){.contact-rfq-card{padding:18px}.contact-rfq-footer{align-items:flex-start;flex-direction:column;gap:15px}}
+@media(max-width:700px){.premium-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}.premium-footer-grid .footer-brand{grid-column:1/-1}.premium-footer-grid>div:not(:first-child){grid-column:auto}}
 @media(max-width:420px){.premium-footer-grid{grid-template-columns:1fr}.premium-footer-grid>div:not(:first-child){grid-column:1/-1}.premium-footer-bottom{align-items:flex-start;flex-direction:column}.premium-footer-bottom div{gap:12px}}
 body.hm-preview .intro-grid h2 em{color:#0065cc}
