@@ -56,3 +56,12 @@ This review is based on the repository's `main` tree and source inspection of th
 - The stylesheet is explicitly excluded from the approved homepage and all Source AO screens.
 - The page-level stylesheet is loaded after the existing legacy stack so the new visual rules take precedence without rewriting existing functional styles.
 - Visual review is still required on the Netlify preview at desktop and mobile widths before production approval.
+
+
+## Interaction refinement extracted from Lovable — 10 November 2026
+- Reused the Lovable prototype's consistent button component principles: shared minimum height, predictable horizontal spacing, clear primary/outline/light variants, restrained radius, and one hover/focus language.
+- Adapted the colors to the HMATIAS institutional palette already present in the repository: navy `#062d56`, blue `#075da8`, pale surface `#f4f8fc`, border `#dce6f0`.
+- Kept the existing local Inter family; the Lovable prototype's DM Sans / Space Grotesk pairing was not copied because HMATIAS already uses Inter and the local font asset is verified.
+- Added consistent focus-visible treatment, input/select/textarea states, mobile tap height and reduced-motion behavior.
+- Scope remains limited to `body.hmatias-institutional`; the approved homepage and Source AO are excluded.
+- No page structure, copy, business claims, links, form destinations or production settings were changed in this refinement.
