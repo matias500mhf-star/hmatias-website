@@ -20,7 +20,10 @@ for page in sorted(ROOT.glob("*.html")):
         problems.append(f"{page.name}: missing shared navigation/action structure")
         continue
     labels = [re.sub(r"<[^>]+>", "", item).strip() for item in re.findall(r"<a\b[^>]*>(.*?)</a>", nav.group(), re.S)]
-    expected_labels = ["Home", "About us", "Services", "Projects"] if re.search(r'<html\b[^>]*lang="en"', html) else ["Início", "Sobre nós", "Serviços", "Projetos"]
+    if page.name in ("index.html", "en.html"):
+        expected_labels = ["HMATIAS", "Construction", "Facilities", "Supply", "Business Services"] if re.search(r'<html\b[^>]*lang="en"', html) else ["HMATIAS", "Construção", "Facilities", "Supply", "Business Services"]
+    else:
+        expected_labels = ["Home", "About us", "Services", "Projects"] if re.search(r'<html\b[^>]*lang="en"', html) else ["Início", "Sobre nós", "Serviços", "Projetos"]
     if labels != expected_labels:
         problems.append(f"{page.name}: inconsistent corporate navigation {labels!r}; expected {expected_labels!r}")
     switches = re.findall(r'<a\b[^>]*class="lang-switch"[^>]*>', actions.group())
@@ -35,7 +38,7 @@ for page in sorted(ROOT.glob("*.html")):
         problems.append(f"{page.name}: missing versioned global navigation stylesheet")
     if not re.search(r"script\.js\?v=.+", html):
         problems.append(f"{page.name}: stale mobile navigation controller")
-    if page.name in ("en.html", "credibility.html", "work-catalogue.html", "karta-en.html"):
+    if page.name in ("credibility.html", "work-catalogue.html", "karta-en.html"):
         if 'About us' not in nav.group():
             problems.append(f"{page.name}: mixed English About us navigation")
 
