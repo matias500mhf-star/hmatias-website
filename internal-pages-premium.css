@@ -80,6 +80,10 @@ body.hmatias-credibility .cred-identity>a{color:var(--hm-blue)}
 body.hmatias-credibility .cred-section{padding:clamp(58px,6vw,78px) 0}
 body.hmatias-credibility .cred-service,body.hmatias-credibility .cred-projects article{border-radius:3px;box-shadow:none}
 body.hmatias-credibility .cred-contact{padding:44px 0;background:#eaf2f8}
+/* Keep blue labels readable on the light credibility-page surfaces. */
+body.hmatias-credibility .cred-label,
+body.hmatias-credibility .cred-service>span,
+body.hmatias-credibility .cred-commitments>article>b{color:var(--hm-blue)!important}
 @media(max-width:850px){
  body.hmatias-institutional .container{width:min(100% - 40px,1180px)}
  body.hmatias-institutional .unit-hero{padding:58px 0}
