@@ -127,7 +127,9 @@ for(const [path,anchor,labels] of [
   const panelStart=html.indexOf('<aside class="cred-identity"');
   const panelEnd=html.indexOf('</aside>',panelStart);
   const identity=panelStart>=0&&panelEnd>=0?html.slice(panelStart,panelEnd+8):'';
-  assert.equal((identity.match(/geral@comercialhmatiasps[.]com/g)||[]).length,1,'Official company email must appear once in the identity panel: '+path);
+  assert.equal((identity.match(/href="mailto:geral@comercialhmatiasps[.]com"/g)||[]).length,1,'Official company email link must appear once in the identity panel: '+path);
+  const visibleIdentity=identity.replace(/href="mailto:geral@comercialhmatiasps[.]com"/g,'');
+  assert.equal((visibleIdentity.match(/geral@comercialhmatiasps[.]com/g)||[]).length,1,'Official company email must be shown once in the identity panel: '+path);
 }
 assert.ok(read('index.html').includes('EMPRESAS · INSTITUIÇÕES · PARTICULARES'));
 assert.ok(read('index.html').includes('ÂMBITO AVALIADO POR PEDIDO'));
