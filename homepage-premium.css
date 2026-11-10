@@ -1,0 +1,122 @@
+/* HMATIAS homepage polish — official blue system, compact navigation and complete footer. */
+body.hmatias-home .hmatias-header .nav{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center;
+  gap:clamp(16px,2.2vw,32px);
+}
+body.hmatias-home .hmatias-header .brand{justify-self:start}
+body.hmatias-home .hmatias-header .nav-menu{
+  justify-self:center;
+  margin:0;
+  gap:clamp(15px,1.8vw,26px);
+}
+body.hmatias-home .hmatias-header .nav-menu a{
+  font-size:.8125rem;
+  font-weight:650;
+  white-space:nowrap;
+  transition:color 220ms cubic-bezier(.25,.1,.25,1);
+}
+body.hmatias-home .hmatias-header .nav-menu a:hover{color:#0065cc}
+body.hmatias-home .hmatias-header .nav-actions{justify-self:end}
+body.hmatias-home .hero-visual{min-height:clamp(520px,45vw,660px)}
+body.hmatias-home .hero-photo img{
+  object-position:center 46%;
+  filter:saturate(.92) contrast(1.02);
+}
+body.hmatias-home .visual-card:before{
+  background:linear-gradient(90deg,#062d56eb 0%,#062d566b 45%,#062d560f 100%),linear-gradient(#062d560a 40%,#062d569e 100%);
+}
+body.hmatias-home .visual-overlay{
+  right:6%;
+  bottom:8%;
+  max-width:82%;
+  border-left:5px solid #48baf5;
+  background:#062d56f0;
+  box-shadow:0 12px 30px #0003;
+}
+body.hmatias-home .blog-development .blog-development-card{
+  grid-template-columns:minmax(0,1.15fr) minmax(220px,.85fr);
+  align-items:center;
+  padding:clamp(24px,4vw,42px);
+  border:1px solid #dce6f0;
+  background:#f4f8fc;
+}
+body.hmatias-home .blog-development .blog-development-copy h3{
+  max-width:520px;
+  font-size:clamp(23px,2.4vw,31px);
+  line-height:1.18;
+  letter-spacing:-.035em;
+}
+body.hmatias-home .blog-development .blog-development-copy p{
+  max-width:560px;
+  color:#52687c;
+}
+body.hmatias-home .blog-development-link{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin-top:18px;
+  color:#0065cc;
+  font-size:.8125rem;
+  font-weight:700;
+}
+body.hmatias-home .footer-pro{
+  color:#bcd1e3;
+  background:#031f3d;
+}
+body.hmatias-home .footer-pro-grid{
+  grid-template-columns:1.55fr 1fr 1.15fr 1.45fr 1fr;
+  gap:clamp(20px,3vw,40px);
+}
+body.hmatias-home .footer-pro-brand .footer-logo{
+  filter:brightness(0) invert(1);
+  opacity:.96;
+}
+body.hmatias-home .footer-pro-col strong{color:#fff}
+body.hmatias-home .footer-pro-col a,
+body.hmatias-home .footer-pro-brand p,
+body.hmatias-home .footer-pro-col span{color:#bcd1e3}
+body.hmatias-home .footer-pro-bottom{
+  border-top:1px solid #ffffff1f;
+  color:#8ea9c0;
+}
+body.hmatias-home .footer-pro-bottom a{color:#bcd1e3}
+body.hmatias-home .footer-pro-bottom a:hover,
+body.hmatias-home .footer-pro-col a:hover{color:#fff}
+@media(max-width:1100px){
+  body.hmatias-home .hmatias-header .nav{gap:14px}
+  body.hmatias-home .hmatias-header .nav-menu{gap:12px}
+  body.hmatias-home .hmatias-header .nav-menu a{font-size:.75rem}
+  body.hmatias-home .footer-pro-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  body.hmatias-home .footer-pro-brand{grid-column:span 3}
+}
+@media(max-width:850px){
+  body.hmatias-home .hmatias-header .nav{
+    grid-template-columns:minmax(0,1fr) auto;
+    min-height:78px;
+    gap:12px;
+  }
+  body.hmatias-home .hmatias-header .brand{grid-column:1;grid-row:1}
+  body.hmatias-home .hmatias-header .menu-toggle{grid-column:2;grid-row:1;justify-self:end}
+  body.hmatias-home .hmatias-header .nav-menu{
+    justify-self:stretch;
+    gap:0;
+    margin:0;
+  }
+  body.hmatias-home .hmatias-header .nav-menu a{font-size:.9375rem}
+  body.hmatias-home .hero-visual{min-height:390px}
+  body.hmatias-home .blog-development .blog-development-card{grid-template-columns:1fr}
+  body.hmatias-home .footer-pro-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 22px}
+  body.hmatias-home .footer-pro-brand{grid-column:span 2}
+}
+@media(max-width:560px){
+  body.hmatias-home .hero-visual{min-height:340px}
+  body.hmatias-home .visual-overlay{right:5%;bottom:6%;max-width:90%;padding:13px 15px}
+  body.hmatias-home .footer-pro-grid{grid-template-columns:1fr 1fr}
+  body.hmatias-home .footer-pro-brand{grid-column:span 2}
+}
+@media(prefers-reduced-motion:reduce){
+  body.hmatias-home .hmatias-header .nav-menu a{transition:none}
+  body.hmatias-home .hero-photo img{transition:none}
+}
