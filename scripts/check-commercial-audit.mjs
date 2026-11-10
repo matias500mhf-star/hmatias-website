@@ -38,27 +38,56 @@ assert.ok(partnerForm.includes('mailto:geral@comercialhmatiasps.com'));
 assert.ok(partnerApi.includes("const COUNTRIES=new Set(['AO','NA','ZA']);"));
 for(const path of ['index.html','en.html']){
   const home=read(path);
-  // The approved premium homepage uses the compact hero-bottom proof row
-  // and the HMATIAS design-system stylesheets instead of the legacy home-proof block.
   assert.ok(home.includes('class="hero-bottom"'),'Homepage proof row missing: '+path);
   assert.ok(home.includes('hm-design-system.css') && home.includes('hm-blue-institutional.css'),
     'Approved HMATIAS design system is missing: '+path);
-
   const mainStart=home.indexOf('<main');
   const mainEnd=home.indexOf('</main>',mainStart);
   const main=mainStart>=0&&mainEnd>mainStart?home.slice(mainStart,mainEnd):'';
   assert.ok(main,'Homepage main content missing: '+path);
-  for(const phrase of ['HMATIAS BLOG','CONHECIMENTO PRÁTICO','PRACTICAL KNOWLEDGE','INFORMAÇÃO INSTITUCIONAL','INSTITUTIONAL INFORMATION','credibility-band'])
-    assert.ok(!main.includes(phrase),'Removed generic or duplicated homepage content returned: '+path+' / '+phrase);
+  for(const phrase of ['HMATIAS BLOG','CONHECIMENTO PRÁTICO','PRACTICAL KNOWLEDGE','INFORMAÇÃO INSTITUCIONAL','INSTITUTIONAL INFORMATION','credibility-band','SMART RFQ'])
+    assert.ok(!main.toUpperCase().includes(phrase.toUpperCase()),'Removed generic or duplicated homepage content returned: '+path+' / '+phrase);
   assert.equal((main.match(/class="intro-band"/g)||[]).length,1,'Homepage must have one company introduction: '+path);
+  assert.equal((main.match(/class="capability"/g)||[]).length,4,'Homepage must present four service areas: '+path);
+  assert.equal((main.match(/class="cap-icon"/g)||[]).length,4,'Homepage service icons missing: '+path);
+  assert.ok(!main.includes('class="cap-no"'),'Numbered service list returned: '+path);
+  assert.ok(!home.includes('id="smart-rfq"'),'Smart RFQ card must not appear on homepage: '+path);
+  const nav=home.match(/<nav id="primary-navigation"[^>]*>([\s\S]*?)<\/nav>/)?.[1]||'';
+  const expected=path==='index.html'
+    ? ['Início','Sobre Nós','Quem Somos','Serviços','Projectos']
+    : ['Home','About Us','Who We Are','Services','Projects'];
+  const labels=[...nav.matchAll(/<a\b[^>]*>(.*?)<\/a>/g)].map(m=>m[1].replace(/<[^>]+>/g,'').trim());
+  assert.deepEqual(labels,expected,'Page-oriented homepage navigation changed: '+path);
   const contactStart=home.indexOf('<section class="contact contact-premium"');
   const contactEnd=home.indexOf('</section>',contactStart);
   const contact=contactStart>=0&&contactEnd>contactStart?home.slice(contactStart,contactEnd):'';
-  assert.ok(contact.includes('id="smart-rfq"'),'Smart RFQ must be inside the contact section: '+path);
-  assert.equal((home.match(/id="smart-rfq"/g)||[]).length,1,'Smart RFQ should appear once: '+path);
-  for(const href of path==='index.html'?['construcao.html','facilities.html','supply.html']:['construction.html','facilities-en.html','supply-en.html'])
-    assert.ok(contact.includes('href="'+href+'"'),'Smart RFQ service link missing: '+path+' / '+href);
+  assert.ok(contact.includes('id="contactForm"'),'Homepage contact form missing: '+path);
 }
+for(const [path,ids] of [
+  ['credibilidade.html',['sobre-nos','quem-somos','credibilidade']],
+  ['credibility.html',['about-us','who-we-are','credibility']]
+]){
+  const html=read(path);
+  for(const id of ids)assert.ok(html.includes('id="'+id+'"'),'Company profile anchor missing: '+path+' / '+id);
+  assert.ok(/class="cred-story-grid"/.test(html),'Company story and working principles missing: '+path);
+  assert.ok(/class="cred-activity"/.test(html),'Company activity scope missing: '+path);
+}
+for(const path of ['supply.html','supply-en.html']){
+  const html=read(path);
+  assert.equal((html.match(/class="supply-product-card"/g)||[]).length,4,'Supply page must show four references: '+path);
+  assert.ok(html.includes('https://synvor-industrial.com/'),'Official SYNVOR catalogue link missing: '+path);
+  assert.ok(!html.includes('supply-rfq-choice'),'Duplicated end-of-page RFQ/WhatsApp actions returned: '+path);
+  assert.ok(!html.includes('institutional-network.js'),'Static Supply page should not wait for catalogue JavaScript: '+path);
+}
+const supplyData=JSON.parse(read('data/supply-catalog.json'));
+const supplyItems=(supplyData.categories||[]).flatMap(category=>category.items||[]);
+assert.equal(supplyItems.length,4,'Supply product data must contain four documented references');
+assert.ok(supplyItems.every(item=>/^https:\/\/synvor-industrial[.]com\//.test(item.catalog_url||'')),
+  'Every documented supply reference must link to an official SYNVOR catalogue family');
+assert.ok(read('index.html').includes('id="servicos"')&&read('index.html').includes('id="capacidades"'),
+  'Portuguese Services anchor and compatibility alias are both required');
+assert.ok(read('index.html').includes('id="projetos"')&&read('index.html').includes('id="trabalho"'),
+  'Portuguese Projects anchor and compatibility alias are both required');
 
 const events=read('analytics-events.js');
 assert.ok(events.includes("form.dataset.hmatiasWebsiteIntake!=='true'"));

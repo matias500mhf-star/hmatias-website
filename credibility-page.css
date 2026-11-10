@@ -58,3 +58,19 @@
 @media(min-width:761px) and (max-width:1000px){.hmatias-credibility footer .footer-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.hmatias-credibility footer .footer-grid>div:first-child,.hmatias-credibility footer .footer-grid>div:nth-child(4){grid-column:1/-1}}
 @media(min-width:1001px){.hmatias-credibility footer .footer-grid{grid-template-columns:minmax(185px,1.35fr) minmax(90px,.7fr) minmax(120px,1fr) minmax(230px,1.65fr) minmax(90px,.7fr);gap:clamp(16px,2vw,24px)}.hmatias-credibility footer .footer-grid>div:nth-child(4) a{overflow-wrap:anywhere}}
 @media(prefers-reduced-motion:reduce){.hmatias-credibility .cred-hero .btn-primary,.hmatias-credibility .cred-contact .btn-primary{transition:none}}
+
+
+/* Company story, working principles and activity links. */
+.hmatias-credibility .cred-story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--cred-line);border-bottom:1px solid var(--cred-line)}
+.hmatias-credibility .cred-story-grid article{min-width:0;padding:24px 24px 22px 0}
+.hmatias-credibility .cred-story-grid article+article{padding-left:24px;border-left:1px solid var(--cred-line)}
+.hmatias-credibility .cred-story-grid h3{margin:13px 0 8px;color:var(--cred-ink);font-size:1.08rem;line-height:1.35;letter-spacing:-.025em}
+.hmatias-credibility .cred-story-grid p,.hmatias-credibility .cred-story-grid li{color:var(--cred-muted);font-size:.86rem;line-height:1.7}
+.hmatias-credibility .cred-story-grid p{margin:0}
+.hmatias-credibility .cred-story-grid ul{display:grid;gap:8px;margin:13px 0 0;padding-left:17px}
+.hmatias-credibility .cred-activity{display:grid;grid-template-columns:190px minmax(0,1fr);gap:18px 28px;align-items:start;margin-top:32px;padding:22px 0;border-top:1px solid var(--cred-line);border-bottom:1px solid var(--cred-line)}
+.hmatias-credibility .cred-activity>div{display:flex;flex-wrap:wrap;gap:10px 22px}
+.hmatias-credibility .cred-activity a{color:var(--cred-ink);font-size:.86rem;font-weight:650;text-decoration:none}
+.hmatias-credibility .cred-activity a:hover{text-decoration:underline;color:#0065cc}
+.hmatias-credibility .cred-activity p{grid-column:2;margin:0;color:var(--cred-muted);font-size:.82rem;line-height:1.6}
+@media(max-width:760px){.hmatias-credibility .cred-story-grid{grid-template-columns:1fr}.hmatias-credibility .cred-story-grid article{padding:18px 0}.hmatias-credibility .cred-story-grid article+article{padding-left:0;border-left:0;border-top:1px solid var(--cred-line)}.hmatias-credibility .cred-activity{grid-template-columns:1fr;gap:12px}.hmatias-credibility .cred-activity p{grid-column:1}}

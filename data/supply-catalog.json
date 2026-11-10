@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "last_reviewed": "2026-11-09",
-  "catalogue_rule": "Only products with genuine product photography and documented references are displayed. Supply is on request; no owned stock or guaranteed availability is implied. Full catalogue PDFs and QR links are activated only when the exact document is committed and the public URL has been tested.",
+  "catalogue_rule": "Only products with genuine product photography and documented references are displayed. Each item points to the relevant official SYNVOR Industrial catalogue family. Supply is on request; no owned stock or guaranteed availability is implied.",
   "categories": [
     {
       "id": "carbodiam-cutting",
@@ -18,7 +18,8 @@
           "specification": "Segmento de 17 mm. Diâmetros indicados no catálogo: 230, 300, 350 e 400 mm.",
           "application": "Betão e betão armado.",
           "image": "images/supply/carbodiam-red-line-17.webp",
-          "image_alt": "Disco diamantado Carbodiam Red Line 17 — fotografia do produto."
+          "image_alt": "Disco diamantado Carbodiam Red Line 17 — fotografia do produto.",
+          "catalog_url": "https://synvor-industrial.com/discos-diamantados"
         },
         {
           "name": "Spyrostar",
@@ -26,7 +27,8 @@
           "specification": "Diâmetros indicados no catálogo: 125, 230, 350 e 400 mm.",
           "application": "Corte de precisão em materiais duros.",
           "image": "images/supply/carbodiam-spyrostar.webp",
-          "image_alt": "Disco diamantado Carbodiam Spyrostar — fotografia do produto."
+          "image_alt": "Disco diamantado Carbodiam Spyrostar — fotografia do produto.",
+          "catalog_url": "https://synvor-industrial.com/discos-diamantados"
         },
         {
           "name": "PRO BF1",
@@ -34,7 +36,8 @@
           "specification": "Diâmetros indicados no catálogo: 300 e 350 mm.",
           "application": "Pavimentos industriais duros.",
           "image": "images/supply/carbodiam-pro-bf1.webp",
-          "image_alt": "Disco diamantado Carbodiam PRO BF1 — fotografia do produto."
+          "image_alt": "Disco diamantado Carbodiam PRO BF1 — fotografia do produto.",
+          "catalog_url": "https://synvor-industrial.com/discos-diamantados"
         }
       ],
       "quote_note": "Confirmar diâmetro, furo central, máquina, material e modo de corte antes da cotação."
@@ -54,7 +57,8 @@
           "specification": "Segmento indicado de 3–5 mm; ligação 5/4″. Diâmetro e comprimento útil dependem do código e da configuração.",
           "application": "Betão duro e fortemente armado; caroteadoras de coluna.",
           "image": "images/supply/carbodiam-rocket-line.webp",
-          "image_alt": "Coroa diamantada Carbodiam Rocket Line — fotografia do produto."
+          "image_alt": "Coroa diamantada Carbodiam Rocket Line — fotografia do produto.",
+          "catalog_url": "https://synvor-industrial.com/coroas-diamantadas"
         }
       ],
       "quote_note": "Diâmetro, comprimento útil, encaixe e compatibilidade são confirmados antes da proposta."

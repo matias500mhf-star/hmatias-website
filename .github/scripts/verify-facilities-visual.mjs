@@ -9,6 +9,17 @@ try {
   for(const path of paths){
     for(const view of viewports){
       const page=await browser.newPage({viewport:{width:view.width,height:view.height},deviceScaleFactor:1});
+      const pageErrors=[];
+      const failedLocalResources=[];
+      page.on('pageerror',error=>pageErrors.push(error.message));
+      page.on('requestfailed',request=>{
+        try{if(new URL(request.url()).origin==='http://127.0.0.1:8080')failedLocalResources.push(request.url()+' — '+request.failure()?.errorText)}
+        catch{}
+      });
+      page.on('response',response=>{
+        try{if(new URL(response.url()).origin==='http://127.0.0.1:8080'&&response.status()>=400)failedLocalResources.push(response.status()+' '+response.url())}
+        catch{}
+      });
       try{
         const r=await page.goto('http://127.0.0.1:8080/'+path,{waitUntil:'domcontentloaded',timeout:25000});
         if(!r||!r.ok())throw Error('Page HTTP status '+r?.status());
@@ -36,6 +47,9 @@ try {
         if(width.scroll-width.inner>8)throw Error('Horizontal page overflow: '+JSON.stringify(width));
         const file='facilities-previews/'+path.replace('.html','')+'-'+view.name+'.png';
         await page.screenshot({path:file,fullPage:true,animations:'disabled',timeout:25000});
+        await page.waitForTimeout(150);
+        if(pageErrors.length)throw Error('Uncaught page errors: '+pageErrors.join(' | '));
+        if(failedLocalResources.length)throw Error('Failed local resources: '+failedLocalResources.join(' | '));
         console.log('PASS',path,view.name,visualCheck,'overflow=',width.scroll-width.inner,'screenshot',file);
       }catch(err){
         errors.push({path,viewport:view.name,error:String(err)});
