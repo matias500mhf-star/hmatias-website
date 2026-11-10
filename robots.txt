@@ -1,4 +1,5 @@
-# Pesquisa ChatGPT: páginas públicas permitidas; áreas operacionais privadas excluídas.
+# HMATIAS – regras de rastreio e descoberta
+# Pesquisa ChatGPT: permitir OAI-SearchBot; GPTBot (treino) permanece bloqueado.
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /admin/
@@ -12,8 +13,21 @@ Disallow: /source-ao/supplier-discovery.html
 Disallow: /source-ao/backend/
 Disallow: /source-ao/docs/
 
-# Conteúdo público igualmente acessível ao Bing e Google pelo grupo genérico.
-# HMATIAS Website Robots.txt
+User-agent: GPTBot
+Disallow: /
+
+# Google Search e Gemini Search: manter Googlebot permitido.
+# Google-Extended controla utilização para certos fins de IA; não bloqueia Google Search.
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Bing e restantes motores: permitir rastreio público.
+User-agent: Bingbot
+Allow: /
+
 User-agent: *
 Allow: /
 Disallow: /admin/
@@ -27,5 +41,4 @@ Disallow: /source-ao/supplier-discovery.html
 Disallow: /source-ao/backend/
 Disallow: /source-ao/docs/
 
-# Sitemap
 Sitemap: https://comercialhmatiasps.com/sitemap.xml
