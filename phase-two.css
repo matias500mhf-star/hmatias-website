@@ -20,3 +20,6 @@
 @media(max-width:700px){.journal-feature{grid-template-columns:1fr;gap:28px;padding:54px 6%}.journal-card{min-height:230px}.premium-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}.premium-footer-grid .footer-brand{grid-column:1/-1}.premium-footer-grid>div:not(:first-child){grid-column:auto}}
 @media(max-width:420px){.premium-footer-grid{grid-template-columns:1fr}.premium-footer-grid>div:not(:first-child){grid-column:1/-1}.premium-footer-bottom{align-items:flex-start;flex-direction:column}.premium-footer-bottom div{gap:12px}}
 @media(prefers-reduced-motion:reduce){.journal-card{transition:none}}
+
+/* Keep the homepage editorial accent readable on white. */
+body.hm-preview .intro-grid h2 em{color:#0065cc}
