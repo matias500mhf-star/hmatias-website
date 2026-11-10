@@ -15,7 +15,9 @@
 .hmatias-credibility .cred-identity dl{display:grid;gap:0;margin:0}
 .hmatias-credibility .cred-identity dl>div{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-top:1px solid var(--cred-line)}
 .hmatias-credibility .cred-identity dt{color:var(--cred-muted);font-size:.78rem}
-.hmatias-credibility .cred-identity dd{margin:0;color:var(--cred-ink);font-size:.8rem;font-weight:700;text-align:right}
+.hmatias-credibility .cred-identity dd{margin:0;color:var(--cred-ink);font-size:.8rem;font-weight:700;text-align:right;overflow-wrap:anywhere}
+.hmatias-credibility .cred-identity dd a{color:inherit;text-decoration:none}
+.hmatias-credibility .cred-identity dd a:hover{color:#0065cc}
 .hmatias-credibility .cred-section{padding:clamp(54px,7vw,82px) 0;background:#fff}
 .hmatias-credibility .cred-section-soft{background:#fff}
 .hmatias-credibility .cred-heading{max-width:720px;margin-bottom:28px}
