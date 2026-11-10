@@ -101,3 +101,110 @@ body.hmatias-credibility .cred-contact{padding:44px 0;background:#eaf2f8}
  body.hmatias-credibility .cred-services{grid-template-columns:1fr 1fr}
 }
 @media(prefers-reduced-motion:reduce){body.hmatias-institutional *{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Shared interaction layer — extracted from the Lovable prototype, adapted to HMATIAS blue.
+   Scoped to internal corporate pages; the approved homepage and Source AO are not affected. */
+body.hmatias-institutional{
+  --hm-navy:#062d56;
+  --hm-blue:#075da8;
+  --hm-blue-hover:#006edb;
+  --hm-sky:#8dc8ee;
+  --hm-ink:#102d4d;
+  --hm-muted:#5d6d7d;
+  --hm-line:#dce6f0;
+  --hm-surface:#f4f8fc;
+  --hm-focus:rgba(0,101,204,.24);
+}
+body.hmatias-institutional :is(.btn,.button,.header-cta,[class*="btn-"]){
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  border-radius:4px;
+  font-family:inherit;
+  font-weight:700;
+  line-height:1.2;
+  text-decoration:none;
+  box-shadow:none;
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .18s ease;
+}
+body.hmatias-institutional :is(.btn-primary,.button-primary,.header-cta){
+  background:var(--hm-blue);
+  border:1px solid var(--hm-blue);
+  color:#fff;
+}
+body.hmatias-institutional :is(.btn-primary,.button-primary,.header-cta):hover{
+  background:var(--hm-blue-hover);
+  border-color:var(--hm-blue-hover);
+  color:#fff;
+  transform:translateY(-1px);
+}
+body.hmatias-institutional :is(.btn-outline,.btn-outline-light,.button-outline){
+  background:transparent;
+  border:1px solid #9aafc1;
+  color:var(--hm-navy);
+}
+body.hmatias-institutional :is(.btn-outline,.btn-outline-light,.button-outline):hover{
+  background:#eaf2f8;
+  border-color:#6f91ad;
+  color:var(--hm-navy);
+}
+body.hmatias-institutional :is(.btn-light,.button-light){
+  background:#fff;
+  border:1px solid #fff;
+  color:var(--hm-navy);
+}
+body.hmatias-institutional :is(.btn-light,.button-light):hover{
+  background:#eaf4fb;
+  border-color:#eaf4fb;
+  color:var(--hm-navy);
+}
+body.hmatias-institutional :is(.btn,.button,.header-cta,[class*="btn-"]):focus-visible,
+body.hmatias-institutional :is(a,button,input,select,textarea):focus-visible{
+  outline:3px solid var(--hm-focus);
+  outline-offset:3px;
+}
+body.hmatias-institutional .hmatias-header .nav-menu a{
+  transition:color .18s ease,border-color .18s ease;
+}
+body.hmatias-institutional .hmatias-header .nav-menu a:hover,
+body.hmatias-institutional .hmatias-header .nav-menu a.active{
+  color:var(--hm-blue);
+}
+body.hmatias-institutional :is(input,select,textarea,.form-control){
+  min-height:44px;
+  border:1px solid var(--hm-line);
+  border-radius:4px;
+  background:#fff;
+  color:var(--hm-ink);
+  font:inherit;
+  box-shadow:none;
+}
+body.hmatias-institutional :is(input,select,textarea,.form-control):focus{
+  border-color:var(--hm-blue);
+  outline:0;
+  box-shadow:0 0 0 3px var(--hm-focus);
+}
+body.hmatias-institutional :is(input,select,textarea,.form-control)::placeholder{
+  color:#8293a3;
+  opacity:1;
+}
+body.hmatias-institutional :is(.unit-card,.unit-hero-panel,.business-contact-form,.cred-identity){
+  border-radius:4px;
+  box-shadow:none;
+}
+body.hmatias-institutional a:not(.btn):not(.button):not(.header-cta){
+  text-underline-offset:3px;
+}
+@media(max-width:620px){
+  body.hmatias-institutional :is(.btn,.button,.header-cta,[class*="btn-"]){
+    min-height:46px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body.hmatias-institutional :is(.btn,.button,.header-cta,[class*="btn-"],a){
+    transition:none!important;
+  }
+}
