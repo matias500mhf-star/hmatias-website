@@ -46,13 +46,19 @@ jobs:
           grep -q '"item-vci-corrosion-protection"' source-ao/data/catalog.json
           grep -q '"item-industrial-protective-coatings"' source-ao/data/catalog.json
           grep -q '"item-hydrotest-corrosion-treatment"' source-ao/data/catalog.json
-          # Supply catalogue is now an evidence-led product selection with real photos.
+          # Supply catalogue presents four static, photographed product references.
           grep -q 'id="catalogue-comercial"' supply.html
           grep -q 'id="catalogue-comercial"' supply-en.html
-          grep -q 'id="catalogue-grid"' supply.html
-          grep -q 'id="catalogue-grid"' supply-en.html
-          grep -q 'Produtos documentados, com imagem real.' supply.html
-          grep -q 'Documented products with real images.' supply-en.html
+          test "$(grep -c 'class="supply-product-card"' supply.html)" -eq 4
+          test "$(grep -c 'class="supply-product-card"' supply-en.html)" -eq 4
+          grep -q 'Quatro referências. Uma consulta clara.' supply.html
+          grep -q 'Four references. A clear enquiry.' supply-en.html
+          grep -q 'https://synvor-industrial.com/discos-diamantados' supply.html
+          grep -q 'https://synvor-industrial.com/coroas-diamantadas' supply.html
+          ! grep -q 'id="catalogue-grid"' supply.html
+          ! grep -q 'id="catalogue-grid"' supply-en.html
+          ! grep -q 'institutional-network.js' supply.html
+          ! grep -q 'institutional-network.js' supply-en.html
           ! grep -RqiE 'commercial_priority|next_action|relationship_stage|private_contact|internal_notes' source-ao/data/catalog.json supply.html supply-en.html
 
       - name: Validate frontend scripts syntax

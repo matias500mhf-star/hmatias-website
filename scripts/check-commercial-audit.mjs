@@ -150,7 +150,7 @@ for(const [path,anchor,labels] of [
   ['credibility.html','how-we-work',['COMPANY DETAILS','From enquiry to proposal.','Enquiry','Assessment','Proposal']]
 ]){
   const html=read(path);
-  assert.ok(html.includes('credibility-page.css?v=20261110-minimal-profile1'),'Credibility layout stylesheet missing: '+path);
+  assert.ok(html.includes('credibility-page.css?v=20261111-company-story1'),'Credibility layout stylesheet missing: '+path);
   assert.ok(html.includes('id="'+anchor+'"'),'Credibility process anchor missing: '+path+'#'+anchor);
   for(const label of labels) assert.ok(html.includes(label),'Company profile copy missing: '+path+' / '+label);
   const panelStart=html.indexOf('<aside class="cred-identity"');
@@ -169,8 +169,9 @@ assert.ok(read('en.html').includes('COMMERCIAL PROPOSAL'));
 
 assert.ok(!read('credibilidade.html').includes('orientados pela nossa missão, visão e valores.'));
 assert.ok(!read('credibility.html').includes('guided by our mission, vision and values.'));
-assert.ok(!read('credibilidade.html').includes('MISSÃO') && !read('credibilidade.html').includes('VISÃO'));
-assert.ok(!read('credibility.html').includes('MISSION') && !read('credibility.html').includes('VISION'));
+assert.ok(read('credibilidade.html').includes('MISSÃO') && read('credibilidade.html').includes('PRINCÍPIOS DE TRABALHO'));
+assert.ok(read('credibility.html').includes('MISSION') && read('credibility.html').includes('WORKING PRINCIPLES'));
+assert.ok(!read('credibilidade.html').includes('VISÃO') && !read('credibility.html').includes('VISION'));
 assert.ok(!read('credibilidade.html').includes('projetos-digitais') && !read('credibility.html').includes('digital-projects'));
 const credibilityCss=read('credibility-page.css');
 assert.ok(credibilityCss.includes('minmax(230px,1.65fr)'),'Desktop credibility footer needs room for contact addresses');
