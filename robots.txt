@@ -1,4 +1,5 @@
 # HMATIAS – regras de rastreio e descoberta
+# Guia de conteúdo para sistemas de IA: https://comercialhmatiasps.com/llms.txt
 # Pesquisa ChatGPT: permitir OAI-SearchBot; GPTBot (treino) permanece bloqueado.
 User-agent: OAI-SearchBot
 Allow: /
