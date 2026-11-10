@@ -152,3 +152,51 @@ body :focus-visible{outline:3px solid #48baf5;outline-offset:3px}
   body .site-header *,body .site-header *::before,body .site-header *::after{transition:none!important}
   body .project-image img{transition:none!important}
 }
+
+/* Refined navigation, original HMATIAS project-photo treatment and branded footer. */
+body .site-header .primary-nav{gap:clamp(16px,2vw,27px)}
+body .site-header .primary-nav a{font-size:12px;white-space:nowrap}
+body .hero-media{padding:0;background:#0a355b}
+body .hero-media .visual-card{position:absolute;inset:0;overflow:hidden;background:#0a355b}
+body .hero-media .hero-photo{display:block;position:absolute;inset:0}
+body .hero-media .hero-photo img{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 46%;filter:saturate(.92) contrast(1.02)}
+body .hero-media .visual-card:before{content:"";z-index:1;pointer-events:none;position:absolute;inset:0;background:linear-gradient(90deg,#062d56eb 0%,#062d566b 42%,#062d560f 100%),linear-gradient(#062d560a 40%,#062d569e 100%)}
+body .hero-media .visual-overlay{z-index:3;position:absolute;right:6%;bottom:8%;max-width:82%;padding:15px 19px;border-left:5px solid var(--sky);background:#062d56f0;color:#fff;box-shadow:0 12px 30px #0003;font-size:12px}
+body .hero-media .visual-overlay strong{display:block;line-height:1.35}
+body .hero-media .visual-overlay small{display:block;margin-top:4px;color:#c4e0f2;font-size:11px}
+body .journal-section{background:#fff}
+body .journal-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(42px,9vw,130px);align-items:center}
+body .journal-heading h2{max-width:500px;margin:0;font-size:clamp(34px,4vw,49px);line-height:1.08;letter-spacing:-.045em;font-weight:520}
+body .journal-heading>p:last-child{max-width:430px;margin:18px 0 0;color:var(--muted);font-size:14px;line-height:1.8}
+body .journal-feature{padding:27px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+body .journal-feature>span{color:var(--blue);font-size:9px;font-weight:700;letter-spacing:.13em}
+body .journal-feature h3{margin:14px 0 8px;font-size:24px;font-weight:550;letter-spacing:-.03em}
+body .journal-feature p{max-width:500px;margin:0;color:#52687c;font-size:13px;line-height:1.8}
+body .journal-feature a{display:inline-flex;gap:12px;margin-top:18px;color:var(--blue);font-size:11px;font-weight:700}
+body .site-footer{padding:0 max(5vw,24px);background:#031f3d;color:#bcd1e3;border-top:0}
+body .footer-main{grid-template-columns:1.35fr 1fr 1.3fr 1.35fr 1fr;gap:30px;padding:48px 0 42px}
+body .footer-brand img{filter:brightness(0) invert(1);opacity:.96}
+body .footer-brand p{color:#fff}
+body .footer-brand>span{color:#8ea9c0}
+body .footer-column strong{color:#fff}
+body .footer-column a{color:#bcd1e3}
+body .footer-column a:hover,body .footer-bottom a:hover{color:#fff}
+body .footer-bottom{border-top:1px solid #ffffff1f;color:#8ea9c0}
+body .footer-bottom a{color:#bcd1e3}
+@media(max-width:1050px){
+  body .site-header .primary-nav{gap:clamp(12px,1.5vw,18px)}
+  body .site-header .primary-nav a{font-size:11px}
+  body .footer-main{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:720px){
+  body .site-header .primary-nav{gap:0}
+  body .site-header .primary-nav a{font-size:13px}
+  body .hero-media .visual-card{position:absolute}
+  body .hero-media{min-height:340px}
+  body .hero-media .visual-overlay{right:20px;bottom:20px;padding:13px 15px}
+  body .journal-grid{grid-template-columns:1fr;gap:28px}
+  body .journal-feature{padding:23px 0}
+  body .footer-main{grid-template-columns:1fr 1fr;gap:28px 22px;padding:36px 0 30px}
+  body .footer-brand{grid-column:span 2}
+}
+@media(prefers-reduced-motion:reduce){body .hero-media .hero-photo img{transition:none!important}}
