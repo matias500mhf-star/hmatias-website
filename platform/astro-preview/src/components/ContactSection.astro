@@ -1,0 +1,39 @@
+---
+import { company } from "../data/site";
+---
+<section class="contact section-pad" id="contacto">
+  <div class="section-kicker">04 / CONTACTO</div>
+  <div class="contact-grid">
+    <div class="contact-copy">
+      <h2>Vamos falar<br /><em>do seu projeto.</em></h2>
+      <p>Partilhe o serviço, o local e o que pretende realizar. A equipa HMATIAS poderá analisar o pedido e indicar os próximos passos.</p>
+      <div class="contact-details">
+        <a href={company.telephoneUri}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7" /></svg>
+          <span>{company.phone}</span>
+        </a>
+        <a href={`mailto:${company.commercialEmail}`}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
+          <span>{company.commercialEmail}</span>
+        </a>
+        <a href={`mailto:${company.institutionalEmail}`}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></svg>
+          <span>{company.institutionalEmail}</span>
+        </a>
+        <span class="contact-address">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></svg>
+          <span>{company.address}</span>
+        </span>
+      </div>
+    </div>
+    <div class="contact-actions">
+      <a class="contact-action" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">
+        <span>WhatsApp</span><b aria-hidden="true">↗</b>
+      </a>
+      <a class="contact-action" href={`mailto:${company.commercialEmail}?subject=Pedido%20de%20informa%C3%A7%C3%A3o%20-%20HMATIAS`}>
+        <span>Enviar e-mail</span><b aria-hidden="true">↗</b>
+      </a>
+      <div class="contact-small">{company.name}<br />Construção · Facilities · Supply · Business Services</div>
+    </div>
+  </div>
+</section>
