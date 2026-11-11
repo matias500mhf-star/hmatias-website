@@ -19,7 +19,7 @@ A homepage foi preservada sem alterações nesta revisão. Não foram eliminadas
 - 28 rotas revistas: 14 PT + 14 EN.
 - 18 páginas (9 pares PT/EN) receberam alterações editoriais.
 - 10 páginas (5 pares PT/EN) foram mantidas nesta ronda por conterem informação funcional, legal ou editorial que não deve ser reduzida sem validação adicional.
-- O diff técnico dos 16 ficheiros de páginas apresenta 203 linhas removidas e 61 adicionadas. Este número é uma contagem de linhas de código/conteúdo, não uma contagem de parágrafos genéricos nem de palavras eliminadas.
+- O diff técnico dos 16 ficheiros de páginas apresenta 213 linhas removidas e 69 adicionadas. Este número é uma contagem de linhas de código/conteúdo, não uma contagem de parágrafos genéricos nem de palavras eliminadas.
 
 ## Alterações efectuadas
 
@@ -30,7 +30,7 @@ A homepage foi preservada sem alterações nesta revisão. Não foram eliminadas
 | Facilities / Facilities | Removida a secção processual repetitiva. Mantidos serviços, intervenções documentadas e dados necessários para avaliar instalações, áreas e frequência. |
 | Supply / Supply | Consolidada a explicação sobre sourcing sob consulta; removida a repetição do processo em quatro passos. Mantidos os limites de stock, categorias, requisitos técnicos, perguntas frequentes e Smart RFQ. |
 | Business Services / Business Services | Substituída a sequência genérica de três passos por uma lista prática: serviço, informação de origem, volume/formato e prazo/prioridade. |
-| Credibilidade / Credibility | Reduzida a introdução institucional e clarificada a função da página: identificação legal, contactos oficiais e condições gerais. |
+| Credibilidade / Credibility | Reduzida a introdução institucional e clarificada a função da página: identificação legal, contactos oficiais e condições gerais. Quatro mensagens genéricas foram consolidadas em três condições operacionais. |
 | Catálogo de Obras / Works Catalogue | Removida a explicação repetida sobre o arquivo fotográfico; mantidas as descrições das imagens e a nota sobre divulgação autorizada e limites probatórios do catálogo. |
 | Blog / Blog | Retirados cartões de temas editoriais sem artigos associados; títulos, descrições e metadados foram alinhados com o guia realmente publicado sobre pedidos de cotação e fornecimento. |
 | Smart RFQ / Smart RFQ | Reduzida a repetição entre introdução e etapas; mantidas as instruções de submissão, dados necessários e distinção entre registo e cotação/adjudicação. |
