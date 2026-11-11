@@ -169,7 +169,7 @@ assert.ok(existsSync(worksCataloguePath), "Works catalogue page must be generate
 const worksCatalogueHtml = readFileSync(worksCataloguePath, "utf8");
 assert.match(worksCatalogueHtml, /Obras, intervenções/, "Works catalogue heading is missing");
 assert.match(worksCatalogueHtml, /Fornecimentos/, "Catalogue must include supply references in its scope");
-assert.match(worksCatalogueHtml, /otimizadas/, "Catalogue copy must use consistent Portuguese orthography");
+assert.match(worksCatalogueHtml, /divulgação é adequada ou autorizada/i, "Catalogue must preserve its client and location disclosure");
 assert.match(worksCatalogueHtml, /faturas/, "Catalogue disclaimer must use current Portuguese orthography");
 assert.match(worksCatalogueHtml, /Apresente o seu projeto/, "Catalogue CTA must use current Portuguese orthography");
 assert.equal((worksCatalogueHtml.match(/<article class="works-catalogue-card"/g) || []).length, 12, "The complete 12-record catalogue must be present");
