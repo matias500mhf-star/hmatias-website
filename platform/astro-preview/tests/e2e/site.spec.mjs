@@ -151,22 +151,24 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
   });
 
-  test("menu móvel abre e fecha ao navegar", async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== "mobile-webkit", "Teste exclusivo do viewport móvel.");
-    await page.goto("/");
-    const toggle = page.locator(".menu-toggle");
-    const nav = page.locator("#main-nav");
-    await expect(toggle).toBeVisible();
-    await expect(toggle).toHaveAttribute("aria-expanded", "false");
-    await toggle.click();
-    await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    await expect(toggle).toHaveAttribute("aria-label", "Fechar menu");
-    await expect(nav).toHaveClass(/is-open/);
-    await nav.getByRole("link", { name: "Serviços" }).click();
-    await expect(toggle).toHaveAttribute("aria-expanded", "false");
-    await expect(toggle).toHaveAttribute("aria-label", "Abrir menu");
-    await expect(nav).not.toHaveClass(/is-open/);
-  });
+  for (const route of routes) {
+    test(`menu móvel abre e fecha em ${route}`, async ({ page }, testInfo) => {
+      test.skip(testInfo.project.name !== "mobile-webkit", "Teste exclusivo do viewport móvel.");
+      await page.goto(route);
+      const toggle = page.locator(".menu-toggle");
+      const nav = page.locator("#main-nav");
+      await expect(toggle).toBeVisible();
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
+      await toggle.click();
+      await expect(toggle).toHaveAttribute("aria-expanded", "true");
+      await expect(toggle).toHaveAttribute("aria-label", "Fechar menu");
+      await expect(nav).toHaveClass(/is-open/);
+      await nav.getByRole("link", { name: "Serviços" }).click();
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
+      await expect(toggle).toHaveAttribute("aria-label", "Abrir menu");
+      await expect(nav).not.toHaveClass(/is-open/);
+    });
+  }
 
   for (const route of routes) {
     test(`rota ${route} responde, apresenta conteúdo e não tem erros estruturais`, async ({ page }) => {
