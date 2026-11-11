@@ -4,6 +4,7 @@ import logo from "../../../../logo-hmatias.png";
 import { company } from "../data/site";
 const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const isEnglish = pathname.startsWith("/en/");
+const isBlogIndex = pathname === "/blog/" || pathname === "/en/blog/";
 const homeUrl = isEnglish ? "/en/" : "/";
 const links = isEnglish
   ? {
@@ -35,7 +36,7 @@ const links = isEnglish
         : "Construção, Facilities, Supply e Business Services para empresas e projetos em Angola."}</p>
       <a class="footer-platform-link" href={company.sourceAoUrl}>SOURCE AO <span>↗</span></a>
       <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
-      <a href={links.blog}>{isEnglish ? "Practical sourcing guides" : "Blog · Guias práticos"}</a>
+      <a href={links.blog}>{isEnglish ? (isBlogIndex ? "Practical sourcing guides" : "Insights and articles") : (isBlogIndex ? "Blog · Guias práticos" : "Blog · Perspetivas empresariais")}</a>
     </section>
 
     <nav class="footer-column" aria-label={isEnglish ? "Construction services" : "Construção"}>
