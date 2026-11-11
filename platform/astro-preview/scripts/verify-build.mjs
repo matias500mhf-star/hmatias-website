@@ -37,7 +37,6 @@ for (const project of ["Galpão com estrutura metálica", "Preparação de terre
   assert.ok(html.includes(project), `Project missing: ${project}`);
 }
 
-
 const blogPath = join(outDir, "blog", "index.html");
 assert.ok(existsSync(blogPath), "Blog page must be generated");
 const blogHtml = readFileSync(blogPath, "utf8");
@@ -65,9 +64,22 @@ assert.match(facilitiesHtml, /Facilities e/, "Facilities page title is missing")
 assert.match(facilitiesHtml, /Manutenção de instalações/, "Facilities services are missing");
 assert.match(facilitiesHtml, /Substituição localizada de cobertura/, "Facilities project evidence is missing");
 assert.match(facilitiesHtml, /Pedido de serviço/i, "Facilities contact section is missing");
-const facilitiesImgCount = (facilitiesHtml.match(/<img\\b/g) || []).length;
-const facilitiesImgWithAltCount = (facilitiesHtml.match(/<img\\b[^>]*\\balt=/g) || []).length;
+const facilitiesImgCount = (facilitiesHtml.match(/<img\b/g) || []).length;
+const facilitiesImgWithAltCount = (facilitiesHtml.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(facilitiesImgWithAltCount, facilitiesImgCount, "Every Facilities page image must have an alt attribute");
+
+const supplyPath = join(outDir, "supply", "index.html");
+assert.ok(existsSync(supplyPath), "Supply page must be generated");
+const supplyHtml = readFileSync(supplyPath, "utf8");
+assert.match(supplyHtml, /Procurement e/, "Supply page heading is missing");
+assert.match(supplyHtml, /não mantém stock próprio/i, "Supply stock disclosure is missing");
+assert.match(supplyHtml, /Fornecimento Nacional/, "Supply category is missing");
+assert.match(supplyHtml, /SOURCE AO/, "Supply page must link to SOURCE AO");
+assert.match(supplyHtml, /Registar pedido de cotação/, "Supply RFQ action is missing");
+const supplyImgCount = (supplyHtml.match(/<img\b/g) || []).length;
+const supplyImgWithAltCount = (supplyHtml.match(/<img\b[^>]*\balt=/g) || []).length;
+assert.equal(supplyImgWithAltCount, supplyImgCount, "Every Supply page image must have an alt attribute");
+assert.equal((supplyHtml.match(/supply-evidence-card/g) || []).length, 3, "Three Supply evidence cards are expected");
 
 const assetDir = join(outDir, "_astro");
 assert.ok(existsSync(assetDir), "Astro must emit processed assets");
@@ -78,4 +90,4 @@ const htmlImgCount = (html.match(/<img\b/g) || []).length;
 const htmlImgWithAltCount = (html.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(htmlImgWithAltCount, htmlImgCount, "Every image must have an alt attribute");
 
-console.log(`Astro static output verified: ${htmlImgCount} images have alt text; ${assets.length} processed assets emitted.`);
+console.log(`Astro static output verified: homepage has ${htmlImgCount} accessible images; ${assets.length} processed assets emitted.`);
