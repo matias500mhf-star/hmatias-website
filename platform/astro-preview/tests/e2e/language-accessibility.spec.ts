@@ -17,7 +17,7 @@ test.describe("Bilingual brand and language accessibility", () => {
     const languageSwitch = page.locator(".language-switch");
     await expect(languageSwitch).toHaveAttribute("href", "/");
     await expect(languageSwitch).toHaveAttribute("lang", "pt-AO");
-    await expect(languageSwitch).toHaveAttribute("aria-label", "Switch to Portuguese");
+    await expect(languageSwitch).toHaveAttribute("aria-label", "PT — Switch to Portuguese");
 
     await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
       "content",
@@ -47,7 +47,7 @@ test.describe("Bilingual brand and language accessibility", () => {
     const languageSwitch = page.locator(".language-switch");
     await expect(languageSwitch).toHaveAttribute("href", "/en/");
     await expect(languageSwitch).toHaveAttribute("lang", "en");
-    await expect(languageSwitch).toHaveAttribute("aria-label", "Mudar para inglês");
+    await expect(languageSwitch).toHaveAttribute("aria-label", "EN — Mudar para inglês");
 
     await expect(page.locator(".footer-legal-id")).toContainText("NIF");
     await expect(page.locator(".footer-legal-id")).toContainText("Registo Comercial");
@@ -110,7 +110,7 @@ test("all English routes expose matching language, brand descriptions and recipr
     );
     await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("href", portugueseRoute);
     await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("lang", "pt-AO");
-    await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("aria-label", "Switch to Portuguese");
+    await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("aria-label", "PT — Switch to Portuguese");
     await expect(page.locator(".footer-legal-id"), englishRoute).toContainText("Tax ID");
     await expect(page.locator(".footer-legal-id"), englishRoute).toContainText("Commercial Registration");
   }
