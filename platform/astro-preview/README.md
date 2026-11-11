@@ -10,10 +10,12 @@ Este projeto é um protótipo isolado para comparar uma arquitetura Astro com o 
 - Manter conteúdos e contactos em dados tipados.
 - Renderizar a página como HTML estático, sem runtime React no conteúdo institucional.
 - Validar tipos, build e estrutura do artefacto em GitHub Actions.
+- Testar navegação real em Chromium desktop e móvel com Playwright.
+- Verificar acessibilidade automatizada com axe-core e recolher auditorias Lighthouse.
 
 ## Requisitos
 
-- Node.js 22.22.0 ou superior. O workflow CI usa Node.js 24.
+- Node.js 26.13.0 (versão fixada em `.node-version` e alinhada com o runtime do preview).
 - npm.
 
 ## Comandos
@@ -46,3 +48,16 @@ React não foi instalado nesta etapa. A homepage institucional é maioritariamen
 - Esta pasta não está ligada ao publisher de produção.
 - Não executar `wrangler deploy`, não alterar DNS e não associar o domínio oficial.
 - O resultado só pode ser considerado candidato a migração após comparação visual, acessibilidade, SEO, performance, formulários e integrações.
+
+## Quality Engineering
+
+O workflow `.github/workflows/astro-prototype-qa.yml` executa:
+
+- `astro check`, build estático, auditoria de dependências e verificação do artefacto.
+- Playwright 1.65.0 em Chromium desktop e móvel: rotas, navegação, âncoras, imagens com texto alternativo e overflow horizontal.
+- axe-core 4.14.0 nas rotas Homepage, Blog e Acessibilidade. Falhas críticas e graves bloqueiam o CI; ocorrências moderadas ou menores são registadas para revisão.
+- Lighthouse CI 0.16.0 nas mesmas rotas, com indicadores de desempenho, acessibilidade, boas práticas, SEO, LCP e CLS. Os limites estão inicialmente em modo de alerta para permitir recolher uma linha de base real.
+
+Os relatórios Playwright e Lighthouse são guardados como artefactos do GitHub Actions por 14 dias. As ferramentas de QA são instaladas apenas no ambiente CI e não entram no bundle do website.
+
+A página de preview mantém `noindex, nofollow` até existir decisão de publicação; essa proteção não deve ser removida durante a avaliação.
