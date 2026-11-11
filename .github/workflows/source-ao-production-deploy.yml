@@ -7,13 +7,9 @@ on:
         description: 'Type DEPLOY-PRODUCTION to continue'
         required: true
         type: string
-  push:
-    branches: [main]
-    paths:
-      - '.source-ao-production-release'
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: source-ao-production-deploy
@@ -21,31 +17,30 @@ concurrency:
 
 jobs:
   deploy-production:
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.confirm == 'DEPLOY-PRODUCTION') }}
+    if: ${{ inputs.confirm == 'DEPLOY-PRODUCTION' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 24
-    # Reuse the already-validated Cloudflare credential scope from staging.
-    # Production D1/Worker resources remain separate and are created by this workflow.
-    environment: source-ao-staging
+    # Production credentials are isolated in this separately protected environment.
+    environment: source-ao-production
     defaults:
       run:
         working-directory: source-ao/backend
     env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
-      SOURCE_AO_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_ADMIN_API_TOKEN }}
-      SOURCE_AO_RESEND_API_KEY: ${{ secrets.SOURCE_AO_RESEND_API_KEY }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      SOURCE_AO_ALERT_FROM: ${{ vars.SOURCE_AO_ALERT_FROM || 'HMATIAS Source AO <geral@comercialhmatiasps.com>' }}
-      SOURCE_AO_ALERT_TO: ${{ vars.SOURCE_AO_ALERT_TO || 'geral@comercialhmatiasps.com' }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.SOURCE_AO_PRODUCTION_CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.SOURCE_AO_PRODUCTION_CLOUDFLARE_ACCOUNT_ID }}
+      SOURCE_AO_ADMIN_API_TOKEN: ${{ secrets.SOURCE_AO_PRODUCTION_ADMIN_API_TOKEN }}
+      SOURCE_AO_RESEND_API_KEY: ${{ secrets.SOURCE_AO_PRODUCTION_RESEND_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.SOURCE_AO_PRODUCTION_GEMINI_API_KEY }}
+      SOURCE_AO_ALERT_FROM: ${{ vars.SOURCE_AO_PRODUCTION_ALERT_FROM || 'HMATIAS Source AO <geral@comercialhmatiasps.com>' }}
+      SOURCE_AO_ALERT_TO: ${{ vars.SOURCE_AO_PRODUCTION_ALERT_TO || 'geral@comercialhmatiasps.com' }}
 
     steps:
       - name: Checkout production release
         uses: actions/checkout@v5
         with:
           ref: main
-          fetch-depth: 0
-          persist-credentials: true
+          fetch-depth: 1
+          persist-credentials: false
 
       - name: Setup Node 22
         uses: actions/setup-node@v5
@@ -390,38 +385,7 @@ jobs:
           NODE
           rm -f "$RUNNER_TEMP/source-ao-partner-network.json"
 
-      - name: Connect public Source AO frontend to production API
-        working-directory: .
-        shell: bash
-        run: |
-          set -euo pipefail
-          node --input-type=module <<'NODE'
-          import {writeFileSync} from 'node:fs';
-          const apiBase=process.env.SOURCE_AO_PRODUCTION_API_BASE;
-          if(!/^https:\/\//.test(apiBase)) throw new Error('Invalid production API base');
-          const runtime=`(()=>{
-            'use strict';
-            window.SOURCE_AO_RUNTIME=Object.freeze({
-              environment:'production',
-              apiBase:${JSON.stringify(apiBase)}
-            });
-          })();
-          `;
-          writeFileSync('source-ao/runtime-config.js',runtime);
-          NODE
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add source-ao/runtime-config.js
-          if git diff --cached --quiet; then
-            echo "Public runtime already points to production API."
-          else
-            git commit -m "Source AO: connect production API"
-            git pull --rebase origin main
-            git push origin HEAD:main
-          fi
-
-      - name: Verify public frontend configuration targets production API
+      - name: Verify committed public Source AO runtime config
         shell: bash
         run: |
           set -euo pipefail
@@ -436,8 +400,8 @@ jobs:
           if(!html.includes('src="runtime-config.js"')) {
             throw new Error('Public Source AO page does not load its runtime configuration');
           }
-          console.log('Public Source AO build targets the production Worker.');
-          console.log('GitHub Pages production smoke verifies the live frontend after publication.');
+          console.log('Committed public runtime configuration targets the production Worker.');
+          console.log('This step is read-only and does not modify repository files.');
           NODE
 
       - name: Remove generated temporary files

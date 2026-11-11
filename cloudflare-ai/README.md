@@ -33,3 +33,16 @@ The Worker:
 - does not ask visitors for passwords, banking information or unnecessary sensitive data.
 
 The website bridge and Worker are separately validated by the GitHub Actions workflow. A successful GitHub Actions run confirms the dedicated assistant deployment; it does not prove that the separate `hmatias-website1` native Cloudflare Builds project is healthy.
+
+## Native Workers Builds configuration
+
+If the native Cloudflare Workers Builds integration remains connected to `hmatias-ai-assistant`, configure that project as follows:
+
+- **Root directory:** `cloudflare-ai`
+- **Build command:** `npm run build` (runs `node --check src/index.js`)
+- **Deploy command:** `npx wrangler deploy --config wrangler.jsonc`
+- **Worker configuration:** `wrangler.jsonc` inside this directory
+
+Do not leave the root directory at the repository root: the root-level `wrangler.jsonc` targets the separate Worker `hmatias-website1`. The dedicated GitHub Actions workflow remains the controlled deployment and smoke-test path for the assistant; a native Workers Builds check is a separate integration status and must not be mistaken for the SOURCE AO backend status.
+
+Cloudflare applies saved build settings to the next build or retry. After changing the Root directory, build command, deploy command, or build token, retry the failed build or push a new commit to the connected branch so the new settings are exercised.
