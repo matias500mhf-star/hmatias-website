@@ -10,7 +10,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page).toHaveTitle(/HMATIAS/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Capacidade para");
     await expect(page.locator("#main-nav")).toBeAttached();
-    await expect(page.getByRole("link", { name: /Falar com a HMATIAS/ })).toBeAttached();
+    await expect(page.getByRole("link", { name: /Contactar a equipa/ })).toBeVisible();
     await expect(page.getByText("geral@comercialhmatiasps.com").first()).toBeAttached();
   });
   test("página de construção apresenta serviços e registos reais", async ({ page }) => {
