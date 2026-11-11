@@ -27,6 +27,14 @@ test.describe("HMATIAS institutional pages", () => {
       .toHaveAttribute("href", "https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business");
   });
 
+  test("works catalogue preserves all twelve archive records and image descriptions", async ({ page }) => {
+    await page.goto("/catalogo-obras/");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(/Catálogo de obras/);
+    await expect(page.locator(".works-catalogue-card")).toHaveCount(12);
+    await expect(page.locator(".works-catalogue-card img[alt]")).toHaveCount(12);
+    await expect(page.getByText(/não substitui contratos, autos de medição/)).toBeVisible();
+  });
+
   test("company page identifies HMATIAS and its four service areas", async ({ page }) => {
     await page.goto("/empresa/");
     await expect(page.getByText("5001578065", { exact: true })).toBeVisible();
@@ -50,7 +58,7 @@ test.describe("HMATIAS institutional pages", () => {
   });
 
   test("new institutional pages do not introduce horizontal overflow", async ({ page }) => {
-    for (const route of ["/business-services/", "/empresa/", "/privacidade/", "/termos/"]) {
+    for (const route of ["/business-services/", "/empresa/", "/privacidade/", "/termos/", "/catalogo-obras/"]) {
       await page.goto(route);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       expect(overflow, route).toBe(false);
