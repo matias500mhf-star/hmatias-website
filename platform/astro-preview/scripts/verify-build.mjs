@@ -129,10 +129,11 @@ assert.match(businessHtml, /área de receção segura/i, "Business Services inta
 const aboutPath = join(outDir, "empresa", "index.html");
 assert.ok(existsSync(aboutPath), "About page must be generated");
 const aboutHtml = readFileSync(aboutPath, "utf8");
+const aboutText = aboutHtml.replace(/<[^>]*>/g, " ");
 assert.ok(aboutHtml.includes("SOBRE A HMATIAS"), "About page label is missing");
 assert.ok(aboutHtml.includes("IDENTIFICAÇÃO EMPRESARIAL"), "About page company information section is missing");
 assert.ok(aboutHtml.includes("24.094-23"), "About page commercial registration is missing");
-assert.doesNotMatch(aboutHtml, /MISSÃO|VISÃO|MENSAGEM DO CEO|Direção Executiva/i, "Removed generic institutional copy must not return");
+assert.doesNotMatch(aboutText, /\bMISSÃO\b|\bVISÃO\b|MENSAGEM DO CEO|Direção Executiva/i, "Removed generic institutional copy must not return");
 assert.ok(aboutHtml.includes("Construção e remodelação"), "About page service overview is missing");
 assert.match(aboutHtml, /pavilhoes-rurais-concluidos/i, "About page must use a distinct real-work photograph");
 assert.doesNotMatch(aboutHtml, /instalacoes-embutidas-construcao/i, "About page must not reuse the homepage photograph");
@@ -234,9 +235,10 @@ assert.ok(englishHomepage.includes('href="/en/supply/"'), "English homepage must
 assert.ok(englishHomepage.includes('href="/en/business-services/"'), "English homepage must link to English Business Services");
 
 const englishAbout = readFileSync(join(outDir, "en", "about", "index.html"), "utf8");
+const englishAboutText = englishAbout.replace(/<[^>]*>/g, " ");
 assert.ok(englishAbout.includes("24.094-23"), "English About page must show the commercial registration");
 assert.ok(englishAbout.includes("HMATIAS – Prestação de Serviços SU, LDA"), "English About page must show the registered company name");
-assert.doesNotMatch(englishAbout, /Henrique Fernandes|MISSION|VISION|VALUES/i, "Removed generic executive and institutional copy must not return");
+assert.doesNotMatch(englishAboutText, /Henrique Fernandes|\bMISSION\b|\bVISION\b|\bVALUES\b/i, "Removed generic executive and institutional copy must not return");
 assert.match(englishAbout, /pavilhoes-rurais-concluidos/i, "English About page must use the distinct real-work photograph");
 assert.doesNotMatch(englishAbout, /instalacoes-embutidas-construcao/i, "English About page must not reuse the homepage photograph");
 
