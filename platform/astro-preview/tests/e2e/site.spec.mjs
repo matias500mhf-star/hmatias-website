@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const routes = ["/", "/blog/", "/acessibilidade/", "/construcao/", "/facilities/"];
+const routes = ["/", "/blog/", "/acessibilidade/", "/construcao/", "/facilities/", "/supply/"];
 
 test.describe("HMATIAS — navegação e conteúdo", () => {
   test("homepage apresenta identidade, proposta e contactos", async ({ page }) => {
@@ -26,7 +26,6 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
 
-
   test("página de Facilities apresenta serviços e intervenções reais", async ({ page }) => {
     const response = await page.goto("/facilities/");
     expect(response?.status()).toBe(200);
@@ -37,6 +36,19 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.getByRole("heading", { name: "Apoio operacional", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Substituição localizada de cobertura" })).toBeVisible();
     await expect(page.locator(".facilities-work-card img")).toHaveCount(2);
+    await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
+  });
+
+  test("página HMATIAS Supply explica procurement e categorias de fornecimento", async ({ page }) => {
+    const response = await page.goto("/supply/");
+    expect(response?.status()).toBe(200);
+    await expect(page).toHaveTitle(/HMATIAS Supply/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Procurement e");
+    await expect(page.getByRole("heading", { name: "Materiais de construção" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "EPI e fardamento" })).toBeVisible();
+    await expect(page.getByText("A HMATIAS não mantém stock próprio de mercadorias.")).toBeVisible();
+    await expect(page.locator(".supply-evidence-card img")).toHaveCount(3);
+    await expect(page.getByRole("link", { name: "Registar pedido de cotação" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
 
@@ -71,9 +83,18 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     expect(missingAlt).toEqual([]);
   });
 
-
   test("imagens da página de Facilities possuem texto alternativo", async ({ page }) => {
     await page.goto("/facilities/");
+    const missingAlt = await page.locator("img").evaluateAll((images) =>
+      images
+        .filter((image) => !(image.getAttribute("alt") || "").trim())
+        .map((image) => image.getAttribute("src") || "(imagem sem src)")
+    );
+    expect(missingAlt).toEqual([]);
+  });
+
+  test("imagens da página Supply possuem texto alternativo", async ({ page }) => {
+    await page.goto("/supply/");
     const missingAlt = await page.locator("img").evaluateAll((images) =>
       images
         .filter((image) => !(image.getAttribute("alt") || "").trim())
@@ -106,9 +127,20 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
   });
 
-
   test("página de Facilities não cria deslocamento horizontal", async ({ page }) => {
     await page.goto("/facilities/");
+    const dimensions = await page.evaluate(() => ({
+      documentWidth: document.documentElement.scrollWidth,
+      viewportWidth: document.documentElement.clientWidth,
+    }));
+    expect(
+      dimensions.documentWidth,
+      `Deslocamento horizontal: documento ${dimensions.documentWidth}px; viewport ${dimensions.viewportWidth}px`
+    ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
+  });
+
+  test("página Supply não cria deslocamento horizontal", async ({ page }) => {
+    await page.goto("/supply/");
     const dimensions = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
       viewportWidth: document.documentElement.clientWidth,
