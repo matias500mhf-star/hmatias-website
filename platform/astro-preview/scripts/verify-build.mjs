@@ -14,6 +14,12 @@ assert.match(html, /geral@comercialhmatiasps\.com/, "Commercial email is missing
 assert.match(html, /info@comercialhmatiasps\.com/, "Institutional email is missing");
 assert.match(html, /Viana, Bairro 1 de Maio/, "Company address is missing");
 assert.match(html, /WhatsApp/, "WhatsApp contact is missing");
+assert.match(html, /Explorar/, "Footer navigation is missing");
+assert.match(html, /Áreas de atuação/, "Footer service links are missing");
+assert.match(html, /Todos os direitos reservados/, "Footer legal copyright line is missing");
+assert.match(html, /Voltar ao topo/, "Footer back-to-top link is missing");
+assert.match(html, /mailto:geral@comercialhmatiasps\\.com/, "Footer commercial mail link is missing");
+assert.match(html, /tel:\\+244948806673/, "Footer telephone link is missing");
 
 for (const activity of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business services"]) {
   assert.ok(html.includes(activity), `Activity missing: ${activity}`);
