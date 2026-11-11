@@ -2,12 +2,13 @@
 import { Image } from "astro:assets";
 import logo from "../../../../logo-hmatias.png";
 import { company } from "../data/site";
+const homePrefix = Astro.url.pathname === "/" ? "" : "/";
 ---
 
 <footer class="site-footer">
   <div class="footer-main">
     <section class="footer-column footer-identity" aria-label="Identidade e plataformas HMATIAS">
-      <a class="footer-logo" href="#inicio" aria-label="HMATIAS — voltar ao início">
+      <a class="footer-logo" href={`${homePrefix}#inicio`} aria-label="HMATIAS — voltar ao início">
         <Image src={logo} alt="HMATIAS — Prestação de Serviços" widths={[96, 128]} sizes="64px" format="webp" quality={82} />
       </a>
       <p class="footer-company">{company.legalName}</p>
@@ -30,7 +31,7 @@ import { company } from "../data/site";
       <a href={company.supplyUrl}>HMATIAS Supply</a>
       <a href={company.businessServicesUrl}>Business Services</a>
       <a href={company.smartRfqUrl}>Smart RFQ</a>
-      <a href="#contacto">Solicitar orçamento</a>
+      <a href={`${homePrefix}#contacto`}>Solicitar orçamento</a>
     </nav>
 
     <section class="footer-column footer-contacts" aria-label="Contacto e localização">
@@ -55,6 +56,6 @@ import { company } from "../data/site";
       <a href={company.termsUrl}>Termos e Condições</a>
       <a href="/acessibilidade/">Acessibilidade</a>
     </nav>
-    <a class="footer-back-top" href="#inicio">Voltar ao topo <span aria-hidden="true">↑</span></a>
+    <a class="footer-back-top" href={`${homePrefix}#inicio`}>Voltar ao topo <span aria-hidden="true">↑</span></a>
   </div>
 </footer>
