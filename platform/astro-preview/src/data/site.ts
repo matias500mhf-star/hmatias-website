@@ -20,7 +20,7 @@ export const services: Service[] = [
     number: "02",
     title: "Facilities e manutenção",
     description: "Manutenção de instalações · Limpeza · Apoio operacional",
-    href: "https://comercialhmatiasps.com/facilities.html",
+    href: "/facilities/",
     icon: "maintenance"
   },
   {
@@ -60,7 +60,7 @@ export const company = {
   smartRfqUrl: "https://comercialhmatiasps.com/rfq.html",
   constructionUrl: "/construcao/",
   remodelingUrl: "/construcao/#remodelacao",
-  facilitiesUrl: "https://comercialhmatiasps.com/facilities.html",
+  facilitiesUrl: "/facilities/",
   projectsUrl: "https://comercialhmatiasps.com/estaleiro-integrado.html",
   worksCatalogueUrl: "https://comercialhmatiasps.com/catalogo-obras.html",
   supplyUrl: "https://comercialhmatiasps.com/supply.html",

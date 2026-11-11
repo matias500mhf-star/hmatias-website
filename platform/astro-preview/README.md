@@ -29,7 +29,7 @@ npm run verify
 npm run preview
 ```
 
-O lockfile `package-lock.json` está versionado. As instalações repetíveis devem usar `npm ci`. O build produz `dist/`. O comando `verify` verifica o HTML, as quatro áreas de atividade, os contactos, as fotografias e os recursos processados.
+O lockfile `package-lock.json` está versionado. As instalações repetíveis devem usar `npm ci`. O build produz `dist/`. O comando `verify` verifica o HTML, as quatro áreas de atividade, os contactos, as fotografias, as páginas Construção e Facilities e os recursos processados.
 
 ## Estrutura
 
@@ -54,9 +54,9 @@ React não foi instalado nesta etapa. A homepage institucional é maioritariamen
 O workflow `.github/workflows/astro-prototype-qa.yml` executa:
 
 - `astro check`, build estático, auditoria de dependências e verificação do artefacto.
-- Playwright 1.65.0 em Chromium desktop e móvel: rotas, navegação, âncoras, imagens com texto alternativo e overflow horizontal.
-- axe-core 4.14.0 nas rotas Homepage, Blog e Acessibilidade. Falhas críticas e graves bloqueiam o CI; ocorrências moderadas ou menores são registadas para revisão.
-- Lighthouse CI 0.16.0 nas mesmas rotas, com indicadores de desempenho, acessibilidade, boas práticas, SEO, LCP e CLS. Os limites estão inicialmente em modo de alerta para permitir recolher uma linha de base real.
+- Playwright 1.65.0 em Chromium desktop e móvel: homepage, Blog, Acessibilidade, Construção e Facilities; navegação, âncoras, imagens com texto alternativo e overflow horizontal.
+- axe-core 4.14.0 nas rotas Homepage, Blog, Acessibilidade, Construção e Facilities. Falhas críticas e graves bloqueiam o CI; ocorrências moderadas ou menores são registadas para revisão.
+- Lighthouse CI 0.16.0 nas rotas Homepage, Blog, Acessibilidade, Construção e Facilities, com indicadores de desempenho, acessibilidade, boas práticas, SEO, LCP e CLS. Os limites estão inicialmente em modo de alerta para permitir recolher uma linha de base real.
 
 Os relatórios Playwright e Lighthouse são guardados como artefactos do GitHub Actions por 14 dias. As ferramentas de QA são instaladas apenas no ambiente CI e não entram no bundle do website.
 

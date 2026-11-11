@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const routes = ["/", "/blog/", "/acessibilidade/", "/construcao/"];
+const routes = ["/", "/blog/", "/acessibilidade/", "/construcao/", "/facilities/"];
 
 test.describe("HMATIAS — navegação e conteúdo", () => {
   test("homepage apresenta identidade, proposta e contactos", async ({ page }) => {
@@ -26,7 +26,20 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
 
-  test("âncoras internas apontam para secções existentes", async ({ page }) => {
+
+  test("página de Facilities apresenta serviços e intervenções reais", async ({ page }) => {
+    const response = await page.goto("/facilities/");
+    expect(response?.status()).toBe(200);
+    await expect(page).toHaveTitle(/Facilities e Manutenção/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Facilities e");
+    await expect(page.getByRole("heading", { name: "Manutenção de instalações" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Limpeza e conservação" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Apoio operacional" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Substituição localizada de cobertura" })).toBeVisible();
+    await expect(page.locator(".facilities-work-card img")).toHaveCount(2);
+    await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
+  });
+\n  test("âncoras internas apontam para secções existentes", async ({ page }) => {
     await page.goto("/");
     const missingTargets = await page.locator('a[href^="#"]').evaluateAll((links) =>
       links
@@ -57,6 +70,17 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     expect(missingAlt).toEqual([]);
   });
 
+
+  test("imagens da página de Facilities possuem texto alternativo", async ({ page }) => {
+    await page.goto("/facilities/");
+    const missingAlt = await page.locator("img").evaluateAll((images) =>
+      images
+        .filter((image) => !(image.getAttribute("alt") || "").trim())
+        .map((image) => image.getAttribute("src") || "(imagem sem src)")
+    );
+    expect(missingAlt).toEqual([]);
+  });
+
   test("layout não cria deslocamento horizontal", async ({ page }) => {
     await page.goto("/");
     const dimensions = await page.evaluate(() => ({
@@ -71,6 +95,19 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
 
   test("página de construção não cria deslocamento horizontal", async ({ page }) => {
     await page.goto("/construcao/");
+    const dimensions = await page.evaluate(() => ({
+      documentWidth: document.documentElement.scrollWidth,
+      viewportWidth: document.documentElement.clientWidth,
+    }));
+    expect(
+      dimensions.documentWidth,
+      `Deslocamento horizontal: documento ${dimensions.documentWidth}px; viewport ${dimensions.viewportWidth}px`
+    ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
+  });
+
+
+  test("página de Facilities não cria deslocamento horizontal", async ({ page }) => {
+    await page.goto("/facilities/");
     const dimensions = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
       viewportWidth: document.documentElement.clientWidth,

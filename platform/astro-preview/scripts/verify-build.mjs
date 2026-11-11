@@ -58,6 +58,17 @@ const constructionImgCount = (constructionHtml.match(/<img\b/g) || []).length;
 const constructionImgWithAltCount = (constructionHtml.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(constructionImgWithAltCount, constructionImgCount, "Every construction page image must have an alt attribute");
 
+const facilitiesPath = join(outDir, "facilities", "index.html");
+assert.ok(existsSync(facilitiesPath), "Facilities page must be generated");
+const facilitiesHtml = readFileSync(facilitiesPath, "utf8");
+assert.match(facilitiesHtml, /Facilities e/, "Facilities page title is missing");
+assert.match(facilitiesHtml, /Manutenção de instalações/, "Facilities services are missing");
+assert.match(facilitiesHtml, /Substituição localizada de cobertura/, "Facilities project evidence is missing");
+assert.match(facilitiesHtml, /Pedido de serviço/i, "Facilities contact section is missing");
+const facilitiesImgCount = (facilitiesHtml.match(/<img\\b/g) || []).length;
+const facilitiesImgWithAltCount = (facilitiesHtml.match(/<img\\b[^>]*\\balt=/g) || []).length;
+assert.equal(facilitiesImgWithAltCount, facilitiesImgCount, "Every Facilities page image must have an alt attribute");
+
 const assetDir = join(outDir, "_astro");
 assert.ok(existsSync(assetDir), "Astro must emit processed assets");
 const assets = readdirSync(assetDir).filter((file) => statSync(join(assetDir, file)).isFile());
