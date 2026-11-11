@@ -109,7 +109,7 @@
         :'<div class="cockpit-empty">A carregar ações comerciais…</div>';
       return;
     }
-    count.textContent=String(commercialActions.length)+' ação(ões)';
+    count.textContent=String(commercialActions.length)+' acção(ões)';
     if(!commercialActions.length){
       list.innerHTML='<div class="cockpit-empty">Sem ações comerciais prioritárias nesta janela.</div>';
       return;
@@ -122,7 +122,7 @@
       const badge=document.createElement('span');badge.className='commercial-action-priority';badge.textContent=labels[action.priority]||action.priority||'Normal';
       const ref=document.createElement('small');ref.textContent=action.reference||action.request_id;
       top.append(badge,ref);
-      const title=document.createElement('strong');title.textContent=action.title||'Ação comercial';
+      const title=document.createElement('strong');title.textContent=action.title||'Acção comercial';
       const requirement=document.createElement('p');requirement.textContent=action.requirement_text||'—';
       const why=document.createElement('p');why.className='commercial-action-why';why.textContent=action.why||'';
       const next=document.createElement('p');next.className='commercial-action-next';next.textContent=action.recommended_action||'';
@@ -246,7 +246,7 @@
         <div class="collections-head">
           <div>
             <small>COBRANÇA & CAIXA</small>
-            <h4>Fatura → pagamentos → saldo → atraso</h4>
+            <h4>Factura → pagamentos → saldo → atraso</h4>
             <p>Receita final não é tratada como dinheiro recebido. Cada pagamento exige referência, valor e data confirmados.</p>
           </div>
           <button class="btn btn-outline btn-small open-collections" type="button">Abrir cobrança</button>
@@ -545,7 +545,7 @@
         <label>Outros custos reais (AOA)<input class="fulfillment-other" type="number" min="0" step="0.01" placeholder="0 ou valor real"></label>
         <label>Ref. entrega<input class="fulfillment-delivery-ref" maxlength="160" placeholder="Guia / recepção / entrega"></label>
         <label>Data entrega<input class="fulfillment-delivered-at" type="datetime-local"></label>
-        <label>Receita final (AOA)<input class="fulfillment-final-revenue" type="number" min="0" step="0.01" placeholder="Valor final faturado/aceite"></label>
+        <label>Receita final (AOA)<input class="fulfillment-final-revenue" type="number" min="0" step="0.01" placeholder="Valor final facturado/aceite"></label>
         <label class="commercial-notes">Notas internas<textarea class="fulfillment-notes" rows="2" maxlength="1600" placeholder="Ocorrências, confirmação de entrega, desvios e fecho"></textarea></label>
       </div>
       <div class="fulfillment-actions">
@@ -657,7 +657,7 @@
     const invoice=payload?.invoice||{};
     const summary=payload?.summary||{};
     const request=payload?.request||{};
-    const statusLabels={not_invoiced:'Não faturado',issued:'Emitida',partial:'Pagamento parcial',overdue:'Vencida',paid:'Paga'};
+    const statusLabels={not_invoiced:'Não facturado',issued:'Emitida',partial:'Pagamento parcial',overdue:'Vencida',paid:'Paga'};
     panel.innerHTML=`
       <div class="collections-statusbar">
         <span>Execução: <strong class="collections-stage"></strong></span>
@@ -671,13 +671,13 @@
         <article><small>ATRASO</small><strong class="collections-overdue">—</strong></article>
       </div>
       <form class="invoice-form">
-        <div class="collections-subhead"><small>FATURA</small><strong>Registo de faturação</strong></div>
+        <div class="collections-subhead"><small>FATURA</small><strong>Registo de facturação</strong></div>
         <label>Referência fatura<input class="invoice-ref" maxlength="160" placeholder="Ex.: FT 2026/..." required></label>
         <label>Data fatura<input class="invoice-date" type="date" required></label>
         <label>Vencimento<input class="invoice-due-date" type="date"></label>
-        <label>Valor faturado (AOA)<input class="invoice-amount" type="number" min="0.01" step="0.01" placeholder="Valor confirmado" required></label>
+        <label>Valor facturado (AOA)<input class="invoice-amount" type="number" min="0.01" step="0.01" placeholder="Valor confirmado" required></label>
         <label class="commercial-notes">Notas internas<textarea class="invoice-notes" rows="2" maxlength="1600" placeholder="Condições, documento emitido, observações"></textarea></label>
-        <div class="collections-actions"><button class="btn btn-primary btn-small save-invoice" type="submit">Guardar fatura</button><span class="collections-message invoice-message"></span></div>
+        <div class="collections-actions"><button class="btn btn-primary btn-small save-invoice" type="submit">Guardar factura</button><span class="collections-message invoice-message"></span></div>
       </form>
       <form class="payment-form">
         <div class="collections-subhead"><small>PAGAMENTO</small><strong>Registar recebimento confirmado</strong></div>
@@ -856,7 +856,7 @@
     card.querySelector('.internal-notes').value=row.internal_notes||'';
     if(row.rfq){
       const rfq=row.rfq;card.querySelector('.rfq-qualification').hidden=false;
-      const labels={company:'Empresa',individual:'Particular',institution:'Instituição pública / estatal',ready:'Compra após aprovação',budgeting:'Consulta de orçamento para projecto / instalação',recurring:'Fornecimento recorrente',urgent:'Urgente',normal:'Prazo normal',planned:'Compra programada',yes:'Aceita equivalentes',no:'Referência exata',discuss:'Consultar antes de substituir'};
+      const labels={company:'Empresa',individual:'Particular',institution:'Instituição pública / estatal',ready:'Compra após aprovação',budgeting:'Consulta de orçamento para projecto / instalação',recurring:'Fornecimento recorrente',urgent:'Urgente',normal:'Prazo normal',planned:'Compra programada',yes:'Aceita equivalentes',no:'Referência exacta',discuss:'Consultar antes de substituir'};
       card.querySelector('.rfq-buyer').textContent=[rfq.requester_name,rfq.company,labels[rfq.buyer_type]].filter(Boolean).join(' · ');
       for(const item of rfq.items||[]){const li=document.createElement('li');li.textContent=`${item.quantity} ${item.unit} · ${item.description}${item.specification?' — '+item.specification:''}`;card.querySelector('.rfq-lines').append(li);}
       card.querySelector('.rfq-conditions').textContent=[labels[rfq.intent],labels[rfq.urgency],labels[rfq.alternatives],rfq.budget==null?'Orçamento a confirmar':Number(rfq.budget).toLocaleString('pt-AO')+' Kz',rfq.origin].filter(Boolean).join(' · ');
