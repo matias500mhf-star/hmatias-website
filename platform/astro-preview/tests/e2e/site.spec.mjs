@@ -206,6 +206,16 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
       );
       expect(missingAlt, `Imagens sem texto alternativo em ${route}`).toEqual([]);
 
+      await page.locator("img").evaluateAll((images) => images.forEach((image) => { image.loading = "eager"; }));
+      const brokenImages = await page.locator("img").evaluateAll(async (images) => {
+        const results = await Promise.all(images.map(async (image) => {
+          try { await image.decode(); return null; }
+          catch { return image.currentSrc || image.src || "(imagem sem origem)"; }
+        }));
+        return results.filter(Boolean);
+      });
+      expect(brokenImages, `Imagens que não carregam em ${route}`).toEqual([]);
+
       const missingTargets = await page.locator('a[href^="#"]').evaluateAll((links) =>
         links.map((link) => link.getAttribute("href") || "")
           .filter((href) => href.length > 1)
