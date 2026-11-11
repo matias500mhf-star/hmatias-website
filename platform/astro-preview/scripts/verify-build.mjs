@@ -161,7 +161,7 @@ for (const route of ["construcao", "facilities", "supply", "business-services", 
     /informacção|instalacção|criaccção|relacção|configuracção|pre-visualizacção|Prestacção/i,
     `Malformed words detected in ${route}`
   );
-  assert.doesNotMatch(content, /<\\/p>\\\\n\\s*<p>/, `Literal newline escape detected in ${route}`);
+  assert.equal(content.includes("</p>\\n"), false, `Literal newline escape detected in ${route}`);
 }
 
 const htmlImgCount = (html.match(/<img\b/g) || []).length;
