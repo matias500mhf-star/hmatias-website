@@ -9,8 +9,8 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft && data.lan
 const featured = posts[0];
 const featuredDate = featured?.data.pubDate.toLocaleDateString("en", { day:"2-digit", month:"long", year:"numeric" });
 ---
-<BaseLayout title="HMATIAS Blog | Business Insights" description="Practical guides and perspectives from HMATIAS on construction, procurement, supply, facilities and business activity in Angola." lang="en">
-  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS PUBLICATIONS</span><span>INSIGHTS · ANALYSIS · MARKET</span></div>
+<BaseLayout title="HMATIAS Blog | Practical Sourcing Guides" description="Practical HMATIAS guides for preparing quotation requests, specifying materials and comparing supply proposals in Angola." lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS PUBLICATIONS</span><span>QUOTATIONS · SPECIFICATIONS · SUPPLY</span></div>
   <SiteHeader />
   <main class="editorial-page">
     <section class="editorial-hero">
