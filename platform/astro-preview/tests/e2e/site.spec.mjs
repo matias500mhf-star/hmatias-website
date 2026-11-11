@@ -34,7 +34,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Facilities e");
     await expect(page.getByRole("heading", { name: "Manutenção de instalações" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Limpeza e conservação" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Apoio operacional" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Apoio operacional", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Substituição localizada de cobertura" })).toBeVisible();
     await expect(page.locator(".facilities-work-card img")).toHaveCount(2);
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
