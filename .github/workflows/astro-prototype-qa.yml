@@ -84,6 +84,7 @@ jobs:
             platform/astro-preview/.lighthouseci/
           if-no-files-found: ignore
           retention-days: 14
+          include-hidden-files: true
       - name: Upload generated dependency lockfile
         uses: actions/upload-artifact@v4
         with:
