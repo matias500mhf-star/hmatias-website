@@ -49,6 +49,10 @@ React não foi instalado nesta etapa. As páginas institucionais são maioritari
 - Não executar `wrangler deploy`, não alterar DNS e não associar o domínio oficial.
 - Os formulários seguros de Business Services continuam temporariamente no website oficial até existir validação da API e do consentimento no novo domínio. O resultado só pode ser considerado candidato a migração após comparação visual, acessibilidade, SEO, performance, formulários, idioma inglês, redirecionamentos e integrações.
 
+## Migração e rotas pendentes
+
+Consultar [`MIGRATION-READINESS.md`](./MIGRATION-READINESS.md) para o inventário das páginas antigas, funcionalidades ainda preservadas no domínio oficial, cobertura bilingue e bloqueios para publicação.
+
 ## Quality Engineering
 
 O workflow `.github/workflows/astro-prototype-qa.yml` executa:
