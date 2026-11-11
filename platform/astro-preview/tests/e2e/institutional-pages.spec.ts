@@ -4,7 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 test.describe("HMATIAS institutional pages", () => {
   test("homepage exposes all four service divisions and routes Business Services internally", async ({ page }) => {
     await page.goto("/");
-    const businessLink = page.getByRole("link", { name: "Business services", exact: true });
+    const businessLink = page.locator(".service-row").filter({ hasText: "Business Services" });
     await expect(businessLink).toHaveAttribute("href", "/business-services/");
     await businessLink.click();
     await expect(page).toHaveURL(/\/business-services\/$/);
@@ -33,7 +33,7 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.getByText("24.094-23", { exact: true })).toBeVisible();
     await expect(page.getByText("MISSÃO", { exact: true })).toBeVisible();
     await expect(page.getByText("VISÃO", { exact: true })).toBeVisible();
-    await expect(page.getByRole("link", { name: /Business Services/ })).toHaveAttribute("href", "/business-services/");
+    await expect(page.locator(".about-area-grid a").filter({ hasText: "Business Services" })).toHaveAttribute("href", "/business-services/");
   });
 
   test("privacy, terms and accessibility pages are reachable from the shared footer", async ({ page }) => {
