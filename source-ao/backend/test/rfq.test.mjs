@@ -40,6 +40,22 @@ test('RFQ validates catalog identity, strict quantities, contact, consent and da
   assert.equal(validateRfq({...input,items:Array(21).fill(input.items[0])},catalog).code,'invalid_items');
 });
 
+test('every customer-visible RFQ select option satisfies the shared API contract',()=>{
+  const source=readFileSync(new URL('../../rfq.js',import.meta.url),'utf8');
+  const input=rfqFixture();
+  const fields=[['rfqUrgency','urgency'],['rfqIntent','intent'],['rfqBuyer','buyer_type']];
+  for(const [selectId,payloadKey] of fields){
+    const select=source.match(new RegExp('<select id="'+selectId+'"[\\s\\S]*?<\\/select>'));
+    assert.ok(select,'RFQ select '+selectId+' must exist');
+    const values=[...select[0].matchAll(/<option value="([^"]+)"/g)].map(match=>match[1]);
+    assert.ok(values.length>0,'RFQ select '+selectId+' must expose choices');
+    for(const value of values){
+      const result=validateRfq({...input,[payloadKey]:value},catalog);
+      assert.equal(result.ok,true,'RFQ choice '+selectId+'='+value+' must be accepted by validateRfq');
+    }
+  }
+});
+
 test('RFQ persists once, encrypts qualification and restricts disclosure to admin',async()=>{
   const {db,env}=testEnvironment();const input=rfqFixture();
   const first=await createSourcingRequest(request(input),env);assert.equal(first.status,201);
