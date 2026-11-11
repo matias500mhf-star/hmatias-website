@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { company } from "../../data/site";
+---
+<BaseLayout
+  title="Blog HMATIAS | Perspetivas empresariais"
+  description="Análises e guias práticos da HMATIAS sobre construção, procurement, fornecimento, facilities e mercado empresarial em Angola."
+>
+  <div class="preview-bar">
+    <span><i aria-hidden="true"></i> PUBLICAÇÕES HMATIAS</span>
+    <span>Conhecimento · Análise · Mercado</span>
+  </div>
+  <SiteHeader />
+  <main class="editorial-page">
+    <section class="editorial-hero">
+      <p class="section-kicker">HMATIAS / BLOG</p>
+      <h1>Perspetivas empresariais<br /><em>para decisões melhores.</em></h1>
+      <p class="editorial-lead">Análises e guias práticos sobre construção, procurement, fornecimento, facilities e atividade empresarial em Angola.</p>
+    </section>
+
+    <section class="editorial-body">
+      <div class="editorial-label">EM PREPARAÇÃO · PT / EN</div>
+      <article class="editorial-feature">
+        <p class="editorial-meta">GUIA PRÁTICO · HMATIAS SUPPLY</p>
+        <h2>Como preparar um pedido de cotação de fornecimento.</h2>
+        <p>O primeiro guia está em preparação. Vai abordar os elementos que ajudam a tornar um pedido de cotação mais claro: especificações, quantidades, local e prazo de entrega, condições comerciais e comparação de propostas.</p>
+        <span class="editorial-status">Publicação em preparação</span>
+      </article>
+
+      <div class="editorial-topics">
+        <h2>Temas editoriais</h2>
+        <div class="editorial-topic-grid">
+          <div><span>01</span><strong>Construção e Engenharia</strong></div>
+          <div><span>02</span><strong>Procurement e Supply</strong></div>
+          <div><span>03</span><strong>Facilities e Manutenção</strong></div>
+          <div><span>04</span><strong>Mercado Empresarial</strong></div>
+        </div>
+      </div>
+
+      <div class="editorial-contact">
+        <p>Para assuntos comerciais ou pedidos de cotação, contacte diretamente a HMATIAS.</p>
+        <a class="button button-dark" href={company.smartRfqUrl}>Preparar Smart RFQ <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+</BaseLayout>
