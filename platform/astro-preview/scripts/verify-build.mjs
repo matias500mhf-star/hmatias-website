@@ -28,6 +28,17 @@ for (const project of ["Galpão com estrutura metálica", "Preparação de terre
   assert.ok(html.includes(project), `Project missing: ${project}`);
 }
 
+
+const blogPath = join(outDir, "blog", "index.html");
+assert.ok(existsSync(blogPath), "Blog page must be generated");
+const blogHtml = readFileSync(blogPath, "utf8");
+assert.match(blogHtml, /Perspetivas empresariais/, "Blog page content is missing");
+
+const accessibilityPath = join(outDir, "acessibilidade", "index.html");
+assert.ok(existsSync(accessibilityPath), "Accessibility page must be generated");
+const accessibilityHtml = readFileSync(accessibilityPath, "utf8");
+assert.match(accessibilityHtml, /acessibilidade/i, "Accessibility page content is missing");
+
 const assetDir = join(outDir, "_astro");
 assert.ok(existsSync(assetDir), "Astro must emit processed assets");
 const assets = readdirSync(assetDir).filter((file) => statSync(join(assetDir, file)).isFile());
