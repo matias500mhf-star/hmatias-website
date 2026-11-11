@@ -48,7 +48,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
   });
 
   test("menu móvel abre e fecha ao navegar", async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== "mobile-chromium", "Teste exclusivo do viewport móvel.");
+    test.skip(testInfo.project.name !== "mobile-webkit", "Teste exclusivo do viewport móvel.");
     await page.goto("/");
     const toggle = page.getByRole("button", { name: "Abrir menu" });
     await expect(toggle).toBeVisible();
@@ -92,14 +92,20 @@ test.describe("Acessibilidade automatizada — axe-core", () => {
         );
       }
 
-      expect(
-        severeViolations.map((violation) => ({
-          id: violation.id,
+      const severeEvidence = severeViolations.flatMap((violation) =>
+        violation.nodes.map((node) => ({
+          rule: violation.id,
           impact: violation.impact,
-          description: violation.description,
-          nodes: violation.nodes.length,
+          target: node.target,
+          failureSummary: node.failureSummary,
+          checks: node.any.map((check) => ({ id: check.id, message: check.message, data: check.data })),
         }))
-      ).toEqual([]);
+      );
+
+      if (severeEvidence.length) {
+        console.error("[axe-core] Critical/serious accessibility findings:", JSON.stringify(severeEvidence, null, 2));
+      }
+      expect(severeEvidence).toEqual([]);
     });
   }
 });
