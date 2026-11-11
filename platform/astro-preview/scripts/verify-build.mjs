@@ -30,7 +30,7 @@ assert.match(html, /5001578065/, "Company tax number is missing");
 assert.match(html, /24\.094-23/, "Company commercial registration is missing");
 assert.match(html, /Instagram/, "Instagram footer link is missing");
 
-for (const activity of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business services"]) {
+for (const activity of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business Services"]) {
   assert.ok(html.includes(activity), `Activity missing: ${activity}`);
 }
 for (const project of ["Galpão com estrutura metálica", "Preparação de terreno", "Substituição de cobertura", "Pavilhões rurais concluídos"]) {
