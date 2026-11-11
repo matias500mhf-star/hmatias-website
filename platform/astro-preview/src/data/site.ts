@@ -54,9 +54,9 @@ export const company = {
   instagramUrl: "https://www.instagram.com/hmatias_pslda/",
   sourceAoUrl: "https://comercialhmatiasps.com/source-ao/index.html",
   partnerApplicationUrl: "https://comercialhmatiasps.com/source-ao/partner-application.html",
-  privacyUrl: "https://comercialhmatiasps.com/privacidade.html",
-  termsUrl: "https://comercialhmatiasps.com/termos.html",
-  credibilityUrl: "https://comercialhmatiasps.com/credibilidade.html",
+  privacyUrl: "/privacidade/",
+  termsUrl: "/termos/",
+  credibilityUrl: "/empresa/",
   smartRfqUrl: "/source-ao/smart-rfq/",
   sourceAoRfqUrl: "https://comercialhmatiasps.com/source-ao/rfq.html",
   constructionUrl: "/construcao/",
@@ -65,5 +65,6 @@ export const company = {
   projectsUrl: "https://comercialhmatiasps.com/estaleiro-integrado.html",
   worksCatalogueUrl: "https://comercialhmatiasps.com/catalogo-obras.html",
   supplyUrl: "/supply/",
-  businessServicesUrl: "https://comercialhmatiasps.com/servicos-administrativos.html"
+  businessServicesUrl: "/business-services/",
+  businessServicesContactUrl: "https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business"
 } as const;
