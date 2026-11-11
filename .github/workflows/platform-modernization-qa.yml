@@ -6,6 +6,7 @@ on:
       - "feat/hmatias-platform-modernization-20261111"
     paths:
       - "package.json"
+      - "package-lock.json"
       - "scripts/**"
       - "style.css"
       - "typography.css"
@@ -23,6 +24,7 @@ on:
       - "main"
     paths:
       - "package.json"
+      - "package-lock.json"
       - "scripts/**"
       - "style.css"
       - "typography.css"
@@ -61,6 +63,9 @@ jobs:
 
       - name: Install locked root development dependencies
         run: npm ci
+
+      - name: Enforce high-severity dependency security floor
+        run: npm audit --audit-level=high
 
       - name: Report dependency advisories without auto-fixing
         shell: bash
