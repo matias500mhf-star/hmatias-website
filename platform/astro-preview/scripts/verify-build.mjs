@@ -28,8 +28,6 @@ assert.match(html, /SOURCE AO/, "Source AO footer link is missing");
 assert.match(html, /Blog · Perspetivas empresariais/, "Blog footer link is missing");
 assert.ok(html.includes('href="/empresa/">Sobre a HMATIAS'), "Footer About link must point to the About page");
 assert.ok(html.includes('href="/credibilidade/">Credibilidade'), "Footer credibility link must point to the credibility page");
-assert.match(html, /href="\\/empresa\\/">Sobre a HMATIAS/, "Footer About link must point to the About page");
-assert.match(html, /href="\\/credibilidade\\/">Credibilidade/, "Footer credibility link must point to the credibility page");
 assert.match(html, /Política de Privacidade/, "Privacy Policy footer link is missing");
 assert.match(html, /Termos e Condições/, "Terms footer link is missing");
 assert.match(html, /Acessibilidade/, "Accessibility footer link is missing");
