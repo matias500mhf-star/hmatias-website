@@ -38,7 +38,7 @@ const featuredDate = featured?.data.pubDate.toLocaleDateString("pt-AO", {
             <p class="editorial-meta">{featured.data.category.toUpperCase()} · {featured.data.author.toUpperCase()}</p>
             <h2><a href={`/blog/${featured.id}/`}>{featured.data.title}</a></h2>
             <p>{featured.data.description}</p>
-            <a class="editorial-read-link" href={`/blog/${featured.slug}/`}>Ler o artigo <span aria-hidden="true">↗</span></a>
+            <a class="editorial-read-link" href={`/blog/${featured.id}/`}>Ler o artigo <span aria-hidden="true">↗</span></a>
           </article>
         </>
       ) : (
