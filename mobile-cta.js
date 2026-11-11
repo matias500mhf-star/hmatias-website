@@ -68,7 +68,7 @@
       .footer-grid>div:first-child{grid-column:auto}
       .footer-logo{width:190px;height:62px}
       .copyright{line-height:1.5}
-      .mobile-cta,.mobile-sticky-contact,.whatsapp-float{display:none!important}
+      .mobile-cta,.mobile-sticky-contact{display:none!important}
     }
     @media (max-width:380px){
       .container{width:calc(100% - 24px)}

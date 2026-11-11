@@ -213,6 +213,23 @@
   };
 
   addItem();
+
+  // Product cards hand the selected reference into the first structured RFQ row.
+  document.addEventListener('click', event => {
+    const trigger = event.target.closest?.('[data-supply-product]');
+    if (!trigger) return;
+    const firstRow = itemsWrap.querySelector('.supply-item');
+    const productField = firstRow?.querySelector('input[name^="item_"]');
+    const specificationField = firstRow?.querySelector('input[name^="spec_"]');
+    if (!productField) return;
+    productField.value = trigger.dataset.supplyProduct || '';
+    productField.dispatchEvent(new Event('input', { bubbles: true }));
+    if (specificationField) {
+      specificationField.value = trigger.dataset.supplySpec || '';
+      specificationField.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+
   addButton.addEventListener('click', () => {
     invalidateDelivery();
     addItem();

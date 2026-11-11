@@ -4,7 +4,7 @@
   // Shared UI/bootstrap must remain independent from analytics/ad-blocking rules.
   if(!document.querySelector('script[data-hmatias-site-bootstrap]')){
     const bootstrap=document.createElement('script');
-    bootstrap.src='site-bootstrap.js?v=20261029-email-icon-preserve1';
+    bootstrap.src='site-bootstrap.js?v=20261108-institutional-blue4';
     bootstrap.defer=true;
     bootstrap.dataset.hmatiasSiteBootstrap='true';
     document.head.appendChild(bootstrap);
@@ -114,7 +114,7 @@
     mobileWhatsApp.href='https://wa.me/244948806673';
     mobileWhatsApp.target='_blank';
     mobileWhatsApp.rel='noopener noreferrer';
-    mobileWhatsApp.textContent=pageEnglish?'WhatsApp — Contact HMATIAS':'WhatsApp — Falar com a HMATIAS';
+    mobileWhatsApp.textContent='WhatsApp';
     mobileWhatsApp.setAttribute('aria-label',mobileWhatsApp.textContent);
     navMenu.appendChild(mobileWhatsApp);
   }

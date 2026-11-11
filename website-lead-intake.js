@@ -100,7 +100,7 @@
   function setup(form,config,siteKey,turnstile){
     if(form.dataset.hmatiasWebsiteIntake)return;
     // A late capability response must preserve a manual request already prepared.
-    if(form.querySelector('[data-hmatias-send-actions],[data-hmatias-clean-handoff]'))return;
+    if(form.querySelector('[data-hmatias-send-actions],[data-hmatias-clean-handoff],[data-business-manual-handoff]'))return;
     form.dataset.hmatiasWebsiteIntake='true';
     const isRfq=config.kind==='rfq';
     let submit=form.querySelector('button[type="submit"]');
