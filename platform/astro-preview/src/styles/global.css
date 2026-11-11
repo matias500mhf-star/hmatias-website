@@ -682,3 +682,55 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .construction-request h2 { font-size: clamp(40px,11vw,54px); }
   .construction-request-guide { padding: 24px 21px; }
 }
+
+/* Readability standard — editorial copy, controls and responsive type */
+main p:not(.eyebrow):not(.section-kicker):not(.hero-meta):not(.portfolio-note):not(.services-foot):not(.contact-small):not(.editorial-label):not(.editorial-meta) {
+  font-size: max(15px, 1em);
+  line-height: 1.75;
+}
+main li {
+  font-size: max(14px, 1em);
+  line-height: 1.7;
+}
+.main-nav a { font-size: 13px; }
+.header-cta { font-size: 12px; }
+.button, .text-link { font-size: 13px; }
+.underlined-link { font-size: 12px; }
+.service-main small { font-size: 12px; }
+.project-caption p { font-size: 14px; line-height: 1.7; }
+.contact-details { font-size: 13px; line-height: 1.7; }
+.contact-action { font-size: 14px; }
+.footer-column a, .footer-column address { font-size: 12px; line-height: 1.7; }
+.footer-company, .footer-summary, .footer-platform-link { font-size: 12px; line-height: 1.75; }
+.footer-socials a { font-size: 11px; }
+.footer-legal-links a, .footer-back-top { font-size: 11px; line-height: 1.7; }
+.editorial-feature p, .accessibility-report p, .editorial-contact p { font-size: 15px; line-height: 1.8; }
+
+@media (max-width: 650px) {
+  body { font-size: 16px; }
+  .main-nav a { font-size: 16px; }
+  .language-switch { font-size: 12px; }
+  .header-cta, .button, .text-link, .underlined-link { font-size: 14px; }
+  .hero-lead, .editorial-lead { font-size: 16px; line-height: 1.75; }
+  .hero-meta { font-size: 10px; line-height: 1.6; }
+  .intro-text p, .section-heading > p, .portfolio-top > p, .contact-copy > p,
+  .construction-intro-copy p, .construction-work-caption p,
+  .editorial-feature p, .accessibility-report p, .editorial-contact p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .service-main small { font-size: 12px; line-height: 1.65; }
+  .project-caption p { font-size: 14px; line-height: 1.75; }
+  .contact-details { font-size: 14px; }
+  .footer-column a, .footer-column address, .footer-summary,
+  .footer-company, .footer-platform-link { font-size: 13px; line-height: 1.75; }
+  .footer-legal-links a, .footer-back-top { font-size: 12px; }
+  .preview-bar { font-size: 9px; line-height: 1.6; }
+  .eyebrow, .section-kicker, .editorial-label, .editorial-meta { font-size: 10px; line-height: 1.6; }
+}
+
+@media (min-width: 651px) and (max-width: 1100px) {
+  .main-nav { gap: clamp(16px, 2.4vw, 28px); }
+  .main-nav a { font-size: 13px; }
+  .hero { grid-template-columns: minmax(0,1fr) minmax(300px,.9fr); }
+}
