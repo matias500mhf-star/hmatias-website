@@ -13,6 +13,7 @@ module.exports = {
         "http://127.0.0.1:4321/privacidade/",
         "http://127.0.0.1:4321/empresa/",
         "http://127.0.0.1:4321/business-services/",
+        "http://127.0.0.1:4321/catalogo-obras/",
       ],
       numberOfRuns: 2,
       startServerCommand: "npm run preview -- --host 127.0.0.1 --port 4321 --strictPort",
