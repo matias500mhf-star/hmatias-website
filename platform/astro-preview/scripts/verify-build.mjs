@@ -213,7 +213,7 @@ const englishRoutes = [
   ["en/works-catalogue", /Works, interventions/, /Completed Rural Pavilions/],
   ["en/blog", /Practical guides/, /FEATURED ARTICLE/],
   ["en/blog/how-to-prepare-a-comparable-supply-quotation", /How to prepare a quotation request/, /quantity and unit/i],
-  ["en/source-ao/smart-rfq", /One requirement/, /Up to 20 product lines/],
+  ["en/source-ao/smart-rfq", /One requirement/, /Nothing is sent until you choose email or WhatsApp/],
   ["en/accessibility", /more accessible to everyone/i, /independent audit/i],
   ["en/privacy", /Privacy Policy/, /Cookiebot/],
   ["en/terms", /Terms and Conditions/, /Intellectual property/],
