@@ -63,8 +63,27 @@ jobs:
           node-version: "24"
           cache: npm
 
-      - name: Refresh the pinned root dependency lockfile on this isolated branch
+      - name: Check whether the pinned root dependency lockfile needs refresh
+        id: root-lock
         if: github.event_name == 'push' && github.ref == 'refs/heads/feat/hmatias-platform-modernization-20261111'
+        run: |
+          node --input-type=module <<'NODE' >> "$GITHUB_OUTPUT"
+          import {readFileSync} from 'node:fs';
+          const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+          const lock = JSON.parse(readFileSync('package-lock.json', 'utf8'));
+          const expected = pkg.devDependencies ?? {};
+          const locked = lock.packages?.['']?.devDependencies ?? {};
+          let refresh = Object.entries(expected).some(([name, version]) => locked[name] !== version);
+          const sourceMap = lock.packages?.['node_modules/source-map-js']?.version ?? '0.0.0';
+          const parts = sourceMap.split('.').map(Number);
+          const sourceMapIsPatched = parts[0] > 1 || (parts[0] === 1 && (parts[1] > 2 || (parts[1] === 2 && parts[2] >= 2)));
+          if (!sourceMapIsPatched) refresh = true;
+          console.log('refresh=' + String(refresh));
+          console.log('Locked source-map-js:', sourceMap);
+          NODE
+
+      - name: Refresh the pinned root dependency lockfile on this isolated branch
+        if: steps.root-lock.outputs.refresh == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -94,7 +113,7 @@ jobs:
           npm audit --json > "$RUNNER_TEMP/hmatias-npm-audit.json"
           audit_exit=$?
           set -e
-          node - "$RUNNER_TEMP/hmatias-npm-audit.json" <<'NODE'
+          NPM_AUDIT_EXIT="$audit_exit" node - "$RUNNER_TEMP/hmatias-npm-audit.json" <<'NODE'
           const fs = require('node:fs');
           const path = process.argv[2];
           try {
@@ -114,7 +133,7 @@ jobs:
             console.log('Dependency audit result could not be parsed:', error.message);
           }
           NODE
-          echo "No automatic dependency changes were applied."
+          echo "This report stage is read-only; lockfile refreshes run separately and only on the isolated branch."
 
       - name: Inventory platform structure
         run: npm run audit:platform
