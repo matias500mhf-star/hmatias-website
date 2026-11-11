@@ -267,4 +267,42 @@ const htmlImgCount = (html.match(/<img\b/g) || []).length;
 const htmlImgWithAltCount = (html.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(htmlImgWithAltCount, htmlImgCount, "Every image must have an alt attribute");
 
+
+const languagePairs = [
+  ["", "en", "/", "/en/"],
+  ["empresa", "en/about", "/empresa/", "/en/about/"],
+  ["credibilidade", "en/credibility", "/credibilidade/", "/en/credibility/"],
+  ["construcao", "en/construction", "/construcao/", "/en/construction/"],
+  ["facilities", "en/facilities", "/facilities/", "/en/facilities/"],
+  ["supply", "en/supply", "/supply/", "/en/supply/"],
+  ["business-services", "en/business-services", "/business-services/", "/en/business-services/"],
+  ["catalogo-obras", "en/works-catalogue", "/catalogo-obras/", "/en/works-catalogue/"],
+  ["blog", "en/blog", "/blog/", "/en/blog/"],
+  ["blog/como-preparar-um-pedido-de-cotacao", "en/blog/how-to-prepare-a-comparable-supply-quotation", "/blog/como-preparar-um-pedido-de-cotacao/", "/en/blog/how-to-prepare-a-comparable-supply-quotation/"],
+  ["source-ao/smart-rfq", "en/source-ao/smart-rfq", "/source-ao/smart-rfq/", "/en/source-ao/smart-rfq/"],
+  ["acessibilidade", "en/accessibility", "/acessibilidade/", "/en/accessibility/"],
+  ["privacidade", "en/privacy", "/privacidade/", "/en/privacy/"],
+  ["termos", "en/terms", "/termos/", "/en/terms/"],
+];
+
+function languageSwitchTarget(pageHtml, route) {
+  const match = pageHtml.match(/<a\\b[^>]*class="language-switch"[^>]*href="([^"]+)"/);
+  assert.ok(match, `Language switch link is missing from /${route || ""}/`);
+  return match[1];
+}
+
+for (const [ptRoute, enRoute, ptHref, enHref] of languagePairs) {
+  const ptPath = join(outDir, ptRoute, "index.html");
+  const enPath = join(outDir, enRoute, "index.html");
+  assert.ok(existsSync(ptPath), `Portuguese route must exist: /${ptRoute}/`);
+  assert.ok(existsSync(enPath), `English counterpart must exist: /${enRoute}/`);
+
+  const ptHtml = readFileSync(ptPath, "utf8");
+  const enHtml = readFileSync(enPath, "utf8");
+  assert.equal(languageSwitchTarget(ptHtml, ptRoute), enHref,
+    `Portuguese language switch must lead to /${enRoute}/`);
+  assert.equal(languageSwitchTarget(enHtml, enRoute), ptHref,
+    `English language switch must lead to /${ptRoute}/`);
+}
+
 console.log(`Astro static output verified: homepage has ${htmlImgCount} accessible images; ${assets.length} processed assets emitted.`);
