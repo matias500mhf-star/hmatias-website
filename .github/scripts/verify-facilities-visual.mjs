@@ -10,8 +10,15 @@ try {
     for(const view of viewports){
       const page=await browser.newPage({viewport:{width:view.width,height:view.height},deviceScaleFactor:1});
       const pageErrors=[];
+      const firstPartyConsoleErrors=[];
       const failedLocalResources=[];
       page.on('pageerror',error=>pageErrors.push(error.message));
+      page.on('console',message=>{
+        if(message.type()!=='error')return;
+        const source=message.location()?.url||'';
+        try{if(source&&new URL(source).origin==='http://127.0.0.1:8080')firstPartyConsoleErrors.push(message.text())}
+        catch{}
+      });
       page.on('requestfailed',request=>{
         try{if(new URL(request.url()).origin==='http://127.0.0.1:8080')failedLocalResources.push(request.url()+' — '+request.failure()?.errorText)}
         catch{}
@@ -43,12 +50,22 @@ try {
           if(actual.rect.width<120||actual.rect.height<120)throw Error('Taurus product photograph is too small visually');
           visualCheck=actual.width+'x'+actual.height;
         }
+        const imageFailures=await page.evaluate(async()=>{
+          const localImages=[...document.images].filter(img=>{try{return new URL(img.currentSrc||img.src,location.href).origin===location.origin}catch{return false}});
+          return (await Promise.all(localImages.map(async img=>{
+            img.loading='eager';
+            try{await Promise.race([img.decode(),new Promise(resolve=>setTimeout(resolve,8000))])}catch{}
+            return img.complete&&img.naturalWidth>0?null:(img.currentSrc||img.src);
+          }))).filter(Boolean);
+        });
+        if(imageFailures.length)throw Error('Local images failed to load: '+imageFailures.join(' | '));
         const width=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,inner:window.innerWidth}));
         if(width.scroll-width.inner>8)throw Error('Horizontal page overflow: '+JSON.stringify(width));
         const file='facilities-previews/'+path.replace('.html','')+'-'+view.name+'.png';
         await page.screenshot({path:file,fullPage:true,animations:'disabled',timeout:25000});
         await page.waitForTimeout(150);
         if(pageErrors.length)throw Error('Uncaught page errors: '+pageErrors.join(' | '));
+        if(firstPartyConsoleErrors.length)throw Error('First-party console errors: '+firstPartyConsoleErrors.join(' | '));
         if(failedLocalResources.length)throw Error('Failed local resources: '+failedLocalResources.join(' | '));
         console.log('PASS',path,view.name,visualCheck,'overflow=',width.scroll-width.inner,'screenshot',file);
       }catch(err){
