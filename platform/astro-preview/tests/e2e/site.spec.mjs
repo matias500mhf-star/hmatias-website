@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const routes = ["/", "/blog/", "/acessibilidade/", "/construcao/", "/facilities/", "/supply/"];
+const routes = ["/", "/blog/", "/acessibilidade/", "/construcao/", "/facilities/", "/supply/", "/source-ao/smart-rfq/", "/termos/", "/privacidade/", "/empresa/", "/business-services/", "/catalogo-obras/"];
 
 test.describe("HMATIAS — navegação e conteúdo", () => {
   test("homepage apresenta identidade, proposta e contactos", async ({ page }) => {
@@ -169,12 +169,51 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
   });
 
   for (const route of routes) {
-    test(`rota ${route} responde e contém conteúdo principal`, async ({ page }) => {
+    test(`rota ${route} responde, apresenta conteúdo e não tem erros estruturais`, async ({ page }) => {
+      const pageErrors = [];
+      page.on("pageerror", (error) => pageErrors.push(error.message));
       const response = await page.goto(route);
       expect(response?.status()).toBe(200);
       await expect(page.locator("main")).toBeVisible();
       await expect(page.locator("h1").first()).toBeVisible();
-      await expect(page).toHaveTitle(/HMATIAS/);
+      await expect(page).toHaveTitle(/HMATIAS|SOURCE AO/);
+
+      const missingAlt = await page.locator("img").evaluateAll((images) =>
+        images.filter((image) => !(image.getAttribute("alt") || "").trim())
+          .map((image) => image.getAttribute("src") || "(imagem sem src)")
+      );
+      expect(missingAlt, `Imagens sem texto alternativo em ${route}`).toEqual([]);
+
+      const missingTargets = await page.locator('a[href^="#"]').evaluateAll((links) =>
+        links.map((link) => link.getAttribute("href") || "")
+          .filter((href) => href.length > 1)
+          .filter((href) => !document.getElementById(decodeURIComponent(href.slice(1))))
+      );
+      expect(missingTargets, `Âncoras sem destino em ${route}`).toEqual([]);
+
+      const dimensions = await page.evaluate(() => ({
+        documentWidth: document.documentElement.scrollWidth,
+        viewportWidth: document.documentElement.clientWidth,
+      }));
+      expect(
+        dimensions.documentWidth,
+        `Deslocamento horizontal em ${route}: documento ${dimensions.documentWidth}px; viewport ${dimensions.viewportWidth}px`
+      ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
+
+      const internalPaths = await page.locator("a[href]").evaluateAll((links) => {
+        const paths = links.flatMap((link) => {
+          const href = link.getAttribute("href");
+          if (!href) return [];
+          const url = new URL(href, location.href);
+          return url.origin === location.origin ? [url.pathname + url.search] : [];
+        });
+        return [...new Set(paths)];
+      });
+      for (const target of internalPaths) {
+        const targetResponse = await page.request.get(new URL(target, page.url()).href);
+        expect(targetResponse.status(), `Ligação interna ${target} em ${route}`).toBe(200);
+      }
+      expect(pageErrors, `Erros JavaScript em ${route}`).toEqual([]);
     });
   }
 });
