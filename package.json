@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "audit:platform": "node scripts/audit-platform.mjs"
+    "audit:platform": "node scripts/audit-platform.mjs",
+    "map:page-dependencies": "node scripts/report-page-dependencies.mjs"
   },
   "devDependencies": {
     "lightningcss": "1.33.0",

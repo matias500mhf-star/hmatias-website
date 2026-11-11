@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      # Keep first-party Actions on their Node 24 runtime; mirrors the runner toolchain below.
+      # First-party Actions use the Node 24 runtime on current GitHub-hosted runners.
       - name: Checkout isolated branch
         uses: actions/checkout@v7
 
@@ -64,6 +64,9 @@ jobs:
 
       - name: Inventory platform structure
         run: npm run audit:platform
+
+      - name: Map shared page dependencies
+        run: npm run map:page-dependencies
 
       - name: Validate generated CSS bundles
         run: node scripts/build-home-css.mjs
