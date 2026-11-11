@@ -60,6 +60,7 @@ export const company = {
   credibilityUrl: "/credibilidade/",
   smartRfqUrl: "/source-ao/smart-rfq/",
   sourceAoRfqUrl: "https://comercialhmatiasps.com/source-ao/rfq.html",
+  sourceAoRfqEnUrl: "https://comercialhmatiasps.com/source-ao/rfq-en.html",
   constructionUrl: "/construcao/",
   remodelingUrl: "/construcao/#remodelacao",
   facilitiesUrl: "/facilities/",
