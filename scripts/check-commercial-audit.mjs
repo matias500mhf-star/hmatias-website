@@ -54,8 +54,8 @@ for(const path of ['index.html','en.html']){
   assert.ok(!home.includes('id="smart-rfq"'),'Smart RFQ card must not appear on homepage: '+path);
   const nav=home.match(/<nav id="primary-navigation"[^>]*>([\s\S]*?)<\/nav>/)?.[1]||'';
   const expected=path==='index.html'
-    ? ['Início','Sobre Nós','Quem Somos','Serviços','Projectos']
-    : ['Home','About Us','Who We Are','Services','Projects'];
+    ? ['Início','Sobre nós','Quem Somos','Serviços','Projectos']
+    : ['Home','About us','Who We Are','Services','Projects'];
   const labels=[...nav.matchAll(/<a\b[^>]*>(.*?)<\/a>/g)].map(m=>m[1].replace(/<[^>]+>/g,'').trim());
   assert.deepEqual(labels,expected,'Page-oriented homepage navigation changed: '+path);
   const contactStart=home.indexOf('<section class="contact contact-premium"');
