@@ -1,0 +1,119 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { company } from "../../data/site";
+---
+<BaseLayout
+  title="Credibilidade | Informação Institucional HMATIAS"
+  description="Identificação empresarial, contactos oficiais e princípios de atuação da HMATIAS – Prestação de Serviços SU, LDA, em Angola."
+>
+  <div class="preview-bar"><span><i aria-hidden="true"></i> INFORMAÇÃO INSTITUCIONAL</span><span>IDENTIFICAÇÃO · TRANSPARÊNCIA · CONTACTO</span></div>
+  <SiteHeader />
+  <main class="credibility-page">
+    <section class="credibility-hero">
+      <p class="eyebrow"><span class="eyebrow-line"></span> CREDIBILIDADE HMATIAS</p>
+      <h1>Informação clara.<br /><em>Compromissos responsáveis.</em></h1>
+      <p>A confiança começa com uma empresa identificável, canais de contacto claros e informação transparente sobre o que pode ser executado, em que condições e mediante que confirmação.</p>
+    </section>
+
+    <section class="credibility-identity section-pad">
+      <div class="credibility-heading">
+        <p class="section-kicker">01 / IDENTIFICAÇÃO EMPRESARIAL</p>
+        <h2>Quem está<br /><em>por trás do serviço.</em></h2>
+      </div>
+      <div class="identity-card">
+        <span class="identity-label">DENOMINAÇÃO SOCIAL</span>
+        <h3>{company.legalName}</h3>
+        <dl>
+          <div><dt>Localização</dt><dd>{company.address}</dd></div>
+          <div><dt>NIF</dt><dd>{company.taxNumber}</dd></div>
+          <div><dt>Registo Comercial</dt><dd>{company.commercialRegistration}</dd></div>
+          <div><dt>Telefone</dt><dd><a href={company.telephoneUri}>{company.phone}</a></dd></div>
+          <div><dt>E-mail comercial</dt><dd><a href={"mailto:"+company.commercialEmail}>{company.commercialEmail}</a></dd></div>
+          <div><dt>E-mail institucional</dt><dd><a href={"mailto:"+company.institutionalEmail}>{company.institutionalEmail}</a></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="credibility-method section-pad">
+      <div class="credibility-heading">
+        <p class="section-kicker">02 / FORMA DE ATUAÇÃO</p>
+        <h2>O que assumimos<br /><em>em cada pedido.</em></h2>
+      </div>
+      <div class="method-list">
+        <article><span>01</span><div><h3>Âmbito definido</h3><p>Clarificamos as necessidades, especificações, localização, entregáveis e responsabilidades antes de avançar com uma proposta.</p></div></article>
+        <article><span>02</span><div><h3>Condições confirmadas</h3><p>Disponibilidade, preço, prazo e logística são confirmados para cada fornecimento ou serviço, de acordo com o pedido.</p></div></article>
+        <article><span>03</span><div><h3>Comunicação responsável</h3><p>Alterações relevantes ao âmbito, ao prazo ou às condições são comunicadas para permitir uma decisão informada.</p></div></article>
+        <article><span>04</span><div><h3>Acompanhamento do trabalho</h3><p>O trabalho é acompanhado de acordo com o serviço contratado e com os entregáveis definidos entre as partes.</p></div></article>
+      </div>
+    </section>
+
+    <section class="credibility-limits section-pad">
+      <div class="credibility-limits-copy">
+        <p class="section-kicker">03 / TRANSPARÊNCIA COMERCIAL</p>
+        <h2>Informação antes<br /><em>de qualquer compromisso.</em></h2>
+      </div>
+      <div class="credibility-limits-text">
+        <p>Na área de Supply e procurement, a HMATIAS trabalha sob consulta e não apresenta disponibilidade como garantida sem confirmação. Stock, origem, preço, prazo e logística são verificados para cada pedido.</p>
+        <p>Na construção, remodelação e manutenção, o âmbito e as condições dependem da avaliação técnica e operacional aplicável ao trabalho solicitado.</p>
+        <p>As propostas devem identificar o serviço ou fornecimento, as condições acordadas e os respetivos limites antes da aceitação.</p>
+      </div>
+    </section>
+
+    <section class="credibility-contact section-pad">
+      <div><p class="section-kicker">04 / CONTACTO OFICIAL</p><h2>Fale diretamente<br /><em>com a HMATIAS.</em></h2><p>Para confirmar dados, apresentar um pedido ou solicitar informação institucional, utilize os canais oficiais da empresa.</p></div>
+      <div class="credibility-contact-links">
+        <a href={"mailto:"+company.commercialEmail}>E-mail comercial <strong>{company.commercialEmail} ↗</strong></a>
+        <a href={"mailto:"+company.institutionalEmail}>E-mail institucional <strong>{company.institutionalEmail} ↗</strong></a>
+        <a href={company.telephoneUri}>Telefone <strong>{company.phone} ↗</strong></a>
+        <a href={company.whatsappUri} target="_blank" rel="noopener noreferrer">WhatsApp <strong>Contactar ↗</strong></a>
+        <a class="about-return" href={company.aboutUrl}>Conhecer a HMATIAS <strong>Sobre nós ↗</strong></a>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+</BaseLayout>
+<style>
+.credibility-hero { padding:clamp(70px,9vw,118px) var(--hm-gutter); color:#fff; background:var(--hm-navy); }
+.credibility-hero h1 { margin:22px 0 0; font-size:clamp(44px,6.2vw,82px); line-height:1.01; font-weight:520; letter-spacing:-.065em; }
+.credibility-hero h1 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; }
+.credibility-hero > p:last-child { max-width:670px; margin:27px 0 0; color:#dceafa; font-size:14px; line-height:1.85; }
+.credibility-identity { display:grid; grid-template-columns:.75fr 1.25fr; gap:clamp(35px,7vw,95px); background:var(--hm-paper); }
+.credibility-heading h2,.credibility-limits h2,.credibility-contact h2 { margin:22px 0 0; font-size:clamp(35px,4.4vw,58px); line-height:1.08; font-weight:520; letter-spacing:-.06em; }
+.credibility-heading h2 em,.credibility-limits h2 em,.credibility-contact h2 em { color:var(--hm-blue); font-family:var(--hm-serif); font-weight:400; }
+.identity-card { padding:30px; background:var(--hm-light); border:1px solid var(--hm-line); }
+.identity-label { color:var(--hm-blue); font-size:9px; font-weight:700; letter-spacing:.15em; }
+.identity-card h3 { margin:17px 0 24px; font-size:22px; line-height:1.35; font-weight:600; letter-spacing:-.035em; }
+.identity-card dl { margin:0; border-top:1px solid var(--hm-line); }
+.identity-card dl div { display:grid; grid-template-columns:minmax(120px,.7fr) minmax(0,1.3fr); gap:20px; padding:13px 0; border-bottom:1px solid var(--hm-line); font-size:11px; }
+.identity-card dt { color:var(--hm-muted); }
+.identity-card dd { margin:0; text-align:right; font-weight:600; overflow-wrap:anywhere; }
+.identity-card dd a { text-decoration:underline; text-decoration-color:#91bfe5; text-underline-offset:3px; }
+.credibility-method { display:grid; grid-template-columns:.75fr 1.25fr; gap:clamp(35px,7vw,95px); background:var(--hm-light); }
+.method-list { border-top:1px solid var(--hm-line); }
+.method-list article { display:grid; grid-template-columns:40px 1fr; gap:18px; padding:23px 0; border-bottom:1px solid var(--hm-line); }
+.method-list article > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:19px; }
+.method-list h3 { margin:0 0 8px; font-size:14px; }
+.method-list p { margin:0; color:var(--hm-muted); font-size:12px; line-height:1.8; }
+.credibility-limits { display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(35px,7vw,95px); background:var(--hm-paper); }
+.credibility-limits-text { max-width:650px; }
+.credibility-limits-text p { margin:0 0 17px; color:var(--hm-muted); font-size:13px; line-height:1.9; }
+.credibility-contact { display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(35px,7vw,95px); background:var(--hm-sky-soft); }
+.credibility-contact > div:first-child > p:last-child { max-width:420px; color:var(--hm-muted); font-size:12px; line-height:1.8; }
+.credibility-contact-links { border-top:1px solid #b9d8ed; }
+.credibility-contact-links > a { display:flex; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid #b9d8ed; font-size:11px; }
+.credibility-contact-links strong { font-weight:650; text-align:right; overflow-wrap:anywhere; }
+.credibility-contact-links > a:hover { color:var(--hm-blue); }
+@media (max-width:800px) {
+  .credibility-identity,.credibility-method,.credibility-limits,.credibility-contact { grid-template-columns:1fr; gap:30px; }
+}
+@media (max-width:520px) {
+  .identity-card { padding:22px 18px; }
+  .identity-card dl div { grid-template-columns:1fr; gap:5px; }
+  .identity-card dd { text-align:left; }
+  .credibility-contact-links > a { flex-direction:column; gap:7px; }
+  .credibility-contact-links strong { text-align:left; }
+}
+</style>
