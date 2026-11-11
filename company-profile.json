@@ -68,7 +68,7 @@
     {
       "name": "SOURCE AO",
       "purpose": "HMATIAS procurement-intelligence and sourcing interface for Angola, separating supplier discovery, traceable evidence and current commercial confirmation",
-      "url": "https://comercialhmatiasps.com/source-ao/index.html",
+      "url": "https://comercialhmatiasps.com/source-ao/",
       "opportunityRadar": "https://comercialhmatiasps.com/source-ao/opportunity-radar.html",
       "rfq": "https://comercialhmatiasps.com/source-ao/rfq.html",
       "automatedQuotation": false,
@@ -87,7 +87,7 @@
     "privacy": "https://comercialhmatiasps.com/privacidade.html",
     "terms": "https://comercialhmatiasps.com/termos.html",
     "llmInformation": "https://comercialhmatiasps.com/llms.txt",
-    "sourceAO": "https://comercialhmatiasps.com/source-ao/index.html",
+    "sourceAO": "https://comercialhmatiasps.com/source-ao/",
     "sourceOpportunityRadar": "https://comercialhmatiasps.com/source-ao/opportunity-radar.html",
     "sourceRfq": "https://comercialhmatiasps.com/source-ao/rfq.html"
   },
