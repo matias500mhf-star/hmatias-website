@@ -241,7 +241,7 @@ assert.match(englishConstruction, /anexo-coberto-estrutura-metalica/i, "English 
 assert.doesNotMatch(englishConstruction, /instalacoes-embutidas-construcao/i, "English construction hero must not reuse the homepage photograph");
 
 const englishArticle = readFileSync(join(outDir, "en", "blog", "how-to-prepare-a-comparable-supply-quotation", "index.html"), "utf8");
-assert.ok(englishArticle.includes('href="https://comercialhmatiasps.com/source-ao/rfq-en.html"'), "English article must link to the English operational RFQ form");
+assert.ok(englishArticle.includes('href="https://comercialhmatiasps.com/rfq-en.html"'), "English article must link to the English operational RFQ form");
 
 const htmlImgCount = (html.match(/<img\b/g) || []).length;
 const htmlImgWithAltCount = (html.match(/<img\b[^>]*\balt=/g) || []).length;
