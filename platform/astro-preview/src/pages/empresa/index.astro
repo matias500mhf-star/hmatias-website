@@ -1,111 +1,123 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+import aboutPhoto from "../../../../images/catalogue/instalacoes-embutidas-construcao.webp";
 import { company } from "../../data/site";
 ---
 <BaseLayout
-  title="Sobre a HMATIAS | Empresa e Serviços em Angola"
-  description="Conheça a HMATIAS – Prestação de Serviços SU, LDA, empresa angolana sediada em Viana, Luanda, com atuação em construção, facilities, procurement e apoio empresarial."
+  title="Sobre a HMATIAS | Quem Somos"
+  description="Conheça a HMATIAS – Prestação de Serviços SU, LDA, empresa angolana de construção, facilities, procurement e serviços empresariais, sediada em Viana, Luanda."
 >
-  <div class="preview-bar"><span><i aria-hidden="true"></i> INFORMAÇÃO INSTITUCIONAL</span><span>HMATIAS · EMPRESA ANGOLANA</span></div>
+  <div class="preview-bar"><span><i aria-hidden="true"></i> SOBRE A HMATIAS</span><span>EMPRESA ANGOLANA · LUANDA</span></div>
   <SiteHeader />
   <main class="about-page">
     <section class="about-hero">
-      <div class="about-hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS · EMPRESA ANGOLANA</p>
-        <h1>Serviços empresariais com escopo claro e execução acompanhada.</h1>
-        <p>Construção, facilities, fornecimento e apoio empresarial para empresas e instituições em Angola. Cada pedido é avaliado segundo as especificações, a localização, o prazo e as condições de execução.</p>
-        <div class="hero-actions"><a class="button button-light" href="/#servicos">Explorar serviços <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="/#contacto">Falar com a HMATIAS <span aria-hidden="true">↗</span></a></div>
+      <div class="about-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> QUEM SOMOS</p>
+        <h1>Uma empresa de serviços, orientada para <em>fazer acontecer.</em></h1>
+        <p class="about-lead">A HMATIAS – Prestação de Serviços SU, LDA é uma empresa angolana sediada em Viana, Luanda. Atua em construção e remodelação, facilities e manutenção, procurement e fornecimento, e serviços administrativos e empresariais.</p>
+        <p class="about-support">Trabalhamos com empresas, instituições e clientes particulares. Cada pedido é analisado de acordo com as necessidades, as especificações e as condições concretas de execução.</p>
+        <div class="about-actions">
+          <a class="button button-light" href="/#servicos">Conhecer os serviços <span aria-hidden="true">↗</span></a>
+          <a class="text-link text-link-light" href={company.credibilityUrl}>Informação institucional <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
-      <aside class="about-identity">
-        <span>IDENTIFICAÇÃO EMPRESARIAL</span>
-        <h2>{company.legalName}</h2>
-        <dl><div><dt>Base</dt><dd>Viana · Luanda · Angola</dd></div><div><dt>NIF</dt><dd>{company.taxNumber}</dd></div><div><dt>Registo Comercial</dt><dd>{company.commercialRegistration}</dd></div></dl>
-        <a href={"mailto:"+company.commercialEmail}>{company.commercialEmail}</a>
-      </aside>
+      <figure class="about-visual">
+        <Image
+          src={aboutPhoto}
+          alt="Trabalho HMATIAS em obra, com instalações técnicas embutidas e alvenaria"
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 900px) 100vw, 44vw"
+          format="webp"
+          quality={84}
+        />
+        <figcaption><span>HMATIAS</span><span>TRABALHO NO TERRENO</span></figcaption>
+      </figure>
     </section>
 
-    <section class="about-areas section-pad">
-      <div class="section-heading"><div><div class="section-kicker">01 / ÁREAS DE ATUAÇÃO</div><h2>Capacidades apresentadas<br /><em>com limites claros.</em></h2></div><p>O âmbito, a disponibilidade e as condições são confirmados para cada pedido antes da proposta.</p></div>
-      <div class="about-area-grid">
-        <a href={company.constructionUrl}><span>01</span><h3>Construção e remodelação</h3><p>Obras, pavimentação, estruturas, coberturas e adaptação de espaços, após avaliação do local e do escopo técnico.</p><b>Ver serviço ↗</b></a>
-        <a href={company.facilitiesUrl}><span>02</span><h3>Facilities e manutenção</h3><p>Manutenção de instalações, limpeza e apoio operacional com frequência, recursos e responsabilidades definidos.</p><b>Ver serviço ↗</b></a>
-        <a href={company.supplyUrl}><span>03</span><h3>Supply e procurement</h3><p>Pesquisa e coordenação de fornecimento sob consulta. Stock, preço, origem, prazo e logística requerem confirmação.</p><b>Ver serviço ↗</b></a>
-        <a href={company.businessServicesUrl}><span>04</span><h3>Business Services</h3><p>Apoio documental e empresarial mediante análise do pedido, com entregáveis e condições acordados.</p><b>Ver serviço ↗</b></a>
+    <section class="about-services section-pad" id="servicos">
+      <div class="about-section-head">
+        <div><p class="section-kicker">O QUE FAZEMOS</p><h2>Quatro áreas.<br /><em>Uma forma responsável de trabalhar.</em></h2></div>
+        <p>Serviços apresentados de forma direta, com âmbito e condições definidos para cada pedido.</p>
+      </div>
+      <div class="about-service-grid">
+        <a href={company.constructionUrl}><span>01</span><h3>Construção e remodelação</h3><p>Obras, reabilitação, pavimentação, estruturas e adaptação de espaços.</p><b>Ver serviço ↗</b></a>
+        <a href={company.facilitiesUrl}><span>02</span><h3>Facilities e manutenção</h3><p>Manutenção de instalações, limpeza e apoio operacional.</p><b>Ver serviço ↗</b></a>
+        <a href={company.supplyUrl}><span>03</span><h3>Supply e procurement</h3><p>Pesquisa, aquisição e coordenação de fornecimentos sob consulta.</p><b>Ver serviço ↗</b></a>
+        <a href={company.businessServicesUrl}><span>04</span><h3>Business Services</h3><p>Apoio administrativo, documental e empresarial.</p><b>Ver serviço ↗</b></a>
       </div>
     </section>
 
-    <section class="about-principles section-pad">
-      <div class="section-heading"><div><div class="section-kicker">02 / ORIENTAÇÃO INSTITUCIONAL</div><h2>Como assumimos<br /><em>cada trabalho.</em></h2></div><p>Uma relação comercial sólida começa com informação compreensível e compromissos possíveis de acompanhar.</p></div>
-      <div class="about-mission"><span>MISSÃO</span><p>Transformar necessidades empresariais em serviços e fornecimentos executáveis, com âmbito definido, comunicação responsável e acompanhamento do trabalho acordado.</p></div>
-      <div class="about-commitments">
-        <article><span>01</span><div><h3>Escopo explícito</h3><p>Especificações, entregáveis, responsabilidades e condições são clarificados antes de iniciar.</p></div></article>
-        <article><span>02</span><div><h3>Comunicação comercial</h3><p>Alterações de escopo, prazo ou disponibilidade são comunicadas antes de avançar com uma decisão.</p></div></article>
-        <article><span>03</span><div><h3>Verificação adequada</h3><p>Materiais, execução e entregáveis são avaliados de acordo com o serviço contratado.</p></div></article>
-        <article><span>04</span><div><h3>Confidencialidade</h3><p>Informação recebida no âmbito do pedido é tratada com cuidado e discrição.</p></div></article>
-      </div>
-      <div class="about-vision"><span>VISÃO</span><p>Consolidar a HMATIAS como uma empresa angolana reconhecida por organizar e executar serviços e fornecimentos empresariais com rigor técnico e responsabilidade contratual.</p></div>
-    </section>
-
-    <section class="about-digital section-pad">
-      <div class="section-kicker">03 / INICIATIVAS DIGITAIS</div>
-      <h2>Projetos em desenvolvimento,<br /><em>apresentados com transparência.</em></h2>
-      <div class="about-digital-grid">
-        <article><span>ALPHA</span><h3>KARTA Identity Wallet</h3><p>Projeto de carteira digital de documentos. Funcionalidades, segurança e eventual disponibilização dependem de testes e validação.</p><a href="https://comercialhmatiasps.com/karta.html">Conhecer o projeto ↗</a></article>
-        <article><span>EM EVOLUÇÃO</span><h3>Source AO</h3><p>Plataforma de apoio a procurement que pesquisa registos indexados e estrutura pedidos. Fornecedores, stock, preços e prazos exigem validação comercial.</p><a href={company.sourceAoUrl}>Conhecer o Source AO ↗</a></article>
+    <section class="ceo-message section-pad">
+      <div class="ceo-message-label"><span class="section-kicker">UMA MENSAGEM DO CEO</span><span class="ceo-mark" aria-hidden="true">“</span></div>
+      <div class="ceo-message-content">
+        <h2>Confiança constrói-se<br /><em>com trabalho.</em></h2>
+        <blockquote>
+          Na HMATIAS, acreditamos que um bom serviço começa por ouvir com atenção, compreender o que é necessário e assumir compromissos que possam ser cumpridos. Queremos construir relações duradouras através de trabalho consistente, comunicação clara e respeito por cada projeto. A confiança não se pede: conquista-se, todos os dias, no trabalho.
+        </blockquote>
+        <div class="ceo-signature">
+          <span>Direção Executiva</span>
+          <strong>HMATIAS</strong>
+          <small>HMATIAS – Prestação de Serviços SU, LDA</small>
+        </div>
       </div>
     </section>
-    <section class="about-contact section-pad"><div><span>CONTACTO INSTITUCIONAL</span><h2>Fale connosco sobre o seu pedido.</h2><p>Envie especificações, localização e prazo pretendido para uma avaliação inicial.</p></div><div><a href={"mailto:"+company.commercialEmail}>{company.commercialEmail}</a><a href={company.whatsappUri} target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><a href="/#contacto">Solicitar atendimento ↗</a></div></section>
   </main>
   <SiteFooter />
   <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
 </BaseLayout>
 <style>
-.about-hero { min-height:540px; padding:clamp(64px,8vw,106px) var(--hm-gutter); display:grid; grid-template-columns:minmax(0,1.2fr) minmax(300px,.7fr); align-items:center; gap:clamp(40px,8vw,110px); color:#fff; background:var(--hm-navy); }
-.about-hero-copy { max-width:720px; }
-.about-hero h1 { margin:22px 0 0; font-size:clamp(42px,5.8vw,76px); line-height:1.02; font-weight:520; letter-spacing:-.065em; }
-.about-hero-copy > p:not(.eyebrow) { max-width:570px; color:#dceafa; font-size:13px; line-height:1.85; margin:25px 0 0; }
-.about-identity { padding:30px; color:var(--hm-ink); background:var(--hm-paper); box-shadow:18px 18px 0 #0b477c; }
-.about-identity > span,.about-contact > div > span { color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.15em; }
-.about-identity h2 { margin:25px 0; font-size:23px; line-height:1.3; font-weight:600; letter-spacing:-.04em; }
-.about-identity dl { margin:0; border-top:1px solid var(--hm-line); }
-.about-identity dl div { display:flex; justify-content:space-between; gap:15px; padding:12px 0; border-bottom:1px solid var(--hm-line); font-size:11px; }
-.about-identity dt { color:var(--hm-muted); }
-.about-identity dd { margin:0; font-weight:650; text-align:right; }
-.about-identity > a { display:block; margin-top:20px; font-size:11px; text-decoration:underline; text-underline-offset:4px; }
-.about-areas { background:var(--hm-light); }
-.about-area-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:48px; }
-.about-area-grid a { min-height:235px; padding:22px 19px; display:flex; flex-direction:column; align-items:flex-start; background:var(--hm-paper); border:1px solid var(--hm-line); }
-.about-area-grid a > span,.about-commitments article > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:17px; }
-.about-area-grid h3 { margin:28px 0 10px; font-size:15px; line-height:1.35; }
-.about-area-grid p { margin:0 0 18px; color:var(--hm-muted); font-size:10px; line-height:1.75; }
-.about-area-grid b { margin-top:auto; color:var(--hm-blue); font-size:10px; }
-.about-principles { background:var(--hm-paper); }
-.about-mission { max-width:720px; margin:42px 0; padding:27px 30px; background:var(--hm-light); border-left:2px solid var(--hm-blue); }
-.about-mission span,.about-vision span { color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.15em; }
-.about-mission p,.about-vision p { margin:15px 0 0; font-family:var(--hm-serif); font-size:21px; line-height:1.5; color:var(--hm-ink); }
-.about-commitments { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 40px; border-top:1px solid var(--hm-line); }
-.about-commitments article { display:grid; grid-template-columns:36px 1fr; gap:15px; padding:22px 0; border-bottom:1px solid var(--hm-line); }
-.about-commitments h3 { margin:0 0 8px; font-size:13px; }
-.about-commitments p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.75; }
-.about-vision { max-width:720px; margin:38px 0 0 auto; padding-top:20px; border-top:1px solid var(--hm-line); }
-.about-digital { background:var(--hm-light); }
-.about-digital h2 { margin:22px 0 38px; font-size:clamp(33px,4.2vw,55px); line-height:1.08; letter-spacing:-.055em; font-weight:520; }
-.about-digital h2 em { color:var(--hm-blue); font-family:var(--hm-serif); font-weight:400; }
-.about-digital-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
-.about-digital-grid article { padding:25px; background:var(--hm-paper); border:1px solid var(--hm-line); }
-.about-digital-grid article > span { color:var(--hm-blue); font-size:9px; letter-spacing:.14em; }
-.about-digital-grid h3 { margin:18px 0 8px; font-size:17px; }
-.about-digital-grid p { max-width:430px; color:var(--hm-muted); font-size:11px; line-height:1.8; }
-.about-digital-grid a { display:inline-block; margin-top:12px; color:var(--hm-blue); font-size:10px; font-weight:700; }
-.about-contact { display:grid; grid-template-columns:1fr .55fr; gap:45px; align-items:center; color:white; background:var(--hm-navy); }
-.about-contact > div > span { color:#b9d8ed; }
-.about-contact h2 { margin:18px 0 10px; font-size:clamp(30px,4vw,44px); line-height:1.12; }
-.about-contact p { max-width:540px; margin:0; color:#dceafa; font-size:12px; line-height:1.8; }
-.about-contact > div:last-child { display:flex; flex-direction:column; gap:15px; }
-.about-contact > div:last-child a { color:#fff; font-size:12px; }
-@media(max-width:1050px) { .about-area-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-@media(max-width:850px) { .about-hero { grid-template-columns:1fr; } .about-identity { max-width:600px; } }
-@media(max-width:650px) { .about-hero { min-height:0; padding-top:55px; padding-bottom:60px; } .about-hero h1 { font-size:clamp(41px,11vw,58px); } .about-area-grid,.about-commitments,.about-digital-grid,.about-contact { grid-template-columns:1fr; } .about-area-grid a { min-height:0; } .about-area-grid h3 { margin-top:18px; } .about-contact { gap:30px; } }
+.about-hero { padding:clamp(62px,8vw,108px) var(--hm-gutter); display:grid; grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr); align-items:center; gap:clamp(38px,7vw,100px); color:#fff; background:var(--hm-navy); }
+.about-copy { max-width:700px; }
+.about-copy h1 { max-width:690px; margin:0; font-size:clamp(43px,5.8vw,76px); line-height:1.02; font-weight:520; letter-spacing:-.065em; }
+.about-copy h1 em,.about-section-head h2 em,.ceo-message h2 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; }
+.about-lead { max-width:600px; margin:25px 0 0; color:#f2f7fc; font-size:14px; line-height:1.85; }
+.about-support { max-width:570px; margin:14px 0 0; color:#c4d8e9; font-size:12px; line-height:1.8; }
+.about-actions { display:flex; flex-wrap:wrap; align-items:center; gap:22px; margin-top:32px; }
+.about-visual { position:relative; margin:0; padding:0 16px 16px 0; }
+.about-visual:after { position:absolute; z-index:0; content:""; inset:16px 0 0 16px; border:1px solid #83c6f277; pointer-events:none; }
+.about-visual img { position:relative; z-index:1; width:100%; aspect-ratio:1.12; object-fit:cover; background:#0b477c; }
+.about-visual figcaption { position:relative; z-index:2; display:flex; justify-content:space-between; gap:12px; padding:15px 17px; color:var(--hm-navy); background:var(--hm-paper); font-size:8px; font-weight:700; letter-spacing:.13em; }
+.about-section-head { display:flex; justify-content:space-between; align-items:end; gap:45px; }
+.about-section-head h2,.ceo-message h2 { margin:22px 0 0; font-size:clamp(36px,4.7vw,62px); line-height:1.08; font-weight:520; letter-spacing:-.06em; }
+.about-section-head h2 em { color:var(--hm-blue); }
+.about-section-head > p { max-width:330px; margin:0 0 6px; color:var(--hm-muted); font-size:12px; line-height:1.8; }
+.about-services { background:var(--hm-light); }
+.about-service-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:48px; }
+.about-service-grid a { min-height:220px; padding:23px 20px; display:flex; flex-direction:column; align-items:flex-start; background:var(--hm-paper); border:1px solid var(--hm-line); transition:transform .2s,border-color .2s; }
+.about-service-grid a:hover { transform:translateY(-3px); border-color:#89bde7; }
+.about-service-grid a > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:19px; }
+.about-service-grid h3 { margin:27px 0 10px; font-size:15px; line-height:1.35; }
+.about-service-grid p { margin:0 0 18px; color:var(--hm-muted); font-size:11px; line-height:1.75; }
+.about-service-grid b { margin-top:auto; color:var(--hm-blue); font-size:10px; }
+.ceo-message { display:grid; grid-template-columns:.65fr 1.35fr; gap:50px; background:var(--hm-paper); }
+.ceo-message-label { display:flex; flex-direction:column; justify-content:space-between; }
+.ceo-mark { color:var(--hm-sky-soft); font-family:var(--hm-serif); font-size:clamp(100px,15vw,190px); line-height:.7; }
+.ceo-message-content { max-width:780px; }
+.ceo-message h2 em { color:var(--hm-blue); }
+.ceo-message blockquote { margin:30px 0 0; color:var(--hm-ink); font-family:var(--hm-serif); font-size:clamp(20px,2.2vw,27px); line-height:1.55; letter-spacing:-.02em; }
+.ceo-signature { display:flex; flex-direction:column; align-items:flex-start; gap:4px; margin-top:38px; padding-top:20px; border-top:1px solid var(--hm-line); }
+.ceo-signature span { color:var(--hm-muted); font-size:9px; letter-spacing:.15em; text-transform:uppercase; }
+.ceo-signature strong { color:var(--hm-navy); font-family:var(--hm-serif); font-size:29px; font-style:italic; font-weight:500; letter-spacing:-.04em; }
+.ceo-signature small { color:var(--hm-muted); font-size:9px; }
+@media (max-width:1000px) {
+  .about-hero { grid-template-columns:1fr  .82fr; gap:35px; }
+  .about-service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:700px) {
+  .about-hero { grid-template-columns:1fr; padding-top:58px; }
+  .about-visual { max-width:560px; margin:10px 0 0; }
+  .about-section-head { display:block; }
+  .about-section-head > p { margin-top:18px; }
+  .about-service-grid { grid-template-columns:1fr; margin-top:30px; }
+  .about-service-grid a { min-height:0; }
+  .about-service-grid h3 { margin-top:17px; }
+  .ceo-message { grid-template-columns:1fr; gap:12px; }
+  .ceo-mark { display:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .about-service-grid a { transition:none; }
+}
 </style>
