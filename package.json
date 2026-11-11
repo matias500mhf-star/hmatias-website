@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "audit:platform": "node scripts/audit-platform.mjs"
   },
   "devDependencies": {
     "lightningcss": "1.33.0",
