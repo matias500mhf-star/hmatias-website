@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../../../../logo-hmatias.png";
+import { company } from "../data/site";
 const homePrefix = Astro.url.pathname === "/" ? "" : "/";
 ---
 <header class="site-header">
@@ -15,6 +16,7 @@ const homePrefix = Astro.url.pathname === "/" ? "" : "/";
       <a href={`${homePrefix}#servicos`}>Serviços</a>
       <a href={`${homePrefix}#projetos`}>Projetos</a>
       <a href={`${homePrefix}#empresa`}>Empresa</a>
+      <a href={company.sourceAoUrl}>SOURCE AO</a>
     </nav>
     <a class="header-cta" href={`${homePrefix}#contacto`}>Falar com a HMATIAS <span aria-hidden="true">↗</span></a>
   </div>
