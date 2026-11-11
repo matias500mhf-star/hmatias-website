@@ -856,7 +856,7 @@
     card.querySelector('.internal-notes').value=row.internal_notes||'';
     if(row.rfq){
       const rfq=row.rfq;card.querySelector('.rfq-qualification').hidden=false;
-      const labels={company:'Empresa',individual:'Particular',institution:'Entidade pública / estatal',ready:'Compra após aprovação',budgeting:'Projeto / instalação',recurring:'Reabastecimento regular',urgent:'Urgente',normal:'Prazo normal',planned:'Compra programada',yes:'Aceita equivalentes',no:'Referência exata',discuss:'Consultar antes de substituir'};
+      const labels={company:'Empresa',individual:'Particular',institution:'Instituição pública / estatal',ready:'Compra após aprovação',budgeting:'Consulta de orçamento para projeto / instalação',recurring:'Fornecimento recorrente',urgent:'Urgente',normal:'Prazo normal',planned:'Compra programada',yes:'Aceita equivalentes',no:'Referência exata',discuss:'Consultar antes de substituir'};
       card.querySelector('.rfq-buyer').textContent=[rfq.requester_name,rfq.company,labels[rfq.buyer_type]].filter(Boolean).join(' · ');
       for(const item of rfq.items||[]){const li=document.createElement('li');li.textContent=`${item.quantity} ${item.unit} · ${item.description}${item.specification?' — '+item.specification:''}`;card.querySelector('.rfq-lines').append(li);}
       card.querySelector('.rfq-conditions').textContent=[labels[rfq.intent],labels[rfq.urgency],labels[rfq.alternatives],rfq.budget==null?'Orçamento a confirmar':Number(rfq.budget).toLocaleString('pt-AO')+' Kz',rfq.origin].filter(Boolean).join(' · ');
