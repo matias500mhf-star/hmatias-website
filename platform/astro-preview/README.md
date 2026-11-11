@@ -71,6 +71,6 @@ O workflow `.github/workflows/astro-prototype-qa.yml` executa:
 
 Os relatórios Playwright e Lighthouse são guardados como artefactos do GitHub Actions por 14 dias. As ferramentas de QA são instaladas apenas no ambiente CI e não entram no bundle do website.
 
-**Estado atual:** o build e a verificação estática passaram num ciclo anterior; a etapa Playwright/axe falhou nesse ciclo e o Lighthouse foi ignorado. A nova execução deve ser confirmada antes de qualquer decisão de publicação.
+**Estado atual:** o workflow Astro prototype QA #474 concluiu com sucesso. Segurança de dependências, Astro Check, build, verificação estática, testes do contrato SOURCE AO, Playwright, axe-core e Lighthouse passaram. Foram registados 115 testes Playwright aprovados, sem falhas axe críticas/graves, e 24 medições Lighthouse em 12 rotas. Desempenho, acessibilidade e boas práticas obtiveram 100/100; SEO obteve 63/100 porque o preview mantém intencionalmente `noindex, nofollow`. Esse resultado não deve ser corrigido removendo a proteção de indexação do ambiente de avaliação. A revisão visual manual, a verificação integral por teclado e os testes de submissão real dos formulários continuam pendentes.
 
 A proteção `noindex, nofollow` deve manter-se durante toda a avaliação.
