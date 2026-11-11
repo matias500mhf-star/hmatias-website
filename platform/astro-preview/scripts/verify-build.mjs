@@ -83,6 +83,17 @@ const supplyImgWithAltCount = (supplyHtml.match(/<img\b[^>]*\balt=/g) || []).len
 assert.equal(supplyImgWithAltCount, supplyImgCount, "Every Supply page image must have an alt attribute");
 assert.equal((supplyHtml.match(/supply-evidence-card/g) || []).length, 3, "Three Supply evidence cards are expected");
 
+const smartRfqPath = join(outDir, "source-ao", "smart-rfq", "index.html");
+assert.ok(existsSync(smartRfqPath), "Smart RFQ page must be generated");
+const smartRfqHtml = readFileSync(smartRfqPath, "utf8");
+assert.match(smartRfqHtml, /Uma necessidade/, "Smart RFQ heading is missing");
+assert.match(smartRfqHtml, /até 20 linhas/i, "Smart RFQ item limit disclosure is missing");
+assert.match(smartRfqHtml, /link privado de acompanhamento/i, "Smart RFQ private tracking explanation is missing");
+assert.match(smartRfqHtml, /source-ao\/rfq\.html/, "Smart RFQ must link to the operational Source AO form");
+const smartRfqImgCount = (smartRfqHtml.match(/<img\\b/g) || []).length;
+const smartRfqImgWithAltCount = (smartRfqHtml.match(/<img\\b[^>]*\\balt=/g) || []).length;
+assert.equal(smartRfqImgWithAltCount, smartRfqImgCount, "Every Smart RFQ page image must have an alt attribute");
+
 const assetDir = join(outDir, "_astro");
 assert.ok(existsSync(assetDir), "Astro must emit processed assets");
 const assets = readdirSync(assetDir).filter((file) => statSync(join(assetDir, file)).isFile());
