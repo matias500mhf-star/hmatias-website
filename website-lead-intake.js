@@ -10,6 +10,8 @@
   const configs=[
     {id:'contactForm',kind:'contact',name:'nome',company:'empresa',phone:'telefone',
       email:'email',service:'servico',location:'location',details:'mensagem'},
+    {id:'footerContactForm',kind:'contact',name:'nome',company:'empresa',phone:'telefone',
+      email:'email',service:'servico',location:'location',details:'mensagem'},
     {id:'businessContactForm',kind:'business',name:'client_name',phone:'contact',
       email:'email',service:'service_type',details:'details',location:'location'},
     {id:'bookingRequestForm',kind:'appointment',name:'client_name',phone:'contact',
@@ -184,14 +186,14 @@
       const fd=new FormData(form);
       const get=key=>key?String(fd.get(key)||'').trim():'';
       const payload={
-        kind:config.kind,nonce,consent:input.checked,website:'',turnstileToken:challengeToken,
+        kind:config.kind,nonce,consent:input.checked,website:get('website'),turnstileToken:challengeToken,
         attribution:campaignAttribution(),
         name:get(config.name),company:get(config.company),phone:get(config.phone),
         email:get(config.email),service:config.kind==='clean'?'HMATIAS Clean':
           (config.kind==='rfq'?({construction:'Construção e Remodelação',facilities:'Facilities e Manutenção',supply:'Supply e Procurement'}[get(config.service)]||'Smart RFQ')
             :get(config.service)||text('Contacto comercial','Business enquiry')),
         location:get(config.location),
-        details:detail(form,config,fd)
+        details:detail(form,config,fd),locale:en?'en':'pt'
       };
       if(config.kind==='appointment')payload.preferred_date=get(config.date);
       submit.disabled=true;
@@ -207,12 +209,17 @@
         const result=await response.json().catch(()=>null);
         if(!response.ok||result?.saved!==true||!/^HM-\d{8}-[A-Z0-9]{8}$/.test(result.reference||''))
           throw Error('save_not_confirmed');
-        status.textContent=text(
-          'Pedido registado na HMATIAS. Referência: '+result.reference+
-          '. A equipa irá analisar o pedido. A notificação por e-mail pode ainda estar pendente.',
-          'Request securely registered. Reference: '+result.reference+
-          '. Our team will review it. Internal email notification may still be pending.'
-        );
+        status.textContent=config.id==='footerContactForm'
+          ?text(
+            'Pedido registado. A confirmação automática foi solicitada para '+payload.email+'. Referência: '+result.reference+'.',
+            'Request registered. An automatic confirmation was requested for '+payload.email+'. Reference: '+result.reference+'.'
+          )
+          :text(
+            'Pedido registado na HMATIAS. Referência: '+result.reference+
+            '. A equipa irá analisar o pedido. A notificação por e-mail pode ainda estar pendente.',
+            'Request securely registered. Reference: '+result.reference+
+            '. Our team will review it. Internal email notification may still be pending.'
+          );
         nonce=crypto.randomUUID();
         // Consent-gated GA4 tracking receives no contact details or lead references.
         const leadTypes={contact:'general_quote',business:'business_services_request',
@@ -269,7 +276,10 @@
         !/^[0-9A-Za-z_-]{8,180}$/.test(data.turnstileSiteKey))return;
       let verifier;
       try{verifier=await turnstileApi();}catch{return;}
-      for(const item of available)setup(item.form,item.config,data.turnstileSiteKey,verifier);
+      for(const item of available){
+        if(item.config.id==='footerContactForm'&&data.emailDeliveryReady!==true)continue;
+        setup(item.form,item.config,data.turnstileSiteKey,verifier);
+      }
     }catch{
       // The original WhatsApp/email flows are unaffected when the API is unavailable.
     }

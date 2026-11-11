@@ -60,8 +60,9 @@ export function validateWebsiteLead(value){
   const details=clean(value.details,2400);
   const preferred=clean(value.preferred_date,20);
   const channel=clean(value.preferred_channel,20);
+  const locale=clean(value.locale,2).toLowerCase();
   const attribution=normaliseAttribution(value.attribution);
-  const maxLengths={nonce:90,name:120,company:160,phone:60,email:180,service:140,location:160,details:2400,preferred_date:20,preferred_channel:20};
+  const maxLengths={nonce:90,name:120,company:160,phone:60,email:180,service:140,location:160,details:2400,preferred_date:20,preferred_channel:20,locale:2};
   if(Object.entries(maxLengths).some(([field,maxLength])=>typeof value[field]==='string'&&value[field].length>maxLength))return null;
   if(!attribution||!KINDS.has(kind)||!/^[a-zA-Z0-9_-]{18,90}$/.test(submission)||
      value.consent!==true||Boolean(value.website)||
@@ -69,14 +70,15 @@ export function validateWebsiteLead(value){
      (!phone&&!email)|| (phone&&phone.length<6)||
      (email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))||
      (channel&&!['phone','email','whatsapp'].includes(channel))||
+     (locale&&!['pt','en'].includes(locale))||
      (preferred&&!/^\d{4}-\d{2}-\d{2}$/.test(preferred)))return null;
-  return {kind,submission,name,company,phone,email,service,location,details,preferred,channel,attribution};
+  return {kind,submission,name,company,phone,email,service,location,details,preferred,channel,locale:locale||'pt',attribution};
 }
 
 export function websiteLeadConfig(request,env){
   if(!allowedPublicOrigin(request))return fail(request,403,'origin_not_allowed');
   const active=enabled(env);
-  return result(request,{ok:true,enabled:active,
+  return result(request,{ok:true,enabled:active,emailDeliveryReady:websiteDeliveryReady(env),
     ...(active?{turnstileSiteKey:env.WEBSITE_LEADS_TURNSTILE_SITE_KEY}:{})});
 }
 export function websiteLeadCors(request){
@@ -145,10 +147,10 @@ export async function createWebsiteLead(request,env,{fetchFn=fetch}={}){
   const reference=ref(),id='wl_'+crypto.randomUUID();
   const encrypted=await encryptPrivateText(JSON.stringify(fields),env.PII_ENCRYPTION_KEY);
   await env.SOURCE_AO_DB.prepare(`
-    INSERT INTO website_leads(id,reference,submission_hash,payload_hash,kind,service,encrypted_payload)
-    VALUES(?,?,?,?,?,?,?)
+    INSERT INTO website_leads(id,reference,submission_hash,payload_hash,kind,service,encrypted_payload,receipt_state,next_receipt_attempt)
+    VALUES(?,?,?,?,?,?,?,?,?)
     ON CONFLICT(submission_hash) DO NOTHING
-  `).bind(id,reference,nonceHash,payloadHash,fields.kind,fields.service,encrypted).run();
+  `).bind(id,reference,nonceHash,payloadHash,fields.kind,fields.service,encrypted,fields.email?'pending':'skipped',iso()).run();
   const saved=await env.SOURCE_AO_DB.prepare(
     'SELECT reference,payload_hash FROM website_leads WHERE submission_hash=?'
   ).bind(nonceHash).first();
@@ -198,15 +200,30 @@ export async function updateWebsiteLeadStatus(request,env,id){
 export function websiteDeliveryReady(env){
   return Boolean(env.SOURCE_AO_DB&&env.PII_ENCRYPTION_KEY&&env.RESEND_API_KEY&&env.SOURCE_AO_ALERT_FROM&&env.SOURCE_AO_ALERT_TO);
 }
-export async function deliverWebsiteLeadAlerts(env,{limit=5,now=new Date(),fetchFn=fetch}={}){
-  if(!websiteDeliveryReady(env))return {configured:false,processed:0,accepted:0,failed:0};
+export async function deliverWebsiteLeadAlerts(env,{limit=5,now=new Date(),fetchFn=fetch,reference=null}={}){
+  if(!websiteDeliveryReady(env))return {
+    configured:false,processed:0,accepted:0,failed:0,
+    receiptsAccepted:0,receiptsSkipped:0,receiptsFailed:0
+  };
   const rows=await env.SOURCE_AO_DB.prepare(
-    "SELECT id,reference,kind,service,encrypted_payload,alert_attempts FROM website_leads WHERE alert_state='pending' AND datetime(next_alert_attempt)<=datetime(?) ORDER BY created_at ASC LIMIT ?"
-  ).bind(now.toISOString(),Math.max(1,Math.min(10,limit))).all();
-  let accepted=0,failed=0;
+    "SELECT id,reference,kind,service,encrypted_payload,alert_state,alert_attempts,receipt_state,receipt_attempts " +
+    "FROM website_leads WHERE ((alert_state='pending' AND datetime(next_alert_attempt)<=datetime(?)) " +
+    "OR (receipt_state='pending' AND datetime(next_receipt_attempt)<=datetime(?))) " +
+    "AND (? IS NULL OR reference=?) ORDER BY created_at ASC LIMIT ?"
+  ).bind(now.toISOString(),now.toISOString(),reference,reference,Math.max(1,Math.min(10,limit))).all();
+
+  let accepted=0,failed=0,receiptsAccepted=0,receiptsSkipped=0,receiptsFailed=0;
   for(const row of rows.results||[]){
+    let details;
     try{
-      const details=JSON.parse(await decryptPrivateText(row.encrypted_payload,env.PII_ENCRYPTION_KEY));
+      details=JSON.parse(await decryptPrivateText(row.encrypted_payload,env.PII_ENCRYPTION_KEY));
+    }catch{
+      failed++;
+      if(row.receipt_state==='pending')receiptsFailed++;
+      continue;
+    }
+
+    if(row.alert_state==='pending'){
       const lines=[
         'HMATIAS — NOVO PEDIDO DO WEBSITE','Referência: '+row.reference,
         'Tipo: '+row.kind,'Serviço: '+row.service,
@@ -222,32 +239,105 @@ export async function deliverWebsiteLeadAlerts(env,{limit=5,now=new Date(),fetch
         '',
         'Registado na D1. Atribuir responsável comercial e verificar os detalhes na área interna.'
       ];
-      const response=await fetchFn('https://api.resend.com/emails',{
-        method:'POST',headers:{
-          authorization:'Bearer '+env.RESEND_API_KEY,
-          'content-type':'application/json','Idempotency-Key':'hmatias-website-'+row.reference
-        },
-        body:JSON.stringify({
-          from:env.SOURCE_AO_ALERT_FROM,to:[env.SOURCE_AO_ALERT_TO],
-          subject:'Novo pedido HMATIAS · '+row.reference,text:lines.join('\n')
-        }),signal:AbortSignal.timeout(10000)
-      });
-      if(!response.ok)throw Error('provider_not_accepted');
-      await env.SOURCE_AO_DB.prepare(
-        "UPDATE website_leads SET alert_state='accepted',alert_accepted_at=?,alert_attempts=alert_attempts+1 WHERE id=? AND alert_state='pending'"
-      ).bind(now.toISOString(),row.id).run();
-      accepted++;
-    }catch{
-      const attempts=Number(row.alert_attempts||0)+1;
-      const minutes=Math.min(1440,5*2**Math.min(8,attempts-1));
-      const next=new Date(now.getTime()+minutes*60000).toISOString();
-      await env.SOURCE_AO_DB.prepare(
-        "UPDATE website_leads SET alert_attempts=?,next_alert_attempt=? WHERE id=? AND alert_state='pending'"
-      ).bind(attempts,next,row.id).run();
-      failed++;
+      try{
+        const response=await fetchFn('https://api.resend.com/emails',{
+          method:'POST',headers:{
+            authorization:'Bearer '+env.RESEND_API_KEY,
+            'content-type':'application/json',
+            'Idempotency-Key':'hmatias-website-alert-'+row.reference
+          },
+          body:JSON.stringify({
+            from:env.SOURCE_AO_ALERT_FROM,to:[env.SOURCE_AO_ALERT_TO],
+            ...(details.email?{reply_to:[details.email]}:{}),
+            subject:'Novo pedido HMATIAS · '+row.reference,text:lines.join('\n')
+          }),signal:AbortSignal.timeout(10000)
+        });
+        if(!response.ok)throw Error('provider_not_accepted');
+        await env.SOURCE_AO_DB.prepare(
+          "UPDATE website_leads SET alert_state='accepted',alert_accepted_at=?,alert_attempts=alert_attempts+1 WHERE id=? AND alert_state='pending'"
+        ).bind(now.toISOString(),row.id).run();
+        accepted++;
+      }catch{
+        const attempts=Number(row.alert_attempts||0)+1;
+        const minutes=Math.min(1440,5*2**Math.min(8,attempts-1));
+        const next=new Date(now.getTime()+minutes*60000).toISOString();
+        await env.SOURCE_AO_DB.prepare(
+          "UPDATE website_leads SET alert_attempts=?,next_alert_attempt=? WHERE id=? AND alert_state='pending'"
+        ).bind(attempts,next,row.id).run();
+        failed++;
+      }
+    }
+
+    if(row.receipt_state==='pending'){
+      const visitorEmail=String(details.email||'').trim().toLowerCase();
+      if(!visitorEmail){
+        await env.SOURCE_AO_DB.prepare(
+          "UPDATE website_leads SET receipt_state='skipped' WHERE id=? AND receipt_state='pending'"
+        ).bind(row.id).run();
+        receiptsSkipped++;
+        continue;
+      }
+      const english=details.locale==='en';
+      const greeting=details.name||(english?'there':'');
+      const lines=english?[
+        'Hello '+greeting+',',
+        '',
+        'We have received the message you submitted through the HMATIAS website.',
+        'Reference: '+row.reference,
+        'Service: '+row.service,
+        '',
+        'Our team will review your request and contact you using the details provided.',
+        'This message confirms receipt only; it does not constitute a quotation, appointment or award.',
+        '',
+        'HMATIAS — Prestação de Serviços, SU, Lda.',
+        'geral@comercialhmatiasps.com'
+      ]:[
+        'Olá '+greeting+',',
+        '',
+        'Recebemos a mensagem que enviou através do website da HMATIAS.',
+        'Referência: '+row.reference,
+        'Serviço: '+row.service,
+        '',
+        'A nossa equipa irá analisar o pedido e contactá-lo através dos dados indicados.',
+        'Esta mensagem confirma apenas a recepção do pedido; não constitui orçamento, agendamento ou adjudicação.',
+        '',
+        'HMATIAS — Prestação de Serviços, SU, Lda.',
+        'geral@comercialhmatiasps.com'
+      ];
+      try{
+        const response=await fetchFn('https://api.resend.com/emails',{
+          method:'POST',headers:{
+            authorization:'Bearer '+env.RESEND_API_KEY,
+            'content-type':'application/json',
+            'Idempotency-Key':'hmatias-website-receipt-'+row.reference
+          },
+          body:JSON.stringify({
+            from:env.SOURCE_AO_ALERT_FROM,to:[visitorEmail],
+            reply_to:[env.SOURCE_AO_ALERT_TO],
+            subject:(english?'We received your message | HMATIAS ':'Recebemos o seu pedido | HMATIAS ')+row.reference,
+            text:lines.join('\n')
+          }),signal:AbortSignal.timeout(10000)
+        });
+        if(!response.ok)throw Error('provider_not_accepted');
+        await env.SOURCE_AO_DB.prepare(
+          "UPDATE website_leads SET receipt_state='accepted',receipt_accepted_at=?,receipt_attempts=receipt_attempts+1 WHERE id=? AND receipt_state='pending'"
+        ).bind(now.toISOString(),row.id).run();
+        receiptsAccepted++;
+      }catch{
+        const attempts=Number(row.receipt_attempts||0)+1;
+        const minutes=Math.min(1440,5*2**Math.min(8,attempts-1));
+        const next=new Date(now.getTime()+minutes*60000).toISOString();
+        await env.SOURCE_AO_DB.prepare(
+          "UPDATE website_leads SET receipt_attempts=?,next_receipt_attempt=? WHERE id=? AND receipt_state='pending'"
+        ).bind(attempts,next,row.id).run();
+        receiptsFailed++;
+      }
     }
   }
-  return {configured:true,processed:(rows.results||[]).length,accepted,failed};
+  return {
+    configured:true,processed:(rows.results||[]).length,
+    accepted,failed,receiptsAccepted,receiptsSkipped,receiptsFailed
+  };
 }
 
 export async function pruneWebsiteLeads(env){

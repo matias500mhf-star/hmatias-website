@@ -36,18 +36,38 @@ for(const path of ['index.html','en.html']){
   const home=read(path);
   assert.ok(home.includes('class="home-proof"'),'Homepage proof row missing: '+path);
   assert.ok(home.includes('site-improvements.css'),'Responsive homepage refinements missing: '+path);
+  assert.ok(home.includes('site-bootstrap.js?v=20261108-footer-contact1'),'Updated footer bootstrap missing: '+path);
 }
+const footerBootstrap=read('site-bootstrap.js');
+assert.ok(footerBootstrap.includes('const ensureFooterContactForm'),'Shared footer form injector missing.');
+assert.ok(footerBootstrap.includes('footer-contact-form.css?v=20261108-1'),'Footer form stylesheet missing.');
+assert.ok(footerBootstrap.includes('footer-contact-fallback-actions'),'Manual delivery fallback missing.');
 
+
+const footerPages=["agendamento.html","booking.html","business-services.html","catalogo-obras.html","clean-en.html","clean.html","coberturas-industriais.html","construcao.html","construction.html","credibilidade.html","credibility.html","en.html","estaleiro-integrado.html","facilities-en.html","facilities.html","fornecimento-de-epi-e-fardamento.html","index.html","integrated-yard.html","karta-en.html","karta.html","limpeza-pos-obra.html","privacidade.html","privacy.html","remodelacao-de-escritorios.html","rfq-en.html","rfq.html","servicos-administrativos.html","supply-en.html","supply.html","termos.html","terms.html","work-catalogue.html"];
+for(const path of footerPages){
+  const html=read(path);
+  assert.ok(html.includes('<footer'),'Footer missing: '+path);
+  assert.ok(
+    html.includes('script.js?v=20261108-footer-contact1') ||
+    html.includes('site-bootstrap.js?v=20261108-footer-contact1'),
+    'Updated shared footer bootstrap missing: '+path
+  );
+}
 const events=read('analytics-events.js');
 assert.ok(events.includes("form.dataset.hmatiasWebsiteIntake!=='true'"));
 assert.ok(events.includes("track('generate_lead'"));
 const loader=read('website-lead-client.js');
-assert.ok(loader.includes('website-lead-intake.js?v='));
 const client=read('website-lead-intake.js');
+assert.ok(loader.includes('website-lead-intake.js?v=20261108-contactreceipt1'));
+assert.ok(loader.includes("'footerContactForm'"));
+assert.ok(client.includes("id:'footerContactForm'"));
 assert.ok(client.includes("window.hmatiasAnalytics?.confirmLead?.("));
 assert.ok(client.includes("if(!response.ok||result?.saved!==true"));
 assert.ok(client.includes('turnstileToken:challengeToken'));
 assert.ok(client.includes('attribution:campaignAttribution()'));
+assert.ok(client.includes("locale:en?'en':'pt'"));
+assert.ok(client.includes("emailDeliveryReady!==true"));
 assert.ok(client.includes("utm_source"));
 assert.ok(client.includes("referrer_host"));
 
@@ -84,7 +104,7 @@ for(const path of ['index.html','en.html','credibilidade.html','credibility.html
   const html=read(path);
   assert.match(html,/href="mailto:geral@comercialhmatiasps[.]com"><img[^>]+contact-email[.]svg/,
     'Official email icon missing from shared contact surface: '+path);
-  assert.ok(html.includes('site-bootstrap.js?v=20261029-email-icon-preserve1'),
+  assert.ok(html.includes('site-bootstrap.js?v=20261108-footer-contact1'),
     'Cache-busted email icon normalizer missing: '+path);
 }
 assert.ok(read('script.js').includes('const existing=target.querySelector'));

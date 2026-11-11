@@ -4,8 +4,8 @@
   const root=document.documentElement;
   if(root.dataset.hmatiasLeadsEndpoint||root.dataset.hmatiasWebsiteLeadLoader)return;
   root.dataset.hmatiasWebsiteLeadLoader='true';
-  const src=new URL('website-lead-intake.js?v=20261014-lazy1',document.currentScript?.src||location.href).href;
-  const ids=['contactForm','businessContactForm','bookingRequestForm','cleanQuoteForm','smartRfqForm'];
+  const src=new URL('website-lead-intake.js?v=20261108-contactreceipt1',document.currentScript?.src||location.href).href;
+  const ids=['contactForm','footerContactForm','businessContactForm','bookingRequestForm','cleanQuoteForm','smartRfqForm'];
   function watch(){
     const forms=ids.map(id=>document.getElementById(id)).filter(Boolean);
     if(!forms.length)return;
