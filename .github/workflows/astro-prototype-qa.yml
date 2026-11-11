@@ -55,6 +55,18 @@ jobs:
       - name: Verify generated website
         run: npm run verify
 
+      - name: Install pinned browser QA tools
+        run: npm install --no-save --no-package-lock @playwright/test@1.65.0 @axe-core/playwright@4.14.0 @lhci/cli@0.16.0
+
+      - name: Install Chromium and system dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Run desktop, mobile and axe accessibility tests
+        run: npx playwright test
+
+      - name: Run Lighthouse CI audits
+        run: npx lhci autorun --config=./lighthouserc.cjs
+
       - name: Commit generated lockfile to isolated branch
         if: github.event_name == 'push' && github.ref == 'refs/heads/feat/hmatias-platform-modernization-20261111'
         run: |
@@ -75,6 +87,16 @@ jobs:
           path: platform/astro-preview/dist/
           if-no-files-found: error
           retention-days: 7
+      - name: Upload browser and Lighthouse QA reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hmatias-browser-quality-reports
+          path: |
+            platform/astro-preview/playwright-report/
+            platform/astro-preview/.lighthouseci/
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Upload generated dependency lockfile
         uses: actions/upload-artifact@v4
         with:
