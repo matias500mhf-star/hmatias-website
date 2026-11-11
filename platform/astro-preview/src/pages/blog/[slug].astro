@@ -8,7 +8,7 @@ import { company } from "../../data/site";
 type Props = { post: CollectionEntry<"blog"> };
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const posts = await getCollection("blog", ({ data }) => !data.draft && data.language === "pt-AO");
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
