@@ -45,7 +45,7 @@ const contactAnchor = isEnglish ? "contact" : "contacto";
 <header class="site-header" data-language={isEnglish ? "en" : "pt"}>
   <div class="header-inner">
     <a class="brand" href={`${homeUrl}#inicio`} aria-label={isEnglish ? "HMATIAS — home" : "HMATIAS — início"}>
-      <Image src={logo} alt="HMATIAS — Prestação de Serviços" widths={[128, 176]} sizes="88px" format="webp" quality={82} loading="eager" />
+      <Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services" : "HMATIAS — Prestação de Serviços"} widths={[128, 176]} sizes="88px" format="webp" quality={82} loading="eager" />
     </a>
     <button class="menu-toggle" type="button" aria-label={isEnglish ? "Open menu" : "Abrir menu"} aria-expanded="false" aria-controls="main-nav">
       <span></span><span></span>
@@ -57,7 +57,7 @@ const contactAnchor = isEnglish ? "contact" : "contacto";
       <a href={company.sourceAoUrl}>SOURCE AO</a>
     </nav>
     <div class="header-actions">
-      <a class="language-switch" href={languageHref} lang={isEnglish ? "pt-AO" : "en"} aria-label={isEnglish ? "Mudar para português" : "Switch to English"}>{isEnglish ? "PT" : "EN"}</a>
+      <a class="language-switch" href={languageHref} lang={isEnglish ? "pt-AO" : "en"} aria-label={isEnglish ? "Switch to Portuguese" : "Switch to English"}>{isEnglish ? "PT" : "EN"}</a>
       <a class="header-cta" href={`${homeUrl}#${contactAnchor}`}>{isEnglish ? "Contact HMATIAS" : "Falar com a HMATIAS"} <span aria-hidden="true">↗</span></a>
     </div>
   </div>
