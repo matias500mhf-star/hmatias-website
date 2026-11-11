@@ -1,0 +1,136 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-concluidos.webp";
+import { company } from "../../../data/site";
+---
+<BaseLayout title="About HMATIAS | Company Profile" description="Learn about HMATIAS – Prestação de Serviços SU, LDA, an Angolan company based in Viana, Luanda, operating in construction, facilities, procurement and business services." lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> ABOUT HMATIAS</span><span>ANGOLAN COMPANY · LUANDA</span></div>
+  <SiteHeader />
+  <main class="about-page">
+    <section class="about-hero">
+      <div class="about-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> WHO WE ARE</p>
+        <h1>A service company, focused on <em>making things happen.</em></h1>
+        <p class="about-lead">HMATIAS – Prestação de Serviços SU, LDA is an Angolan company based in Viana, Luanda. Its activities include construction and remodelling, facilities and maintenance, procurement and supply, and administrative and business services.</p>
+        <p class="about-support">We work with companies, institutions and private clients. Each request is assessed against the actual requirements, specifications and delivery conditions.</p>
+        <div class="about-actions"><a class="button button-light" href="/en/#services">Explore our services <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="/en/credibility/">Company information <span aria-hidden="true">↗</span></a></div>
+      </div>
+      <figure class="about-visual"><Image src={aboutPhoto} alt="Completed rural pavilions with metal roofing and ventilated side areas" widths={[640,960,1280]} sizes="(max-width:900px) 100vw, 44vw" format="webp" quality={84}/><figcaption><span>HMATIAS</span><span>WORK ON SITE</span></figcaption></figure>
+    </section>
+
+    <section class="about-services section-pad" id="services">
+      <div class="about-section-head"><div><p class="section-kicker">WHAT WE DO</p><h2>Four service areas.<br /><em>One responsible approach.</em></h2></div><p>Services are presented with a clear scope and conditions defined for each request.</p></div>
+      <div class="about-service-grid">
+        <a href="/en/construction/"><span>01</span><h3>Construction and remodelling</h3><p>Building works, rehabilitation, paving, structures and space adaptations.</p><b>View service ↗</b></a>
+        <a href="/en/facilities/"><span>02</span><h3>Facilities and maintenance</h3><p>Building maintenance, cleaning and operational support.</p><b>View service ↗</b></a>
+        <a href="/en/supply/"><span>03</span><h3>Supply and procurement</h3><p>Sourcing, purchasing and supply coordination on request.</p><b>View service ↗</b></a>
+        <a href="/en/business-services/"><span>04</span><h3>Business Services</h3><p>Administrative, documentary and business support.</p><b>View service ↗</b></a>
+      </div>
+    </section>
+
+    <section class="about-purpose section-pad">
+      <div class="about-section-head"><div><p class="section-kicker">WHAT GUIDES US</p><h2>Clear purpose.<br /><em>Defined direction.</em></h2></div><p>Our mission, vision and values guide the way HMATIAS works and engages with clients and partners.</p></div>
+      <div class="purpose-grid">
+        <article class="purpose-card purpose-mission"><span>01 / MISSION</span><h3>Respond with solutions. Deliver with responsibility.</h3><p>Provide construction, maintenance, supply and business support solutions aligned with each client's actual needs, with execution discipline, clear conditions and responsibility for commitments made.</p></article>
+        <article class="purpose-card purpose-vision"><span>02 / VISION</span><h3>Become a trusted Angolan service provider.</h3><p>Establish HMATIAS as a company recognised for the quality of its work, responsiveness and integrated services that help companies and institutions deliver their projects.</p></article>
+      </div>
+      <div class="values-heading"><p class="section-kicker">03 / VALUES</p><h3>Principles behind every decision.</h3></div>
+      <div class="values-grid">
+        <article><span>01</span><h4>Integrity</h4><p>Act honestly and transparently, while respecting commitments made.</p></article>
+        <article><span>02</span><h4>Rigor</h4><p>Pay attention to specifications, quality and the details of every service.</p></article>
+        <article><span>03</span><h4>Responsibility</h4><p>Assess delivery conditions and make clear, sustainable commitments.</p></article>
+        <article><span>04</span><h4>Client focus</h4><p>Understand each requirement and communicate clearly throughout the work.</p></article>
+        <article><span>05</span><h4>Continuous improvement</h4><p>Improve processes, capabilities and tools to respond more effectively.</p></article>
+      </div>
+    </section>
+
+    <section class="ceo-message section-pad">
+      <div class="ceo-message-label"><span class="section-kicker">A MESSAGE FROM THE CEO</span><span class="ceo-mark" aria-hidden="true">“</span></div>
+      <div class="ceo-message-content"><h2>Trust is built<br /><em>through work.</em></h2><blockquote>HMATIAS is founded on a simple conviction: projects move forward more effectively when there is clarity from the first conversation and responsibility through to delivery. We aim to be a partner that understands the requirement, organises the response and follows the work with seriousness. This is how we seek to build lasting relationships and contribute to the development of businesses in Angola.</blockquote><div class="ceo-signature"><span>Executive Management</span><strong>Henrique Fernandes</strong><small>HMATIAS – Prestação de Serviços SU, LDA</small></div></div>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+</BaseLayout>
+<style>
+.about-hero { padding:clamp(62px,8vw,108px) var(--hm-gutter); display:grid; grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr); align-items:center; gap:clamp(38px,7vw,100px); color:#fff; background:var(--hm-navy); }
+.about-copy { max-width:700px; }
+.about-copy h1 { max-width:690px; margin:0; font-size:clamp(43px,5.8vw,76px); line-height:1.02; font-weight:520; letter-spacing:-.065em; }
+.about-copy h1 em,.about-section-head h2 em,.ceo-message h2 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; }
+.about-lead { max-width:600px; margin:25px 0 0; color:#f2f7fc; font-size:14px; line-height:1.85; }
+.about-support { max-width:570px; margin:14px 0 0; color:#c4d8e9; font-size:12px; line-height:1.8; }
+.about-actions { display:flex; flex-wrap:wrap; align-items:center; gap:22px; margin-top:32px; }
+.about-visual { position:relative; margin:0; padding:0 16px 16px 0; }
+.about-visual:after { position:absolute; z-index:0; content:""; inset:16px 0 0 16px; border:1px solid #83c6f277; pointer-events:none; }
+.about-visual img { position:relative; z-index:1; width:100%; aspect-ratio:1.12; object-fit:cover; background:#0b477c; }
+.about-visual figcaption { position:relative; z-index:2; display:flex; justify-content:space-between; gap:12px; padding:15px 17px; color:var(--hm-navy); background:var(--hm-paper); font-size:8px; font-weight:700; letter-spacing:.13em; }
+.about-section-head { display:flex; justify-content:space-between; align-items:end; gap:45px; }
+.about-section-head h2,.ceo-message h2 { margin:22px 0 0; font-size:clamp(36px,4.7vw,62px); line-height:1.08; font-weight:520; letter-spacing:-.06em; }
+.about-section-head h2 em { color:var(--hm-blue); }
+.about-section-head > p { max-width:330px; margin:0 0 6px; color:var(--hm-muted); font-size:12px; line-height:1.8; }
+.about-services { background:var(--hm-light); }
+.about-service-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:48px; }
+.about-service-grid a { min-height:220px; padding:23px 20px; display:flex; flex-direction:column; align-items:flex-start; background:var(--hm-paper); border:1px solid var(--hm-line); transition:transform .2s,border-color .2s; }
+.about-service-grid a:hover { transform:translateY(-3px); border-color:#89bde7; }
+.about-service-grid a > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:19px; }
+.about-service-grid h3 { margin:27px 0 10px; font-size:15px; line-height:1.35; }
+.about-service-grid p { margin:0 0 18px; color:var(--hm-muted); font-size:11px; line-height:1.75; }
+.about-service-grid b { margin-top:auto; color:var(--hm-blue); font-size:10px; }
+.about-purpose { background:var(--hm-paper); }
+.purpose-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:45px; }
+.purpose-card { min-height:285px; padding:clamp(25px,3.2vw,42px); border:1px solid var(--hm-line); background:var(--hm-light); }
+.purpose-card > span,.values-grid article > span { color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.15em; }
+.purpose-card h3 { max-width:440px; margin:35px 0 15px; font-family:var(--hm-serif); font-size:clamp(24px,2.7vw,34px); font-weight:400; line-height:1.25; letter-spacing:-.025em; }
+.purpose-card p { max-width:540px; margin:0; color:var(--hm-muted); font-size:12px; line-height:1.9; }
+.purpose-vision { color:#fff; background:var(--hm-navy); border-color:var(--hm-navy); }
+.purpose-vision > span { color:#9ecff2; }
+.purpose-vision h3 { color:#fff; }
+.purpose-vision p { color:#d2e1ef; }
+.values-heading { display:flex; align-items:end; justify-content:space-between; gap:24px; margin:58px 0 20px; padding-bottom:18px; border-bottom:1px solid var(--hm-line); }
+.values-heading .section-kicker { margin:0; }
+.values-heading h3 { margin:0; font-size:15px; font-weight:600; }
+.values-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
+.values-grid article { min-height:185px; padding:19px 16px; border:1px solid var(--hm-line); background:#fff; }
+.values-grid article > span { font-family:var(--hm-serif); font-size:17px; letter-spacing:0; }
+.values-grid h4 { margin:22px 0 9px; font-size:13px; line-height:1.35; }
+.values-grid p { margin:0; color:var(--hm-muted); font-size:10px; line-height:1.75; }
+.ceo-message { display:grid; grid-template-columns:.65fr 1.35fr; gap:50px; background:var(--hm-paper); }
+.ceo-message-label { display:flex; flex-direction:column; justify-content:space-between; }
+.ceo-mark { color:var(--hm-sky-soft); font-family:var(--hm-serif); font-size:clamp(100px,15vw,190px); line-height:.7; }
+.ceo-message-content { max-width:780px; }
+.ceo-message h2 em { color:var(--hm-blue); }
+.ceo-message blockquote { margin:30px 0 0; color:var(--hm-ink); font-family:var(--hm-serif); font-size:clamp(20px,2.2vw,27px); line-height:1.55; letter-spacing:-.02em; }
+.ceo-signature { display:flex; flex-direction:column; align-items:flex-start; gap:4px; margin-top:38px; padding-top:20px; border-top:1px solid var(--hm-line); }
+.ceo-signature span { color:var(--hm-muted); font-size:9px; letter-spacing:.15em; text-transform:uppercase; }
+.ceo-signature strong { color:var(--hm-navy); font-family:var(--hm-serif); font-size:29px; font-style:italic; font-weight:500; letter-spacing:-.04em; }
+.ceo-signature small { color:var(--hm-muted); font-size:9px; }
+@media (max-width:1000px) {
+  .values-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+
+  .about-hero { grid-template-columns:1fr  .82fr; gap:35px; }
+  .about-service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:700px) {
+  .purpose-grid { grid-template-columns:1fr; }
+  .purpose-card { min-height:0; }
+  .values-heading { display:block; }
+  .values-heading h3 { margin-top:14px; }
+  .values-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+
+  .about-hero { grid-template-columns:1fr; padding-top:58px; }
+  .about-visual { max-width:560px; margin:10px 0 0; }
+  .about-section-head { display:block; }
+  .about-section-head > p { margin-top:18px; }
+  .about-service-grid { grid-template-columns:1fr; margin-top:30px; }
+  .about-service-grid a { min-height:0; }
+  .about-service-grid h3 { margin-top:17px; }
+  .ceo-message { grid-template-columns:1fr; gap:12px; }
+  .ceo-mark { display:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .about-service-grid a { transition:none; }
+}
+</style>
