@@ -139,28 +139,37 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .contact-action b { color: var(--hm-blue); font-size: 17px; font-weight: 400; }
 .contact-small { margin-top: 25px; color: var(--hm-muted); font-size: 9px; line-height: 1.8; }
 .site-footer { color: #dceafa; background: var(--hm-navy); }
-.footer-main { padding: 66px var(--hm-gutter) 58px; display: grid; grid-template-columns: minmax(220px,1.35fr) minmax(110px,.7fr) minmax(180px,1fr) minmax(220px,1.2fr); gap: clamp(28px,4vw,64px); }
-.footer-brand-block { max-width: 300px; }
-.footer-logo { width: 88px; min-height: 70px; padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center; background: #fff; }
-.footer-logo img { width: 100%; height: 58px; object-fit: contain; }
-.footer-company { margin: 18px 0 9px; color: #fff; font-size: 12px; font-weight: 650; line-height: 1.55; }
-.footer-summary { max-width: 270px; margin: 0; color: #b9cadd; font-size: 11px; line-height: 1.8; }
-.footer-column { display: flex; flex-direction: column; align-items: flex-start; gap: 13px; }
-.footer-column h2 { margin: 3px 0 8px; color: var(--hm-sky); font-size: 9px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; }
+.footer-main { padding: 64px var(--hm-gutter) 54px; display: grid; grid-template-columns: minmax(210px,1.25fr) minmax(135px,.8fr) minmax(150px,.85fr) minmax(225px,1.2fr); gap: clamp(24px,3.5vw,54px); }
+.footer-column { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.footer-column h2 { margin: 3px 0 9px; color: var(--hm-sky); font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
 .footer-column a, .footer-column address { color: #dceafa; font-size: 10px; font-style: normal; line-height: 1.65; overflow-wrap: anywhere; transition: color .2s; }
 .footer-column a:hover, .footer-bottom a:hover { color: var(--hm-sky); }
-.footer-contacts { gap: 11px; }
-.footer-contacts .footer-whatsapp { margin-top: 2px; color: var(--hm-sky); font-weight: 650; }
-.footer-whatsapp span { padding-left: 8px; font-size: 13px; }
-.footer-contacts address { margin-top: 6px; color: #b9cadd; }
-.footer-bottom { min-height: 66px; padding: 17px var(--hm-gutter); display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid #ffffff24; color: #b9cadd; font-size: 9px; letter-spacing: .025em; }
-.footer-bottom a { color: #dceafa; white-space: nowrap; transition: color .2s; }
-.footer-bottom a span { padding-left: 8px; color: var(--hm-sky); }
+.footer-identity { max-width: 290px; }
+.footer-logo { width: 82px; min-height: 66px; padding: 5px 9px; display: inline-flex; align-items: center; justify-content: center; background: #fff; }
+.footer-logo img { width: 100%; height: 55px; object-fit: contain; }
+.footer-company { margin: 13px 0 0; color: #fff; font-size: 11px; font-weight: 650; line-height: 1.6; }
+.footer-summary { max-width: 265px; margin: 0 0 5px; color: #b9cadd; font-size: 10px; line-height: 1.8; }
+.footer-platform-link { margin-top: 2px; color: var(--hm-sky) !important; font-size: 10px; font-weight: 700; letter-spacing: .08em; }
+.footer-platform-link span, .footer-whatsapp span, .footer-socials span { padding-left: 7px; }
+.footer-contacts { gap: 10px; }
+.footer-contacts address { margin-top: 4px; color: #b9cadd; }
+.footer-contacts .footer-whatsapp { color: var(--hm-sky); font-weight: 650; }
+.footer-socials { display: flex; align-items: center; gap: 12px; margin-top: 5px; }
+.footer-socials a { color: #b9d8ed; font-size: 9px; }
+.footer-bottom { padding: 19px var(--hm-gutter) 22px; display: grid; grid-template-columns: minmax(250px,1.2fr) minmax(0,2fr) auto; align-items: center; gap: 18px 24px; border-top: 1px solid #ffffff24; color: #b9cadd; }
+.footer-legal-id { margin: 0; font-size: 8px; line-height: 1.65; }
+.footer-legal-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 17px; }
+.footer-legal-links a, .footer-back-top { color: #dceafa; font-size: 8px; line-height: 1.6; white-space: nowrap; transition: color .2s; }
+.footer-back-top { justify-self: end; }
+.footer-back-top span { padding-left: 6px; color: var(--hm-sky); }
 .preview-disclaimer { padding: 11px var(--hm-gutter); color: #b9d8ed; background: var(--hm-navy-deep); font-size: 8px; letter-spacing: .04em; text-align: center; }
 
 @media (max-width: 1100px) {
-  .footer-main { grid-template-columns: minmax(220px,1.2fr) minmax(130px,.8fr) minmax(200px,1fr); }
-  .footer-brand-block { grid-column: 1 / -1; max-width: 420px; }
+  .footer-main { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 38px 42px; }
+  .footer-identity { max-width: 360px; }
+  .footer-bottom { grid-template-columns: minmax(0,1fr) auto; }
+  .footer-legal-links { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; }
+  .footer-back-top { grid-column: 2; grid-row: 1; }
 }
 @media (max-width: 900px) {
   .hero { min-height: 590px; grid-template-columns: 1fr .85fr; gap: 30px; }
@@ -170,11 +179,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .contact-grid { margin-left: 8%; grid-template-columns: minmax(220px,.8fr) minmax(280px,1.2fr); gap: 28px; }
 }
 @media (max-width: 650px) {
-  .footer-main { padding-top: 48px; padding-bottom: 40px; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 34px 22px; }
-  .footer-brand-block { grid-column: 1 / -1; }
-  .footer-column h2 { margin-bottom: 5px; }
+  .footer-main { padding-top: 46px; padding-bottom: 40px; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px 20px; }
+  .footer-identity { grid-column: 1 / -1; max-width: 360px; }
+  .footer-column h2 { margin-bottom: 4px; }
   .footer-contacts { grid-column: 1 / -1; max-width: 360px; }
-  .footer-bottom { align-items: flex-start; flex-direction: column; gap: 12px; padding-top: 17px; padding-bottom: 19px; line-height: 1.6; }
+  .footer-bottom { display: flex; align-items: flex-start; flex-direction: column; gap: 14px; padding-top: 18px; padding-bottom: 21px; line-height: 1.6; }
+  .footer-legal-links { justify-content: flex-start; gap: 10px 15px; }
+  .footer-back-top { align-self: flex-end; }
   .preview-bar { align-items: flex-start; flex-direction: column; gap: 6px; font-size: 8px; }
   .site-header { height: 72px; }
   .header-inner { gap: 15px; }
