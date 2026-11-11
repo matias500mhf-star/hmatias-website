@@ -49,6 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      # Keep first-party Actions on their Node 24 runtime; mirrors the runner toolchain below.
       - name: Checkout isolated branch
         uses: actions/checkout@v7
 
