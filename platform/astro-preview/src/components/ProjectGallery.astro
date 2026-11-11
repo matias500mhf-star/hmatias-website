@@ -1,0 +1,36 @@
+---
+import { Image } from "astro:assets";
+import { projects } from "../data/projects";
+---
+<section class="portfolio section-pad" id="projetos">
+  <div class="portfolio-top">
+    <div>
+      <div class="section-kicker">03 / TRABALHO REAL</div>
+      <h2>O trabalho<br /><em>fala por si.</em></h2>
+    </div>
+    <p>Uma seleção de trabalhos e registos visuais da atividade da HMATIAS.</p>
+  </div>
+
+  <div class="project-grid">
+    {projects.map((project) => (
+      <article class="project-card">
+        <figure class="project-photo">
+          <Image
+            src={project.image}
+            alt={project.alt}
+            widths={[480, 720, 1040]}
+            sizes="(max-width: 650px) 100vw, 50vw"
+            format="webp"
+            quality={82}
+          />
+        </figure>
+        <div class="project-caption">
+          <span>{project.category}</span>
+          <h3>{project.title}</h3>
+          <p>{project.description}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+  <div class="portfolio-note"><span>IMAGENS DE TRABALHOS REAIS</span><span>HMATIAS · ANGOLA</span></div>
+</section>
