@@ -179,6 +179,26 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
       await expect(page.locator("main")).toBeVisible();
       await expect(page.locator("h1").first()).toBeVisible();
       await expect(page).toHaveTitle(/HMATIAS|SOURCE AO/);
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.+/);
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
+      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", await page.title());
+      await expect(page.locator('meta[property="og:description"]')).toHaveAttribute("content", /.+/);
+      await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
+
+      if (route === "/supply/") {
+        await expect(page.getByRole("link", { name: "Registar pedido de cotação" }))
+          .toHaveAttribute("href", "https://comercialhmatiasps.com/source-ao/rfq.html?from=supply");
+      }
+      if (route === "/source-ao/smart-rfq/") {
+        await expect(page.getByRole("link", { name: "Abrir Smart RFQ" }))
+          .toHaveAttribute("href", "https://comercialhmatiasps.com/source-ao/rfq.html");
+      }
+      if (route === "/business-services/") {
+        await expect(page.getByRole("link", { name: "Abrir formulário de pedido" }))
+          .toHaveAttribute("href", "https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business");
+        await expect(page.getByRole("link", { name: "Solicitar atendimento" }))
+          .toHaveAttribute("href", "https://comercialhmatiasps.com/agendamento.html");
+      }
 
       const missingAlt = await page.locator("img").evaluateAll((images) =>
         images.filter((image) => !(image.getAttribute("alt") || "").trim())
