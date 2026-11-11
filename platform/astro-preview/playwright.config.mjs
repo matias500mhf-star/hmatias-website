@@ -20,7 +20,7 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
     {
-      name: "mobile-chromium",
+      name: "mobile-webkit",
       use: { ...devices["iPhone 13"] },
     },
   ],
