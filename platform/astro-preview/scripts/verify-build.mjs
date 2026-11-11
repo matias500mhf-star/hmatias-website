@@ -9,6 +9,9 @@ assert.ok(existsSync(indexPath), "Astro build must generate dist/index.html");
 const html = readFileSync(indexPath, "utf8");
 assert.match(html, /<html lang="pt-AO"/, "Portuguese Angola document language must be present");
 assert.match(html, /name="robots" content="noindex, nofollow"/, "Prototype must not be indexed");
+assert.match(html, /property="og:title"/, "Open Graph title is missing");
+assert.match(html, /property="og:description"/, "Open Graph description is missing");
+assert.match(html, /name="twitter:card" content="summary_large_image"/, "Twitter card metadata is missing");
 assert.match(html, /Capacidade para/, "Homepage hero is missing");
 assert.match(html, /geral@comercialhmatiasps\.com/, "Commercial email is missing");
 assert.match(html, /info@comercialhmatiasps\.com/, "Institutional email is missing");
@@ -89,6 +92,9 @@ const smartRfqHtml = readFileSync(smartRfqPath, "utf8");
 assert.match(smartRfqHtml, /Uma necessidade/, "Smart RFQ heading is missing");
 assert.match(smartRfqHtml, /até 20 linhas/i, "Smart RFQ item limit disclosure is missing");
 assert.match(smartRfqHtml, /ligação privada de acompanhamento/i, "Smart RFQ private tracking explanation is missing");
+assert.match(smartRfqHtml, /uma ligação privada de acompanhamento/i, "Smart RFQ tracking link grammar is incorrect");
+assert.match(smartRfqHtml, /Selecione uma categoria/i, "Smart RFQ Portuguese orthography is inconsistent");
+assert.doesNotMatch(smartRfqHtml, /link privado|Seleccione/i, "Old Smart RFQ wording must not return");
 assert.match(smartRfqHtml, /source-ao\/rfq\.html/, "Smart RFQ must link to the operational Source AO form");
 const smartRfqImgCount = (smartRfqHtml.match(/<img\b/g) || []).length;
 const smartRfqImgWithAltCount = (smartRfqHtml.match(/<img\b[^>]*\balt=/g) || []).length;
@@ -102,6 +108,7 @@ for (const service of ["Expediente Administrativo e Redação Institucional", "E
   assert.ok(businessHtml.includes(service), `Business Services offer missing: ${service}`);
 }
 assert.match(businessHtml, /contacto-business/, "Business Services operational intake link is missing");
+assert.doesNotMatch(businessHtml, /website actual|recepção/i, "Business Services copy must use current Portuguese orthography");
 
 const aboutPath = join(outDir, "empresa", "index.html");
 assert.ok(existsSync(aboutPath), "Company credibility page must be generated");
@@ -110,6 +117,8 @@ assert.match(aboutHtml, /5001578065/, "Company NIF is missing from credibility p
 assert.match(aboutHtml, /24\.094-23/, "Commercial registration is missing from credibility page");
 assert.match(aboutHtml, /MISSÃO/, "Company mission is missing");
 assert.match(aboutHtml, /VISÃO/, "Company vision is missing");
+assert.match(aboutHtml, /HMATIAS – Prestação de Serviços SU, LDA/, "Company legal name must use the shared approved display form");
+assert.doesNotMatch(aboutHtml, /Prestação de Serviços, \(SU\)/, "Legacy punctuation in company name must not return");
 
 for (const [route, heading, marker] of [
   ["privacidade", /Política de Privacidade/, /Cookies, consentimento e estatísticas/],
@@ -120,12 +129,18 @@ for (const [route, heading, marker] of [
   const content = readFileSync(path, "utf8");
   assert.match(content, heading, `${route} legal heading is missing`);
   assert.match(content, marker, `${route} legal content is incomplete`);
+if (route === "privacidade") {
+    assert.match(content, /Microsoft Clarity/, "Privacy policy must disclose the consent-gated Clarity integration");
+  }
 }
 
 const worksCataloguePath = join(outDir, "catalogo-obras", "index.html");
 assert.ok(existsSync(worksCataloguePath), "Works catalogue page must be generated");
 const worksCatalogueHtml = readFileSync(worksCataloguePath, "utf8");
 assert.match(worksCatalogueHtml, /Obras, intervenções/, "Works catalogue heading is missing");
+assert.match(worksCatalogueHtml, /Fornecimentos/, "Catalogue must include supply references in its scope");
+assert.match(worksCatalogueHtml, /otimizadas/, "Catalogue copy must use consistent Portuguese orthography");
+assert.doesNotMatch(worksCatalogueHtml, /optimizado/i, "Outdated orthography must not return");
 assert.equal((worksCatalogueHtml.match(/<article class="works-catalogue-card"/g) || []).length, 12, "The complete 12-record catalogue must be present");
 const catalogueImgCount = (worksCatalogueHtml.match(/<img\b/g) || []).length;
 const catalogueImgWithAltCount = (worksCatalogueHtml.match(/<img\b[^>]*\balt=/g) || []).length;
