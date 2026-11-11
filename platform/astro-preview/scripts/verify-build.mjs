@@ -286,7 +286,7 @@ const languagePairs = [
 ];
 
 function languageSwitchTarget(pageHtml, route) {
-  const match = pageHtml.match(/<a\\b[^>]*class="language-switch"[^>]*href="([^"]+)"/);
+  const match = pageHtml.match(/<a\b[^>]*class="language-switch"[^>]*href="([^"]+)"/);
   assert.ok(match, `Language switch link is missing from /${route || ""}/`);
   return match[1];
 }
