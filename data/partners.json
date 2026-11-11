@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "last_reviewed": "2026-11-09",
+  "publication_rule": "The public listing identifies approved HMATIAS collaboration relationships only. No partner direct contacts, websites, emails, phone numbers, discounts, prices or internal commercial terms are published. Scope and availability are confirmed by HMATIAS case by case.",
+  "partners": [
+    {
+      "id": "kent-offshore",
+      "name": "Kent Offshore",
+      "region": "Namíbia",
+      "relationship_type": "Parceiro estratégico",
+      "status_label": "Parceria aprovada",
+      "status_label_en": "Approved partner",
+      "public": true,
+      "logo": "images/partners/kent-offshore-logo.webp",
+      "summary": "Colaboração estratégica para identificação e sourcing de soluções e produtos industriais, incluindo protecção anticorrosiva, manutenção, inspecção e ensaios não destrutivos.",
+      "summary_en": "Strategic collaboration for identifying and sourcing industrial solutions and products, including corrosion protection, maintenance, inspection and non-destructive testing.",
+      "capabilities": [
+        "Protecção anticorrosiva",
+        "Manutenção industrial",
+        "Inspecção e NDT",
+        "Soluções industriais, energia e offshore"
+      ],
+      "capabilities_en": [
+        "Corrosion protection",
+        "Industrial maintenance",
+        "Inspection and NDT",
+        "Industrial, energy and offshore solutions"
+      ]
+    },
+    {
+      "id": "synvor-industrial",
+      "name": "SYNVOR Industrial",
+      "region": "Portugal · apoio a Angola",
+      "relationship_type": "Parceiro estratégico de fornecimento",
+      "status_label": "Parceria aprovada",
+      "status_label_en": "Approved partner",
+      "public": true,
+      "logo": "images/partners/synvor-industrial-logo.webp",
+      "summary": "Colaboração especializada em consumíveis de corte e perfuração, ferramentas diamantadas e soluções abrasivas para construção, pavimentos, pedra e aplicações industriais.",
+      "summary_en": "Specialist collaboration in cutting and drilling consumables, diamond tools and abrasive solutions for construction, flooring, stone and industrial applications.",
+      "capabilities": [
+        "Discos diamantados",
+        "Coroas de perfuração",
+        "Discos de corte e desbaste",
+        "Consumíveis abrasivos"
+      ],
+      "capabilities_en": [
+        "Diamond blades",
+        "Drilling core bits",
+        "Cutting and grinding discs",
+        "Abrasive consumables"
+      ]
+    },
+    {
+      "id": "telewise",
+      "name": "TELEWISE",
+      "region": "Angola",
+      "relationship_type": "Parceiro de colaboração técnica e comercial",
+      "status_label": "Parceria aprovada · não exclusiva",
+      "status_label_en": "Approved · non-exclusive",
+      "public": true,
+      "logo": "images/partners/telewise-logo.webp",
+      "summary": "Colaboração técnica e comercial não exclusiva em manutenção técnica, AVAC, refrigeração industrial, manutenção eléctrica, Facility Management e apoio operacional.",
+      "summary_en": "Non-exclusive technical and commercial collaboration in technical maintenance, HVAC, industrial refrigeration, electrical maintenance, Facility Management and operational support.",
+      "capabilities": [
+        "AVAC e refrigeração industrial",
+        "Manutenção eléctrica",
+        "Facility Management",
+        "Apoio operacional"
+      ],
+      "capabilities_en": [
+        "HVAC and industrial refrigeration",
+        "Electrical maintenance",
+        "Facility Management",
+        "Operational support"
+      ]
+    },
+    {
+      "id": "dewood",
+      "name": "D&WOOD, S.A.",
+      "region": "Angola",
+      "relationship_type": "Parceiro institucional",
+      "status_label": "Parceria aprovada",
+      "status_label_en": "Approved partner",
+      "public": true,
+      "logo": "images/partners/d-wood-logo.webp",
+      "summary": "Empresa de concepção, produção, fornecimento e instalação de mobiliário para espaços empresariais, residenciais e contract, incluindo carpintaria e soluções personalizadas.",
+      "summary_en": "Company specialising in the design, production, supply and installation of furniture for corporate, residential and contract spaces, including carpentry and customised solutions.",
+      "capabilities": [
+        "Mobiliário empresarial e institucional",
+        "Mobiliário residencial e contract",
+        "Carpintaria e soluções complementares",
+        "Concepção e visualização 3D"
+      ],
+      "capabilities_en": [
+        "Corporate and institutional furniture",
+        "Residential and contract furniture",
+        "Carpentry and complementary solutions",
+        "Design and 3D visualisation"
+      ]
+    },
+    {
+      "id": "fransga",
+      "name": "FRANSGA, LDA",
+      "region": "Angola",
+      "relationship_type": "Parceiro estratégico",
+      "status_label": "Parceria aprovada",
+      "status_label_en": "Approved partner",
+      "public": true,
+      "logo": "images/partners/fransga-logo.webp",
+      "summary": "Empresa angolana com actividade em apoio logístico integrado e engenharia para instalações e equipamentos do sector de petróleo e gás, incluindo fornecimentos industriais especializados.",
+      "summary_en": "Angolan company active in integrated logistics support and engineering for facilities and equipment in the oil and gas sector, including specialised industrial supply.",
+      "capabilities": [
+        "Apoio logístico integrado",
+        "Engenharia para petróleo e gás",
+        "Equipamentos hidráulicos",
+        "Soldadura industrial, EPI e combate a incêndios"
+      ],
+      "capabilities_en": [
+        "Integrated logistics support",
+        "Oil and gas engineering",
+        "Hydraulic equipment",
+        "Industrial welding, PPE and firefighting equipment"
+      ]
+    },
+    {
+      "id": "miliart",
+      "name": "MILIART",
+      "region": "Angola",
+      "relationship_type": "Parceiro comercial",
+      "status_label": "Parceria aprovada",
+      "status_label_en": "Approved partner",
+      "public": true,
+      "logo": "images/partners/miliart-logo.webp",
+      "summary": "Soluções para espaços empresariais, residenciais e hoteleiros, incluindo estores e cortinados, mobiliário, divisórias, pavimentos, tectos técnicos e revestimentos.",
+      "summary_en": "Solutions for corporate, residential and hospitality spaces, including blinds and curtains, furniture, partitions, flooring, technical ceilings and wall finishes.",
+      "capabilities": [
+        "Estores e cortinados",
+        "Mobiliário empresarial, residencial e hoteleiro",
+        "Divisórias e sistemas integrados",
+        "Pavimentos, tectos técnicos e revestimentos"
+      ],
+      "capabilities_en": [
+        "Blinds and curtains",
+        "Corporate, residential and hospitality furniture",
+        "Partitions and integrated systems",
+        "Flooring, technical ceilings and finishes"
+      ]
+    }
+  ]
+}

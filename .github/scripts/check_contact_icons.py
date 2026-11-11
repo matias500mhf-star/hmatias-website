@@ -48,7 +48,7 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
     ):
         fail(f"{page} has malformed contact SVG src markup (width/height inside src)")
     section_match = re.search(
-        r'<section\s+class="contact"[^>]*>(.*?)</section>',
+        r'<section\s+class="contact(?:\s+contact-premium)?"[^>]*>(.*?)</section>',
         html,
         re.IGNORECASE | re.DOTALL,
     )
@@ -80,14 +80,28 @@ for page, locale in (("index.html", "pt"), ("en.html", "en")):
         fail(f"{page} must show the location icon beside the office address")
 
     icon_blocks = re.findall(
-        r'<div\s+class="service-icon"\s+aria-hidden="true">(.*?)</div>',
+        r'<div\b(?=[^>]*\bclass="[^"]*\bservice-icon\b[^"]*")(?=[^>]*\baria-hidden="true")[^>]*>(.*?)</div>',
         html,
         re.IGNORECASE | re.DOTALL,
     )
-    if len(icon_blocks) != 4:
+    if len(icon_blocks) == 4:
+        if any("<svg" not in block or 'stroke="currentColor"' not in block for block in icon_blocks):
+            fail(f"{page} service icons must have modern inline SVG fallbacks")
+    elif page in ("index.html", "en.html"):
+        # The current bilingual editorial homepages intentionally use numbered
+        # capability lists instead of the older four-card icon grid.
+        capability_blocks = re.findall(
+            r'<a\s+class="capability"[^>]*>(.*?)</a>',
+            html,
+            re.IGNORECASE | re.DOTALL,
+        )
+        if len(capability_blocks) != 4 or any(
+            'class="cap-title"' not in block or 'class="cap-desc"' not in block
+            for block in capability_blocks
+        ):
+            fail(f"{page} must provide four complete, labelled capability links")
+    else:
         fail(f"{page} must provide four service icons; found {len(icon_blocks)}")
-    elif any("<svg" not in block or 'stroke="currentColor"' not in block for block in icon_blocks):
-        fail(f"{page} service icons must have modern inline SVG fallbacks")
 
 enhancements = read("site-enhancements.js")
 icon_array = re.search(r"const icons = \[(.*?)\n\s*\];", enhancements, re.DOTALL)

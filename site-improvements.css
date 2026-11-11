@@ -94,17 +94,3 @@ body.hmatias-home .development-projects .section-heading .eyebrow{
   text-shadow:none;
   filter:none;
 }
-
-
-/* Editorial publication teaser — visible on the official homepage while the bilingual blog remains in development. */
-body.hmatias-home .blog-development{padding:72px 0;background:#f4f8fc}
-body.hmatias-home .blog-development .section-heading{margin-bottom:26px}
-body.hmatias-home .blog-development-card{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);overflow:hidden;border:1px solid #d8e2ea;border-radius:8px;background:#fff;box-shadow:0 10px 28px rgba(7,35,59,.06)}
-body.hmatias-home .blog-development-copy{padding:clamp(25px,4vw,40px);background:#082b4b;color:#fff}
-body.hmatias-home .blog-development-status{display:inline-flex;padding:7px 11px;border-left:3px solid #e98b2a;background:rgba(255,255,255,.09);color:#ffd19e;font-size:.72rem;font-weight:800;letter-spacing:.07em}
-body.hmatias-home .blog-development-copy h3{margin:17px 0 10px;color:#fff;font-size:clamp(1.45rem,2.4vw,2rem);line-height:1.2;letter-spacing:-.02em}
-body.hmatias-home .blog-development-copy p{max-width:62ch;margin:0;color:#edf4f9;font-size:.96rem;line-height:1.7}
-body.hmatias-home .blog-development-topics{display:grid;grid-template-columns:1fr;align-content:center;gap:0;padding:22px 30px}
-body.hmatias-home .blog-development-topics span{padding:13px 0;border-bottom:1px solid #e1e9ef;color:#173b59;font-size:.9rem;font-weight:700}
-body.hmatias-home .blog-development-topics span:last-child{border-bottom:0}
-@media(max-width:760px){body.hmatias-home .blog-development-card{grid-template-columns:1fr}body.hmatias-home .blog-development-copy{padding:25px}body.hmatias-home .blog-development-topics{padding:12px 25px}}

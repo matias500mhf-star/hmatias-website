@@ -1,0 +1,20 @@
+/* HMATIAS phase two — clean navigation and footer layout. */
+.masthead nav{gap:clamp(12px,1.45vw,21px)}
+.masthead nav a{white-space:nowrap;text-decoration:none!important}
+body.hm-preview .masthead nav a::after{content:none!important;display:none!important}
+.masthead nav a:focus-visible,.header-cta:focus-visible{outline:2px solid #0b5f9d;outline-offset:4px}
+
+.premium-footer-grid{grid-template-columns:minmax(210px,1.55fr) repeat(3,minmax(125px,1fr)) minmax(180px,1.3fr);gap:clamp(18px,2.5vw,34px)}
+.premium-footer-grid>div:not(:first-child){min-width:0}
+@media(max-width:1050px){.premium-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.premium-footer-grid .footer-brand{grid-column:1/-1}}
+@media(max-width:820px){.premium-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.premium-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}.premium-footer-grid .footer-brand{grid-column:1/-1}.premium-footer-grid>div:not(:first-child){grid-column:auto}}
+@media(max-width:420px){.premium-footer-grid{grid-template-columns:1fr}.premium-footer-grid>div:not(:first-child){grid-column:1/-1}.premium-footer-bottom{align-items:flex-start;flex-direction:column}.premium-footer-bottom div{gap:12px}}
+body.hm-preview .intro-grid h2 em{color:#0065cc}
+
+/* Maintain readable HMATIAS blue on pale homepage backgrounds. */
+body.hm-preview .intro-grid h2 em,
+body.hm-preview .partner-showcase-head h2 em,
+body.hm-preview .contact-premium h2 em{color:#07549a!important}
+body.hm-preview a.preview-language,
+body.hm-preview a.preview-language span{color:#07549a!important}

@@ -1,0 +1,26 @@
+/* HMATIAS Explore — premium directory, aligned with the institutional system. */
+body.hm-explore-page .hm-global-footer{margin-top:0}
+body.hm-explore-page .hm-explore-hero{padding:clamp(72px,8vw,104px) 0 72px;background:#f4f8fc;border-bottom:1px solid #d6e4f0}
+body.hm-explore-page .hm-explore-hero h1{max-width:12ch;margin:15px 0 18px;color:#071d33;font-size:clamp(3rem,5.8vw,5.7rem);line-height:.96;letter-spacing:-.065em}
+body.hm-explore-page .hm-explore-hero p{max-width:68ch;margin:0;color:#52697b;font-size:1rem;line-height:1.78}
+body.hm-explore-page .hm-explore-directory{padding:0 0 100px;background:#fff}
+body.hm-explore-page .hm-explore-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid #d6e4f0}
+body.hm-explore-page .hm-explore-card{display:flex;min-width:0;min-height:290px;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:28px;padding:34px 38px 36px 0;border-bottom:1px solid #d6e4f0;color:#102d4d;text-decoration:none;background:#fff;transition:background-color .18s ease,color .18s ease}
+body.hm-explore-page .hm-explore-card:nth-child(even){padding-left:38px;border-left:1px solid #d6e4f0}
+body.hm-explore-page .hm-explore-label{color:#0065cc;font-family:"IBM Plex Mono",Consolas,monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+body.hm-explore-page .hm-explore-card h2{margin:0 0 12px;color:#071d33;font-family:"Instrument Sans","Inter",Arial,sans-serif;font-size:clamp(1.8rem,3vw,2.65rem);font-weight:600;letter-spacing:-.05em;line-height:1.05}
+body.hm-explore-page .hm-explore-card p{max-width:52ch;margin:0;color:#52697b;font-size:.94rem;line-height:1.75}
+body.hm-explore-page .hm-explore-link{display:flex;width:100%;align-items:center;justify-content:space-between;gap:18px;padding-top:16px;border-top:1px solid #d6e4f0;color:#062d56;font-size:.84rem;font-weight:750}
+body.hm-explore-page .hm-explore-card:hover,body.hm-explore-page .hm-explore-card:focus-visible{background:#f7fbff}
+body.hm-explore-page .hm-explore-card:hover .hm-explore-link{color:#0065cc}
+@media(max-width:760px){
+ body.hm-explore-page .hm-explore-hero{padding:64px 0 52px}
+ body.hm-explore-page .hm-explore-hero h1{font-size:clamp(2.7rem,11vw,4rem)}
+ body.hm-explore-page .hm-explore-directory{padding-bottom:72px}
+ body.hm-explore-page .hm-explore-grid{grid-template-columns:minmax(0,1fr)}
+ body.hm-explore-page .hm-explore-card,body.hm-explore-page .hm-explore-card:nth-child(even){min-height:230px;padding:28px 0;border-left:0}
+}
+@media(prefers-reduced-motion:reduce){body.hm-explore-page .hm-explore-card{transition:none}}
+
+/* Full-width project row balances the three-resource directory. */
+body.hm-explore-page .hm-explore-card--project{grid-column:1/-1;min-height:230px;padding-right:0}

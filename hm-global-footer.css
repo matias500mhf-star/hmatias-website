@@ -1,0 +1,16 @@
+/* HMATIAS shared institutional footer */
+.hm-global-footer{background:#071b35;color:#fff;padding:52px 0 20px;margin-top:64px}
+.hm-global-footer .hm-footer-grid{display:grid;grid-template-columns:1.35fr repeat(4,minmax(0,1fr));gap:30px}
+.hm-global-footer .hm-footer-grid>div{display:flex;flex-direction:column;align-items:flex-start;gap:11px;min-width:0}
+.hm-global-footer strong{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:#a9c5e4;margin-bottom:5px}
+.hm-global-footer a{color:#e8f0f8;text-decoration:none;font-size:.91rem;line-height:1.5}
+.hm-global-footer a:hover,.hm-global-footer a:focus-visible{color:#fff;text-decoration:underline}
+.hm-global-footer .hm-footer-brand p{margin:0;color:#c2d1e1;font-size:.9rem;line-height:1.6}
+.hm-global-footer .footer-logo{width:145px;height:auto;object-fit:contain}
+.hm-global-footer .hm-footer-cta{display:inline-flex;margin-top:5px;padding:10px 14px;border:1px solid #8bb7e6;border-radius:4px;font-weight:600}
+.hm-global-footer .hm-footer-bottom{display:flex;flex-wrap:wrap;gap:18px;align-items:center;border-top:1px solid rgba(255,255,255,.18);margin-top:34px;padding-top:18px;color:#c2d1e1;font-size:.8rem}
+.hm-global-footer .hm-footer-bottom span{margin-left:auto}
+@media(max-width:900px){.hm-global-footer .hm-footer-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:25px}}
+@media(max-width:600px){.hm-global-footer{padding:38px 0 18px}.hm-global-footer .hm-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 18px}.hm-global-footer .hm-footer-brand{grid-column:1/-1}.hm-global-footer .hm-footer-bottom{gap:12px}.hm-global-footer .hm-footer-bottom span{width:100%;margin-left:0}}
+
+/* Netlify deploy-preview refresh: 2026-11-09 */

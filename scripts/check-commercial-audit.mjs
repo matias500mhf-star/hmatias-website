@@ -9,8 +9,12 @@ const ptCatalogue=read('catalogo-obras.html');
 const enCatalogue=read('work-catalogue.html');
 assert.ok(!ptCatalogue.includes('<a href="karta.html">KARTA Wallet</a>'));
 assert.ok(!enCatalogue.includes('<a href="karta-en.html">KARTA Wallet</a>'));
-assert.ok(ptCatalogue.includes('href="credibilidade.html#projetos-digitais"'));
-assert.ok(enCatalogue.includes('href="credibility.html#digital-projects"'));
+assert.ok(ptCatalogue.includes('href="explorar.html#karta-wallet">KARTA Wallet</a>'));
+assert.ok(enCatalogue.includes('href="explore.html#karta-wallet">KARTA Wallet</a>'));
+assert.ok(read('explorar.html').includes('id="karta-wallet" href="karta.html"'));
+assert.ok(read('explore.html').includes('id="karta-wallet" href="karta-en.html"'));
+assert.ok(!read('karta.html').includes('credibilidade.html#projetos-digitais'));
+assert.ok(!read('karta-en.html').includes('credibility.html#digital-projects'));
 
 for(const path of ['karta.html','karta-en.html']){
   const html=read(path);
@@ -34,9 +38,57 @@ assert.ok(partnerForm.includes('mailto:geral@comercialhmatiasps.com'));
 assert.ok(partnerApi.includes("const COUNTRIES=new Set(['AO','NA','ZA']);"));
 for(const path of ['index.html','en.html']){
   const home=read(path);
-  assert.ok(home.includes('class="home-proof"'),'Homepage proof row missing: '+path);
-  assert.ok(home.includes('site-improvements.css'),'Responsive homepage refinements missing: '+path);
+  assert.ok(home.includes('class="hero-bottom"'),'Homepage proof row missing: '+path);
+  assert.ok(home.includes('hm-design-system.css') && home.includes('hm-blue-institutional.css'),
+    'Approved HMATIAS design system is missing: '+path);
+  const mainStart=home.indexOf('<main');
+  const mainEnd=home.indexOf('</main>',mainStart);
+  const main=mainStart>=0&&mainEnd>mainStart?home.slice(mainStart,mainEnd):'';
+  assert.ok(main,'Homepage main content missing: '+path);
+  for(const phrase of ['HMATIAS BLOG','CONHECIMENTO PRÁTICO','PRACTICAL KNOWLEDGE','INFORMAÇÃO INSTITUCIONAL','INSTITUTIONAL INFORMATION','credibility-band','SMART RFQ'])
+    assert.ok(!main.toUpperCase().includes(phrase.toUpperCase()),'Removed generic or duplicated homepage content returned: '+path+' / '+phrase);
+  assert.equal((main.match(/class="intro-band"/g)||[]).length,1,'Homepage must have one company introduction: '+path);
+  assert.equal((main.match(/class="capability"/g)||[]).length,4,'Homepage must present four service areas: '+path);
+  assert.equal((main.match(/class="cap-icon"/g)||[]).length,4,'Homepage service icons missing: '+path);
+  assert.ok(!main.includes('class="cap-no"'),'Numbered service list returned: '+path);
+  assert.ok(!home.includes('id="smart-rfq"'),'Smart RFQ card must not appear on homepage: '+path);
+  const nav=home.match(/<nav id="primary-navigation"[^>]*>([\s\S]*?)<\/nav>/)?.[1]||'';
+  const expected=path==='index.html'
+    ? ['Início','Sobre nós','Quem Somos','Serviços','Projectos']
+    : ['Home','About us','Who We Are','Services','Projects'];
+  const labels=[...nav.matchAll(/<a\b[^>]*>(.*?)<\/a>/g)].map(m=>m[1].replace(/<[^>]+>/g,'').trim());
+  assert.deepEqual(labels,expected,'Page-oriented homepage navigation changed: '+path);
+  const contactStart=home.indexOf('<section class="contact contact-premium"');
+  const contactEnd=home.indexOf('</section>',contactStart);
+  const contact=contactStart>=0&&contactEnd>contactStart?home.slice(contactStart,contactEnd):'';
+  assert.ok(contact.includes('id="contactForm"'),'Homepage contact form missing: '+path);
 }
+for(const [path,ids] of [
+  ['credibilidade.html',['sobre-nos','quem-somos','credibilidade']],
+  ['credibility.html',['about-us','who-we-are','credibility']]
+]){
+  const html=read(path);
+  for(const id of ids)assert.ok(html.includes('id="'+id+'"'),'Company profile anchor missing: '+path+' / '+id);
+  assert.ok(/class="cred-story-grid"/.test(html),'Company story and working principles missing: '+path);
+  assert.ok(/class="cred-activity"/.test(html),'Company activity scope missing: '+path);
+}
+for(const path of ['supply.html','supply-en.html']){
+  const html=read(path);
+  assert.equal((html.match(/class="supply-product-card"/g)||[]).length,4,'Supply page must show four references: '+path);
+  assert.ok(html.includes('https://synvor-industrial.com/'),'Official SYNVOR catalogue link missing: '+path);
+  assert.ok(!html.includes('supply-rfq-choice'),'Duplicated end-of-page RFQ/WhatsApp actions returned: '+path);
+  assert.ok(!html.includes('institutional-network.js'),'Static Supply page should not wait for catalogue JavaScript: '+path);
+  assert.ok(!html.includes('supply-request.js')&&!html.includes('supply-request.css'),'Inactive embedded RFQ builder should not load on Supply: '+path);
+}
+const supplyData=JSON.parse(read('data/supply-catalog.json'));
+const supplyItems=(supplyData.categories||[]).flatMap(category=>category.items||[]);
+assert.equal(supplyItems.length,4,'Supply product data must contain four documented references');
+assert.ok(supplyItems.every(item=>/^https:\/\/synvor-industrial[.]com\//.test(item.catalog_url||'')),
+  'Every documented supply reference must link to an official SYNVOR catalogue family');
+assert.ok(read('index.html').includes('id="servicos"')&&read('index.html').includes('id="capacidades"'),
+  'Portuguese Services anchor and compatibility alias are both required');
+assert.ok(read('index.html').includes('id="projetos"')&&read('index.html').includes('id="trabalho"'),
+  'Portuguese Projects anchor and compatibility alias are both required');
 
 const events=read('analytics-events.js');
 assert.ok(events.includes("form.dataset.hmatiasWebsiteIntake!=='true'"));
@@ -59,7 +111,9 @@ for(const path of allForms){
   assert.match(html,/analytics[.]js[?]v=[a-zA-Z0-9._-]+/,
     'Analytics script must be versioned: '+path);
   if(path==='index.html'||path==='en.html'){
-    assert.match(html,/site-bootstrap[.]js[?]v=[a-zA-Z0-9._-]+/);
+    // Premium homepages load the versioned site bootstrap dynamically from script.js.
+    assert.match(html,/script[.]js[?]v=[a-zA-Z0-9._-]+/);
+    assert.match(read('script.js'),/site-bootstrap[.]js[?]v=[a-zA-Z0-9._-]+/);
   }else{
     assert.match(html,/website-lead-client[.]js[?]v=[a-zA-Z0-9._-]+/,
       'Secure versioned client not loaded: '+path);
@@ -84,7 +138,7 @@ for(const path of ['index.html','en.html','credibilidade.html','credibility.html
   const html=read(path);
   assert.match(html,/href="mailto:geral@comercialhmatiasps[.]com"><img[^>]+contact-email[.]svg/,
     'Official email icon missing from shared contact surface: '+path);
-  assert.ok(html.includes('site-bootstrap.js?v=20261029-email-icon-preserve1'),
+  assert.ok(html.includes('site-bootstrap.js?v=20261108-whatsapp-bilingual1'),
     'Cache-busted email icon normalizer missing: '+path);
 }
 assert.ok(read('script.js').includes('const existing=target.querySelector'));
@@ -92,20 +146,34 @@ assert.ok(read('growth-intelligence.js').includes('[data-hmatias-email-alternati
 assert.ok(client.includes("id:'cleanQuoteForm'"));
 assert.ok(client.includes("id:'smartRfqForm'"));
 
-for(const [path,anchors,labels] of [
-  ['credibilidade.html',['orientacao-institucional','projetos-digitais'],['Capacidades apresentadas com limites claros.','Escopo explícito','Stock, preço, origem, prazo e logística requerem confirmação.']],
-  ['credibility.html',['institutional-direction','digital-projects'],['Capabilities presented with clear limits.','Defined scope','Stock, price, origin, lead time and logistics require confirmation.']]
+for(const [path,anchor,labels] of [
+  ['credibilidade.html','como-trabalhamos',['DADOS DA EMPRESA','Do pedido à proposta.','Pedido','Avaliação','Proposta']],
+  ['credibility.html','how-we-work',['COMPANY DETAILS','From enquiry to proposal.','Enquiry','Assessment','Proposal']]
 ]){
   const html=read(path);
-  assert.ok(html.includes('credibility-page.css?v=20261029-2'),'Credibility layout stylesheet missing: '+path);
-  for(const anchor of anchors) assert.ok(html.includes('id="'+anchor+'"'),'Credibility anchor missing: '+path+'#'+anchor);
-  for(const label of labels) assert.ok(html.includes(label),'Evidence-led credibility copy missing: '+path+' / '+label);
+  assert.ok(html.includes('credibility-page.css?v=20261111-company-story1'),'Credibility layout stylesheet missing: '+path);
+  assert.ok(html.includes('id="'+anchor+'"'),'Credibility process anchor missing: '+path+'#'+anchor);
+  for(const label of labels) assert.ok(html.includes(label),'Company profile copy missing: '+path+' / '+label);
+  const panelStart=html.indexOf('<aside class="cred-identity"');
+  const panelEnd=html.indexOf('</aside>',panelStart);
+  const identity=panelStart>=0&&panelEnd>=0?html.slice(panelStart,panelEnd+8):'';
+  assert.equal((identity.match(/href="mailto:geral@comercialhmatiasps[.]com"/g)||[]).length,1,'Official company email link must appear once in the identity panel: '+path);
+  const visibleIdentity=identity.replace(/href="mailto:geral@comercialhmatiasps[.]com"/g,'');
+  assert.equal((visibleIdentity.match(/geral@comercialhmatiasps[.]com/g)||[]).length,1,'Official company email must be shown once in the identity panel: '+path);
 }
-assert.ok(read('index.html').includes('Alterações de escopo comunicadas antes de avançar'));
-assert.ok(read('en.html').includes('Scope changes are communicated before work proceeds'));
+assert.ok(read('index.html').includes('EMPRESAS · INSTITUIÇÕES · PARTICULARES'));
+assert.ok(read('index.html').includes('ÂMBITO AVALIADO POR PEDIDO'));
+assert.ok(read('index.html').includes('PROPOSTA DA EQUIPA COMERCIAL'));
+assert.ok(read('en.html').includes('BUSINESSES · INSTITUTIONS · PRIVATE CLIENTS'));
+assert.ok(read('en.html').includes('SCOPE REVIEWED PER REQUEST'));
+assert.ok(read('en.html').includes('COMMERCIAL PROPOSAL'));
 
 assert.ok(!read('credibilidade.html').includes('orientados pela nossa missão, visão e valores.'));
 assert.ok(!read('credibility.html').includes('guided by our mission, vision and values.'));
+assert.ok(read('credibilidade.html').includes('MISSÃO') && read('credibilidade.html').includes('VALORES DE TRABALHO'));
+assert.ok(read('credibility.html').includes('MISSION') && read('credibility.html').includes('WORKING VALUES'));
+assert.ok(!read('credibilidade.html').includes('VISÃO') && !read('credibility.html').includes('VISION'));
+assert.ok(!read('credibilidade.html').includes('projetos-digitais') && !read('credibility.html').includes('digital-projects'));
 const credibilityCss=read('credibility-page.css');
 assert.ok(credibilityCss.includes('minmax(230px,1.65fr)'),'Desktop credibility footer needs room for contact addresses');
 assert.ok(credibilityCss.includes('.hmatias-credibility footer .footer-grid>div:nth-child(4){grid-column:1/-1}'),'Tablet credibility footer contact must span the row');

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "last_reviewed": "2026-11-09",
+  "catalogue_rule": "Only products with genuine product photography and documented references are displayed. Each item points to the relevant official SYNVOR Industrial catalogue family. Supply is on request; no owned stock or guaranteed availability is implied.",
+  "categories": [
+    {
+      "id": "carbodiam-cutting",
+      "title": "Discos diamantados e corte de materiais",
+      "status_label": "Referências sob consulta",
+      "description": "Ferramentas diamantadas Carbodiam para corte de betão, betão armado e pavimentos. A selecção depende do material, máquina, diâmetro, furo central e modo de corte.",
+      "brands": [
+        "Carbodiam"
+      ],
+      "items": [
+        {
+          "name": "Red Line 17",
+          "type": "Disco diamantado para corte intensivo",
+          "specification": "Segmento de 17 mm. Diâmetros indicados no catálogo: 230, 300, 350 e 400 mm.",
+          "application": "Betão e betão armado.",
+          "image": "images/supply/carbodiam-red-line-17.webp",
+          "image_alt": "Disco diamantado Carbodiam Red Line 17 — fotografia do produto.",
+          "catalog_url": "https://synvor-industrial.com/discos-diamantados"
+        },
+        {
+          "name": "Spyrostar",
+          "type": "Disco diamantado de corte fino e precisão",
+          "specification": "Diâmetros indicados no catálogo: 125, 230, 350 e 400 mm.",
+          "application": "Corte de precisão em materiais duros.",
+          "image": "images/supply/carbodiam-spyrostar.webp",
+          "image_alt": "Disco diamantado Carbodiam Spyrostar — fotografia do produto.",
+          "catalog_url": "https://synvor-industrial.com/discos-diamantados"
+        },
+        {
+          "name": "PRO BF1",
+          "type": "Disco diamantado para serra de chão",
+          "specification": "Diâmetros indicados no catálogo: 300 e 350 mm.",
+          "application": "Pavimentos industriais duros.",
+          "image": "images/supply/carbodiam-pro-bf1.webp",
+          "image_alt": "Disco diamantado Carbodiam PRO BF1 — fotografia do produto.",
+          "catalog_url": "https://synvor-industrial.com/discos-diamantados"
+        }
+      ],
+      "quote_note": "Confirmar diâmetro, furo central, máquina, material e modo de corte antes da cotação."
+    },
+    {
+      "id": "carbodiam-drilling",
+      "title": "Coroas diamantadas e perfuração",
+      "status_label": "Referência sob consulta",
+      "description": "Coroas Carbodiam para perfuração profissional em betão duro e fortemente armado. A configuração é confirmada pela referência, máquina e aplicação.",
+      "brands": [
+        "Carbodiam"
+      ],
+      "items": [
+        {
+          "name": "Rocket Line",
+          "type": "Coroa diamantada profissional intensiva",
+          "specification": "Segmento indicado de 3–5 mm; ligação 5/4″. Diâmetro e comprimento útil dependem do código e da configuração.",
+          "application": "Betão duro e fortemente armado; caroteadoras de coluna.",
+          "image": "images/supply/carbodiam-rocket-line.webp",
+          "image_alt": "Coroa diamantada Carbodiam Rocket Line — fotografia do produto.",
+          "catalog_url": "https://synvor-industrial.com/coroas-diamantadas"
+        }
+      ],
+      "quote_note": "Diâmetro, comprimento útil, encaixe e compatibilidade são confirmados antes da proposta."
+    }
+  ]
+}

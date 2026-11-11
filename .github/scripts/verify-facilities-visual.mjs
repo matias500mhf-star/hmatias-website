@@ -9,23 +9,65 @@ try {
   for(const path of paths){
     for(const view of viewports){
       const page=await browser.newPage({viewport:{width:view.width,height:view.height},deviceScaleFactor:1});
+      const pageErrors=[];
+      const firstPartyConsoleErrors=[];
+      const failedLocalResources=[];
+      page.on('pageerror',error=>pageErrors.push(error.message));
+      page.on('console',message=>{
+        if(message.type()!=='error')return;
+        const source=message.location()?.url||'';
+        try{if(source&&new URL(source).origin==='http://127.0.0.1:8080')firstPartyConsoleErrors.push(message.text())}
+        catch{}
+      });
+      page.on('requestfailed',request=>{
+        try{if(new URL(request.url()).origin==='http://127.0.0.1:8080')failedLocalResources.push(request.url()+' — '+request.failure()?.errorText)}
+        catch{}
+      });
+      page.on('response',response=>{
+        try{if(new URL(response.url()).origin==='http://127.0.0.1:8080'&&response.status()>=400)failedLocalResources.push(response.status()+' '+response.url())}
+        catch{}
+      });
       try{
         const r=await page.goto('http://127.0.0.1:8080/'+path,{waitUntil:'domcontentloaded',timeout:25000});
         if(!r||!r.ok())throw Error('Page HTTP status '+r?.status());
-        const product=page.locator('img[data-hmatias-product-photo="taurus"]');
-        if(await product.count()!==1)throw Error('Expected exactly one Taurus product picture');
-        await product.scrollIntoViewIfNeeded();
-        await product.evaluate(async img => {if(!img.complete)await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject});await img.decode()});
-        const actual=await product.evaluate(img=>({width:img.naturalWidth,height:img.naturalHeight,src:img.getAttribute('src'),rect:img.getBoundingClientRect().toJSON()}));
-        if(actual.width<350||actual.height<350||!actual.src.includes('taurus-pine-gel-t563p-official.jpg'))throw Error('Taurus picture did not load as the official image: '+JSON.stringify(actual));
-        if(actual.rect.width<120||actual.rect.height<120)throw Error('Taurus product photograph is too small visually');
+        let visualCheck='Facilities service layout';
+        if(path.startsWith('facilities')){
+          const cleanLink=page.locator('#hmatias-clean a[href*="clean"]');
+          if(await cleanLink.count()!==1)throw Error('Expected one clear HMATIAS Clean destination');
+          if(await page.locator('img[data-hmatias-product-photo="taurus"]').count()!==0)throw Error('Product photo duplicated on Facilities service page');
+          const expectedClean=path.endsWith('-en.html')?'clean-en.html':'clean.html';
+          if(await cleanLink.getAttribute('href')!==expectedClean)throw Error('HMATIAS Clean link points to the wrong language destination');
+          if(await page.locator('#hmatias-clean h2').count()!==1)throw Error('HMATIAS Clean handoff heading missing');
+        }else{
+          const productCards=page.locator('.clean-feature-card');
+          if(await productCards.count()!==2)throw Error('Two HMATIAS Clean product reference cards missing');
+          const product=page.locator('img[data-hmatias-product-photo="taurus"]');
+          if(await product.count()!==1)throw Error('Expected exactly one Taurus product picture on HMATIAS Clean');
+          await product.scrollIntoViewIfNeeded();
+          await product.evaluate(async img => {if(!img.complete)await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject});await img.decode()});
+          const actual=await product.evaluate(img=>({width:img.naturalWidth,height:img.naturalHeight,src:img.getAttribute('src'),rect:img.getBoundingClientRect().toJSON()}));
+          if(actual.width<350||actual.height<350||!actual.src.includes('taurus-pine-gel-t563p-official.jpg'))throw Error('Taurus picture did not load as the official image: '+JSON.stringify(actual));
+          if(actual.rect.width<120||actual.rect.height<120)throw Error('Taurus product photograph is too small visually');
+          visualCheck=actual.width+'x'+actual.height;
+        }
+        const imageFailures=await page.evaluate(async()=>{
+          const localImages=[...document.images].filter(img=>{try{return new URL(img.currentSrc||img.src,location.href).origin===location.origin}catch{return false}});
+          return (await Promise.all(localImages.map(async img=>{
+            img.loading='eager';
+            try{await Promise.race([img.decode(),new Promise(resolve=>setTimeout(resolve,8000))])}catch{}
+            return img.complete&&img.naturalWidth>0?null:(img.currentSrc||img.src);
+          }))).filter(Boolean);
+        });
+        if(imageFailures.length)throw Error('Local images failed to load: '+imageFailures.join(' | '));
         const width=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,inner:window.innerWidth}));
         if(width.scroll-width.inner>8)throw Error('Horizontal page overflow: '+JSON.stringify(width));
-        const productCards=path.startsWith('facilities')?'.facilities-clean-card':'.clean-feature-card';
-        if(await page.locator(productCards).count()!==2)throw Error('Two product reference cards missing');
         const file='facilities-previews/'+path.replace('.html','')+'-'+view.name+'.png';
         await page.screenshot({path:file,fullPage:true,animations:'disabled',timeout:25000});
-        console.log('PASS',path,view.name,actual.width+'x'+actual.height,'overflow=',width.scroll-width.inner,'screenshot',file);
+        await page.waitForTimeout(150);
+        if(pageErrors.length)throw Error('Uncaught page errors: '+pageErrors.join(' | '));
+        if(firstPartyConsoleErrors.length)throw Error('First-party console errors: '+firstPartyConsoleErrors.join(' | '));
+        if(failedLocalResources.length)throw Error('Failed local resources: '+failedLocalResources.join(' | '));
+        console.log('PASS',path,view.name,visualCheck,'overflow=',width.scroll-width.inner,'screenshot',file);
       }catch(err){
         errors.push({path,viewport:view.name,error:String(err)});
         console.error('FAIL',path,view.name,String(err));

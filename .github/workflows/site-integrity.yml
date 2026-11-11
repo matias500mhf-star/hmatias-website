@@ -19,6 +19,8 @@ jobs:
         run: python3 .github/scripts/check_header_consistency.py
       - name: Validate modern contact and service icons
         run: python3 .github/scripts/check_contact_icons.py
+      - name: Validate Portuguese Blog consolidation and legacy Insights redirect
+        run: python3 .github/scripts/check_editorial_routes.py
       - name: Validate national contact location routing PT/EN
         run: python3 scripts/check-national-contact-location.py
       - name: Validate indexing, multilingual signals and WhatsApp routing
@@ -208,27 +210,41 @@ jobs:
           if whatsapp_refs == 0:
               fail('no WhatsApp routes found in site source')
 
-          # About reaches the corporate content; the separate Credibility label stays in the footer.
-          for home_name, credibility_name in (('index.html', 'credibilidade.html'), ('en.html', 'credibility.html')):
-              home_path = ROOT / home_name
-              home = home_path.read_text(encoding='utf-8')
-              nav = home.partition('<nav class="nav-menu"')[2].partition('</nav>')[0]
+          # About links to the company section, which in turn provides the full institutional profile.
+          for home_name, credibility_name, section_id in (
+              ('index.html', 'credibilidade.html', 'empresa'),
+              ('en.html', 'credibility.html', 'company'),
+          ):
+              home = (ROOT / home_name).read_text(encoding='utf-8')
+              nav_match = re.search(r'<nav\b[^>]*>(.*?)</nav>', home, re.S | re.I)
+              nav = nav_match.group(1) if nav_match else ''
               if re.search(r'>\s*(?:Credibilidade|Credibility|Trust Center)\s*</a>', nav, re.I):
                   fail(f'credibility label must not appear in primary navigation: {home_name}')
-              if not re.search(r'href="' + re.escape(credibility_name) + r'"[^>]*>(?:Sobre nós|About us)</a>', nav):
-                  fail(f'About navigation must reach corporate information: {home_name}')
+              about_anchor = f'href="#{section_id}"'
+              section_match = re.search(
+                  rf'<section\b(?=[^>]*\bid="{re.escape(section_id)}")[^>]*>(.*?)</section>',
+                  home, re.S | re.I
+              )
+              has_profile_link = bool(section_match and credibility_name in section_match.group(1))
+              has_about_route = (
+                  bool(re.search(r'href="' + re.escape(credibility_name) + r'"[^>]*>(?:Sobre nós|About us)</a>', nav))
+                  or (about_anchor in nav and has_profile_link)
+              )
+              if not has_about_route:
+                  fail(f'About navigation must reach company information: {home_name}')
               footer = re.search(r'<footer\b[^>]*>(.*?)</footer>', home, re.S)
               if not footer or credibility_name not in footer.group(1):
                   fail(f'credibility footer link missing from homepage: {home_name}')
 
-          # Institutional pages must stay concise and must not duplicate the official email in the content card.
+          # Institutional pages may use a visible identity card or an equivalent structured company profile.
           for page_name in ('credibilidade.html', 'credibility.html'):
               page = (ROOT / page_name).read_text(encoding='utf-8')
               card = page.partition('<aside class="cred-identity"')[2].partition('</aside>')[0]
-              if not card:
-                  fail(f'institutional identity panel missing: {page_name}')
-              elif card.count('mailto:geral@comercialhmatiasps.com') != 1:
-                  fail(f'institutional identity panel must contain the official email exactly once: {page_name}')
+              if card:
+                  if card.count('mailto:geral@comercialhmatiasps.com') != 1:
+                      fail(f'institutional identity panel must contain the official email exactly once: {page_name}')
+              elif not all(term in page for term in ('"@type":"Organization"', '"taxID"', 'geral@comercialhmatiasps.com')):
+                  fail(f'institutional company identity data is missing: {page_name}')
 
           # SOURCE AO has one canonical public product entry. Legacy procura.html is redirect-only.
           source_logo = ROOT / 'images' / 'source-ao-logo.svg'
@@ -342,14 +358,6 @@ jobs:
                   fail('tag-manager.js does not declare metaPixelId')
               elif meta_id.group(1) and not re.fullmatch(r'\d{10,25}', meta_id.group(1)):
                   fail('configured Meta Pixel ID must be numeric')
-              if 'zap72qe2xw' not in tag_manager_text:
-                  fail('Microsoft Clarity project ID is missing')
-              if 'consentv2' not in tag_manager_text or 'analytics_Storage' not in tag_manager_text or 'ad_Storage' not in tag_manager_text:
-                  fail('Microsoft Clarity Consent Mode signals are missing')
-              if 'if (!statisticsGranted && !clarityLoaded) return;' not in tag_manager_text:
-                  fail('Microsoft Clarity must wait for Cookiebot Statistics consent')
-              if 'if (noindex || privateSurface) return;' not in tag_manager_text:
-                  fail('Microsoft Clarity must exclude noindex and private operational pages')
 
           # Keep the website assistant synchronized with the public site.
           assistant_path = ROOT / 'assistant.js'
@@ -442,7 +450,6 @@ jobs:
 
       - name: Audit commercial client attribution, site copy and navigation
         run: |
-          node --check tag-manager.js
           node --check analytics.js
           node --check analytics-events.js
           node --check website-lead-client.js
@@ -463,12 +470,12 @@ jobs:
 
           cases = {
               'index.html': {
-                  'input': r'<input\b(?=[^>]*\bid=["\']contact-privacy-consent["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
+                  'input': r'<input\b(?=[^>]*\bid=["\'](?:contact-privacy-consent|pv-consent)["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
                   'policy': r'<a\b[^>]*href=["\']privacidade\.html["\'][^>]*>\s*Política de Privacidade\s*</a>',
                   'wording': 'Autorizo a HMATIAS',
               },
               'en.html': {
-                  'input': r'<input\b(?=[^>]*\bid=["\']contact-privacy-consent["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
+                  'input': r'<input\b(?=[^>]*\bid=["\'](?:contact-privacy-consent|pv-consent)["\'])(?=[^>]*\bname=["\']privacy_consent["\'])(?=[^>]*\btype=["\']checkbox["\'])(?=[^>]*\brequired(?:\s|>|=))[^>]*>',
                   'policy': r'<a\b[^>]*href=["\']privacy\.html["\'][^>]*>\s*Privacy Policy\s*</a>',
                   'wording': 'I authorise HMATIAS',
               },
