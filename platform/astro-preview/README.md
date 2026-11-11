@@ -56,7 +56,7 @@ O workflow `.github/workflows/astro-prototype-qa.yml` executa:
 - `astro check`, build estático, auditoria de dependências e verificação do artefacto.
 - Playwright 1.65.0 em Chromium desktop e móvel: homepage, Blog, Acessibilidade, Construção, Facilities, Supply e Smart RFQ; navegação, âncoras, imagens com texto alternativo e overflow horizontal.
 - axe-core 4.14.0 nas rotas Homepage, Blog, Acessibilidade, Construção, Facilities, Supply e Smart RFQ. Falhas críticas e graves bloqueiam o CI; ocorrências moderadas ou menores são registadas para revisão.
-- Lighthouse CI 0.16.0 nas mesmas rotas, com indicadores de desempenho, acessibilidade, boas práticas, SEO, LCP e CLS. Os limites estão inicialmente em modo de alerta para permitir recolher uma linha de base real.
+- Lighthouse CI 0.16.0 nas mesmas rotas, incluindo Smart RFQ, com indicadores de desempenho, acessibilidade, boas práticas, SEO, LCP e CLS. Os limites estão inicialmente em modo de alerta para permitir recolher uma linha de base real.
 
 Os relatórios Playwright e Lighthouse são guardados como artefactos do GitHub Actions por 14 dias. As ferramentas de QA são instaladas apenas no ambiente CI e não entram no bundle do website.
 
