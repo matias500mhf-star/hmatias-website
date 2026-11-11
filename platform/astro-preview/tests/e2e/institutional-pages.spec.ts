@@ -4,7 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 test.describe("HMATIAS institutional pages", () => {
   test("homepage exposes all four service divisions and routes Business Services internally", async ({ page }) => {
     await page.goto("/");
-    const businessLink = page.getByRole("link", { name: /Business services/i });
+    const businessLink = page.getByRole("link", { name: "Business services", exact: true });
     await expect(businessLink).toHaveAttribute("href", "/business-services/");
     await businessLink.click();
     await expect(page).toHaveURL(/\/business-services\/$/);
