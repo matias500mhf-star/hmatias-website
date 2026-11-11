@@ -47,8 +47,30 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     expect(missingAlt).toEqual([]);
   });
 
+  test("imagens da página de construção possuem texto alternativo", async ({ page }) => {
+    await page.goto("/construcao/");
+    const missingAlt = await page.locator("img").evaluateAll((images) =>
+      images
+        .filter((image) => !(image.getAttribute("alt") || "").trim())
+        .map((image) => image.getAttribute("src") || "(imagem sem src)")
+    );
+    expect(missingAlt).toEqual([]);
+  });
+
   test("layout não cria deslocamento horizontal", async ({ page }) => {
     await page.goto("/");
+    const dimensions = await page.evaluate(() => ({
+      documentWidth: document.documentElement.scrollWidth,
+      viewportWidth: document.documentElement.clientWidth,
+    }));
+    expect(
+      dimensions.documentWidth,
+      `Deslocamento horizontal: documento ${dimensions.documentWidth}px; viewport ${dimensions.viewportWidth}px`
+    ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
+  });
+
+  test("página de construção não cria deslocamento horizontal", async ({ page }) => {
+    await page.goto("/construcao/");
     const dimensions = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
       viewportWidth: document.documentElement.clientWidth,
