@@ -5,8 +5,6 @@ import { company } from "../data/site";
 
 const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const isEnglish = pathname.startsWith("/en/");
-const isHome = pathname === "/" || pathname === "/en/";
-
 const ptToEn: Record<string, string> = {
   "/": "/en/",
   "/empresa/": "/en/about/",
@@ -27,8 +25,16 @@ const enToPt = Object.fromEntries(Object.entries(ptToEn).map(([pt, en]) => [en, 
 const ptArticle = pathname.match(/^\/blog\/([^/]+)\/$/);
 const enArticle = pathname.match(/^\/en\/blog\/([^/]+)\/$/);
 const languageHref = isEnglish
-  ? (enArticle ? `/blog/${enArticle[1]}/` : (enToPt[pathname] ?? "/"))
-  : (ptArticle ? `/en/blog/${ptArticle[1]}/` : (ptToEn[pathname] ?? "/en/"));
+  ? (enArticle
+      ? (enArticle[1] === "how-to-prepare-a-comparable-supply-quotation"
+          ? "/blog/como-preparar-um-pedido-de-cotacao/"
+          : "/blog/")
+      : (enToPt[pathname] ?? "/"))
+  : (ptArticle
+      ? (ptArticle[1] === "como-preparar-um-pedido-de-cotacao"
+          ? "/en/blog/how-to-prepare-a-comparable-supply-quotation/"
+          : "/en/blog/")
+      : (ptToEn[pathname] ?? "/en/"));
 
 const homeUrl = isEnglish ? "/en/" : "/";
 const servicesAnchor = isEnglish ? "services" : "servicos";
