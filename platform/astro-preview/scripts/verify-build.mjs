@@ -199,6 +199,50 @@ for (const route of ["construcao", "facilities", "supply", "business-services", 
   assert.equal(content.includes("</p>\\n"), false, `Literal newline escape detected in ${route}`);
 }
 
+// English routes must exist as independently translated pages, not as Portuguese pages with a changed label.
+const englishRoutes = [
+  ["en", /Capability to/, /Construction, Facilities, Supply and Business Services/],
+  ["en/about", /A service company/, /MISSION|MISSION/],
+  ["en/credibility", /HMATIAS CREDIBILITY/, /COMPANY IDENTIFICATION/],
+  ["en/construction", /Construction and/, /Metal-frame building/],
+  ["en/facilities", /Facilities and/, /Building maintenance/],
+  ["en/supply", /Procurement and/, /does not hold its own merchandise stock/i],
+  ["en/business-services", /Administrative,/, /Professional CV structuring/],
+  ["en/works-catalogue", /Works, interventions/, /Completed Rural Pavilions/],
+  ["en/blog", /Business insights/, /FEATURED ARTICLE/],
+  ["en/blog/how-to-prepare-a-comparable-supply-quotation", /How to prepare a quotation request/, /quantity and unit/i],
+  ["en/source-ao/smart-rfq", /One requirement/, /Up to 20 product lines/],
+  ["en/accessibility", /more accessible to everyone/i, /independent audit/i],
+  ["en/privacy", /Privacy Policy/, /Cookiebot/],
+  ["en/terms", /Terms and Conditions/, /Intellectual property/],
+];
+for (const [route, heading, marker] of englishRoutes) {
+  const path = join(outDir, route, "index.html");
+  assert.ok(existsSync(path), `English route must be generated: /${route}/`);
+  const content = readFileSync(path, "utf8");
+  assert.match(content, /<html lang="en"/, `English document language is missing: /${route}/`);
+  assert.match(content, heading, `English heading is missing: /${route}/`);
+  assert.match(content, marker, `English key content is missing: /${route}/`);
+  assert.ok(content.includes('class="language-switch"'), `Language switch is missing: /${route}/`);
+}
+
+const englishHomepage = readFileSync(join(outDir, "en", "index.html"), "utf8");
+assert.ok(englishHomepage.includes('href="/en/construction/"'), "English homepage must link to English construction");
+assert.ok(englishHomepage.includes('href="/en/facilities/"'), "English homepage must link to English facilities");
+assert.ok(englishHomepage.includes('href="/en/supply/"'), "English homepage must link to English supply");
+assert.ok(englishHomepage.includes('href="/en/business-services/"'), "English homepage must link to English Business Services");
+
+const englishAbout = readFileSync(join(outDir, "en", "about", "index.html"), "utf8");
+assert.ok(englishAbout.includes("Henrique Fernandes"), "English About page must retain the approved CEO name");
+assert.ok(englishAbout.includes("MISSION") && englishAbout.includes("VISION") && englishAbout.includes("VALUES"), "English About page must contain Mission, Vision and Values");
+
+const englishConstruction = readFileSync(join(outDir, "en", "construction", "index.html"), "utf8");
+assert.match(englishConstruction, /anexo-coberto-estrutura-metalica/i, "English construction hero must use its distinct real-work photograph");
+assert.doesNotMatch(englishConstruction, /instalacoes-embutidas-construcao/i, "English construction hero must not reuse the homepage photograph");
+
+const englishArticle = readFileSync(join(outDir, "en", "blog", "how-to-prepare-a-comparable-supply-quotation", "index.html"), "utf8");
+assert.ok(englishArticle.includes('href="https://comercialhmatiasps.com/source-ao/rfq-en.html"'), "English article must link to the English operational RFQ form");
+
 const htmlImgCount = (html.match(/<img\b/g) || []).length;
 const htmlImgWithAltCount = (html.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(htmlImgWithAltCount, htmlImgCount, "Every image must have an alt attribute");
