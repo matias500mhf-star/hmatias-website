@@ -79,7 +79,7 @@ jobs:
           const sourceMapIsPatched = parts[0] > 1 || (parts[0] === 1 && (parts[1] > 2 || (parts[1] === 2 && parts[2] >= 2)));
           if (!sourceMapIsPatched) refresh = true;
           console.log('refresh=' + String(refresh));
-          console.log('Locked source-map-js:', sourceMap);
+          console.error('Locked source-map-js:', sourceMap);
           NODE
 
       - name: Refresh the pinned root dependency lockfile on this isolated branch
