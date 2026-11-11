@@ -1,0 +1,94 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import { company } from "../../../data/site";
+import roofMaintenance from "../../../../../../images/catalogue/cobertura-metalica-substituicao.webp";
+import metalHall from "../../../../../../images/catalogue/galpao-estrutura-metalica.webp";
+import ruralPavilions from "../../../../../../images/catalogue/pavilhoes-rurais-concluidos.webp";
+import sitePreparation from "../../../../../../images/catalogue/terraplanagem-preparacao-terreno.webp";
+import masonry from "../../../../../../images/catalogue/alvenaria-elementos-estruturais.webp";
+import waterTank from "../../../../../../images/catalogue/reservatorio-compartimentado-betao.webp";
+import coveredAnnex from "../../../../../../images/catalogue/anexo-coberto-estrutura-metalica.webp";
+import aluminiumGlass from "../../../../../../images/catalogue/caixilharia-vidro-fumado.webp";
+import metalProfiles from "../../../../../../images/catalogue/perfis-metalicos-estrutura.webp";
+import roofSheets from "../../../../../../images/catalogue/chapas-cobertura-fornecimento.webp";
+import logistics from "../../../../../../images/catalogue/logistica-estrutura-metalica.webp";
+import embeddedServices from "../../../../../../images/catalogue/instalacoes-embutidas-construcao.webp";
+
+const works = [
+  {category:"Roofing · Maintenance",title:"Metal Roof Replacement",description:"Localised replacement of roof sheets, with mechanical fixing and integration into the existing roof.",image:roofMaintenance,alt:"Partial metal roof replacement using new profiled sheets"},
+  {category:"Metal Structures",title:"Metal-frame Building",description:"Assembly of a metal structure, roof covering and sheet cladding, with supporting masonry.",image:metalHall,alt:"Building under construction with metal frame and sheet roofing"},
+  {category:"Rural Construction · Infrastructure",title:"Completed Rural Pavilions",description:"Exterior view of completed pavilions with metal roofing and ventilated side areas.",image:ruralPavilions,alt:"Completed rural pavilions with red metal roofing"},
+  {category:"Earthworks",title:"Site Preparation",description:"Backhoe loader mobilised for earthmoving and initial ground levelling.",image:sitePreparation,alt:"Backhoe loader preparing and levelling a site"},
+  {category:"Masonry · Construction",title:"Masonry, Openings and Reinforcement",description:"Concrete block walls, defined openings, lintels and vertical reinforcement.",image:masonry,alt:"Masonry construction showing lintels and vertical reinforcement"},
+  {category:"Hydraulic Works · Concrete",title:"Compartmentalised Reservoir",description:"Concrete reservoir structure with internal divisions and cement finish for hydraulic support.",image:waterTank,alt:"Compartmentalised concrete reservoir with internal divisions"},
+  {category:"Ancillary Works",title:"Covered Annex with Metal Structure",description:"Metal roof structure creating an additional covered area beside an existing building.",image:coveredAnnex,alt:"Covered annex with metal structure and ceramic roof tiles"},
+  {category:"Aluminium Frames · Glazing",title:"Aluminium Frames and Tinted Glass",description:"Aluminium profiles and tinted glass panels, including sliding doors.",image:aluminiumGlass,alt:"Aluminium window framing and tinted glass enclosure"},
+  {category:"Structures · Materials",title:"Structural Metal Profiles",description:"Metal profiles prepared and organised on site for subsequent structural assembly.",image:metalProfiles,alt:"Metal profiles organised on site for structural assembly"},
+  {category:"Supply · Roofing",title:"Profiled Roofing Sheets",description:"Profiled metal sheets prepared for supply and use in roofing systems.",image:roofSheets,alt:"Profiled metal sheets for roof installation"},
+  {category:"Logistics · Structures",title:"Metal Structure Mobilisation",description:"Transport and mobilisation of metal elements for construction and assembly work.",image:logistics,alt:"Truck transporting metal elements for construction work"},
+  {category:"Construction · Installations",title:"Concealed Building Services",description:"Construction phase showing block walls and preparation of concealed electrical and plumbing points.",image:embeddedServices,alt:"Interior construction showing masonry and concealed service points"}
+];
+---
+<BaseLayout title="HMATIAS Works, Interventions and Supply Catalogue" description="Photographic records of HMATIAS construction works, interventions, execution stages, materials and supply references in Angola." lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS VISUAL ARCHIVE</span><span>WORKS · INTERVENTIONS · SUPPLY</span></div>
+  <SiteHeader />
+  <main class="works-catalogue">
+    <section class="works-catalogue-hero">
+      <div class="works-catalogue-hero-inner">
+        <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS VISUAL ARCHIVE</p>
+        <h1>Works, interventions<br /><em>and supply.</em></h1>
+        <p>A selection of photographs documenting HMATIAS work, interventions, execution stages and supply references. The catalogue describes the type of work or material shown; clients and locations are identified only where disclosure is appropriate or authorised.</p>
+        <div class="hero-actions"><a class="button button-light" href={company.legacyContactFormUrl}>Request an assessment <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="/en/construction/">Construction and Infrastructure <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+    <section class="works-catalogue-body section-pad">
+      <div class="section-heading">
+        <div><div class="section-kicker">01 / PHOTOGRAPHIC RECORDS</div><h2>Construction, infrastructure,<br /><em>maintenance and supply.</em></h2></div>
+        <p>Records from the HMATIAS visual archive, organised by the work or material shown in each image. Photographs have been optimised for web presentation and faster loading only.</p>
+      </div>
+      <div class="works-catalogue-grid">
+        {works.map((work,index) => (
+          <article class="works-catalogue-card">
+            <figure><Image src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" format="webp" quality={82}/></figure>
+            <div class="works-catalogue-copy"><span>{String(index+1).padStart(2,"0")} · {work.category}</span><h3>{work.title}</h3><p>{work.description}</p></div>
+          </article>
+        ))}
+      </div>
+      <p class="works-catalogue-note">This is a commercial visual archive. It does not replace contracts, measurement records, invoices or other proof documents. HMATIAS identifies clients, dates and locations only where disclosure is appropriate or authorised.</p>
+    </section>
+    <section class="works-catalogue-cta">
+      <div><p class="section-kicker">PLANNING A PROJECT OR INTERVENTION?</p><h2>Present your project<br /><em>to HMATIAS.</em></h2><p>Send the location, photographs, approximate measurements and a brief description so we can assess the next step.</p></div>
+      <a class="button button-light" href={company.legacyContactFormUrl}>Request an assessment <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+</BaseLayout>
+<style>
+.works-catalogue-hero { padding:clamp(70px,9vw,115px) var(--hm-gutter); color:#fff; background:var(--hm-navy); }
+.works-catalogue-hero-inner { max-width:900px; }
+.works-catalogue-hero h1 { margin:0; font-size:clamp(44px,6vw,82px); font-weight:520; line-height:1.02; letter-spacing:-.065em; }
+.works-catalogue-hero h1 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; }
+.works-catalogue-hero > div > p:not(.eyebrow) { max-width:680px; margin:26px 0 0; color:#dceafa; font-size:13px; line-height:1.85; }
+.works-catalogue-hero .hero-actions { margin-top:32px; }
+.works-catalogue-body { background:var(--hm-paper); }
+.works-catalogue-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:start; gap:35px 22px; margin-top:55px; }
+.works-catalogue-card { min-width:0; }
+.works-catalogue-card figure { margin:0; background:var(--hm-light); }
+.works-catalogue-card figure img { display:block; width:100%; height:auto; object-fit:contain; }
+.works-catalogue-copy { padding:16px 2px 0; }
+.works-catalogue-copy > span { color:var(--hm-blue); font-size:9px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
+.works-catalogue-copy h3 { margin:10px 0 8px; color:var(--hm-ink); font-size:16px; line-height:1.35; font-weight:650; letter-spacing:-.025em; }
+.works-catalogue-copy p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
+.works-catalogue-note { max-width:900px; margin:44px auto 0; padding:19px 22px; color:var(--hm-muted); background:var(--hm-light); border-left:2px solid var(--hm-blue); font-size:10px; line-height:1.8; }
+.works-catalogue-cta { padding:clamp(60px,8vw,95px) var(--hm-gutter); display:flex; justify-content:space-between; align-items:center; gap:35px; color:#fff; background:var(--hm-navy); }
+.works-catalogue-cta .section-kicker { margin:0 0 18px; padding:0; color:#b9d8ed; }
+.works-catalogue-cta h2 { margin:0; font-size:clamp(35px,4.5vw,58px); line-height:1.07; letter-spacing:-.06em; font-weight:520; }
+.works-catalogue-cta h2 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; }
+.works-catalogue-cta > div > p:not(.section-kicker) { max-width:560px; margin:16px 0 0; color:#dceafa; font-size:11px; line-height:1.8; }
+@media(max-width:950px) { .works-catalogue-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:650px) { .works-catalogue-grid { grid-template-columns:1fr; gap:28px; margin-top:35px; } .works-catalogue-cta { flex-direction:column; align-items:flex-start; } }
+</style>
