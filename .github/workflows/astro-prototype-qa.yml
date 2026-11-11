@@ -55,6 +55,11 @@ jobs:
       - name: Verify generated website
         run: npm run verify
 
+      - name: Verify Source AO RFQ contract and persistence
+        run: |
+          node --check ../../source-ao/rfq.js
+          node --test ../../source-ao/backend/test/rfq.test.mjs
+
       - name: Install pinned browser QA tools
         run: npm install --no-save --no-package-lock @playwright/test@1.65.0 @axe-core/playwright@4.14.0 @lhci/cli@0.16.0
 
