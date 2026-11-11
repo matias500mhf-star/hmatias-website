@@ -39,7 +39,8 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.locator(".facilities-work-card img")).toHaveCount(2);
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
-\n  test("âncoras internas apontam para secções existentes", async ({ page }) => {
+
+  test("âncoras internas apontam para secções existentes", async ({ page }) => {
     await page.goto("/");
     const missingTargets = await page.locator('a[href^="#"]').evaluateAll((links) =>
       links
