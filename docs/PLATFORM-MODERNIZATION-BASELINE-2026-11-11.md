@@ -49,7 +49,27 @@ Estes números descrevem a árvore consultada e podem mudar com novos commits.
 
 Estas fronteiras são relevantes. Não devem ser fundidas numa migração do website institucional sem uma justificação técnica específica.
 
-## 4. Publicação e controlos de segurança
+## 4. Segurança da toolchain — atualização concluída
+
+A auditoria inicial do pacote raiz encontrou duas vulnerabilidades altas:
+
+- Vite 8.3.0 estava dentro da faixa afetada pelos avisos de segurança publicados para o servidor de desenvolvimento.
+- A dependência transitiva `source-map-js` estava em 1.2.1.
+
+A correção foi aplicada somente nesta branch:
+
+| Pacote | Antes | Depois |
+|---|---:|---:|
+| Vite | 8.3.0 | 8.3.7 |
+| source-map-js | 1.2.1 | 1.2.2 |
+
+A atualização do Vite 8.3.7 corrige, entre outros, o aviso crítico GHSA-p4f5-76q4-ffq7, relacionado com execução remota de código quando o servidor de desenvolvimento está exposto à rede. A configuração atual do servidor Vite usa `host: 0.0.0.0`, pelo que a atualização era relevante para o ambiente de desenvolvimento. O site publicado em produção não executa o servidor Vite.
+
+A última execução de `npm audit` no pacote raiz reportou **0 vulnerabilidades** (0 low, 0 moderate, 0 high, 0 critical). O workflow agora impõe `npm audit --audit-level=high` e verifica a integridade da versão direta e do lockfile.
+
+Referência oficial: [Vite GHSA-p4f5-76q4-ffq7](https://github.com/vitejs/vite/security/advisories/GHSA-p4f5-76q4-ffq7).
+
+## 5. Publicação e controlos de segurança
 
 O workflow `.github/workflows/jekyll-docker.yml` é o publisher do website GitHub Pages. O trigger de publicação está associado a `main` e à execução manual.
 
@@ -64,7 +84,7 @@ Existe documentação operacional anterior que identifica uma integração Verce
 
 A modernização desta branch não contém passos de deployment.
 
-## 5. Diagnóstico inicial
+## 6. Diagnóstico inicial
 
 | Área | Estado observado | Implicação |
 |---|---|---|
@@ -78,7 +98,7 @@ A modernização desta branch não contém passos de deployment.
 
 Esta auditoria é estrutural. Não equivale a uma nova medição Lighthouse nem certifica Core Web Vitals, acessibilidade integral, funcionamento de DNS ou disponibilidade de APIs.
 
-## 6. Decisão de arquitetura recomendada
+## 7. Decisão de arquitetura recomendada
 
 A decisão inicial é **modernização incremental com prova comparativa**, em vez de migração integral imediata.
 
@@ -90,7 +110,7 @@ A decisão inicial é **modernização incremental com prova comparativa**, em v
 6. Usar TypeScript onde o volume e a complexidade de lógica justificarem tipagem e validação adicionais.
 7. Manter Cloudflare Workers e os serviços existentes como sistemas separados, ligados por contratos de API documentados.
 
-## 7. Critérios para qualquer migração futura
+## 8. Critérios para qualquer migração futura
 
 Uma migração só deve avançar quando o protótipo provar que:
 
@@ -102,7 +122,7 @@ Uma migração só deve avançar quando o protótipo provar que:
 - pode ser publicada por um único caminho de produção claramente identificado;
 - tem rollback e revisão por pull request.
 
-## 8. Trabalho introduzido nesta branch
+## 9. Trabalho introduzido nesta branch
 
 - `scripts/audit-platform.mjs`: inventário estrutural repetível, sem alterações nos ficheiros do site.
 - `npm run audit:platform`: comando para executar o inventário.
@@ -111,6 +131,6 @@ Uma migração só deve avançar quando o protótipo provar que:
 
 O workflow não executa `vite build`, não publica GitHub Pages e não executa `wrangler deploy`.
 
-## 9. Próxima etapa
+## 10. Próxima etapa
 
 Depois da primeira execução do QA, a próxima entrega deve ser o mapa de componentes, estilos e dependências partilhadas, seguido de um protótipo de arquitetura isolado. A decisão Astro/React deve resultar da comparação com a baseline atual, não de preferência tecnológica.
