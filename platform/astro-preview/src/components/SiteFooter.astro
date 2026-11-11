@@ -1,0 +1,13 @@
+---
+import { Image } from "astro:assets";
+import logo from "../../../../logo-hmatias.png";
+import { company, services } from "../data/site";
+---
+<footer class="site-footer">
+  <a class="footer-brand" href="#inicio" aria-label="HMATIAS — voltar ao início">
+    <Image src={logo} alt="HMATIAS" width={200} height={190} />
+  </a>
+  <span>© {new Date().getFullYear()} HMATIAS — Luanda, Angola</span>
+  <a href="#inicio">Voltar ao topo ↑</a>
+  <span class="sr-only">{company.name} · {services.length} áreas de atividade</span>
+</footer>
