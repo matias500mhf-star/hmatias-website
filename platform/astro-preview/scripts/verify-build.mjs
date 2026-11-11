@@ -108,7 +108,7 @@ for (const service of ["Expediente Administrativo e Redação Institucional", "E
   assert.ok(businessHtml.includes(service), `Business Services offer missing: ${service}`);
 }
 assert.match(businessHtml, /contacto-business/, "Business Services operational intake link is missing");
-assert.doesNotMatch(businessHtml, /website actual|recepção/i, "Business Services copy must use current Portuguese orthography");
+assert.doesNotMatch(businessHtml, /website atual|receção/i, "Business Services copy must not mix AO90 spelling with Angolan house style");
 
 const aboutPath = join(outDir, "empresa", "index.html");
 assert.ok(existsSync(aboutPath), "Company credibility page must be generated");
@@ -139,8 +139,8 @@ assert.ok(existsSync(worksCataloguePath), "Works catalogue page must be generate
 const worksCatalogueHtml = readFileSync(worksCataloguePath, "utf8");
 assert.match(worksCatalogueHtml, /Obras, intervenções/, "Works catalogue heading is missing");
 assert.match(worksCatalogueHtml, /Fornecimentos/, "Catalogue must include supply references in its scope");
-assert.match(worksCatalogueHtml, /otimizadas/, "Catalogue copy must use consistent Portuguese orthography");
-assert.doesNotMatch(worksCatalogueHtml, /otimizad/i, "Outdated orthography must not return");
+assert.match(worksCatalogueHtml, /optimizadas/, "Catalogue copy must use consistent Angolan Portuguese orthography");
+assert.doesNotMatch(worksCatalogueHtml, /otimizad/i, "AO90 spelling must not return in the Angolan Portuguese catalogue");
 assert.equal((worksCatalogueHtml.match(/<article class="works-catalogue-card"/g) || []).length, 12, "The complete 12-record catalogue must be present");
 const catalogueImgCount = (worksCatalogueHtml.match(/<img\b/g) || []).length;
 const catalogueImgWithAltCount = (worksCatalogueHtml.match(/<img\b[^>]*\balt=/g) || []).length;
