@@ -34,7 +34,7 @@ export const services: Service[] = [
     number: "04",
     title: "Business services",
     description: "Apoio administrativo · Documentação · Serviços empresariais",
-    href: "https://comercialhmatiasps.com/servicos-administrativos.html",
+    href: "/business-services/",
     icon: "business"
   }
 ];
