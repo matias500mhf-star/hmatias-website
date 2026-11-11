@@ -47,7 +47,7 @@ test.describe("Bilingual brand and language accessibility", () => {
     const languageSwitch = page.locator(".language-switch");
     await expect(languageSwitch).toHaveAttribute("href", "/en/");
     await expect(languageSwitch).toHaveAttribute("lang", "en");
-    await expect(languageSwitch).toHaveAttribute("aria-label", "Switch to English");
+    await expect(languageSwitch).toHaveAttribute("aria-label", "Mudar para inglês");
 
     await expect(page.locator(".footer-legal-id")).toContainText("NIF");
     await expect(page.locator(".footer-legal-id")).toContainText("Registo Comercial");
