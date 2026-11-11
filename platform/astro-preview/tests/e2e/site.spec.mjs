@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const routes = ["/", "/blog/", "/acessibilidade/"];
+const routes = ["/", "/blog/", "/acessibilidade/", "/construcao/"];
 
 test.describe("HMATIAS — navegação e conteúdo", () => {
   test("homepage apresenta identidade, proposta e contactos", async ({ page }) => {
@@ -12,6 +12,18 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.locator("#main-nav")).toBeAttached();
     await expect(page.getByRole("link", { name: /Falar com a HMATIAS/ })).toBeAttached();
     await expect(page.getByText("geral@comercialhmatiasps.com").first()).toBeAttached();
+  });
+  test("página de construção apresenta serviços e registos reais", async ({ page }) => {
+    const response = await page.goto("/construcao/");
+    expect(response?.status()).toBe(200);
+    await expect(page).toHaveTitle(/Construção e Remodelação/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Construção e");
+    await expect(page.getByRole("heading", { name: "Construção civil" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Preparação de terreno" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Pavilhões rurais concluídos" })).toBeVisible();
+    await expect(page.locator(".construction-work-card img")).toHaveCount(4);
+    await expect(page.locator(".main-nav").getByRole("link", { name: "Serviços" })).toHaveAttribute("href", "/#servicos");
+    await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
 
   test("âncoras internas apontam para secções existentes", async ({ page }) => {
