@@ -94,6 +94,34 @@ const smartRfqImgCount = (smartRfqHtml.match(/<img\b/g) || []).length;
 const smartRfqImgWithAltCount = (smartRfqHtml.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(smartRfqImgWithAltCount, smartRfqImgCount, "Every Smart RFQ page image must have an alt attribute");
 
+const businessPath = join(outDir, "business-services", "index.html");
+assert.ok(existsSync(businessPath), "Business Services page must be generated");
+const businessHtml = readFileSync(businessPath, "utf8");
+assert.match(businessHtml, /HMATIAS BUSINESS SERVICES/, "Business Services identity is missing");
+for (const service of ["Expediente Administrativo e Redação Institucional", "Estruturação de CV Profissional", "Gestão e Organização Documental", "Propostas Comerciais e Apoio Empresarial", "Apresentações Empresariais", "Apoio Administrativo Recorrente para PME"]) {
+  assert.ok(businessHtml.includes(service), `Business Services offer missing: ${service}`);
+}
+assert.match(businessHtml, /contacto-business/, "Business Services operational intake link is missing");
+
+const aboutPath = join(outDir, "empresa", "index.html");
+assert.ok(existsSync(aboutPath), "Company credibility page must be generated");
+const aboutHtml = readFileSync(aboutPath, "utf8");
+assert.match(aboutHtml, /5001578065/, "Company NIF is missing from credibility page");
+assert.match(aboutHtml, /24\\.094-23/, "Commercial registration is missing from credibility page");
+assert.match(aboutHtml, /MISSÃO/, "Company mission is missing");
+assert.match(aboutHtml, /VISÃO/, "Company vision is missing");
+
+for (const [route, heading, marker] of [
+  ["privacidade", /Política de Privacidade/, /Cookies, consentimento e estatísticas/],
+  ["termos", /Termos &amp; Condições/, /Propriedade intelectual/],
+]) {
+  const path = join(outDir, route, "index.html");
+  assert.ok(existsSync(path), `${route} legal page must be generated`);
+  const content = readFileSync(path, "utf8");
+  assert.match(content, heading, `${route} legal heading is missing`);
+  assert.match(content, marker, `${route} legal content is incomplete`);
+}
+
 const assetDir = join(outDir, "_astro");
 assert.ok(existsSync(assetDir), "Astro must emit processed assets");
 const assets = readdirSync(assetDir).filter((file) => statSync(join(assetDir, file)).isFile());
