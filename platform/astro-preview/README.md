@@ -8,7 +8,7 @@ Este projeto é um protótipo isolado para comparar uma arquitetura Astro com o 
 - Preservar o azul institucional, a tipografia Inter local, o logótipo e as fotografias reais.
 - Preservar as proporções originais das fotografias. A galeria não impõe alturas fixas nem corta a imagem para preencher cartões.
 - Manter conteúdos e contactos em dados tipados.
-- Renderizar a página como HTML estático, sem runtime React no conteúdo institucional.
+- Renderizar as páginas institucionais como HTML estático, sem runtime React no conteúdo predominantemente editorial.
 - Validar tipos, build e estrutura do artefacto em GitHub Actions.
 - Testar navegação real em Chromium desktop e móvel com Playwright.
 - Verificar acessibilidade automatizada com axe-core e recolher auditorias Lighthouse.
@@ -29,7 +29,7 @@ npm run verify
 npm run preview
 ```
 
-O lockfile `package-lock.json` está versionado. As instalações repetíveis devem usar `npm ci`. O build produz `dist/`. O comando `verify` verifica o HTML, as quatro áreas de atividade, os contactos, as fotografias, as páginas Construção e Facilities e os recursos processados.
+O lockfile `package-lock.json` está versionado. As instalações repetíveis devem usar `npm ci`. O build produz `dist/`. O comando `verify` verifica o HTML, as quatro áreas de atividade, os contactos, as fotografias, as páginas Construção, Facilities e Supply e os recursos processados.
 
 ## Estrutura
 
@@ -41,7 +41,7 @@ O lockfile `package-lock.json` está versionado. As instalações repetíveis de
 
 ## Decisão sobre React
 
-React não foi instalado nesta etapa. A homepage institucional é maioritariamente conteúdo e navegação; Astro produz HTML estático e evita enviar um runtime de interface desnecessário. React será avaliado como ilha interativa quando a fase Smart RFQ exigir estado complexo, validações dinâmicas ou fluxos multi-etapa.
+React não foi instalado nesta etapa. As páginas institucionais são maioritariamente conteúdo e navegação; Astro produz HTML estático e evita enviar um runtime de interface desnecessário. React será avaliado como ilha interativa quando a fase Smart RFQ exigir estado complexo, validações dinâmicas ou fluxos multi-etapa.
 
 ## Limites de publicação
 
@@ -54,9 +54,9 @@ React não foi instalado nesta etapa. A homepage institucional é maioritariamen
 O workflow `.github/workflows/astro-prototype-qa.yml` executa:
 
 - `astro check`, build estático, auditoria de dependências e verificação do artefacto.
-- Playwright 1.65.0 em Chromium desktop e móvel: homepage, Blog, Acessibilidade, Construção e Facilities; navegação, âncoras, imagens com texto alternativo e overflow horizontal.
-- axe-core 4.14.0 nas rotas Homepage, Blog, Acessibilidade, Construção e Facilities. Falhas críticas e graves bloqueiam o CI; ocorrências moderadas ou menores são registadas para revisão.
-- Lighthouse CI 0.16.0 nas rotas Homepage, Blog, Acessibilidade, Construção e Facilities, com indicadores de desempenho, acessibilidade, boas práticas, SEO, LCP e CLS. Os limites estão inicialmente em modo de alerta para permitir recolher uma linha de base real.
+- Playwright 1.65.0 em Chromium desktop e móvel: homepage, Blog, Acessibilidade, Construção, Facilities e Supply; navegação, âncoras, imagens com texto alternativo e overflow horizontal.
+- axe-core 4.14.0 nas rotas Homepage, Blog, Acessibilidade, Construção, Facilities e Supply. Falhas críticas e graves bloqueiam o CI; ocorrências moderadas ou menores são registadas para revisão.
+- Lighthouse CI 0.16.0 nas mesmas rotas, com indicadores de desempenho, acessibilidade, boas práticas, SEO, LCP e CLS. Os limites estão inicialmente em modo de alerta para permitir recolher uma linha de base real.
 
 Os relatórios Playwright e Lighthouse são guardados como artefactos do GitHub Actions por 14 dias. As ferramentas de QA são instaladas apenas no ambiente CI e não entram no bundle do website.
 
