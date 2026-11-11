@@ -1,0 +1,134 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import { company } from "../../../data/site";
+import heroPhoto from "../../../../../../images/catalogue/chapas-cobertura-fornecimento.webp";
+import metalProfiles from "../../../../../../images/catalogue/perfis-metalicos-estrutura.webp";
+import roofSheets from "../../../../../../images/catalogue/chapas-cobertura-fornecimento.webp";
+import logisticsPhoto from "../../../../../../images/catalogue/logistica-estrutura-metalica.webp";
+const evidence = [
+  { category:"MATERIALS · STRUCTURES", title:"Metal profiles", description:"Recorded metal profiles intended for structural and construction applications.", image:metalProfiles, alt:"Metal profiles prepared for use on site" },
+  { category:"SUPPLY · ROOFING", title:"Profiled roof sheets", description:"Visual reference for profiled sheets in supply enquiries.", image:roofSheets, alt:"Profiled roof sheets prepared for supply" },
+  { category:"LOGISTICS · MOBILISATION", title:"Delivery for execution", description:"Recorded mobilisation of metal elements to support project execution.", image:logisticsPhoto, alt:"Logistics mobilisation of metal elements" },
+];
+---
+<BaseLayout title="Procurement and Supply in Angola | HMATIAS Supply" description="Procurement, sourcing and supply enquiries for materials, equipment and consumables. HMATIAS checks supplier conditions before submitting a proposal." lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS SUPPLY</span><span>PROCUREMENT · SOURCING · SUPPLY</span></div>
+  <SiteHeader />
+  <main class="supply-page">
+    <section class="construction-hero supply-hero" id="inicio">
+      <div class="construction-hero-copy">
+        <nav class="construction-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span>/</span><span>HMATIAS Supply</span></nav>
+        <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS SUPPLY · PROCUREMENT · SOURCING</p>
+        <h1>Procurement and<br /><em>supply.</em></h1>
+        <p class="hero-lead">Materials, equipment and consumables for companies and projects in Angola. We receive the requirement, research suppliers and check the conditions before presenting a proposal.</p>
+        <div class="hero-actions"><a class="button button-light" href="#request">Structure a request <span aria-hidden="true">↓</span></a><a class="text-link text-link-light" href={company.sourceAoUrl}>Explore SOURCE AO <span aria-hidden="true">↗</span></a></div>
+        <div class="hero-meta"><span>Materials · PPE · Equipment · Consumables</span><span>Angola · Southern Africa, where applicable</span></div>
+      </div>
+      <figure class="construction-hero-image supply-hero-image"><Image src={heroPhoto} alt="Profiled roofing sheets prepared for a supply enquiry" widths={[640,960,1280]} sizes="(max-width:900px) 100vw,48vw" format="webp" quality={84} loading="eager" fetchpriority="high"/><figcaption><span>01</span> SUPPLY REFERENCE</figcaption></figure>
+      <span class="construction-hero-note" aria-hidden="true">SOURCING · VERIFICATION · SUPPLY</span>
+    </section>
+
+    <section class="construction-intro section-pad supply-intro" id="company">
+      <div class="section-kicker">01 / HOW WE WORK</div>
+      <div class="construction-intro-content"><h2>From requirement<br /><em>to supply proposal.</em></h2><div class="construction-intro-copy"><p>HMATIAS does not hold its own merchandise stock. We work on a request basis: identify the requirement, research the supplier network and review specifications and commercial conditions.</p><p>Availability, price, lead time, documentation and logistics are checked case by case before any supply commitment is made.</p><a class="underlined-link" href="#process">Understand the process <span aria-hidden="true">↘</span></a></div></div>
+    </section>
+
+    <section class="construction-scopes section-pad supply-categories" id="categories">
+      <div class="section-heading"><div><div class="section-kicker">02 / SUPPLY CATEGORIES</div><h2>Start with the<br /><em>specification.</em></h2></div><p>These categories organise sourcing enquiries. They do not represent stock availability or warehouse inventory.</p></div>
+      <div class="supply-category-grid">
+        <article class="supply-category-card"><span class="supply-category-number">01</span><h3>Construction materials</h3><p>Steel, profiles, sheets, building materials and components identified by reference, dimensions and quantity.</p></article>
+        <article class="supply-category-card"><span class="supply-category-number">02</span><h3>PPE and workwear</h3><p>Safety footwear, protective clothing and personal protective equipment, subject to specification and availability checks.</p></article>
+        <article class="supply-category-card"><span class="supply-category-number">03</span><h3>Industrial equipment</h3><p>Equipment, spare parts and technical products assessed against the intended application and required specifications.</p></article>
+        <article class="supply-category-card"><span class="supply-category-number">04</span><h3>Consumables and general supplies</h3><p>Operational consumables and recurring requirements identified by brand, reference, packaging and quantity where applicable.</p></article>
+      </div>
+    </section>
+
+    <section class="supply-evidence section-pad" id="references">
+      <div class="section-heading"><div><div class="section-kicker">03 / SUPPLY REFERENCES</div><h2>Visual references<br /><em>for sourcing enquiries.</em></h2></div><p>Images illustrate product and logistics categories. They are not an indication of current stock.</p></div>
+      <div class="supply-evidence-grid">
+        {evidence.map((item) => <article class="supply-evidence-card"><figure><Image src={item.image} alt={item.alt} widths={[640,960]} sizes="(max-width:700px) 100vw,33vw" format="webp" quality={82}/></figure><p class="supply-evidence-category">{item.category}</p><h3>{item.title}</h3><p>{item.description}</p></article>)}
+      </div>
+    </section>
+
+    <section class="supply-process section-pad" id="process">
+      <div class="section-heading"><div><div class="section-kicker">04 / THE PROCESS</div><h2>Request. Research.<br /><em>Confirm.</em></h2></div><p>A structured process helps distinguish confirmed information from estimates and preferences.</p></div>
+      <div class="supply-process-list">
+        <article><span>01</span><div><h3>Submit the requirement</h3><p>Provide product details, specifications, quantities, destination and target delivery date.</p></div></article>
+        <article><span>02</span><div><h3>Supplier research and checks</h3><p>HMATIAS consults suppliers and seeks confirmation of specification, availability, price, origin, lead time and logistics.</p></div></article>
+        <article><span>03</span><div><h3>Receive a proposal</h3><p>Where the required conditions can be confirmed, HMATIAS prepares a proposal for the client to review.</p></div></article>
+      </div>
+    </section>
+
+    <section class="construction-request section-pad" id="request">
+      <div class="construction-request-copy"><p class="section-kicker">05 / SUPPLY ENQUIRIES</p><h2>Have a supply<br /><em>requirement?</em></h2><p>Submit one or more items with specifications, quantities, destination and required timing. The Smart RFQ flow can organise up to 20 product lines in one request.</p><div class="construction-request-actions"><a class="button button-light" href={company.sourceAoRfqEnUrl}>Open English Smart RFQ <span aria-hidden="true">↗</span></a><a class="construction-email-link" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">WhatsApp <span>↗</span></a></div></div>
+      <aside class="construction-request-guide"><h3>Information to include</h3><ul><li>Product description and reference</li><li>Technical specification or equivalent criteria</li><li>Quantity and unit</li><li>Delivery location and timing</li><li>Required documentation</li></ul><p>Submission records a sourcing enquiry. It is not a confirmed quotation, purchase order or stock reservation.</p></aside>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+</BaseLayout>
+<style>
+.supply-hero-image { aspect-ratio: auto; }
+.supply-hero-image img { height: auto; background: transparent; }
+.supply-category-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:54px; }
+.supply-category-card { min-height:250px; padding:23px 20px; display:flex; flex-direction:column; align-items:flex-start; background:var(--hm-paper); border:1px solid var(--hm-line); }
+.supply-category-icon { width:45px; height:45px; display:grid; place-items:center; color:var(--hm-blue); background:var(--hm-sky-soft); border:1px solid var(--hm-line); border-radius:11px; }
+.supply-category-icon svg { width:25px; height:25px; }
+.supply-card-number { margin-top:22px; color:#005aa8; font-family:var(--hm-serif); font-size:14px; }
+.supply-category-card h3 { margin:12px 0 9px; color:var(--hm-ink); font-size:15px; font-weight:620; line-height:1.35; letter-spacing:-.03em; }
+.supply-category-card p { margin:0; color:var(--hm-muted); font-size:10px; line-height:1.75; }
+.supply-evidence { background:var(--hm-paper); }
+.supply-evidence-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:start; gap:26px; }
+.supply-evidence-card { min-width:0; }
+.supply-evidence-card figure { margin:0; background:transparent; }
+.supply-evidence-card figure img { display:block; width:100%; height:auto; object-fit:contain; object-position:center; }
+.supply-process-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); margin-top:52px; border-top:1px solid var(--hm-line); }
+.supply-process-grid article { min-height:180px; padding:23px 20px 18px 0; border-bottom:1px solid var(--hm-line); }
+.supply-process-grid article + article { padding-left:20px; border-left:1px solid var(--hm-line); }
+.supply-process-grid article > span, .supply-faq-grid article > span { color:#005aa8; font-family:var(--hm-serif); font-size:16px; }
+.supply-process-grid h3 { margin:28px 0 10px; color:var(--hm-ink); font-size:14px; font-weight:650; line-height:1.35; }
+.supply-process-grid p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.75; }
+.supply-request-info { background:var(--hm-paper); }
+.supply-request-grid { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(270px,.85fr); gap:clamp(35px,7vw,95px); margin-top:52px; }
+.supply-request-copy h3, .supply-request-aside h3 { margin:0 0 18px; font-size:19px; font-weight:620; letter-spacing:-.035em; }
+.supply-request-copy ul { margin:0; padding:0; list-style:none; border-top:1px solid var(--hm-line); }
+.supply-request-copy li { padding:13px 0; border-bottom:1px solid var(--hm-line); color:var(--hm-ink); font-size:12px; line-height:1.55; }
+.supply-request-copy li::before { content:"—"; margin-right:12px; color:#005aa8; }
+.supply-request-copy > p { max-width:620px; margin:20px 0 0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
+.supply-request-aside { align-self:start; padding:clamp(25px,4vw,38px); background:var(--hm-light); border-left:2px solid var(--hm-blue); }
+.supply-request-aside .section-kicker { margin:0 0 18px; padding:0; }
+.supply-request-aside h3 { font-size:24px; }
+.supply-request-aside > p:not(.section-kicker) { margin:0; color:var(--hm-muted); font-size:12px; line-height:1.85; }
+.supply-faq { background:var(--hm-light); }
+.supply-faq-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; margin-top:48px; }
+.supply-faq-grid article { min-height:205px; padding:23px 21px; background:var(--hm-paper); border:1px solid var(--hm-line); }
+.supply-faq-grid h3 { margin:24px 0 10px; color:var(--hm-ink); font-size:14px; line-height:1.4; font-weight:650; }
+.supply-faq-grid p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.75; }
+.supply-final-cta .construction-request-guide a { color:var(--hm-ink); text-decoration:underline; text-decoration-color:#9bb7ce; text-underline-offset:3px; }
+.supply-final-cta .construction-request-guide li { display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+@media(max-width:1100px) {
+  .supply-category-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .supply-process-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .supply-process-grid article:nth-child(3) { padding-left:0; border-left:0; }
+}
+@media(max-width:900px) {
+  .supply-evidence-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .supply-request-grid { grid-template-columns:1fr 1fr; gap:28px; }
+  .supply-faq-grid { grid-template-columns:1fr; }
+  .supply-faq-grid article { min-height:0; }
+}
+@media(max-width:650px) {
+  .supply-hero-image { width:90%; align-self:flex-end; }
+  .supply-category-grid, .supply-evidence-grid, .supply-process-grid, .supply-request-grid { grid-template-columns:1fr; }
+  .supply-category-grid { margin-top:40px; }
+  .supply-category-card { min-height:0; padding:22px; }
+  .supply-process-grid { margin-top:38px; }
+  .supply-process-grid article, .supply-process-grid article + article { min-height:0; padding:22px 0; border-left:0; }
+  .supply-process-grid h3 { margin-top:16px; }
+  .supply-request-grid { margin-top:36px; }
+  .supply-request-aside { padding:24px 21px; }
+}
+</style>
