@@ -57,3 +57,10 @@ jobs:
           path: platform/astro-preview/dist/
           if-no-files-found: error
           retention-days: 7
+      - name: Upload generated dependency lockfile
+        uses: actions/upload-artifact@v4
+        with:
+          name: hmatias-astro-lockfile
+          path: platform/astro-preview/package-lock.json
+          if-no-files-found: error
+          retention-days: 7
