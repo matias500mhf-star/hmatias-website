@@ -14,6 +14,16 @@ test.describe("SOURCE AO Smart RFQ", () => {
     await expect(page.getByText(/não gera automaticamente uma cotação/i)).toBeVisible();
   });
 
+  test("English Smart RFQ accurately explains the browser-generated brief and manual send", async ({ page }) => {
+    await page.goto("/en/source-ao/smart-rfq/");
+
+    await expect(page.getByRole("link", { name: /Prepare a request/ }))
+      .toHaveAttribute("href", "https://comercialhmatiasps.com/rfq-en.html");
+    await expect(page.getByText(/Nothing is sent until you choose email or WhatsApp/i)).toBeVisible();
+    await expect(page.getByText(/Up to 20 product lines|Private request record and follow-up/i)).toHaveCount(0);
+    await expect(page.getByRole("heading", { name: /From requirement to request brief/i })).toBeVisible();
+  });
+
   test("has no horizontal overflow on desktop and mobile viewports", async ({ page }) => {
     await page.goto("/source-ao/smart-rfq/");
     const overflows = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
