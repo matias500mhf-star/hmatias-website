@@ -32,7 +32,7 @@ export const services: Service[] = [
   },
   {
     number: "04",
-    title: "Business services",
+    title: "Business Services",
     description: "Apoio administrativo · Documentação · Serviços empresariais",
     href: "/business-services/",
     icon: "business"
