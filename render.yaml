@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: hmatias-astro-preview
+    runtime: static
+    branch: feat/hmatias-platform-modernization-20261111
+    rootDir: platform/astro-preview
+    buildCommand: npm ci && npm run build && npm run verify
+    staticPublishPath: dist
+    autoDeployTrigger: commit
