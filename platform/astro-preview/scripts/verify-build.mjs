@@ -235,6 +235,26 @@ assert.ok(englishHomepage.includes('href="/en/business-services/"'), "English ho
 const englishAbout = readFileSync(join(outDir, "en", "about", "index.html"), "utf8");
 assert.ok(englishAbout.includes("Henrique Fernandes"), "English About page must retain the approved CEO name");
 assert.ok(englishAbout.includes("MISSION") && englishAbout.includes("VISION") && englishAbout.includes("VALUES"), "English About page must contain Mission, Vision and Values");
+assert.match(englishAbout, /pavilhoes-rurais-concluidos/i, "English About page must use the distinct real-work photograph");
+assert.doesNotMatch(englishAbout, /instalacoes-embutidas-construcao/i, "English About page must not reuse the homepage photograph");
+
+for (const [route] of englishRoutes) {
+  const content = readFileSync(join(outDir, route, "index.html"), "utf8");
+  const imageCount = (content.match(/<img\\b/g) || []).length;
+  const imageAltCount = (content.match(/<img\\b[^>]*\\balt=/g) || []).length;
+  assert.equal(imageAltCount, imageCount, `Every image in English route /${route}/ must have alt text`);
+  assert.doesNotMatch(content, /Lorem ipsum|This is a space to share|Coming soon|EM PREPARAÇÃO|Publicação em preparação/i, `Placeholder copy must not appear in /${route}/`);
+}
+
+const portugueseAbout = readFileSync(join(outDir, "empresa", "index.html"), "utf8");
+const portugueseArticle = readFileSync(join(outDir, "blog", "como-preparar-um-pedido-de-cotacao", "index.html"), "utf8");
+const englishBlogArticle = readFileSync(join(outDir, "en", "blog", "how-to-prepare-a-comparable-supply-quotation", "index.html"), "utf8");
+assert.ok(html.includes('class="language-switch" href="/en/"'), "Portuguese homepage must switch to the English homepage");
+assert.ok(englishHomepage.includes('class="language-switch" href="/"'), "English homepage must switch to the Portuguese homepage");
+assert.ok(portugueseAbout.includes('class="language-switch" href="/en/about/"'), "Portuguese About page must switch to English About");
+assert.ok(englishAbout.includes('class="language-switch" href="/empresa/"'), "English About page must switch to Portuguese About");
+assert.ok(portugueseArticle.includes('class="language-switch" href="/en/blog/how-to-prepare-a-comparable-supply-quotation/"'), "Portuguese article must switch to its English counterpart");
+assert.ok(englishBlogArticle.includes('class="language-switch" href="/blog/como-preparar-um-pedido-de-cotacao/"'), "English article must switch to its Portuguese counterpart");
 
 const englishConstruction = readFileSync(join(outDir, "en", "construction", "index.html"), "utf8");
 assert.match(englishConstruction, /anexo-coberto-estrutura-metalica/i, "English construction hero must use its distinct real-work photograph");
