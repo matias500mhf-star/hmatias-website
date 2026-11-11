@@ -203,3 +203,6 @@ img{display:block;max-width:100%}
  .project-large .project-photo,.project-photo,.project-wide .project-photo{height:auto;min-height:0;aspect-ratio:auto}
  .project-photo img{height:auto;object-fit:contain}
 }
+
+/* Cartões assimétricos também respeitam a altura natural das fotografias */
+.project-large .project-photo,.project-wide .project-photo{height:auto;min-height:0}
