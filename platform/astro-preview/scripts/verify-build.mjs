@@ -126,10 +126,10 @@ const worksCataloguePath = join(outDir, "catalogo-obras", "index.html");
 assert.ok(existsSync(worksCataloguePath), "Works catalogue page must be generated");
 const worksCatalogueHtml = readFileSync(worksCataloguePath, "utf8");
 assert.match(worksCatalogueHtml, /Catálogo de obras/, "Works catalogue heading is missing");
-assert.equal((worksCatalogueHtml.match(/works-catalogue-card/g) || []).length, 12, "The complete 12-record catalogue must be present");
-const catalogueImgCount = (worksCatalogueHtml.match(/<img\\b/g) || []).length;
-const catalogueImgWithAltCount = (worksCatalogueHtml.match(/<img\\b[^>]*\\balt=/g) || []).length;
-assert.equal(catalogueImgCount, 12, "All twelve catalogue images must be rendered");
+assert.equal((worksCatalogueHtml.match(/<article class="works-catalogue-card"/g) || []).length, 12, "The complete 12-record catalogue must be present");
+const catalogueImgCount = (worksCatalogueHtml.match(/<img\b/g) || []).length;
+const catalogueImgWithAltCount = (worksCatalogueHtml.match(/<img\b[^>]*\balt=/g) || []).length;
+assert.equal(catalogueImgCount, 14, "Twelve catalogue photographs and two shared brand marks must be rendered");
 assert.equal(catalogueImgWithAltCount, catalogueImgCount, "Every catalogue image must have alt text");
 
 const assetDir = join(outDir, "_astro");
