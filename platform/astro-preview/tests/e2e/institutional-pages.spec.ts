@@ -31,19 +31,28 @@ test.describe("HMATIAS institutional pages", () => {
 
   test("works catalogue preserves all twelve archive records and image descriptions", async ({ page }) => {
     await page.goto("/catalogo-obras/");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText(/Catálogo de obras/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(/Obras, intervenções/);
     await expect(page.locator(".works-catalogue-card")).toHaveCount(12);
     await expect(page.locator(".works-catalogue-card img[alt]")).toHaveCount(12);
     await expect(page.getByText(/não substitui contratos, autos de medição/)).toBeVisible();
   });
 
-  test("company page identifies HMATIAS and its four service areas", async ({ page }) => {
+  test("company page presents its purpose, leadership and four service areas", async ({ page }) => {
     await page.goto("/empresa/");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(/Uma empresa de serviços/);
+    await expect(page.getByText(/01 \/ MISSÃO/)).toBeVisible();
+    await expect(page.getByText(/02 \/ VISÃO/)).toBeVisible();
+    await expect(page.getByText("Henrique Fernandes", { exact: true })).toBeVisible();
+    await expect(page.getByText("Direção Executiva", { exact: true })).toBeVisible();
+    await expect(page.locator(".about-service-grid a").filter({ hasText: "Business Services" })).toHaveAttribute("href", "/business-services/");
+  });
+
+  test("credibility page displays the registered company identifiers", async ({ page }) => {
+    await page.goto("/credibilidade/");
     await expect(page.getByText("5001578065", { exact: true })).toBeVisible();
     await expect(page.getByText("24.094-23", { exact: true })).toBeVisible();
-    await expect(page.getByText("MISSÃO", { exact: true })).toBeVisible();
-    await expect(page.getByText("VISÃO", { exact: true })).toBeVisible();
-    await expect(page.locator(".about-area-grid a").filter({ hasText: "Business Services" })).toHaveAttribute("href", "/business-services/");
+    await expect(page.getByText("NIF", { exact: true })).toBeVisible();
+    await expect(page.getByText("Registo Comercial", { exact: true })).toBeVisible();
   });
 
   test("privacy, terms and accessibility pages are reachable from the shared footer", async ({ page }) => {
