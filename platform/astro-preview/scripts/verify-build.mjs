@@ -46,6 +46,17 @@ const blogPath = join(outDir, "blog", "index.html");
 assert.ok(existsSync(blogPath), "Blog page must be generated");
 const blogHtml = readFileSync(blogPath, "utf8");
 assert.match(blogHtml, /Perspetivas empresariais/, "Blog page content is missing");
+assert.ok(blogHtml.includes("/blog/como-preparar-um-pedido-de-cotacao/"), "Blog must link to its published Supply guide");
+assert.ok(!blogHtml.includes("EM PREPARAÇÃO"), "The blog must not present the featured article as a placeholder");
+
+const supplyGuidePath = join(outDir, "blog", "como-preparar-um-pedido-de-cotacao", "index.html");
+assert.ok(existsSync(supplyGuidePath), "The published HMATIAS Supply guide must be generated");
+const supplyGuideHtml = readFileSync(supplyGuidePath, "utf8");
+assert.match(supplyGuideHtml, /Como preparar um pedido de cotação/, "Supply guide title is missing");
+assert.match(supplyGuideHtml, /quantidade e unidade/i, "Supply guide must explain quantities and units");
+assert.match(supplyGuideHtml, /local de entrega/i, "Supply guide must explain delivery destination");
+assert.match(supplyGuideHtml, /até 20 linhas/i, "Supply guide must reflect the Smart RFQ item limit");
+assert.ok(supplyGuideHtml.includes('href="/source-ao/smart-rfq/"'), "Supply guide must link to Smart RFQ");
 
 const accessibilityPath = join(outDir, "acessibilidade", "index.html");
 assert.ok(existsSync(accessibilityPath), "Accessibility page must be generated");
@@ -178,7 +189,7 @@ assert.match(compiledCss, /HMATIAS IBM Plex Mono/, "Local IBM Plex Mono utility 
 assert.ok(assets.some((file) => file.includes("manrope-latin-variable")), "Manrope font asset must be emitted");
 assert.ok(assets.some((file) => file.includes("ibm-plex-mono-latin-600")), "IBM Plex Mono font asset must be emitted");
 
-for (const route of ["construcao", "facilities", "supply", "business-services", "catalogo-obras", "empresa", "credibilidade", "blog", "acessibilidade", "privacidade", "termos", "source-ao/smart-rfq"]) {
+for (const route of ["construcao", "facilities", "supply", "business-services", "catalogo-obras", "empresa", "credibilidade", "blog", "blog/como-preparar-um-pedido-de-cotacao", "acessibilidade", "privacidade", "termos", "source-ao/smart-rfq"]) {
   const content = readFileSync(join(outDir, route, "index.html"), "utf8");
   assert.doesNotMatch(
     content,
