@@ -50,12 +50,42 @@ import { company } from "../../data/site";
       </div>
     </section>
 
+    <section class="about-purpose section-pad">
+      <div class="about-section-head">
+        <div><p class="section-kicker">O QUE NOS ORIENTA</p><h2>Propósito claro.<br /><em>Direção definida.</em></h2></div>
+        <p>Missão, visão e valores que orientam a forma como a HMATIAS trabalha e se relaciona com os seus clientes e parceiros.</p>
+      </div>
+      <div class="purpose-grid">
+        <article class="purpose-card purpose-mission">
+          <span>01 / MISSÃO</span>
+          <h3>Responder com soluções. Executar com responsabilidade.</h3>
+          <p>Entregar soluções de construção, manutenção, fornecimento e apoio empresarial ajustadas às necessidades reais de cada cliente, com rigor na execução, clareza nas condições e responsabilidade nos compromissos assumidos.</p>
+        </article>
+        <article class="purpose-card purpose-vision">
+          <span>02 / VISÃO</span>
+          <h3>Ser uma referência angolana de confiança.</h3>
+          <p>Consolidar a HMATIAS como uma empresa reconhecida pela qualidade do trabalho, capacidade de resposta e integração de serviços que ajudam empresas e instituições a concretizar os seus projetos.</p>
+        </article>
+      </div>
+      <div class="values-heading">
+        <p class="section-kicker">03 / VALORES</p>
+        <h3>Princípios que orientam cada decisão.</h3>
+      </div>
+      <div class="values-grid">
+        <article><span>01</span><h4>Integridade</h4><p>Agir com honestidade, transparência e respeito pelos compromissos assumidos.</p></article>
+        <article><span>02</span><h4>Rigor</h4><p>Trabalhar com atenção às especificações, à qualidade e aos detalhes de cada serviço.</p></article>
+        <article><span>03</span><h4>Responsabilidade</h4><p>Avaliar as condições de execução e assumir apenas compromissos claros e sustentáveis.</p></article>
+        <article><span>04</span><h4>Orientação para o cliente</h4><p>Compreender cada necessidade e manter uma comunicação objetiva ao longo do trabalho.</p></article>
+        <article><span>05</span><h4>Melhoria contínua</h4><p>Aperfeiçoar processos, competências e ferramentas para responder melhor a cada desafio.</p></article>
+      </div>
+    </section>
+
     <section class="ceo-message section-pad">
       <div class="ceo-message-label"><span class="section-kicker">UMA MENSAGEM DO CEO</span><span class="ceo-mark" aria-hidden="true">“</span></div>
       <div class="ceo-message-content">
         <h2>Confiança constrói-se<br /><em>com trabalho.</em></h2>
         <blockquote>
-          Na HMATIAS, acreditamos que um bom serviço começa por ouvir com atenção, compreender o que é necessário e assumir compromissos que possam ser cumpridos. Queremos construir relações duradouras através de trabalho consistente, comunicação clara e respeito por cada projeto. A confiança não se pede: conquista-se, todos os dias, no trabalho.
+          A HMATIAS parte de uma convicção simples: os projetos avançam melhor quando existe clareza desde o primeiro contacto e responsabilidade até à entrega. Queremos ser um parceiro que compreende a necessidade, organiza a resposta e acompanha o trabalho com seriedade. É assim que procuramos construir relações duradouras e contribuir para o desenvolvimento das empresas em Angola.
         </blockquote>
         <div class="ceo-signature">
           <span>Direção Executiva</span>
@@ -92,6 +122,24 @@ import { company } from "../../data/site";
 .about-service-grid h3 { margin:27px 0 10px; font-size:15px; line-height:1.35; }
 .about-service-grid p { margin:0 0 18px; color:var(--hm-muted); font-size:11px; line-height:1.75; }
 .about-service-grid b { margin-top:auto; color:var(--hm-blue); font-size:10px; }
+.about-purpose { background:var(--hm-paper); }
+.purpose-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:45px; }
+.purpose-card { min-height:285px; padding:clamp(25px,3.2vw,42px); border:1px solid var(--hm-line); background:var(--hm-light); }
+.purpose-card > span,.values-grid article > span { color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.15em; }
+.purpose-card h3 { max-width:440px; margin:35px 0 15px; font-family:var(--hm-serif); font-size:clamp(24px,2.7vw,34px); font-weight:400; line-height:1.25; letter-spacing:-.025em; }
+.purpose-card p { max-width:540px; margin:0; color:var(--hm-muted); font-size:12px; line-height:1.9; }
+.purpose-vision { color:#fff; background:var(--hm-navy); border-color:var(--hm-navy); }
+.purpose-vision > span { color:#9ecff2; }
+.purpose-vision h3 { color:#fff; }
+.purpose-vision p { color:#d2e1ef; }
+.values-heading { display:flex; align-items:end; justify-content:space-between; gap:24px; margin:58px 0 20px; padding-bottom:18px; border-bottom:1px solid var(--hm-line); }
+.values-heading .section-kicker { margin:0; }
+.values-heading h3 { margin:0; font-size:15px; font-weight:600; }
+.values-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
+.values-grid article { min-height:185px; padding:19px 16px; border:1px solid var(--hm-line); background:#fff; }
+.values-grid article > span { font-family:var(--hm-serif); font-size:17px; letter-spacing:0; }
+.values-grid h4 { margin:22px 0 9px; font-size:13px; line-height:1.35; }
+.values-grid p { margin:0; color:var(--hm-muted); font-size:10px; line-height:1.75; }
 .ceo-message { display:grid; grid-template-columns:.65fr 1.35fr; gap:50px; background:var(--hm-paper); }
 .ceo-message-label { display:flex; flex-direction:column; justify-content:space-between; }
 .ceo-mark { color:var(--hm-sky-soft); font-family:var(--hm-serif); font-size:clamp(100px,15vw,190px); line-height:.7; }
@@ -103,10 +151,18 @@ import { company } from "../../data/site";
 .ceo-signature strong { color:var(--hm-navy); font-family:var(--hm-serif); font-size:29px; font-style:italic; font-weight:500; letter-spacing:-.04em; }
 .ceo-signature small { color:var(--hm-muted); font-size:9px; }
 @media (max-width:1000px) {
+  .values-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+
   .about-hero { grid-template-columns:1fr  .82fr; gap:35px; }
   .about-service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media (max-width:700px) {
+  .purpose-grid { grid-template-columns:1fr; }
+  .purpose-card { min-height:0; }
+  .values-heading { display:block; }
+  .values-heading h3 { margin-top:14px; }
+  .values-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+
   .about-hero { grid-template-columns:1fr; padding-top:58px; }
   .about-visual { max-width:560px; margin:10px 0 0; }
   .about-section-head { display:block; }
