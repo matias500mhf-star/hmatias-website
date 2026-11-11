@@ -267,7 +267,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .header-actions .header-cta { display:none; }
   .menu-toggle { order:3; margin-left:0; }
   .language-switch { min-width:32px; min-height:32px; }
-  .menu-toggle { width: 36px; height: 36px; margin-left: auto; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; border: 1px solid var(--hm-line); background: transparent; }
+  .menu-toggle { width: 36px; height: 36px; margin-left: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; border: 1px solid var(--hm-line); background: transparent; }
   .menu-toggle span { width: 14px; height: 1px; background: var(--hm-navy); }
   .main-nav { position: absolute; top: 72px; left: 0; right: 0; display: none; flex-direction: column; align-items: flex-start; gap: 21px; padding: 22px var(--hm-gutter); background: var(--hm-paper); border-bottom: 1px solid var(--hm-line); }
   .main-nav.is-open { display: flex; }
