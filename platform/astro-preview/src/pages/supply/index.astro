@@ -239,7 +239,8 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
         <h2>Procura um material,<br /><em>produto ou equipamento?</em></h2>
         <p>Partilhe a referência, a quantidade, o destino e o prazo pretendido. A equipa HMATIAS poderá analisar a necessidade e iniciar a consulta comercial.</p>
         <div class="construction-request-actions">
-          <a class="button button-light" href="https://comercialhmatiasps.com/source-ao/rfq.html?from=supply">Registar pedido de cotação <span aria-hidden="true">↗</span></a>
+          <a class="button button-light" href={company.sourceAoRfqUrl + "?from=supply"}>Registar pedido de cotação <span aria-hidden="true">↗</span></a>
+          <a class="construction-email-link" href={company.smartRfqUrl}>Conhecer o Smart RFQ <span aria-hidden="true">↗</span></a>
           <a class="construction-email-link" href={whatsappSupply} target="_blank" rel="noopener noreferrer">Preparar pedido pelo WhatsApp <span aria-hidden="true">↗</span></a>
         </div>
       </div>
