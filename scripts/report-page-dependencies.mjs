@@ -18,7 +18,10 @@ function walk(directory) {
 }
 
 function attribute(tag, name) {
-  return tag.match(new RegExp('\\b' + name + '\\s*=\\s*(["\\'])(.*?)\\1', 'i'))?.[2] ?? '';
+  const doubleQuoted = tag.match(new RegExp(String.raw`\b${name}\s*=\s*"([^"]*)"`, 'i'));
+  if (doubleQuoted) return doubleQuoted[1];
+  const singleQuoted = tag.match(new RegExp(String.raw`\b${name}\s*=\s*'([^']*)'`, 'i'));
+  return singleQuoted?.[1] ?? '';
 }
 
 function localAsset(raw, page) {
