@@ -3,11 +3,42 @@ import { Image } from "astro:assets";
 import logo from "../../../../logo-hmatias.png";
 import { company, services } from "../data/site";
 ---
+
 <footer class="site-footer">
-  <a class="footer-brand" href="#inicio" aria-label="HMATIAS — voltar ao início">
-    <Image src={logo} alt="HMATIAS" width={200} height={190} />
-  </a>
-  <span>© {new Date().getFullYear()} HMATIAS — Luanda, Angola</span>
-  <a href="#inicio">Voltar ao topo ↑</a>
-  <span class="sr-only">{company.name} · {services.length} áreas de atividade</span>
+  <div class="footer-main">
+    <section class="footer-brand-block" aria-label="Apresentação HMATIAS">
+      <a class="footer-logo" href="#inicio" aria-label="HMATIAS — voltar ao início">
+        <Image src={logo} alt="HMATIAS — Prestação de Serviços" width={200} height={190} />
+      </a>
+      <p class="footer-company">{company.name}</p>
+      <p class="footer-summary">Construção, manutenção, fornecimento e apoio a projetos para empresas e clientes em Angola.</p>
+    </section>
+
+    <nav class="footer-column" aria-label="Navegação institucional">
+      <h2>Explorar</h2>
+      <a href="#empresa">A empresa</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#contacto">Contactos</a>
+    </nav>
+
+    <nav class="footer-column" aria-label="Áreas de atividade">
+      <h2>Áreas de atuação</h2>
+      {services.map((service) => <a href={service.href}>{service.title}</a>)}
+    </nav>
+
+    <section class="footer-column footer-contacts" aria-label="Contactos HMATIAS">
+      <h2>Contactos</h2>
+      <a href={company.telephoneUri}>{company.phone}</a>
+      <a href={`mailto:${company.commercialEmail}`}>{company.commercialEmail}</a>
+      <a href={`mailto:${company.institutionalEmail}`}>{company.institutionalEmail}</a>
+      <a class="footer-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">WhatsApp <span aria-hidden="true">↗</span></a>
+      <address>{company.address}</address>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© {new Date().getFullYear()} {company.name}. Todos os direitos reservados.</span>
+    <a href="#inicio">Voltar ao topo <span aria-hidden="true">↑</span></a>
+  </div>
 </footer>
