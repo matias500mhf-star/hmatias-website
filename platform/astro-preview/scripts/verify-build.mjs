@@ -48,6 +48,16 @@ assert.ok(existsSync(accessibilityPath), "Accessibility page must be generated")
 const accessibilityHtml = readFileSync(accessibilityPath, "utf8");
 assert.match(accessibilityHtml, /acessibilidade/i, "Accessibility page content is missing");
 
+const constructionPath = join(outDir, "construcao", "index.html");
+assert.ok(existsSync(constructionPath), "Construction page must be generated");
+const constructionHtml = readFileSync(constructionPath, "utf8");
+assert.match(constructionHtml, /Construção e/, "Construction page title is missing");
+assert.match(constructionHtml, /Pavilhões rurais concluídos/, "Construction page project content is missing");
+assert.match(constructionHtml, /Pedido de orçamento/, "Construction page contact section is missing");
+const constructionImgCount = (constructionHtml.match(/<img\\b/g) || []).length;
+const constructionImgWithAltCount = (constructionHtml.match(/<img\\b[^>]*\\balt=/g) || []).length;
+assert.equal(constructionImgWithAltCount, constructionImgCount, "Every construction page image must have an alt attribute");
+
 const assetDir = join(outDir, "_astro");
 assert.ok(existsSync(assetDir), "Astro must emit processed assets");
 const assets = readdirSync(assetDir).filter((file) => statSync(join(assetDir, file)).isFile());
