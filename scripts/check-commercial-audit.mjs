@@ -78,6 +78,7 @@ for(const path of ['supply.html','supply-en.html']){
   assert.ok(html.includes('https://synvor-industrial.com/'),'Official SYNVOR catalogue link missing: '+path);
   assert.ok(!html.includes('supply-rfq-choice'),'Duplicated end-of-page RFQ/WhatsApp actions returned: '+path);
   assert.ok(!html.includes('institutional-network.js'),'Static Supply page should not wait for catalogue JavaScript: '+path);
+  assert.ok(!html.includes('supply-request.js')&&!html.includes('supply-request.css'),'Inactive embedded RFQ builder should not load on Supply: '+path);
 }
 const supplyData=JSON.parse(read('data/supply-catalog.json'));
 const supplyItems=(supplyData.categories||[]).flatMap(category=>category.items||[]);
