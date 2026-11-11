@@ -72,6 +72,22 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .header-cta { display: inline-flex; align-items: center; gap: 25px; padding: 15px 20px; color: #fff; background: var(--hm-navy); font-size: 11px; font-weight: 650; transition: background .2s; }
 .header-cta:hover { background: var(--hm-blue-mid); }
 .header-cta span { color: var(--hm-sky); font-size: 15px; }
+.header-actions { display:flex; align-items:center; gap:12px; }
+.language-switch {
+  min-width:35px;
+  min-height:35px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--hm-navy);
+  border:1px solid var(--hm-line);
+  font-family:var(--hm-mono);
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.08em;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.language-switch:hover { color:var(--hm-blue); background:var(--hm-sky-soft); border-color:#a9cde8; }
 .menu-toggle { display: none; }
 
 .hero { position: relative; overflow: hidden; min-height: 640px; padding: clamp(66px, 8vw, 120px) var(--hm-gutter) 70px; display: grid; grid-template-columns: minmax(0,1.03fr) minmax(360px,.97fr); align-items: center; gap: clamp(35px,7vw,112px); color: #fff; background: var(--hm-navy); }
@@ -246,6 +262,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .header-inner { gap: 15px; }
   .brand { width: 73px; }
   .brand img { height: 57px; }
+  .brand { order:1; }
+  .header-actions { order:2; margin-left:auto; gap:8px; }
+  .header-actions .header-cta { display:none; }
+  .menu-toggle { order:3; margin-left:0; }
+  .language-switch { min-width:32px; min-height:32px; }
   .menu-toggle { width: 36px; height: 36px; margin-left: auto; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; border: 1px solid var(--hm-line); background: transparent; }
   .menu-toggle span { width: 14px; height: 1px; background: var(--hm-navy); }
   .main-nav { position: absolute; top: 72px; left: 0; right: 0; display: none; flex-direction: column; align-items: flex-start; gap: 21px; padding: 22px var(--hm-gutter); background: var(--hm-paper); border-bottom: 1px solid var(--hm-line); }
