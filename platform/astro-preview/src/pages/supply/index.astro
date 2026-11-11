@@ -1,0 +1,324 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { company } from "../../data/site";
+
+import heroPhoto from "../../../../../images/catalogue/chapas-cobertura-fornecimento.webp";
+import metalProfiles from "../../../../../images/catalogue/perfis-metalicos-estrutura.webp";
+import roofSheets from "../../../../../images/catalogue/chapas-cobertura-fornecimento.webp";
+import logisticsPhoto from "../../../../../images/catalogue/logistica-estrutura-metalica.webp";
+
+const evidence = [
+  {
+    category: "MATERIAIS · ESTRUTURAS",
+    title: "Perfis metálicos",
+    description: "Registo de perfis metálicos destinados a aplicações em estruturas e trabalhos de construção.",
+    image: metalProfiles,
+    alt: "Perfis metálicos preparados para utilização em obra",
+  },
+  {
+    category: "SUPPLY · COBERTURAS",
+    title: "Chapas perfiladas",
+    description: "Referência visual de chapas perfiladas para consulta em pedidos de fornecimento.",
+    image: roofSheets,
+    alt: "Chapas perfiladas preparadas para fornecimento",
+  },
+  {
+    category: "LOGÍSTICA · MOBILIZAÇÃO",
+    title: "Entrega para execução",
+    description: "Registo de mobilização logística de elementos metálicos para apoio à execução.",
+    image: logisticsPhoto,
+    alt: "Mobilização logística de elementos metálicos",
+  },
+];
+
+const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
+  "Olá, HMATIAS. Pretendo apresentar um pedido de fornecimento. Seguem os dados para avaliação:"
+);
+---
+<BaseLayout
+  title="HMATIAS Supply | Procurement e Fornecimento Empresarial em Angola"
+  description="Procurement, sourcing e fornecimento empresarial em Angola. A HMATIAS trabalha sob consulta, confirma disponibilidade, preço, prazo e logística antes de apresentar uma proposta."
+>
+  <div class="preview-bar">
+    <span><i aria-hidden="true"></i> PROTÓTIPO TECNOLÓGICO ASTRO</span>
+    <span>HMATIAS Supply · Procurement e Fornecimento</span>
+  </div>
+  <SiteHeader />
+
+  <main class="supply-page">
+    <section class="construction-hero supply-hero" id="inicio">
+      <div class="construction-hero-copy">
+        <nav class="construction-breadcrumb" aria-label="Navegação estrutural">
+          <a href="/">Início</a><span aria-hidden="true">/</span><span>HMATIAS Supply</span>
+        </nav>
+        <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS SUPPLY · PROCUREMENT · SOURCING</p>
+        <h1>Procurement e<br /><em>fornecimento.</em></h1>
+        <p class="hero-lead">Materiais, equipamentos e consumíveis para empresas e projetos em Angola. Recebemos o pedido, pesquisamos fornecedores e verificamos as condições antes de apresentar uma proposta.</p>
+        <div class="hero-actions">
+          <a class="button button-light" href="#pedido">Estruturar pedido <span aria-hidden="true">↓</span></a>
+          <a class="text-link text-link-light" href={company.sourceAoUrl}>Pesquisar no SOURCE AO <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-meta">
+          <span>Materiais · EPI · Equipamentos · Consumíveis</span>
+          <span>Angola · África Austral, quando aplicável</span>
+        </div>
+      </div>
+      <figure class="construction-hero-image supply-hero-image">
+        <Image
+          src={heroPhoto}
+          alt="Chapas perfiladas preparadas para fornecimento"
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 900px) 100vw, 48vw"
+          format="webp"
+          quality={84}
+          loading="eager"
+          fetchpriority="high"
+        />
+        <figcaption><span>01</span> REFERÊNCIA DE FORNECIMENTO</figcaption>
+      </figure>
+      <span class="construction-hero-note" aria-hidden="true">PESQUISA · VERIFICAÇÃO · FORNECIMENTO</span>
+    </section>
+
+    <section class="construction-intro section-pad supply-intro" id="empresa">
+      <div class="section-kicker">01 / COMO TRABALHAMOS</div>
+      <div class="construction-intro-content">
+        <h2>Do pedido à proposta<br /><em>de fornecimento.</em></h2>
+        <div class="construction-intro-copy">
+          <p>A HMATIAS não mantém stock próprio de mercadorias. Trabalhamos sob consulta: identificamos a necessidade, pesquisamos a rede de fornecedores e analisamos especificações e condições comerciais.</p>
+          <p>Disponibilidade, preço, prazo, documentação e logística são confirmados caso a caso, antes de assumirmos qualquer compromisso de fornecimento.</p>
+          <a class="underlined-link" href="#processo">Conhecer o processo <span aria-hidden="true">↘</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="construction-scopes section-pad supply-categories" id="categorias">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">02 / CATEGORIAS DE FORNECIMENTO</div>
+          <h2>Começamos pela<br /><em>especificação.</em></h2>
+        </div>
+        <p>Estas categorias organizam os pedidos de consulta. Não representam stock disponível nem catálogo de artigos em armazém.</p>
+      </div>
+
+      <div class="supply-category-grid">
+        <article class="supply-category-card">
+          <span class="supply-category-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10.5 16 4l11.5 6.5L16 17 4.5 10.5Z"/><path d="M4.5 10.5V23L16 29l11.5-6V10.5M16 17v12M10 7.5l11.5 6.7"/></svg>
+          </span>
+          <span class="supply-card-number">01</span>
+          <h3>Materiais de construção</h3>
+          <p>Aço, perfis, chapas, materiais e componentes identificados por referência, dimensão e quantidade.</p>
+        </article>
+        <article class="supply-category-card">
+          <span class="supply-category-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19v-3a9 9 0 0 1 18 0v3"/><path d="M5 18h22v5H5zM11 11l5-4 5 4M16 7v11M9 23v3h14v-3"/></svg>
+          </span>
+          <span class="supply-card-number">02</span>
+          <h3>EPI e fardamento</h3>
+          <p>Equipamentos de proteção individual e vestuário profissional, mediante especificação e requisitos do cliente.</p>
+        </article>
+        <article class="supply-category-card">
+          <span class="supply-category-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9h18v16H7zM11 9V6h10v3M11 14h10M11 18h6M11 22h8"/><path d="M23 21l4 4-4 4"/></svg>
+          </span>
+          <span class="supply-card-number">03</span>
+          <h3>Equipamentos e consumíveis</h3>
+          <p>Equipamentos, ferramentas, peças e consumíveis técnicos, conforme marca, modelo ou alternativa autorizada.</p>
+        </article>
+        <article class="supply-category-card">
+          <span class="supply-category-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 26h22M7 26V12h18v14M11 12V7h10v5M11 17h10M11 21h4M20 21h1"/><path d="M3 7h4M25 7h4"/></svg>
+          </span>
+          <span class="supply-card-number">04</span>
+          <h3>Fornecimento industrial</h3>
+          <p>Materiais e artigos específicos, com análise de origem, conformidade e documentação aplicável.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="construction-work section-pad supply-evidence" id="referencias">
+      <div class="portfolio-top">
+        <div>
+          <div class="section-kicker">03 / REFERÊNCIAS VISUAIS</div>
+          <h2>Materiais e logística<br /><em>em contexto real.</em></h2>
+        </div>
+        <p>Imagens de referência associadas a materiais e trabalhos da HMATIAS. A disponibilidade de cada artigo depende de consulta e confirmação junto do fornecedor.</p>
+      </div>
+
+      <div class="supply-evidence-grid">
+        {evidence.map((item, index) => (
+          <article class="supply-evidence-card">
+            <figure>
+              <Image
+                src={item.image}
+                alt={item.alt}
+                widths={[480, 720, 1040]}
+                sizes="(max-width: 650px) 100vw, (max-width: 1000px) 50vw, 33vw"
+                format="webp"
+                quality={82}
+              />
+            </figure>
+            <div class="construction-work-caption">
+              <span>{String(index + 1).padStart(2, "0")} · {item.category}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="portfolio-note"><span>REFERÊNCIAS VISUAIS · HMATIAS SUPPLY</span><span>ANGOLA</span></div>
+    </section>
+
+    <section class="construction-method section-pad supply-process" id="processo">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">04 / PROCESSO DE SOURCING</div>
+          <h2>Pesquisa orientada.<br /><em>Condições confirmadas.</em></h2>
+        </div>
+        <p>O pedido é analisado de acordo com a especificação, o mercado, o destino e o prazo solicitado.</p>
+      </div>
+      <div class="supply-process-grid">
+        <article><span>01</span><h3>Receber o pedido</h3><p>Recolha da descrição, referência técnica, quantidade, unidade, destino e prazo pretendido.</p></article>
+        <article><span>02</span><h3>Pesquisar fornecedores</h3><p>Consulta do mercado angolano e, quando necessário, avaliação de alternativas regionais.</p></article>
+        <article><span>03</span><h3>Verificar condições</h3><p>Confirmação de disponibilidade, preço, prazo, documentação e condições logísticas.</p></article>
+        <article><span>04</span><h3>Apresentar proposta</h3><p>Organização da resposta comercial para avaliação e eventual adjudicação pelo cliente.</p></article>
+      </div>
+    </section>
+
+    <section class="construction-scopes section-pad supply-request-info" id="pedido">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">05 / PREPARAR UM PEDIDO</div>
+          <h2>Mais detalhe na origem.<br /><em>Menos dúvidas na cotação.</em></h2>
+        </div>
+        <p>Uma especificação clara ajuda a identificar o artigo correto e a consultar fornecedores em condições comparáveis.</p>
+      </div>
+      <div class="supply-request-grid">
+        <div class="supply-request-copy">
+          <h3>O que deve enviar?</h3>
+          <ul>
+            <li>Descrição, referência ou código do artigo</li>
+            <li>Norma, marca, modelo, dimensão ou ficha técnica, quando aplicável</li>
+            <li>Quantidade e unidade de medida</li>
+            <li>Local de entrega e prazo pretendido</li>
+            <li>Certificados ou documentos técnicos exigidos</li>
+            <li>Fotografias ou catálogo de referência, quando disponíveis</li>
+          </ul>
+          <p>Recebemos pedidos para Luanda e outras províncias. O transporte, a mobilização e o prazo são avaliados em função do destino e do fornecimento.</p>
+        </div>
+        <aside class="supply-request-aside">
+          <p class="section-kicker">TRANSPARÊNCIA COMERCIAL</p>
+          <h3>Sem stock presumido.</h3>
+          <p>A pesquisa de um produto não significa que exista disponibilidade confirmada. A HMATIAS apresenta as condições apuradas antes de assumir o fornecimento.</p>
+          <a class="underlined-link" href={company.sourceAoUrl}>Conhecer SOURCE AO <span aria-hidden="true">↗</span></a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="construction-scopes section-pad supply-faq" id="informacao">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">06 / INFORMAÇÃO DE FORNECIMENTO</div>
+          <h2>Antes de pedir<br /><em>uma cotação.</em></h2>
+        </div>
+        <p>As condições são analisadas por pedido; não há compromisso de stock, prazo ou preço antes da confirmação.</p>
+      </div>
+      <div class="supply-faq-grid">
+        <article><span>01</span><h3>É possível fornecer para outras províncias?</h3><p>Recebemos consultas de todo o país. Local de entrega, transporte, disponibilidade e prazo são avaliados em cada pedido.</p></article>
+        <article><span>02</span><h3>Podem ser pesquisadas alternativas regionais?</h3><p>Sim. Quando o mercado angolano não responde à especificação ou ao prazo, podem ser avaliadas alternativas na África Austral.</p></article>
+        <article><span>03</span><h3>Como são confirmados certificados e documentos?</h3><p>Os requisitos são recolhidos no pedido e consultados junto do fornecedor. A documentação aplicável é identificada antes da proposta.</p></article>
+      </div>
+    </section>
+
+    <section class="construction-request section-pad supply-final-cta">
+      <div class="construction-request-copy">
+        <p class="section-kicker">07 / PEDIDO DE FORNECIMENTO</p>
+        <h2>Procura um material,<br /><em>produto ou equipamento?</em></h2>
+        <p>Partilhe a referência, a quantidade, o destino e o prazo pretendido. A equipa HMATIAS poderá analisar a necessidade e iniciar a consulta comercial.</p>
+        <div class="construction-request-actions">
+          <a class="button button-light" href="https://comercialhmatiasps.com/source-ao/rfq.html?from=supply">Registar pedido de cotação <span aria-hidden="true">↗</span></a>
+          <a class="construction-email-link" href={whatsappSupply} target="_blank" rel="noopener noreferrer">Preparar pedido pelo WhatsApp <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <aside class="construction-request-guide">
+        <h3>Contacto comercial</h3>
+        <ul>
+          <li><a href={company.telephoneUri}>{company.phone}</a></li>
+          <li><a href={"mailto:" + company.commercialEmail}>{company.commercialEmail}</a></li>
+          <li><a href={"mailto:" + company.institutionalEmail}>{company.institutionalEmail}</a></li>
+          <li>{company.shortAddress}</li>
+        </ul>
+        <p>O envio de um pedido não representa confirmação de stock, preço ou prazo. A proposta será apresentada após consulta.</p>
+      </aside>
+    </section>
+  </main>
+
+  <SiteFooter />
+  <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+</BaseLayout>
+
+<style>
+.supply-hero-image { aspect-ratio: auto; }
+.supply-hero-image img { height: auto; background: transparent; }
+.supply-category-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:54px; }
+.supply-category-card { min-height:250px; padding:23px 20px; display:flex; flex-direction:column; align-items:flex-start; background:var(--hm-paper); border:1px solid var(--hm-line); }
+.supply-category-icon { width:45px; height:45px; display:grid; place-items:center; color:var(--hm-blue); background:var(--hm-sky-soft); border:1px solid var(--hm-line); border-radius:11px; }
+.supply-category-icon svg { width:25px; height:25px; }
+.supply-card-number { margin-top:22px; color:#005aa8; font-family:var(--hm-serif); font-size:14px; }
+.supply-category-card h3 { margin:12px 0 9px; color:var(--hm-ink); font-size:15px; font-weight:620; line-height:1.35; letter-spacing:-.03em; }
+.supply-category-card p { margin:0; color:var(--hm-muted); font-size:10px; line-height:1.75; }
+.supply-evidence { background:var(--hm-paper); }
+.supply-evidence-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:start; gap:26px; }
+.supply-evidence-card { min-width:0; }
+.supply-evidence-card figure { margin:0; background:transparent; }
+.supply-evidence-card figure img { display:block; width:100%; height:auto; object-fit:contain; object-position:center; }
+.supply-process-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); margin-top:52px; border-top:1px solid var(--hm-line); }
+.supply-process-grid article { min-height:180px; padding:23px 20px 18px 0; border-bottom:1px solid var(--hm-line); }
+.supply-process-grid article + article { padding-left:20px; border-left:1px solid var(--hm-line); }
+.supply-process-grid article > span, .supply-faq-grid article > span { color:#005aa8; font-family:var(--hm-serif); font-size:16px; }
+.supply-process-grid h3 { margin:28px 0 10px; color:var(--hm-ink); font-size:14px; font-weight:650; line-height:1.35; }
+.supply-process-grid p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.75; }
+.supply-request-info { background:var(--hm-paper); }
+.supply-request-grid { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(270px,.85fr); gap:clamp(35px,7vw,95px); margin-top:52px; }
+.supply-request-copy h3, .supply-request-aside h3 { margin:0 0 18px; font-size:19px; font-weight:620; letter-spacing:-.035em; }
+.supply-request-copy ul { margin:0; padding:0; list-style:none; border-top:1px solid var(--hm-line); }
+.supply-request-copy li { padding:13px 0; border-bottom:1px solid var(--hm-line); color:var(--hm-ink); font-size:12px; line-height:1.55; }
+.supply-request-copy li::before { content:"—"; margin-right:12px; color:#005aa8; }
+.supply-request-copy > p { max-width:620px; margin:20px 0 0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
+.supply-request-aside { align-self:start; padding:clamp(25px,4vw,38px); background:var(--hm-light); border-left:2px solid var(--hm-blue); }
+.supply-request-aside .section-kicker { margin:0 0 18px; padding:0; }
+.supply-request-aside h3 { font-size:24px; }
+.supply-request-aside > p:not(.section-kicker) { margin:0; color:var(--hm-muted); font-size:12px; line-height:1.85; }
+.supply-faq { background:var(--hm-light); }
+.supply-faq-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; margin-top:48px; }
+.supply-faq-grid article { min-height:205px; padding:23px 21px; background:var(--hm-paper); border:1px solid var(--hm-line); }
+.supply-faq-grid h3 { margin:24px 0 10px; color:var(--hm-ink); font-size:14px; line-height:1.4; font-weight:650; }
+.supply-faq-grid p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.75; }
+.supply-final-cta .construction-request-guide a { color:var(--hm-ink); text-decoration:underline; text-decoration-color:#9bb7ce; text-underline-offset:3px; }
+.supply-final-cta .construction-request-guide li { display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+@media(max-width:1100px) {
+  .supply-category-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .supply-process-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .supply-process-grid article:nth-child(3) { padding-left:0; border-left:0; }
+}
+@media(max-width:900px) {
+  .supply-evidence-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .supply-request-grid { grid-template-columns:1fr 1fr; gap:28px; }
+  .supply-faq-grid { grid-template-columns:1fr; }
+  .supply-faq-grid article { min-height:0; }
+}
+@media(max-width:650px) {
+  .supply-hero-image { width:90%; align-self:flex-end; }
+  .supply-category-grid, .supply-evidence-grid, .supply-process-grid, .supply-request-grid { grid-template-columns:1fr; }
+  .supply-category-grid { margin-top:40px; }
+  .supply-category-card { min-height:0; padding:22px; }
+  .supply-process-grid { margin-top:38px; }
+  .supply-process-grid article, .supply-process-grid article + article { min-height:0; padding:22px 0; border-left:0; }
+  .supply-process-grid h3 { margin-top:16px; }
+  .supply-request-grid { margin-top:36px; }
+  .supply-request-aside { padding:24px 21px; }
+}
+</style>
