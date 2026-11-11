@@ -2,41 +2,78 @@
 import { Image } from "astro:assets";
 import logo from "../../../../logo-hmatias.png";
 import { company } from "../data/site";
-const homePrefix = Astro.url.pathname === "/" ? "" : "/";
+
+const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const isEnglish = pathname.startsWith("/en/");
+const isHome = pathname === "/" || pathname === "/en/";
+
+const ptToEn: Record<string, string> = {
+  "/": "/en/",
+  "/empresa/": "/en/about/",
+  "/credibilidade/": "/en/credibility/",
+  "/construcao/": "/en/construction/",
+  "/facilities/": "/en/facilities/",
+  "/supply/": "/en/supply/",
+  "/business-services/": "/en/business-services/",
+  "/catalogo-obras/": "/en/works-catalogue/",
+  "/blog/": "/en/blog/",
+  "/acessibilidade/": "/en/accessibility/",
+  "/privacidade/": "/en/privacy/",
+  "/termos/": "/en/terms/",
+  "/source-ao/smart-rfq/": "/en/source-ao/smart-rfq/",
+};
+
+const enToPt = Object.fromEntries(Object.entries(ptToEn).map(([pt, en]) => [en, pt])) as Record<string, string>;
+const ptArticle = pathname.match(/^\/blog\/([^/]+)\/$/);
+const enArticle = pathname.match(/^\/en\/blog\/([^/]+)\/$/);
+const languageHref = isEnglish
+  ? (enArticle ? `/blog/${enArticle[1]}/` : (enToPt[pathname] ?? "/"))
+  : (ptArticle ? `/en/blog/${ptArticle[1]}/` : (ptToEn[pathname] ?? "/en/"));
+
+const homeUrl = isEnglish ? "/en/" : "/";
+const servicesAnchor = isEnglish ? "services" : "servicos";
+const projectsAnchor = isEnglish ? "projects" : "projetos";
+const companyAnchor = isEnglish ? "company" : "empresa";
+const contactAnchor = isEnglish ? "contact" : "contacto";
 ---
-<header class="site-header">
+<header class="site-header" data-language={isEnglish ? "en" : "pt"}>
   <div class="header-inner">
-    <a class="brand" href={`${homePrefix}#inicio`} aria-label="HMATIAS — início">
+    <a class="brand" href={`${homeUrl}#inicio`} aria-label={isEnglish ? "HMATIAS — home" : "HMATIAS — início"}>
       <Image src={logo} alt="HMATIAS — Prestação de Serviços" widths={[128, 176]} sizes="88px" format="webp" quality={82} loading="eager" />
     </a>
-    <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+    <button class="menu-toggle" type="button" aria-label={isEnglish ? "Open menu" : "Abrir menu"} aria-expanded="false" aria-controls="main-nav">
       <span></span><span></span>
     </button>
-    <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
-      <a href={`${homePrefix}#servicos`}>Serviços</a>
-      <a href={`${homePrefix}#projetos`}>Projetos</a>
-      <a href={`${homePrefix}#empresa`}>Empresa</a>
+    <nav class="main-nav" id="main-nav" aria-label={isEnglish ? "Main navigation" : "Navegação principal"}>
+      <a href={`${homeUrl}#${servicesAnchor}`}>{isEnglish ? "Services" : "Serviços"}</a>
+      <a href={`${homeUrl}#${projectsAnchor}`}>{isEnglish ? "Projects" : "Projetos"}</a>
+      <a href={`${homeUrl}#${companyAnchor}`}>{isEnglish ? "Company" : "Empresa"}</a>
       <a href={company.sourceAoUrl}>SOURCE AO</a>
     </nav>
-    <a class="header-cta" href={`${homePrefix}#contacto`}>Falar com a HMATIAS <span aria-hidden="true">↗</span></a>
+    <div class="header-actions">
+      <a class="language-switch" href={languageHref} lang={isEnglish ? "pt-AO" : "en"} aria-label={isEnglish ? "Mudar para português" : "Switch to English"}>{isEnglish ? "PT" : "EN"}</a>
+      <a class="header-cta" href={`${homeUrl}#${contactAnchor}`}>{isEnglish ? "Contact HMATIAS" : "Falar com a HMATIAS"} <span aria-hidden="true">↗</span></a>
+    </div>
   </div>
 </header>
 <script>
   const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
   const nav = document.querySelector<HTMLElement>("#main-nav");
+  const header = document.querySelector<HTMLElement>(".site-header");
+  const isEnglish = header?.dataset.language === "en";
 
   if (toggle && nav) {
     toggle.addEventListener("click", () => {
       const isOpen = toggle.getAttribute("aria-expanded") !== "true";
       toggle.setAttribute("aria-expanded", String(isOpen));
-      toggle.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+      toggle.setAttribute("aria-label", isOpen ? (isEnglish ? "Close menu" : "Fechar menu") : (isEnglish ? "Open menu" : "Abrir menu"));
       nav.classList.toggle("is-open", isOpen);
     });
 
     nav.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => {
         toggle.setAttribute("aria-expanded", "false");
-        toggle.setAttribute("aria-label", "Abrir menu");
+        toggle.setAttribute("aria-label", isEnglish ? "Open menu" : "Abrir menu");
         nav.classList.remove("is-open");
       });
     });
