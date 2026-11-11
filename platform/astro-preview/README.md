@@ -29,7 +29,7 @@ npm run verify
 npm run preview
 ```
 
-O lockfile `package-lock.json` está versionado. As instalações repetíveis devem usar `npm ci`. O build produz `dist/`. O comando `verify` verifica o HTML, as quatro áreas de atividade, os contactos, as fotografias, as páginas Construção, Facilities e Supply e os recursos processados.
+O lockfile `package-lock.json` está versionado. As instalações repetíveis devem usar `npm ci`. O build produz `dist/`. O comando `verify` verifica o HTML, as quatro áreas de atividade, os contactos, as fotografias, as páginas Construção, Facilities, Supply e Smart RFQ e os recursos processados.
 
 ## Estrutura
 
@@ -41,7 +41,7 @@ O lockfile `package-lock.json` está versionado. As instalações repetíveis de
 
 ## Decisão sobre React
 
-React não foi instalado nesta etapa. As páginas institucionais são maioritariamente conteúdo e navegação; Astro produz HTML estático e evita enviar um runtime de interface desnecessário. React será avaliado como ilha interativa quando a fase Smart RFQ exigir estado complexo, validações dinâmicas ou fluxos multi-etapa.
+React não foi instalado nesta etapa. As páginas institucionais são maioritariamente conteúdo e navegação; Astro produz HTML estático e evita enviar um runtime de interface desnecessário. A página de apresentação Smart RFQ já está no protótipo Astro e encaminha para o formulário operacional existente no SOURCE AO. React será avaliado como ilha interactiva numa migração futura desse formulário, apenas quando trouxer ganhos claros de estado, validação e manutenção.
 
 ## Limites de publicação
 
@@ -54,8 +54,8 @@ React não foi instalado nesta etapa. As páginas institucionais são maioritari
 O workflow `.github/workflows/astro-prototype-qa.yml` executa:
 
 - `astro check`, build estático, auditoria de dependências e verificação do artefacto.
-- Playwright 1.65.0 em Chromium desktop e móvel: homepage, Blog, Acessibilidade, Construção, Facilities e Supply; navegação, âncoras, imagens com texto alternativo e overflow horizontal.
-- axe-core 4.14.0 nas rotas Homepage, Blog, Acessibilidade, Construção, Facilities e Supply. Falhas críticas e graves bloqueiam o CI; ocorrências moderadas ou menores são registadas para revisão.
+- Playwright 1.65.0 em Chromium desktop e móvel: homepage, Blog, Acessibilidade, Construção, Facilities, Supply e Smart RFQ; navegação, âncoras, imagens com texto alternativo e overflow horizontal.
+- axe-core 4.14.0 nas rotas Homepage, Blog, Acessibilidade, Construção, Facilities, Supply e Smart RFQ. Falhas críticas e graves bloqueiam o CI; ocorrências moderadas ou menores são registadas para revisão.
 - Lighthouse CI 0.16.0 nas mesmas rotas, com indicadores de desempenho, acessibilidade, boas práticas, SEO, LCP e CLS. Os limites estão inicialmente em modo de alerta para permitir recolher uma linha de base real.
 
 Os relatórios Playwright e Lighthouse são guardados como artefactos do GitHub Actions por 14 dias. As ferramentas de QA são instaladas apenas no ambiente CI e não entram no bundle do website.
