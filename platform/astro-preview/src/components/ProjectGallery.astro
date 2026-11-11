@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { projects } from "../data/projects";
+import { company } from "../data/site";
 ---
 <section class="portfolio section-pad" id="projetos">
   <div class="portfolio-top">
@@ -33,4 +34,6 @@ import { projects } from "../data/projects";
     ))}
   </div>
   <div class="portfolio-note"><span>IMAGENS DE TRABALHOS REAIS</span><span>HMATIAS · ANGOLA</span></div>
+  <div class="portfolio-catalogue-link"><a href={company.worksCatalogueUrl}>Ver catálogo completo de obras <span aria-hidden="true">↗</span></a></div>
+  <style>.portfolio-catalogue-link { display:flex; justify-content:flex-end; margin-top:24px; } .portfolio-catalogue-link a { display:inline-flex; align-items:center; gap:18px; padding-bottom:9px; color:var(--hm-blue); border-bottom:1px solid var(--hm-blue); font-size:11px; font-weight:700; }</style>
 </section>
