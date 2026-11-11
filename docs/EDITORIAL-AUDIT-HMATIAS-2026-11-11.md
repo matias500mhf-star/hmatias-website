@@ -17,9 +17,9 @@ A homepage foi preservada sem alterações nesta revisão. Não foram eliminadas
 ## Resultado do levantamento
 
 - 28 rotas revistas: 14 PT + 14 EN.
-- 16 páginas (8 pares PT/EN) receberam alterações editoriais.
-- 12 páginas (6 pares PT/EN) foram mantidas nesta ronda por conterem informação funcional, legal ou editorial que não deve ser reduzida sem validação adicional.
-- O diff técnico dos 16 ficheiros de páginas apresenta 173 linhas removidas e 49 adicionadas. Este número é uma contagem de linhas de código/conteúdo, não uma contagem de parágrafos genéricos nem de palavras eliminadas.
+- 18 páginas (9 pares PT/EN) receberam alterações editoriais.
+- 10 páginas (5 pares PT/EN) foram mantidas nesta ronda por conterem informação funcional, legal ou editorial que não deve ser reduzida sem validação adicional.
+- O diff técnico dos 16 ficheiros de páginas apresenta 203 linhas removidas e 61 adicionadas. Este número é uma contagem de linhas de código/conteúdo, não uma contagem de parágrafos genéricos nem de palavras eliminadas.
 
 ## Alterações efectuadas
 
@@ -32,6 +32,7 @@ A homepage foi preservada sem alterações nesta revisão. Não foram eliminadas
 | Business Services / Business Services | Substituída a sequência genérica de três passos por uma lista prática: serviço, informação de origem, volume/formato e prazo/prioridade. |
 | Credibilidade / Credibility | Reduzida a introdução institucional e clarificada a função da página: identificação legal, contactos oficiais e condições gerais. |
 | Catálogo de Obras / Works Catalogue | Removida a explicação repetida sobre o arquivo fotográfico; mantidas as descrições das imagens e a nota sobre divulgação autorizada e limites probatórios do catálogo. |
+| Blog / Blog | Retirados cartões de temas editoriais sem artigos associados; títulos, descrições e metadados foram alinhados com o guia realmente publicado sobre pedidos de cotação e fornecimento. |
 | Smart RFQ / Smart RFQ | Reduzida a repetição entre introdução e etapas; mantidas as instruções de submissão, dados necessários e distinção entre registo e cotação/adjudicação. |
 
 ## Páginas mantidas após revisão
@@ -40,7 +41,7 @@ A homepage foi preservada sem alterações nesta revisão. Não foram eliminadas
 - Política de Privacidade / Privacy Policy: mantida por conter informação material sobre dados, formulários, consentimento, cookies, analytics e canais externos. A nota de pré-visualização distingue a política do site oficial das integrações ainda não migradas para o protótipo.
 - Termos e Condições / Terms and Conditions: mantidos por explicarem pedidos, fornecimentos, transporte, pagamento e propriedade intelectual.
 - Acessibilidade / Accessibility: mantida com declaração transparente de que a versão está em avaliação e não reivindica conformidade independente ainda não auditada.
-- Blog PT e EN e artigo técnico bilingue: mantidos por apresentarem orientação prática sobre especificações, quantidades, entrega, documentação e comparação de cotações.
+- Artigo técnico bilingue do Blog: mantido por apresentar orientação prática sobre especificações, quantidades, entrega, documentação e comparação de cotações. As páginas de entrada do Blog foram simplificadas e alinhadas com esse conteúdo.
 
 ## Integridade e verificações
 
