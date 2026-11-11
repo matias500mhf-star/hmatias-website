@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync} from 'node:fs';
 import catalog from '../../data/catalog.json' with {type:'json'};
-import {validateRfq} from '../../rfq-model.js';
+import {validateRfq,UNITS,CATEGORY_LABELS} from '../../rfq-model.js';
 import {createSourcingRequest,getSourcingRequest,listSourcingRequests,updateSourcingRequestStatus} from '../src/sourcing.js';
 import {runMaintenance} from '../src/maintenance.js';
 
@@ -46,23 +46,33 @@ test('every customer-visible RFQ select option satisfies the shared API contract
   const input=rfqFixture();
   for(const label of [
     "institution:'Instituição pública / estatal'",
-    "budgeting:'Consulta de orçamento para projeto / instalação'",
+    "budgeting:'Consulta de orçamento para projecto / instalação'",
     "recurring:'Fornecimento recorrente'",
     "planned:'Compra programada'"
   ]){
     assert.ok(review.includes(label),'RFQ review desk label must match the shared option: '+label);
   }
   assert.ok(source.includes('Guarde a ligação privada'),'RFQ success message must use consistent Portuguese terminology');
-  const fields=[['rfqUrgency','urgency'],['rfqIntent','intent'],['rfqBuyer','buyer_type']];
+  const fields=[['rfqUrgency','urgency'],['rfqIntent','intent'],['rfqBuyer','buyer_type'],['rfqAlternatives','alternatives'],['rfqChannel','contact_channel']];
   for(const [selectId,payloadKey] of fields){
     const select=source.match(new RegExp('<select id="'+selectId+'"[\\s\\S]*?<\\/select>'));
     assert.ok(select,'RFQ select '+selectId+' must exist');
     const values=[...select[0].matchAll(/<option value="([^"]+)"/g)].map(match=>match[1]);
     assert.ok(values.length>0,'RFQ select '+selectId+' must expose choices');
     for(const value of values){
-      const result=validateRfq({...input,[payloadKey]:value},catalog);
+      const candidate={...input,[payloadKey]:value};
+      if(payloadKey==='contact_channel'&&value==='email')candidate.requester_contact='buyer@example.com';
+      const result=validateRfq(candidate,catalog);
       assert.equal(result.ok,true,'RFQ choice '+selectId+'='+value+' must be accepted by validateRfq');
     }
+  }
+  for(const category of Object.keys(CATEGORY_LABELS)){
+    const candidate={...input,items:input.items.map(item=>({...item,catalog_item_id:null,category}))};
+    assert.equal(validateRfq(candidate,catalog).ok,true,'RFQ category '+category+' must be accepted');
+  }
+  for(const unit of UNITS){
+    const candidate={...input,items:input.items.map(item=>({...item,unit}))};
+    assert.equal(validateRfq(candidate,catalog).ok,true,'RFQ unit '+unit+' must be accepted');
   }
 });
 
