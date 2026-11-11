@@ -45,7 +45,7 @@ for (const project of ["Galpão com estrutura metálica", "Preparação de terre
 const blogPath = join(outDir, "blog", "index.html");
 assert.ok(existsSync(blogPath), "Blog page must be generated");
 const blogHtml = readFileSync(blogPath, "utf8");
-assert.match(blogHtml, /Perspetivas empresariais/, "Blog page content is missing");
+assert.match(blogHtml, /Guias práticos para/, "Blog page content is missing");
 assert.ok(blogHtml.includes("/blog/como-preparar-um-pedido-de-cotacao/"), "Blog must link to its published Supply guide");
 assert.ok(!blogHtml.includes("EM PREPARAÇÃO"), "The blog must not present the featured article as a placeholder");
 
@@ -211,7 +211,7 @@ const englishRoutes = [
   ["en/supply", /Procurement and/, /does not hold its own merchandise stock/i],
   ["en/business-services", /Administrative,/, /Professional CV structuring/],
   ["en/works-catalogue", /Works, interventions/, /Completed Rural Pavilions/],
-  ["en/blog", /Business insights/, /FEATURED ARTICLE/],
+  ["en/blog", /Practical guides/, /FEATURED ARTICLE/],
   ["en/blog/how-to-prepare-a-comparable-supply-quotation", /How to prepare a quotation request/, /quantity and unit/i],
   ["en/source-ao/smart-rfq", /One requirement/, /Up to 20 product lines/],
   ["en/accessibility", /more accessible to everyone/i, /independent audit/i],
