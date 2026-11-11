@@ -25,6 +25,8 @@ test.describe("HMATIAS institutional pages", () => {
     }
     await expect(page.getByRole("link", { name: /Abrir formulário de pedido/ }))
       .toHaveAttribute("href", "https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business");
+    await expect(page.getByRole("link", { name: /Solicitar atendimento/ }))
+      .toHaveAttribute("href", "https://comercialhmatiasps.com/agendamento.html");
   });
 
   test("works catalogue preserves all twelve archive records and image descriptions", async ({ page }) => {
