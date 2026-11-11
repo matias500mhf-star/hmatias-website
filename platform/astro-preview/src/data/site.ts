@@ -27,7 +27,7 @@ export const services: Service[] = [
     number: "03",
     title: "Supply e procurement",
     description: "Sourcing · Materiais · Consumíveis · Equipamentos",
-    href: "https://comercialhmatiasps.com/supply.html",
+    href: "/supply/",
     icon: "supply"
   },
   {
@@ -63,6 +63,6 @@ export const company = {
   facilitiesUrl: "/facilities/",
   projectsUrl: "https://comercialhmatiasps.com/estaleiro-integrado.html",
   worksCatalogueUrl: "https://comercialhmatiasps.com/catalogo-obras.html",
-  supplyUrl: "https://comercialhmatiasps.com/supply.html",
+  supplyUrl: "/supply/",
   businessServicesUrl: "https://comercialhmatiasps.com/servicos-administrativos.html"
 } as const;
