@@ -2,7 +2,7 @@
 
 **Data:** 11 de novembro de 2026  
 **Branch:** `feat/hmatias-platform-modernization-20261111`  
-**Estado:** primeiro protótipo modular criado; validação CI em curso.
+**Estado:** primeiro protótipo modular criado; verificação CI concluída com sucesso em 11 de Novembro de 2026.
 
 ## Decisão
 
@@ -39,9 +39,9 @@ A imagem principal usa uma moldura 4:3 com comportamento `contain`; a galeria us
 - TypeScript já é usado para tipar a estrutura de serviços, projectos e contactos.
 - SOURCE AO, lead intake e assistente continuam nos seus Workers e contratos actuais.
 
-## Validação planeada
+## Validação executada
 
-O workflow `.github/workflows/astro-prototype-qa.yml` instala dependências em Node 24, executa `npm audit --audit-level=high`, `astro check`, `astro build` e valida a saída HTML/activos. O artefacto fica disponível durante sete dias no próprio run do GitHub Actions.
+O workflow `.github/workflows/astro-prototype-qa.yml` instalou dependências em Node 24 e concluiu com sucesso: `npm audit --audit-level=high`, `astro check`, `astro build` e validação da saída HTML/activos. O artefacto estático tem aproximadamente 1,8 MB e contém a homepage, CSS, fonte local, logótipo e imagens optimizadas. O run GitHub Actions é [42942870211](https://github.com/matias500mhf-star/hmatias-website/actions/runs/42942870211). A verificação de build e os testes passaram; o deployment Vercel permaneceu limitado pelo limite diário da API.
 
 ## Fronteira de segurança
 
