@@ -88,7 +88,7 @@ assert.ok(existsSync(smartRfqPath), "Smart RFQ page must be generated");
 const smartRfqHtml = readFileSync(smartRfqPath, "utf8");
 assert.match(smartRfqHtml, /Uma necessidade/, "Smart RFQ heading is missing");
 assert.match(smartRfqHtml, /até 20 linhas/i, "Smart RFQ item limit disclosure is missing");
-assert.match(smartRfqHtml, /link privado de acompanhamento/i, "Smart RFQ private tracking explanation is missing");
+assert.match(smartRfqHtml, /ligação privada de acompanhamento/i, "Smart RFQ private tracking explanation is missing");
 assert.match(smartRfqHtml, /source-ao\/rfq\.html/, "Smart RFQ must link to the operational Source AO form");
 const smartRfqImgCount = (smartRfqHtml.match(/<img\b/g) || []).length;
 const smartRfqImgWithAltCount = (smartRfqHtml.match(/<img\b[^>]*\balt=/g) || []).length;
