@@ -13,7 +13,7 @@ export const services: Service[] = [
     number: "01",
     title: "Construção e remodelação",
     description: "Obras · Infraestruturas · Pavimentos · Acabamentos",
-    href: "https://comercialhmatiasps.com/construcao.html",
+    href: "/construcao/",
     icon: "building"
   },
   {
