@@ -186,3 +186,20 @@ img{display:block;max-width:100%}
  .contact-details{gap:11px}
  .contact-detail{font-size:10px}
 }
+
+/* Fotografia sem cortes: preservar o formato original de cada ficheiro */
+.hero-image-wrap{height:auto;min-height:0;aspect-ratio:4/3;background:#eaf4fd}
+.hero-image{width:100%;height:100%;object-fit:contain;object-position:center;filter:none;background:#eaf4fd}
+.project-grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+.project-large{grid-row:auto}
+.project-wide{grid-column:auto}
+.project-photo{height:auto;min-height:0;aspect-ratio:auto;overflow:visible;background:transparent}
+.project-photo img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;object-position:center;filter:none;transform:none}
+.project-card:hover .project-photo img{transform:none;filter:none}
+@media(max-width:650px){
+ .hero-image-wrap{height:auto;min-height:0;aspect-ratio:4/3}
+ .project-grid{grid-template-columns:minmax(0,1fr);align-items:start}
+ .project-large,.project-wide{grid-column:auto;grid-row:auto}
+ .project-large .project-photo,.project-photo,.project-wide .project-photo{height:auto;min-height:0;aspect-ratio:auto}
+ .project-photo img{height:auto;object-fit:contain}
+}
