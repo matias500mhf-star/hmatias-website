@@ -3,6 +3,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import { company } from "../../data/site";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft && data.language === "pt-AO"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featured = posts[0];
+const featuredDate = featured?.data.pubDate.toLocaleDateString("pt-AO", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+});
 ---
 <BaseLayout
   title="Blog HMATIAS | Perspetivas empresariais"
@@ -21,13 +31,19 @@ import { company } from "../../data/site";
     </section>
 
     <section class="editorial-body">
-      <div class="editorial-label">ARTIGO EM DESTAQUE · 11 NOVEMBRO 2026</div>
-      <article class="editorial-feature">
-        <p class="editorial-meta">GUIA PRÁTICO · HMATIAS SUPPLY</p>
-        <h2><a href="/blog/como-preparar-um-pedido-de-cotacao/">Como preparar um pedido de cotação que permita uma proposta comparável.</a></h2>
-        <p>Especificações, quantidades, unidades, destino, prazo e documentação: veja o que incluir num pedido para reduzir dúvidas e comparar propostas com os mesmos critérios.</p>
-        <a class="editorial-read-link" href="/blog/como-preparar-um-pedido-de-cotacao/">Ler o guia completo <span aria-hidden="true">↗</span></a>
-      </article>
+      {featured ? (
+        <>
+          <div class="editorial-label">ARTIGO EM DESTAQUE · {featuredDate?.toUpperCase()}</div>
+          <article class="editorial-feature">
+            <p class="editorial-meta">{featured.data.category.toUpperCase()} · {featured.data.author.toUpperCase()}</p>
+            <h2><a href={`/blog/${featured.slug}/`}>{featured.data.title}</a></h2>
+            <p>{featured.data.description}</p>
+            <a class="editorial-read-link" href={`/blog/${featured.slug}/`}>Ler o artigo <span aria-hidden="true">↗</span></a>
+          </article>
+        </>
+      ) : (
+        <p class="editorial-empty">Não existem artigos publicados nesta língua.</p>
+      )}
 
       <div class="editorial-topics">
         <h2>Temas editoriais</h2>
