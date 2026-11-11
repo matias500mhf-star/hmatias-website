@@ -63,7 +63,7 @@ export const company = {
   remodelingUrl: "/construcao/#remodelacao",
   facilitiesUrl: "/facilities/",
   projectsUrl: "https://comercialhmatiasps.com/estaleiro-integrado.html",
-  worksCatalogueUrl: "https://comercialhmatiasps.com/catalogo-obras.html",
+  worksCatalogueUrl: "/catalogo-obras/",
   supplyUrl: "/supply/",
   businessServicesUrl: "/business-services/",
   businessServicesContactUrl: "https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business",
