@@ -19,7 +19,7 @@ Este projeto é um protótipo isolado para comparar uma arquitetura Astro com o 
 ## Comandos
 
 ```bash
-npm install
+npm ci
 npm run dev
 npm run check
 npm run build
@@ -27,7 +27,7 @@ npm run verify
 npm run preview
 ```
 
-O build produz `dist/`. O comando `verify` verifica o HTML, as quatro áreas de atividade, os contactos, as fotografias e os recursos processados.
+O lockfile `package-lock.json` está versionado. As instalações repetíveis devem usar `npm ci`. O build produz `dist/`. O comando `verify` verifica o HTML, as quatro áreas de atividade, os contactos, as fotografias e os recursos processados.
 
 ## Estrutura
 
