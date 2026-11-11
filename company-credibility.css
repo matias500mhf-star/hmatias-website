@@ -1,0 +1,61 @@
+/* Separate company profile from institutional credibility information. */
+.hmatias-company-page,.hmatias-credibility-page{--corp-ink:#0a2945;--corp-muted:#5a6f80;--corp-line:#dbe5ed}
+.hmatias-company-page .company-hero,.hmatias-credibility-page .credibility-hero{padding:clamp(68px,8vw,108px) 0;background:linear-gradient(118deg,#041f3d 0%,#073c70 72%,#0b5d91 100%);color:#fff}
+.hmatias-company-page .company-hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(250px,.65fr);gap:clamp(36px,7vw,90px);align-items:center}
+.hmatias-company-page .company-hero .eyebrow,.hmatias-company-page .company-ceo-section .eyebrow,.hmatias-credibility-page .credibility-hero .eyebrow{color:#a9d7f5}
+.hmatias-company-page .company-hero h1,.hmatias-credibility-page .credibility-hero h1{max-width:820px;margin:12px 0 18px;color:#fff;font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:1.02;letter-spacing:-.045em}
+.hmatias-company-page .company-hero p,.hmatias-credibility-page .credibility-hero p{max-width:690px;color:#d8e6f1;font-size:1.04rem;line-height:1.75}
+.hmatias-company-page .company-hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:22px;margin-top:30px}
+.hmatias-company-page .company-secondary-link{color:#fff;font-weight:700}
+.hmatias-company-page .company-fact-panel{padding:28px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff}
+.hmatias-company-page .company-fact-panel>span{display:block;color:#a9d7f5;font-size:.68rem;font-weight:800;letter-spacing:.13em}
+.hmatias-company-page .company-fact-panel>strong{display:block;margin-top:25px;font-size:2.7rem;line-height:1}
+.hmatias-company-page .company-fact-panel>small{display:block;margin-top:6px;color:#d8e6f1}
+.hmatias-company-page .company-fact-panel>div{display:flex;align-items:baseline;gap:12px;margin-top:35px;padding-top:18px;border-top:1px solid rgba(255,255,255,.2)}
+.hmatias-company-page .company-fact-panel>div b{font-size:2rem;color:#8fd0f3}
+.hmatias-company-page .company-section,.hmatias-company-page .company-values-section{padding:clamp(58px,7vw,88px) 0}
+.hmatias-company-page .company-section-heading{max-width:700px;margin-bottom:30px}
+.hmatias-company-page .company-section-heading h2,.hmatias-company-page .company-values-grid h2,.hmatias-credibility-page .credibility-scope h2{margin-top:8px;color:var(--corp-ink);font-size:clamp(2rem,3.5vw,3rem);line-height:1.1;letter-spacing:-.035em}
+.hmatias-company-page .company-section-heading p,.hmatias-company-page .company-values-grid>div>p{margin-top:12px;color:var(--corp-muted);line-height:1.7}
+.hmatias-company-page .company-areas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.hmatias-company-page .company-areas>a{display:flex;flex-direction:column;min-height:225px;padding:23px;border:1px solid var(--corp-line);background:#fff;color:var(--corp-ink);transition:border-color .2s,transform .2s}
+.hmatias-company-page .company-areas>a:hover{border-color:#82b9df;transform:translateY(-3px)}
+.hmatias-company-page .company-areas>a>span{color:#0b70ad;font-size:.72rem;font-weight:800;letter-spacing:.1em}
+.hmatias-company-page .company-areas h3{margin:22px 0 8px;font-size:1.08rem;line-height:1.3}
+.hmatias-company-page .company-areas p{color:var(--corp-muted);font-size:.85rem;line-height:1.6}
+.hmatias-company-page .company-values-section{background:#f3f7fa}
+.hmatias-company-page .company-values-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:start}
+.hmatias-company-page .company-values{display:grid;gap:12px}
+.hmatias-company-page .company-values article{padding:19px 21px;border:1px solid var(--corp-line);background:#fff}
+.hmatias-company-page .company-values b{color:var(--corp-ink);font-size:1rem}
+.hmatias-company-page .company-values p{margin-top:6px;color:var(--corp-muted);font-size:.9rem;line-height:1.65}
+.hmatias-company-page .company-ceo-section{padding:clamp(58px,7vw,90px) 0;background:#071d33;color:#fff}
+.hmatias-company-page .company-ceo{max-width:900px}
+.hmatias-company-page .company-ceo blockquote{margin:18px 0 28px;color:#f0f6fa;font-size:clamp(1.25rem,2.5vw,1.8rem);line-height:1.55;letter-spacing:-.02em}
+.hmatias-company-page .company-ceo-signature{display:grid;gap:4px;padding-top:17px;border-top:1px solid rgba(255,255,255,.2)}
+.hmatias-company-page .company-ceo-signature strong{font-size:1rem}
+.hmatias-company-page .company-ceo-signature span{color:#a9c4d8;font-size:.78rem}
+.hmatias-company-page .company-contact-strip{padding:36px 0;background:#eaf3f9}
+.hmatias-company-page .company-contact-strip>.container{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.hmatias-company-page .company-contact-strip h2{margin-top:7px;color:var(--corp-ink);font-size:clamp(1.4rem,2.5vw,2rem)}
+.hmatias-credibility-page .credibility-hero h1{max-width:760px}
+.hmatias-credibility-page .credibility-content{padding:70px 0}
+.hmatias-credibility-page .credibility-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.hmatias-credibility-page .credibility-card{padding:28px;border:1px solid var(--corp-line);background:#fff}
+.hmatias-credibility-page .credibility-card h2{margin:10px 0 22px;color:var(--corp-ink);font-size:1.35rem}
+.hmatias-credibility-page .credibility-card dl{display:grid;gap:0}
+.hmatias-credibility-page .credibility-card dl>div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid var(--corp-line)}
+.hmatias-credibility-page .credibility-card dt{color:var(--corp-muted);font-size:.86rem}
+.hmatias-credibility-page .credibility-card dd{margin:0;color:var(--corp-ink);font-size:.86rem;font-weight:700;text-align:right}
+.hmatias-credibility-page .credibility-card p{display:grid;gap:5px;margin:14px 0;color:var(--corp-muted);font-size:.9rem}
+.hmatias-credibility-page .credibility-card p b{color:var(--corp-ink)}
+.hmatias-credibility-page .credibility-card a{color:#075e9c;font-weight:700;overflow-wrap:anywhere}
+.hmatias-credibility-page .credibility-scope{padding:70px 0;background:#f3f7fa}
+.hmatias-credibility-page .credibility-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:28px}
+.hmatias-credibility-page .credibility-points article{padding:22px;border:1px solid var(--corp-line);background:#fff}
+.hmatias-credibility-page .credibility-points b{color:var(--corp-ink)}
+.hmatias-credibility-page .credibility-points p{margin-top:8px;color:var(--corp-muted);font-size:.88rem;line-height:1.65}
+.hmatias-credibility-page .credibility-note{margin-top:25px;color:var(--corp-muted);font-size:.85rem}
+@media(max-width:900px){.hmatias-company-page .company-areas{grid-template-columns:repeat(2,minmax(0,1fr))}.hmatias-company-page .company-values-grid{grid-template-columns:1fr;gap:24px}}
+@media(max-width:650px){.hmatias-company-page .company-hero-grid,.hmatias-credibility-page .credibility-grid{grid-template-columns:1fr}.hmatias-company-page .company-areas,.hmatias-credibility-page .credibility-points{grid-template-columns:1fr}.hmatias-company-page .company-contact-strip>.container{align-items:flex-start;flex-direction:column}.hmatias-credibility-page .credibility-content,.hmatias-credibility-page .credibility-scope{padding:52px 0}.hmatias-credibility-page .credibility-card{padding:21px}.hmatias-credibility-page .credibility-card dl>div{align-items:flex-start;flex-direction:column;gap:4px}.hmatias-credibility-page .credibility-card dd{text-align:left}}
+@media(prefers-reduced-motion:reduce){.hmatias-company-page .company-areas>a{transition:none}.hmatias-company-page .company-areas>a:hover{transform:none}}
