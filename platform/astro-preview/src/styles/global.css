@@ -661,15 +661,24 @@ button, a { -webkit-tap-highlight-color: transparent; }
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 43px;
-    padding-top: 28px;
-    padding-bottom: 55px;
+    gap: 26px;
+    padding-top: 30px;
+    padding-bottom: 42px;
   }
-  .construction-breadcrumb { margin-bottom: 36px; }
-  .construction-hero h1 { font-size: clamp(48px,13vw,68px); }
-  .construction-hero .hero-lead { margin-top: 24px; }
-  .construction-hero .hero-meta { margin-top: 44px; }
-  .construction-hero-image { width: 90%; align-self: flex-end; aspect-ratio: 4 / 3; }
+  .construction-breadcrumb { margin-bottom: 25px; }
+  .construction-hero h1 { font-size: clamp(43px,11.5vw,58px); }
+  .construction-hero .hero-lead { margin-top: 19px; }
+  .construction-hero .hero-meta { margin-top: 27px; }
+  .construction-hero-image {
+    width: 100%;
+    max-width: none;
+    max-height: 225px;
+    align-self: stretch;
+    aspect-ratio: 16 / 10;
+  }
+  .construction-hero-image img { object-fit: cover; object-position: center; }
+  .construction-hero-image::before { inset: 9px -8px -8px 8px; }
+  .construction-hero-image figcaption { min-height: 43px; padding: 9px 12px; font-size: 7px; }
   .construction-hero-note { display: none; }
   .construction-intro-content { display: block; margin-left: 0; }
   .construction-intro-copy { margin-top: 28px; }
