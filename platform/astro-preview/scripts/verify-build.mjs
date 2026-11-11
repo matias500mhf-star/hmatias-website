@@ -20,6 +20,14 @@ assert.match(html, /Todos os direitos reservados/, "Footer legal copyright line 
 assert.match(html, /Voltar ao topo/, "Footer back-to-top link is missing");
 assert.match(html, /mailto:geral@comercialhmatiasps\.com/, "Footer commercial mail link is missing");
 assert.match(html, /tel:\+244948806673/, "Footer telephone link is missing");
+assert.match(html, /SOURCE AO/, "Source AO footer link is missing");
+assert.match(html, /Blog · Perspetivas empresariais/, "Blog footer link is missing");
+assert.match(html, /Política de Privacidade/, "Privacy Policy footer link is missing");
+assert.match(html, /Termos e Condições/, "Terms footer link is missing");
+assert.match(html, /Acessibilidade/, "Accessibility footer link is missing");
+assert.match(html, /5001578065/, "Company tax number is missing");
+assert.match(html, /24\.094-23/, "Company commercial registration is missing");
+assert.match(html, /Instagram/, "Instagram footer link is missing");
 
 for (const activity of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business services"]) {
   assert.ok(html.includes(activity), `Activity missing: ${activity}`);
