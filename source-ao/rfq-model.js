@@ -13,6 +13,26 @@ export const CATEGORY_LABELS = {
 export const categoryLabel = (id, en=false) => CATEGORY_LABELS[id]?.[en?1:0] || id;
 export const itemLabel = (item, en=false) => en ? item.name : (item.name_pt || item.name);
 
+const CANONICAL_CATEGORIES = new Set(Object.keys(CATEGORY_LABELS));
+const CATEGORY_ALIASES = new Map([
+  ['cimento', 'construction'],
+  ['cimento portland', 'construction'],
+  ['portland cement', 'construction'],
+  ['cement', 'construction'],
+  ['concrete', 'construction'],
+  ['betao', 'construction'],
+  ['betão', 'construction'],
+  ['tv construction', 'construction'],
+  ['tv-construction', 'construction']
+]);
+
+export function normalizeRfqCategory(raw) {
+  if (typeof raw !== 'string') return null;
+  const key = raw.trim().toLocaleLowerCase('pt-AO').replace(/\s+/g, ' ');
+  if (CANONICAL_CATEGORIES.has(key)) return key;
+  return CATEGORY_ALIASES.get(key) || null;
+}
+
 const text = (value,max,required=false) => {
   if(value==null && !required) return '';
   if(typeof value!=='string') throw new Error('invalid_text');
@@ -39,7 +59,9 @@ export function validateRfq(data,catalog,now=new Date()) {
       const catalogId=text(row.catalog_item_id,100);
       const product=catalog.items.find(item=>item.id===catalogId);
       if(catalogId && !product) throw new Error('invalid_catalog_item');
-      const category=product?.category || choice(row.category,Object.keys(CATEGORY_LABELS));
+      const rawCategory = product?.category || row.category;
+      const category = normalizeRfqCategory(rawCategory);
+      if (!category) throw new Error('invalid_category');
       const quantity=Number(row.quantity);
       if(!['string','number'].includes(typeof row.quantity) || !Number.isFinite(quantity) || quantity<=0 || quantity>1e9) throw new Error('invalid_quantity');
       return {catalog_item_id:product?.id||null,category,description:text(row.description,200,true),specification:text(row.specification,600),quantity,unit:choice(row.unit,UNITS)};
