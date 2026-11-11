@@ -27,7 +27,7 @@ const links = isEnglish
   <div class="footer-main">
     <section class="footer-column footer-identity" aria-label={isEnglish ? "HMATIAS identity and platforms" : "Identidade e plataformas HMATIAS"}>
       <a class="footer-logo" href={`${homeUrl}#inicio`} aria-label={isEnglish ? "HMATIAS — back to home" : "HMATIAS — voltar ao início"}>
-        <Image src={logo} alt="HMATIAS — Prestação de Serviços" widths={[96, 128]} sizes="64px" format="webp" quality={82} />
+        <Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services" : "HMATIAS — Prestação de Serviços"} widths={[96, 128]} sizes="64px" format="webp" quality={82} />
       </a>
       <p class="footer-company">{company.legalName}</p>
       <p class="footer-summary">{isEnglish
@@ -69,7 +69,7 @@ const links = isEnglish
   </div>
 
   <div class="footer-bottom">
-    <p class="footer-legal-id">© {new Date().getFullYear()} {company.legalName} · NIF {company.taxNumber} · Registo Comercial {company.commercialRegistration}. {isEnglish ? "All rights reserved." : "Todos os direitos reservados."}</p>
+    <p class="footer-legal-id">© {new Date().getFullYear()} {company.legalName} · {isEnglish ? "Tax ID" : "NIF"} {company.taxNumber} · {isEnglish ? "Commercial Registration" : "Registo Comercial"} {company.commercialRegistration}. {isEnglish ? "All rights reserved." : "Todos os direitos reservados."}</p>
     <nav class="footer-legal-links" aria-label={isEnglish ? "Legal information" : "Informação legal"}>
       <a href={company.partnerApplicationUrl}>{isEnglish ? "Partnerships" : "Parcerias"}</a>
       <a href={links.credibility}>{isEnglish ? "Company information" : "Credibilidade"}</a>
