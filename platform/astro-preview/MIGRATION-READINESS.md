@@ -86,18 +86,33 @@ Não remover nem desindexar estas páginas antes de decidir o destino de cada um
 
 ## 6. Estado técnico observado
 
-No build de preview correspondente ao commit `2d502301`:
+No workflow **Astro prototype QA #474**, commit `bd7d1451`, concluído com sucesso em 11 de novembro de 2026:
 
+- Auditoria de dependências: aprovada.
 - Astro Check: 0 erros, 0 avisos e 0 indicações.
 - Build estático: 28 páginas geradas.
 - Verificação personalizada: aprovada; 98 recursos processados e 7 imagens na homepage com texto alternativo.
-- Auditoria de dependências no workflow: aprovada nesse ciclo.
-- Testes de contrato e persistência do SOURCE AO: aprovados nesse ciclo.
+- Testes de contrato e persistência do SOURCE AO: aprovados.
+- Playwright: 115 testes passaram em Chromium desktop e WebKit móvel; 13 casos foram ignorados por estarem limitados ao perfil oposto (desktop ou móvel).
+- axe-core: nenhum problema de impacto crítico ou grave nas rotas abrangidas.
+- Lighthouse CI: 24 relatórios concluídos em 12 rotas, com duas medições por rota.
 
-**Validação de browser ainda não aprovada:** uma execução anterior concluiu com falha na etapa Playwright/axe. Por consequência, o Lighthouse foi ignorado nessa execução. A causa exata ainda não foi isolada e a nova execução do workflow permanece pendente. A presença dos testes no repositório não equivale a um resultado aprovado.
+**Resultados Lighthouse nesta pré-visualização:**
 
-Também não está concluída a validação manual integral de navegação, acessibilidade por teclado, comportamento responsivo e submissão real dos formulários.
+| Indicador | Resultado observado |
+|---|---:|
+| Desempenho | 100/100 em 24 medições |
+| Acessibilidade | 100/100 em 24 medições |
+| Boas práticas | 100/100 em 24 medições |
+| SEO | 63/100 em 24 medições |
+| LCP | 203–545 ms |
+| CLS máximo | 0,043 |
 
+A pontuação SEO de 63/100 é uma consequência esperada da diretiva `noindex, nofollow`: o Lighthouse assinala a página como bloqueada para indexação. Esta proteção é intencional no preview e deve manter-se até à decisão de publicação. Não se deve remover o `noindex` apenas para elevar a pontuação do ambiente de testes. Canonicals, `hreflang`, sitemap, redirecionamentos e indexabilidade do publisher de produção continuam sujeitos à validação final.
+
+Os relatórios Playwright e Lighthouse foram guardados no artefacto `hmatias-browser-quality-reports` do workflow #474. A aprovação do CI confirma o comportamento automatizado coberto pelos testes; não substitui a revisão editorial e visual humana nem a submissão real dos formulários operacionais.
+
+Continuam pendentes a revisão visual manual em vários dispositivos, a navegação integral apenas por teclado e o teste de ponta a ponta de pedidos reais nos canais de produção.
 ## 7. Estado de publicação
 
 - O ambiente Astro é um preview separado em Render.
