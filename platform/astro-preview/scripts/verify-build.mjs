@@ -107,7 +107,7 @@ const aboutPath = join(outDir, "empresa", "index.html");
 assert.ok(existsSync(aboutPath), "Company credibility page must be generated");
 const aboutHtml = readFileSync(aboutPath, "utf8");
 assert.match(aboutHtml, /5001578065/, "Company NIF is missing from credibility page");
-assert.match(aboutHtml, /24\\.094-23/, "Commercial registration is missing from credibility page");
+assert.match(aboutHtml, /24\.094-23/, "Commercial registration is missing from credibility page");
 assert.match(aboutHtml, /MISSÃO/, "Company mission is missing");
 assert.match(aboutHtml, /VISÃO/, "Company vision is missing");
 
