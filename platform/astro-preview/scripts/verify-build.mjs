@@ -61,6 +61,8 @@ assert.match(constructionHtml, /Pedido de orçamento/i, "Construction page conta
 const constructionImgCount = (constructionHtml.match(/<img\b/g) || []).length;
 const constructionImgWithAltCount = (constructionHtml.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(constructionImgWithAltCount, constructionImgCount, "Every construction page image must have an alt attribute");
+assert.match(constructionHtml, /anexo-coberto-estrutura-metalica/i, "Construction hero must use its distinct real-work photograph");
+assert.doesNotMatch(constructionHtml, /instalacoes-embutidas-construcao/i, "Construction hero must not reuse the homepage photograph");
 
 const facilitiesPath = join(outDir, "facilities", "index.html");
 assert.ok(existsSync(facilitiesPath), "Facilities page must be generated");
@@ -95,8 +97,8 @@ assert.match(smartRfqHtml, /Uma necessidade/, "Smart RFQ heading is missing");
 assert.match(smartRfqHtml, /até 20 linhas/i, "Smart RFQ item limit disclosure is missing");
 assert.match(smartRfqHtml, /ligação privada de acompanhamento/i, "Smart RFQ private tracking explanation is missing");
 assert.match(smartRfqHtml, /uma ligação privada de acompanhamento/i, "Smart RFQ tracking link grammar is incorrect");
-assert.match(smartRfqHtml, /Seleccione uma categoria/i, "Smart RFQ category instruction is missing");
-assert.doesNotMatch(smartRfqHtml, /link privado|Selecione/i, "Old Smart RFQ wording must not return");
+assert.match(smartRfqHtml, /Selecione uma categoria/i, "Smart RFQ category instruction is missing");
+assert.doesNotMatch(smartRfqHtml, /Seleccione|link privado/i, "Legacy Smart RFQ wording must not return");
 assert.match(smartRfqHtml, /source-ao\/rfq\.html/, "Smart RFQ must link to the operational Source AO form");
 const smartRfqImgCount = (smartRfqHtml.match(/<img\b/g) || []).length;
 const smartRfqImgWithAltCount = (smartRfqHtml.match(/<img\b[^>]*\balt=/g) || []).length;
@@ -110,8 +112,8 @@ for (const service of ["Expediente Administrativo e Redação Institucional", "E
   assert.ok(businessHtml.includes(service), `Business Services offer missing: ${service}`);
 }
 assert.match(businessHtml, /contacto-business/, "Business Services operational intake link is missing");
-assert.match(businessHtml, /website actual/i, "Business Services must identify the official website as the current request channel");
-assert.match(businessHtml, /recepção segura de pedidos/i, "Business Services intake migration notice is missing");
+assert.match(businessHtml, /website oficial/i, "Business Services must identify the official website as the current request channel");
+assert.match(businessHtml, /área de receção segura/i, "Business Services intake migration notice is missing");
 
 const aboutPath = join(outDir, "empresa", "index.html");
 assert.ok(existsSync(aboutPath), "About page must be generated");
@@ -120,6 +122,8 @@ assert.ok(aboutHtml.includes("SOBRE A HMATIAS"), "About page label is missing");
 assert.ok(aboutHtml.includes("MENSAGEM DO CEO"), "CEO message section is missing");
 assert.ok(aboutHtml.includes("Direção Executiva"), "About page executive signature is missing");
 assert.ok(aboutHtml.includes("Construção e remodelação"), "About page service overview is missing");
+assert.match(aboutHtml, /pavilhoes-rurais-concluidos/i, "About page must use a distinct real-work photograph");
+assert.doesNotMatch(aboutHtml, /instalacoes-embutidas-construcao/i, "About page must not reuse the homepage photograph");
 assert.ok(aboutHtml.includes('href="/credibilidade/"'), "About page must link to the separate credibility page");
 
 const credibilityPath = join(outDir, "credibilidade", "index.html");
@@ -152,9 +156,9 @@ assert.ok(existsSync(worksCataloguePath), "Works catalogue page must be generate
 const worksCatalogueHtml = readFileSync(worksCataloguePath, "utf8");
 assert.match(worksCatalogueHtml, /Obras, intervenções/, "Works catalogue heading is missing");
 assert.match(worksCatalogueHtml, /Fornecimentos/, "Catalogue must include supply references in its scope");
-assert.match(worksCatalogueHtml, /optimizadas/, "Catalogue copy must use consistent Angolan Portuguese orthography");
-assert.match(worksCatalogueHtml, /facturas/, "Catalogue disclaimer must retain its document terminology");
-assert.match(worksCatalogueHtml, /Apresente o seu projecto/, "Catalogue CTA must use the established company wording");
+assert.match(worksCatalogueHtml, /otimizadas/, "Catalogue copy must use consistent Portuguese orthography");
+assert.match(worksCatalogueHtml, /faturas/, "Catalogue disclaimer must use current Portuguese orthography");
+assert.match(worksCatalogueHtml, /Apresente o seu projeto/, "Catalogue CTA must use current Portuguese orthography");
 assert.equal((worksCatalogueHtml.match(/<article class="works-catalogue-card"/g) || []).length, 12, "The complete 12-record catalogue must be present");
 const catalogueImgCount = (worksCatalogueHtml.match(/<img\b/g) || []).length;
 const catalogueImgWithAltCount = (worksCatalogueHtml.match(/<img\b[^>]*\balt=/g) || []).length;
@@ -165,12 +169,20 @@ const assetDir = join(outDir, "_astro");
 assert.ok(existsSync(assetDir), "Astro must emit processed assets");
 const assets = readdirSync(assetDir).filter((file) => statSync(join(assetDir, file)).isFile());
 assert.ok(assets.length >= 5, "Expected optimized local project images, fonts or styles in the build output");
+const compiledCss = assets
+  .filter((file) => file.endsWith(".css"))
+  .map((file) => readFileSync(join(assetDir, file), "utf8"))
+  .join("\\n");
+assert.match(compiledCss, /HMATIAS Manrope/, "Local Manrope display font must be active");
+assert.match(compiledCss, /HMATIAS IBM Plex Mono/, "Local IBM Plex Mono utility font must be active");
+assert.ok(assets.some((file) => file.includes("manrope-latin-variable")), "Manrope font asset must be emitted");
+assert.ok(assets.some((file) => file.includes("ibm-plex-mono-latin-600")), "IBM Plex Mono font asset must be emitted");
 
 for (const route of ["construcao", "facilities", "supply", "business-services", "catalogo-obras", "empresa", "credibilidade", "blog", "acessibilidade", "privacidade", "termos", "source-ao/smart-rfq"]) {
   const content = readFileSync(join(outDir, route, "index.html"), "utf8");
   assert.doesNotMatch(
     content,
-    /informacção|instalacção|criaccção|relacção|configuracção|pre-visualizacção|Prestacção/i,
+    /informacção|instalacção|criaccção|relacção|configuracção|pre-visualizacção|Prestacção|projecto|projectos|Seleccione|Selecção|directa|optimizada|facturas|recepção|actualizados|actualização/i,
     `Malformed words detected in ${route}`
   );
   assert.equal(content.includes("</p>\\n"), false, `Literal newline escape detected in ${route}`);
