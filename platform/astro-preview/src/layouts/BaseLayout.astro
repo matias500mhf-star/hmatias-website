@@ -5,12 +5,14 @@ import favicon from "../../../../images/favicon.png";
 interface Props {
   title: string;
   description: string;
+  lang?: "pt-AO" | "en";
 }
 
-const { title, description } = Astro.props;
+const { title, description, lang = "pt-AO" } = Astro.props;
+const ogLocale = lang === "en" ? "en_US" : "pt_AO";
 ---
 <!doctype html>
-<html lang="pt-AO">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,7 +23,7 @@ const { title, description } = Astro.props;
     <meta property="og:site_name" content="HMATIAS" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:locale" content="pt_AO" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:image" content="https://comercialhmatiasps.com/og-hmatias.jpg" />
     <meta property="og:image:alt" content="HMATIAS — Prestação de Serviços" />
     <meta name="twitter:card" content="summary_large_image" />
