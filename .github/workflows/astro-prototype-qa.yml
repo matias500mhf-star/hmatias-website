@@ -1,0 +1,58 @@
+name: Astro prototype QA
+
+on:
+  push:
+    branches:
+      - feat/hmatias-platform-modernization-20261111
+    paths:
+      - "platform/astro-preview/**"
+      - ".github/workflows/astro-prototype-qa.yml"
+  pull_request:
+    paths:
+      - "platform/astro-preview/**"
+      - ".github/workflows/astro-prototype-qa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astro-prototype-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: platform/astro-preview
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: platform/astro-preview/package-lock.json
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Check dependency security
+        run: npm audit --audit-level=high
+
+      - name: Build static website
+        run: npm run build
+
+      - name: Verify generated website
+        run: npm run verify
+
+      - name: Upload static preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hmatias-astro-preview
+          path: platform/astro-preview/dist/
+          if-no-files-found: error
+          retention-days: 7
