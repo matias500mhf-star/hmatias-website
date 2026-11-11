@@ -15,8 +15,8 @@ const featuredDate = featured?.data.pubDate.toLocaleDateString("en", { day:"2-di
   <main class="editorial-page">
     <section class="editorial-hero">
       <p class="section-kicker">HMATIAS / BLOG</p>
-      <h1>Business insights<br /><em>for better decisions.</em></h1>
-      <p class="editorial-lead">Practical guides and perspectives on construction, procurement, supply, facilities and business activity in Angola.</p>
+      <h1>Practical guides for<br /><em>sourcing and supply.</em></h1>
+      <p class="editorial-lead">Technical and commercial notes on preparing quotation requests, specifying materials and comparing supplier proposals.</p>
     </section>
     <section class="editorial-body">
       {featured ? (
@@ -30,15 +30,7 @@ const featuredDate = featured?.data.pubDate.toLocaleDateString("en", { day:"2-di
           </article>
         </>
       ) : <p class="editorial-empty">There are no articles published in this language yet.</p>}
-      <div class="editorial-topics">
-        <h2>Editorial topics</h2>
-        <div class="editorial-topic-grid">
-          <div><span>01</span><strong>Construction and Engineering</strong></div>
-          <div><span>02</span><strong>Procurement and Supply</strong></div>
-          <div><span>03</span><strong>Facilities and Maintenance</strong></div>
-          <div><span>04</span><strong>Business Market</strong></div>
-        </div>
-      </div>
+
       <div class="editorial-contact">
         <p>For commercial enquiries or quotation requests, contact HMATIAS directly.</p>
         <a class="button button-dark" href="/en/source-ao/smart-rfq/">Prepare a Smart RFQ <span aria-hidden="true">↗</span></a>
