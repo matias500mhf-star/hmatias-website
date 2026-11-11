@@ -22,7 +22,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.getByRole("heading", { name: "Preparação de terreno" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Pavilhões rurais concluídos" })).toBeVisible();
     await expect(page.locator(".construction-work-card img")).toHaveCount(4);
-    await expect(page.locator(".main-nav").getByRole("link", { name: "Serviços" })).toHaveAttribute("href", "/#servicos");
+    await expect(page.locator('.main-nav a[href="/#servicos"]')).toHaveCount(1);
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
 
