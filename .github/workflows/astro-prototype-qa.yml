@@ -1,13 +1,8 @@
 name: Astro prototype QA
 
 on:
-  push:
-    branches:
-      - feat/hmatias-platform-modernization-20261111
-    paths:
-      - "platform/astro-preview/**"
-      - ".github/workflows/astro-prototype-qa.yml"
   pull_request:
+    types: [opened, synchronize, reopened]
     paths:
       - "platform/astro-preview/**"
       - ".github/workflows/astro-prototype-qa.yml"
@@ -17,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: astro-prototype-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.event.pull_request.head.ref || github.ref_name }}
+  group: astro-prototype-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
