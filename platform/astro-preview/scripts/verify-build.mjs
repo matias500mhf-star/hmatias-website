@@ -26,6 +26,8 @@ assert.match(html, /mailto:geral@comercialhmatiasps\.com/, "Footer commercial ma
 assert.match(html, /tel:\+244948806673/, "Footer telephone link is missing");
 assert.match(html, /SOURCE AO/, "Source AO footer link is missing");
 assert.match(html, /Blog · Perspetivas empresariais/, "Blog footer link is missing");
+assert.ok(html.includes('href="/empresa/">Sobre a HMATIAS'), "Footer About link must point to the About page");
+assert.ok(html.includes('href="/credibilidade/">Credibilidade'), "Footer credibility link must point to the credibility page");
 assert.match(html, /href="\\/empresa\\/">Sobre a HMATIAS/, "Footer About link must point to the About page");
 assert.match(html, /href="\\/credibilidade\\/">Credibilidade/, "Footer credibility link must point to the credibility page");
 assert.match(html, /Política de Privacidade/, "Privacy Policy footer link is missing");
@@ -116,22 +118,22 @@ assert.match(businessHtml, /recepção segura de pedidos/i, "Business Services i
 const aboutPath = join(outDir, "empresa", "index.html");
 assert.ok(existsSync(aboutPath), "About page must be generated");
 const aboutHtml = readFileSync(aboutPath, "utf8");
-assert.match(aboutHtml, /SOBRE A HMATIAS/, "About page label is missing");
-assert.match(aboutHtml, /MENSAGEM DO CEO/, "CEO message section is missing");
-assert.match(aboutHtml, /Direção Executiva/, "About page executive signature is missing");
-assert.match(aboutHtml, /Construção e remodelação/, "About page service overview is missing");
-assert.match(aboutHtml, /href="\\/credibilidade\\//, "About page must link to the separate credibility page");
+assert.ok(aboutHtml.includes("SOBRE A HMATIAS"), "About page label is missing");
+assert.ok(aboutHtml.includes("MENSAGEM DO CEO"), "CEO message section is missing");
+assert.ok(aboutHtml.includes("Direção Executiva"), "About page executive signature is missing");
+assert.ok(aboutHtml.includes("Construção e remodelação"), "About page service overview is missing");
+assert.ok(aboutHtml.includes('href="/credibilidade/"'), "About page must link to the separate credibility page");
 
 const credibilityPath = join(outDir, "credibilidade", "index.html");
 assert.ok(existsSync(credibilityPath), "Dedicated credibility page must be generated");
 const credibilityHtml = readFileSync(credibilityPath, "utf8");
-assert.match(credibilityHtml, /5001578065/, "Company NIF is missing from credibility page");
-assert.match(credibilityHtml, /24\\.094-23/, "Commercial registration is missing from credibility page");
-assert.match(credibilityHtml, /IDENTIFICAÇÃO EMPRESARIAL/, "Company identification section is missing");
-assert.match(credibilityHtml, /CONTACTO OFICIAL/, "Official contact section is missing");
-assert.match(credibilityHtml, /HMATIAS – Prestação de Serviços SU, LDA/, "Company legal name must use the shared approved display form");
-assert.doesNotMatch(credibilityHtml, /Prestação de Serviços, \\(SU\\)/, "Legacy punctuation in company name must not return");
-assert.match(credibilityHtml, /href="\\/empresa\\//, "Credibility page must link back to About");
+assert.ok(credibilityHtml.includes("5001578065"), "Company NIF is missing from credibility page");
+assert.ok(credibilityHtml.includes("24.094-23"), "Commercial registration is missing from credibility page");
+assert.ok(credibilityHtml.includes("IDENTIFICAÇÃO EMPRESARIAL"), "Company identification section is missing");
+assert.ok(credibilityHtml.includes("CONTACTO OFICIAL"), "Official contact section is missing");
+assert.ok(credibilityHtml.includes("HMATIAS – Prestação de Serviços SU, LDA"), "Company legal name must use the shared approved display form");
+assert.ok(!credibilityHtml.includes("Prestação de Serviços, (SU)"), "Legacy punctuation in company name must not return");
+assert.ok(credibilityHtml.includes('href="/empresa/"'), "Credibility page must link back to About");
 
 for (const [route, heading, marker] of [
   ["privacidade", /Política de Privacidade/, /Cookies, consentimento e estatísticas/],
