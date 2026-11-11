@@ -9,7 +9,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle(/HMATIAS/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Capacidade para");
-    await expect(page.getByRole("navigation", { name: "Navegação principal" })).toBeAttached();
+    await expect(page.locator("#main-nav")).toBeAttached();
     await expect(page.getByRole("link", { name: /Falar com a HMATIAS/ })).toBeAttached();
     await expect(page.getByText("geral@comercialhmatiasps.com").first()).toBeAttached();
   });
@@ -50,12 +50,18 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
   test("menu móvel abre e fecha ao navegar", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "mobile-webkit", "Teste exclusivo do viewport móvel.");
     await page.goto("/");
-    const toggle = page.getByRole("button", { name: "Abrir menu" });
+    const toggle = page.locator(".menu-toggle");
+    const nav = page.locator("#main-nav");
     await expect(toggle).toBeVisible();
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
     await toggle.click();
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    await page.getByRole("navigation", { name: "Navegação principal" }).getByRole("link", { name: "Serviços" }).click();
+    await expect(toggle).toHaveAttribute("aria-label", "Fechar menu");
+    await expect(nav).toHaveClass(/is-open/);
+    await nav.getByRole("link", { name: "Serviços" }).click();
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await expect(toggle).toHaveAttribute("aria-label", "Abrir menu");
+    await expect(nav).not.toHaveClass(/is-open/);
   });
 
   for (const route of routes) {
