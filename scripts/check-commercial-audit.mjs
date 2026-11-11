@@ -169,8 +169,8 @@ assert.ok(read('en.html').includes('COMMERCIAL PROPOSAL'));
 
 assert.ok(!read('credibilidade.html').includes('orientados pela nossa missão, visão e valores.'));
 assert.ok(!read('credibility.html').includes('guided by our mission, vision and values.'));
-assert.ok(read('credibilidade.html').includes('MISSÃO') && read('credibilidade.html').includes('PRINCÍPIOS DE TRABALHO'));
-assert.ok(read('credibility.html').includes('MISSION') && read('credibility.html').includes('WORKING PRINCIPLES'));
+assert.ok(read('credibilidade.html').includes('MISSÃO') && read('credibilidade.html').includes('VALORES DE TRABALHO'));
+assert.ok(read('credibility.html').includes('MISSION') && read('credibility.html').includes('WORKING VALUES'));
 assert.ok(!read('credibilidade.html').includes('VISÃO') && !read('credibility.html').includes('VISION'));
 assert.ok(!read('credibilidade.html').includes('projetos-digitais') && !read('credibility.html').includes('digital-projects'));
 const credibilityCss=read('credibility-page.css');
