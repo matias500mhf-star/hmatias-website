@@ -1,0 +1,78 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import { company } from "../../../data/site";
+import heroPhoto from "../../../../../../images/catalogue/anexo-coberto-estrutura-metalica.webp";
+import metalStructure from "../../../../../../images/catalogue/galpao-estrutura-metalica.webp";
+import sitePreparation from "../../../../../../images/catalogue/terraplanagem-preparacao-terreno.webp";
+import roofWorks from "../../../../../../images/catalogue/cobertura-metalica-substituicao.webp";
+import ruralPavilions from "../../../../../../images/catalogue/pavilhoes-rurais-concluidos.webp";
+---
+<BaseLayout title="Construction and Remodelling in Angola | HMATIAS" description="Civil construction, remodelling, site preparation, paving, roofing and supporting structures for companies and projects in Angola." lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS CONSTRUCTION</span><span>CIVIL CONSTRUCTION · REMODELLING</span></div>
+  <SiteHeader />
+  <main class="construction-page">
+    <section class="construction-hero" id="inicio">
+      <div class="construction-hero-copy">
+        <nav class="construction-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span>/</span><span>Construction and Remodelling</span></nav>
+        <p class="eyebrow"><span class="eyebrow-line"></span> CIVIL CONSTRUCTION · REMODELLING</p>
+        <h1>Construction and<br /><em>remodelling.</em></h1>
+        <p class="hero-lead">Building works, rehabilitation and interventions in existing facilities and infrastructure for companies and projects in Angola.</p>
+        <div class="hero-actions"><a class="button button-light" href="#request">Discuss a project <span aria-hidden="true">↓</span></a><a class="text-link text-link-light" href="#work">View project records <span aria-hidden="true">↘</span></a></div>
+        <div class="hero-meta"><span>Construction · Remodelling · Paving</span><span>Luanda · Angola</span></div>
+      </div>
+      <figure class="construction-hero-image"><Image src={heroPhoto} alt="Covered annex with a metal structure attached to an existing building" widths={[640,960,1280]} sizes="(max-width:900px) 100vw, 48vw" format="webp" quality={84} loading="eager" fetchpriority="high"/><figcaption><span>01</span> HMATIAS PROJECT RECORD</figcaption></figure>
+      <span class="construction-hero-note" aria-hidden="true">BUILDING WORKS · REHABILITATION · INFRASTRUCTURE</span>
+    </section>
+
+    <section class="construction-intro section-pad" id="company">
+      <div class="section-kicker">01 / SERVICE AREA</div>
+      <div class="construction-intro-content">
+        <h2>Interventions planned<br /><em>for the space and its use.</em></h2>
+        <div class="construction-intro-copy">
+          <p>HMATIAS undertakes civil construction and remodelling works, including interventions in existing facilities, site preparation, paving, roofing and supporting structures.</p>
+          <p>The scope is defined against the requirement, site conditions and work to be performed. The team follows execution and maintains direct communication throughout the process.</p>
+          <a class="underlined-link" href="#work">Review recorded work <span aria-hidden="true">↘</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="construction-scopes section-pad" id="services">
+      <div class="section-heading"><div><div class="section-kicker">02 / SCOPE OF WORK</div><h2>From construction<br /><em>to rehabilitation.</em></h2></div><p>Each intervention is assessed according to the type of work, existing conditions and intended outcome.</p></div>
+      <div class="construction-scope-grid">
+        <article class="construction-scope-card"><span>01</span><h3>Civil construction</h3><p>Building works for business premises, facilities and project requirements.</p></article>
+        <article class="construction-scope-card" id="remodelling"><span>02</span><h3>Remodelling and rehabilitation</h3><p>Upgrading existing spaces, including offices, washrooms and supporting areas.</p></article>
+        <article class="construction-scope-card"><span>03</span><h3>Site preparation and paving</h3><p>Ground preparation, earthmoving, surface levelling and paving works.</p></article>
+        <article class="construction-scope-card"><span>04</span><h3>Roofing and metal structures</h3><p>Roof coverings, metal structures and supporting construction elements.</p></article>
+      </div>
+    </section>
+
+    <section class="construction-work section-pad" id="work">
+      <div class="section-heading"><div><div class="section-kicker">03 / RECORDED WORK</div><h2>Work records,<br /><em>not generic illustrations.</em></h2></div><p>Selected photographs documenting HMATIAS work and project activity. The descriptions identify the visible intervention.</p></div>
+      <div class="construction-work-grid">
+        <article class="construction-work-card"><figure><Image src={metalStructure} alt="Metal-frame building with roof covering and sheet cladding" widths={[640,960]} sizes="(max-width:650px) 100vw, 50vw" format="webp" quality={82}/></figure><div class="construction-work-caption"><span>METAL STRUCTURES</span><h3>Metal-frame building</h3><p>Assembly of a metal structure, roof covering and sheet cladding, with supporting masonry.</p></div></article>
+        <article class="construction-work-card"><figure><Image src={sitePreparation} alt="Backhoe loader preparing and levelling a construction site" widths={[640,960]} sizes="(max-width:650px) 100vw, 50vw" format="webp" quality={82}/></figure><div class="construction-work-caption"><span>INFRASTRUCTURE</span><h3>Site preparation</h3><p>Earthmoving equipment mobilised for initial excavation and ground levelling.</p></div></article>
+        <article class="construction-work-card"><figure><Image src={roofWorks} alt="Replacement of metal roof sheets on an existing structure" widths={[640,960]} sizes="(max-width:650px) 100vw, 50vw" format="webp" quality={82}/></figure><div class="construction-work-caption"><span>MAINTENANCE</span><h3>Roof replacement</h3><p>Localised replacement of roof sheets, integrated with the existing structure.</p></div></article>
+        <article class="construction-work-card"><figure><Image src={ruralPavilions} alt="Completed rural pavilions with metal roofing and ventilated side areas" widths={[640,960]} sizes="(max-width:650px) 100vw, 50vw" format="webp" quality={82}/></figure><div class="construction-work-caption"><span>RURAL CONSTRUCTION</span><h3>Completed rural pavilions</h3><p>Exterior view of completed pavilions with metal roofing and ventilated side areas.</p></div></article>
+      </div>
+    </section>
+
+    <section class="construction-method section-pad">
+      <div class="section-heading"><div><div class="section-kicker">04 / HOW WE APPROACH A PROJECT</div><h2>Scope before execution.<br /><em>Follow-up through delivery.</em></h2></div><p>A clear sequence helps align technical requirements, expectations and delivery conditions.</p></div>
+      <div class="construction-method-list">
+        <article><span>01</span><div><h3>Review the requirement</h3><p>Understand the site, intended use, specifications and expected outcome.</p></div></article>
+        <article><span>02</span><div><h3>Define the scope and conditions</h3><p>Clarify deliverables, responsibilities, schedule and commercial conditions before work starts.</p></div></article>
+        <article><span>03</span><div><h3>Coordinate and follow the work</h3><p>Coordinate the agreed activities and communicate relevant changes during execution.</p></div></article>
+      </div>
+    </section>
+
+    <section class="construction-request section-pad" id="request">
+      <div class="construction-request-copy"><p class="section-kicker">05 / PROJECT ENQUIRIES</p><h2>Let's review<br /><em>your project.</em></h2><p>Send the location, a description of the work and any available drawings or specifications. HMATIAS will review the requirement and indicate the information needed for an initial assessment.</p><div class="construction-request-actions"><a class="button button-light" href={`mailto:${company.commercialEmail}?subject=Construction%20project%20enquiry`}>Send project details <span aria-hidden="true">↗</span></a><a class="construction-email-link" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">WhatsApp <span>↗</span></a></div></div>
+      <aside class="construction-request-guide"><h3>Information to include</h3><ul><li>Project location</li><li>Type of work required</li><li>Approximate dimensions or quantities</li><li>Drawings, photographs or technical requirements</li><li>Target schedule</li></ul><p>Project feasibility, scope and delivery conditions are subject to review.</p></aside>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+</BaseLayout>
