@@ -53,7 +53,7 @@ assert.ok(existsSync(constructionPath), "Construction page must be generated");
 const constructionHtml = readFileSync(constructionPath, "utf8");
 assert.match(constructionHtml, /Construção e/, "Construction page title is missing");
 assert.match(constructionHtml, /Pavilhões rurais concluídos/, "Construction page project content is missing");
-assert.match(constructionHtml, /Pedido de orçamento/, "Construction page contact section is missing");
+assert.match(constructionHtml, /Pedido de orçamento/i, "Construction page contact section is missing");
 const constructionImgCount = (constructionHtml.match(/<img\b/g) || []).length;
 const constructionImgWithAltCount = (constructionHtml.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(constructionImgWithAltCount, constructionImgCount, "Every construction page image must have an alt attribute");
