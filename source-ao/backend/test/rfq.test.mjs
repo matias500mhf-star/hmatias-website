@@ -42,7 +42,17 @@ test('RFQ validates catalog identity, strict quantities, contact, consent and da
 
 test('every customer-visible RFQ select option satisfies the shared API contract',()=>{
   const source=readFileSync(new URL('../../rfq.js',import.meta.url),'utf8');
+  const review=readFileSync(new URL('../../requests.js',import.meta.url),'utf8');
   const input=rfqFixture();
+  for(const label of [
+    "institution:'Instituição pública / estatal'",
+    "budgeting:'Consulta de orçamento para projeto / instalação'",
+    "recurring:'Fornecimento recorrente'",
+    "planned:'Compra programada'"
+  ]){
+    assert.ok(review.includes(label),'RFQ review desk label must match the shared option: '+label);
+  }
+  assert.ok(source.includes('Guarde a ligação privada'),'RFQ success message must use consistent Portuguese terminology');
   const fields=[['rfqUrgency','urgency'],['rfqIntent','intent'],['rfqBuyer','buyer_type']];
   for(const [selectId,payloadKey] of fields){
     const select=source.match(new RegExp('<select id="'+selectId+'"[\\s\\S]*?<\\/select>'));
