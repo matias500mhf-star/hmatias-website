@@ -123,7 +123,8 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.locator("[data-clean-request-preview]")).toContainText("Bundu Lodge T215");
     await expect(page.locator("[data-clean-send-whatsapp]")).toHaveAttribute("href", /^https:\/\/wa\.me\/244948806673\?text=/);
     await expect(page.locator("[data-clean-send-email]")).toHaveAttribute("href", /^mailto:geral@comercialhmatiasps\.com/);
-    await expect(page.locator("[data-hmatias-clean-handoff]")).toContainText("não foi registado automaticamente");
+    await expect(page.locator("#clean-form-status")).toContainText("não foi registado automaticamente");
+    await expect(page.locator("[data-hmatias-clean-handoff]")).toContainText("não foi submetido automaticamente");
   });
 
   test("HMATIAS Clean English page keeps language and product catalogue", async ({ page }) => {
@@ -137,7 +138,7 @@ test.describe("HMATIAS institutional pages", () => {
   });
 
   test("new institutional pages do not introduce horizontal overflow", async ({ page }) => {
-    for (const route of ["/business-services/", "/empresa/", "/privacidade/", "/termos/", "/catalogo-obras/"]) {
+    for (const route of ["/business-services/", "/empresa/", "/privacidade/", "/termos/", "/catalogo-obras/", "/clean/", "/en/clean/"]) {
       await page.goto(route);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       expect(overflow, route).toBe(false);
