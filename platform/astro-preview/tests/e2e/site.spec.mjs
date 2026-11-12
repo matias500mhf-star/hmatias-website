@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const routes = ["/", "/blog/", "/acessibilidade/", "/construcao/", "/facilities/", "/supply/", "/source-ao/smart-rfq/", "/termos/", "/privacidade/", "/empresa/", "/business-services/", "/catalogo-obras/", "/karta/"];
+const routes = ["/", "/blog/", "/acessibilidade/", "/construcao/", "/facilities/", "/supply/", "/source-ao/smart-rfq/", "/termos/", "/privacidade/", "/empresa/", "/business-services/", "/catalogo-obras/", "/karta/", "/estaleiro/"];
 
 test.describe("HMATIAS — navegação e conteúdo", () => {
   test("homepage apresenta identidade, proposta e contactos", async ({ page }) => {
