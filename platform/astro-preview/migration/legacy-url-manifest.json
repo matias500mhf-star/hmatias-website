@@ -256,35 +256,35 @@
     },
     {
       "source_url": "/coberturas-industriais.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
+      "preview_target": "/coberturas-industriais/",
+      "treatment": "preview_route_pending_redirect_approval",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
-      "notes": "Landing page especializada não deve ser reduzida a Construção sem equivalência de intenção."
+      "notes": "Página especializada recriada no preview em PT/EN; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar a migração."
     },
     {
       "source_url": "/limpeza-pos-obra.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
+      "preview_target": "/limpeza-pos-obra/",
+      "treatment": "preview_route_pending_redirect_approval",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
-      "notes": "Landing page especializada não deve ser reduzida a Facilities sem equivalência."
+      "notes": "Página especializada recriada no preview em PT/EN; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar a migração."
     },
     {
       "source_url": "/fornecimento-de-epi-e-fardamento.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
+      "preview_target": "/fornecimento-de-epi-e-fardamento/",
+      "treatment": "preview_route_pending_redirect_approval",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
-      "notes": "Landing page especializada não deve ser reduzida a Supply sem equivalência."
+      "notes": "Página especializada recriada no preview em PT/EN; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar a migração."
     },
     {
       "source_url": "/remodelacao-de-escritorios.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
+      "preview_target": "/remodelacao-de-escritorios/",
+      "treatment": "preview_route_pending_redirect_approval",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
-      "notes": "Landing page especializada não deve ser reduzida a Construção sem equivalência."
+      "notes": "Página especializada recriada no preview em PT/EN; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar a migração."
     },
     {
       "source_url": "/estaleiro-integrado.html",
