@@ -11,7 +11,7 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/Apoio administrativo/);
   });
 
-  test("Business Services preserves the six published service areas and uses the existing secure intake", async ({ page }) => {
+  test("Business Services preserves the six published service areas and direct enquiry channels", async ({ page }) => {
     await page.goto("/business-services/");
     for (const name of [
       "Expediente Administrativo e Redação Institucional",
@@ -23,10 +23,10 @@ test.describe("HMATIAS institutional pages", () => {
     ]) {
       await expect(page.getByRole("heading", { name })).toBeVisible();
     }
-    await expect(page.getByRole("link", { name: /Abrir formulário de pedido/ }))
-      .toHaveAttribute("href", "https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business");
-    await expect(page.getByRole("link", { name: /Solicitar atendimento/ }))
-      .toHaveAttribute("href", "https://comercialhmatiasps.com/agendamento.html");
+    await expect(page.locator(".business-contact-cta a[href^='https://wa.me/244948806673']")).toBeVisible();
+    await expect(page.locator(".business-contact-cta a[href^='mailto:geral@comercialhmatiasps.com']")).toBeVisible();
+    await expect(page.getByRole("link", { name: "Consultar Política de Privacidade" }))
+      .toHaveAttribute("href", "/privacidade/");
   });
 
   test("works catalogue preserves all twelve archive records and image descriptions", async ({ page }) => {
@@ -42,7 +42,8 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/Empresa angolana/);
     await expect(page.locator(".about-lead")).toContainText("HMATIAS – Prestação de Serviços SU, LDA");
     await expect(page.getByRole("heading", { name: "Áreas de serviço." })).toBeVisible();
-    await expect(page.locator(".work-principles, .ceo-message")).toHaveCount(0);
+    await expect(page.locator(".ceo-message")).toContainText("Henrique Matias");
+    await expect(page.locator(".ceo-message")).toContainText("Sócio Único, CEO & Managing Director");
     await expect(page.getByText(/MISSÃO|VISÃO|O nosso compromisso|Integridade nas relações/i)).toHaveCount(0);
     await expect(page.locator(".about-service-grid a")).toHaveCount(4);
     for (const name of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business Services"]) {
