@@ -50,10 +50,10 @@ Preservar o histórico orgânico do domínio comercialhmatiasps.com durante a tr
 | /source-ao/rfq.html | /source-ao/smart-rfq/ apenas se funcionalidade e conteúdo forem equivalentes | Rever |
 | /source-ao/privacy.html | Manter até existir política equivalente no novo Source AO | Preservar |
 | /source-ao/terms.html | Manter até existirem termos equivalentes no novo Source AO | Preservar |
-| /coberturas-industriais.html | Manter URL ou reconstruir landing page específica; não redirecionar para Construção sem equivalência | Preservar |
-| /limpeza-pos-obra.html | Manter URL ou reconstruir landing page específica; não redirecionar para Facilities sem equivalência | Preservar |
-| /fornecimento-de-epi-e-fardamento.html | Manter URL ou reconstruir landing page específica; não redirecionar para Supply sem equivalência | Preservar |
-| /remodelacao-de-escritorios.html | Manter URL ou reconstruir landing page específica; não redirecionar para Construção sem equivalência | Preservar |
+| /coberturas-industriais.html | Página especializada recriada no preview em /coberturas-industriais/ e /en/industrial-roofing/; manter URL oficial até validar equivalência, Search Console e backlinks | Preservar até aprovação |
+| /limpeza-pos-obra.html | Página especializada recriada no preview em /limpeza-pos-obra/ e /en/post-construction-cleaning/; manter URL oficial até validar equivalência, Search Console e backlinks | Preservar até aprovação |
+| /fornecimento-de-epi-e-fardamento.html | Página especializada recriada no preview em /fornecimento-de-epi-e-fardamento/ e /en/ppe-workwear/; manter URL oficial até validar equivalência, Search Console e backlinks | Preservar até aprovação |
+| /remodelacao-de-escritorios.html | Página especializada recriada no preview em /remodelacao-de-escritorios/ e /en/office-remodelling/; manter URL oficial até validar equivalência, Search Console e backlinks | Preservar até aprovação |
 | /estaleiro-integrado.html | Página recriada no preview em /estaleiro/; manter a URL oficial até validar a equivalência e aprovar a migração | Preservar até aprovação |
 | /integrated-yard.html | Página recriada no preview em /en/integrated-yard/; manter a URL oficial até validar a equivalência e aprovar a migração | Preservar até aprovação |
 
@@ -85,3 +85,12 @@ A versão em desenvolvimento contém 28 ficheiros de página Astro, incluindo 14
 8. Monitorizar diariamente os primeiros 14 dias e semanalmente durante pelo menos 6 semanas.
 
 **Bloqueio de segurança:** a pré-visualização continua noindex. Não remover o noindex, não trocar DNS, não substituir o sitemap de produção e não publicar redirects até à aprovação explícita da migração.
+
+
+## Páginas especializadas recriadas no preview
+- /coberturas-industriais.html → /coberturas-industriais/ ↔ /en/industrial-roofing/
+- /limpeza-pos-obra.html → /limpeza-pos-obra/ ↔ /en/post-construction-cleaning/
+- /fornecimento-de-epi-e-fardamento.html → /fornecimento-de-epi-e-fardamento/ ↔ /en/ppe-workwear/
+- /remodelacao-de-escritorios.html → /remodelacao-de-escritorios/ ↔ /en/office-remodelling/
+
+Os destinos acima existem apenas no preview. Os URLs históricos mantêm-se no domínio oficial até conclusão da revisão de Search Console/backlinks, aprovação da equivalência e autorização explícita para redirects.
