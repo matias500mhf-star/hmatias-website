@@ -6,13 +6,14 @@ Este inventário separa o que já foi recriado no protótipo Astro, o que contin
 
 ## 1. Páginas já recriadas no protótipo Astro
 
-O protótipo gera agora 30 páginas estáticas: 15 em Português (pt-AO) e 15 em Inglês.
+O protótipo gera agora 32 páginas estáticas: 16 em Português (pt-AO) e 16 em Inglês.
 
 | Área | Português | Inglês | Situação |
 |---|---|---|---|
 | Homepage | `/` | `/en/` | Quatro áreas de atividade e galeria inicial |
 | Sobre a HMATIAS | `/empresa/` | `/en/about/` | Apresentação factual, identificação empresarial e quatro áreas de atividade |
 | KARTA Wallet | `/karta/` | `/en/karta/` | Projeto Alpha; separa componentes em desenvolvimento de objetivos futuros, sem alegar disponibilidade pública |
+| Estaleiro Integrado | `/estaleiro/` | `/en/integrated-yard/` | Estudo preliminar com duas plantas vectoriais, áreas e ressalvas técnicas; não apresentado como obra executada |
 | Credibilidade | `/credibilidade/` | `/en/credibility/` | Identificação empresarial, contactos e dados de registo |
 | Construção | `/construcao/` | `/en/construction/` | Serviços e registos de obras reais |
 | Facilities | `/facilities/` | `/en/facilities/` | Serviços e intervenções de manutenção |
@@ -60,7 +61,7 @@ As páginas abaixo continuam por recriar ou dependem de equivalência funcional.
 | `/limpeza-pos-obra.html` | Página especializada de limpeza pós-obra | Não migrada |
 | `/fornecimento-de-epi-e-fardamento.html` | Página especializada de EPI e fardamento | Não migrada |
 | `/remodelacao-de-escritorios.html` | Página especializada de remodelação de escritórios | Não migrada |
-| `/estaleiro-integrado.html` e `/integrated-yard.html` | Projeto do Estaleiro Integrado | Não migrados |
+| `/estaleiro-integrado.html` e `/integrated-yard.html` | Projeto do Estaleiro Integrado | Recriado no preview em `/estaleiro/` e `/en/integrated-yard/`; manter URLs oficiais até validação e aprovação |
 
 Não remover nem desindexar estas páginas antes de decidir o destino de cada uma. Algumas podem continuar relevantes para campanhas, pesquisa orgânica ou informação de projeto.
 
@@ -177,3 +178,10 @@ No mesmo head foram concluídos com sucesso:
 A nova página Astro `/karta/` e a respetiva versão `/en/karta/` foram criadas a partir do conteúdo atualmente publicado em `karta.html` e `karta-en.html`. A página apresenta o produto como pré-lançamento / Alpha, descreve apenas componentes sujeitos a desenvolvimento e validação, e identifica OCR/MRZ, partilha seletiva, QR e KARTA Verify/API como objetivos futuros. O contacto é encaminhado por e-mail; não foi criado formulário de registo nem promessa de lançamento.
 
 As URLs antigas `/karta.html` e `/karta-en.html` continuam no inventário e não são redirecionadas. A equivalência editorial e o estado do produto devem ser revistos antes de qualquer substituição no publisher oficial.
+
+
+### Nota de migração do Estaleiro Integrado
+
+As rotas Astro `/estaleiro/` e `/en/integrated-yard/` foram criadas a partir das páginas antigas `estaleiro-integrado.html` e `integrated-yard.html`. O conteúdo preserva o estado de estudo preliminar, a área de 378,53 m², as dimensões de referência de 15,141 × 25 m, as duas alternativas de implantação, as áreas dos armazéns e as ressalvas necessárias antes de qualquer construção. As plantas vectoriais originais foram integradas no preview, com opção de abertura em tamanho integral.
+
+As páginas não afirmam que o estaleiro esteja construído ou licenciado. As URLs oficiais antigas permanecem sem redirecionamento até aprovação da equivalência e do mapa final.
