@@ -26,6 +26,7 @@ assert.match(html, /mailto:geral@comercialhmatiasps\.com/, "Footer commercial ma
 assert.match(html, /tel:\+244948806673/, "Footer telephone link is missing");
 assert.match(html, /SOURCE AO/, "Source AO footer link is missing");
 assert.match(html, /Blog · Perspetivas empresariais/, "Blog footer link is missing");
+assert.match(html, /KARTA Wallet · Projeto Alpha/, "KARTA Alpha project footer link is missing");
 assert.ok(html.includes('href="/empresa/">Sobre a HMATIAS'), "Footer About link must point to the About page");
 assert.ok(html.includes('href="/credibilidade/">Credibilidade'), "Footer credibility link must point to the credibility page");
 assert.match(html, /Política de Privacidade/, "Privacy Policy footer link is missing");
@@ -62,6 +63,17 @@ const accessibilityPath = join(outDir, "acessibilidade", "index.html");
 assert.ok(existsSync(accessibilityPath), "Accessibility page must be generated");
 const accessibilityHtml = readFileSync(accessibilityPath, "utf8");
 assert.match(accessibilityHtml, /acessibilidade/i, "Accessibility page content is missing");
+
+const kartaPath = join(outDir, "karta", "index.html");
+assert.ok(existsSync(kartaPath), "KARTA Alpha page must be generated");
+const kartaHtml = readFileSync(kartaPath, "utf8");
+assert.match(kartaHtml, /KARTA Wallet Mobile/, "KARTA product name is missing");
+assert.match(kartaHtml, /A sua identidade\. Os seus documentos\. O seu controlo\./, "KARTA positioning is missing");
+assert.match(kartaHtml, /ESTADO DO PRODUTO/, "KARTA status section is missing");
+assert.match(kartaHtml, />ALPHA</, "KARTA must retain its Alpha status");
+assert.match(kartaHtml, /não disponível para download público/i, "KARTA must not claim public availability");
+assert.match(kartaHtml, /objetivos futuros/i, "KARTA roadmap must be distinguished from current capabilities");
+assert.match(kartaHtml, /mailto:geral@comercialhmatiasps\.com\?subject=KARTA%20Wallet/, "KARTA interest handoff must use the published email channel");
 
 const constructionPath = join(outDir, "construcao", "index.html");
 assert.ok(existsSync(constructionPath), "Construction page must be generated");
@@ -223,6 +235,7 @@ const englishRoutes = [
   ["en/accessibility", /more accessible to everyone/i, /independent audit/i],
   ["en/privacy", /Privacy Policy/, /Cookiebot/],
   ["en/terms", /Terms and Conditions/, /Intellectual property/],
+  ["en/karta", /KARTA Wallet Mobile/, /not currently available for public download/i],
 ];
 for (const [route, heading, marker] of englishRoutes) {
   const path = join(outDir, route, "index.html");
@@ -293,6 +306,7 @@ const languagePairs = [
   ["acessibilidade", "en/accessibility", "/acessibilidade/", "/en/accessibility/"],
   ["privacidade", "en/privacy", "/privacidade/", "/en/privacy/"],
   ["termos", "en/terms", "/termos/", "/en/terms/"],
+  ["karta", "en/karta", "/karta/", "/en/karta/"],
 ];
 
 function languageSwitchTarget(pageHtml, route) {
