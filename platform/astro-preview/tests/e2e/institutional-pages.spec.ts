@@ -40,13 +40,15 @@ test.describe("HMATIAS institutional pages", () => {
   test("company page presents its registered identity and four service areas", async ({ page }) => {
     await page.goto("/empresa/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/Empresa angolana/);
-    await expect(page.getByRole("heading", { name: "HMATIAS – Prestação de Serviços SU, LDA.", exact: true })).toBeVisible();
-    await expect(page.getByText("24.094-23", { exact: true })).toBeVisible();
+    await expect(page.locator(".about-lead")).toContainText("HMATIAS – Prestação de Serviços SU, LDA");
+    await expect(page.getByRole("heading", { name: /O que orienta cada trabalho/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Construir relações de confiança/ })).toBeVisible();
+    await expect(page.getByText("Henrique Matias", { exact: true })).toBeVisible();
     await expect(page.locator(".about-service-grid a")).toHaveCount(4);
     for (const name of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business Services"]) {
       await expect(page.locator(".about-service-grid a").filter({ hasText: name })).toHaveCount(1);
     }
-    await expect(page.getByText(/MISSÃO|VISÃO|Henrique Fernandes|Direção Executiva/i)).toHaveCount(0);
+    await expect(page.getByText(/MISSÃO|VISÃO/i)).toHaveCount(0);
   });
 
   test("credibility page displays the registered company identifiers", async ({ page }) => {
