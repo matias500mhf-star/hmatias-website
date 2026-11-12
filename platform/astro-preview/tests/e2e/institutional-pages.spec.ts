@@ -100,6 +100,42 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/acessível a todos/i);
   });
 
+  test("HMATIAS Clean exposes the full 100-reference catalogue and prepares a multi-item request", async ({ page }) => {
+    await page.goto("/clean/");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(/Produtos de limpeza e higiene/);
+    await expect(page.locator("#clean-catalog-count")).toHaveText("100 produtos");
+    await expect(page.locator(".clean-catalog-item")).toHaveCount(100);
+    await page.locator("#clean-catalog-search").fill("T563P");
+    await expect(page.locator(".clean-catalog-item")).toHaveCount(1);
+    await expect(page.locator(".clean-catalog-item")).toContainText("Pine Gel");
+    await page.locator("#clean-catalog-search").fill("");
+    await page.locator('[data-clean-product="Bundu Lodge T215"]').click();
+    await expect(page.locator(".clean-cart-section")).toBeVisible();
+    await expect(page.locator("#cleanCartCount")).toHaveText("1");
+    await page.locator("#clean-name").fill("Cliente de teste");
+    await page.locator("#clean-client-type").selectOption({ label: "Empresa" });
+    await page.locator("#clean-request").selectOption({ label: "Pedir cotação" });
+    await page.locator("#clean-location").fill("Viana, Luanda");
+    await page.locator("#clean-phone").fill("+244900000000");
+    await page.locator("#clean-privacy-consent").check();
+    await page.getByRole("button", { name: /Preparar pedido de cotação/ }).click();
+    await expect(page.locator("[data-hmatias-clean-handoff]")).toBeVisible();
+    await expect(page.locator("[data-clean-request-preview]")).toContainText("Bundu Lodge T215");
+    await expect(page.locator("[data-clean-send-whatsapp]")).toHaveAttribute("href", /^https:\/\/wa\.me\/244948806673\?text=/);
+    await expect(page.locator("[data-clean-send-email]")).toHaveAttribute("href", /^mailto:geral@comercialhmatiasps\.com/);
+    await expect(page.locator("[data-hmatias-clean-handoff]")).toContainText("não foi registado automaticamente");
+  });
+
+  test("HMATIAS Clean English page keeps language and product catalogue", async ({ page }) => {
+    await page.goto("/en/clean/");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(/Cleaning and hygiene products/);
+    await expect(page.locator("#clean-catalog-count")).toHaveText("100 products");
+    await expect(page.locator(".clean-catalog-item")).toHaveCount(100);
+    await expect(page.locator(".language-switch")).toHaveAttribute("href", "/clean/");
+    await expect(page.getByText(/does not submit a server request or register an order/)).toBeVisible();
+  });
+
   test("new institutional pages do not introduce horizontal overflow", async ({ page }) => {
     for (const route of ["/business-services/", "/empresa/", "/privacidade/", "/termos/", "/catalogo-obras/"]) {
       await page.goto(route);
