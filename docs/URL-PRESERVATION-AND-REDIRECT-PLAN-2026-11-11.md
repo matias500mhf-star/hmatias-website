@@ -28,7 +28,7 @@ Nenhuma URL histórica deve ser removida, desindexada ou redirecionada antes de:
 | `/limpeza-pos-obra.html` | Página especializada de limpeza pós-obra | Preservar | Integrar em Facilities apenas se mantiver escopo, condições e conteúdo específico |
 | `/fornecimento-de-epi-e-fardamento.html` | Página especializada de EPI e fardamento | Preservar | Integrar em Supply apenas com conteúdo e encaminhamento de cotação equivalentes |
 | `/remodelacao-de-escritorios.html` | Página especializada de remodelação de escritórios | Preservar | Integrar em Construção apenas se a página de destino cobrir a intenção específica |
-| `/estaleiro-integrado.html`, `/integrated-yard.html` | Apresentação de projeto em desenvolvimento, com alternativas de implantação | Manter como projeto em desenvolvimento | Não classificar como obra executada; migrar preservando o estado preliminar, as ressalvas técnicas e as plantas aprovadas para divulgação |
+| `/estaleiro-integrado.html`, `/integrated-yard.html` | Projeto em desenvolvimento recriado no preview em `/estaleiro/` e `/en/integrated-yard/` | Preservar URLs oficiais até aprovação | Não classificar como obra executada; preservar o estudo preliminar, as ressalvas técnicas e as duas plantas dimensionadas; não aplicar redirects nesta fase |
 
 ## Rotas operacionais que não devem ser substituídas por páginas demonstrativas
 
