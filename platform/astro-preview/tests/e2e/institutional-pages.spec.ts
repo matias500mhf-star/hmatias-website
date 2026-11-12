@@ -216,4 +216,19 @@ test.describe("HMATIAS institutional pages", () => {
       expect(blocking, route).toEqual([]);
     }
   });
+
+  test("HMATIAS Clean dynamic cart is accessible in Portuguese and English", async ({ page }) => {
+    for (const route of ["/clean/", "/en/clean/"]) {
+      await page.goto(route);
+      await page.locator('[data-clean-product="Taurus Pine Gel T563P"]').click();
+      await expect(page.locator("#cleanCartCount")).toHaveText("1");
+      await expect(page.locator(".clean-cart-section")).toBeVisible();
+
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
+      const blocking = results.violations.filter(item => ["critical", "serious"].includes(item.impact || ""));
+      expect(blocking, `${route} dynamic cart state`).toEqual([]);
+    }
+  });
 });
