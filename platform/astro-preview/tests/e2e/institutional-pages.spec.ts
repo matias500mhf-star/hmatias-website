@@ -137,8 +137,53 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.getByText(/does not submit a server request or register an order/)).toBeVisible();
   });
 
+  test("specialist service pages preserve scope and preselect the Smart RFQ", async ({ page }) => {
+    const pages = [
+      ["/coberturas-industriais/", /Coberturas industriais: avaliação/, "construction"],
+      ["/limpeza-pos-obra/", /Limpeza pós-obra para espaços empresariais/, "facilities"],
+      ["/fornecimento-de-epi-e-fardamento/", /Fornecimento de EPI e fardamento/, "supply"],
+      ["/remodelacao-de-escritorios/", /Remodelação de escritórios e espaços comerciais/, "construction"],
+    ] as const;
+    for (const [route, heading, service] of pages) {
+      await page.goto(route);
+      await expect(page.getByRole("heading", { level: 1 })).toContainText(heading);
+      await expect(page.locator(".specialist-condition")).toBeVisible();
+      await page.locator(".specialist-actions .button").click();
+      await expect(page.locator("#rfqService")).toHaveValue(service);
+      await expect(page.locator("#rfqProject")).not.toHaveValue("");
+    }
+  });
+
+  test("specialist English pages expose reciprocal language links and the correct RFQ area", async ({ page }) => {
+    const pages = [
+      ["/en/industrial-roofing/", /Industrial roofing/, "/coberturas-industriais/", "construction"],
+      ["/en/post-construction-cleaning/", /Post-construction cleaning/, "/limpeza-pos-obra/", "facilities"],
+      ["/en/ppe-workwear/", /PPE and workwear supply/, "/fornecimento-de-epi-e-fardamento/", "supply"],
+      ["/en/office-remodelling/", /Office and commercial premises remodelling/, "/remodelacao-de-escritorios/", "construction"],
+    ] as const;
+    for (const [route, heading, portugueseRoute, service] of pages) {
+      await page.goto(route);
+      await expect(page.locator("html")).toHaveAttribute("lang", "en");
+      await expect(page.getByRole("heading", { level: 1 })).toContainText(heading);
+      await expect(page.locator(".language-switch")).toHaveAttribute("href", portugueseRoute);
+      await page.locator(".specialist-actions .button").click();
+      await expect(page.locator("#rfqService")).toHaveValue(service);
+      await expect(page.locator("#rfqProject")).not.toHaveValue("");
+    }
+  });
+
+  test("parent service pages link to their specialist service routes", async ({ page }) => {
+    await page.goto("/construcao/");
+    await expect(page.locator('a[href="/coberturas-industriais/"]')).toBeVisible();
+    await expect(page.locator('a[href="/remodelacao-de-escritorios/"]')).toBeVisible();
+    await page.goto("/facilities/");
+    await expect(page.locator('a[href="/limpeza-pos-obra/"]')).toBeVisible();
+    await page.goto("/supply/");
+    await expect(page.locator('a[href="/fornecimento-de-epi-e-fardamento/"]')).toBeVisible();
+  });
+
   test("new institutional pages do not introduce horizontal overflow", async ({ page }) => {
-    for (const route of ["/business-services/", "/empresa/", "/privacidade/", "/termos/", "/catalogo-obras/", "/clean/", "/en/clean/"]) {
+    for (const route of ["/business-services/", "/empresa/", "/privacidade/", "/termos/", "/catalogo-obras/", "/clean/", "/en/clean/", "/coberturas-industriais/", "/limpeza-pos-obra/", "/fornecimento-de-epi-e-fardamento/", "/remodelacao-de-escritorios/", "/en/industrial-roofing/", "/en/post-construction-cleaning/", "/en/ppe-workwear/", "/en/office-remodelling/"]) {
       await page.goto(route);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       expect(overflow, route).toBe(false);
