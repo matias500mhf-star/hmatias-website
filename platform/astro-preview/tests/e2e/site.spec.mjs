@@ -22,6 +22,8 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.getByRole("heading", { name: "Preparação de terreno" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Pavilhões rurais concluídos" })).toBeVisible();
     await expect(page.locator(".construction-work-card img")).toHaveCount(4);
+    const constructionWhatsApp = new URL(await page.locator(".construction-request-actions a[href^='https://wa.me/']").getAttribute("href"));
+    expect(constructionWhatsApp.searchParams.get("text")).toContain("localização da obra");
     await expect(page.locator('.main-nav a[href="/#servicos"]')).toHaveCount(1);
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
@@ -36,6 +38,8 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.getByRole("heading", { name: "Apoio operacional", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Substituição localizada de cobertura" })).toBeVisible();
     await expect(page.locator(".facilities-work-card img")).toHaveCount(2);
+    const facilitiesWhatsApp = new URL(await page.locator(".construction-request-actions a[href^='https://wa.me/']").getAttribute("href"));
+    expect(facilitiesWhatsApp.searchParams.get("text")).toContain("tipo de instalação");
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
 
