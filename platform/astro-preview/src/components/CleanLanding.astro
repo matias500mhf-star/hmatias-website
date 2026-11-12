@@ -3,7 +3,6 @@ import { Picture } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteHeader from "./SiteHeader.astro";
 import SiteFooter from "./SiteFooter.astro";
-import { company } from "../data/site";
 import taurusPineImage from "../../../../images/products/taurus-pine-gel-t563p-official.jpg";
 
 interface Props {
@@ -45,7 +44,7 @@ const privacyHref = isEn ? "/en/privacy/" : "/privacidade/";
       </div>
       <aside class="clean-hero-panel" aria-label={isEn ? "Supply conditions" : "Condições de fornecimento"}>
         <span class="clean-panel-label">{isEn ? "COMMERCIAL CONDITIONS" : "CONDIÇÕES COMERCIAIS"}</span>
-        <strong>{isEn ? "Reference first.<br />Confirmation before supply." : "Referência primeiro.<br />Confirmação antes do fornecimento."}</strong>
+        <strong>{isEn ? <>Reference first.<br />Confirmation before supply.</> : <>Referência primeiro.<br />Confirmação antes do fornecimento.</>}</strong>
         <p>{isEn
           ? "Pack size, price, availability, lead time and delivery are checked for each request. No stock or price is assumed by this catalogue."
           : "Formato, preço, disponibilidade, prazo e entrega são verificados em cada pedido. Este catálogo não pressupõe stock nem preços."}</p>
