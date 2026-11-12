@@ -43,11 +43,11 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     const response = await page.goto("/supply/");
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle(/HMATIAS Supply/);
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Procurement e");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Fornecimento");
     await expect(page.getByRole("heading", { name: "Materiais de construção" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "EPI e fardamento" })).toBeVisible();
     await expect(page.getByText("A HMATIAS não mantém stock próprio.", { exact: false })).toBeVisible();
-    await expect(page.locator(".supply-evidence-card img")).toHaveCount(3);
+    await expect(page.locator(".supply-evidence-photo img")).toHaveCount(2);
     await expect(page.getByRole("link", { name: "Registar pedido de cotação" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
