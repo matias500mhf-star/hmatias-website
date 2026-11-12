@@ -6,7 +6,7 @@ Este inventário separa o que já foi recriado no protótipo Astro, o que contin
 
 ## 1. Páginas já recriadas no protótipo Astro
 
-O protótipo gera agora 32 páginas estáticas: 16 em Português (pt-AO) e 16 em Inglês.
+O protótipo gera agora 34 páginas estáticas: 17 em Português (pt-AO) e 17 em Inglês.
 
 | Área | Português | Inglês | Situação |
 |---|---|---|---|
