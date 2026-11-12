@@ -3,6 +3,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import { company } from "../../data/site";
+const businessWhatsapp = company.whatsappUri + "?text=" + encodeURIComponent(
+  "Olá, HMATIAS. Pretendo solicitar uma avaliação dos serviços administrativos e empresariais. Serviço pretendido, documentos ou informação disponível, volume, formato e prazo:"
+);
 const serviceItems = [
   ["01","Expediente Administrativo e Redação Institucional","Formatação, revisão e organização de minutas, cartas, declarações, ofícios e outros documentos administrativos."],
   ["02","Estruturação de CV Profissional","Organização e apresentação do perfil profissional com base nas informações fornecidas pelo cliente."],
@@ -84,11 +87,10 @@ const serviceItems = [
       <div>
         <p class="section-kicker">04 / PEDIDO DE AVALIAÇÃO</p>
         <h2 id="pages-business-services-index-section-5-heading">Indique o serviço,<br /><em>o volume e o prazo.</em></h2>
-        <p>Os pedidos de Business Services continuam a ser recebidos através do formulário publicado no website oficial. A nova área de receção segura só será disponibilizada depois de concluídos os testes de funcionamento e segurança.</p>
+        <p>Envie o serviço pretendido, a informação de base disponível, o volume documental, o formato desejado e o prazo. A HMATIAS analisará o âmbito antes de confirmar os entregáveis e as condições comerciais.</p>
         <div class="hero-actions">
-          <a class="button button-light" href={company.businessServicesContactUrl}>Abrir formulário de pedido <span aria-hidden="true">↗</span></a>
-          <a class="text-link text-link-light" href={company.businessServicesBookingUrl}>Solicitar atendimento <span aria-hidden="true">↗</span></a>
-          <a class="text-link text-link-light" href={"mailto:"+company.commercialEmail}>Contactar por e-mail <span aria-hidden="true">↗</span></a>
+          <a class="button button-light" href={businessWhatsapp} target="_blank" rel="noopener noreferrer">Solicitar avaliação por WhatsApp <span aria-hidden="true">↗</span></a>
+          <a class="text-link text-link-light" href={"mailto:"+company.commercialEmail+"?subject=Pedido%20de%20Business%20Services"}>Contactar por e-mail <span aria-hidden="true">↗</span></a>
         </div>
       </div>
       <aside>
