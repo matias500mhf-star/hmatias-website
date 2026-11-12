@@ -2,131 +2,19 @@
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../../components/SiteHeader.astro";
 import SiteFooter from "../../../../components/SiteFooter.astro";
-import { company } from "../../../../data/site";
+import SmartRfqForm from "../../../../components/SmartRfqForm.astro";
 ---
-<BaseLayout title="SOURCE AO Smart RFQ | Structured Supply Enquiry" description="Prepare an English request brief for Construction, Facilities or Supply. Review it in your browser, then send it to HMATIAS by email or WhatsApp." lang="en">
-  <div class="preview-bar"><span><i aria-hidden="true"></i> SOURCE AO · SMART RFQ</span><span>STRUCTURED SUPPLY ENQUIRY</span></div>
+<BaseLayout
+  title="Smart RFQ | HMATIAS Quotation Request"
+  description="Prepare a quotation request for construction, facilities, maintenance or supply. Review the brief and choose how to send it to HMATIAS."
+  lang="en"
+>
+  <div class="preview-bar">
+    <span><i aria-hidden="true"></i> INDEPENDENT ASTRO PREVIEW</span>
+    <span>HMATIAS · SMART RFQ</span>
+  </div>
   <SiteHeader />
-  <main class="smart-rfq-page">
-    <section class="smart-rfq-hero">
-      <div class="smart-rfq-hero-copy">
-        <nav class="smart-rfq-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/source-ao/">SOURCE AO</a><span>/</span><span>Smart RFQ</span></nav>
-        <p class="eyebrow"><span class="eyebrow-line"></span> SOURCE AO · STRUCTURED REQUEST FOR QUOTATION</p>
-        <h1>One requirement.<br /><em>One clear request.</em></h1>
-        <p class="smart-rfq-lead">Prepare a structured brief for one HMATIAS service area. The English form organises your details and requirements for review before you send them to the commercial team.</p>
-        <div class="hero-actions"><a class="button button-light" href="https://comercialhmatiasps.com/rfq-en.html" target="_blank" rel="noopener noreferrer">Prepare a request <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Send request via WhatsApp <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="/en/source-ao/">Explore SOURCE AO <span aria-hidden="true">↗</span></a></div>
-        <div class="smart-rfq-hero-meta"><span>Construction · Facilities · Supply</span><span>Review before sending</span></div>
-      </div>
-      <aside class="smart-rfq-visual" aria-label="Smart RFQ stages">
-        <div class="smart-rfq-visual-head"><span>SMART RFQ</span><span>01 — 03</span></div>
-        <div class="smart-rfq-visual-title">Prepare and send your request brief</div>
-        <ol class="smart-rfq-visual-steps">
-          <li><span>01</span><div><strong>Choose an area</strong><small>Construction, Facilities or Supply</small></div><b aria-hidden="true">↗</b></li>
-          <li><span>02</span><div><strong>Describe the requirement</strong><small>Provide the relevant scope and specifications</small></div><b aria-hidden="true">↗</b></li>
-          <li><span>03</span><div><strong>Review and send</strong><small>Generate the brief, then choose email or WhatsApp</small></div><b aria-hidden="true">✓</b></li>
-        </ol>
-        <p class="smart-rfq-visual-note">The English form generates a request brief in your browser. Nothing is sent until you choose email or WhatsApp. The brief is not a quotation or confirmation of stock.</p>
-      </aside>
-    </section>
-    <section class="smart-rfq-intro section-pad">
-      <div class="section-kicker">01 / WHAT SMART RFQ DOES</div>
-      <div class="smart-rfq-intro-content"><h2>Fewer scattered messages.<br /><em>More context from the start.</em></h2><div><p>The English form organises the information needed to assess a Construction, Facilities or Supply requirement. You can review the generated brief before choosing how to send it to HMATIAS.</p></div></div>
-    </section>
-    <section class="smart-rfq-steps section-pad">
-      <div class="section-heading"><div><div class="section-kicker">02 / HOW IT WORKS</div><h2>From requirement<br /><em>to request brief.</em></h2></div></div>
-      <div class="smart-rfq-step-grid">
-        <article><span>01</span><h3>Choose the HMATIAS area</h3><p>Select Construction, Facilities or Supply. The form displays the relevant fields for the service area you choose.</p></article>
-        <article><span>02</span><h3>Describe the requirement</h3><p>Provide the project context, location and the relevant dimensions, frequency, product details or specifications.</p></article>
-        <article><span>03</span><h3>Review and send</h3><p>Generate the request brief, check its contents and send it using your email application or WhatsApp. The form does not submit data automatically.</p></article>
-      </div>
-    </section>
-    <section class="smart-rfq-disclaimer section-pad">
-      <div><p class="section-kicker">03 / IMPORTANT INFORMATION</p><h2>A request is not yet a quotation.</h2><p>HMATIAS works on a request basis and does not present supplier stock as guaranteed availability. Product specification, price, availability, origin, lead time and logistics must be checked before a commercial proposal can be issued.</p><div class="hero-actions"><a class="button button-light" href="https://comercialhmatiasps.com/rfq-en.html" target="_blank" rel="noopener noreferrer">Open Smart RFQ <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contact HMATIAS on WhatsApp <span aria-hidden="true">↗</span></a></div></div>
-    </section>
-  </main>
+  <SmartRfqForm lang="en" />
   <SiteFooter />
-  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+  <div class="preview-disclaimer">Independent technology preview. Your information stays in the browser until you choose to send it by email or WhatsApp. It does not replace or modify the official website.</div>
 </BaseLayout>
-<style>
-.smart-rfq-hero { min-height:590px; padding:clamp(64px,8vw,104px) var(--hm-gutter); display:grid; grid-template-columns:minmax(0,1.1fr) minmax(340px,.8fr); align-items:center; gap:clamp(45px,8vw,120px); color:#fff; background:var(--hm-navy); }
-.smart-rfq-hero-copy { max-width:700px; }
-.smart-rfq-breadcrumb { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:0 0 36px; color:#b9d8ed; font-size:10px; }
-.smart-rfq-breadcrumb a:hover { color:#fff; }
-.smart-rfq-hero .eyebrow { margin-bottom:29px; }
-.smart-rfq-hero h1 { margin:0; font-size:clamp(48px,6.2vw,82px); font-weight:520; line-height:.99; letter-spacing:-.065em; }
-.smart-rfq-hero h1 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; letter-spacing:-.055em; }
-.smart-rfq-lead { max-width:570px; margin:27px 0 0; color:#dceafa; font-size:14px; line-height:1.85; }
-.smart-rfq-hero-meta { display:flex; flex-wrap:wrap; gap:12px 24px; margin-top:63px; padding-top:19px; border-top:1px solid #ffffff26; color:#b9d8ed; font-size:9px; letter-spacing:.08em; text-transform:uppercase; }
-.smart-rfq-visual { padding:clamp(25px,4vw,39px); color:var(--hm-ink); background:var(--hm-paper); box-shadow:22px 22px 0 #0b477c; }
-.smart-rfq-visual-head { display:flex; justify-content:space-between; padding-bottom:18px; border-bottom:1px solid var(--hm-line); color:var(--hm-blue); font-size:9px; font-weight:700; letter-spacing:.15em; }
-.smart-rfq-visual-title { margin:23px 0 10px; font-size:24px; font-weight:550; letter-spacing:-.04em; }
-.smart-rfq-visual-steps { margin:0; padding:0; list-style:none; }
-.smart-rfq-visual-steps li { display:grid; grid-template-columns:35px 1fr 20px; align-items:center; gap:14px; padding:18px 0; border-bottom:1px solid var(--hm-line); }
-.smart-rfq-visual-steps li > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:17px; }
-.smart-rfq-visual-steps li div { display:flex; flex-direction:column; gap:5px; }
-.smart-rfq-visual-steps strong { font-size:13px; font-weight:650; }
-.smart-rfq-visual-steps small { color:var(--hm-muted); font-size:10px; line-height:1.5; }
-.smart-rfq-visual-steps li > b { color:var(--hm-blue); font-size:14px; font-weight:500; }
-.smart-rfq-visual-note { margin:20px 0 0; color:var(--hm-muted); font-size:10px; line-height:1.75; }
-.smart-rfq-intro { display:grid; grid-template-columns:1fr 3fr; gap:35px; }
-.smart-rfq-intro-content { display:grid; grid-template-columns:1.1fr .75fr; align-items:end; gap:clamp(30px,7vw,110px); }
-.smart-rfq-intro h2, .smart-rfq-data h2, .smart-rfq-followup h2, .smart-rfq-cta h2 { margin:0; font-size:clamp(36px,4.5vw,61px); line-height:1.08; font-weight:520; letter-spacing:-.06em; }
-.smart-rfq-intro h2 em, .smart-rfq-data h2 em, .smart-rfq-followup h2 em, .smart-rfq-cta h2 em { color:#005aa8; font-family:var(--hm-serif); font-weight:400; }
-.smart-rfq-intro-content p { margin:0 0 14px; color:var(--hm-muted); font-size:12px; line-height:1.85; }
-.smart-rfq-steps { background:var(--hm-light); }
-.smart-rfq-step-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:54px; border-top:1px solid var(--hm-line); }
-.smart-rfq-step-grid article { min-height:230px; padding:25px 28px 22px 0; border-bottom:1px solid var(--hm-line); }
-.smart-rfq-step-grid article + article { padding-left:28px; border-left:1px solid var(--hm-line); }
-.smart-rfq-step-grid article > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:18px; }
-.smart-rfq-step-grid h3 { margin:35px 0 12px; font-size:16px; font-weight:650; letter-spacing:-.025em; }
-.smart-rfq-step-grid p { max-width:390px; margin:0; color:var(--hm-muted); font-size:11px; line-height:1.85; }
-.smart-rfq-data { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:clamp(35px,8vw,110px); }
-.smart-rfq-data .section-kicker { margin:0 0 25px; padding:0; }
-.smart-rfq-data-list { border-top:1px solid var(--hm-line); }
-.smart-rfq-data-list article { display:grid; grid-template-columns:35px 1fr; gap:15px; padding:20px 0; border-bottom:1px solid var(--hm-line); }
-.smart-rfq-data-list article > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:16px; }
-.smart-rfq-data-list h3 { margin:0 0 7px; font-size:13px; font-weight:650; }
-.smart-rfq-data-list p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.75; }
-.smart-rfq-followup { display:grid; grid-template-columns:1fr .9fr; align-items:start; gap:clamp(40px,8vw,120px); background:var(--hm-light); }
-.smart-rfq-followup-copy .section-kicker { margin:0 0 25px; padding:0; }
-.smart-rfq-followup-copy > p:not(.section-kicker) { max-width:490px; margin:24px 0 0; color:var(--hm-muted); font-size:12px; line-height:1.85; }
-.smart-rfq-followup-panel { padding:clamp(24px,4vw,38px); background:var(--hm-paper); border:1px solid var(--hm-line); }
-.smart-rfq-status-label { display:block; margin:0 0 14px; color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.13em; }
-.smart-rfq-status-muted { margin-top:27px; color:var(--hm-muted); }
-.smart-rfq-followup-panel ul { display:grid; gap:11px; margin:0; padding:0; list-style:none; }
-.smart-rfq-followup-panel li { display:grid; grid-template-columns:17px 1fr; gap:9px; color:var(--hm-ink); font-size:11px; line-height:1.6; }
-.smart-rfq-followup-panel li span { color:var(--hm-blue); font-weight:700; }
-.smart-rfq-truth { display:grid; grid-template-columns:56px 1fr; gap:20px; padding:clamp(45px,7vw,85px) var(--hm-gutter); background:var(--hm-paper); border-top:1px solid var(--hm-line); border-bottom:1px solid var(--hm-line); }
-.smart-rfq-truth-mark { width:42px; height:42px; display:grid; place-items:center; color:var(--hm-blue); background:var(--hm-sky-soft); border:1px solid var(--hm-line); border-radius:50%; font-family:var(--hm-serif); font-size:24px; }
-.smart-rfq-truth .section-kicker { margin:0 0 13px; padding:0; }
-.smart-rfq-truth h2 { margin:0 0 12px; font-size:25px; font-weight:620; letter-spacing:-.04em; }
-.smart-rfq-truth div:last-child p:last-child { max-width:830px; margin:0; color:var(--hm-muted); font-size:12px; line-height:1.85; }
-.smart-rfq-cta { display:grid; grid-template-columns:minmax(0,1fr) 270px; align-items:center; gap:45px; color:#fff; background:var(--hm-navy); }
-.smart-rfq-cta .section-kicker { margin:0 0 24px; padding:0; color:#b9d8ed; }
-.smart-rfq-cta h2 em { color:#b9d8ed; }
-.smart-rfq-cta > div:first-child > p:not(.section-kicker) { max-width:520px; margin:23px 0 0; color:#dceafa; font-size:12px; line-height:1.85; }
-.smart-rfq-cta .hero-actions { margin-top:27px; }
-.smart-rfq-cta-side { display:flex; flex-direction:column; gap:24px; padding:27px; border:1px solid #ffffff38; color:#b9d8ed; }
-.smart-rfq-cta-side span, .smart-rfq-cta-side small { font-size:9px; letter-spacing:.13em; text-transform:uppercase; }
-.smart-rfq-cta-side strong { color:#fff; font-family:var(--hm-serif); font-size:24px; font-weight:400; line-height:1.35; }
-@media(max-width:950px) {
-  .smart-rfq-hero { grid-template-columns:1fr; }
-  .smart-rfq-visual { max-width:680px; }
-  .smart-rfq-intro { grid-template-columns:1fr; }
-  .smart-rfq-intro-content { grid-template-columns:1.1fr .9fr; }
-  .smart-rfq-data { grid-template-columns:1fr; }
-}
-@media(max-width:700px) {
-  .smart-rfq-hero { min-height:0; padding-top:58px; padding-bottom:62px; }
-  .smart-rfq-hero h1 { font-size:clamp(44px,13vw,62px); }
-  .smart-rfq-hero-meta { margin-top:42px; }
-  .smart-rfq-visual { padding:24px 20px; box-shadow:10px 10px 0 #0b477c; }
-  .smart-rfq-intro-content, .smart-rfq-step-grid, .smart-rfq-followup, .smart-rfq-cta { grid-template-columns:1fr; }
-  .smart-rfq-step-grid { margin-top:36px; }
-  .smart-rfq-step-grid article, .smart-rfq-step-grid article + article { min-height:0; padding:22px 0; border-left:0; }
-  .smart-rfq-step-grid h3 { margin:18px 0 9px; }
-  .smart-rfq-truth { grid-template-columns:38px 1fr; gap:14px; }
-  .smart-rfq-truth-mark { width:34px; height:34px; }
-  .smart-rfq-cta-side { max-width:370px; }
-}
-</style>
