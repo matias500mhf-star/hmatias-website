@@ -206,7 +206,7 @@ const englishRoutes = [
   ["en/credibility", /HMATIAS CREDIBILITY/, /COMPANY IDENTIFICATION/],
   ["en/construction", /Construction and/, /Metal-frame building/],
   ["en/facilities", /Facilities and/, /Building maintenance/],
-  ["en/supply", /Procurement and/, /without holding its own stock/i],
+  ["en/supply", /Procurement and/, /does not hold its own stock/i],
   ["en/business-services", /Administrative,/, /Professional CV structuring/],
   ["en/works-catalogue", /Works, interventions/, /Completed Rural Pavilions/],
   ["en/blog", /Practical guides/, /FEATURED ARTICLE/],
