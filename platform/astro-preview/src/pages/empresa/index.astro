@@ -48,6 +48,14 @@ import { company } from "../../data/site";
       </div>
     </section>
 
+    <section class="ceo-message section-pad" aria-labelledby="ceo-heading">
+      <div class="ceo-message-inner">
+        <p class="section-kicker">MENSAGEM DA DIREÇÃO</p>
+        <h2 id="ceo-heading">Construir relações de confiança. <em>Entregar soluções com propósito.</em></h2>
+        <p class="ceo-message-copy">A HMATIAS nasceu da vontade de responder a necessidades reais das empresas e dos projetos em Angola. Trabalhamos para transformar cada pedido numa solução responsável, com atenção à qualidade, à execução e à confiança de quem nos escolhe.</p>
+        <div class="ceo-signature"><strong>Henrique Matias</strong><span>Sócio Único · CEO &amp; Managing Director</span></div>
+      </div>
+    </section>
 
   </main>
   <SiteFooter />
@@ -133,4 +141,16 @@ import { company } from "../../data/site";
 @media (prefers-reduced-motion:reduce) {
   .about-service-grid a { transition:none; }
 }
+
+.ceo-message { background:var(--hm-paper); border-top:1px solid var(--hm-line); }
+.ceo-message-inner { max-width:920px; margin:0 auto; padding-left:clamp(20px,5vw,64px); border-left:2px solid var(--hm-blue); }
+.ceo-message .section-kicker { margin:0; color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.15em; }
+.ceo-message h2 { max-width:790px; margin:22px 0 0; font-size:clamp(30px,4vw,48px); line-height:1.12; font-weight:520; letter-spacing:-.055em; }
+.ceo-message h2 em { color:var(--hm-blue); font-family:var(--hm-serif); font-weight:400; }
+.ceo-message-copy { max-width:760px; margin:22px 0 0; color:var(--hm-muted); font-size:13px; line-height:1.9; }
+.ceo-signature { display:flex; flex-direction:column; gap:5px; margin-top:26px; }
+.ceo-signature strong { color:var(--hm-ink); font-family:var(--hm-serif); font-size:21px; font-weight:400; }
+.ceo-signature span { color:var(--hm-muted); font-size:10px; letter-spacing:.04em; }
+@media (max-width:700px) { .ceo-message-inner { padding-left:20px; } .ceo-message h2 { font-size:clamp(29px,8vw,38px); } }
+
 </style>
