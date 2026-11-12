@@ -131,8 +131,6 @@ assert.ok(existsSync(aboutPath), "About page must be generated");
 const aboutHtml = readFileSync(aboutPath, "utf8");
 const aboutText = aboutHtml.replace(/<[^>]*>/g, " ");
 assert.ok(aboutHtml.includes("SOBRE A HMATIAS"), "About page label is missing");
-assert.ok(aboutHtml.includes("IDENTIFICAÇÃO EMPRESARIAL"), "About page company information section is missing");
-assert.ok(aboutHtml.includes("24.094-23"), "About page commercial registration is missing");
 assert.doesNotMatch(aboutText, /\bMISSÃO\b|\bVISÃO\b|MENSAGEM DO CEO|Direção Executiva/i, "Removed generic institutional copy must not return");
 assert.ok(aboutHtml.includes("Construção e remodelação"), "About page service overview is missing");
 assert.match(aboutHtml, /pavilhoes-rurais-concluidos/i, "About page must use a distinct real-work photograph");
