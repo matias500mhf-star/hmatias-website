@@ -99,7 +99,7 @@ assert.match(supplyHtml, /Registar pedido de cotação/, "Supply RFQ action is m
 const supplyImgCount = (supplyHtml.match(/<img\b/g) || []).length;
 const supplyImgWithAltCount = (supplyHtml.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(supplyImgWithAltCount, supplyImgCount, "Every Supply page image must have an alt attribute");
-assert.equal((supplyHtml.match(/supply-evidence-card/g) || []).length, 3, "Three Supply evidence cards are expected");
+assert.equal((supplyHtml.match(/class="supply-evidence-photo"/g) || []).length, 2, "Two Supply evidence photographs are expected");
 
 const smartRfqPath = join(outDir, "source-ao", "smart-rfq", "index.html");
 assert.ok(existsSync(smartRfqPath), "Smart RFQ page must be generated");
