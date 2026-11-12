@@ -6,7 +6,7 @@ Este inventário separa o que já foi recriado no protótipo Astro, o que contin
 
 ## 1. Páginas já recriadas no protótipo Astro
 
-O protótipo gera agora 34 páginas estáticas: 17 em Português (pt-AO) e 17 em Inglês.
+O protótipo gera agora 36 páginas estáticas: 18 em Português (pt-AO) e 18 em Inglês.
 
 | Área | Português | Inglês | Situação |
 |---|---|---|---|
@@ -16,7 +16,8 @@ O protótipo gera agora 34 páginas estáticas: 17 em Português (pt-AO) e 17 em
 | Estaleiro Integrado | `/estaleiro/` | `/en/integrated-yard/` | Estudo preliminar com duas plantas vectoriais, áreas e ressalvas técnicas; não apresentado como obra executada |
 | Credibilidade | `/credibilidade/` | `/en/credibility/` | Identificação empresarial, contactos e dados de registo |
 | Construção | `/construcao/` | `/en/construction/` | Serviços e registos de obras reais |
-| Facilities | `/facilities/` | `/en/facilities/` | Serviços e intervenções de manutenção |
+| Facilities | `/facilities/` | `/en/facilities/` | Serviços e intervenções de manutenção; ligação contextual para HMATIAS Clean |
+| HMATIAS Clean | `/clean/` | `/en/clean/` | Catálogo Taurus com 100 referências, pesquisa por nome/código/descrição, dois produtos em destaque e preparação de pedido multiartigo manual (até 20 artigos) |
 | Supply | `/supply/` | `/en/supply/` | Categorias, procurement e encaminhamento para pedidos |
 | Business Services | `/business-services/` | `/en/business-services/` | Seis áreas de serviço e ligações para os canais de pedido existentes |
 | Catálogo de Obras | `/catalogo-obras/` | `/en/works-catalogue/` | Doze registos fotográficos do arquivo |
@@ -54,7 +55,7 @@ As páginas abaixo continuam por recriar ou dependem de equivalência funcional.
 | Página atual | Conteúdo / função | Estado |
 |---|---|---|
 | `/rfq.html` | Construtor antigo de briefing RFQ por área de serviço | Não migrado; não confundir com o SOURCE AO RFQ |
-| `/clean.html` e `/clean-en.html` | HMATIAS Clean e fluxo de cotação | Não migrados |
+| `/clean.html` e `/clean-en.html` | HMATIAS Clean, catálogo Taurus e pedido multiartigo | Recriados no preview em `/clean/` e `/en/clean/`; fluxo de preparação e envio manual por WhatsApp/e-mail. Manter URLs oficiais até validação de equivalência, Search Console, backlinks e aprovação |
 | `/karta.html` e `/karta-en.html` | Apresentação do projeto KARTA | Recriada no preview como `/karta/` e `/en/karta/`; manter as URLs oficiais até validar e aprovar a migração |
 | `/agendamento.html` e `/booking.html` | Pedido de atendimento e preferência de horário | Mantidos no domínio oficial |
 | `/coberturas-industriais.html` | Página especializada de coberturas industriais | Não migrada |
@@ -163,7 +164,7 @@ No mesmo head foram concluídos com sucesso:
 
 ### Bloqueios ainda abertos para produção
 
-1. Migrar ou preservar páginas HMATIAS Clean, KARTA, agendamento/booking, Estaleiro Integrado e páginas especializadas, sem inventar conteúdo ou substituir funções por demonstrações.
+1. Validar a equivalência editorial e funcional das páginas HMATIAS Clean, KARTA e Estaleiro Integrado; preservar agendamento/booking e as páginas especializadas até existir substituto equivalente, sem inventar conteúdo ou substituir funções por demonstrações.
 2. Testar de ponta a ponta o formulário de contacto, Business Services, agendamento, RFQ operacional SOURCE AO, consentimento, tracking, notificações e alternativa manual.
 3. Obter exportação do Search Console e relatório de backlinks/referral traffic; completar a decisão de migração URL a URL.
 4. Executar revisão visual manual desktop/tablet/mobile, navegação integral por teclado e verificação com tecnologias de apoio.
@@ -199,3 +200,11 @@ URL de pré-visualização validada: https://hmatias-astro-preview-3z8cv9xdz-hma
 O workflow Astro prototype QA #624 está em execução para o head atual. A execução anterior #599 teve 115 testes aprovados e duas falhas num teste de navegação que ainda esperava a ligação antiga “Abrir Smart RFQ”; a expectativa foi substituída pela verificação do formulário autónomo. Os resultados de browser/axe/Lighthouse do head atual permanecem pendentes até à conclusão do workflow.
 
 **Estado de produção:** nenhum merge, redirect, alteração DNS ou publicação no domínio `comercialhmatiasps.com` foi realizado.
+
+### Nota de migração HMATIAS Clean — 12 de novembro de 2026
+
+As rotas Astro `/clean/` e `/en/clean/` foram acrescentadas como componente bilingue. A página preserva as duas referências em destaque (123 Pine Gel 500 ml e Taurus Pine Gel T563P), a ligação para o catálogo técnico Taurus do fabricante e as **100 referências** do catálogo legado, com categorias, códigos, descrições PT/EN e formatos indicados pelo fabricante.
+
+O formulário permite preparar um pedido com vários artigos (até 20), formato e quantidade por item, dados de contacto, localização de entrega e consentimento. O pedido é revisto no navegador e enviado manualmente pelo canal escolhido (WhatsApp ou e-mail). Não existe submissão ao servidor, registo automático de encomenda, cálculo de cotação nem confirmação de stock, preço ou prazo. Estes continuam sujeitos a confirmação comercial da HMATIAS.
+
+As imagens e os formatos dos produtos são referências de identificação. A menção à Taurus não afirma representação exclusiva, parceria ou exclusividade comercial. As URLs antigas `/clean.html` e `/clean-en.html` permanecem no inventário, sem redirect, até à revisão de Search Console/backlinks e aprovação explícita da migração.
