@@ -235,7 +235,7 @@ const englishRoutes = [
   ["en/accessibility", /more accessible to everyone/i, /independent audit/i],
   ["en/privacy", /Privacy Policy/, /Cookiebot/],
   ["en/terms", /Terms and Conditions/, /Intellectual property/],
-  ["en/karta", /KARTA Wallet Mobile/, /not currently available for public download/i],
+  ["en/karta", /KARTA Wallet Mobile/, /not yet available for public download/i],
 ];
 for (const [route, heading, marker] of englishRoutes) {
   const path = join(outDir, route, "index.html");
