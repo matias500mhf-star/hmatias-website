@@ -288,19 +288,19 @@
     },
     {
       "source_url": "/estaleiro-integrado.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
+      "preview_target": "/estaleiro/",
+      "treatment": "preview_route_pending_project_status_validation",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
-      "notes": "Projeto em desenvolvimento permanece com contexto, plantas e ressalvas técnicas."
+      "notes": "Projeto recriado no preview com estudo preliminar, duas plantas e ressalvas técnicas; a URL oficial mantém-se sem redirect até aprovação da migração."
     },
     {
       "source_url": "/integrated-yard.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
+      "preview_target": "/en/integrated-yard/",
+      "treatment": "preview_route_pending_project_status_validation",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
-      "notes": "Projeto em desenvolvimento em inglês permanece com contexto e ressalvas técnicas."
+      "notes": "Projeto recriado no preview com estudo preliminar, duas plantas e ressalvas técnicas; a URL oficial mantém-se sem redirect até aprovação da migração."
     },
     {
       "source_url": "/hmatias-clean.html",
