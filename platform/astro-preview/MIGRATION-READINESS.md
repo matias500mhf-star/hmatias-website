@@ -21,14 +21,14 @@ O protótipo gera agora 32 páginas estáticas: 16 em Português (pt-AO) e 16 em
 | Business Services | `/business-services/` | `/en/business-services/` | Seis áreas de serviço e ligações para os canais de pedido existentes |
 | Catálogo de Obras | `/catalogo-obras/` | `/en/works-catalogue/` | Doze registos fotográficos do arquivo |
 | Blog | `/blog/` | `/en/blog/` | Listagem e artigo de orientação sobre pedidos de cotação |
-| Smart RFQ | `/source-ao/smart-rfq/` | `/en/source-ao/smart-rfq/` | Página explicativa; encaminha para o RFQ operacional do SOURCE AO |
+| Smart RFQ | `/source-ao/smart-rfq/` | `/en/source-ao/smart-rfq/` | Formulário bilingue autónomo para Construção, Facilities e Supply; gera briefing local e oferece envio manual por e-mail ou WhatsApp |
 | Acessibilidade | `/acessibilidade/` | `/en/accessibility/` | Compromisso e canal para comunicar dificuldades |
 | Privacidade | `/privacidade/` | `/en/privacy/` | Política em português e inglês, com distinção entre preview e site oficial |
 | Termos | `/termos/` | `/en/terms/` | Termos gerais em português e inglês |
 
 O alternador de idioma associa as páginas PT e EN correspondentes, incluindo os dois slugs do artigo do Blog. A tradução das páginas acima está criada, mas a revisão editorial bilingue integral e a validação de todas as ligações continuam a fazer parte da revisão final.
 
-A página Smart RFQ é uma apresentação do fluxo, não um segundo motor de RFQ. O formulário multiartigo, a validação, o registo e o acompanhamento continuam no fluxo operacional existente em `/source-ao/rfq.html`.
+O Smart RFQ geral é um formulário de preparação de pedido independente: recolhe os dados no navegador, valida os campos da área selecionada, gera um resumo e uma referência local e só abre o canal escolhido pelo utilizador (e-mail ou WhatsApp). Não envia dados para um servidor, não regista pedidos, não gera cotações e não confirma stock nem prazos. O formulário multiartigo, o registo e o acompanhamento do SOURCE AO continuam no fluxo operacional separado em `/source-ao/rfq.html`.
 
 ## 2. Funcionalidades que permanecem no domínio oficial
 
@@ -185,3 +185,17 @@ As URLs antigas `/karta.html` e `/karta-en.html` continuam no inventário e não
 As rotas Astro `/estaleiro/` e `/en/integrated-yard/` foram criadas a partir das páginas antigas `estaleiro-integrado.html` e `integrated-yard.html`. O conteúdo preserva o estado de estudo preliminar, a área de 378,53 m², as dimensões de referência de 15,141 × 25 m, as duas alternativas de implantação, as áreas dos armazéns e as ressalvas necessárias antes de qualquer construção. As plantas vectoriais originais foram integradas no preview, com opção de abertura em tamanho integral.
 
 As páginas não afirmam que o estaleiro esteja construído ou licenciado. As URLs oficiais antigas permanecem sem redirecionamento até aprovação da equivalência e do mapa final.
+
+## 9. Correção do ambiente de pré-visualização — 12 de novembro de 2026
+
+A primeira URL Vercel anteriormente partilhada (`hmatias-site-test`) estava a servir o publisher antigo, apesar de o deployment aparecer como Ready. A resposta HTTP da homepage continha o canonical do domínio oficial e a rota Smart RFQ devolvia 404. Essa URL não deve voltar a ser usada para validar o protótipo Astro.
+
+Foi criado um projecto Vercel separado, ligado à pasta `platform/astro-preview`, com framework Astro, build `npm run build` e output `dist`. O deployment dedicado `hmatias-astro-preview` foi confirmado como Ready. A resposta HTTP 200 foi verificada para `/`, `/source-ao/smart-rfq/`, `/en/source-ao/smart-rfq/` e `/empresa/`.
+
+A homepage e as páginas servidas contêm os recursos processados em `/_astro/`, não o HTML antigo do publisher. A pré-visualização mantém `noindex, nofollow`, não possui o domínio oficial associado e não altera DNS nem produção.
+
+URL de pré-visualização validada: https://hmatias-astro-preview-3z8cv9xdz-hmatias.vercel.app/
+
+O workflow Astro prototype QA #624 está em execução para o head atual. A execução anterior #599 teve 115 testes aprovados e duas falhas num teste de navegação que ainda esperava a ligação antiga “Abrir Smart RFQ”; a expectativa foi substituída pela verificação do formulário autónomo. Os resultados de browser/axe/Lighthouse do head atual permanecem pendentes até à conclusão do workflow.
+
+**Estado de produção:** nenhum merge, redirect, alteração DNS ou publicação no domínio `comercialhmatiasps.com` foi realizado.
