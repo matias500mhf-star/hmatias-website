@@ -90,7 +90,10 @@
     radarTitle:'Organize pedidos de sourcing que aguardam resposta comercial.',
     requestTitle:'Peça à HMATIAS a análise de um pedido de fornecimento estruturado.',
     navCategories:'Categorias',
-    menuLabel:'Abrir navegação'
+    menuLabel:'Abrir navegação',
+    scopeAngolaTitle:'Angola · mercado principal',scopeAngolaText:'Concursos, RFQs, necessidades de compra e sourcing local.',
+    scopeNamibiaTitle:'Namíbia · pesquisa de fornecimento',scopeNamibiaText:'Materiais e equipamentos para abastecimento de Angola.',
+    scopeSouthAfricaTitle:'África do Sul · pesquisa de fornecimento',scopeSouthAfricaText:'Materiais e equipamentos para abastecimento de Angola.'
   });
   Object.assign(dictionary.en,{
     outcomeSpec:'Structured specification',outcomeSearch:'Targeted research',outcomeValidation:'Commercial validation',
@@ -101,7 +104,10 @@
     radarTitle:'Organise sourcing requests awaiting a commercial response.',
     requestTitle:'Ask HMATIAS to review a structured supply request.',
     navCategories:'Categories',
-    menuLabel:'Open navigation'
+    menuLabel:'Open navigation',
+    scopeAngolaTitle:'Angola · primary market',scopeAngolaText:'Tenders, RFQs, buying requirements and local sourcing.',
+    scopeNamibiaTitle:'Namibia · supply research',scopeNamibiaText:'Materials and equipment research for supply into Angola.',
+    scopeSouthAfricaTitle:'South Africa · supply research',scopeSouthAfricaText:'Materials and equipment research for supply into Angola.'
   });
 
   const categories=[
