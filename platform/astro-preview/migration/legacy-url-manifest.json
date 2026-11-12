@@ -120,19 +120,19 @@
     },
     {
       "source_url": "/clean.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
+      "preview_target": "/clean/",
+      "treatment": "preview_route_pending_redirect_approval",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
-      "notes": "HMATIAS Clean e cotação multiartigo ainda sem substituto equivalente."
+      "notes": "Página HMATIAS Clean recriada no Astro com catálogo de 100 referências Taurus, produtos em destaque e pedido multiartigo manual até 20 itens; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar migração."
     },
     {
       "source_url": "/clean-en.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
+      "preview_target": "/en/clean/",
+      "treatment": "preview_route_pending_redirect_approval",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
-      "notes": "HMATIAS Clean inglês e cotação multiartigo ainda sem substituto equivalente."
+      "notes": "Página HMATIAS Clean em inglês recriada no Astro com catálogo de 100 referências Taurus, produtos em destaque e pedido multiartigo manual até 20 itens; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar migração."
     },
     {
       "source_url": "/karta.html",
