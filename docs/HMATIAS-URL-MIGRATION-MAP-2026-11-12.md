@@ -33,8 +33,8 @@ Preservar o histórico orgânico do domínio comercialhmatiasps.com durante a tr
 | /work-catalogue.html | /en/works-catalogue/ | 301 após validar arquivo e conteúdo |
 | /credibilidade.html | /credibilidade/ | 301 após validar dados institucionais |
 | /credibility.html | /en/credibility/ | 301 após validar dados institucionais |
-| /clean.html | Manter /clean.html até existir página nova equivalente | Preservar |
-| /clean-en.html | Manter /clean-en.html até existir página nova equivalente | Preservar |
+| /clean.html | Página HMATIAS Clean recriada no preview em /clean/; manter o URL oficial até validar o catálogo, pedido multiartigo, Search Console e backlinks | Preservar até aprovação |
+| /clean-en.html | Página HMATIAS Clean em inglês recriada no preview em /en/clean/; manter o URL oficial até validar equivalência, Search Console e backlinks | Preservar até aprovação |
 | /karta.html | Página KARTA recriada no preview em /karta/; manter a URL oficial até validar o estado Alpha e aprovar a migração | Preservar até aprovação |
 | /karta-en.html | Página KARTA EN recriada no preview em /en/karta/; manter a URL oficial até validar o estado Alpha e aprovar a migração | Preservar até aprovação |
 | /servicos-administrativos.html | /business-services/ | 301 após validar formulário e conteúdo |
