@@ -5,6 +5,10 @@ import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import { company } from "../../data/site";
 
+const constructionWhatsapp = company.whatsappUri + "?text=" + encodeURIComponent(
+  "Olá, HMATIAS. Pretendo solicitar uma avaliação de construção ou remodelação. Localização da obra, tipo de intervenção, dimensões ou quantidades, prazo pretendido e fotografias ou plantas disponíveis:"
+);
+
 import heroPhoto from "../../../../../images/catalogue/anexo-coberto-estrutura-metalica.webp";
 import metalStructure from "../../../../../images/catalogue/galpao-estrutura-metalica.webp";
 import sitePreparation from "../../../../../images/catalogue/terraplanagem-preparacao-terreno.webp";
@@ -170,7 +174,7 @@ const workRecords = [
         <h2 id="pages-construcao-index-section-5-heading">Tem uma obra<br /><em>para avaliar?</em></h2>
         <p>Partilhe a localização, o tipo de intervenção e o que pretende realizar. Com essa informação, a HMATIAS poderá analisar o pedido e indicar os próximos passos.</p>
         <div class="construction-request-actions">
-          <a class="button button-light" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contactar por WhatsApp <span aria-hidden="true">↗</span></a>
+          <a class="button button-light" href={constructionWhatsapp} target="_blank" rel="noopener noreferrer">Contactar por WhatsApp <span aria-hidden="true">↗</span></a>
           <a class="construction-email-link" href={"mailto:" + company.commercialEmail + "?subject=Pedido%20de%20or%C3%A7amento%20-%20Constru%C3%A7%C3%A3o%20e%20Remodela%C3%A7%C3%A3o"}>Enviar e-mail <span aria-hidden="true">↗</span></a>
         </div>
       </div>
