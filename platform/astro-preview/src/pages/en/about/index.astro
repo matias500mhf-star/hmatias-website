@@ -47,10 +47,10 @@ import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-conc
 
     <section class="ceo-message section-pad" aria-labelledby="ceo-heading">
       <div class="ceo-message-inner">
-        <p class="section-kicker">A MESSAGE FROM LEADERSHIP</p>
-        <h2 id="ceo-heading">Building trusted relationships. <em>Delivering purposeful solutions.</em></h2>
-        <p class="ceo-message-copy">HMATIAS was founded on the commitment to address the real needs of businesses and projects in Angola. Our aim is to turn each request into a responsible solution, with close attention to quality, delivery and the trust of those who work with us.</p>
-        <div class="ceo-signature"><strong>Henrique Matias</strong><span>Sole Shareholder · CEO &amp; Managing Director</span></div>
+        <p class="section-kicker">MESSAGE FROM THE CEO</p>
+        <h2 id="ceo-heading">Our commitment.</h2>
+        <p class="ceo-message-copy">At HMATIAS, we approach every assignment with responsibility, care and attention to our clients’ needs. Our commitment is to provide suitable solutions and handle every stage with professionalism.</p>
+        <div class="ceo-signature"><strong>Henrique Fernandes</strong><span>CEO</span></div>
       </div>
     </section>
 
@@ -165,5 +165,78 @@ import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-conc
 .direction-statement { max-width:850px; margin:30px 0 0; padding-left:18px; border-left:2px solid var(--hm-blue); color:var(--hm-ink); font-family:var(--hm-serif); font-size:clamp(18px,2.2vw,25px); line-height:1.5; }
 @media (max-width:800px) { .principles-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:520px) { .principles-grid { grid-template-columns:1fr; } .principles-grid article { min-height:0; padding:21px; } }
+
+
+/* CEO message: single-column layout, consistent across desktop and mobile. */
+.ceo-message {
+  display:block;
+  background:var(--hm-paper);
+  border-top:1px solid var(--hm-line);
+}
+.ceo-message-inner {
+  box-sizing:border-box;
+  width:100%;
+  max-width:1040px;
+  margin:0 auto;
+  padding:0 0 0 clamp(22px,4vw,52px);
+  border-left:2px solid var(--hm-blue);
+}
+.ceo-message .section-kicker {
+  margin:0;
+  color:var(--hm-blue);
+  font-size:9px;
+  font-weight:750;
+  letter-spacing:.15em;
+}
+.ceo-message h2 {
+  max-width:790px;
+  margin:18px 0 0;
+  font-size:clamp(30px,4vw,48px);
+  line-height:1.12;
+  font-weight:520;
+  letter-spacing:-.055em;
+}
+.ceo-message-copy {
+  max-width:760px;
+  margin:18px 0 0;
+  color:var(--hm-muted);
+  font-size:14px;
+  line-height:1.8;
+}
+.ceo-signature {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+  margin-top:24px;
+}
+.ceo-signature strong {
+  color:var(--hm-ink);
+  font-family:var(--hm-serif);
+  font-size:22px;
+  font-weight:400;
+}
+.ceo-signature span {
+  color:var(--hm-muted);
+  font-size:10px;
+  letter-spacing:.04em;
+}
+@media (max-width:700px) {
+  .ceo-message-inner {
+    padding-left:18px;
+    max-width:100%;
+  }
+  .ceo-message h2 {
+    margin-top:14px;
+    font-size:clamp(28px,8vw,36px);
+    line-height:1.12;
+  }
+  .ceo-message-copy {
+    margin-top:14px;
+    font-size:13px;
+    line-height:1.75;
+  }
+  .ceo-signature { margin-top:20px; }
+}
 
 </style>
