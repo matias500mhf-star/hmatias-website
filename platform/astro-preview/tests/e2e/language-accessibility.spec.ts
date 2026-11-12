@@ -82,6 +82,7 @@ test("all English routes expose matching language, brand descriptions and recipr
     ["/en/credibility/", "/credibilidade/"],
     ["/en/construction/", "/construcao/"],
     ["/en/facilities/", "/facilities/"],
+    ["/en/clean/", "/clean/"],
     ["/en/supply/", "/supply/"],
     ["/en/business-services/", "/business-services/"],
     ["/en/works-catalogue/", "/catalogo-obras/"],
