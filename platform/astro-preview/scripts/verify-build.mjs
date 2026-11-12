@@ -27,6 +27,7 @@ assert.match(html, /tel:\+244948806673/, "Footer telephone link is missing");
 assert.match(html, /SOURCE AO/, "Source AO footer link is missing");
 assert.match(html, /Blog · Perspetivas empresariais/, "Blog footer link is missing");
 assert.match(html, /KARTA Wallet · Projeto Alpha/, "KARTA Alpha project footer link is missing");
+assert.match(html, /href="\/estaleiro\//, "Footer project link must point to the Integrated Yard preview");
 assert.ok(html.includes('href="/empresa/">Sobre a HMATIAS'), "Footer About link must point to the About page");
 assert.ok(html.includes('href="/credibilidade/">Credibilidade'), "Footer credibility link must point to the credibility page");
 assert.match(html, /Política de Privacidade/, "Privacy Policy footer link is missing");
@@ -74,6 +75,20 @@ assert.match(kartaHtml, />ALPHA</, "KARTA must retain its Alpha status");
 assert.match(kartaHtml, /não disponível para download público/i, "KARTA must not claim public availability");
 assert.match(kartaHtml, /objetivos futuros/i, "KARTA roadmap must be distinguished from current capabilities");
 assert.match(kartaHtml, /mailto:geral@comercialhmatiasps\.com\?subject=KARTA%20Wallet/, "KARTA interest handoff must use the published email channel");
+
+const yardPath = join(outDir, "estaleiro", "index.html");
+assert.ok(existsSync(yardPath), "Integrated Yard page must be generated");
+const yardHtml = readFileSync(yardPath, "utf8");
+assert.match(yardHtml, /Estaleiro Integrado HMATIAS/, "Integrated Yard title is missing");
+assert.match(yardHtml, /378,53 m²/, "Integrated Yard plot area is missing");
+assert.match(yardHtml, /15,141 × 25 m/, "Integrated Yard plot dimensions are missing");
+assert.match(yardHtml, /Armazém compacto com cobertura lateral/, "Integrated Yard Alternative A is missing");
+assert.match(yardHtml, /Armazém ampliado com acesso lateral/, "Integrated Yard Alternative B is missing");
+assert.match(yardHtml, /Estudo preliminar de implantação/, "Integrated Yard preliminary status is missing");
+assert.match(yardHtml, /não substituem os projetos de arquitetura e especialidades/, "Integrated Yard technical disclaimer is missing");
+assert.doesNotMatch(yardHtml, /obra concluída|instalação concluída/i, "Integrated Yard must not be presented as completed");
+assert.equal((yardHtml.match(/class="yard-plan-image"/g) || []).length, 2, "Both dimensioned yard plans must be rendered");
+assert.equal((yardHtml.match(/<img\b[^>]*\balt=/g) || []).length, (yardHtml.match(/<img\b/g) || []).length, "Every yard image must have alt text");
 
 const constructionPath = join(outDir, "construcao", "index.html");
 assert.ok(existsSync(constructionPath), "Construction page must be generated");
@@ -236,6 +251,7 @@ const englishRoutes = [
   ["en/privacy", /Privacy Policy/, /Cookiebot/],
   ["en/terms", /Terms and Conditions/, /Intellectual property/],
   ["en/karta", /KARTA Wallet Mobile/, /not yet available for public download/i],
+  ["en/integrated-yard", /HMATIAS Integrated Yard/, /preliminary site-layout study/i],
 ];
 for (const [route, heading, marker] of englishRoutes) {
   const path = join(outDir, route, "index.html");
@@ -307,6 +323,7 @@ const languagePairs = [
   ["privacidade", "en/privacy", "/privacidade/", "/en/privacy/"],
   ["termos", "en/terms", "/termos/", "/en/terms/"],
   ["karta", "en/karta", "/karta/", "/en/karta/"],
+  ["estaleiro", "en/integrated-yard", "/estaleiro/", "/en/integrated-yard/"],
 ];
 
 function languageSwitchTarget(pageHtml, route) {
