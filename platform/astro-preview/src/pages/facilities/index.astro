@@ -5,6 +5,10 @@ import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import { company } from "../../data/site";
 
+const facilitiesWhatsapp = company.whatsappUri + "?text=" + encodeURIComponent(
+  "Olá, HMATIAS. Pretendo solicitar uma avaliação de facilities ou manutenção. Tipo e localização da instalação, áreas abrangidas, serviço necessário, frequência pretendida, horário e fotografias disponíveis:"
+);
+
 import heroPhoto from "../../../../../images/catalogue/caixilharia-vidro-fumado.webp";
 import roofMaintenance from "../../../../../images/catalogue/cobertura-metalica-substituicao.webp";
 import annexStructure from "../../../../../images/catalogue/anexo-coberto-estrutura-metalica.webp";
@@ -154,7 +158,7 @@ const evidence = [
         <h2 id="pages-facilities-index-section-5-heading">Precisa de manutenção<br /><em>ou apoio operacional?</em></h2>
         <p>Indique o tipo de instalação, a localização, as áreas abrangidas e a frequência pretendida. A HMATIAS poderá avaliar o âmbito e preparar uma proposta adequada ao pedido.</p>
         <div class="construction-request-actions">
-          <a class="button button-light" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contactar por WhatsApp <span aria-hidden="true">↗</span></a>
+          <a class="button button-light" href={facilitiesWhatsapp} target="_blank" rel="noopener noreferrer">Contactar por WhatsApp <span aria-hidden="true">↗</span></a>
           <a class="construction-email-link" href={"mailto:" + company.commercialEmail + "?subject=Pedido%20de%20servi%C3%A7o%20-%20Facilities%20e%20Manuten%C3%A7%C3%A3o"}>Enviar e-mail <span aria-hidden="true">↗</span></a>
         </div>
       </div>
