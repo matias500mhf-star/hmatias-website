@@ -269,14 +269,10 @@
   });
 
   const handleCleanProductAdd = event => {
-    const eventTarget = event.target instanceof Element
-      ? event.target
-      : event.target?.parentElement;
-    const button = eventTarget?.closest('[data-clean-product]');
-    if (!button) return;
     event.preventDefault();
-    event.stopPropagation();
-    const productName = button.getAttribute('data-clean-product') || '';
+    const button = event.currentTarget;
+    const productName = button?.getAttribute('data-clean-product') || '';
+    if (!productName) return;
     addToCart(productName);
     const previous = button.textContent;
     button.textContent = copy.added;
@@ -287,11 +283,26 @@
     }, 1200);
   };
 
-  // The catalogue is re-rendered on each search, so delegate at its stable root.
-  q('#clean-catalog-results')?.addEventListener('click', handleCleanProductAdd, true);
-  // Featured product controls are static Astro elements and sit outside the catalogue root.
+  const bindCleanProductButtons = root => {
+    root.querySelectorAll('[data-clean-product]').forEach(button => {
+      if (button.dataset.hmatiasCleanBound === 'true') return;
+      button.dataset.hmatiasCleanBound = 'true';
+      button.addEventListener('click', handleCleanProductAdd);
+    });
+  };
+
+  // Product cards are rebuilt when the catalogue search or category changes.
+  const catalogRoot = q('#clean-catalog-results');
+  if (catalogRoot) {
+    bindCleanProductButtons(catalogRoot);
+    const catalogueObserver = new MutationObserver(() => bindCleanProductButtons(catalogRoot));
+    catalogueObserver.observe(catalogRoot, { childList: true, subtree: true });
+  }
+  // Featured products are static elements outside the rendered catalogue.
   qa('.clean-featured [data-clean-product]').forEach(button => {
-    button.addEventListener('click', handleCleanProductAdd, true);
+    if (button.dataset.hmatiasCleanBound === 'true') return;
+    button.dataset.hmatiasCleanBound = 'true';
+    button.addEventListener('click', handleCleanProductAdd);
   });
 
   cartClear?.addEventListener('click', () => {
