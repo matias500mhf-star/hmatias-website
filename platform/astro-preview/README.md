@@ -10,7 +10,7 @@ Este projeto é um protótipo isolado para avaliar uma arquitetura Astro para o 
 - Preservar as proporções das fotografias; a galeria não impõe cortes para preencher cartões.
 - Manter conteúdos e contactos em dados tipados.
 - Gerar HTML estático para as páginas institucionais, sem adicionar runtime React onde não existe necessidade de interação complexa.
-- Disponibilizar 14 rotas em Português (pt-AO) e 14 rotas em Inglês.
+- Disponibilizar 18 rotas em Português (pt-AO) e 18 rotas em Inglês.
 - Validar tipos, build e estrutura do artefacto em CI.
 - Testar navegação em Chromium desktop e WebKit móvel com Playwright.
 - Verificar acessibilidade automatizada com axe-core e recolher auditorias Lighthouse.
@@ -45,13 +45,13 @@ O lockfile `package-lock.json` está versionado. As instalações repetíveis de
 
 ## Decisão sobre React
 
-React não foi instalado nesta etapa. As páginas institucionais são maioritariamente conteúdo e navegação; Astro produz HTML estático e evita enviar um runtime de interface desnecessário. A página Smart RFQ contém agora um formulário bilingue próprio para Construção, Facilities e Supply. Valida os campos da área escolhida, gera no navegador um resumo estruturado e uma referência local e permite ao utilizador optar pelo envio por e-mail ou WhatsApp. Não submete dados a um servidor, não cria encomendas, não calcula cotações e não confirma stock ou prazos. O RFQ multi-produto operacional do SOURCE AO em `/source-ao/rfq.html` mantém-se separado. React não foi adicionado porque a interação atual não justifica um runtime adicional.
+React não foi instalado nesta etapa. As páginas institucionais são maioritariamente conteúdo e navegação; Astro produz HTML estático e evita enviar um runtime de interface desnecessário. A página Smart RFQ contém agora um formulário bilingue próprio para Construção, Facilities e Supply. Valida os campos da área escolhida, gera no navegador um resumo estruturado e uma referência local e permite ao utilizador optar pelo envio por e-mail ou WhatsApp. Não submete dados a um servidor, não cria encomendas, não calcula cotações e não confirma stock ou prazos. O RFQ multi-produto operacional do SOURCE AO em `/source-ao/rfq.html` mantém-se separado. React não foi adicionado porque a interação atual não justifica um runtime adicional. A HMATIAS Clean inclui um catálogo de 100 referências Taurus e um carrinho de preparação de pedido multiartigo (máximo de 20 itens), com handoff manual por WhatsApp ou e-mail; não submete dados a servidor nem regista encomendas.
 
 ## Limites de publicação
 
 - Esta pasta não está ligada ao publisher de produção.
 - Não executar `wrangler deploy`, não alterar DNS e não associar o domínio oficial.
-- O contacto principal, Business Services, agendamento e RFQ multi-produto operacional SOURCE AO continuam no website oficial. O novo Smart RFQ geral é um fluxo autónomo, executado no navegador.
+- O contacto principal, Business Services, agendamento e RFQ multi-produto operacional SOURCE AO continuam no website oficial. O Smart RFQ geral e o pedido multiartigo HMATIAS Clean são fluxos de preparação local, com envio manual e sem submissão automática ao servidor.
 - O preview mantém `noindex, nofollow`.
 - O resultado só pode ser considerado candidato a migração após validação visual, acessibilidade, SEO, performance, versões linguísticas, redirecionamentos e integrações.
 
