@@ -42,7 +42,7 @@ const isEn = lang === "en";
       </div>
       <p>{isEn
         ? "Only the fields relevant to your selected service will be required."
-        : "Só serão exigidos os campos relevantes para a área seleccionada."}</p>
+        : "Só serão exigidos os campos relevantes para a área selecionada."}</p>
     </div>
 
     <div class="rfq-layout">
@@ -79,14 +79,14 @@ const isEn = lang === "en";
               <div class="rfq-field">
                 <label for="rfqService">{isEn ? "HMATIAS service area *" : "Área HMATIAS *"}</label>
                 <select id="rfqService" name="service" required>
-                  <option value="">{isEn ? "Select an area" : "Seleccione uma área"}</option>
+                  <option value="">{isEn ? "Select an area" : "Selecione uma área"}</option>
                   <option value="construction">{isEn ? "Construction & Remodelling" : "Construção & Remodelação"}</option>
                   <option value="facilities">{isEn ? "Facilities & Maintenance" : "Facilities & Manutenção"}</option>
                   <option value="supply">{isEn ? "Supply & Procurement" : "Supply & Procurement"}</option>
                 </select>
               </div>
               <div class="rfq-field full">
-                <label for="rfqProject">{isEn ? "Project / requirement (optional)" : "Projecto / necessidade (opcional)"}</label>
+                <label for="rfqProject">{isEn ? "Project / requirement (optional)" : "Projeto / necessidade (opcional)"}</label>
                 <input id="rfqProject" name="project_name" maxlength="180" placeholder={isEn ? "E.g. office remodelling, preventive maintenance, equipment supply" : "Ex.: remodelação de escritório, manutenção preventiva, fornecimento de equipamento"} />
               </div>
             </div>
@@ -98,7 +98,7 @@ const isEn = lang === "en";
               <div class="rfq-field">
                 <label for="constructionType">{isEn ? "Type of work *" : "Tipo de intervenção *"}</label>
                 <select id="constructionType" name="construction_type" required>
-                  <option value="">{isEn ? "Select" : "Seleccione"}</option>
+                  <option value="">{isEn ? "Select" : "Selecione"}</option>
                   <option>{isEn ? "Construction / execution" : "Construção / execução"}</option>
                   <option>{isEn ? "Remodelling / rehabilitation" : "Remodelação / reabilitação"}</option>
                   <option>{isEn ? "Paving / concrete" : "Pavimentação / betonagem"}</option>
@@ -136,7 +136,7 @@ const isEn = lang === "en";
               <div class="rfq-field">
                 <label for="facilityFrequency">{isEn ? "Required frequency *" : "Frequência pretendida *"}</label>
                 <select id="facilityFrequency" name="facility_frequency" required>
-                  <option value="">{isEn ? "Select" : "Seleccione"}</option>
+                  <option value="">{isEn ? "Select" : "Selecione"}</option>
                   <option>{isEn ? "One-off intervention" : "Intervenção pontual"}</option>
                   <option>{isEn ? "Weekly" : "Semanal"}</option>
                   <option>{isEn ? "Monthly" : "Mensal"}</option>
@@ -148,7 +148,7 @@ const isEn = lang === "en";
               <div class="rfq-field">
                 <label for="facilityPriority">{isEn ? "Priority" : "Prioridade"}</label>
                 <select id="facilityPriority" name="facility_priority">
-                  <option value="">{isEn ? "Select" : "Seleccione"}</option>
+                  <option value="">{isEn ? "Select" : "Selecione"}</option>
                   <option>{isEn ? "Normal" : "Normal"}</option>
                   <option>{isEn ? "High" : "Alta"}</option>
                   <option>{isEn ? "Operation affected" : "Operação condicionada"}</option>
@@ -194,7 +194,7 @@ const isEn = lang === "en";
               <div class="rfq-field">
                 <label for="supplyAlternative">{isEn ? "Equivalent alternative acceptable?" : "Aceita alternativa equivalente?"}</label>
                 <select id="supplyAlternative" name="supply_alternative">
-                  <option value="">{isEn ? "Select" : "Seleccione"}</option>
+                  <option value="">{isEn ? "Select" : "Selecione"}</option>
                   <option>{isEn ? "Yes" : "Sim"}</option>
                   <option>{isEn ? "No, exact reference" : "Não, referência exacta"}</option>
                   <option>{isEn ? "Subject to approval" : "Sujeito a aprovação"}</option>
