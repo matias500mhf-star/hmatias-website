@@ -180,5 +180,17 @@
   });
 
   service?.addEventListener('change', updateContext);
+
+  const presetParams = new URLSearchParams(window.location.search);
+  const presetService = presetParams.get('service');
+  const allowedServices = ['construction', 'facilities', 'supply'];
+  if (service && presetService && allowedServices.includes(presetService)) {
+    service.value = presetService;
+  }
+  const presetProject = presetParams.get('project');
+  const projectField = form.querySelector('#rfqProject');
+  if (projectField && presetProject) {
+    projectField.value = presetProject.slice(0, 180);
+  }
   updateContext();
 })();
