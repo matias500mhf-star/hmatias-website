@@ -280,8 +280,8 @@ assert.doesNotMatch(englishAbout, /instalacoes-embutidas-construcao/i, "English 
 
 for (const [route] of englishRoutes) {
   const content = readFileSync(join(outDir, route, "index.html"), "utf8");
-  const imageCount = (content.match(/<img\\b/g) || []).length;
-  const imageAltCount = (content.match(/<img\\b[^>]*\\balt=/g) || []).length;
+  const imageCount = (content.match(/<img\b/g) || []).length;
+  const imageAltCount = (content.match(/<img\b[^>]*\balt=/g) || []).length;
   assert.equal(imageAltCount, imageCount, `Every image in English route /${route}/ must have alt text`);
   assert.doesNotMatch(content, /Lorem ipsum|This is a space to share|Coming soon|EM PREPARAÇÃO|Publicação em preparação/i, `Placeholder copy must not appear in /${route}/`);
 }
