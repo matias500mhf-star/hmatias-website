@@ -191,7 +191,23 @@ test.describe("HMATIAS institutional pages", () => {
   });
 
   test("new institutional pages have no critical or serious axe violations", async ({ page }) => {
-    for (const route of ["/business-services/", "/empresa/", "/privacidade/", "/termos/", "/catalogo-obras/", "/clean/", "/en/clean/"]) {
+    for (const route of [
+      "/business-services/",
+      "/empresa/",
+      "/privacidade/",
+      "/termos/",
+      "/catalogo-obras/",
+      "/clean/",
+      "/en/clean/",
+      "/coberturas-industriais/",
+      "/limpeza-pos-obra/",
+      "/fornecimento-de-epi-e-fardamento/",
+      "/remodelacao-de-escritorios/",
+      "/en/industrial-roofing/",
+      "/en/post-construction-cleaning/",
+      "/en/ppe-workwear/",
+      "/en/office-remodelling/",
+    ]) {
       await page.goto(route);
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
