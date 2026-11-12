@@ -244,6 +244,7 @@ const englishRoutes = [
   ["en/credibility", /HMATIAS CREDIBILITY/, /COMPANY IDENTIFICATION/],
   ["en/construction", /Construction and/, /Metal-frame building/],
   ["en/facilities", /Facilities and/, /Building maintenance/],
+  ["en/clean", /HMATIAS Clean/, /Prepare a multi-item request/],
   ["en/supply", /Procurement and/, /does not hold its own stock/i],
   ["en/business-services", /Administrative,/, /Professional CV structuring/],
   ["en/works-catalogue", /Works, interventions/, /Completed Rural Pavilions/],
@@ -265,6 +266,29 @@ for (const [route, heading, marker] of englishRoutes) {
   assert.match(content, marker, `English key content is missing: /${route}/`);
   assert.ok(content.includes('class="language-switch"'), `Language switch is missing: /${route}/`);
 }
+
+const cleanPortuguese = readFileSync(join(outDir, "clean", "index.html"), "utf8");
+const cleanEnglish = readFileSync(join(outDir, "en", "clean", "index.html"), "utf8");
+assert.match(cleanPortuguese, /HMATIAS Clean/);
+assert.match(cleanPortuguese, /Produtos em destaque/);
+assert.match(cleanPortuguese, /Taurus technical catalogue|Catálogo técnico Taurus/);
+assert.match(cleanPortuguese, /clean-catalog-search/);
+assert.match(cleanPortuguese, /clean-catalog-tabs/);
+assert.match(cleanPortuguese, /clean-catalog-results/);
+assert.match(cleanPortuguese, /cleanQuoteForm/);
+assert.match(cleanPortuguese, /clean-privacy-consent/);
+assert.match(cleanPortuguese, /Não submete dados a um servidor nem regista uma encomenda/);
+assert.match(cleanPortuguese, /noindex, nofollow/);
+assert.match(cleanPortuguese, /href="https:\/\/www\.tmpn\.com\/resources\/taurus-catalogue\.pdf"/);
+assert.match(cleanEnglish, /HMATIAS Clean/);
+assert.match(cleanEnglish, /Featured product references|Featured product/);
+assert.match(cleanEnglish, /clean-catalog-search/);
+assert.match(cleanEnglish, /clean-catalog-tabs/);
+assert.match(cleanEnglish, /clean-catalog-results/);
+assert.match(cleanEnglish, /cleanQuoteForm/);
+assert.match(cleanEnglish, /clean-privacy-consent/);
+assert.match(cleanEnglish, /does not submit a server request or register an order/);
+assert.match(cleanEnglish, /noindex, nofollow/);
 
 const englishHomepage = readFileSync(join(outDir, "en", "index.html"), "utf8");
 assert.ok(englishHomepage.includes('href="/en/construction/"'), "English homepage must link to English construction");
@@ -319,6 +343,7 @@ const languagePairs = [
   ["credibilidade", "en/credibility", "/credibilidade/", "/en/credibility/"],
   ["construcao", "en/construction", "/construcao/", "/en/construction/"],
   ["facilities", "en/facilities", "/facilities/", "/en/facilities/"],
+  ["clean", "en/clean", "/clean/", "/en/clean/"],
   ["supply", "en/supply", "/supply/", "/en/supply/"],
   ["business-services", "en/business-services", "/business-services/", "/en/business-services/"],
   ["catalogo-obras", "en/works-catalogue", "/catalogo-obras/", "/en/works-catalogue/"],
