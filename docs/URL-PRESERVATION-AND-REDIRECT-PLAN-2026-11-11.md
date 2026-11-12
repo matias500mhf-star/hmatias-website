@@ -22,7 +22,7 @@ Nenhuma URL histórica deve ser removida, desindexada ou redirecionada antes de:
 |---|---|---|---|
 | `/rfq.html` | Briefing RFQ antigo para Construção, Facilities e Supply; prepara o texto no navegador e permite envio por e-mail/WhatsApp | Manter operacional; não confundir com o SOURCE AO RFQ | Só substituir quando o novo fluxo cobrir as mesmas áreas, campos, revisão e canais de envio |
 | `/clean.html`, `/clean-en.html` | HMATIAS Clean, referências de produtos, catálogo técnico e pedido de cotação multiartigo | Manter as duas versões | Criar destino específico para catálogo/linha de produtos e testar o pedido multiartigo; não reduzir automaticamente à página geral Supply |
-| `/karta.html`, `/karta-en.html` | Apresentação do produto/projeto KARTA | Manter até decisão de produto e conteúdo | Confirmar estado comercial, identidade, propriedade do produto e destino futuro |
+| `/karta.html`, `/karta-en.html` | Apresentação do produto/projeto KARTA | Preservar as URLs oficiais; o preview recria `/karta/` e `/en/karta/` | Confirmar estado Alpha, conteúdo aprovado, identidade e decisão de migração antes de qualquer redirect |
 | `/agendamento.html`, `/booking.html` | Pedido de atendimento/agendamento Business Services | Manter no domínio oficial | Migrar apenas com formulário, disponibilidade, notificações e confirmação testados |
 | `/coberturas-industriais.html` | Página especializada de coberturas industriais | Preservar | Integrar em Construção apenas se a página de destino mantiver o conteúdo específico e a intenção da consulta |
 | `/limpeza-pos-obra.html` | Página especializada de limpeza pós-obra | Preservar | Integrar em Facilities apenas se mantiver escopo, condições e conteúdo específico |
