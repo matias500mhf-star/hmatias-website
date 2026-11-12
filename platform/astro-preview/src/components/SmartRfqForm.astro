@@ -1,0 +1,320 @@
+---
+interface Props {
+  lang?: "pt" | "en";
+}
+
+const { lang = "pt" } = Astro.props;
+const isEn = lang === "en";
+---
+<main class="smart-rfq-builder">
+  <section class="rfq-hero">
+    <div class="rfq-hero-copy">
+      <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS · SMART RFQ</p>
+      <h1>{isEn ? "Turn your requirement into a clear request." : "Transforme a necessidade num pedido claro."}</h1>
+      <p class="rfq-hero-lead">
+        {isEn
+          ? "Choose a service area, describe what you need and review the brief before sending it to HMATIAS."
+          : "Escolha a área de serviço, descreva o que precisa e reveja o briefing antes de o enviar à HMATIAS."}
+      </p>
+      <div class="rfq-badges" aria-label={isEn ? "Available service areas" : "Áreas de serviço"}>
+        <span>{isEn ? "Construction & Remodelling" : "Construção & Remodelação"}</span>
+        <span>{isEn ? "Facilities & Maintenance" : "Facilities & Manutenção"}</span>
+        <span>{isEn ? "Supply & Procurement" : "Supply & Procurement"}</span>
+      </div>
+    </div>
+    <aside class="rfq-hero-note">
+      <span class="rfq-note-label">{isEn ? "IMPORTANT" : "INFORMAÇÃO IMPORTANTE"}</span>
+      <strong>{isEn ? "This is a request brief, not an automatic quotation." : "Este é um briefing, não uma cotação automática."}</strong>
+      <p>{isEn
+        ? "The tool does not calculate prices, confirm stock or guarantee delivery dates. Nothing is sent until you choose email or WhatsApp."
+        : "A ferramenta não calcula preços, não confirma stock nem garante prazos. Nada é enviado até escolher e-mail ou WhatsApp."}</p>
+      <p>{isEn
+        ? "Do not enter passwords, banking details or identity document numbers."
+        : "Não introduza palavras-passe, dados bancários ou números de documentos de identificação."}</p>
+    </aside>
+  </section>
+
+  <section class="rfq-content section-pad" id="rfq">
+    <div class="rfq-section-heading">
+      <div>
+        <p class="section-kicker">{isEn ? "01 / REQUEST DETAILS" : "01 / DADOS DO PEDIDO"}</p>
+        <h2>{isEn ? "What do you need?" : "O que precisa?"}</h2>
+      </div>
+      <p>{isEn
+        ? "Only the fields relevant to your selected service will be required."
+        : "Só serão exigidos os campos relevantes para a área seleccionada."}</p>
+    </div>
+
+    <div class="rfq-layout">
+      <div class="rfq-panel rfq-form-panel">
+        <div class="rfq-progress" aria-label={isEn ? "Request stages" : "Etapas do pedido"}>
+          <span class="active">{isEn ? "1 · Contact" : "1 · Contacto"}</span>
+          <span>{isEn ? "2 · Requirement" : "2 · Necessidade"}</span>
+          <span>{isEn ? "3 · Review" : "3 · Revisão"}</span>
+        </div>
+        <form id="smartRfqForm" novalidate>
+          <fieldset class="rfq-section">
+            <legend>{isEn ? "Contact and location" : "Contacto e localização"}</legend>
+            <div class="rfq-grid">
+              <div class="rfq-field">
+                <label for="rfqName">{isEn ? "Contact name *" : "Nome do responsável *"}</label>
+                <input id="rfqName" name="requester_name" autocomplete="name" required maxlength="120" />
+              </div>
+              <div class="rfq-field">
+                <label for="rfqCompany">{isEn ? "Company / organisation" : "Empresa / entidade"}</label>
+                <input id="rfqCompany" name="company" autocomplete="organization" maxlength="160" />
+              </div>
+              <div class="rfq-field">
+                <label for="rfqEmail">{isEn ? "Email *" : "E-mail *"}</label>
+                <input id="rfqEmail" name="email" type="email" autocomplete="email" required maxlength="160" />
+              </div>
+              <div class="rfq-field">
+                <label for="rfqPhone">{isEn ? "Phone / WhatsApp" : "Telefone / WhatsApp"}</label>
+                <input id="rfqPhone" name="phone" type="tel" autocomplete="tel" maxlength="60" />
+              </div>
+              <div class="rfq-field">
+                <label for="rfqLocation">{isEn ? "Request location *" : "Localização do pedido *"}</label>
+                <input id="rfqLocation" name="location" required maxlength="180" placeholder={isEn ? "E.g. Viana, Luanda" : "Ex.: Viana, Luanda"} />
+              </div>
+              <div class="rfq-field">
+                <label for="rfqService">{isEn ? "HMATIAS service area *" : "Área HMATIAS *"}</label>
+                <select id="rfqService" name="service" required>
+                  <option value="">{isEn ? "Select an area" : "Seleccione uma área"}</option>
+                  <option value="construction">{isEn ? "Construction & Remodelling" : "Construção & Remodelação"}</option>
+                  <option value="facilities">{isEn ? "Facilities & Maintenance" : "Facilities & Manutenção"}</option>
+                  <option value="supply">{isEn ? "Supply & Procurement" : "Supply & Procurement"}</option>
+                </select>
+              </div>
+              <div class="rfq-field full">
+                <label for="rfqProject">{isEn ? "Project / requirement (optional)" : "Projecto / necessidade (opcional)"}</label>
+                <input id="rfqProject" name="project_name" maxlength="180" placeholder={isEn ? "E.g. office remodelling, preventive maintenance, equipment supply" : "Ex.: remodelação de escritório, manutenção preventiva, fornecimento de equipamento"} />
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="rfq-section rfq-context" data-service="construction">
+            <legend>{isEn ? "Construction & Remodelling" : "Construção & Remodelação"}</legend>
+            <div class="rfq-grid">
+              <div class="rfq-field">
+                <label for="constructionType">{isEn ? "Type of work *" : "Tipo de intervenção *"}</label>
+                <select id="constructionType" name="construction_type" required>
+                  <option value="">{isEn ? "Select" : "Seleccione"}</option>
+                  <option>{isEn ? "Construction / execution" : "Construção / execução"}</option>
+                  <option>{isEn ? "Remodelling / rehabilitation" : "Remodelação / reabilitação"}</option>
+                  <option>{isEn ? "Paving / concrete" : "Pavimentação / betonagem"}</option>
+                  <option>{isEn ? "Roofing / structure" : "Cobertura / estrutura"}</option>
+                  <option>{isEn ? "Finishes / adaptation" : "Acabamentos / adaptação"}</option>
+                  <option>{isEn ? "Other" : "Outro"}</option>
+                </select>
+              </div>
+              <div class="rfq-field">
+                <label for="constructionSize">{isEn ? "Approximate area / dimensions" : "Área / medidas aproximadas"}</label>
+                <input id="constructionSize" name="construction_size" maxlength="120" placeholder={isEn ? "E.g. 120 m², 55 linear metres" : "Ex.: 120 m², 55 metros lineares"} />
+              </div>
+              <div class="rfq-field">
+                <label for="constructionDate">{isEn ? "Target date" : "Data / prazo pretendido"}</label>
+                <input id="constructionDate" name="target_date" type="date" />
+              </div>
+              <div class="rfq-field full">
+                <label for="constructionSpec">{isEn ? "Materials / specifications (optional)" : "Materiais / especificações (opcional)"}</label>
+                <textarea id="constructionSpec" name="construction_spec" maxlength="1400" placeholder={isEn ? "Dimensions, materials, finish or site conditions." : "Dimensões, materiais, acabamentos ou condições do local."}></textarea>
+              </div>
+              <div class="rfq-field full">
+                <label for="constructionDescription">{isEn ? "Describe the required outcome *" : "Descreva o resultado pretendido *"}</label>
+                <textarea id="constructionDescription" name="construction_description" required maxlength="1800"></textarea>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="rfq-section rfq-context" data-service="facilities">
+            <legend>{isEn ? "Facilities & Maintenance" : "Facilities & Manutenção"}</legend>
+            <div class="rfq-grid">
+              <div class="rfq-field">
+                <label for="facilityType">{isEn ? "Type of facility *" : "Tipo de instalação *"}</label>
+                <input id="facilityType" name="facility_type" required maxlength="160" placeholder={isEn ? "E.g. office, warehouse, industrial facility" : "Ex.: escritório, armazém, instalação industrial"} />
+              </div>
+              <div class="rfq-field">
+                <label for="facilityFrequency">{isEn ? "Required frequency *" : "Frequência pretendida *"}</label>
+                <select id="facilityFrequency" name="facility_frequency" required>
+                  <option value="">{isEn ? "Select" : "Seleccione"}</option>
+                  <option>{isEn ? "One-off intervention" : "Intervenção pontual"}</option>
+                  <option>{isEn ? "Weekly" : "Semanal"}</option>
+                  <option>{isEn ? "Monthly" : "Mensal"}</option>
+                  <option>{isEn ? "Scheduled preventive maintenance" : "Manutenção preventiva programada"}</option>
+                  <option>{isEn ? "Recurring contract" : "Contrato recorrente"}</option>
+                  <option>{isEn ? "To be defined after assessment" : "A definir após avaliação"}</option>
+                </select>
+              </div>
+              <div class="rfq-field">
+                <label for="facilityPriority">{isEn ? "Priority" : "Prioridade"}</label>
+                <select id="facilityPriority" name="facility_priority">
+                  <option value="">{isEn ? "Select" : "Seleccione"}</option>
+                  <option>{isEn ? "Normal" : "Normal"}</option>
+                  <option>{isEn ? "High" : "Alta"}</option>
+                  <option>{isEn ? "Operation affected" : "Operação condicionada"}</option>
+                  <option>{isEn ? "Preventive assessment" : "Avaliação preventiva"}</option>
+                </select>
+              </div>
+              <div class="rfq-field">
+                <label for="facilityAreas">{isEn ? "Areas / systems involved" : "Áreas / sistemas abrangidos"}</label>
+                <input id="facilityAreas" name="facility_areas" maxlength="220" placeholder={isEn ? "E.g. roofing, installations, cleaning" : "Ex.: cobertura, instalações, limpeza"} />
+              </div>
+              <div class="rfq-field full">
+                <label for="facilityDescription">{isEn ? "Describe the requirement *" : "Descreva a necessidade *"}</label>
+                <textarea id="facilityDescription" name="facility_description" required maxlength="1800"></textarea>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="rfq-section rfq-context" data-service="supply">
+            <legend>{isEn ? "Supply & Procurement" : "Supply & Procurement"}</legend>
+            <div class="rfq-grid">
+              <div class="rfq-field full">
+                <label for="supplyItem">{isEn ? "Product / material / equipment *" : "Produto / material / equipamento *"}</label>
+                <input id="supplyItem" name="supply_item" required maxlength="220" placeholder={isEn ? "Name, reference, brand or specification" : "Nome, referência, marca ou especificação disponível"} />
+              </div>
+              <div class="rfq-field">
+                <label for="supplyQty">{isEn ? "Quantity *" : "Quantidade *"}</label>
+                <input id="supplyQty" name="supply_quantity" required maxlength="80" placeholder={isEn ? "E.g. 25 units" : "Ex.: 25 unidades"} />
+              </div>
+              <div class="rfq-field">
+                <label for="supplyDate">{isEn ? "Target date" : "Data pretendida"}</label>
+                <input id="supplyDate" name="target_date" type="date" />
+              </div>
+              <div class="rfq-field">
+                <label for="supplyOrigin">{isEn ? "Preferred origin" : "Origem preferencial"}</label>
+                <select id="supplyOrigin" name="supply_origin">
+                  <option value="">{isEn ? "No preference" : "Sem preferência"}</option>
+                  <option>{isEn ? "Angola" : "Angola"}</option>
+                  <option>{isEn ? "Southern Africa" : "África Austral"}</option>
+                  <option>{isEn ? "International" : "Internacional"}</option>
+                  <option>{isEn ? "Best available option" : "Melhor opção disponível"}</option>
+                </select>
+              </div>
+              <div class="rfq-field">
+                <label for="supplyAlternative">{isEn ? "Equivalent alternative acceptable?" : "Aceita alternativa equivalente?"}</label>
+                <select id="supplyAlternative" name="supply_alternative">
+                  <option value="">{isEn ? "Select" : "Seleccione"}</option>
+                  <option>{isEn ? "Yes" : "Sim"}</option>
+                  <option>{isEn ? "No, exact reference" : "Não, referência exacta"}</option>
+                  <option>{isEn ? "Subject to approval" : "Sujeito a aprovação"}</option>
+                </select>
+              </div>
+              <div class="rfq-field full">
+                <label for="supplySpec">{isEn ? "Specifications and relevant conditions *" : "Especificações e condições relevantes *"}</label>
+                <textarea id="supplySpec" name="supply_spec" required maxlength="1800" placeholder={isEn ? "Model, dimensions, standard, application, destination or other requirements." : "Modelo, dimensões, norma, aplicação, destino ou outros requisitos."}></textarea>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="rfq-section">
+            <legend>{isEn ? "Additional information (optional)" : "Informação adicional (opcional)"}</legend>
+            <div class="rfq-grid">
+              <div class="rfq-field full">
+                <label for="rfqNotes">{isEn ? "Notes for commercial assessment" : "Notas para avaliação comercial"}</label>
+                <textarea id="rfqNotes" name="additional_notes" maxlength="1400" placeholder={isEn ? "Access, timing or other relevant conditions." : "Acesso, prazos ou outras condições relevantes."}></textarea>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="rfq-actions">
+            <button class="rfq-generate" type="submit">{isEn ? "Generate request brief" : "Gerar briefing do pedido"}</button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="rfq-panel rfq-preview" aria-live="polite">
+        <div class="rfq-reference">
+          <span>{isEn ? "Local reference" : "Referência local"}</span>
+          <strong id="rfqReference">—</strong>
+        </div>
+        <h2>{isEn ? "Review before sending" : "Rever antes de enviar"}</h2>
+        <p>{isEn ? "Your structured brief will appear here after validation." : "O briefing estruturado aparece aqui depois da validação."}</p>
+        <div id="rfqSummary" class="rfq-summary" data-placeholder={isEn ? "Complete the required fields and generate the brief." : "Preencha os campos obrigatórios e gere o briefing."}>{isEn ? "Complete the required fields and generate the brief." : "Preencha os campos obrigatórios e gere o briefing."}</div>
+        <div class="rfq-preview-actions">
+          <a id="rfqEmailSend" class="rfq-email" href="mailto:geral@comercialhmatiasps.com" aria-disabled="true">{isEn ? "Send by email" : "Enviar por e-mail"}</a>
+          <a id="rfqWhatsapp" class="rfq-whatsapp" href="https://wa.me/244948806673" aria-disabled="true" target="_blank" rel="noopener noreferrer">{isEn ? "Send by WhatsApp" : "Enviar por WhatsApp"}</a>
+          <button id="rfqCopy" class="rfq-copy" type="button">{isEn ? "Copy brief" : "Copiar briefing"}</button>
+        </div>
+        <p id="rfqCopyStatus" class="rfq-copy-status" role="status" aria-live="polite"></p>
+        <p class="rfq-disclaimer">{isEn
+          ? "The reference is generated in your browser only. It is not a quotation, order or contract number. Prices, stock, timing and delivery conditions are confirmed by HMATIAS."
+          : "A referência é gerada apenas no navegador. Não é um número de proposta, encomenda ou contrato. Preços, stock, prazos e condições de entrega são confirmados pela HMATIAS."}</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="rfq-bottom-note">
+    <p class="section-kicker">{isEn ? "BUSINESS SERVICES" : "BUSINESS SERVICES"}</p>
+    <p>{isEn
+      ? "For administrative or document support, use the dedicated Business Services page."
+      : "Para apoio administrativo ou documental, utilize a página própria de Business Services."}
+      <a href={isEn ? "/en/business-services/" : "/business-services/"}>{isEn ? "View Business Services" : "Consultar Business Services"} ↗</a>
+    </p>
+  </section>
+</main>
+
+<script>
+  import "../scripts/smart-rfq.js";
+</script>
+
+<style>
+.smart-rfq-builder { color:var(--hm-ink); }
+.rfq-hero { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(290px,.8fr); gap:clamp(35px,7vw,100px); align-items:center; padding:clamp(54px,7vw,92px) var(--hm-gutter); color:#fff; background:var(--hm-navy); }
+.rfq-hero-copy { max-width:740px; }
+.rfq-hero .eyebrow { margin:0 0 23px; }
+.rfq-hero h1 { max-width:740px; margin:0; font-size:clamp(43px,6vw,76px); line-height:1.02; font-weight:520; letter-spacing:-.06em; }
+.rfq-hero-lead { max-width:620px; margin:24px 0 0; color:#e1edf7; font-size:14px; line-height:1.8; }
+.rfq-badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:27px; }
+.rfq-badges span { padding:9px 11px; border:1px solid #ffffff48; color:#e4f0fb; font-size:10px; letter-spacing:.02em; }
+.rfq-hero-note { padding:27px; color:var(--hm-ink); background:var(--hm-paper); border-left:3px solid var(--hm-sky); }
+.rfq-note-label { display:block; margin-bottom:17px; color:var(--hm-blue); font-family:var(--hm-mono); font-size:9px; font-weight:700; letter-spacing:.15em; }
+.rfq-hero-note strong { display:block; font-size:17px; line-height:1.4; }
+.rfq-hero-note p { margin:13px 0 0; color:var(--hm-muted); font-size:11px; line-height:1.7; }
+.rfq-content { background:var(--hm-light); }
+.rfq-section-heading { display:flex; justify-content:space-between; align-items:end; gap:28px; margin-bottom:34px; }
+.rfq-section-heading .section-kicker { margin:0 0 15px; }
+.rfq-section-heading h2 { margin:0; font-size:clamp(32px,4vw,48px); font-weight:520; letter-spacing:-.05em; }
+.rfq-section-heading > p { max-width:340px; margin:0 0 4px; color:var(--hm-muted); font-size:12px; line-height:1.7; }
+.rfq-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr); gap:22px; align-items:start; }
+.rfq-panel { min-width:0; padding:clamp(20px,3vw,32px); background:var(--hm-white); border:1px solid var(--hm-line); }
+.rfq-form-panel { border-top:3px solid var(--hm-blue); }
+.rfq-progress { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; margin:0 0 26px; }
+.rfq-progress span { padding:9px 7px; text-align:center; color:var(--hm-muted); background:var(--hm-light); font-size:9px; font-weight:650; }
+.rfq-progress span.active { color:#fff; background:var(--hm-blue-mid); }
+.rfq-section { min-width:0; margin:0 0 25px; padding:0; border:0; }
+.rfq-section legend { margin:0 0 15px; padding:0; color:var(--hm-navy); font-size:15px; font-weight:700; }
+.rfq-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.rfq-field { min-width:0; display:flex; flex-direction:column; gap:7px; }
+.rfq-field.full { grid-column:1/-1; }
+.rfq-field label { color:#24435e; font-size:11px; font-weight:650; }
+.rfq-field input,.rfq-field select,.rfq-field textarea { width:100%; min-height:43px; padding:10px 12px; border:1px solid #bdcbd8; border-radius:0; color:var(--hm-ink); background:#fff; font:inherit; font-size:12px; }
+.rfq-field textarea { min-height:100px; resize:vertical; line-height:1.6; }
+.rfq-field input:focus,.rfq-field select:focus,.rfq-field textarea:focus { border-color:var(--hm-blue); outline:2px solid #0065cc20; outline-offset:1px; }
+.rfq-context { display:none; }
+.rfq-context.active { display:block; }
+.rfq-actions { display:flex; justify-content:flex-start; }
+.rfq-generate { min-height:46px; padding:0 21px; color:#fff; background:var(--hm-navy); border:1px solid var(--hm-navy); font:inherit; font-size:11px; font-weight:700; cursor:pointer; }
+.rfq-generate:hover { background:var(--hm-blue-mid); border-color:var(--hm-blue-mid); }
+.rfq-preview { position:sticky; top:24px; border-top:3px solid var(--hm-navy); }
+.rfq-reference { display:flex; justify-content:space-between; align-items:center; gap:12px; padding-bottom:17px; margin-bottom:20px; border-bottom:1px solid var(--hm-line); }
+.rfq-reference span { color:var(--hm-muted); font-family:var(--hm-mono); font-size:8px; letter-spacing:.12em; text-transform:uppercase; }
+.rfq-reference strong { color:var(--hm-blue); font-family:var(--hm-mono); font-size:11px; }
+.rfq-preview h2 { margin:0; color:var(--hm-navy); font-size:23px; font-weight:600; letter-spacing:-.04em; }
+.rfq-preview > p:not(.rfq-disclaimer):not(.rfq-copy-status) { margin:9px 0 17px; color:var(--hm-muted); font-size:11px; line-height:1.6; }
+.rfq-summary { min-height:260px; max-height:480px; overflow:auto; padding:15px; color:#314a60; background:var(--hm-light); border:1px solid var(--hm-line); font-size:10px; line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; }
+.rfq-preview-actions { display:grid; gap:8px; margin-top:14px; }
+.rfq-preview-actions a,.rfq-preview-actions button { display:flex; justify-content:center; align-items:center; min-height:42px; padding:10px 13px; border:1px solid var(--hm-line); text-align:center; font:inherit; font-size:10px; font-weight:700; cursor:pointer; }
+.rfq-preview-actions a[aria-disabled="true"] { opacity:.45; cursor:not-allowed; pointer-events:none; }
+.rfq-email { color:#fff; background:var(--hm-navy); border-color:var(--hm-navy)!important; }
+.rfq-whatsapp { color:var(--hm-navy); background:#fff; }
+.rfq-copy { color:var(--hm-blue-mid); background:var(--hm-sky-soft); }
+.rfq-copy-status { min-height:16px; margin:8px 0 0; color:var(--hm-blue-mid); font-size:10px; text-align:center; }
+.rfq-disclaimer { margin:16px 0 0; padding-top:14px; color:var(--hm-muted); border-top:1px solid var(--hm-line); font-size:10px; line-height:1.65; }
+.rfq-bottom-note { padding:28px var(--hm-gutter) 46px; background:var(--hm-paper); }
+.rfq-bottom-note .section-kicker { margin:0 0 8px; color:var(--hm-blue); }
+.rfq-bottom-note > p:last-child { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.7; }
+.rfq-bottom-note a { display:inline-block; margin-left:8px; color:var(--hm-blue); font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+@media(max-width:900px) { .rfq-hero,.rfq-layout { grid-template-columns:1fr; } .rfq-hero-note { max-width:650px; } .rfq-preview { position:static; } }
+@media(max-width:620px) { .rfq-hero { padding-top:48px; padding-bottom:48px; } .rfq-hero h1 { font-size:clamp(40px,12vw,58px); } .rfq-section-heading { display:block; } .rfq-section-heading > p { margin-top:12px; } .rfq-grid { grid-template-columns:1fr; } .rfq-field.full { grid-column:auto; } .rfq-progress { gap:4px; } .rfq-progress span { padding:8px 4px; font-size:8px; } .rfq-preview { position:static; } }
+</style>
