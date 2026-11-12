@@ -54,8 +54,8 @@ Preservar o histórico orgânico do domínio comercialhmatiasps.com durante a tr
 | /limpeza-pos-obra.html | Manter URL ou reconstruir landing page específica; não redirecionar para Facilities sem equivalência | Preservar |
 | /fornecimento-de-epi-e-fardamento.html | Manter URL ou reconstruir landing page específica; não redirecionar para Supply sem equivalência | Preservar |
 | /remodelacao-de-escritorios.html | Manter URL ou reconstruir landing page específica; não redirecionar para Construção sem equivalência | Preservar |
-| /estaleiro-integrado.html | Manter URL ou reconstruir landing page específica; não redirecionar para Construção sem equivalência | Preservar |
-| /integrated-yard.html | Manter URL ou reconstruir landing page específica; não redirecionar para Construction sem equivalência | Preservar |
+| /estaleiro-integrado.html | Página recriada no preview em /estaleiro/; manter a URL oficial até validar a equivalência e aprovar a migração | Preservar até aprovação |
+| /integrated-yard.html | Página recriada no preview em /en/integrated-yard/; manter a URL oficial até validar a equivalência e aprovar a migração | Preservar até aprovação |
 
 ## Outras páginas HTML encontradas no repositório
 Estas páginas não aparecem entre as 37 URLs do sitemap consultado, mas devem ser verificadas no Search Console e nos logs antes de decidir o seu destino:
