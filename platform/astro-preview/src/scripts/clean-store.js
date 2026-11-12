@@ -113,7 +113,8 @@
     try { sessionStorage.setItem(storageKey, JSON.stringify(cart)); } catch {}
   };
 
-  const productsSection = q('.commerce-products, .clean-featured');
+  const cartMount = q('#clean-cart-mount');
+  const productsSection = q('.clean-featured') || q('.commerce-products');
   const pdfSection = q('.clean-pdf-section');
   const cartSection = document.createElement('section');
   cartSection.className = 'clean-cart-section';
@@ -131,8 +132,12 @@
       </div>
     </div>`;
 
-  if (productsSection?.parentNode) {
-    productsSection.parentNode.insertBefore(cartSection, pdfSection || productsSection.nextSibling);
+  if (cartMount) {
+    cartMount.replaceWith(cartSection);
+  } else if (pdfSection?.parentNode) {
+    pdfSection.parentNode.insertBefore(cartSection, pdfSection);
+  } else if (productsSection?.parentNode) {
+    productsSection.parentNode.insertBefore(cartSection, productsSection.nextSibling);
   }
 
   const cartList = q('#cleanCartList');
