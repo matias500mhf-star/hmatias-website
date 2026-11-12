@@ -1,6 +1,6 @@
 # HMATIAS — Inventário de migração e prontidão para produção
 
-Data de referência: 11 de novembro de 2026
+Data de referência: 12 de novembro de 2026
 
 Este inventário separa o que já foi recriado no protótipo Astro, o que continua deliberadamente no website oficial e os controlos que ainda impedem uma migração. O protótipo é independente e não substitui o publisher oficial.
 
@@ -11,7 +11,7 @@ O protótipo gera 28 páginas estáticas: 14 em Português (pt-AO) e 14 em Ingl�
 | Área | Português | Inglês | Situação |
 |---|---|---|---|
 | Homepage | `/` | `/en/` | Quatro áreas de atividade e galeria inicial |
-| Sobre a HMATIAS | `/empresa/` | `/en/about/` | Identidade, missão, visão, valores e mensagem da Direção Executiva |
+| Sobre a HMATIAS | `/empresa/` | `/en/about/` | Apresentação factual, identificação empresarial e quatro áreas de atividade |
 | Credibilidade | `/credibilidade/` | `/en/credibility/` | Identificação empresarial, contactos e dados de registo |
 | Construção | `/construcao/` | `/en/construction/` | Serviços e registos de obras reais |
 | Facilities | `/facilities/` | `/en/facilities/` | Serviços e intervenções de manutenção |
@@ -121,3 +121,51 @@ Continuam pendentes a revisão visual manual em vários dispositivos, a navegaç
 - Os formulários operacionais acima permanecem no website oficial.
 - O preview mantém `noindex, nofollow`.
 - Esta versão **não está aprovada para publicação em produção** enquanto a validação Playwright/axe/Lighthouse, a revisão manual e os testes reais dos formulários não estiverem concluídos.
+
+## 8. Atualização de prontidão — 12 de novembro de 2026
+
+Esta secção substitui os resultados de execução anteriores como referência do head `a6a95ee`.
+
+### Inventário e proteção de URLs
+
+- O inventário do sitemap legado tem **37 URLs**.
+- Foram também registadas **5 páginas adicionais do repositório** que precisam de consulta no Search Console e nos dados de tráfego.
+- O inventário executável está em `migration/legacy-url-manifest.json` e é verificado por `scripts/verify-migration-readiness.mjs`.
+- Cada URL tem uma decisão e justificação. Os destinos Astro são verificados contra o diretório `dist`; as páginas sem equivalente são marcadas para preservação no publisher oficial.
+- O script reprova se faltar uma URL do inventário, existir duplicação, faltar um destino Astro declarado ou um destino do preview deixar de conter `noindex,nofollow`.
+- A verificação não cria redirects nem altera qualquer configuração de produção. A variável `production_changes_permitted` permanece `false`.
+
+### Resultados do workflow Astro prototype QA #602
+
+- Auditoria de dependências: aprovada.
+- Astro Check, build estático e verificação do artefacto: aprovados.
+- Contrato e persistência do SOURCE AO RFQ: aprovados.
+- Playwright desktop/mobile e axe: **117 testes aprovados**.
+- Lighthouse CI: **48 relatórios**, cobrindo 24 rotas com duas medições por rota.
+- Desempenho: **100/100 em 48 medições**.
+- Acessibilidade: **100/100 em 48 medições**.
+- Boas práticas: **100/100 em 48 medições**.
+- SEO: **66/100 em 48 medições**, devido ao bloqueio intencional `noindex,nofollow` do preview.
+- LCP observado em laboratório: **203–645 ms**.
+- CLS observado em laboratório: **0–0,034**.
+
+Estes valores resultam da execução local do Lighthouse CI no ambiente GitHub Actions. Não representam medições em produção, dispositivos físicos ou redes móveis angolanas. Não remover `noindex,nofollow` para alterar a pontuação SEO do preview.
+
+### Workflows de integração
+
+No mesmo head foram concluídos com sucesso:
+
+- Source AO Data Quality #975.
+- HMATIAS AI Worker Deploy #56: validação de configuração, health endpoint e resposta IA no endpoint `workers.dev`; o job de deploy adicional foi ignorado.
+- Vercel: deployment de preview marcado como Ready.
+
+### Bloqueios ainda abertos para produção
+
+1. Migrar ou preservar páginas HMATIAS Clean, KARTA, agendamento/booking, Estaleiro Integrado e páginas especializadas, sem inventar conteúdo ou substituir funções por demonstrações.
+2. Testar de ponta a ponta o formulário de contacto, Business Services, agendamento, RFQ operacional SOURCE AO, consentimento, tracking, notificações e alternativa manual.
+3. Obter exportação do Search Console e relatório de backlinks/referral traffic; completar a decisão de migração URL a URL.
+4. Executar revisão visual manual desktop/tablet/mobile, navegação integral por teclado e verificação com tecnologias de apoio.
+5. Validar legalmente as políticas e os termos, e confirmar a equivalência bilingue final.
+6. Só depois aprovar redirects, canonical, hreflang, sitemap e janela de migração com plano de rollback.
+
+**Estado:** os quality gates automatizados do protótipo estão verdes. A cobertura editorial e técnica do preview avançou, mas a migração completa e a publicação em produção continuam bloqueadas pelos itens acima. Nenhum merge, DNS, redirect ou deploy do domínio oficial é autorizado por esta etapa.
