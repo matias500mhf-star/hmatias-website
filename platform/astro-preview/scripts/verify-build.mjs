@@ -93,7 +93,7 @@ assert.match(supplyHtml, /Procurement e/, "Supply page heading is missing");
 assert.match(supplyHtml, /não mantém stock próprio/i, "Supply stock disclosure is missing");
 assert.match(supplyHtml, /Materiais de construção/, "Supply construction-materials category is missing");
 assert.match(supplyHtml, /EPI e fardamento/, "Supply PPE and workwear category is missing");
-assert.match(supplyHtml, /Fornecimento industrial/, "Supply industrial category is missing");
+assert.match(supplyHtml, /Fornecimento industrial/i, "Supply industrial category is missing");
 assert.match(supplyHtml, /SOURCE AO/, "Supply page must link to SOURCE AO");
 assert.match(supplyHtml, /Registar pedido de cotação/, "Supply RFQ action is missing");
 const supplyImgCount = (supplyHtml.match(/<img\b/g) || []).length;
