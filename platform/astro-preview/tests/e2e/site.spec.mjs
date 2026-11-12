@@ -190,8 +190,11 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
           .toHaveAttribute("href", "https://comercialhmatiasps.com/source-ao/rfq.html?from=supply");
       }
       if (route === "/source-ao/smart-rfq/") {
-        await expect(page.getByRole("link", { name: "Abrir Smart RFQ" }))
-          .toHaveAttribute("href", "https://comercialhmatiasps.com/source-ao/rfq.html");
+        await expect(page.locator("#smartRfqForm")).toBeVisible();
+        await expect(page.getByRole("heading", { name: "Transforme a necessidade num pedido claro." })).toBeVisible();
+        await expect(page.getByRole("button", { name: "Gerar briefing do pedido" })).toBeVisible();
+        await expect(page.locator("#rfqEmailSend")).toHaveAttribute("aria-disabled", "true");
+        await expect(page.locator("#rfqWhatsapp")).toHaveAttribute("aria-disabled", "true");
       }
       if (route === "/business-services/") {
         await expect(page.getByRole("link", { name: "Abrir formulário de pedido" }))
