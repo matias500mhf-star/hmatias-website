@@ -197,10 +197,10 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
         await expect(page.locator("#rfqWhatsapp")).toHaveAttribute("aria-disabled", "true");
       }
       if (route === "/business-services/") {
-        await expect(page.getByRole("link", { name: "Abrir formulário de pedido" }))
-          .toHaveAttribute("href", "https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business");
-        await expect(page.getByRole("link", { name: "Solicitar atendimento" }))
-          .toHaveAttribute("href", "https://comercialhmatiasps.com/agendamento.html");
+        await expect(page.locator(".business-contact-cta a[href^='https://wa.me/244948806673']")).toBeVisible();
+        await expect(page.locator(".business-contact-cta a[href^='mailto:geral@comercialhmatiasps.com']")).toBeVisible();
+        await expect(page.getByRole("link", { name: "Consultar Política de Privacidade" }))
+          .toHaveAttribute("href", "/privacidade/");
       }
 
       const missingAlt = await page.locator("img").evaluateAll((images) =>
