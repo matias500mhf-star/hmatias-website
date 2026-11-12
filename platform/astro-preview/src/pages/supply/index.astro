@@ -38,13 +38,26 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
       <div class="section-kicker">01 / MODELO DE FORNECIMENTO</div>
       <div class="construction-intro-content">
         <h2>Da especificação<br /><em>à proposta.</em></h2>
-        <div class="construction-intro-copy"><p>A HMATIAS presta serviços de fornecimento industrial e procurement e não mantém stock próprio. Cada pedido é analisado por referência, quantidade, aplicação, destino e prazo. A disponibilidade, o preço, a documentação e a logística são confirmados antes da proposta.</p></div>
+        <div class="construction-intro-copy"><p>A HMATIAS não mantém stock próprio. Presta serviços de fornecimento industrial e procurement; cada pedido é analisado por referência, quantidade, aplicação, destino e prazo. Cada pedido é analisado por referência, quantidade, aplicação, destino e prazo. A disponibilidade, o preço, a documentação e a logística são confirmados antes da proposta.</p></div>
       </div>
     </section>
 
+
+    <section class="supply-categories section-pad" id="categorias">
+      <div class="section-heading">
+        <div><div class="section-kicker">02 / CATEGORIAS DE FORNECIMENTO</div><h2>O pedido começa<br /><em>pela especificação.</em></h2></div>
+        <p>Consultamos o mercado de acordo com a aplicação, os requisitos técnicos, a quantidade e o destino indicado pelo cliente.</p>
+      </div>
+      <div class="supply-category-grid">
+        <article class="supply-category-card"><span>01</span><h3>Materiais de construção</h3><p>Perfis, chapas, elementos metálicos e outros materiais identificados por referência, dimensão e aplicação.</p></article>
+        <article class="supply-category-card"><span>02</span><h3>Consumíveis industriais</h3><p>Discos diamantados, coroas de perfuração e consumíveis técnicos sujeitos a consulta por marca e especificação.</p></article>
+        <article class="supply-category-card"><span>03</span><h3>EPI e fardamento</h3><p>Equipamentos de protecção individual e vestuário profissional, com verificação de tamanhos, normas e documentação exigida.</p></article>
+        <article class="supply-category-card"><span>04</span><h3>Equipamentos e ferramentas</h3><p>Equipamentos e ferramentas avaliados conforme requisitos técnicos, disponibilidade, condições comerciais e logística.</p></article>
+      </div>
+    </section>
     <section class="supply-partners section-pad" id="parceiros">
       <div class="section-heading">
-        <div><div class="section-kicker">02 / CATEGORIAS E FONTES DE FORNECIMENTO</div><h2>Uma oferta<br /><em>seleccionada.</em></h2></div>
+        <div><div class="section-kicker">03 / CATEGORIAS E FONTES DE FORNECIMENTO</div><h2>Uma oferta<br /><em>seleccionada.</em></h2></div>
         <p>Apresentamos categorias de fornecimento e fontes de consulta. A disponibilidade e as condições de cada artigo são verificadas pedido a pedido.</p>
       </div>
       <div class="supply-partner-list">
@@ -73,7 +86,7 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
 
     <section class="supply-evidence section-pad" id="materiais">
       <div class="portfolio-top">
-        <div><div class="section-kicker">03 / REGISTOS DE FORNECIMENTO</div><h2>Materiais e logística<br /><em>em contexto.</em></h2></div>
+        <div><div class="section-kicker">04 / REGISTOS DE FORNECIMENTO</div><h2>Materiais e logística<br /><em>em contexto.</em></h2></div>
         <p>Registos visuais existentes da actividade HMATIAS. Não representam confirmação de stock ou disponibilidade actual.</p>
       </div>
       <div class="supply-evidence-grid">
@@ -84,7 +97,7 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
 
     <section class="construction-request section-pad supply-request" id="pedido">
       <div class="construction-request-copy">
-        <p class="section-kicker">04 / PEDIDO DE FORNECIMENTO</p>
+        <p class="section-kicker">05 / PEDIDO DE FORNECIMENTO</p>
         <h2>Indique o que<br /><em>precisa.</em></h2>
         <p>Envie a referência ou descrição técnica, quantidade, local de entrega e prazo pretendido. A HMATIAS analisará o pedido e confirmará as condições antes de apresentar uma proposta.</p>
         <div class="construction-request-actions"><a class="button button-light" href={company.sourceAoRfqUrl + "?from=supply"}>Registar pedido de cotação <span aria-hidden="true">↗</span></a><a class="construction-email-link" href={whatsappSupply} target="_blank" rel="noopener noreferrer">Enviar pelo WhatsApp <span aria-hidden="true">↗</span></a></div>
@@ -98,6 +111,12 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
 <style>
 .supply-hero-image { aspect-ratio:auto; }
 .supply-hero-image img { height:auto; background:transparent; }
+.supply-categories { background:var(--hm-paper); }
+.supply-category-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:42px; }
+.supply-category-card { min-height:220px; padding:22px 20px; border:1px solid var(--hm-line); background:var(--hm-paper); }
+.supply-category-card > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:17px; }
+.supply-category-card h3 { margin:28px 0 12px; font-size:16px; line-height:1.35; font-weight:650; letter-spacing:-.025em; }
+.supply-category-card p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
 .supply-partners { background:var(--hm-light); }
 .supply-partner-list { margin-top:48px; border-top:1px solid var(--hm-line); }
 .supply-partner { display:grid; grid-template-columns:54px minmax(0,1fr) minmax(190px,.42fr); gap:25px; align-items:start; padding:30px 0; border-bottom:1px solid var(--hm-line); }
@@ -116,6 +135,7 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
 .supply-evidence-photo img { display:block; width:100%; height:auto; object-fit:contain; }
 .supply-evidence-photo figcaption { padding-top:12px; color:var(--hm-muted); font-size:11px; }
 .supply-request .construction-request-guide a { color:var(--hm-ink); }
+@media(max-width:900px) { .supply-category-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:800px) {
  .supply-partner { grid-template-columns:36px minmax(0,1fr); gap:15px; }
  .supply-partner-action { grid-column:2; padding-top:0; }
@@ -123,6 +143,9 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
 @media(max-width:650px) {
  .supply-partner-list { margin-top:34px; }
  .supply-partner { padding:24px 0; }
+ .supply-category-grid { grid-template-columns:1fr; }
+ .supply-category-card { min-height:0; }
+ .supply-category-card h3 { margin-top:17px; }
  .supply-evidence-grid { grid-template-columns:1fr; gap:28px; }
  .supply-partner-main > p:not(.supply-partner-type) { font-size:14px; }
 }
