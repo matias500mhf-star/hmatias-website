@@ -30,12 +30,12 @@ const dateLabel = post.data.pubDate.toLocaleDateString(
   <div class="preview-bar"><span><i aria-hidden="true"></i> BLOG HMATIAS</span><span>{post.data.category.toUpperCase()}</span></div>
   <SiteHeader />
   <main class="article-page">
-    <section class="article-hero">
+    <section class="article-hero" aria-labelledby="pages-blog-slug-section-1-heading">
       <nav class="article-breadcrumb" aria-label="Navegação estrutural">
         <a href="/">Início</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>{post.data.category}</span>
       </nav>
       <p class="eyebrow"><span class="eyebrow-line"></span> {post.data.category.toUpperCase()}</p>
-      <h1>{post.data.title}.</h1>
+      <h1 id="pages-blog-slug-section-1-heading">{post.data.title}.</h1>
       <p class="article-deck">{post.data.description}</p>
       <div class="article-meta">
         <span>{post.data.author.toUpperCase()}</span>
@@ -45,10 +45,10 @@ const dateLabel = post.data.pubDate.toLocaleDateString(
 
     <article class="article-content">
       <Content />
-      <section class="article-cta">
+      <section class="article-cta" aria-labelledby="pages-blog-slug-section-2-heading">
         <div>
           <p class="section-kicker">ESTRUTURE O SEU PEDIDO</p>
-          <h2>Tem vários artigos para cotar?</h2>
+          <h2 id="pages-blog-slug-section-2-heading">Tem vários artigos para cotar?</h2>
           <p>O Smart RFQ do SOURCE AO permite registar até 20 linhas num único pedido, com quantidades, especificações e condições de entrega.</p>
         </div>
         <a class="button button-light" href={company.smartRfqUrl}>Abrir Smart RFQ <span aria-hidden="true">↗</span></a>

@@ -7,10 +7,10 @@ const { lang = "pt" } = Astro.props;
 const isEn = lang === "en";
 ---
 <main class="smart-rfq-builder">
-  <section class="rfq-hero">
+  <section class="rfq-hero" aria-labelledby="review-src-components-SmartRfqForm-astro-section-1-heading">
     <div class="rfq-hero-copy">
       <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS · SMART RFQ</p>
-      <h1>{isEn ? "Turn your requirement into a clear request." : "Transforme a necessidade num pedido claro."}</h1>
+      <h1 id="review-src-components-SmartRfqForm-astro-section-1-heading">{isEn ? "Turn your requirement into a clear request." : "Transforme a necessidade num pedido claro."}</h1>
       <p class="rfq-hero-lead">
         {isEn
           ? "Choose a service area, describe what you need and review the brief before sending it to HMATIAS."
@@ -39,11 +39,11 @@ const isEn = lang === "en";
     </aside>
   </section>
 
-  <section class="rfq-content section-pad" id="rfq">
+  <section class="rfq-content section-pad" id="rfq" aria-labelledby="review-src-components-SmartRfqForm-astro-section-2-heading">
     <div class="rfq-section-heading">
       <div>
         <p class="section-kicker">{isEn ? "01 / REQUEST DETAILS" : "01 / DADOS DO PEDIDO"}</p>
-        <h2>{isEn ? "What do you need?" : "O que precisa?"}</h2>
+        <h2 id="review-src-components-SmartRfqForm-astro-section-2-heading">{isEn ? "What do you need?" : "O que precisa?"}</h2>
       </div>
       <p>{isEn
         ? "Only the fields relevant to your selected service will be required."
@@ -58,6 +58,10 @@ const isEn = lang === "en";
           <span>{isEn ? "3 · Review" : "3 · Revisão"}</span>
         </div>
         <form id="smartRfqForm" novalidate>
+          <div class="rfq-honeypot sr-only" aria-hidden="true">
+            <label for="rfqWebsite">Leave this field empty</label>
+            <input id="rfqWebsite" name="website_url" type="text" tabindex="-1" autocomplete="off" />
+          </div>
           <fieldset class="rfq-section">
             <legend>{isEn ? "Contact and location" : "Contacto e localização"}</legend>
             <div class="rfq-grid">
@@ -75,7 +79,7 @@ const isEn = lang === "en";
               </div>
               <div class="rfq-field">
                 <label for="rfqPhone">{isEn ? "Phone / WhatsApp" : "Telefone / WhatsApp"}</label>
-                <input id="rfqPhone" name="phone" type="tel" autocomplete="tel" maxlength="60" />
+                <input id="rfqPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="60" />
               </div>
               <div class="rfq-field">
                 <label for="rfqLocation">{isEn ? "Request location *" : "Localização do pedido *"}</label>
@@ -249,14 +253,14 @@ const isEn = lang === "en";
     </div>
   </section>
 
-  <section class="rfq-bottom-note">
+  <aside class="rfq-bottom-note">
     <p class="section-kicker">{isEn ? "BUSINESS SERVICES" : "BUSINESS SERVICES"}</p>
     <p>{isEn
       ? "For administrative or document support, use the dedicated Business Services page."
       : "Para apoio administrativo ou documental, utilize a página própria de Business Services."}
       <a href={isEn ? "/en/business-services/" : "/business-services/"}>{isEn ? "View Business Services" : "Consultar Business Services"} ↗</a>
     </p>
-  </section>
+  </aside>
 </main>
 
 <script>

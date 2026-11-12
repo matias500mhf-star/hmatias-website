@@ -17,17 +17,17 @@ const dateLabel = post.data.pubDate.toLocaleDateString("en", { day:"2-digit", mo
   <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS BLOG</span><span>{post.data.category.toUpperCase()}</span></div>
   <SiteHeader />
   <main class="article-page">
-    <section class="article-hero">
+    <section class="article-hero" aria-labelledby="pages-en-blog-slug-section-1-heading">
       <nav class="article-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span aria-hidden="true">/</span><a href="/en/blog/">Blog</a><span aria-hidden="true">/</span><span>{post.data.category}</span></nav>
       <p class="eyebrow"><span class="eyebrow-line"></span> {post.data.category.toUpperCase()}</p>
-      <h1>{post.data.title}</h1>
+      <h1 id="pages-en-blog-slug-section-1-heading">{post.data.title}</h1>
       <p class="article-deck">{post.data.description}</p>
       <div class="article-meta"><span>{post.data.author.toUpperCase()}</span><time datetime={post.data.pubDate.toISOString()}>{dateLabel}</time></div>
     </section>
     <article class="article-content">
       <Content />
-      <section class="article-cta">
-        <div><p class="section-kicker">STRUCTURE YOUR REQUEST</p><h2>Several items to quote?</h2><p>The SOURCE AO Smart RFQ flow supports up to 20 product lines in one request, with quantities, specifications and delivery requirements.</p></div>
+      <section class="article-cta" aria-labelledby="pages-en-blog-slug-section-2-heading">
+        <div><p class="section-kicker">STRUCTURE YOUR REQUEST</p><h2 id="pages-en-blog-slug-section-2-heading">Several items to quote?</h2><p>The SOURCE AO Smart RFQ flow supports up to 20 product lines in one request, with quantities, specifications and delivery requirements.</p></div>
         <a class="button button-light" href={company.sourceAoRfqEnUrl}>Open English Smart RFQ <span aria-hidden="true">↗</span></a>
       </section>
     </article>

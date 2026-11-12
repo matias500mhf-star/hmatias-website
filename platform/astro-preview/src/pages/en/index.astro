@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
@@ -18,10 +18,10 @@ import { company } from "../../data/site";
   <div class="preview-bar"><span><i aria-hidden="true"></i> ASTRO TECHNOLOGY PREVIEW</span><span>HMATIAS · ENGLISH VERSION</span></div>
   <SiteHeader />
   <main>
-    <section class="hero" id="inicio">
+    <section class="hero" id="inicio" aria-labelledby="pages-en-index-section-1-heading">
       <div class="hero-copy">
         <p class="eyebrow"><span class="eyebrow-line"></span> CONSTRUCTION · FACILITIES · SUPPLY · BUSINESS SERVICES</p>
-        <h1>Capability to<br /><em>make it happen.</em></h1>
+        <h1 id="pages-en-index-section-1-heading">Capability to<br /><em>make it happen.</em></h1>
         <p class="hero-lead">Construction, facilities, procurement and business support for companies and projects in Angola.</p>
         <div class="hero-actions">
           <a class="button button-light" href="#services">Explore our services <span aria-hidden="true">↓</span></a>
@@ -30,16 +30,16 @@ import { company } from "../../data/site";
         <div class="hero-meta"><span>{company.name}</span><span>Viana, Luanda · Angola</span></div>
       </div>
       <div class="hero-image-wrap">
-        <Image src={heroPhoto} alt="HMATIAS construction work showing masonry and concealed technical installations" widths={[640,960,1280]} sizes="(max-width: 900px) 100vw, 50vw" format="webp" quality={84} loading="eager" fetchpriority="high" />
+        <Picture src={heroPhoto} alt="HMATIAS construction work showing masonry and concealed technical installations" widths={[640,960,1280]} sizes="(max-width: 900px) 100vw, 50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={84} loading="eager" fetchpriority="high" decoding="async" />
         <div class="image-index"><span>01</span><span>HMATIAS PROJECT RECORD</span></div>
       </div>
       <div class="hero-side-note">DELIVERY · SUPPLY · OPERATIONS</div>
     </section>
 
-    <section class="intro section-pad" id="company">
+    <section class="intro section-pad" id="company" aria-labelledby="pages-en-index-section-2-heading">
       <div class="section-kicker">01 / WHO WE ARE</div>
       <div class="intro-content">
-        <h2>A service company.<br /><em>Four areas of delivery.</em></h2>
+        <h2 id="pages-en-index-section-2-heading">A service company.<br /><em>Four areas of delivery.</em></h2>
         <div class="intro-text">
           <p>HMATIAS supports companies, institutions and private clients through construction and remodelling, facilities and maintenance, procurement and supply, and administrative and business services.</p>
           <p>From the initial requirement to delivery: clear scope, direct communication and follow-up throughout the agreed work.</p>
@@ -48,9 +48,9 @@ import { company } from "../../data/site";
       </div>
     </section>
 
-    <section class="services section-pad" id="services">
+    <section class="services section-pad" id="services" aria-labelledby="pages-en-index-section-3-heading">
       <div class="section-heading">
-        <div><div class="section-kicker">02 / WHAT WE DO</div><h2>Services designed<br /><em>around real requirements.</em></h2></div>
+        <div><div class="section-kicker">02 / WHAT WE DO</div><h2 id="pages-en-index-section-3-heading">Services designed<br /><em>around real requirements.</em></h2></div>
         <p>Four service areas, one point of contact to assess the requirement and define a suitable scope of work.</p>
       </div>
       <div class="service-list">
@@ -62,30 +62,31 @@ import { company } from "../../data/site";
       <div class="services-foot"><span>01—04</span><span>HMATIAS SERVICE AREAS</span></div>
     </section>
 
-    <section class="portfolio section-pad" id="projects">
+    <section class="portfolio section-pad" id="projects" aria-labelledby="pages-en-index-section-4-heading">
       <div class="portfolio-top">
-        <div><div class="section-kicker">03 / PROJECT RECORDS</div><h2>The work<br /><em>speaks for itself.</em></h2></div>
+        <div><div class="section-kicker">03 / PROJECT RECORDS</div><h2 id="pages-en-index-section-4-heading">The work<br /><em>speaks for itself.</em></h2></div>
         <p>A selection of work records and visual references from HMATIAS activity.</p>
       </div>
       <div class="project-grid">
-        <article class="project-card"><figure class="project-photo"><Image src={metalStructure} alt="Galvanised metal structure and roof sheeting on a building" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" format="webp" quality={82}/></figure><div class="project-caption"><span>METAL STRUCTURES</span><h3>Metal-frame building</h3><p>Assembly of a metal structure, roof covering and sheet cladding, with supporting masonry.</p></div></article>
-        <article class="project-card"><figure class="project-photo"><Image src={sitePreparation} alt="Backhoe loader preparing and levelling a construction site" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" format="webp" quality={82}/></figure><div class="project-caption"><span>INFRASTRUCTURE</span><h3>Site preparation</h3><p>Earthmoving equipment mobilised for initial excavation and ground levelling.</p></div></article>
-        <article class="project-card"><figure class="project-photo"><Image src={roofWorks} alt="Replacement of metal roof sheets on an existing structure" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" format="webp" quality={82}/></figure><div class="project-caption"><span>FACILITIES · MAINTENANCE</span><h3>Roof replacement</h3><p>Localised replacement of roof sheets, integrated with the existing structure.</p></div></article>
-        <article class="project-card"><figure class="project-photo"><Image src={ruralPavilions} alt="Completed rural pavilions with metal roofing and ventilated side areas" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" format="webp" quality={82}/></figure><div class="project-caption"><span>RURAL CONSTRUCTION</span><h3>Completed rural pavilions</h3><p>Exterior view of completed pavilions with metal roofing and ventilated side areas.</p></div></article>
+        <article class="project-card"><figure class="project-photo"><Picture src={metalStructure} alt="Galvanised metal structure and roof sheeting on a building" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure><div class="project-caption"><span>METAL STRUCTURES</span><h3>Metal-frame building</h3><p>Assembly of a metal structure, roof covering and sheet cladding, with supporting masonry.</p></div></article>
+        <article class="project-card"><figure class="project-photo"><Picture src={sitePreparation} alt="Backhoe loader preparing and levelling a construction site" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure><div class="project-caption"><span>INFRASTRUCTURE</span><h3>Site preparation</h3><p>Earthmoving equipment mobilised for initial excavation and ground levelling.</p></div></article>
+        <article class="project-card"><figure class="project-photo"><Picture src={roofWorks} alt="Replacement of metal roof sheets on an existing structure" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure><div class="project-caption"><span>FACILITIES · MAINTENANCE</span><h3>Roof replacement</h3><p>Localised replacement of roof sheets, integrated with the existing structure.</p></div></article>
+        <article class="project-card"><figure class="project-photo"><Picture src={ruralPavilions} alt="Completed rural pavilions with metal roofing and ventilated side areas" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure><div class="project-caption"><span>RURAL CONSTRUCTION</span><h3>Completed rural pavilions</h3><p>Exterior view of completed pavilions with metal roofing and ventilated side areas.</p></div></article>
       </div>
       <div class="portfolio-note"><span>REAL WORK RECORDS</span><span>HMATIAS · ANGOLA</span></div>
       <a class="underlined-link" href="/en/works-catalogue/">View the works catalogue <span aria-hidden="true">↗</span></a>
     </section>
 
-    <section class="statement">
+    <section class="statement" aria-labelledby="pages-en-index-section-5-heading">
       <div class="statement-mark" aria-hidden="true">“</div>
-      <div class="statement-content"><p>Every project starts with a clear conversation about what needs to be done.</p><a class="button button-dark" href="#contact">Submit a requirement <span aria-hidden="true">↗</span></a></div>
+      <div class="statement-content">
+        <h2 id="pages-en-index-section-5-heading">Every project starts with a clear conversation about what needs to be done.</h2><a class="button button-dark" href="#contact">Submit a requirement <span aria-hidden="true">↗</span></a></div>
       <span class="statement-label">HMATIAS · AO</span>
     </section>
 
-    <section class="contact section-pad" id="contact">
+    <section class="contact section-pad" id="contact" aria-labelledby="pages-en-index-section-6-heading">
       <div class="contact-grid">
-        <div class="contact-copy"><div class="section-kicker">04 / CONTACT</div><h2>Let's discuss<br /><em>your project.</em></h2><p>Share the service required, the location and what you intend to achieve. The HMATIAS team can review the request and outline the next steps.</p><div class="contact-details"><a href={company.telephoneUri}>{company.phone}</a><a href={`mailto:${company.commercialEmail}`}>{company.commercialEmail}</a><a href={`mailto:${company.institutionalEmail}`}>{company.institutionalEmail}</a><span class="contact-address">{company.address}</span></div></div>
+        <div class="contact-copy"><div class="section-kicker">04 / CONTACT</div><h2 id="pages-en-index-section-6-heading">Let's discuss<br /><em>your project.</em></h2><p>Share the service required, the location and what you intend to achieve. The HMATIAS team can review the request and outline the next steps.</p><div class="contact-details"><a href={company.telephoneUri}>{company.phone}</a><a href={`mailto:${company.commercialEmail}`}>{company.commercialEmail}</a><a href={`mailto:${company.institutionalEmail}`}>{company.institutionalEmail}</a><span class="contact-address">{company.address}</span></div></div>
         <div class="contact-actions"><a class="contact-action" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contact us on WhatsApp <b>↗</b></a><a class="contact-action" href={`mailto:${company.commercialEmail}?subject=HMATIAS%20service%20enquiry`}>Send an email <b>↗</b></a><a class="contact-action" href="/en/source-ao/smart-rfq/">Prepare a supply request <b>↗</b></a><p class="contact-small">A submitted enquiry is subject to review and does not constitute acceptance of a contract or confirmation of supply availability.</p></div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
@@ -16,26 +16,26 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
   <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS SUPPLY</span><span>PROCUREMENT · SOURCING · SUPPLY</span></div>
   <SiteHeader />
   <main class="supply-page">
-    <section class="construction-hero supply-hero" id="home">
+    <section class="construction-hero supply-hero" id="home" aria-labelledby="pages-en-supply-index-section-1-heading">
       <div class="construction-hero-copy">
         <nav class="construction-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span aria-hidden="true">/</span><span>Supply</span></nav>
         <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS SUPPLY · PROCUREMENT</p>
-        <h1>Supply,<br /><em>with precision.</em></h1>
+        <h1 id="pages-en-supply-index-section-1-heading">Supply,<br /><em>with precision.</em></h1>
         <p class="hero-lead">We identify supply solutions from client specifications, consult our partners and verify commercial conditions before submitting a proposal.</p>
         <div class="hero-actions"><a class="button button-light" href="#request">Request a quotation <span aria-hidden="true">↓</span></a><a class="text-link text-link-light" href={company.sourceAoUrl}>SOURCE AO <span aria-hidden="true">↗</span></a></div>
         <div class="hero-meta"><span>Materials · Consumables · PPE and workwear · Equipment</span><span>Angola · regional sourcing where applicable</span></div>
       </div>
-      <figure class="construction-hero-image supply-hero-image"><Image src={heroPhoto} alt="Profiled roofing sheets documented for supply enquiries" widths={[640,960,1280]} sizes="(max-width:900px) 100vw,48vw" format="webp" quality={84} loading="eager" fetchpriority="high"/><figcaption><span>01</span> HMATIAS MATERIAL RECORD</figcaption></figure>
+      <figure class="construction-hero-image supply-hero-image"><Picture src={heroPhoto} alt="Profiled roofing sheets documented for supply enquiries" widths={[640,960,1280]} sizes="(max-width:900px) 100vw,48vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={84} loading="eager" fetchpriority="high" decoding="async" /><figcaption><span>01</span> HMATIAS MATERIAL RECORD</figcaption></figure>
     </section>
 
-    <section class="construction-intro section-pad supply-intro">
+    <section class="construction-intro section-pad supply-intro" aria-labelledby="pages-en-supply-index-section-2-heading">
       <div class="section-kicker">01 / SUPPLY MODEL</div>
-      <div class="construction-intro-content"><h2>From specification<br /><em>to proposal.</em></h2><div class="construction-intro-copy"><p>HMATIAS does not hold its own stock. It provides industrial supply and procurement services; each request is assessed by reference, quantity, application, destination and required timing. Each request is assessed by reference, quantity, application, destination and required timing. Availability, price, documentation and logistics are checked before a proposal is submitted.</p></div></div>
+      <div class="construction-intro-content"><h2 id="pages-en-supply-index-section-2-heading">From specification<br /><em>to proposal.</em></h2><div class="construction-intro-copy"><p>HMATIAS does not hold its own stock. It provides industrial supply and procurement services; each request is assessed by reference, quantity, application, destination and required timing. Each request is assessed by reference, quantity, application, destination and required timing. Availability, price, documentation and logistics are checked before a proposal is submitted.</p></div></div>
     </section>
 
 
-    <section class="supply-categories section-pad" id="categories">
-      <div class="section-heading"><div><div class="section-kicker">02 / SUPPLY CATEGORIES</div><h2>Every request starts<br /><em>with a specification.</em></h2></div><p>We source against the intended application, technical requirements, quantity and delivery destination supplied by the client.</p></div>
+    <section class="supply-categories section-pad" id="categories" aria-labelledby="pages-en-supply-index-section-3-heading">
+      <div class="section-heading"><div><div class="section-kicker">02 / SUPPLY CATEGORIES</div><h2 id="pages-en-supply-index-section-3-heading">Every request starts<br /><em>with a specification.</em></h2></div><p>We source against the intended application, technical requirements, quantity and delivery destination supplied by the client.</p></div>
       <div class="supply-category-grid">
         <article class="supply-category-card"><span>01</span><h3>Construction materials</h3><p>Profiles, sheets, metal components and other materials identified by reference, dimensions and intended application.</p></article>
         <article class="supply-category-card"><span>02</span><h3>Industrial consumables</h3><p>Diamond cutting discs, drilling crowns and technical consumables sourced by brand and specification.</p></article>
@@ -43,8 +43,8 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
         <article class="supply-category-card"><span>04</span><h3>Equipment and tools</h3><p>Equipment and tools assessed against technical requirements, availability, commercial terms and logistics.</p></article>
       </div>
     </section>
-    <section class="supply-partners section-pad" id="partners">
-      <div class="section-heading"><div><div class="section-kicker">03 / SUPPLY CATEGORIES & SOURCING</div><h2>A selected<br /><em>supply offer.</em></h2></div><p>We present supply categories and sourcing channels. Availability and commercial terms are checked for each individual request.</p></div>
+    <section class="supply-partners section-pad" id="partners" aria-labelledby="pages-en-supply-index-section-4-heading">
+      <div class="section-heading"><div><div class="section-kicker">03 / SUPPLY CATEGORIES & SOURCING</div><h2 id="pages-en-supply-index-section-4-heading">A selected<br /><em>supply offer.</em></h2></div><p>We present supply categories and sourcing channels. Availability and commercial terms are checked for each individual request.</p></div>
       <div class="supply-partner-list">
         <article class="supply-partner">
           <div class="supply-partner-index">01</div>
@@ -59,16 +59,16 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
       </div>
     </section>
 
-    <section class="supply-evidence section-pad" id="materials">
-      <div class="portfolio-top"><div><div class="section-kicker">04 / SUPPLY RECORDS</div><h2>Materials and logistics<br /><em>in context.</em></h2></div><p>Existing HMATIAS visual records. They do not indicate current stock or availability.</p></div>
+    <section class="supply-evidence section-pad" id="materials" aria-labelledby="pages-en-supply-index-section-5-heading">
+      <div class="portfolio-top"><div><div class="section-kicker">04 / SUPPLY RECORDS</div><h2 id="pages-en-supply-index-section-5-heading">Materials and logistics<br /><em>in context.</em></h2></div><p>Existing HMATIAS visual records. They do not indicate current stock or availability.</p></div>
       <div class="supply-evidence-grid">
-        <figure class="supply-evidence-photo"><Image src={metalProfiles} alt="Metal profiles documented for construction applications" widths={[640,960]} sizes="(max-width:700px) 100vw,50vw" format="webp" quality={82}/><figcaption>Metal profiles · construction materials</figcaption></figure>
-        <figure class="supply-evidence-photo"><Image src={logisticsPhoto} alt="Logistics mobilisation of metal elements" widths={[640,960]} sizes="(max-width:700px) 100vw,50vw" format="webp" quality={82}/><figcaption>Logistics · material mobilisation</figcaption></figure>
+        <figure class="supply-evidence-photo"><Picture src={metalProfiles} alt="Metal profiles documented for construction applications" widths={[640,960]} sizes="(max-width:700px) 100vw,50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /><figcaption>Metal profiles · construction materials</figcaption></figure>
+        <figure class="supply-evidence-photo"><Picture src={logisticsPhoto} alt="Logistics mobilisation of metal elements" widths={[640,960]} sizes="(max-width:700px) 100vw,50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /><figcaption>Logistics · material mobilisation</figcaption></figure>
       </div>
     </section>
 
-    <section class="construction-request section-pad supply-request" id="request">
-      <div class="construction-request-copy"><p class="section-kicker">05 / SUPPLY ENQUIRY</p><h2>Tell us what<br /><em>you need.</em></h2><p>Send the product reference or technical description, quantity, delivery location and required timing. HMATIAS will review the request and check the conditions before submitting a proposal.</p><div class="construction-request-actions"><a class="button button-light" href={company.sourceAoRfqEnUrl}>Submit a quotation request <span aria-hidden="true">↗</span></a><a class="construction-email-link" href={whatsappSupply} target="_blank" rel="noopener noreferrer">Send via WhatsApp <span aria-hidden="true">↗</span></a></div></div>
+    <section class="construction-request section-pad supply-request" id="request" aria-labelledby="pages-en-supply-index-section-6-heading">
+      <div class="construction-request-copy"><p class="section-kicker">05 / SUPPLY ENQUIRY</p><h2 id="pages-en-supply-index-section-6-heading">Tell us what<br /><em>you need.</em></h2><p>Send the product reference or technical description, quantity, delivery location and required timing. HMATIAS will review the request and check the conditions before submitting a proposal.</p><div class="construction-request-actions"><a class="button button-light" href={company.sourceAoRfqEnUrl}>Submit a quotation request <span aria-hidden="true">↗</span></a><a class="construction-email-link" href={whatsappSupply} target="_blank" rel="noopener noreferrer">Send via WhatsApp <span aria-hidden="true">↗</span></a></div></div>
       <aside class="construction-request-guide"><h3>Information required</h3><ul><li>Item reference, brand or description</li><li>Technical specification and application</li><li>Quantity and unit</li><li>Delivery destination and required timing</li><li>Required standards or documentation</li></ul><p>A request initiates a sourcing enquiry. It does not confirm stock, price or lead time.</p></aside>
     </section>
   </main>

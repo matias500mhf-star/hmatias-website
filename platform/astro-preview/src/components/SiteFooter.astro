@@ -26,7 +26,7 @@ const links = isEnglish
 ---
 <footer class="site-footer" data-language={isEnglish ? "en" : "pt"}>
   <div class="footer-main">
-    <section class="footer-column footer-identity" aria-label={isEnglish ? "HMATIAS identity and platforms" : "Identidade e plataformas HMATIAS"}>
+    <div class="footer-column footer-identity">
       <a class="footer-logo" href={`${homeUrl}#inicio`} aria-label={isEnglish ? "HMATIAS — back to home" : "HMATIAS — voltar ao início"}>
         <Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services" : "HMATIAS — Prestação de Serviços"} widths={[96, 128]} sizes="64px" format="webp" quality={82} />
       </a>
@@ -37,7 +37,7 @@ const links = isEnglish
       <a class="footer-platform-link" href={company.sourceAoUrl}>SOURCE AO <span>↗</span></a>
       <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
       <a href={links.blog}>{isEnglish ? (isBlogIndex ? "Practical sourcing guides" : "Insights and articles") : (isBlogIndex ? "Blog · Guias práticos" : "Blog · Perspetivas empresariais")}</a>
-    </section>
+    </div>
 
     <nav class="footer-column" aria-label={isEnglish ? "Construction services" : "Construção"}>
       <h2>{isEnglish ? "Construction" : "Construção"}</h2>
@@ -56,8 +56,8 @@ const links = isEnglish
       <a href={links.contact}>{isEnglish ? "Request a quotation" : "Solicitar orçamento"}</a>
     </nav>
 
-    <section class="footer-column footer-contacts" aria-label={isEnglish ? "Contact and location" : "Contacto e localização"}>
-      <h2>{isEnglish ? "Contact and location" : "Contacto e localização"}</h2>
+    <section class="footer-column footer-contacts"  aria-labelledby="components-sitefooter-section-2-heading">
+      <h2 id="components-sitefooter-section-2-heading">{isEnglish ? "Contact and location" : "Contacto e localização"}</h2>
       <a href={company.telephoneUri}>{company.phone}</a>
       <a class="footer-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">WhatsApp <span aria-hidden="true">↗</span></a>
       <a href={`mailto:${company.commercialEmail}`}>{company.commercialEmail}</a>

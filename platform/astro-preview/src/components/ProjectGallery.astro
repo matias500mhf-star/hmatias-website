@@ -1,13 +1,13 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import { projects } from "../data/projects";
 import { company } from "../data/site";
 ---
-<section class="portfolio section-pad" id="projetos">
+<section class="portfolio section-pad" id="projetos" aria-labelledby="components-projectgallery-section-1-heading">
   <div class="portfolio-top">
     <div>
       <div class="section-kicker">03 / TRABALHO REAL</div>
-      <h2>O trabalho<br /><em>fala por si.</em></h2>
+      <h2 id="components-projectgallery-section-1-heading">O trabalho<br /><em>fala por si.</em></h2>
     </div>
     <p>Uma seleção de trabalhos e registos visuais da atividade da HMATIAS.</p>
   </div>
@@ -16,14 +16,13 @@ import { company } from "../data/site";
     {projects.map((project) => (
       <article class="project-card">
         <figure class="project-photo">
-          <Image
+          <Picture
             src={project.image}
             alt={project.alt}
             widths={[480, 720, 1040]}
             sizes="(max-width: 650px) 100vw, 50vw"
-            format="webp"
-            quality={82}
-          />
+            formats={["avif", "webp"]} fallbackFormat="jpg"
+            quality={82} decoding="async" loading="lazy" />
         </figure>
         <div class="project-caption">
           <span>{project.category}</span>

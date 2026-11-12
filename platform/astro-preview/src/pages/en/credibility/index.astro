@@ -8,9 +8,9 @@ import { company } from "../../../data/site";
   <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS COMPANY INFORMATION</span><span>IDENTIFICATION · TRANSPARENCY · CONTACT</span></div>
   <SiteHeader />
   <main class="credibility-page">
-    <section class="credibility-hero"><p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS CREDIBILITY</p><h1>Legal details.<br /><em>Commercial conditions.</em></h1><p>This page brings together HMATIAS' legal identity, official contact details and the general conditions that apply to services and supplies.</p></section>
-    <section class="credibility-identity section-pad">
-      <div class="credibility-heading"><p class="section-kicker">01 / COMPANY IDENTIFICATION</p><h2>Company<br /><em>registration.</em></h2></div>
+    <section class="credibility-hero" aria-labelledby="pages-en-credibility-index-section-1-heading"><p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS CREDIBILITY</p><h1 id="pages-en-credibility-index-section-1-heading">Legal details.<br /><em>Commercial conditions.</em></h1><p>This page brings together HMATIAS' legal identity, official contact details and the general conditions that apply to services and supplies.</p></section>
+    <section class="credibility-identity section-pad" aria-labelledby="pages-en-credibility-index-section-2-heading">
+      <div class="credibility-heading"><p class="section-kicker">01 / COMPANY IDENTIFICATION</p><h2 id="pages-en-credibility-index-section-2-heading">Company<br /><em>registration.</em></h2></div>
       <div class="identity-card"><span class="identity-label">REGISTERED COMPANY NAME</span><h3>{company.legalName}</h3><dl>
         <div><dt>Location</dt><dd>{company.address}</dd></div>
         <div><dt>Tax number (NIF)</dt><dd>{company.taxNumber}</dd></div>
@@ -20,20 +20,20 @@ import { company } from "../../../data/site";
         <div><dt>Institutional email</dt><dd><a href={"mailto:"+company.institutionalEmail}>{company.institutionalEmail}</a></dd></div>
       </dl></div>
     </section>
-    <section class="credibility-method section-pad">
-      <div class="credibility-heading"><p class="section-kicker">02 / SERVICE CONDITIONS</p><h2>Services and<br /><em>supplies.</em></h2></div>
-      <div class="method-list">
-        <article><span>01</span><div><h3>Scope and responsibilities</h3><p>Requirements, specifications, location, deliverables and responsibilities are clarified before a proposal is prepared.</p></div></article>
-        <article><span>02</span><div><h3>Verified conditions</h3><p>Availability, price, lead time and logistics are confirmed for each service or supply request.</p></div></article>
-        <article><span>03</span><div><h3>Changes and deliverables</h3><p>Material changes are communicated; follow-up is limited to the service and deliverables accepted in the proposal.</p></div></article>
-      </div>
+    <section class="credibility-method section-pad" aria-labelledby="pages-en-credibility-index-section-3-heading">
+      <div class="credibility-heading"><p class="section-kicker">02 / SERVICE CONDITIONS</p><h2 id="pages-en-credibility-index-section-3-heading">Services and<br /><em>supplies.</em></h2></div>
+      <ul class="method-list">
+        <li><span aria-hidden="true">01</span><div><h3>An Angolan company</h3><p>HMATIAS – Prestação de Serviços SU, LDA. is an Angolan company with a contact address in Viana, Luanda.</p></div></li>
+        <li><span aria-hidden="true">02</span><div><h3>Defined scope and conditions</h3><p>Requirements, specifications, location, deliverables and responsibilities are clarified before a proposal. Availability, price, lead time and logistics are confirmed for each service or supply request.</p></div></li>
+        <li><span aria-hidden="true">03</span><div><h3>Changes and deliverables</h3><p>Material scope changes are communicated; follow-up is limited to the service and deliverables accepted in the proposal.</p></div></li>
+      </ul>
     </section>
-    <section class="credibility-limits section-pad">
-      <div class="credibility-limits-copy"><p class="section-kicker">03 / COMMERCIAL TRANSPARENCY</p><h2>Information before<br /><em>any commitment.</em></h2></div>
+    <section class="credibility-limits section-pad" aria-labelledby="pages-en-credibility-index-section-4-heading">
+      <div class="credibility-limits-copy"><p class="section-kicker">03 / COMMERCIAL TRANSPARENCY</p><h2 id="pages-en-credibility-index-section-4-heading">Information before<br /><em>any commitment.</em></h2></div>
       <div class="credibility-limits-text"><p>HMATIAS Supply operates on a request basis. Stock is not presented as guaranteed availability without confirmation. Stock status, origin, price, lead time and logistics are checked for each request.</p><p>For construction, remodelling and maintenance, scope and conditions depend on the technical and operational assessment applicable to the requested work.</p><p>Proposals should identify the service or supply, agreed conditions and relevant limitations before acceptance.</p></div>
     </section>
-    <section class="credibility-contact section-pad">
-      <div><p class="section-kicker">04 / OFFICIAL CONTACT</p><h2>Speak directly<br /><em>with HMATIAS.</em></h2><p>To verify company details, submit a request or ask for institutional information, use the company's official contact channels.</p></div>
+    <section class="credibility-contact section-pad" aria-labelledby="pages-en-credibility-index-section-5-heading">
+      <div><p class="section-kicker">04 / OFFICIAL CONTACT</p><h2 id="pages-en-credibility-index-section-5-heading">Speak directly<br /><em>with HMATIAS.</em></h2><p>To verify company details, submit a request or ask for institutional information, use the company's official contact channels.</p></div>
       <div class="credibility-contact-links">
         <a href={"mailto:"+company.commercialEmail}>Commercial email <strong>{company.commercialEmail} ↗</strong></a>
         <a href={"mailto:"+company.institutionalEmail}>Institutional email <strong>{company.institutionalEmail} ↗</strong></a>
@@ -63,9 +63,9 @@ import { company } from "../../../data/site";
 .identity-card dd { margin:0; text-align:right; font-weight:600; overflow-wrap:anywhere; }
 .identity-card dd a { text-decoration:underline; text-decoration-color:#91bfe5; text-underline-offset:3px; }
 .credibility-method { display:grid; grid-template-columns:.75fr 1.25fr; gap:clamp(35px,7vw,95px); background:var(--hm-light); }
-.method-list { border-top:1px solid var(--hm-line); }
-.method-list article { display:grid; grid-template-columns:40px 1fr; gap:18px; padding:23px 0; border-bottom:1px solid var(--hm-line); }
-.method-list article > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:19px; }
+.method-list { margin:0; padding:0; list-style:none; border-top:1px solid var(--hm-line); }
+.method-list li { display:grid; grid-template-columns:40px 1fr; gap:18px; padding:23px 0; border-bottom:1px solid var(--hm-line); }
+.method-list li > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:19px; }
 .method-list h3 { margin:0 0 8px; font-size:14px; }
 .method-list p { margin:0; color:var(--hm-muted); font-size:12px; line-height:1.8; }
 .credibility-limits { display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(35px,7vw,95px); background:var(--hm-paper); }

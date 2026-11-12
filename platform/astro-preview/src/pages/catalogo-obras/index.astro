@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
@@ -36,10 +36,10 @@ const works = [
   <div class="preview-bar"><span><i aria-hidden="true"></i> ARQUIVO VISUAL HMATIAS</span><span>Obras · Intervenções · Fornecimentos</span></div>
   <SiteHeader />
   <main class="works-catalogue">
-    <section class="works-catalogue-hero">
+    <section class="works-catalogue-hero" aria-labelledby="pages-catalogo-obras-index-section-1-heading">
       <div class="works-catalogue-hero-inner">
         <p class="eyebrow"><span class="eyebrow-line"></span> ARQUIVO VISUAL HMATIAS</p>
-        <h1>Obras, intervenções<br /><em>e fornecimentos.</em></h1>
+        <h1 id="pages-catalogo-obras-index-section-1-heading">Obras, intervenções<br /><em>e fornecimentos.</em></h1>
         <p>Seleção de registos fotográficos de obras, intervenções, fases de execução e referências de fornecimento da HMATIAS. O catálogo mostra o tipo de trabalho ou material de forma direta; clientes e localizações são identificados apenas quando a divulgação é adequada ou autorizada.</p>
         <div class="hero-actions">
           <a class="button button-light" href={company.legacyContactFormUrl}>Solicitar avaliação <span aria-hidden="true">↗</span></a>
@@ -47,22 +47,22 @@ const works = [
         </div>
       </div>
     </section>
-    <section class="works-catalogue-body section-pad">
+    <section class="works-catalogue-body section-pad" aria-labelledby="pages-catalogo-obras-index-section-2-heading">
       <div class="section-heading">
-        <div><div class="section-kicker">01 / REGISTOS FOTOGRÁFICOS</div><h2>Construção, infraestrutura,<br /><em>manutenção e fornecimento.</em></h2></div>
+        <div><div class="section-kicker">01 / REGISTOS FOTOGRÁFICOS</div><h2 id="pages-catalogo-obras-index-section-2-heading">Construção, infraestrutura,<br /><em>manutenção e fornecimento.</em></h2></div>
       </div>
       <div class="works-catalogue-grid">
         {works.map((work,index) => (
           <article class="works-catalogue-card">
-            <figure><Image src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" format="webp" quality={82} /></figure>
+            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure>
             <div class="works-catalogue-copy"><span>{String(index+1).padStart(2,"0")} · {work.category}</span><h3>{work.title}</h3><p>{work.description}</p></div>
           </article>
         ))}
       </div>
       <p class="works-catalogue-note">Este catálogo é um arquivo visual comercial e não substitui contratos, autos de medição, faturas ou outros documentos de comprovação. A HMATIAS identifica clientes, datas e localizações apenas quando essa divulgação é adequada ou autorizada.</p>
     </section>
-    <section class="works-catalogue-cta">
-      <div><p class="section-kicker">TEM UMA OBRA OU INTERVENÇÃO?</p><h2>Apresente o seu projeto<br /><em>à HMATIAS.</em></h2><p>Envie localização, fotografias, medidas aproximadas e uma descrição breve para estruturarmos o próximo passo.</p></div>
+    <section class="works-catalogue-cta" aria-labelledby="pages-catalogo-obras-index-section-3-heading">
+      <div><p class="section-kicker">TEM UMA OBRA OU INTERVENÇÃO?</p><h2 id="pages-catalogo-obras-index-section-3-heading">Apresente o seu projeto<br /><em>à HMATIAS.</em></h2><p>Envie localização, fotografias, medidas aproximadas e uma descrição breve para estruturarmos o próximo passo.</p></div>
       <a class="button button-light" href={company.legacyContactFormUrl}>Solicitar avaliação <span aria-hidden="true">↗</span></a>
     </section>
   </main>

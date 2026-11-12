@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
@@ -9,18 +9,18 @@ import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-conc
   <div class="preview-bar"><span><i aria-hidden="true"></i> ABOUT HMATIAS</span><span>ANGOLAN COMPANY · LUANDA</span></div>
   <SiteHeader />
   <main class="about-page">
-    <section class="about-hero">
+    <section class="about-hero" aria-labelledby="pages-en-about-index-section-1-heading">
       <div class="about-copy">
         <p class="eyebrow"><span class="eyebrow-line"></span> WHO WE ARE</p>
-        <h1>An Angolan company.<br /><em>Services for businesses and projects.</em></h1>
+        <h1 id="pages-en-about-index-section-1-heading">An Angolan company.<br /><em>Services for businesses and projects.</em></h1>
         <p class="about-lead">HMATIAS – Prestação de Serviços SU, LDA is an Angolan company based in Viana, Luanda, operating in construction, facilities, supply and business services.</p>
         <div class="about-actions"><a class="button button-light" href="/en/#services">Explore our services <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="/en/credibility/">Company information <span aria-hidden="true">↗</span></a></div>
       </div>
-      <figure class="about-visual"><Image src={aboutPhoto} alt="Completed rural pavilions with metal roofing and ventilated side areas" widths={[640,960,1280]} sizes="(max-width:900px) 100vw, 44vw" format="webp" quality={84}/><figcaption><span>HMATIAS</span><span>WORK ON SITE</span></figcaption></figure>
+      <figure class="about-visual"><Picture src={aboutPhoto} alt="Completed rural pavilions with metal roofing and ventilated side areas" widths={[640,960,1280]} sizes="(max-width:900px) 100vw, 44vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={84} decoding="async" loading="eager" fetchpriority="high" /><figcaption><span>HMATIAS</span><span>WORK ON SITE</span></figcaption></figure>
     </section>
 
-    <section class="about-services section-pad" id="services">
-      <div class="about-section-head"><div><p class="section-kicker">WHAT WE DO</p><h2>Service areas.</h2></div></div>
+    <section class="about-services section-pad" id="services" aria-labelledby="pages-en-about-index-section-2-heading">
+      <div class="about-section-head"><div><p class="section-kicker">WHAT WE DO</p><h2 id="pages-en-about-index-section-2-heading">Service areas.</h2></div></div>
       <div class="about-service-grid">
         <a href="/en/construction/"><span>01</span><h3>Construction and remodelling</h3><p>Building works, rehabilitation, paving, structures and space adaptations.</p><b>View service ↗</b></a>
         <a href="/en/facilities/"><span>02</span><h3>Facilities and maintenance</h3><p>Building maintenance, cleaning and operational support.</p><b>View service ↗</b></a>

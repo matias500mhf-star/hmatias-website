@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
@@ -53,13 +53,13 @@ const workRecords = [
   <SiteHeader />
 
   <main class="construction-page">
-    <section class="construction-hero" id="inicio">
+    <section class="construction-hero" id="inicio" aria-labelledby="pages-construcao-index-section-1-heading">
       <div class="construction-hero-copy">
         <nav class="construction-breadcrumb" aria-label="Navegação estrutural">
           <a href="/">Início</a><span aria-hidden="true">/</span><span>Construção e Remodelação</span>
         </nav>
         <p class="eyebrow"><span class="eyebrow-line"></span> CONSTRUÇÃO CIVIL · REMODELAÇÃO</p>
-        <h1>Construção e<br /><em>remodelação.</em></h1>
+        <h1 id="pages-construcao-index-section-1-heading">Construção e<br /><em>remodelação.</em></h1>
         <p class="hero-lead">Obras, reabilitação e intervenções em instalações e infraestruturas para empresas e projetos em Angola.</p>
         <div class="hero-actions">
           <a class="button button-light" href="#pedido">Falar sobre a obra <span aria-hidden="true">↓</span></a>
@@ -71,25 +71,24 @@ const workRecords = [
         </div>
       </div>
       <figure class="construction-hero-image">
-        <Image
+        <Picture
           src={heroPhoto}
           alt="Anexo coberto com estrutura metálica, junto a uma edificação existente"
           widths={[640, 960, 1280]}
           sizes="(max-width: 900px) 100vw, 48vw"
-          format="webp"
+          formats={["avif", "webp"]} fallbackFormat="jpg"
           quality={84}
           loading="eager"
-          fetchpriority="high"
-        />
+          fetchpriority="high" decoding="async" />
         <figcaption><span>01</span> REGISTO DE OBRA HMATIAS</figcaption>
       </figure>
       <span class="construction-hero-note" aria-hidden="true">OBRA · REABILITAÇÃO · INFRAESTRUTURA</span>
     </section>
 
-    <section class="construction-intro section-pad" id="empresa">
+    <section class="construction-intro section-pad" id="empresa" aria-labelledby="pages-construcao-index-section-2-heading">
       <div class="section-kicker">01 / ÁREA DE ATUAÇÃO</div>
       <div class="construction-intro-content">
-        <h2>Intervenções pensadas<br /><em>para o espaço e a sua utilização.</em></h2>
+        <h2 id="pages-construcao-index-section-2-heading">Intervenções pensadas<br /><em>para o espaço e a sua utilização.</em></h2>
         <div class="construction-intro-copy">
           <p>A HMATIAS executa trabalhos de construção civil e remodelação, incluindo intervenções em instalações existentes, preparação de terrenos, pavimentos, coberturas e estruturas de apoio.</p>
           
@@ -98,11 +97,11 @@ const workRecords = [
       </div>
     </section>
 
-    <section class="construction-scopes section-pad" id="servicos">
+    <section class="construction-scopes section-pad" id="servicos" aria-labelledby="pages-construcao-index-section-3-heading">
       <div class="section-heading">
         <div>
           <div class="section-kicker">02 / O QUE FAZEMOS</div>
-          <h2>Frentes de trabalho<br /><em>da construção à reabilitação.</em></h2>
+          <h2 id="pages-construcao-index-section-3-heading">Frentes de trabalho<br /><em>da construção à reabilitação.</em></h2>
         </div>
         <p>As intervenções são enquadradas conforme o tipo de obra, as condições existentes e o resultado pretendido.</p>
       </div>
@@ -131,11 +130,11 @@ const workRecords = [
       </div>
     </section>
 
-    <section class="construction-work section-pad" id="trabalhos">
+    <section class="construction-work section-pad" id="trabalhos" aria-labelledby="pages-construcao-index-section-4-heading">
       <div class="portfolio-top">
         <div>
           <div class="section-kicker">03 / TRABALHO REAL</div>
-          <h2>O trabalho<br /><em>fala por si.</em></h2>
+          <h2 id="pages-construcao-index-section-4-heading">O trabalho<br /><em>fala por si.</em></h2>
         </div>
         <p>Registos visuais de trabalhos e frentes de atividade da HMATIAS.</p>
       </div>
@@ -144,14 +143,13 @@ const workRecords = [
         {workRecords.map((work, index) => (
           <article class="construction-work-card">
             <figure>
-              <Image
+              <Picture
                 src={work.image}
                 alt={work.alt}
                 widths={[480, 720, 1040]}
                 sizes="(max-width: 650px) 100vw, 50vw"
-                format="webp"
-                quality={82}
-              />
+                formats={["avif", "webp"]} fallbackFormat="jpg"
+                quality={82} decoding="async" loading="lazy" />
             </figure>
             <div class="construction-work-caption">
               <span>{String(index + 1).padStart(2, "0")} · {work.category}</span>
@@ -166,10 +164,10 @@ const workRecords = [
 
 
 
-    <section class="construction-request section-pad" id="pedido">
+    <section class="construction-request section-pad" id="pedido" aria-labelledby="pages-construcao-index-section-5-heading">
       <div class="construction-request-copy">
         <p class="section-kicker">04 / PEDIDO DE ORÇAMENTO</p>
-        <h2>Tem uma obra<br /><em>para avaliar?</em></h2>
+        <h2 id="pages-construcao-index-section-5-heading">Tem uma obra<br /><em>para avaliar?</em></h2>
         <p>Partilhe a localização, o tipo de intervenção e o que pretende realizar. Com essa informação, a HMATIAS poderá analisar o pedido e indicar os próximos passos.</p>
         <div class="construction-request-actions">
           <a class="button button-light" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contactar por WhatsApp <span aria-hidden="true">↗</span></a>

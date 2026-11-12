@@ -16,11 +16,11 @@ const serviceItems = [
   <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS BUSINESS SERVICES</span><span>ADMINISTRATIVE · DOCUMENTARY · BUSINESS SUPPORT</span></div>
   <SiteHeader />
   <main class="business-page">
-    <section class="business-hero">
+    <section class="business-hero" aria-labelledby="pages-en-business-services-index-section-1-heading">
       <div class="business-hero-copy">
         <nav class="business-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span>/</span><span>Business Services</span></nav>
         <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS BUSINESS SERVICES</p>
-        <h1>Administrative,<br /><em>documentary and business support.</em></h1>
+        <h1 id="pages-en-business-services-index-section-1-heading">Administrative,<br /><em>documentary and business support.</em></h1>
         <p class="business-lead">Document organisation, institutional correspondence and preparation of commercial materials for professionals and small and medium-sized businesses.</p>
         <div class="hero-actions"><a class="button button-light" href={`mailto:${company.commercialEmail}?subject=Business%20Services%20enquiry`}>Request an assessment <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="#services">View services <span aria-hidden="true">↓</span></a></div>
         <div class="business-meta"><span>Enquiries from across Angola</span><span>Remote support where applicable</span></div>
@@ -28,20 +28,20 @@ const serviceItems = [
       <aside class="business-hero-panel"><span class="business-panel-label">SERVICE SCOPE</span><strong>Clear deliverables.<br />Agreed conditions.</strong><p>The service, workload, required documents and deadline are defined after the request is reviewed.</p><span class="business-panel-rule"></span><div><small>HMATIAS</small><small>LUANDA · ANGOLA</small></div></aside>
     </section>
 
-    <section class="business-intro section-pad">
+    <section class="business-intro section-pad" aria-labelledby="pages-en-business-services-index-section-2-heading">
       <div class="section-kicker">01 / BUSINESS SUPPORT</div>
-      <div class="business-intro-content"><h2>Administrative work<br /><em>also needs a method.</em></h2><div><p>HMATIAS Business Services organises administrative and documentary tasks that require clarity, careful presentation and compliance with requirements defined by the client.</p><p>Each request is assessed individually. Scope, deliverables, timing and commercial conditions are confirmed before work begins.</p></div></div>
+      <div class="business-intro-content"><h2 id="pages-en-business-services-index-section-2-heading">Administrative work<br /><em>also needs a method.</em></h2><div><p>HMATIAS Business Services organises administrative and documentary tasks that require clarity, careful presentation and compliance with requirements defined by the client.</p><p>Each request is assessed individually. Scope, deliverables, timing and commercial conditions are confirmed before work begins.</p></div></div>
     </section>
 
-    <section class="business-services section-pad" id="services">
-      <div class="section-heading"><div><div class="section-kicker">02 / SERVICES</div><h2>Services adapted<br /><em>to the requirement.</em></h2></div><p>Select the area you need. A proposal is prepared after the request and expected workload have been understood.</p></div>
+    <section class="business-services section-pad" id="services" aria-labelledby="pages-en-business-services-index-section-3-heading">
+      <div class="section-heading"><div><div class="section-kicker">02 / SERVICES</div><h2 id="pages-en-business-services-index-section-3-heading">Services adapted<br /><em>to the requirement.</em></h2></div><p>Select the area you need. A proposal is prepared after the request and expected workload have been understood.</p></div>
       <div class="business-service-grid">
         {serviceItems.map(([number,title,description]) => <article class="business-service-card"><span>{number}</span><h3>{title}</h3><p>{description}</p></article>)}
       </div>
     </section>
 
-    <section class="business-process section-pad">
-      <div class="section-heading"><div><div class="section-kicker">03 / INFORMATION FOR ASSESSMENT</div><h2>What to include<br /><em>in your request.</em></h2></div><p>These details help estimate the work and define deliverables and timing.</p></div>
+    <section class="business-process section-pad" aria-labelledby="pages-en-business-services-index-section-4-heading">
+      <div class="section-heading"><div><div class="section-kicker">03 / INFORMATION FOR ASSESSMENT</div><h2 id="pages-en-business-services-index-section-4-heading">What to include<br /><em>in your request.</em></h2></div><p>These details help estimate the work and define deliverables and timing.</p></div>
       <div class="business-process-list">
         <article><span>01</span><div><h3>Service required</h3><p>Identify the document, administrative task or commercial material to be prepared.</p></div></article>
         <article><span>02</span><div><h3>Source information</h3><p>Explain the context and identify the information or content already available.</p></div></article>
@@ -50,10 +50,10 @@ const serviceItems = [
       </div>
     </section>
 
-    <section class="business-contact-cta section-pad" id="request">
+    <section class="business-contact-cta section-pad" id="request" aria-labelledby="pages-en-business-services-index-section-5-heading">
       <div>
         <p class="section-kicker">04 / REQUEST AN ASSESSMENT</p>
-        <h2>Tell us what you need,<br /><em>and the expected scope.</em></h2>
+        <h2 id="pages-en-business-services-index-section-5-heading">Tell us what you need,<br /><em>and the expected scope.</em></h2>
         <p>Business Services requests are currently received through the form published on the official website. A secure intake area will be made available only after its functionality and security checks are complete.</p>
         <div class="hero-actions">
           <a class="button button-light" href={company.businessServicesContactUrl}>Open request form <span aria-hidden="true">↗</span></a>

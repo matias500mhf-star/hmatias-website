@@ -7,6 +7,7 @@
 
   const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
   const service = form.querySelector('#rfqService');
+  const honeypot = form.querySelector('#rfqWebsite');
   const preview = document.getElementById('rfqSummary');
   const referenceEl = document.getElementById('rfqReference');
   const emailLink = document.getElementById('rfqEmailSend');
@@ -127,6 +128,11 @@
 
   form.addEventListener('submit', event => {
     event.preventDefault();
+    if (honeypot?.value.trim()) {
+      resetOutput();
+      setProgress(1);
+      return;
+    }
     if (!form.reportValidity()) return;
     const summary = buildSummary();
     if (preview) preview.textContent = summary;

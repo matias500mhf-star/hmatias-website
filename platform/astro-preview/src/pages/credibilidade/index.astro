@@ -11,16 +11,16 @@ import { company } from "../../data/site";
   <div class="preview-bar"><span><i aria-hidden="true"></i> INFORMAÇÃO INSTITUCIONAL</span><span>IDENTIFICAÇÃO · TRANSPARÊNCIA · CONTACTO</span></div>
   <SiteHeader />
   <main class="credibility-page">
-    <section class="credibility-hero">
+    <section class="credibility-hero" aria-labelledby="pages-credibilidade-index-section-1-heading">
       <p class="eyebrow"><span class="eyebrow-line"></span> CREDIBILIDADE HMATIAS</p>
-      <h1>Dados legais.<br /><em>Condições comerciais.</em></h1>
+      <h1 id="pages-credibilidade-index-section-1-heading">Dados legais.<br /><em>Condições comerciais.</em></h1>
       <p>Esta página reúne a identificação legal da HMATIAS, os contactos oficiais e as condições gerais aplicáveis a serviços e fornecimentos.</p>
     </section>
 
-    <section class="credibility-identity section-pad">
+    <section class="credibility-identity section-pad" aria-labelledby="pages-credibilidade-index-section-2-heading">
       <div class="credibility-heading">
         <p class="section-kicker">01 / IDENTIFICAÇÃO EMPRESARIAL</p>
-        <h2>Registo<br /><em>da empresa.</em></h2>
+        <h2 id="pages-credibilidade-index-section-2-heading">Registo<br /><em>da empresa.</em></h2>
       </div>
       <div class="identity-card">
         <span class="identity-label">DENOMINAÇÃO SOCIAL</span>
@@ -36,22 +36,22 @@ import { company } from "../../data/site";
       </div>
     </section>
 
-    <section class="credibility-method section-pad">
+    <section class="credibility-method section-pad" aria-labelledby="pages-credibilidade-index-section-3-heading">
       <div class="credibility-heading">
         <p class="section-kicker">02 / CONDIÇÕES DE EXECUÇÃO</p>
-        <h2>Serviços e<br /><em>fornecimentos.</em></h2>
+        <h2 id="pages-credibilidade-index-section-3-heading">Serviços e<br /><em>fornecimentos.</em></h2>
       </div>
-      <div class="method-list">
-        <article><span>01</span><div><h3>Âmbito e responsabilidades</h3><p>Necessidades, especificações, localização, entregáveis e responsabilidades são clarificados antes da proposta.</p></div></article>
-        <article><span>02</span><div><h3>Condições verificadas</h3><p>Disponibilidade, preço, prazo e logística são confirmados para cada fornecimento ou serviço.</p></div></article>
-        <article><span>03</span><div><h3>Alterações e entregáveis</h3><p>Alterações relevantes são comunicadas; o acompanhamento limita-se ao serviço e aos entregáveis aceites na proposta.</p></div></article>
-      </div>
+      <ul class="method-list">
+        <li><span aria-hidden="true">01</span><div><h3>Empresa angolana</h3><p>A HMATIAS – Prestação de Serviços SU, LDA. está estabelecida em Angola e apresenta endereço em Viana, Luanda.</p></div></li>
+        <li><span aria-hidden="true">02</span><div><h3>Âmbito e condições definidos</h3><p>Necessidades, especificações, localização, entregáveis e responsabilidades são clarificados antes da proposta. Disponibilidade, preço, prazo e logística são confirmados para cada fornecimento ou serviço.</p></div></li>
+        <li><span aria-hidden="true">03</span><div><h3>Alterações de âmbito e entregáveis</h3><p>Alterações relevantes ao âmbito são comunicadas; o acompanhamento limita-se ao serviço e aos entregáveis aceites na proposta.</p></div></li>
+      </ul>
     </section>
 
-    <section class="credibility-limits section-pad">
+    <section class="credibility-limits section-pad" aria-labelledby="pages-credibilidade-index-section-4-heading">
       <div class="credibility-limits-copy">
         <p class="section-kicker">03 / TRANSPARÊNCIA COMERCIAL</p>
-        <h2>Informação antes<br /><em>de qualquer compromisso.</em></h2>
+        <h2 id="pages-credibilidade-index-section-4-heading">Informação antes<br /><em>de qualquer compromisso.</em></h2>
       </div>
       <div class="credibility-limits-text">
         <p>Na área de Supply e procurement, a HMATIAS trabalha sob consulta e não apresenta disponibilidade como garantida sem confirmação. Stock, origem, preço, prazo e logística são verificados para cada pedido.</p>
@@ -60,8 +60,8 @@ import { company } from "../../data/site";
       </div>
     </section>
 
-    <section class="credibility-contact section-pad">
-      <div><p class="section-kicker">04 / CONTACTO OFICIAL</p><h2>Fale diretamente<br /><em>com a HMATIAS.</em></h2><p>Para confirmar dados, apresentar um pedido ou solicitar informação institucional, utilize os canais oficiais da empresa.</p></div>
+    <section class="credibility-contact section-pad" aria-labelledby="pages-credibilidade-index-section-5-heading">
+      <div><p class="section-kicker">04 / CONTACTO OFICIAL</p><h2 id="pages-credibilidade-index-section-5-heading">Fale diretamente<br /><em>com a HMATIAS.</em></h2><p>Para confirmar dados, apresentar um pedido ou solicitar informação institucional, utilize os canais oficiais da empresa.</p></div>
       <div class="credibility-contact-links">
         <a href={"mailto:"+company.commercialEmail}>E-mail comercial <strong>{company.commercialEmail} ↗</strong></a>
         <a href={"mailto:"+company.institutionalEmail}>E-mail institucional <strong>{company.institutionalEmail} ↗</strong></a>
@@ -91,9 +91,9 @@ import { company } from "../../data/site";
 .identity-card dd { margin:0; text-align:right; font-weight:600; overflow-wrap:anywhere; }
 .identity-card dd a { text-decoration:underline; text-decoration-color:#91bfe5; text-underline-offset:3px; }
 .credibility-method { display:grid; grid-template-columns:.75fr 1.25fr; gap:clamp(35px,7vw,95px); background:var(--hm-light); }
-.method-list { border-top:1px solid var(--hm-line); }
-.method-list article { display:grid; grid-template-columns:40px 1fr; gap:18px; padding:23px 0; border-bottom:1px solid var(--hm-line); }
-.method-list article > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:19px; }
+.method-list { margin:0; padding:0; list-style:none; border-top:1px solid var(--hm-line); }
+.method-list li { display:grid; grid-template-columns:40px 1fr; gap:18px; padding:23px 0; border-bottom:1px solid var(--hm-line); }
+.method-list li > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:19px; }
 .method-list h3 { margin:0 0 8px; font-size:14px; }
 .method-list p { margin:0; color:var(--hm-muted); font-size:12px; line-height:1.8; }
 .credibility-limits { display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(35px,7vw,95px); background:var(--hm-paper); }

@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
@@ -35,30 +35,30 @@ const works = [
   <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS VISUAL ARCHIVE</span><span>WORKS · INTERVENTIONS · SUPPLY</span></div>
   <SiteHeader />
   <main class="works-catalogue">
-    <section class="works-catalogue-hero">
+    <section class="works-catalogue-hero" aria-labelledby="pages-en-works-catalogue-index-section-1-heading">
       <div class="works-catalogue-hero-inner">
         <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS VISUAL ARCHIVE</p>
-        <h1>Works, interventions<br /><em>and supply.</em></h1>
+        <h1 id="pages-en-works-catalogue-index-section-1-heading">Works, interventions<br /><em>and supply.</em></h1>
         <p>A selection of photographs documenting HMATIAS work, interventions, execution stages and supply references. The catalogue describes the type of work or material shown; clients and locations are identified only where disclosure is appropriate or authorised.</p>
         <div class="hero-actions"><a class="button button-light" href="/en/#contact">Request an assessment <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="/en/construction/">Construction and Infrastructure <span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
-    <section class="works-catalogue-body section-pad">
+    <section class="works-catalogue-body section-pad" aria-labelledby="pages-en-works-catalogue-index-section-2-heading">
       <div class="section-heading">
-        <div><div class="section-kicker">01 / PHOTOGRAPHIC RECORDS</div><h2>Construction, infrastructure,<br /><em>maintenance and supply.</em></h2></div>
+        <div><div class="section-kicker">01 / PHOTOGRAPHIC RECORDS</div><h2 id="pages-en-works-catalogue-index-section-2-heading">Construction, infrastructure,<br /><em>maintenance and supply.</em></h2></div>
       </div>
       <div class="works-catalogue-grid">
         {works.map((work,index) => (
           <article class="works-catalogue-card">
-            <figure><Image src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" format="webp" quality={82}/></figure>
+            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure>
             <div class="works-catalogue-copy"><span>{String(index+1).padStart(2,"0")} · {work.category}</span><h3>{work.title}</h3><p>{work.description}</p></div>
           </article>
         ))}
       </div>
       <p class="works-catalogue-note">This is a commercial visual archive. It does not replace contracts, measurement records, invoices or other proof documents. HMATIAS identifies clients, dates and locations only where disclosure is appropriate or authorised.</p>
     </section>
-    <section class="works-catalogue-cta">
-      <div><p class="section-kicker">PLANNING A PROJECT OR INTERVENTION?</p><h2>Present your project<br /><em>to HMATIAS.</em></h2><p>Send the location, photographs, approximate measurements and a brief description so we can assess the next step.</p></div>
+    <section class="works-catalogue-cta" aria-labelledby="pages-en-works-catalogue-index-section-3-heading">
+      <div><p class="section-kicker">PLANNING A PROJECT OR INTERVENTION?</p><h2 id="pages-en-works-catalogue-index-section-3-heading">Present your project<br /><em>to HMATIAS.</em></h2><p>Send the location, photographs, approximate measurements and a brief description so we can assess the next step.</p></div>
       <a class="button button-light" href="/en/#contact">Request an assessment <span aria-hidden="true">↗</span></a>
     </section>
   </main>

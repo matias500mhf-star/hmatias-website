@@ -2,40 +2,11 @@
 import { Image } from "astro:assets";
 import logo from "../../../../logo-hmatias.png";
 import { company } from "../data/site";
+import { getLanguageSwitchPath } from "../data/locales";
 
 const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const isEnglish = pathname.startsWith("/en/");
-const ptToEn: Record<string, string> = {
-  "/": "/en/",
-  "/empresa/": "/en/about/",
-  "/credibilidade/": "/en/credibility/",
-  "/construcao/": "/en/construction/",
-  "/facilities/": "/en/facilities/",
-  "/supply/": "/en/supply/",
-  "/business-services/": "/en/business-services/",
-  "/catalogo-obras/": "/en/works-catalogue/",
-  "/blog/": "/en/blog/",
-  "/acessibilidade/": "/en/accessibility/",
-  "/privacidade/": "/en/privacy/",
-  "/termos/": "/en/terms/",
-  "/source-ao/smart-rfq/": "/en/source-ao/smart-rfq/",
-};
-
-const enToPt = Object.fromEntries(Object.entries(ptToEn).map(([pt, en]) => [en, pt])) as Record<string, string>;
-const ptArticle = pathname.match(/^\/blog\/([^/]+)\/$/);
-const enArticle = pathname.match(/^\/en\/blog\/([^/]+)\/$/);
-const languageHref = isEnglish
-  ? (enArticle
-      ? (enArticle[1] === "how-to-prepare-a-comparable-supply-quotation"
-          ? "/blog/como-preparar-um-pedido-de-cotacao/"
-          : "/blog/")
-      : (enToPt[pathname] ?? "/"))
-  : (ptArticle
-      ? (ptArticle[1] === "como-preparar-um-pedido-de-cotacao"
-          ? "/en/blog/how-to-prepare-a-comparable-supply-quotation/"
-          : "/en/blog/")
-      : (ptToEn[pathname] ?? "/en/"));
-
+const languageHref = getLanguageSwitchPath(pathname, isEnglish);
 const homeUrl = isEnglish ? "/en/" : "/";
 const servicesAnchor = isEnglish ? "services" : "servicos";
 const projectsAnchor = isEnglish ? "projects" : "projetos";

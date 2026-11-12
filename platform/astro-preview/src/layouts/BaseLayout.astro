@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 import favicon from "../../../../images/favicon.png";
+import { company } from "../data/site";
+import { getLanguagePair } from "../data/locales";
 
 interface Props {
   title: string;
@@ -14,6 +16,41 @@ const ogLocale = isEnglish ? "en_US" : "pt_AO";
 const brandImageAlt = isEnglish
   ? "HMATIAS — Construction, Facilities, Supply and Business Services"
   : "HMATIAS — Prestação de Serviços";
+const siteUrl = Astro.site ?? new URL("https://hmatias-astro-preview.onrender.com");
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const languagePair = getLanguagePair(Astro.url.pathname);
+const ptUrl = languagePair ? new URL(languagePair.pt, siteUrl).toString() : undefined;
+const enUrl = languagePair ? new URL(languagePair.en, siteUrl).toString() : undefined;
+const structuredData = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": ["GeneralContractor", "LocalBusiness"],
+  "@id": new URL("/#business", siteUrl).toString(),
+  name: company.name,
+  legalName: company.legalName,
+  url: new URL("/", siteUrl).toString(),
+  image: "https://comercialhmatiasps.com/og-hmatias.jpg",
+  logo: "https://comercialhmatiasps.com/logo-hmatias.png",
+  telephone: company.phone,
+  email: company.commercialEmail,
+  identifier: {
+    "@type": "PropertyValue",
+    name: isEnglish ? "Commercial registration" : "Registo Comercial",
+    value: company.commercialRegistration,
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Bairro 1 de Maio, Casa n.º 31",
+    addressLocality: "Viana",
+    addressRegion: "Luanda",
+    addressCountry: "AO",
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "Angola",
+  },
+  sameAs: [company.instagramUrl],
+  description,
+}).replace(/</g, "\\u003c");
 ---
 <!doctype html>
 <html lang={lang}>
@@ -28,14 +65,20 @@ const brandImageAlt = isEnglish
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content={ogLocale} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content="https://comercialhmatiasps.com/og-hmatias.jpg" />
     <meta property="og:image:alt" content={brandImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://comercialhmatiasps.com/og-hmatias.jpg" />
+    <link rel="canonical" href={canonicalUrl} />
+    {ptUrl && <link rel="alternate" hreflang="pt-AO" href={ptUrl} />}
+    {enUrl && <link rel="alternate" hreflang="en" href={enUrl} />}
+    {ptUrl && <link rel="alternate" hreflang="x-default" href={ptUrl} />}
     <title>{title}</title>
     <link rel="icon" type="image/png" href={favicon.src} />
+    <script type="application/ld+json" set:html={structuredData}></script>
   </head>
   <body>
     <slot />

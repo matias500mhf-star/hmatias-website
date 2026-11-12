@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
@@ -37,13 +37,13 @@ const evidence = [
   <SiteHeader />
 
   <main class="facilities-page">
-    <section class="construction-hero" id="inicio">
+    <section class="construction-hero" id="inicio" aria-labelledby="pages-facilities-index-section-1-heading">
       <div class="construction-hero-copy">
         <nav class="construction-breadcrumb" aria-label="Navegação estrutural">
           <a href="/">Início</a><span aria-hidden="true">/</span><span>Facilities e Manutenção</span>
         </nav>
         <p class="eyebrow"><span class="eyebrow-line"></span> FACILITIES · MANUTENÇÃO DE INSTALAÇÕES</p>
-        <h1>Facilities e<br /><em>manutenção.</em></h1>
+        <h1 id="pages-facilities-index-section-1-heading">Facilities e<br /><em>manutenção.</em></h1>
         <p class="hero-lead">Manutenção, conservação e apoio operacional para instalações empresariais e institucionais.</p>
         <div class="hero-actions">
           <a class="button button-light" href="#pedido">Solicitar avaliação <span aria-hidden="true">↓</span></a>
@@ -55,25 +55,24 @@ const evidence = [
         </div>
       </div>
       <figure class="construction-hero-image">
-        <Image
+        <Picture
           src={heroPhoto}
           alt="Caixilharia de alumínio e vidro fumado numa instalação"
           widths={[640, 960, 1280]}
           sizes="(max-width: 900px) 100vw, 48vw"
-          format="webp"
+          formats={["avif", "webp"]} fallbackFormat="jpg"
           quality={84}
           loading="eager"
-          fetchpriority="high"
-        />
+          fetchpriority="high" decoding="async" />
         <figcaption><span>01</span> REGISTO DE INTERVENÇÃO HMATIAS</figcaption>
       </figure>
       <span class="construction-hero-note" aria-hidden="true">CONSERVAÇÃO · MANUTENÇÃO · OPERAÇÃO</span>
     </section>
 
-    <section class="construction-intro section-pad" id="empresa">
+    <section class="construction-intro section-pad" id="empresa" aria-labelledby="pages-facilities-index-section-2-heading">
       <div class="section-kicker">01 / ÁREA DE ATUAÇÃO</div>
       <div class="construction-intro-content">
-        <h2>Instalações cuidadas.<br /><em>Serviços com escopo definido.</em></h2>
+        <h2 id="pages-facilities-index-section-2-heading">Instalações cuidadas.<br /><em>Serviços com escopo definido.</em></h2>
         <div class="construction-intro-copy">
           <p>A HMATIAS presta serviços de facilities e manutenção a empresas e instituições. A área integra manutenção de instalações, limpeza profissional, conservação de coberturas e apoio operacional.</p>
           <p>Frequência, áreas, recursos, materiais e responsabilidades são definidos antes do início de cada serviço.</p>
@@ -82,11 +81,11 @@ const evidence = [
       </div>
     </section>
 
-    <section class="construction-scopes section-pad" id="servicos">
+    <section class="construction-scopes section-pad" id="servicos" aria-labelledby="pages-facilities-index-section-3-heading">
       <div class="section-heading">
         <div>
           <div class="section-kicker">02 / SERVIÇOS</div>
-          <h2>Manutenção e operação<br /><em>do espaço de trabalho.</em></h2>
+          <h2 id="pages-facilities-index-section-3-heading">Manutenção e operação<br /><em>do espaço de trabalho.</em></h2>
         </div>
         <p>O serviço é organizado de acordo com as condições das instalações e as necessidades identificadas.</p>
       </div>
@@ -115,11 +114,11 @@ const evidence = [
       </div>
     </section>
 
-    <section class="construction-work section-pad" id="intervencoes">
+    <section class="construction-work section-pad" id="intervencoes" aria-labelledby="pages-facilities-index-section-4-heading">
       <div class="portfolio-top">
         <div>
           <div class="section-kicker">03 / REGISTOS REAIS</div>
-          <h2>Intervenções<br /><em>no terreno.</em></h2>
+          <h2 id="pages-facilities-index-section-4-heading">Intervenções<br /><em>no terreno.</em></h2>
         </div>
         <p>Registos visuais de trabalhos de manutenção e apoio a instalações realizados pela HMATIAS.</p>
       </div>
@@ -128,14 +127,13 @@ const evidence = [
         {evidence.map((work, index) => (
           <article class="construction-work-card facilities-work-card">
             <figure>
-              <Image
+              <Picture
                 src={work.image}
                 alt={work.alt}
                 widths={[480, 720, 1040]}
                 sizes="(max-width: 650px) 100vw, 50vw"
-                format="webp"
-                quality={82}
-              />
+                formats={["avif", "webp"]} fallbackFormat="jpg"
+                quality={82} decoding="async" loading="lazy" />
             </figure>
             <div class="construction-work-caption">
               <span>{String(index + 2).padStart(2, "0")} · {work.category}</span>
@@ -150,10 +148,10 @@ const evidence = [
 
 
 
-    <section class="construction-request section-pad" id="pedido">
+    <section class="construction-request section-pad" id="pedido" aria-labelledby="pages-facilities-index-section-5-heading">
       <div class="construction-request-copy">
         <p class="section-kicker">04 / PEDIDO DE SERVIÇO</p>
-        <h2>Precisa de manutenção<br /><em>ou apoio operacional?</em></h2>
+        <h2 id="pages-facilities-index-section-5-heading">Precisa de manutenção<br /><em>ou apoio operacional?</em></h2>
         <p>Indique o tipo de instalação, a localização, as áreas abrangidas e a frequência pretendida. A HMATIAS poderá avaliar o âmbito e preparar uma proposta adequada ao pedido.</p>
         <div class="construction-request-actions">
           <a class="button button-light" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contactar por WhatsApp <span aria-hidden="true">↗</span></a>

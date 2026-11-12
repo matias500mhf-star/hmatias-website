@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
@@ -13,10 +13,10 @@ import { company } from "../../data/site";
   <div class="preview-bar"><span><i aria-hidden="true"></i> SOBRE A HMATIAS</span><span>EMPRESA ANGOLANA · LUANDA</span></div>
   <SiteHeader />
   <main class="about-page">
-    <section class="about-hero">
+    <section class="about-hero" aria-labelledby="pages-empresa-index-section-1-heading">
       <div class="about-copy">
         <p class="eyebrow"><span class="eyebrow-line"></span> QUEM SOMOS</p>
-        <h1>Empresa angolana.<br /><em>Serviços para empresas e projetos.</em></h1>
+        <h1 id="pages-empresa-index-section-1-heading">Empresa angolana.<br /><em>Serviços para empresas e projetos.</em></h1>
         <p class="about-lead">A HMATIAS – Prestação de Serviços SU, LDA é uma empresa angolana sediada em Viana, Luanda, com atividade em construção, facilities, supply e serviços empresariais.</p>
         <div class="about-actions">
           <a class="button button-light" href="/#servicos">Conhecer os serviços <span aria-hidden="true">↗</span></a>
@@ -24,21 +24,20 @@ import { company } from "../../data/site";
         </div>
       </div>
       <figure class="about-visual">
-        <Image
+        <Picture
           src={aboutPhoto}
           alt="Pavilhões rurais concluídos, com cobertura metálica e áreas laterais ventiladas"
           widths={[640, 960, 1280]}
           sizes="(max-width: 900px) 100vw, 44vw"
-          format="webp"
-          quality={84}
-        />
+          formats={["avif", "webp"]} fallbackFormat="jpg"
+          quality={84} decoding="async" loading="eager" fetchpriority="high" />
         <figcaption><span>HMATIAS</span><span>TRABALHO NO TERRENO</span></figcaption>
       </figure>
     </section>
 
-    <section class="about-services section-pad" id="servicos">
+    <section class="about-services section-pad" id="servicos" aria-labelledby="pages-empresa-index-section-2-heading">
       <div class="about-section-head">
-        <div><p class="section-kicker">O QUE FAZEMOS</p><h2>Áreas de serviço.</h2></div>
+        <div><p class="section-kicker">O QUE FAZEMOS</p><h2 id="pages-empresa-index-section-2-heading">Áreas de serviço.</h2></div>
       </div>
       <div class="about-service-grid">
         <a href={company.constructionUrl}><span>01</span><h3>Construção e remodelação</h3><p>Obras, reabilitação, pavimentação, estruturas e adaptação de espaços.</p><b>Ver serviço ↗</b></a>

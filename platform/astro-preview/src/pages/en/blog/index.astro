@@ -13,18 +13,18 @@ const featuredDate = featured?.data.pubDate.toLocaleDateString("en", { day:"2-di
   <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS PUBLICATIONS</span><span>QUOTATIONS · SPECIFICATIONS · SUPPLY</span></div>
   <SiteHeader />
   <main class="editorial-page">
-    <section class="editorial-hero">
+    <section class="editorial-hero" aria-labelledby="pages-en-blog-index-section-1-heading">
       <p class="section-kicker">HMATIAS / BLOG</p>
-      <h1>Practical guides for<br /><em>sourcing and supply.</em></h1>
+      <h1 id="pages-en-blog-index-section-1-heading">Practical guides for<br /><em>sourcing and supply.</em></h1>
       <p class="editorial-lead">Technical and commercial notes on preparing quotation requests, specifying materials and comparing supplier proposals.</p>
     </section>
-    <section class="editorial-body">
+    <section class="editorial-body" aria-labelledby="pages-en-blog-index-section-2-heading">
       {featured ? (
         <>
           <div class="editorial-label">FEATURED ARTICLE · {featuredDate?.toUpperCase()}</div>
           <article class="editorial-feature">
             <p class="editorial-meta">{featured.data.category.toUpperCase()} · {featured.data.author.toUpperCase()}</p>
-            <h2><a href={`/en/blog/${featured.id}/`}>{featured.data.title}</a></h2>
+            <h2 id="pages-en-blog-index-section-2-heading"><a href={`/en/blog/${featured.id}/`}>{featured.data.title}</a></h2>
             <p>{featured.data.description}</p>
             <a class="editorial-read-link" href={`/en/blog/${featured.id}/`}>Read the article <span aria-hidden="true">↗</span></a>
           </article>
