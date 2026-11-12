@@ -54,7 +54,7 @@ As páginas abaixo continuam por recriar ou dependem de equivalência funcional.
 |---|---|---|
 | `/rfq.html` | Construtor antigo de briefing RFQ por área de serviço | Não migrado; não confundir com o SOURCE AO RFQ |
 | `/clean.html` e `/clean-en.html` | HMATIAS Clean e fluxo de cotação | Não migrados |
-| `/karta.html` e `/karta-en.html` | Apresentação do projeto KARTA | Não migrado |
+| `/karta.html` e `/karta-en.html` | Apresentação do projeto KARTA | Recriada no preview como `/karta/` e `/en/karta/`; manter as URLs oficiais até validar e aprovar a migração |
 | `/agendamento.html` e `/booking.html` | Pedido de atendimento e preferência de horário | Mantidos no domínio oficial |
 | `/coberturas-industriais.html` | Página especializada de coberturas industriais | Não migrada |
 | `/limpeza-pos-obra.html` | Página especializada de limpeza pós-obra | Não migrada |
