@@ -123,7 +123,7 @@
     <div class="container">
       <div class="clean-cart-card">
         <div class="clean-cart-head">
-          <div><span class="eyebrow blue">${copy.eyebrow}</span><h3>${copy.title}</h3></div>
+          <div><span class="eyebrow clean-cart-eyebrow">${copy.eyebrow}</span><h3>${copy.title}</h3></div>
           <span class="clean-cart-count" id="cleanCartCount" aria-live="polite">0</span>
         </div>
         <div class="clean-cart-list" id="cleanCartList"></div>
@@ -268,14 +268,30 @@
     button.setAttribute('aria-label', `${copy.add.replace(/\s*→$/, '')}: ${button.dataset.cleanProduct || ''}`);
   });
 
-  document.addEventListener('click', event => {
-    const button = event.target.closest('[data-clean-product]');
+  const handleCleanProductAdd = event => {
+    const eventTarget = event.target instanceof Element
+      ? event.target
+      : event.target?.parentElement;
+    const button = eventTarget?.closest('[data-clean-product]');
     if (!button) return;
     event.preventDefault();
-    addToCart(button.dataset.cleanProduct || '');
+    event.stopPropagation();
+    const productName = button.getAttribute('data-clean-product') || '';
+    addToCart(productName);
     const previous = button.textContent;
     button.textContent = copy.added;
-    setTimeout(() => { button.textContent = previous; }, 1200);
+    button.setAttribute('aria-live', 'polite');
+    setTimeout(() => {
+      button.textContent = previous;
+      button.removeAttribute('aria-live');
+    }, 1200);
+  };
+
+  // The catalogue is re-rendered on each search, so delegate at its stable root.
+  q('#clean-catalog-results')?.addEventListener('click', handleCleanProductAdd, true);
+  // Featured product controls are static Astro elements and sit outside the catalogue root.
+  qa('.clean-featured [data-clean-product]').forEach(button => {
+    button.addEventListener('click', handleCleanProductAdd, true);
   });
 
   cartClear?.addEventListener('click', () => {
