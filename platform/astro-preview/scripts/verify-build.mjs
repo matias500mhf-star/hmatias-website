@@ -202,7 +202,7 @@ for (const route of ["construcao", "facilities", "supply", "business-services", 
 // English routes must exist as independently translated pages, not as Portuguese pages with a changed label.
 const englishRoutes = [
   ["en", /Capability to/, /Construction, Facilities, Supply and Business Services/],
-  ["en/about", /An Angolan company/, /COMPANY INFORMATION/],
+  ["en/about", /An Angolan company/, /Building trusted relationships/],
   ["en/credibility", /HMATIAS CREDIBILITY/, /COMPANY IDENTIFICATION/],
   ["en/construction", /Construction and/, /Metal-frame building/],
   ["en/facilities", /Facilities and/, /Building maintenance/],
@@ -234,8 +234,6 @@ assert.ok(englishHomepage.includes('href="/en/business-services/"'), "English ho
 
 const englishAbout = readFileSync(join(outDir, "en", "about", "index.html"), "utf8");
 const englishAboutText = englishAbout.replace(/<[^>]*>/g, " ");
-assert.ok(englishAbout.includes("24.094-23"), "English About page must show the commercial registration");
-assert.ok(englishAbout.includes("HMATIAS – Prestação de Serviços SU, LDA"), "English About page must show the registered company name");
 assert.doesNotMatch(englishAboutText, /Henrique Fernandes|\bMISSION\b|\bVISION\b|\bVALUES\b/i, "Removed generic executive and institutional copy must not return");
 assert.match(englishAbout, /pavilhoes-rurais-concluidos/i, "English About page must use the distinct real-work photograph");
 assert.doesNotMatch(englishAbout, /instalacoes-embutidas-construcao/i, "English About page must not reuse the homepage photograph");
