@@ -4,6 +4,10 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 import { company } from "../../../data/site";
+
+const facilitiesWhatsapp = company.whatsappUri + "?text=" + encodeURIComponent(
+  "Hello HMATIAS. I would like to request an assessment for facilities or maintenance. Premises type and location, areas involved, service required, preferred frequency, operating hours, and available photographs:"
+);
 import heroPhoto from "../../../../../../images/catalogue/caixilharia-vidro-fumado.webp";
 import roofMaintenance from "../../../../../../images/catalogue/cobertura-metalica-substituicao.webp";
 import annexStructure from "../../../../../../images/catalogue/anexo-coberto-estrutura-metalica.webp";
@@ -46,7 +50,7 @@ import annexStructure from "../../../../../../images/catalogue/anexo-coberto-est
     </section>
 
     <section class="construction-request section-pad" id="request" aria-labelledby="pages-en-facilities-index-section-5-heading">
-      <div class="construction-request-copy"><p class="section-kicker">04 / SERVICE ENQUIRIES</p><h2 id="pages-en-facilities-index-section-5-heading">Let's assess<br /><em>your premises.</em></h2><p>Share the location, the areas involved, the type of service required and the preferred frequency. HMATIAS can review the scope and identify the information needed for a proposal.</p><div class="construction-request-actions"><a class="button button-light" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contact via WhatsApp <span aria-hidden="true">↗</span></a><a class="construction-email-link" href={`mailto:${company.commercialEmail}?subject=Facilities%20service%20enquiry`}>Send an email <span>↗</span></a></div></div>
+      <div class="construction-request-copy"><p class="section-kicker">04 / SERVICE ENQUIRIES</p><h2 id="pages-en-facilities-index-section-5-heading">Let's assess<br /><em>your premises.</em></h2><p>Share the location, the areas involved, the type of service required and the preferred frequency. HMATIAS can review the scope and identify the information needed for a proposal.</p><div class="construction-request-actions"><a class="button button-light" href={facilitiesWhatsapp} target="_blank" rel="noopener noreferrer">Contact via WhatsApp <span aria-hidden="true">↗</span></a><a class="construction-email-link" href={`mailto:${company.commercialEmail}?subject=Facilities%20service%20enquiry`}>Send an email <span>↗</span></a></div></div>
       <aside class="construction-request-guide"><h3>Information to include</h3><ul><li>Premises location</li><li>Areas and type of facility</li><li>Tasks or issues identified</li><li>Required frequency</li><li>Preferred start date</li></ul><p>The service scope and operating conditions are subject to assessment and agreement.</p></aside>
     </section>
   </main>
