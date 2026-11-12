@@ -104,16 +104,24 @@ assert.equal((supplyHtml.match(/class="supply-evidence-photo"/g) || []).length, 
 const smartRfqPath = join(outDir, "source-ao", "smart-rfq", "index.html");
 assert.ok(existsSync(smartRfqPath), "Smart RFQ page must be generated");
 const smartRfqHtml = readFileSync(smartRfqPath, "utf8");
-assert.match(smartRfqHtml, /Uma necessidade/, "Smart RFQ heading is missing");
-assert.match(smartRfqHtml, /até 20 linhas/i, "Smart RFQ item limit disclosure is missing");
-assert.match(smartRfqHtml, /ligação privada de acompanhamento/i, "Smart RFQ private tracking explanation is missing");
-assert.match(smartRfqHtml, /uma ligação privada de acompanhamento/i, "Smart RFQ tracking link grammar is incorrect");
-assert.match(smartRfqHtml, /Selecione uma categoria/i, "Smart RFQ category instruction is missing");
-assert.doesNotMatch(smartRfqHtml, /Seleccione|link privado/i, "Legacy Smart RFQ wording must not return");
-assert.match(smartRfqHtml, /source-ao\/rfq\.html/, "Smart RFQ must link to the operational Source AO form");
+assert.match(smartRfqHtml, /Transforme a necessidade num pedido claro/i, "Smart RFQ heading is missing");
+assert.match(smartRfqHtml, /id="smartRfqForm"/, "The browser-based Smart RFQ form is missing");
+assert.match(smartRfqHtml, /id="rfqService"/, "Smart RFQ service selector is missing");
+assert.match(smartRfqHtml, /id="rfqEmailSend"/, "Smart RFQ email handoff is missing");
+assert.match(smartRfqHtml, /id="rfqWhatsapp"/, "Smart RFQ WhatsApp handoff is missing");
+assert.match(smartRfqHtml, /Nada é enviado até escolher e-mail ou WhatsApp/i, "Smart RFQ manual-send disclosure is missing");
+assert.match(smartRfqHtml, /A referência é gerada apenas no navegador/i, "Smart RFQ local reference disclosure is missing");
+assert.doesNotMatch(smartRfqHtml, /Até 20 linhas|ligação privada de acompanhamento|source-ao\/rfq\.html/i, "Supply-only Source AO claims must not appear in the general Smart RFQ");
+assert.match(smartRfqHtml, /\/business-services\//, "Smart RFQ must link to the Business Services page");
 const smartRfqImgCount = (smartRfqHtml.match(/<img\b/g) || []).length;
 const smartRfqImgWithAltCount = (smartRfqHtml.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(smartRfqImgWithAltCount, smartRfqImgCount, "Every Smart RFQ page image must have an alt attribute");
+
+const englishSmartRfqHtml = readFileSync(join(outDir, "en", "source-ao", "smart-rfq", "index.html"), "utf8");
+assert.match(englishSmartRfqHtml, /Turn your requirement into a clear request/i, "English Smart RFQ heading is missing");
+assert.match(englishSmartRfqHtml, /id="smartRfqForm"/, "English Smart RFQ form is missing");
+assert.match(englishSmartRfqHtml, /Nothing is sent until you choose email or WhatsApp/i, "English Smart RFQ manual-send disclosure is missing");
+assert.doesNotMatch(englishSmartRfqHtml, /comercialhmatiasps\.com\/(?:rfq-en|source-ao\/rfq)\.html/i, "English Smart RFQ must not redirect to the official legacy form");
 
 const businessPath = join(outDir, "business-services", "index.html");
 assert.ok(existsSync(businessPath), "Business Services page must be generated");
@@ -211,7 +219,7 @@ const englishRoutes = [
   ["en/works-catalogue", /Works, interventions/, /Completed Rural Pavilions/],
   ["en/blog", /Practical guides/, /FEATURED ARTICLE/],
   ["en/blog/how-to-prepare-a-comparable-supply-quotation", /How to prepare a quotation request/, /quantity and unit/i],
-  ["en/source-ao/smart-rfq", /One requirement/, /Nothing is sent until you choose email or WhatsApp/],
+  ["en/source-ao/smart-rfq", /Turn your requirement into a clear request/, /This is a request brief, not an automatic quotation/],
   ["en/accessibility", /more accessible to everyone/i, /independent audit/i],
   ["en/privacy", /Privacy Policy/, /Cookiebot/],
   ["en/terms", /Terms and Conditions/, /Intellectual property/],
