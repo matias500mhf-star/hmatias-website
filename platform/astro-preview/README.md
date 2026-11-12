@@ -45,13 +45,13 @@ O lockfile `package-lock.json` está versionado. As instalações repetíveis de
 
 ## Decisão sobre React
 
-React não foi instalado nesta etapa. As páginas institucionais são maioritariamente conteúdo e navegação; Astro produz HTML estático e evita enviar um runtime de interface desnecessário. A página Smart RFQ apresenta o fluxo e encaminha para o formulário operacional existente no SOURCE AO. React poderá ser avaliado como ilha interativa numa futura migração do formulário, apenas se trouxer ganhos claros de estado, validação e manutenção.
+React não foi instalado nesta etapa. As páginas institucionais são maioritariamente conteúdo e navegação; Astro produz HTML estático e evita enviar um runtime de interface desnecessário. A página Smart RFQ contém agora um formulário bilingue próprio para Construção, Facilities e Supply. Valida os campos da área escolhida, gera no navegador um resumo estruturado e uma referência local e permite ao utilizador optar pelo envio por e-mail ou WhatsApp. Não submete dados a um servidor, não cria encomendas, não calcula cotações e não confirma stock ou prazos. O RFQ multi-produto operacional do SOURCE AO em `/source-ao/rfq.html` mantém-se separado. React não foi adicionado porque a interação atual não justifica um runtime adicional.
 
 ## Limites de publicação
 
 - Esta pasta não está ligada ao publisher de produção.
 - Não executar `wrangler deploy`, não alterar DNS e não associar o domínio oficial.
-- Os formulários de contacto, Business Services, agendamento e SOURCE AO continuam temporariamente no website oficial.
+- O contacto principal, Business Services, agendamento e RFQ multi-produto operacional SOURCE AO continuam no website oficial. O novo Smart RFQ geral é um fluxo autónomo, executado no navegador.
 - O preview mantém `noindex, nofollow`.
 - O resultado só pode ser considerado candidato a migração após validação visual, acessibilidade, SEO, performance, versões linguísticas, redirecionamentos e integrações.
 
@@ -71,6 +71,6 @@ O workflow `.github/workflows/astro-prototype-qa.yml` executa:
 
 Os relatórios Playwright e Lighthouse são guardados como artefactos do GitHub Actions por 14 dias. As ferramentas de QA são instaladas apenas no ambiente CI e não entram no bundle do website.
 
-**Estado atual:** o workflow Astro prototype QA #474 concluiu com sucesso. Segurança de dependências, Astro Check, build, verificação estática, testes do contrato SOURCE AO, Playwright, axe-core e Lighthouse passaram. Foram registados 115 testes Playwright aprovados, sem falhas axe críticas/graves, e 24 medições Lighthouse em 12 rotas. Desempenho, acessibilidade e boas práticas obtiveram 100/100; SEO obteve 63/100 porque o preview mantém intencionalmente `noindex, nofollow`. Esse resultado não deve ser corrigido removendo a proteção de indexação do ambiente de avaliação. A revisão visual manual, a verificação integral por teclado e os testes de submissão real dos formulários continuam pendentes.
+**Estado atual:** o workflow Astro prototype QA #624 está a validar o head atual da branch. A execução anterior #599 registou 115 testes aprovados e duas falhas causadas por uma expectativa desatualizada que ainda procurava o antigo redireccionamento do Smart RFQ para o SOURCE AO. O teste foi atualizado para verificar o formulário autónomo. Não declarar Playwright, axe-core ou Lighthouse aprovados para este head até à conclusão do workflow #624. A revisão visual manual, a verificação integral por teclado e os testes reais dos canais de contacto continuam pendentes.
 
 A proteção `noindex, nofollow` deve manter-se durante toda a avaliação.
