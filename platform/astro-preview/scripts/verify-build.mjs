@@ -96,6 +96,7 @@ const constructionHtml = readFileSync(constructionPath, "utf8");
 assert.match(constructionHtml, /Construção e/, "Construction page title is missing");
 assert.match(constructionHtml, /Pavilhões rurais concluídos/, "Construction page project content is missing");
 assert.match(constructionHtml, /Pedido de orçamento/i, "Construction page contact section is missing");
+assert.match(constructionHtml, /href="https:\/\/wa\.me\/244948806673\?text=/, "Construction WhatsApp enquiry must include a prefilled service brief");
 const constructionImgCount = (constructionHtml.match(/<img\b/g) || []).length;
 const constructionImgWithAltCount = (constructionHtml.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(constructionImgWithAltCount, constructionImgCount, "Every construction page image must have an alt attribute");
@@ -109,6 +110,7 @@ assert.match(facilitiesHtml, /Facilities e/, "Facilities page title is missing")
 assert.match(facilitiesHtml, /Manutenção de instalações/, "Facilities services are missing");
 assert.match(facilitiesHtml, /Substituição localizada de cobertura/, "Facilities project evidence is missing");
 assert.match(facilitiesHtml, /Pedido de serviço/i, "Facilities contact section is missing");
+assert.match(facilitiesHtml, /href="https:\/\/wa\.me\/244948806673\?text=/, "Facilities WhatsApp enquiry must include a prefilled service brief");
 const facilitiesImgCount = (facilitiesHtml.match(/<img\b/g) || []).length;
 const facilitiesImgWithAltCount = (facilitiesHtml.match(/<img\b[^>]*\balt=/g) || []).length;
 assert.equal(facilitiesImgWithAltCount, facilitiesImgCount, "Every Facilities page image must have an alt attribute");
@@ -299,6 +301,9 @@ assert.ok(englishBlogArticle.includes('class="language-switch" href="/blog/como-
 const englishConstruction = readFileSync(join(outDir, "en", "construction", "index.html"), "utf8");
 assert.match(englishConstruction, /anexo-coberto-estrutura-metalica/i, "English construction hero must use its distinct real-work photograph");
 assert.doesNotMatch(englishConstruction, /instalacoes-embutidas-construcao/i, "English construction hero must not reuse the homepage photograph");
+assert.match(englishConstruction, /href="https:\/\/wa\.me\/244948806673\?text=/, "English construction WhatsApp enquiry must include a prefilled service brief");
+const englishFacilities = readFileSync(join(outDir, "en", "facilities", "index.html"), "utf8");
+assert.match(englishFacilities, /href="https:\/\/wa\.me\/244948806673\?text=/, "English Facilities WhatsApp enquiry must include a prefilled service brief");
 
 const englishArticle = readFileSync(join(outDir, "en", "blog", "how-to-prepare-a-comparable-supply-quotation", "index.html"), "utf8");
 assert.ok(englishArticle.includes('href="https://comercialhmatiasps.com/rfq-en.html"'), "English article must link to the English operational RFQ form");
