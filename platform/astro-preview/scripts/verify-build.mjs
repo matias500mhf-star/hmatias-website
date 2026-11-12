@@ -202,7 +202,7 @@ for (const route of ["construcao", "facilities", "supply", "business-services", 
 // English routes must exist as independently translated pages, not as Portuguese pages with a changed label.
 const englishRoutes = [
   ["en", /Capability to/, /Construction, Facilities, Supply and Business Services/],
-  ["en/about", /An Angolan company/, /Our commitment\\./],
+  ["en/about", /An Angolan company/, /Our commitment\./],
   ["en/credibility", /HMATIAS CREDIBILITY/, /COMPANY IDENTIFICATION/],
   ["en/construction", /Construction and/, /Metal-frame building/],
   ["en/facilities", /Facilities and/, /Building maintenance/],
