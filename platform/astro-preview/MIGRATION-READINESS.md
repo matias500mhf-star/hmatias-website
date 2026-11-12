@@ -201,7 +201,7 @@ A homepage e as páginas servidas contêm os recursos processados em `/_astro/`,
 
 URL de pré-visualização validada: https://hmatias-astro-preview-3z8cv9xdz-hmatias.vercel.app/
 
-O workflow Astro prototype QA #624 está em execução para o head atual. A execução anterior #599 teve 115 testes aprovados e duas falhas num teste de navegação que ainda esperava a ligação antiga “Abrir Smart RFQ”; a expectativa foi substituída pela verificação do formulário autónomo. Os resultados de browser/axe/Lighthouse do head atual permanecem pendentes até à conclusão do workflow.
+Em 13 de novembro de 2026, o head `260b1a2c8e34c5190b9655dac171d0a7811f6fee` tem o workflow Astro prototype QA #43330488115 na fila de execução. A cobertura Playwright/axe inclui as quatro páginas especializadas em PT e EN, além de uma verificação do carrinho dinâmico HMATIAS Clean nos dois idiomas. A configuração Lighthouse foi ampliada para as 44 rotas estáticas (22 pares PT/EN), com duas medições por rota. Os resultados do ciclo actual permanecem pendentes até à conclusão do workflow; não devem ser confundidos com as medições históricas registadas acima.
 
 **Estado de produção:** nenhum merge, redirect, alteração DNS ou publicação no domínio `comercialhmatiasps.com` foi realizado.
 
