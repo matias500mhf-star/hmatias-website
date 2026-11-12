@@ -6,7 +6,7 @@ Este inventário separa o que já foi recriado no protótipo Astro, o que contin
 
 ## 1. Páginas já recriadas no protótipo Astro
 
-O protótipo gera agora 36 páginas estáticas: 18 em Português (pt-AO) e 18 em Inglês.
+O protótipo gera agora 44 páginas estáticas: 22 em Português (pt-AO) e 22 em Inglês.
 
 | Área | Português | Inglês | Situação |
 |---|---|---|---|
@@ -15,7 +15,11 @@ O protótipo gera agora 36 páginas estáticas: 18 em Português (pt-AO) e 18 em
 | KARTA Wallet | `/karta/` | `/en/karta/` | Projeto Alpha; separa componentes em desenvolvimento de objetivos futuros, sem alegar disponibilidade pública |
 | Estaleiro Integrado | `/estaleiro/` | `/en/integrated-yard/` | Estudo preliminar com duas plantas vectoriais, áreas e ressalvas técnicas; não apresentado como obra executada |
 | Credibilidade | `/credibilidade/` | `/en/credibility/` | Identificação empresarial, contactos e dados de registo |
-| Construção | `/construcao/` | `/en/construction/` | Serviços e registos de obras reais |
+| Construção | `/construcao/` | `/en/construction/` | Serviços e registos de obras reais; ligação para coberturas industriais e remodelação de escritórios |
+| Coberturas industriais | `/coberturas-industriais/` | `/en/industrial-roofing/` | Avaliação, reparação localizada e manutenção programada, sujeitas a levantamento técnico |
+| Remodelação de escritórios | `/remodelacao-de-escritorios/` | `/en/office-remodelling/` | Organização do espaço, acabamentos, reparações e coordenação da intervenção |
+| Limpeza pós-obra | `/limpeza-pos-obra/` | `/en/post-construction-cleaning/` | Preparação de espaços, superfícies, pavimentos e áreas acessíveis, com escopo acordado |
+| EPI e fardamento | `/fornecimento-de-epi-e-fardamento/` | `/en/ppe-workwear/` | Especificações, normas, tamanhos, quantidades e condições de fornecimento sujeitas a confirmação |
 | Facilities | `/facilities/` | `/en/facilities/` | Serviços e intervenções de manutenção; ligação contextual para HMATIAS Clean |
 | HMATIAS Clean | `/clean/` | `/en/clean/` | Catálogo Taurus com 100 referências, pesquisa por nome/código/descrição, dois produtos em destaque e preparação de pedido multiartigo manual (até 20 artigos) |
 | Supply | `/supply/` | `/en/supply/` | Categorias, procurement e encaminhamento para pedidos |
@@ -58,10 +62,10 @@ As páginas abaixo continuam por recriar ou dependem de equivalência funcional.
 | `/clean.html` e `/clean-en.html` | HMATIAS Clean, catálogo Taurus e pedido multiartigo | Recriados no preview em `/clean/` e `/en/clean/`; fluxo de preparação e envio manual por WhatsApp/e-mail. Manter URLs oficiais até validação de equivalência, Search Console, backlinks e aprovação |
 | `/karta.html` e `/karta-en.html` | Apresentação do projeto KARTA | Recriada no preview como `/karta/` e `/en/karta/`; manter as URLs oficiais até validar e aprovar a migração |
 | `/agendamento.html` e `/booking.html` | Pedido de atendimento e preferência de horário | Mantidos no domínio oficial |
-| `/coberturas-industriais.html` | Página especializada de coberturas industriais | Não migrada |
-| `/limpeza-pos-obra.html` | Página especializada de limpeza pós-obra | Não migrada |
-| `/fornecimento-de-epi-e-fardamento.html` | Página especializada de EPI e fardamento | Não migrada |
-| `/remodelacao-de-escritorios.html` | Página especializada de remodelação de escritórios | Não migrada |
+| `/coberturas-industriais.html` | Página especializada de coberturas industriais | Recriada no preview em `/coberturas-industriais/` e `/en/industrial-roofing/`; manter URL oficial até validar e aprovar a migração |
+| `/limpeza-pos-obra.html` | Página especializada de limpeza pós-obra | Recriada no preview em `/limpeza-pos-obra/` e `/en/post-construction-cleaning/`; manter URL oficial até validar e aprovar a migração |
+| `/fornecimento-de-epi-e-fardamento.html` | Página especializada de EPI e fardamento | Recriada no preview em `/fornecimento-de-epi-e-fardamento/` e `/en/ppe-workwear/`; manter URL oficial até validar e aprovar a migração |
+| `/remodelacao-de-escritorios.html` | Página especializada de remodelação de escritórios | Recriada no preview em `/remodelacao-de-escritorios/` e `/en/office-remodelling/`; manter URL oficial até validar e aprovar a migração |
 | `/estaleiro-integrado.html` e `/integrated-yard.html` | Projeto do Estaleiro Integrado | Recriado no preview em `/estaleiro/` e `/en/integrated-yard/`; manter URLs oficiais até validação e aprovação |
 
 Não remover nem desindexar estas páginas antes de decidir o destino de cada uma. Algumas podem continuar relevantes para campanhas, pesquisa orgânica ou informação de projeto.
@@ -164,7 +168,7 @@ No mesmo head foram concluídos com sucesso:
 
 ### Bloqueios ainda abertos para produção
 
-1. Validar a equivalência editorial e funcional das páginas HMATIAS Clean, KARTA e Estaleiro Integrado; preservar agendamento/booking e as páginas especializadas até existir substituto equivalente, sem inventar conteúdo ou substituir funções por demonstrações.
+1. Validar a equivalência editorial e funcional de HMATIAS Clean, das quatro páginas especializadas, KARTA e Estaleiro Integrado; preservar agendamento/booking até existir substituto equivalente, sem inventar conteúdo ou substituir funções por demonstrações.
 2. Testar de ponta a ponta o formulário de contacto, Business Services, agendamento, RFQ operacional SOURCE AO, consentimento, tracking, notificações e alternativa manual.
 3. Obter exportação do Search Console e relatório de backlinks/referral traffic; completar a decisão de migração URL a URL.
 4. Executar revisão visual manual desktop/tablet/mobile, navegação integral por teclado e verificação com tecnologias de apoio.
@@ -208,3 +212,12 @@ As rotas Astro `/clean/` e `/en/clean/` foram acrescentadas como componente bili
 O formulário permite preparar um pedido com vários artigos (até 20), formato e quantidade por item, dados de contacto, localização de entrega e consentimento. O pedido é revisto no navegador e enviado manualmente pelo canal escolhido (WhatsApp ou e-mail). Não existe submissão ao servidor, registo automático de encomenda, cálculo de cotação nem confirmação de stock, preço ou prazo. Estes continuam sujeitos a confirmação comercial da HMATIAS.
 
 As imagens e os formatos dos produtos são referências de identificação. A menção à Taurus não afirma representação exclusiva, parceria ou exclusividade comercial. As URLs antigas `/clean.html` e `/clean-en.html` permanecem no inventário, sem redirect, até à revisão de Search Console/backlinks e aprovação explícita da migração.
+
+
+### Nota de migração das páginas especializadas — 12 de novembro de 2026
+
+Foram recriadas em PT-AO e inglês quatro páginas especializadas, com conteúdo baseado nas páginas HTML existentes: Coberturas Industriais, Limpeza Pós-Obra, Fornecimento de EPI e Fardamento e Remodelação de Escritórios. Cada uma mantém intenção de pesquisa, âmbito e informações úteis para preparar o pedido, sem afirmar disponibilidade, preço, prazo ou execução antes de avaliação e confirmação.
+
+As páginas encaminham para o Smart RFQ com a área HMATIAS e o título do serviço pré-seleccionados. O visitante continua a preencher, rever e escolher o envio manual por e-mail ou WhatsApp. A pré-selecção não submete o pedido ao servidor, não cria uma cotação e não confirma adjudicação. As páginas-mãe de Construção, Facilities e Supply incluem ligações para os respectivos serviços especializados.
+
+As quatro URLs HTML históricas permanecem no inventário, sem redireccionamento, até à revisão de Search Console/backlinks, validação da equivalência e aprovação explícita da migração.
