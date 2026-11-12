@@ -11,7 +11,7 @@
       "preview_target": "/",
       "treatment": "preview_route",
       "in_legacy_sitemap": true,
-      "preserve_until_approved": false,
+      "preserve_until_approved": true,
       "notes": "Homepage da pré-visualização; manter o URL raiz."
     },
     {
