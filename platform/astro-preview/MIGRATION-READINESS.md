@@ -6,12 +6,13 @@ Este inventário separa o que já foi recriado no protótipo Astro, o que contin
 
 ## 1. Páginas já recriadas no protótipo Astro
 
-O protótipo gera 28 páginas estáticas: 14 em Português (pt-AO) e 14 em Inglês.
+O protótipo gera agora 30 páginas estáticas: 15 em Português (pt-AO) e 15 em Inglês.
 
 | Área | Português | Inglês | Situação |
 |---|---|---|---|
 | Homepage | `/` | `/en/` | Quatro áreas de atividade e galeria inicial |
 | Sobre a HMATIAS | `/empresa/` | `/en/about/` | Apresentação factual, identificação empresarial e quatro áreas de atividade |
+| KARTA Wallet | `/karta/` | `/en/karta/` | Projeto Alpha; separa componentes em desenvolvimento de objetivos futuros, sem alegar disponibilidade pública |
 | Credibilidade | `/credibilidade/` | `/en/credibility/` | Identificação empresarial, contactos e dados de registo |
 | Construção | `/construcao/` | `/en/construction/` | Serviços e registos de obras reais |
 | Facilities | `/facilities/` | `/en/facilities/` | Serviços e intervenções de manutenção |
@@ -47,7 +48,7 @@ Os formulários dependem de integrações de receção segura, consentimento, Cl
 
 ## 3. Páginas e funções ainda não recriadas
 
-As páginas abaixo constam do website atual e precisam de decisão explícita: migrar, manter temporariamente no domínio oficial ou redirecionar depois de existir substituto equivalente.
+As páginas abaixo continuam por recriar ou dependem de equivalência funcional. A KARTA já tem uma versão informativa no preview; as URLs antigas continuam protegidas até à revisão final do estado do produto e aprovação da migração.
 
 | Página atual | Conteúdo / função | Estado |
 |---|---|---|
@@ -169,3 +170,10 @@ No mesmo head foram concluídos com sucesso:
 6. Só depois aprovar redirects, canonical, hreflang, sitemap e janela de migração com plano de rollback.
 
 **Estado:** os quality gates automatizados do protótipo estão verdes. A cobertura editorial e técnica do preview avançou, mas a migração completa e a publicação em produção continuam bloqueadas pelos itens acima. Nenhum merge, DNS, redirect ou deploy do domínio oficial é autorizado por esta etapa.
+
+
+### Nota de migração KARTA
+
+A nova página Astro `/karta/` e a respetiva versão `/en/karta/` foram criadas a partir do conteúdo atualmente publicado em `karta.html` e `karta-en.html`. A página apresenta o produto como pré-lançamento / Alpha, descreve apenas componentes sujeitos a desenvolvimento e validação, e identifica OCR/MRZ, partilha seletiva, QR e KARTA Verify/API como objetivos futuros. O contacto é encaminhado por e-mail; não foi criado formulário de registo nem promessa de lançamento.
+
+As URLs antigas `/karta.html` e `/karta-en.html` continuam no inventário e não são redirecionadas. A equivalência editorial e o estado do produto devem ser revistos antes de qualquer substituição no publisher oficial.
