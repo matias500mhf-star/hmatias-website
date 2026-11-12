@@ -83,8 +83,8 @@
 
   Object.assign(dictionary.pt,{
     outcomeSpec:'Especificação organizada',outcomeSearch:'Pesquisa orientada',outcomeValidation:'Validação comercial',
-    heroTitle:'Transforme a necessidade de compra numa cotação validada.',
-    heroLead:'O SOURCE AO organiza os requisitos; a equipa HMATIAS valida potenciais fornecedores, disponibilidade, preço e condições antes de apresentar uma cotação. A pesquisa pública é uma referência, não uma confirmação de fornecimento.',
+    heroTitle:'Encontre referências. Verifique fornecedores. Prepare uma compra.',
+    heroLead:'O SOURCE AO estrutura a sua necessidade e ajuda a identificar referências públicas. A identidade do fornecedor, stock atual, preço, prazo e entrega só são confirmados após contacto e validação comercial.',
     browseNote:'Escolha uma categoria ou descreva a necessidade na pesquisa.',
     whatLooking:'Pesquise por categoria.',
     radarTitle:'Organize pedidos de sourcing que aguardam resposta comercial.',
@@ -97,8 +97,8 @@
   });
   Object.assign(dictionary.en,{
     outcomeSpec:'Structured specification',outcomeSearch:'Targeted research',outcomeValidation:'Commercial validation',
-    heroTitle:'Turn a buying requirement into a validated quotation.',
-    heroLead:'SOURCE AO structures the requirement; the HMATIAS team validates potential suppliers, availability, pricing and terms before preparing a quotation. Public search is a reference, not supply confirmation.',
+    heroTitle:'Find references. Check suppliers. Prepare a purchase.',
+    heroLead:'SOURCE AO structures your requirement and helps identify public references. Supplier identity, current stock, price, lead time and delivery are confirmed only after direct commercial checks.',
     browseNote:'Choose a category or describe what you need in the search.',
     whatLooking:'Search by category.',
     radarTitle:'Organise sourcing requests awaiting a commercial response.',
