@@ -91,6 +91,7 @@ test("all English routes expose matching language, brand descriptions and recipr
     ["/en/accessibility/", "/acessibilidade/"],
     ["/en/privacy/", "/privacidade/"],
     ["/en/terms/", "/termos/"],
+    ["/en/karta/", "/karta/"],
   ] as const;
 
   for (const [englishRoute, portugueseRoute] of routes) {
