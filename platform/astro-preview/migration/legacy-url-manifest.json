@@ -136,19 +136,19 @@
     },
     {
       "source_url": "/karta.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
+      "preview_target": "/karta/",
+      "treatment": "preview_route_pending_product_state_validation",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
-      "notes": "Apresentação KARTA permanece até confirmação do estado do produto e conteúdo aprovado."
+      "notes": "Página KARTA recriada no preview com o estado Alpha e roadmap separados; qualquer substituição/redirect oficial depende de revisão do estado comercial e aprovação."
     },
     {
       "source_url": "/karta-en.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
+      "preview_target": "/en/karta/",
+      "treatment": "preview_route_pending_product_state_validation",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
-      "notes": "Apresentação KARTA em inglês permanece até confirmação do estado do produto."
+      "notes": "Página KARTA recriada no preview com o estado Alpha e roadmap separados; qualquer substituição/redirect oficial depende de revisão do estado comercial e aprovação."
     },
     {
       "source_url": "/servicos-administrativos.html",
