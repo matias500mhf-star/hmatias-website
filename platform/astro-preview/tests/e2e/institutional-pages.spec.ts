@@ -51,6 +51,19 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.getByText(/MISSÃO|VISÃO/i)).toHaveCount(0);
   });
 
+  test("KARTA page accurately presents Alpha status and future roadmap", async ({ page }) => {
+    await page.goto("/karta/");
+    await expect(page).toHaveTitle(/KARTA Wallet Mobile/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("KARTA Wallet Mobile");
+    await expect(page.locator(".karta-status-panel")).toContainText("ALPHA");
+    await expect(page.getByText(/Ainda não disponível para download público/i)).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Capacidades previstas para etapas posteriores." })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Registar interesse" }))
+      .toHaveAttribute("href", /^mailto:geral@comercialhmatiasps\.com\?subject=KARTA/);
+    await expect(page.locator(".karta-roadmap-grid article")).toHaveCount(3);
+    await expect(page.locator(".karta-roadmap-grid")).toContainText("OBJETIVO FUTURO");
+  });
+
   test("credibility page displays the registered company identifiers", async ({ page }) => {
     await page.goto("/credibilidade/");
     await expect(page.getByText("5001578065", { exact: true })).toBeVisible();
