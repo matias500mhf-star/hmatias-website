@@ -113,7 +113,7 @@
     try { sessionStorage.setItem(storageKey, JSON.stringify(cart)); } catch {}
   };
 
-  const productsSection = q('.commerce-products');
+  const productsSection = q('.commerce-products, .clean-featured');
   const pdfSection = q('.clean-pdf-section');
   const cartSection = document.createElement('section');
   cartSection.className = 'clean-cart-section';
