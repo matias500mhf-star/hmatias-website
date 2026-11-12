@@ -31,6 +31,11 @@ const isEn = lang === "en";
       <p>{isEn
         ? "Do not enter passwords, banking details or identity document numbers."
         : "Não introduza palavras-passe, dados bancários ou números de documentos de identificação."}</p>
+      <p class="rfq-privacy-link">
+        <a href={isEn ? "/en/privacy/" : "/privacidade/"}>
+          {isEn ? "Read the Privacy Policy" : "Consultar a Política de Privacidade"} ↗
+        </a>
+      </p>
     </aside>
   </section>
 
@@ -271,6 +276,7 @@ const isEn = lang === "en";
 .rfq-note-label { display:block; margin-bottom:17px; color:var(--hm-blue); font-family:var(--hm-mono); font-size:9px; font-weight:700; letter-spacing:.15em; }
 .rfq-hero-note strong { display:block; font-size:17px; line-height:1.4; }
 .rfq-hero-note p { margin:13px 0 0; color:var(--hm-muted); font-size:11px; line-height:1.7; }
+.rfq-privacy-link a { color:var(--hm-blue); font-weight:700; text-decoration:underline; text-underline-offset:3px; }
 .rfq-content { background:var(--hm-light); }
 .rfq-section-heading { display:flex; justify-content:space-between; align-items:end; gap:28px; margin-bottom:34px; }
 .rfq-section-heading .section-kicker { margin:0 0 15px; }
