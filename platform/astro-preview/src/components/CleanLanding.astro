@@ -67,7 +67,7 @@ const privacyHref = isEn ? "/en/privacy/" : "/privacidade/";
         <article class="clean-feature-card">
           <div class="clean-product-image">
             <img src="https://www.cosmeticconnection.co.za/cdn/shop/products/123-pine-gel-500ml-6009602763867-1420-33327311978646.jpg?v=1655459672"
-              referrerpolicy="no-referrer" alt="123 Pine Gel 500 ml — {isEn ? 'reference product photograph' : 'fotografia de referência do produto'}"
+              referrerpolicy="no-referrer" alt={isEn ? "123 Pine Gel 500 ml — reference product photograph" : "123 Pine Gel 500 ml — fotografia de referência do produto"}
               width="560" height="560" loading="lazy" decoding="async" />
             <span>{isEn ? "REFERENCE PHOTO · 500 ML" : "FOTOGRAFIA DE REFERÊNCIA · 500 ML"}</span>
           </div>
@@ -84,7 +84,7 @@ const privacyHref = isEn ? "/en/privacy/" : "/privacidade/";
         </article>
         <article class="clean-feature-card">
           <div class="clean-product-image clean-product-image-light">
-            <Picture src={taurusPineImage} alt="Taurus Pine Gel T563P — {isEn ? 'manufacturer product packaging' : 'embalagem do fabricante'}"
+            <Picture src={taurusPineImage} alt={isEn ? "Taurus Pine Gel T563P — manufacturer product packaging" : "Taurus Pine Gel T563P — embalagem do fabricante"}
               widths={[360, 520, 680]} sizes="(max-width: 760px) 100vw, 48vw"
               formats={["avif", "webp"]} fallbackFormat="jpg" quality={84} loading="lazy" decoding="async" />
             <span>{isEn ? "MANUFACTURER PHOTO · T563P" : "FOTOGRAFIA DO FABRICANTE · T563P"}</span>
