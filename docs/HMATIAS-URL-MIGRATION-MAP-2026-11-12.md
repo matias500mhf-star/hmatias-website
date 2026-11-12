@@ -35,8 +35,8 @@ Preservar o histórico orgânico do domínio comercialhmatiasps.com durante a tr
 | /credibility.html | /en/credibility/ | 301 após validar dados institucionais |
 | /clean.html | Manter /clean.html até existir página nova equivalente | Preservar |
 | /clean-en.html | Manter /clean-en.html até existir página nova equivalente | Preservar |
-| /karta.html | Manter /karta.html até existir página nova equivalente | Preservar |
-| /karta-en.html | Manter /karta-en.html até existir página nova equivalente | Preservar |
+| /karta.html | Página KARTA recriada no preview em /karta/; manter a URL oficial até validar o estado Alpha e aprovar a migração | Preservar até aprovação |
+| /karta-en.html | Página KARTA EN recriada no preview em /en/karta/; manter a URL oficial até validar o estado Alpha e aprovar a migração | Preservar até aprovação |
 | /servicos-administrativos.html | /business-services/ | 301 após validar formulário e conteúdo |
 | /business-services.html | /en/business-services/ | 301 após validar formulário e conteúdo |
 | /agendamento.html | Manter /agendamento.html até existir rota funcional equivalente | Preservar |
