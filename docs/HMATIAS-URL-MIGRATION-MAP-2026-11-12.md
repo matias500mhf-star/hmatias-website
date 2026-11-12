@@ -1,5 +1,5 @@
 # HMATIAS — Inventário de migração de URLs
-Data: 12 de novembro de 2026
+Data: 13 de novembro de 2026
 Branch: feat/hmatias-platform-modernization-20261111
 Estado: plano de migração em preparação; não aplicar redirects nem alterar o domínio de produção nesta fase.
 
@@ -66,7 +66,7 @@ Estas páginas não aparecem entre as 37 URLs do sitemap consultado, mas devem s
 - /procura.html
 
 ## Rotas novas já presentes na estrutura Astro
-A versão em desenvolvimento contém 28 ficheiros de página Astro, incluindo 14 rotas de conteúdo em pares PT/EN: homepage, Sobre, Credibilidade, Construção, Facilities, Supply, Business Services, Catálogo, Blog, Smart RFQ, Acessibilidade, Privacidade e Termos. A existência de uma rota nova não autoriza eliminar uma URL antiga sem confirmar a equivalência e o tráfego.
+Na revisão atual, o protótipo gera 44 páginas estáticas, organizadas em 22 pares PT/EN. A cobertura inclui páginas institucionais, Construção, Facilities, Supply, HMATIAS Clean, Business Services, Catálogo de Obras, Blog, Smart RFQ, páginas especializadas de serviços, KARTA e Estaleiro Integrado. A existência de uma rota no preview não autoriza eliminar ou redirecionar uma URL antiga sem confirmar a equivalência, os dados de tráfego e os backlinks.
 
 ## Dados ainda necessários antes de fechar o mapa definitivo
 - Exportação do Search Console: páginas indexadas e respetivas impressões, cliques, CTR e posição.
