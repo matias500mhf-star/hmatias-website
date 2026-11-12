@@ -157,9 +157,10 @@ assert.match(businessHtml, /HMATIAS BUSINESS SERVICES/, "Business Services ident
 for (const service of ["Expediente Administrativo e Redação Institucional", "Estruturação de CV Profissional", "Gestão e Organização Documental", "Propostas Comerciais e Apoio Empresarial", "Apresentações Empresariais", "Apoio Administrativo Recorrente para PME"]) {
   assert.ok(businessHtml.includes(service), `Business Services offer missing: ${service}`);
 }
-assert.match(businessHtml, /contacto-business/, "Business Services operational intake link is missing");
-assert.match(businessHtml, /website oficial/i, "Business Services must identify the official website as the current request channel");
-assert.match(businessHtml, /área de receção segura/i, "Business Services intake migration notice is missing");
+assert.match(businessHtml, /wa\.me\/244948806673/, "Business Services WhatsApp enquiry channel is missing");
+assert.match(businessHtml, /mailto:geral@comercialhmatiasps\.com/, "Business Services email enquiry channel is missing");
+assert.match(businessHtml, /Consultar Política de Privacidade/, "Business Services privacy notice is missing");
+assert.doesNotMatch(businessHtml, /servicos-administrativos\.html#contacto-business/, "Business Services must not send visitors to the legacy intake form");
 
 const aboutPath = join(outDir, "empresa", "index.html");
 assert.ok(existsSync(aboutPath), "About page must be generated");
