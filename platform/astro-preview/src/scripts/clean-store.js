@@ -154,8 +154,11 @@
   const summary = document.createElement('div');
   summary.className = 'clean-cart-summary';
   summary.hidden = true;
-  const firstField = form.querySelector('label');
-  if (firstField) form.insertBefore(summary, firstField);
+  // Place the summary before the form grid. The first label is nested
+  // inside that grid and is not a direct child of the form element.
+  const formGrid = form.querySelector('.clean-form-grid');
+  if (formGrid?.parentNode === form) form.insertBefore(summary, formGrid);
+  else form.prepend(summary);
 
   if (request) {
     const orderOption = [...request.options].find(option => /comprar|buy/i.test(option.textContent || ''));
