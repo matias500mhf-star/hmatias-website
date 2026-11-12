@@ -227,7 +227,7 @@ assert.match(compiledCss, /HMATIAS IBM Plex Mono/, "Local IBM Plex Mono utility 
 assert.ok(assets.some((file) => file.includes("manrope-latin-variable")), "Manrope font asset must be emitted");
 assert.ok(assets.some((file) => file.includes("ibm-plex-mono-latin-600")), "IBM Plex Mono font asset must be emitted");
 
-for (const route of ["construcao", "facilities", "supply", "business-services", "catalogo-obras", "empresa", "credibilidade", "blog", "blog/como-preparar-um-pedido-de-cotacao", "acessibilidade", "privacidade", "termos", "source-ao/smart-rfq"]) {
+for (const route of ["construcao", "facilities", "coberturas-industriais", "limpeza-pos-obra", "fornecimento-de-epi-e-fardamento", "remodelacao-de-escritorios", "supply", "business-services", "catalogo-obras", "empresa", "credibilidade", "blog", "blog/como-preparar-um-pedido-de-cotacao", "acessibilidade", "privacidade", "termos", "source-ao/smart-rfq"]) {
   const content = readFileSync(join(outDir, route, "index.html"), "utf8");
   assert.doesNotMatch(
     content,
@@ -243,6 +243,10 @@ const englishRoutes = [
   ["en/about", /An Angolan company/, /Service areas\./],
   ["en/credibility", /HMATIAS CREDIBILITY/, /COMPANY IDENTIFICATION/],
   ["en/construction", /Construction and/, /Metal-frame building/],
+  ["en/industrial-roofing", /Industrial roofing:/, /Execution subject to assessment/],
+  ["en/post-construction-cleaning", /Post-construction cleaning/, /Scope agreed before execution/],
+  ["en/ppe-workwear", /PPE and workwear supply/, /Supply subject to confirmation/],
+  ["en/office-remodelling", /Office and commercial premises remodelling/, /Proposal after site assessment/],
   ["en/facilities", /Facilities and/, /Building maintenance/],
   ["en/clean", /HMATIAS Clean/, /Prepare a multi-item request/],
   ["en/supply", /Procurement and/, /does not hold its own stock/i],
@@ -343,6 +347,10 @@ const languagePairs = [
   ["credibilidade", "en/credibility", "/credibilidade/", "/en/credibility/"],
   ["construcao", "en/construction", "/construcao/", "/en/construction/"],
   ["facilities", "en/facilities", "/facilities/", "/en/facilities/"],
+  ["coberturas-industriais", "en/industrial-roofing", "/coberturas-industriais/", "/en/industrial-roofing/"],
+  ["limpeza-pos-obra", "en/post-construction-cleaning", "/limpeza-pos-obra/", "/en/post-construction-cleaning/"],
+  ["fornecimento-de-epi-e-fardamento", "en/ppe-workwear", "/fornecimento-de-epi-e-fardamento/", "/en/ppe-workwear/"],
+  ["remodelacao-de-escritorios", "en/office-remodelling", "/remodelacao-de-escritorios/", "/en/office-remodelling/"],
   ["clean", "en/clean", "/clean/", "/en/clean/"],
   ["supply", "en/supply", "/supply/", "/en/supply/"],
   ["business-services", "en/business-services", "/business-services/", "/en/business-services/"],
@@ -375,6 +383,20 @@ for (const [ptRoute, enRoute, ptHref, enHref] of languagePairs) {
     `Portuguese language switch must lead to /${enRoute}/`);
   assert.equal(languageSwitchTarget(enHtml, enRoute), ptHref,
     `English language switch must lead to /${ptRoute}/`);
+}
+
+const specialistRoutes = [
+  ["coberturas-industriais", /Coberturas industriais: avaliação, reparação e manutenção/],
+  ["limpeza-pos-obra", /Limpeza pós-obra para espaços empresariais/],
+  ["fornecimento-de-epi-e-fardamento", /Fornecimento de EPI e fardamento para empresas/],
+  ["remodelacao-de-escritorios", /Remodelação de escritórios e espaços comerciais/],
+];
+for (const [route, heading] of specialistRoutes) {
+  const content = readFileSync(join(outDir, route, "index.html"), "utf8");
+  assert.match(content, /<html lang="pt-AO"/, `Portuguese specialist route must use pt-AO: /${route}/`);
+  assert.match(content, /name="robots" content="noindex, nofollow"/, `Preview route must remain noindex: /${route}/`);
+  assert.match(content, heading, `Specialist page heading is missing: /${route}/`);
+  assert.match(content, /href="\/source-ao\/smart-rfq\/\?service=/, `Specialist request must link to Smart RFQ: /${route}/`);
 }
 
 console.log(`Astro static output verified: homepage has ${htmlImgCount} accessible images; ${assets.length} processed assets emitted.`);
