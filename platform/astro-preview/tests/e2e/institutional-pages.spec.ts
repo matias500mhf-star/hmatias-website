@@ -64,6 +64,20 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.locator(".karta-roadmap-grid")).toContainText("OBJETIVO FUTURO");
   });
 
+  test("Integrated Yard preserves preliminary-study status, alternatives and dimensioned plans", async ({ page }) => {
+    await page.goto("/estaleiro/");
+    await expect(page).toHaveTitle(/Estaleiro Integrado HMATIAS/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Estaleiro Integrado HMATIAS");
+    await expect(page.locator(".yard-facts")).toContainText("378,53 m²");
+    await expect(page.locator(".yard-facts")).toContainText("15,141 × 25 m");
+    await expect(page.locator(".yard-plan-card")).toHaveCount(2);
+    await expect(page.locator(".yard-plan-image img[alt]")).toHaveCount(2);
+    await expect(page.getByRole("heading", { name: "Estudo preliminar de implantação." })).toBeVisible();
+    await expect(page.locator(".yard-disclaimer")).toContainText("não substituem os projetos de arquitetura");
+    await expect(page.getByRole("link", { name: "Consultar planta integral" })).toHaveCount(2);
+    await expect(page.locator(".yard-disclaimer")).not.toContainText(/obra concluída|instalação concluída/i);
+  });
+
   test("credibility page displays the registered company identifiers", async ({ page }) => {
     await page.goto("/credibilidade/");
     await expect(page.getByText("5001578065", { exact: true })).toBeVisible();
