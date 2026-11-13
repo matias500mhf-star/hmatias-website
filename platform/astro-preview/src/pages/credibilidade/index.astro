@@ -60,23 +60,8 @@ import { company } from "../../data/site";
       </div>
     </section>
 
-    <section class="credibility-dossier section-pad" aria-labelledby="pages-credibilidade-index-section-5-heading">
-      <div class="credibility-dossier-copy">
-        <p class="section-kicker">04 / DOSSIER INSTITUCIONAL</p>
-        <h2 id="pages-credibilidade-index-section-5-heading">A empresa,<br /><em>num só documento.</em></h2>
-        <p>Consulte o dossier institucional para uma apresentação consolidada da identidade legal da HMATIAS, áreas de actuação, registos de trabalhos, método de execução e contactos oficiais.</p>
-      </div>
-      <article class="dossier-download">
-        <p class="section-kicker">EDIÇÃO 2026</p>
-        <h3>Dossier Institucional HMATIAS</h3>
-        <p>Documento de apresentação para equipas de Procurement, potenciais clientes, parceiros e processos de qualificação institucional.</p>
-        <a href={company.dossierUrl}>Consultar dossier institucional <span aria-hidden="true">↗</span></a>
-        <small>Página preparada para impressão e gravação em PDF pelo navegador</small>
-      </article>
-    </section>
-
     <section class="credibility-contact section-pad" aria-labelledby="pages-credibilidade-index-section-6-heading">
-      <div><p class="section-kicker">05 / CONTACTO OFICIAL</p><h2 id="pages-credibilidade-index-section-6-heading">Fale diretamente<br /><em>com a HMATIAS.</em></h2><p>Para confirmar dados, apresentar um pedido ou solicitar informação institucional, utilize os canais oficiais da empresa.</p></div>
+      <div><p class="section-kicker">04 / CONTACTO OFICIAL</p><h2 id="pages-credibilidade-index-section-6-heading">Fale diretamente<br /><em>com a HMATIAS.</em></h2><p>Para confirmar dados, apresentar um pedido ou solicitar informação institucional, utilize os canais oficiais da empresa.</p></div>
       <div class="credibility-contact-links">
         <a href={"mailto:"+company.commercialEmail}>E-mail comercial <strong>{company.commercialEmail} ↗</strong></a>
         <a href={"mailto:"+company.institutionalEmail}>E-mail institucional <strong>{company.institutionalEmail} ↗</strong></a>
@@ -120,18 +105,7 @@ import { company } from "../../data/site";
 .credibility-contact-links > a { display:flex; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid #b9d8ed; font-size:11px; }
 .credibility-contact-links strong { font-weight:650; text-align:right; overflow-wrap:anywhere; }
 .credibility-contact-links > a:hover { color:var(--hm-blue); }
-.credibility-dossier { display:grid; grid-template-columns:.9fr 1.1fr; align-items:center; gap:clamp(35px,7vw,95px); background:var(--hm-sky-soft); }
-.credibility-dossier-copy h2 { margin:22px 0 0; font-size:clamp(35px,4.4vw,58px); line-height:1.08; font-weight:520; letter-spacing:-.06em; }
-.credibility-dossier-copy h2 em { color:var(--hm-blue); font-family:var(--hm-serif); font-weight:400; }
-.credibility-dossier-copy > p:last-child { max-width:560px; margin:20px 0 0; color:var(--hm-muted); font-size:12px; line-height:1.9; }
-.dossier-download { padding:clamp(24px,3.5vw,40px); background:var(--hm-paper); border:1px solid #b9d8ed; }
-.dossier-download h3 { margin:18px 0 10px; font-size:20px; letter-spacing:-.035em; }
-.dossier-download > p:not(.section-kicker) { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
-.dossier-download > a { display:flex; justify-content:space-between; gap:20px; margin-top:25px; padding-bottom:10px; color:var(--hm-blue); border-bottom:1px solid var(--hm-blue); font-size:11px; font-weight:750; }
-.dossier-download small { display:block; margin-top:12px; color:var(--hm-muted); font-size:9px; line-height:1.6; }
-@media (max-width:800px) {
-  .credibility-identity,.credibility-method,.credibility-limits,.credibility-dossier,.credibility-contact { grid-template-columns:1fr; gap:30px; }
-}
+
 @media (max-width:520px) {
   .identity-card { padding:22px 18px; }
   .identity-card dl div { grid-template-columns:1fr; gap:5px; }
