@@ -209,6 +209,8 @@ assert.match(partnerScript, /privacy_consent:consent/, "Partner application must
 assert.match(sourceRfqScript, /apiBase\(\)\+'\/api\/catalog'/, "SOURCE AO RFQ must prefer the live catalog API when configured");
 assert.match(sourceRfqScript, /staticCatalogUrl=.*'\/source-ao\/data\/catalog\.json'/, "SOURCE AO RFQ must retain the local catalogue fallback");
 assert.match(sourceRfqScript, /loadCatalog\(staticCatalogUrl\)/, "SOURCE AO RFQ must retry the local catalogue when the live API is unavailable");
+const previewCatalogEndpoint = readFileSync(new URL('../src/pages/api/source-ao/catalog.json.ts', import.meta.url), 'utf8');
+assert.ok(previewCatalogEndpoint.includes('public-catalog.json'), 'Astro fallback must use the sanitised public catalogue');
 assert.match(sourceRfqScript, /fetch\(apiBase\(\)\+'\/api\/sourcing-requests'/, "SOURCE AO RFQ must post requests to its configured API");
 assert.match(sourceRfqScript, /result\?\.ok!==true/, "SOURCE AO RFQ must require a confirmed API response");
 assert.match(sourceRfqScript, /trackingUrl\(result\.request\.status_path\)/, "SOURCE AO RFQ must validate and expose the private tracking link");
