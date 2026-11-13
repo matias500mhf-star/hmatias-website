@@ -258,7 +258,7 @@ const englishRoutes = [
   ["en/works-catalogue", /Works, interventions/, /Completed Rural Pavilions/],
   ["en/blog", /Practical guides/, /FEATURED ARTICLE/],
   ["en/blog/how-to-prepare-a-comparable-supply-quotation", /How to prepare a quotation request/, /quantity and unit/i],
-  ["en/source-ao/smart-rfq", /Turn your requirement into a clear request/, /This is a request brief, not an automatic quotation/],
+  ["en/source-ao/smart-rfq", /<h1[^>]*data-en="What do you need to source\?"/, /Isolated preview: online registration/],
   ["en/accessibility", /more accessible to everyone/i, /independent audit/i],
   ["en/privacy", /Privacy Policy/, /Cookiebot/],
   ["en/terms", /Terms and Conditions/, /Intellectual property/],
@@ -272,7 +272,11 @@ for (const [route, heading, marker] of englishRoutes) {
   assert.match(content, /<html lang="en"/, `English document language is missing: /${route}/`);
   assert.match(content, heading, `English heading is missing: /${route}/`);
   assert.match(content, marker, `English key content is missing: /${route}/`);
-  assert.ok(content.includes('class="language-switch"'), `Language switch is missing: /${route}/`);
+  if (route === "en/source-ao/smart-rfq") {
+    assert.ok(content.includes('id="rfqLanguage"'), "RFQ language control is missing: /" + route + "/");
+  } else {
+    assert.ok(content.includes('class="language-switch"'), `Language switch is missing: /${route}/`);
+  }
 }
 
 const cleanPortuguese = readFileSync(join(outDir, "clean", "index.html"), "utf8");
