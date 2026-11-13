@@ -185,10 +185,25 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.locator('a[href="/limpeza-pos-obra/"]')).toBeVisible();
     await page.goto("/supply/");
     await expect(page.locator('a[href="/fornecimento-de-epi-e-fardamento/"]')).toBeVisible();
+    await page.goto("/en/facilities/");
+    await expect(page.locator('a[href="/en/clean/"]')).toBeVisible();
+    await expect(page.locator('a[href="/en/post-construction-cleaning/"]')).toBeVisible();
   });
 
   test("new institutional pages do not introduce horizontal overflow", async ({ page }) => {
-    for (const route of ["/business-services/", "/empresa/", "/privacidade/", "/termos/", "/catalogo-obras/", "/clean/", "/en/clean/", "/coberturas-industriais/", "/limpeza-pos-obra/", "/fornecimento-de-epi-e-fardamento/", "/remodelacao-de-escritorios/", "/en/industrial-roofing/", "/en/post-construction-cleaning/", "/en/ppe-workwear/", "/en/office-remodelling/"]) {
+    for (const route of [
+      "/business-services/", "/en/business-services/",
+      "/empresa/", "/en/about/",
+      "/construcao/", "/en/construction/",
+      "/facilities/", "/en/facilities/",
+      "/supply/", "/en/supply/",
+      "/privacidade/", "/termos/", "/catalogo-obras/",
+      "/clean/", "/en/clean/",
+      "/coberturas-industriais/", "/limpeza-pos-obra/",
+      "/fornecimento-de-epi-e-fardamento/", "/remodelacao-de-escritorios/",
+      "/en/industrial-roofing/", "/en/post-construction-cleaning/",
+      "/en/ppe-workwear/", "/en/office-remodelling/"
+    ]) {
       await page.goto(route);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       expect(overflow, route).toBe(false);
