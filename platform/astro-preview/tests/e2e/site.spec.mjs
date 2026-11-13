@@ -155,7 +155,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
   });
 
-  for (const route of routes) {
+  for (const route of routes.filter(route => route !== "/source-ao/smart-rfq/")) {
     test(`menu móvel abre e fecha em ${route}`, async ({ page }, testInfo) => {
       test.skip(testInfo.project.name !== "mobile-webkit", "Teste exclusivo do viewport móvel.");
       await page.goto(route);
@@ -191,14 +191,15 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
 
       if (route === "/supply/") {
         await expect(page.getByRole("link", { name: "Registar pedido de cotação" }))
-          .toHaveAttribute("href", "https://comercialhmatiasps.com/source-ao/rfq.html?from=supply");
+          .toHaveAttribute("href", "/source-ao/smart-rfq/?from=supply");
       }
       if (route === "/source-ao/smart-rfq/") {
-        await expect(page.locator("#smartRfqForm")).toBeVisible();
-        await expect(page.getByRole("heading", { name: "Transforme a necessidade num pedido claro." })).toBeVisible();
-        await expect(page.getByRole("button", { name: "Gerar briefing do pedido" })).toBeVisible();
-        await expect(page.locator("#rfqEmailSend")).toHaveAttribute("aria-disabled", "true");
-        await expect(page.locator("#rfqWhatsapp")).toHaveAttribute("aria-disabled", "true");
+        await expect(page.locator("#rfqForm")).toBeVisible();
+        await expect(page.getByRole("heading", { name: "O que precisa de encontrar?" })).toBeVisible();
+        await expect(page.locator("#rfqNext")).toBeVisible();
+        await expect(page.locator("#rfqSubmit")).toBeHidden();
+        await expect(page.locator(".rfq-item")).toHaveCount(1);
+        await expect(page.locator(".source-rfq-stage-note")).toContainText("Pré-visualização isolada");
       }
       if (route === "/business-services/") {
         await expect(page.locator(".business-contact-cta a[href^='https://wa.me/244948806673']")).toBeVisible();
