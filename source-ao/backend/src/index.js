@@ -188,8 +188,8 @@ async function listCatalogItems(request, env) {
   if (raw.length>180) return fail(env,400,'invalid_query','Catalog query is too long.');
   const q=normalizeSearch(raw);
   const stmt=q
-    ? env.SOURCE_AO_DB.prepare(`SELECT id,name,category,specification,unit FROM items WHERE search_text LIKE ? ORDER BY name ASC LIMIT 50`).bind(`%${q}%`)
-    : env.SOURCE_AO_DB.prepare(`SELECT id,name,category,specification,unit FROM items ORDER BY name ASC LIMIT 50`);
+    ? env.SOURCE_AO_DB.prepare(`SELECT id,name,name_pt,category,specification,unit,public_visible FROM items WHERE search_text LIKE ? ORDER BY name ASC LIMIT 50`).bind(`%${q}%`)
+    : env.SOURCE_AO_DB.prepare(`SELECT id,name,name_pt,category,specification,unit,public_visible FROM items ORDER BY name ASC LIMIT 50`);
   const rows=await stmt.all();
   return json(env,{ok:true,results:rows.results||[]});
 }
@@ -259,16 +259,23 @@ async function createCatalogItem(request, env) {
   const name=data.name.trim();
   const category=data.category.trim();
   if (!name || !category || name.length>160 || category.length>100) return fail(env,400,'invalid_fields','Catalog name or category is invalid.');
-  const specification=optionalText(data.specification,240);
+  const specification=optionalText(data.specification,1200);
   const unit=optionalText(data.unit,40);
-  if (!specification.ok || !unit.ok) return fail(env,400,'invalid_fields','Catalog specification or unit is invalid.');
-  const aliases=Array.isArray(data.aliases)?data.aliases.filter(x=>typeof x==='string').map(x=>x.trim()).filter(Boolean).slice(0,20):[];
-  if (aliases.some(x=>x.length>120)) return fail(env,400,'invalid_alias','Catalog alias is too long.');
-  const itemId=data.id||id('item');
-  const searchText=normalizeSearch([name,specification.value||'',...aliases].join(' '));
-  await env.SOURCE_AO_DB.prepare(`INSERT INTO items(id,name,category,specification,unit,aliases_json,search_text) VALUES(?,?,?,?,?,?,?)`)
-    .bind(itemId,name,category,specification.value,unit.value,JSON.stringify(aliases),searchText).run();
-  return json(env,{ok:true,item:{id:itemId,name,category}},201);
+  const namePt=optionalText(data.name_pt,160);
+  if (!specification.ok || !unit.ok || !namePt.ok) return fail(env,400,'invalid_fields','Catalog text fields are invalid.');
+  const aliases=Array.isArray(data.aliases)?data.aliases.filter(x=>typeof x==='string').map(x=>x.trim()).filter(Boolean).slice(0,25):[];
+  const keywords=Array.isArray(data.keywords)?data.keywords.filter(x=>typeof x==='string').map(x=>x.trim()).filter(Boolean).slice(0,25):[];
+  if (aliases.some(x=>x.length>120)||keywords.some(x=>x.length>120)) return fail(env,400,'invalid_alias','Catalog aliases or keywords are too long.');
+  if (data.public_visible!=null && typeof data.public_visible!=='boolean') return fail(env,400,'invalid_visibility','public_visible must be a boolean.');
+  const itemId=typeof data.id==='string'&&data.id.trim()?data.id.trim():id('item');
+  const publicVisible=data.public_visible===true&&!new Set(['item-formaldehyde']).has(itemId)?1:0;
+  const searchText=normalizeSearch([name,namePt.value||'',specification.value||'',...aliases,...keywords].join(' '));
+  await env.SOURCE_AO_DB.prepare(`INSERT INTO items(
+    id,name,name_pt,category,specification,unit,aliases_json,keywords_json,search_text,
+    public_visible,management_mode
+  ) VALUES(?,?,?,?,?,?,?,?,?,?, 'managed')`)
+    .bind(itemId,name,namePt.value,category,specification.value,unit.value,JSON.stringify(aliases),JSON.stringify(keywords),searchText,publicVisible).run();
+  return json(env,{ok:true,item:{id:itemId,name,name_pt:namePt.value||name,category,public_visible:publicVisible===1}},201);
 }
 
 export default {
