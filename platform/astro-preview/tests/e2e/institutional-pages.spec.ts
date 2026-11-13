@@ -188,6 +188,11 @@ test.describe("HMATIAS institutional pages", () => {
     await page.goto("/en/facilities/");
     await expect(page.locator('a[href="/en/clean/"]')).toBeVisible();
     await expect(page.locator('a[href="/en/post-construction-cleaning/"]')).toBeVisible();
+    await page.goto("/en/construction/");
+    await expect(page.locator('a[href="/en/industrial-roofing/"]')).toBeVisible();
+    await expect(page.locator('a[href="/en/office-remodelling/"]')).toBeVisible();
+    await page.goto("/en/supply/");
+    await expect(page.locator('a[href="/en/ppe-workwear/"]')).toBeVisible();
   });
 
   test("new institutional pages do not introduce horizontal overflow", async ({ page }) => {
