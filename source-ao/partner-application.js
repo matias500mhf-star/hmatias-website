@@ -28,6 +28,7 @@
       whatsapp:data.get('whatsapp'),
       portfolio_url:data.get('portfolio_url'),
       note:data.get('note'),
+      privacy_consent:document.getElementById('confirmAccuracy')?.checked===true,
       capabilities,
       sectors:[]
     };
