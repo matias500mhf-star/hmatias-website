@@ -18,12 +18,13 @@
     pt:{
       live:'Intelligence live',
       liveUpdating:'A sincronizar',
-      liveFallback:'Dados disponíveis',
+      liveFallback:'Sem ligação',
+      apiNotConfigured:'API de staging não configurada',noLiveData:'O feed público será ligado quando o ambiente de staging estiver configurado.',
       back:'← Source AO',
       eyebrow:'SOURCE AO · INTELLIGENCE RADAR',
       title:'Não veja apenas oportunidades.\nEntenda quais merecem ação.',
       lead:'O Radar cruza prazo, fonte, setor, localização e compatibilidade comercial para transformar anúncios dispersos em prioridades de negócio verificáveis.',
-      engineState:'Motor ativo',
+      engineState:'Triagem comercial',
       statActive:'Oportunidades ativas',statActiveNote:'com prazo válido',
       statHighFit:'Fit elevado',statHighFitNote:'score ≥ 80',
       statUrgent:'Ação urgente',statUrgentNote:'≤ 5 dias',
@@ -54,12 +55,13 @@
     en:{
       live:'Intelligence live',
       liveUpdating:'Syncing',
-      liveFallback:'Available data',
+      liveFallback:'Not connected',
+      apiNotConfigured:'Staging API not configured',noLiveData:'The public feed will be enabled when the staging environment is configured.',
       back:'← Source AO',
       eyebrow:'SOURCE AO · INTELLIGENCE RADAR',
       title:'Do not just see opportunities.\nKnow which ones deserve action.',
       lead:'The Radar combines deadline, source, sector, location and commercial fit to turn scattered notices into verifiable business priorities.',
-      engineState:'Engine active',
+      engineState:'Commercial triage',
       statActive:'Active opportunities',statActiveNote:'valid deadline',
       statHighFit:'High fit',statHighFitNote:'score ≥ 80',
       statUrgent:'Urgent action',statUrgentNote:'≤ 5 days',
@@ -124,6 +126,10 @@
       status.textContent=t('liveSynced')+(lastSyncAt?' · '+clock(lastSyncAt):'');
       meta.textContent=[t('autoRefresh'),sourceMeta].filter(Boolean).join(' · ');
       if(liveLabel)liveLabel.textContent=t('live');
+    }else if(syncState==='unconfigured'){
+      status.textContent=t('apiNotConfigured');
+      meta.textContent=t('noLiveData');
+      if(liveLabel)liveLabel.textContent=t('liveFallback');
     }else if(syncState==='fallback'){
       status.textContent=t('liveUnavailable');
       meta.textContent=[t('fallbackNote'),sourceMeta].filter(Boolean).join(' · ');
@@ -147,7 +153,10 @@
     syncState='syncing';
     updateSyncUI();
     try{
-      if(!window.SourceAOAPI?.isConfigured?.())throw new Error('live_api_not_configured');
+      if(!window.SourceAOAPI?.isConfigured?.()){
+        syncState='unconfigured';
+        return;
+      }
       const payload=await window.SourceAOAPI.opportunities();
       const live=Array.isArray(payload)?payload:(payload?.results||payload?.opportunities||[]);
       if(!Array.isArray(live))throw new Error('invalid_opportunity_payload');
