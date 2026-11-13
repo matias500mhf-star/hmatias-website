@@ -15,9 +15,29 @@ The SOURCE AO Radar requests live opportunities from the API and refreshes its v
 
 ## What remains release-driven
 
-The HMATIAS institutional pages and product catalogue are static release assets. Changes to approved page copy, catalogue descriptions, product references or imagery require a reviewed repository change and a new site build/deployment. This is not currently a live CMS or a supplier-synchronised inventory.
+The HMATIAS institutional pages and product imagery remain release assets. The SOURCE AO product-family catalogue now has a live database-backed path: the RFQ prefers `GET /api/catalog` and falls back to the versioned static catalogue if the API is unavailable. The backend validates each RFQ against the same public-visible D1 records, so a newly published family is accepted without a website rebuild. This catalogue is not a stock or supplier inventory.
 
 Prices, stock, supplier lead times and transport conditions must never be inferred from a catalogue entry or automatically published as confirmed facts. They require current evidence and appropriate commercial approval.
+
+## Live catalogue operations
+
+The catalogue has two content modes:
+
+- **Seed-managed:** curated entries from `source-ao/data/catalog.json` are synchronised into D1 on a reviewed backend release. These values can be updated with a source release.
+- **Admin-managed:** entries edited or created through SOURCE AO Ops are marked `management_mode='managed'`; the seed process preserves their content and explicit visibility decision across later redeployments.
+
+The internal **SOURCE AO Ops → Catálogo público** panel requires the same administrator session as the other private operations. It uses:
+
+- `GET /api/admin/catalog/items` to load the internal catalogue;
+- `POST /api/admin/items` to create a managed entry (private by default);
+- `PATCH /api/admin/catalog/items/:id` to edit bilingual names, category, public specification, unit, aliases, keywords and explicit public visibility;
+- `GET /api/catalog` for the public projection.
+
+Only rows with `public_visible=1` enter the public RFQ catalogue. The excluded `item-formaldehyde` identifier cannot be published. The public projection contains no prices, supplier identities, contacts, stock levels, lead times, margins or internal notes.
+
+The RFQ prefers the live catalogue API when configured. When the API is unavailable, it falls back to the static public catalogue. The server-side RFQ validator reads the same published D1 records; private items are rejected even when a client manually submits their IDs.
+
+Administrator tokens remain in page memory only. Do not store them in localStorage, sessionStorage, source files or browser exports.
 
 ## Publication boundaries
 
