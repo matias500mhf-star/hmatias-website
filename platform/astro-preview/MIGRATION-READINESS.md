@@ -1,12 +1,12 @@
 # HMATIAS — Inventário de migração e prontidão para produção
 
-Data de referência: 12 de novembro de 2026
+Data de referência: 13 de novembro de 2026
 
 Este inventário separa o que já foi recriado no protótipo Astro, o que continua deliberadamente no website oficial e os controlos que ainda impedem uma migração. O protótipo é independente e não substitui o publisher oficial.
 
 ## 1. Páginas já recriadas no protótipo Astro
 
-O protótipo gera agora 44 páginas estáticas: 22 em Português (pt-AO) e 22 em Inglês.
+O protótipo gera agora 50 páginas estáticas: 25 em Português (pt-AO) e 25 em Inglês.
 
 | Área | Português | Inglês | Situação |
 |---|---|---|---|
@@ -27,7 +27,9 @@ O protótipo gera agora 44 páginas estáticas: 22 em Português (pt-AO) e 22 em
 | Catálogo de Obras | `/catalogo-obras/` | `/en/works-catalogue/` | Doze registos fotográficos do arquivo |
 | Blog | `/blog/` | `/en/blog/` | Listagem e artigo de orientação sobre pedidos de cotação |
 | SOURCE AO | `/source-ao/` | `/en/source-ao/` | Página própria de sourcing e cobertura de mercado, com percurso dedicado para RFQ multiartigo |
-| SOURCE AO RFQ | `/source-ao/smart-rfq/` | `/en/source-ao/smart-rfq/` | Formulário multiartigo bilingue; regista no backend SOURCE AO quando a API de staging estiver configurada; sem ligação à base de produção a partir do preview |
+| SOURCE AO RFQ | `/source-ao/smart-rfq/` | `/en/source-ao/smart-rfq/` | Formulário multiartigo bilingue; regista no backend SOURCE AO apenas quando a API de staging estiver configurada; sem ligação à base de produção a partir do preview |
+| SOURCE AO Radar | `/source-ao/radar/` | `/en/source-ao/radar/` | Oportunidades públicas aprovadas, activas, em Angola e com prazo válido; sem dados internos; encaminhamento contextual para Smart RFQ; feed identificado como não configurado até ligação ao staging |
+| Candidatura de parceiros SOURCE AO | `/source-ao/parceiros/` | `/en/source-ao/partners/` | Formulário bilingue, desactivado sem API de staging; consentimento explícito, registo de data/versão do aviso, contactos cifrados e fila de revisão privada; resposta pública apenas com referência e estado |
 | Acessibilidade | `/acessibilidade/` | `/en/accessibility/` | Compromisso e canal para comunicar dificuldades |
 | Privacidade | `/privacidade/` | `/en/privacy/` | Política em português e inglês, com distinção entre preview e site oficial |
 | Termos | `/termos/` | `/en/terms/` | Termos gerais em português e inglês |
@@ -48,7 +50,8 @@ Estas ligações foram mantidas intencionalmente para não substituir formulári
 | RFQ SOURCE AO operacional | `/source-ao/rfq.html` no domínio oficial; preview em `/source-ao/smart-rfq/` e `/en/source-ao/smart-rfq/` |
 | Formulário RFQ em inglês | `https://comercialhmatiasps.com/rfq-en.html` |
 | SOURCE AO | `/source-ao/index.html` no domínio oficial |
-| Radar de oportunidades SOURCE AO | `/source-ao/opportunity-radar.html` no domínio oficial |
+| Radar de oportunidades SOURCE AO | `/source-ao/opportunity-radar.html` no domínio oficial; preview Astro em `/source-ao/radar/` e `/en/source-ao/radar/` |
+| Candidaturas de parceiros SOURCE AO | `/source-ao/partner-application.html` no domínio oficial; preview Astro em `/source-ao/parceiros/` e `/en/source-ao/partners/` |
 | Privacidade e termos específicos do SOURCE AO | `/source-ao/privacy.html` e `/source-ao/terms.html` no domínio oficial |
 
 Os formulários dependem de integrações de receção segura, consentimento, Cloudflare Turnstile, Cloudflare D1 e, conforme o fluxo, notificações. A migração só deve ocorrer depois de testar origem permitida pela API, consentimento, registo, referência de confirmação, tratamento de falhas e canal manual alternativo.
@@ -123,7 +126,7 @@ Os relatórios Playwright e Lighthouse foram guardados no artefacto `hmatias-bro
 Continuam pendentes a revisão visual manual em vários dispositivos, a navegação integral apenas por teclado e o teste de ponta a ponta de pedidos reais nos canais de produção.
 ## 7. Estado de publicação
 
-- O ambiente Astro é um preview separado em Render.
+- O ambiente Astro é um projecto Vercel separado, ligado à pasta `platform/astro-preview`; o publisher oficial não está associado a este projecto.
 - O domínio oficial e a homepage oficial não foram migrados.
 - Não foram alterados DNS nem publisher de produção.
 - Os formulários operacionais acima permanecem no website oficial.
@@ -222,3 +225,25 @@ Foram recriadas em PT-AO e inglês quatro páginas especializadas, com conteúdo
 As páginas encaminham para o Smart RFQ com a área HMATIAS e o título do serviço pré-seleccionados. O visitante continua a preencher, rever e escolher o envio manual por e-mail ou WhatsApp. A pré-selecção não submete o pedido ao servidor, não cria uma cotação e não confirma adjudicação. As páginas-mãe de Construção, Facilities e Supply incluem ligações para os respectivos serviços especializados.
 
 As quatro URLs HTML históricas permanecem no inventário, sem redireccionamento, até à revisão de Search Console/backlinks, validação da equivalência e aprovação explícita da migração.
+
+
+## 10. SOURCE AO Radar e rede de parceiros — 13 de novembro de 2026
+
+Foram acrescentadas duas rotas bilingues ao preview Astro: Radar público (`/source-ao/radar/`, `/en/source-ao/radar/`) e candidatura de parceiros (`/source-ao/parceiros/`, `/en/source-ao/partners/`). O inventário passa a 50 páginas estáticas, 25 por idioma.
+
+**Radar:** utiliza o endpoint público existente, que filtra oportunidades angolanas aprovadas para publicação, activas e com prazo ainda válido. Não lê filas administrativas nem expõe identidade/contactos de fornecedores, custos de aquisição, margens ou notas comerciais privadas. O botão de análise encaminha para o Smart RFQ no mesmo idioma, com título, localização, referência pública, fonte e prazo pré-preenchidos. Enquanto a API de staging não estiver configurada, a interface informa que o feed não está ligado e não apresenta dados fictícios.
+
+**Candidatura de parceiros:** reutiliza o endpoint privado existente. Exige consentimento afirmativo, guarda data e versão do aviso, mantém NIF/registo e dados de contacto dentro do perfil cifrado, e devolve publicamente apenas referência e estado. A listagem e leitura integral continuam protegidas por autenticação administrativa. A política de privacidade PT/EN foi actualizada para descrever dados, finalidades e limites do processo. A candidatura não é um directório público e não garante aceitação ou adjudicação.
+
+A migração D1 `0027_partner_application_privacy_consent.sql` acrescenta os campos de auditoria de consentimento. Registos históricos permanecem sem preenchimento retroactivo, uma vez que não é possível inferir consentimento anterior. Esta migração ainda deve ser aplicada no ambiente de staging antes de se activar a submissão; o fluxo público continua desactivado por omissão e nunca deve apontar para a base de produção.
+
+Os testes backend do ciclo passaram com **172 testes aprovados e zero falhas**, incluindo mapeamento Radar → RFQ, ausência de campos internos na URL, rejeição de candidaturas sem consentimento, resposta pública sem contactos e migração sem backfill de consentimento. A validação Astro do head em execução deve ser consultada antes de se declarar a aprovação final do build, navegador, acessibilidade e Lighthouse.
+
+### Estado de ambiente e publicação
+
+- O preview é alojado num projecto Vercel independente. Os checks automáticos do provider reportaram bloqueio temporário por limite de deploy (mensagem de nova tentativa em 24 horas); não foi possível confirmar uma nova pré-visualização pública para estas alterações.
+- O build estático já gerou 50 páginas no ciclo anterior; a verificação editorial identificou uma grafia antiga no formulário e esta foi corrigida. A validação subsequente deve ser considerada a referência definitiva quando concluir.
+- O preview mantém `noindex, nofollow`; as rotas RFQ e parceiro não recebem submissões de produção.
+- A PR #316 permanece aberta e em rascunho. Não foi feito merge, deploy do domínio oficial, alteração DNS, redirect ou substituição da homepage aprovada.
+
+**Estado:** funcionalidades integradas em preview e sujeitas a validação final. A migração e publicação em produção continuam não autorizadas.
