@@ -86,7 +86,7 @@ const capabilities = [
         <div class="section-head">
           <p class="eyebrow dark">{english ? "CAPACITY" : "CAPACIDADE"}</p>
           <h2>{english ? "What can your company deliver?" : "O que a empresa consegue executar ou fornecer?"}</h2>
-          <p>{english ? "Select only capabilities that you can support with commercial or technical evidence." : "Seleccione apenas actividades que consegue comprovar comercial ou tecnicamente."}</p>
+          <p>{english ? "Select only capabilities that you can support with commercial or technical evidence." : "Selecione apenas actividades que consegue comprovar comercial ou tecnicamente."}</p>
         </div>
         <div class="checks" id="capabilities" aria-label={english ? "Company capabilities" : "Capacidades da empresa"}>
           {capabilities.map(([value, pt, en]) => <label><input type="checkbox" value={value} /> {english ? en : pt}</label>)}
