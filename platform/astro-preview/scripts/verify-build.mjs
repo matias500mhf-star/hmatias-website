@@ -184,6 +184,21 @@ for (const [route, language, privacyHref, languageHref] of partnerRoutes) {
   assert.match(content, /staging/i, `Partner application must disclose isolated staging state: /${route}/`);
 }
 
+const lighthouseConfig = readFileSync(new URL("../lighthouserc.cjs", import.meta.url), "utf8");
+const lighthouseRoutes = [...lighthouseConfig.matchAll(/http:\/\/127\\.0\\.0\\.1:4321([^"]+)/g)].map((match) => match[1]);
+assert.equal(lighthouseRoutes.length, 50, "Lighthouse must audit all 50 generated PT/EN routes");
+assert.equal(new Set(lighthouseRoutes).size, 50, "Lighthouse route list must not contain duplicates");
+for (const route of [
+  "/dossier-institucional/",
+  "/en/institutional-dossier/",
+  "/source-ao/radar/",
+  "/en/source-ao/radar/",
+  "/source-ao/parceiros/",
+  "/en/source-ao/partners/",
+]) {
+  assert.ok(lighthouseRoutes.includes(route), `Lighthouse route coverage is missing ${route}`);
+}
+
 const sourceRfqScript = readFileSync(new URL("../../../source-ao/rfq.js", import.meta.url), "utf8");
 const radarScript = readFileSync(new URL("../../../source-ao/opportunity-radar.js", import.meta.url), "utf8");
 assert.match(radarScript, /data-radar-preview/, "Radar preview must route analysis into local Smart RFQ");
