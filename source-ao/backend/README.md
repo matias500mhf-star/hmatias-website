@@ -128,6 +128,14 @@ Do not deploy until all of the following are true:
 The public HMATIAS website does not depend on this backend. If the backend deployment fails, remove/disable the Source AO API endpoint or frontend API configuration; the HMATIAS main site remains unaffected.
 
 
+## Public partner applications and privacy consent
+
+The public `POST /api/partner-applications` intake requires `privacy_consent: true`. The API records the consent timestamp and notice version (`source-ao-partner-privacy-2026-11`) alongside each new application through migration `0027_partner_application_privacy_consent.sql`. Historical rows remain nullable; prior consent must not be inferred or backfilled.
+
+Company identity and application classification are used for the private review queue. Registration number, contact name, email, WhatsApp, portfolio URL and commercial note remain inside the encrypted private profile. The public submission response contains only the application reference and review status. Listing, reading and reviewing applications continue to require administrator authorization.
+
+The Astro preview partner form is intentionally disabled unless `PUBLIC_SOURCE_AO_API_BASE` points to an HTTPS staging Worker. For browser submissions to work, configure the staging environment's `SOURCE_AO_STAGING_PUBLIC_ORIGIN` to the exact HTTPS preview origin (for example, `https://hmatias-astro-preview.onrender.com`) and set the Astro preview's `PUBLIC_SOURCE_AO_API_BASE` to the deployed staging API URL. Apply migration 0027 to staging before enabling this form. Never point the preview at the production API.
+
 ## Commercial RFQ and partner notifications (production)
 
 The Source AO API stores sourcing requests and partner applications in private D1 tables. Migration `0023_intake_alert_queue.sql` creates a durable notification outbox from both tables. **A stored SAO reference is not proof that the HMATIAS commercial inbox was notified.**
