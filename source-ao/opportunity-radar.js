@@ -7,7 +7,7 @@
   let query='';
   let market='AO';
   let opportunities=[];
-  let lang=document.documentElement.lang==='en'?'en':'pt';
+  let lang=document.documentElement?.lang==='en'?'en':'pt';
   let localById=new Map();
   let syncState='idle';
   let lastSyncAt=null;
