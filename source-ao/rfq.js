@@ -27,6 +27,23 @@ function staticLanguage(){
   document.querySelectorAll('[data-en]').forEach(node=>{if(!node.dataset.pt)node.dataset.pt=node.textContent;node.textContent=en?node.dataset.en:node.dataset.pt;});
   $('#rfqLanguage').textContent=en?'PT':'EN';
   $('#rfqLanguage').setAttribute('aria-label',en?'Switch to PT — Português':'Mudar para EN — English');
+  const localizedLinks = {
+    sourceAo: en ? '/en/source-ao/' : '/source-ao/',
+    supply: en ? '/en/supply/' : '/supply/',
+    privacy: en ? '/en/privacy/' : '/privacidade/',
+    terms: en ? '/en/terms/' : '/termos/'
+  };
+  for (const selector of ['#sourceAoLogoLink', '#sourceAoBackLink', '#sourceAoPreviewHomeLink']) {
+    const node = $(selector);
+    if (node) node.href = localizedLinks.sourceAo;
+  }
+  const linkTargets = [
+    ['#sourceAoSupplyLink', localizedLinks.supply],
+    ['#sourceAoPrivacyLink', localizedLinks.privacy],
+    ['#rfqPrivacyNoticeLink', localizedLinks.privacy],
+    ['#rfqTermsLink', localizedLinks.terms]
+  ];
+  linkTargets.forEach(([selector, href]) => { const node=$(selector); if(node) node.href=href; });
 }
 
 function setAccessibleLabel(input, labelText) {
