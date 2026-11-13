@@ -40,6 +40,8 @@ const dateLabel = post.data.pubDate.toLocaleDateString(
       <div class="article-meta">
         <span>{post.data.author.toUpperCase()}</span>
         <time datetime={post.data.pubDate.toISOString()}>{dateLabel}</time>
+        <span>{post.data.readingMinutes} min de leitura</span>
+        <span>{post.data.contentType === "case-study" ? "Caso prático ilustrativo" : "Guia técnico"}</span>
       </div>
     </section>
 
