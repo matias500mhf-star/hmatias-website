@@ -23,6 +23,10 @@ const ptToEn: Record<string, string> = {
   "/source-ao/radar/": "/en/source-ao/radar/",
   "/source-ao/parceiros/": "/en/source-ao/partners/",
   "/blog/como-preparar-um-pedido-de-cotacao/": "/en/blog/how-to-prepare-a-comparable-supply-quotation/",
+  "/blog/avaliar-propostas-fornecimento-sem-comparar-apenas-preco/": "/en/blog/evaluating-supply-proposals-beyond-price/",
+  "/blog/caso-pratico-intervencao-cobertura-industrial/": "/en/blog/industrial-roofing-intervention-case-study/",
+  "/blog/plano-manutencao-preventiva-instalacoes/": "/en/blog/preventive-facilities-maintenance-plan/",
+  "/blog/recepcao-e-conferencia-de-fornecimentos/": "/en/blog/receiving-and-inspecting-supply-deliveries/",
 };
 
 const enToPt: Record<string, string> = Object.fromEntries(
