@@ -102,7 +102,7 @@
       country_invalid:english?'Select a supported country.':'Seleccione um país suportado.',
       locality_required:english?'Province or city is required.':'A província ou cidade é obrigatória.',
       type_invalid:english?'Select a valid partner type.':'Seleccione um tipo de parceiro válido.',
-      contact_name_required:english?'Contact person's name is required.':'O nome do responsável é obrigatório.',
+      contact_name_required:english?"Contact person's name is required.":'O nome do responsável é obrigatório.',
       website_invalid:english?'Enter a valid company website URL.':'Indique um endereço válido para o website da empresa.',
       portfolio_invalid:english?'Enter a valid portfolio or reference URL.':'Indique um endereço válido para o portfólio ou referências.',
       field_too_long:english?'One or more fields exceed the allowed length.':'Um ou mais campos excedem o limite permitido.'
