@@ -7,6 +7,12 @@ on:
       - "platform/astro-preview/**"
       - "source-ao/data/catalog.json"
       - "source-ao/data/public-catalog.json"
+      - "source-ao/opportunity-radar.js"
+      - "source-ao/opportunity-radar.css"
+      - "source-ao/api-client.js"
+      - "source-ao/data-engine.js"
+      - "source-ao/rfq.js"
+      - "source-ao/rfq-model.js"
       - "platform/astro-preview/scripts/generate-public-catalog.mjs"
       - ".github/workflows/astro-prototype-qa.yml"
   workflow_dispatch:
