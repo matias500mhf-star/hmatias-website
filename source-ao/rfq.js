@@ -4,6 +4,7 @@ const $=selector=>document.querySelector(selector);
 const params=new URLSearchParams(location.search);
 let en=params.get('lang')==='en';
 let catalog={items:[]};
+const PUBLIC_EXCLUDED_CATALOG_ITEMS=new Set(['item-formaldehyde']);
 let step=0;
 let rowNumber=0;
 let busy=false;
@@ -76,7 +77,7 @@ function addItem(initial={}){
   options(category,[['',copy('Selecionar categoria','Select category')],...Object.keys(CATEGORY_LABELS).map(key=>[key,categoryLabel(key,en)])]);
   options(row.querySelector('.item-unit'),UNITS.map(unit=>[unit,unit==='serviço'?copy('serviço','service'):unit]));
   function products(){
-    options(row.querySelector('.item-product'),[['',copy('Descrever o artigo','Describe the item')],...catalog.items.filter(item=>item.category===category.value).map(item=>[item.id,itemLabel(item,en)])]);
+    options(row.querySelector('.item-product'),[['',copy('Descrever o artigo','Describe the item')],...catalog.items.filter(item=>item.category===category.value&&!PUBLIC_EXCLUDED_CATALOG_ITEMS.has(item.id)).map(item=>[item.id,itemLabel(item,en)])]);
   }
   category.addEventListener('change',()=>{products();summary();});
   row.querySelector('.item-product').addEventListener('change',event=>{
@@ -250,11 +251,11 @@ if(catalogLoaded){
   const normalize=text=>String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
   const query=' '+normalize(params.get('request'))+' ';
   const inferred=catalog.items.flatMap(item=>
-    [item.name,item.name_pt,...(item.aliases||[])].filter(Boolean)
+    [item.name,item.name_pt,...(item.aliases||[])].filter(Boolean).filter(()=>!PUBLIC_EXCLUDED_CATALOG_ITEMS.has(item.id))
       .map(alias=>({item,alias:normalize(alias)}))
   ).filter(match=>match.alias.length>=3 && query.includes(' '+match.alias+' '))
     .sort((a,b)=>b.alias.length-a.alias.length)[0]?.item;
-  const matched=catalog.items.find(item=>item.id===params.get('item'))||inferred;
+  const matched=catalog.items.find(item=>item.id===params.get('item')&&!PUBLIC_EXCLUDED_CATALOG_ITEMS.has(item.id))||inferred;
   const first=rows()[0];
   const firstCategory=first?.querySelector('.item-category');
   if(matched && firstCategory && !firstCategory.value){
