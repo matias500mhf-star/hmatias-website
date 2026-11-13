@@ -66,4 +66,4 @@ Incomplete requests do not need to be abandoned. The team may ask for missing in
 
 ## Structure your request
 
-The SOURCE AO Smart RFQ flow supports up to 20 product lines in one request, including quantities, specifications and delivery conditions. [Open the English Smart RFQ form](https://comercialhmatiasps.com/rfq-en.html).
+The SOURCE AO Smart RFQ flow supports up to 20 product lines in one request, including quantities, specifications and delivery conditions. [Open the English SOURCE AO Smart RFQ form](/en/source-ao/smart-rfq/).
