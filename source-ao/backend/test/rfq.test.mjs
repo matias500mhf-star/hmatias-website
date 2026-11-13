@@ -41,6 +41,13 @@ test('RFQ validates catalog identity, strict quantities, contact, consent and da
 });
 
 test('every customer-visible RFQ select option satisfies the shared API contract',()=>{
+  const publicPage=readFileSync(new URL('../../rfq.html',import.meta.url),'utf8');
+  const publicScript=readFileSync(new URL('../../rfq.js',import.meta.url),'utf8');
+  assert.ok(publicPage.includes('família de fornecimento'),'RFQ must describe catalogue entries as supply families');
+  assert.ok(publicPage.includes('artigo exato'),'RFQ must ask for the exact item specification');
+  assert.ok(publicScript.includes('Famílias de fornecimento disponíveis'),'catalogue notice must not imply generic entries are exact products');
+  assert.ok(publicScript.includes('Artigo / material / serviço'),'the required description must refer to the requested item');
+
   const source=readFileSync(new URL('../../rfq.js',import.meta.url),'utf8');
   const review=readFileSync(new URL('../../requests.js',import.meta.url),'utf8');
   const input=rfqFixture();
