@@ -24,6 +24,8 @@ const partnerForm=read('source-ao/partner-application.html');
 const partnerApi=read('source-ao/backend/src/partner-applications.js');
 assert.ok(source.includes('O SOURCE AO organiza os requisitos; a equipa HMATIAS valida potenciais fornecedores, disponibilidade, preço e condições antes de apresentar uma cotação.'));
 assert.ok(source.includes('A pesquisa pública é uma referência, não uma confirmação de fornecimento.'));
+assert.ok(!source.includes('formol 37% 1L urgente'),'Do not use an unreviewed regulated chemical as a public example search.');
+assert.ok(!source.includes('químicos · embalagem · componentes'),'Public Source AO category copy must not imply a verified chemical catalogue.');
 assert.ok(sourceJs.includes("publicSearch:'Abrir pesquisa pública (Google)'"));
 assert.ok(sourceJs.includes("publicSearch:'Open public search (Google)'"));
 assert.ok(!source.includes('<strong data-i18n="cap2t">Supplier Discovery</strong>'));
