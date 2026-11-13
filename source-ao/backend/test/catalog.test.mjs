@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {listPublicCatalog,listAdminCatalog,updateCatalogItem} from '../src/catalog.js';
+import core from '../src/index.js';
 
 function databaseMock({items=[],item=null}={}){
   return {
@@ -78,4 +79,21 @@ test('excluded item can never be published even by an administrator',async()=>{
 
   assert.equal(response.status,400);
   assert.equal(body.error.code,'item_not_publishable');
+});
+
+test('catalog editing preflight explicitly allows the PATCH method',async()=>{
+  const env={PUBLIC_ORIGIN:'https://preview.example'};
+  const response=await core.fetch(new Request('https://api.example/api/admin/catalog/items/item-a',{
+    method:'OPTIONS',
+    headers:{
+      origin:'https://preview.example',
+      'access-control-request-method':'PATCH',
+      'access-control-request-headers':'authorization,content-type'
+    }
+  }),env);
+
+  assert.equal(response.status,204);
+  assert.equal(response.headers.get('access-control-allow-origin'),'https://preview.example');
+  assert.match(response.headers.get('access-control-allow-methods')||'',/PATCH/);
+  assert.match(response.headers.get('access-control-allow-headers')||'',/authorization/i);
 });
