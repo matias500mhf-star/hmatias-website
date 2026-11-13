@@ -5,6 +5,7 @@ const PARTNER_TYPES=new Set(['supplier','subcontractor','service_provider','tech
 const COUNTRIES=new Set(['AO','NA','ZA']);
 const STATUSES=new Set(['pending_review','under_review','accepted','rejected']);
 const enc=new TextEncoder();
+const PRIVACY_NOTICE_VERSION='source-ao-partner-privacy-2026-11';
 
 const headers=env=>({
   'content-type':'application/json; charset=utf-8',
@@ -48,7 +49,7 @@ const contactHint=value=>{
 };
 
 function validate(input={}){
-  let companyName,country,locality,website,type,registration,contactName,role,email,whatsapp,note,portfolio;
+  let companyName,country,locality,website,type,registration,contactName,role,email,whatsapp,note,portfolio,privacyConsent;
   try{
     companyName=clean(input.company_name,220);
     country=clean(input.country_code,2).toUpperCase()||'AO';
@@ -62,6 +63,7 @@ function validate(input={}){
     whatsapp=clean(input.whatsapp,80);
     note=clean(input.note,1600);
     portfolio=clean(input.portfolio_url,600);
+    privacyConsent=input.privacy_consent===true;
   }catch{return {ok:false,code:'field_too_long'}}
   if(companyName.length<2)return {ok:false,code:'company_required'};
   if(!COUNTRIES.has(country))return {ok:false,code:'country_invalid'};
@@ -77,9 +79,10 @@ function validate(input={}){
   const capabilities=list(input.capabilities,30,100);
   const sectors=list(input.sectors,20,100);
   if(!capabilities.length)return {ok:false,code:'capabilities_required'};
+  if(!privacyConsent)return {ok:false,code:'privacy_consent_required'};
   return {ok:true,value:{
     companyName,country,locality,website:web,type,registration,contactName,role,email,whatsapp,note,
-    portfolio:port,capabilities,sectors
+    portfolio:port,capabilities,sectors,privacyConsent
   }};
 }
 
@@ -105,6 +108,7 @@ export async function createPartnerApplication(request,env){
       website_invalid:'Website must be a valid HTTP/HTTPS URL.',
       portfolio_invalid:'Portfolio/reference URL must be a valid HTTP/HTTPS URL.',
       capabilities_required:'Select at least one business capability.',
+      privacy_consent_required:'Privacy consent is required.'
       field_too_long:'One or more fields exceed the allowed length.'
     };
     return fail(env,400,valid.code,messages[valid.code]||'Invalid partner application.');
@@ -134,11 +138,11 @@ export async function createPartnerApplication(request,env){
   await env.SOURCE_AO_DB.prepare(`
     INSERT INTO partner_applications(
       id,reference,company_name,normalized_name,country_code,locality,website,partner_type,
-      capabilities_json,sectors_json,private_profile_ciphertext,contact_hint,dedupe_key,status
-    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,'pending_review')
+      capabilities_json,sectors_json,private_profile_ciphertext,contact_hint,dedupe_key,privacy_consent_at,privacy_notice_version,status
+    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,'pending_review')
   `).bind(
     applicationId,ref,v.companyName,normalized,v.country,v.locality,v.website,v.type,
-    JSON.stringify(v.capabilities),JSON.stringify(v.sectors),privateProfile,hint,dedupeKey
+    JSON.stringify(v.capabilities),JSON.stringify(v.sectors),privateProfile,hint,dedupeKey,PRIVACY_NOTICE_VERSION
   ).run();
 
   return json(env,{ok:true,reference:ref,status:'pending_review'},201);
