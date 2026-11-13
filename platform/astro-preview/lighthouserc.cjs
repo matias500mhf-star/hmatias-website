@@ -10,6 +10,7 @@ module.exports = {
         "http://127.0.0.1:4321/credibilidade/",
         "http://127.0.0.1:4321/blog/como-preparar-um-pedido-de-cotacao/",
         "http://127.0.0.1:4321/blog/caso-pratico-intervencao-cobertura-industrial/",
+        "http://127.0.0.1:4321/blog/caso-pratico-comparacao-tres-propostas-fornecimento/",
         "http://127.0.0.1:4321/source-ao/",
         "http://127.0.0.1:4321/coberturas-industriais/",
         "http://127.0.0.1:4321/limpeza-pos-obra/",
