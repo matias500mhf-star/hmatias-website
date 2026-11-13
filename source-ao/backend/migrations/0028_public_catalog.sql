@@ -6,5 +6,8 @@ ALTER TABLE items ADD COLUMN name_pt TEXT;
 ALTER TABLE items ADD COLUMN keywords_json TEXT NOT NULL DEFAULT '[]';
 ALTER TABLE items ADD COLUMN public_visible INTEGER NOT NULL DEFAULT 0;
 
+UPDATE items SET public_visible=1 WHERE id<>'item-formaldehyde';
+UPDATE items SET public_visible=0 WHERE id='item-formaldehyde';
+
 CREATE INDEX IF NOT EXISTS idx_items_public_catalog
   ON items(public_visible, category, name);
