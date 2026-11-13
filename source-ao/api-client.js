@@ -43,5 +43,9 @@
     return request('/health');
   }
 
-  window.SourceAOAPI=Object.freeze({isConfigured,search,searchIntelligence,procurementMission,opportunities,health});
+  async function automationStatus(){
+    return request('/api/automation/status',8000);
+  }
+
+  window.SourceAOAPI=Object.freeze({isConfigured,search,searchIntelligence,procurementMission,opportunities,health,automationStatus});
 })();
