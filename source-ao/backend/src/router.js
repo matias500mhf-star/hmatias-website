@@ -8,6 +8,7 @@ import {
 } from './sourcing.js';
 import {enforceRateLimit,hardenResponse,safeRequestLog} from './security.js';
 import {readinessResponse} from './health.js';
+import {automationStatusResponse} from './automation-status.js';
 import {runMaintenance} from './maintenance.js';
 import {sendPendingIntakeAlerts,intakeAlertStatus} from './intake-alerts.js';
 import {websiteLeadDesk} from './website-lead-desk.js';
@@ -76,6 +77,8 @@ export default {
           response=collectorResponse;
         }else if(request.method==='GET' && url.pathname==='/ready'){
           response=await readinessResponse(env);
+        }else if(request.method==='GET' && url.pathname==='/api/automation/status'){
+          response=await automationStatusResponse(env);
         }else if(request.method==='GET' && url.pathname==='/internal/website-leads'){
           response=websiteLeadDesk();
         }else if(request.method==='GET' && url.pathname==='/api/admin/intake-alerts/status'){
