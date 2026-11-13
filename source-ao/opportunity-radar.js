@@ -7,7 +7,7 @@
   let query='';
   let market='AO';
   let opportunities=[];
-  let lang='pt';
+  let lang=document.documentElement.lang==='en'?'en':'pt';
   let localById=new Map();
   let syncState='idle';
   let lastSyncAt=null;
@@ -279,7 +279,29 @@
   }
 
   function requestHref(o){
-    const params=new URLSearchParams({request:o.title||'',ref:o.reference||'',location:o.location||'Angola'});
+    const tags=areaTags(o);
+    const category=tags.includes('construction')?'construction'
+      :tags.includes('facilities')?'cleaning-facilities'
+      :tags.includes('supply')?'industrial-supply'
+      :tags.includes('electrical-hvac')?'hvac-electrical'
+      :tags.includes('subcontracting')?'services-contractors':'';
+    const context=[
+      o.reference?'Referência: '+o.reference:'',
+      o.source_url?'Fonte pública: '+o.source_url:'',
+      o.deadline?'Prazo indicado: '+fmt(o.deadline):''
+    ].filter(Boolean).join(' | ');
+    const params=new URLSearchParams({
+      request:(o.title||'').slice(0,200),
+      location:(o.location||'Angola').slice(0,100),
+      specification:context.slice(0,600)
+    });
+    if(category)params.set('category',category);
+    const preview=Boolean(document.querySelector('[data-radar-preview]'));
+    if(preview){
+      const path=lang==='en'?'/en/source-ao/smart-rfq/':'/source-ao/smart-rfq/';
+      return path+'?'+params.toString();
+    }
+    params.set('ref',o.reference||'');
     return 'index.html?'+params.toString()+'#request';
   }
 
@@ -304,6 +326,12 @@
       if(value)node.setAttribute('placeholder',value);
     });
     $('#langToggle').textContent=lang==='pt'?'EN':'PT';
+    const home=lang==='en'?'/en/source-ao/':'/source-ao/';
+    const rfq=lang==='en'?'/en/source-ao/smart-rfq/':'/source-ao/smart-rfq/';
+    const partners=lang==='en'?'/en/source-ao/partners/':'/source-ao/parceiros/';
+    ['#radarHomeLink','#radarBrandLink','#radarBackLink','#radarFooterHomeLink'].forEach(id=>{const node=$(id);if(node)node.href=home;});
+    const rfqLink=$('#radarRfqLink');if(rfqLink)rfqLink.href=rfq;
+    const partnerLink=$('#radarPartnerLink');if(partnerLink)partnerLink.href=partners;
     render();
     updateSyncUI();
   }
