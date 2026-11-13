@@ -71,6 +71,7 @@ jobs:
       - name: Validate frontend scripts syntax
         run: |
           node --check source-ao/data-engine.js
+          grep -q "catalog:'data/public-catalog.json'" source-ao/data-engine.js
           node --check source-ao/sourceao.js
           node --check source-ao/verified-results.js
           node --check source-ao/runtime-config.js
