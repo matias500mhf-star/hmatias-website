@@ -1,104 +1,102 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-test.describe("HMATIAS Smart RFQ", () => {
-  test("Portuguese request builder prepares a local brief and enables manual handoff", async ({ page }) => {
+test.describe("SOURCE AO Smart RFQ", () => {
+  test("Portuguese form collects a multi-item request for review", async ({ page }) => {
     await page.goto("/source-ao/smart-rfq/");
 
-    await expect(page).toHaveTitle(/Smart RFQ/);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Transforme a necessidade num pedido claro/);
-    await expect(page.locator("#smartRfqForm")).toBeVisible();
-    await expect(page.locator("#rfqEmailSend")).toHaveAttribute("aria-disabled", "true");
-    await expect(page.locator("#rfqWhatsapp")).toHaveAttribute("aria-disabled", "true");
+    await expect(page).toHaveTitle(/SOURCE AO/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("O que precisa de encontrar?");
+    await expect(page.locator("#rfqForm")).toBeVisible();
+    await expect(page.locator(".source-rfq-stage-note")).toContainText("Pré-visualização isolada");
+    await expect(page.locator(".rfq-item")).toHaveCount(1);
 
-    await page.locator("#rfqName").fill("Cliente de teste");
-    await page.locator("#rfqCompany").fill("Empresa de demonstração");
-    await page.locator("#rfqEmail").fill("teste@example.com");
+    const first = page.locator(".rfq-item").nth(0);
+    await first.locator(".item-category").selectOption("construction");
+    await first.locator(".item-description").fill("Chapas perfiladas para cobertura industrial");
+    await first.locator(".item-quantity").fill("50");
+    await first.locator(".item-unit").selectOption("un");
+    await first.locator(".item-specification").fill("Chapa galvanizada, perfil e espessura a confirmar.");
+
+    await page.locator("#addItem").click();
+    await expect(page.locator(".rfq-item")).toHaveCount(2);
+    const second = page.locator(".rfq-item").nth(1);
+    await second.locator(".item-category").selectOption("industrial-supply");
+    await second.locator(".item-description").fill("Luvas de protecção industrial");
+    await second.locator(".item-quantity").fill("250");
+    await second.locator(".item-unit").selectOption("par");
+    await second.locator(".item-specification").fill("Tamanho L; norma e ficha técnica a validar.");
+
+    await page.locator("#rfqNext").click();
+    await expect(page.locator('[data-step="1"]')).toBeVisible();
     await page.locator("#rfqLocation").fill("Viana, Luanda");
-    await page.locator("#rfqService").selectOption("construction");
+    await page.locator("#rfqNotes").fill("Entrega em horário laboral.");
 
-    await expect(page.locator('.rfq-context[data-service="construction"]')).toBeVisible();
-    await expect(page.locator('.rfq-context[data-service="facilities"]')).toBeHidden();
+    await page.locator("#rfqNext").click();
+    await expect(page.locator('[data-step="2"]')).toBeVisible();
+    await page.locator("#rfqName").fill("Contacto de teste");
+    await page.locator("#rfqChannel").selectOption("email");
+    await page.locator("#rfqContact").fill("teste@example.com");
+    await page.locator("#rfqConsent").check();
 
-    await page.locator("#constructionType").selectOption({ label: "Remodelação / reabilitação" });
-    await page.locator("#constructionDescription").fill("Remodelação de um escritório com cerca de 120 metros quadrados.");
-    await page.getByRole("button", { name: "Gerar briefing do pedido" }).click();
-
-    await expect(page.locator("#rfqReference")).toHaveText(/^HM-RFQ-\d{8}-[A-F0-9]{4}$/);
-    await expect(page.locator("#rfqSummary")).toContainText("Cliente de teste");
-    await expect(page.locator("#rfqSummary")).toContainText("Remodelação de um escritório");
-    await expect(page.locator("#rfqEmailSend")).toHaveAttribute("href", /^mailto:geral@comercialhmatiasps\.com\?/);
-    await expect(page.locator("#rfqWhatsapp")).toHaveAttribute("href", /^https:\/\/wa\.me\/244948806673\?text=/);
-    await expect(page.locator("#rfqEmailSend")).not.toHaveAttribute("aria-disabled", "true");
-    await expect(page.locator("#rfqWhatsapp")).not.toHaveAttribute("aria-disabled", "true");
+    await expect(page.locator("#itemCount")).toHaveText("2 artigos");
+    await expect(page.locator("#rfqReview")).toContainText("Chapas perfiladas para cobertura industrial");
+    await expect(page.locator("#rfqReview")).toContainText("Luvas de protecção industrial");
+    await expect(page.locator("#rfqReview")).toContainText("250");
+    await expect(page.locator("#rfqSubmit")).toBeVisible();
+    await expect(page.locator("#rfqResult")).toBeHidden();
   });
 
-  test("English request builder displays the same service flow and uses English output", async ({ page }) => {
+  test("English form toggles language without losing the request or using Portuguese routes", async ({ page }) => {
     await page.goto("/en/source-ao/smart-rfq/");
 
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Turn your requirement into a clear request/);
-    await expect(page.locator("#smartRfqForm")).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("What do you need to source?");
+    await expect(page.locator("#rfqForm")).toBeVisible();
+    await expect(page.locator("#sourceAoPreviewHomeLink")).toHaveAttribute("href", "/en/source-ao/");
+    await expect(page.locator("#sourceAoSupplyLink")).toHaveAttribute("href", "/en/supply/");
+    await expect(page.locator("#sourceAoPrivacyLink")).toHaveAttribute("href", "/en/privacy/");
 
-    await page.locator("#rfqName").fill("Test contact");
-    await page.locator("#rfqEmail").fill("test@example.com");
-    await page.locator("#rfqLocation").fill("Viana, Luanda");
-    await page.locator("#rfqService").selectOption("facilities");
+    const first = page.locator(".rfq-item").first();
+    await first.locator(".item-category").selectOption("cleaning-facilities");
+    await first.locator(".item-description").fill("Monthly maintenance of an office building");
+    await first.locator(".item-quantity").fill("1");
+    await first.locator(".item-unit").selectOption("serviço");
 
-    await expect(page.locator('.rfq-context[data-service="facilities"]')).toBeVisible();
-    await page.locator("#facilityType").fill("Office building");
-    await page.locator("#facilityFrequency").selectOption({ label: "Monthly" });
-    await page.locator("#facilityDescription").fill("Monthly preventive maintenance for the office building.");
-    await page.getByRole("button", { name: "Generate request brief" }).click();
+    await page.locator("#rfqLanguage").click();
+    await expect(page.locator("html")).toHaveAttribute("lang", "pt-AO");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("O que precisa de encontrar?");
+    await expect(page.locator(".item-description").first()).toHaveValue("Monthly maintenance of an office building");
+    await expect(page.locator("#sourceAoPreviewHomeLink")).toHaveAttribute("href", "/source-ao/");
+    await expect(page.locator("#sourceAoSupplyLink")).toHaveAttribute("href", "/supply/");
 
-    await expect(page.locator("#rfqSummary")).toContainText("Test contact");
-    await expect(page.locator("#rfqSummary")).toContainText("Office building");
-    await expect(page.locator("#rfqEmailSend")).toHaveAttribute("href", /^mailto:geral@comercialhmatiasps\.com\?/);
-    await expect(page.locator("#rfqWhatsapp")).toHaveAttribute("href", /^https:\/\/wa\.me\/244948806673\?text=/);
-    await expect(page.getByText(/Nothing is sent until you choose email or WhatsApp/i)).toBeVisible();
+    await page.locator("#rfqLanguage").click();
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("What do you need to source?");
+    await expect(page.locator(".item-description").first()).toHaveValue("Monthly maintenance of an office building");
+    await expect(page.locator("#sourceAoPreviewHomeLink")).toHaveAttribute("href", "/en/source-ao/");
+    await expect(page.locator("#rfqPrivacyNoticeLink")).toHaveAttribute("href", "/en/privacy/");
   });
 
-  test("Supply request keeps the selected specification and excludes inactive service fields", async ({ page }) => {
-    await page.goto("/source-ao/smart-rfq/");
-
-    await page.locator("#rfqName").fill("Contacto de teste Supply");
-    await page.locator("#rfqEmail").fill("supply-test@example.com");
-    await page.locator("#rfqLocation").fill("Viana, Luanda");
-    await page.locator("#rfqService").selectOption("supply");
-
-    await expect(page.locator('.rfq-context[data-service="supply"]')).toBeVisible();
-    await expect(page.locator('.rfq-context[data-service="construction"]')).toBeHidden();
-    await expect(page.locator('.rfq-context[data-service="facilities"]')).toBeHidden();
-
-    await page.locator("#supplyItem").fill("Luvas de proteção industrial, referência indicada pelo cliente");
-    await page.locator("#supplyQty").fill("250");
-    await page.locator("#supplySpec").fill("Tamanho L; norma e ficha técnica a validar antes da proposta.");
-    await page.locator("#constructionDescription").evaluate((field: HTMLTextAreaElement) => { field.value = "Este conteúdo não pode integrar o pedido Supply."; });
-    await page.getByRole("button", { name: "Gerar briefing do pedido" }).click();
-
-    await expect(page.locator("#rfqSummary")).toContainText("Luvas de proteção industrial");
-    await expect(page.locator("#rfqSummary")).toContainText("250");
-    await expect(page.locator("#rfqSummary")).toContainText("ficha técnica a validar");
-    await expect(page.locator("#rfqSummary")).not.toContainText("Este conteúdo não pode integrar o pedido Supply.");
-    await expect(page.locator("#rfqSummary")).toContainText("não constitui cotação");
-    await expect(page.locator("#rfqEmailSend")).toHaveAttribute("href", /^mailto:geral@comercialhmatiasps\.com\?/);
-    await expect(page.locator("#rfqWhatsapp")).toHaveAttribute("href", /^https:\/\/wa\.me\/244948806673\?text=/);
-  });
-
-  test("has no horizontal overflow on desktop and mobile viewports", async ({ page }) => {
+  test("form has no horizontal overflow in Portuguese or English", async ({ page }) => {
     for (const route of ["/source-ao/smart-rfq/", "/en/source-ao/smart-rfq/"]) {
       await page.goto(route);
-      const overflows = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
-      expect(overflows, route).toBe(false);
+      const dimensions = await page.evaluate(() => ({
+        documentWidth: document.documentElement.scrollWidth,
+        viewportWidth: document.documentElement.clientWidth,
+      }));
+      expect(dimensions.documentWidth, route).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
     }
   });
 
-  test("has no critical or serious automated accessibility violations", async ({ page }) => {
-    await page.goto("/source-ao/smart-rfq/");
-    const results = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-      .analyze();
-    const blocking = results.violations.filter(item => ["critical", "serious"].includes(item.impact || ""));
-    expect(blocking).toEqual([]);
+  test("Portuguese and English RFQ screens have no critical or serious axe violations", async ({ page }) => {
+    for (const route of ["/source-ao/smart-rfq/", "/en/source-ao/smart-rfq/"]) {
+      await page.goto(route);
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
+      const blocking = results.violations.filter(item => ["critical", "serious"].includes(item.impact || ""));
+      expect(blocking, route).toEqual([]);
+    }
   });
 });
