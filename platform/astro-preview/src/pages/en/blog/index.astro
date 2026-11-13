@@ -3,38 +3,50 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 import { getCollection } from "astro:content";
-
-const posts = (await getCollection("blog", ({ data }) => !data.draft && data.language === "en"))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = (await getCollection("blog", ({ data }) => !data.draft && data.language === "en")).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
 const featured = posts[0];
-const featuredDate = featured?.data.pubDate.toLocaleDateString("en", { day:"2-digit", month:"long", year:"numeric" });
+const featuredDate = featured?.data.pubDate.toLocaleDateString("en",{day:"2-digit",month:"long",year:"numeric"});
+const categories = [...new Set(posts.map((post)=>post.data.category))];
+const categoryGroups = categories.map((category)=>({name:category,id:"category-"+category.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""),items:posts.filter((post)=>post.data.category===category&&post.id!==featured?.id)})).filter((group)=>group.items.length>0);
 ---
-<BaseLayout title="HMATIAS Blog | Practical Sourcing Guides" description="Practical HMATIAS guides for preparing quotation requests, specifying materials and comparing supply proposals in Angola." lang="en">
-  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS PUBLICATIONS</span><span>QUOTATIONS · SPECIFICATIONS · SUPPLY</span></div>
+<BaseLayout title="HMATIAS Blog | Business Perspectives and Practical Guides" description="Technical guides, procurement insights and illustrative case studies on construction, maintenance, supply and operations in Angola." lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS PUBLICATIONS</span><span>WORKS · PROCUREMENT · OPERATIONS</span></div>
   <SiteHeader />
   <main class="editorial-page">
     <section class="editorial-hero" aria-labelledby="pages-en-blog-index-section-1-heading">
       <p class="section-kicker">HMATIAS / BLOG</p>
-      <h1 id="pages-en-blog-index-section-1-heading">Practical guides for<br /><em>sourcing and supply.</em></h1>
-      <p class="editorial-lead">Technical and commercial notes on preparing quotation requests, specifying materials and comparing supplier proposals.</p>
+      <h1 id="pages-en-blog-index-section-1-heading">Business perspectives.<br /><em>Knowledge you can apply.</em></h1>
+      <p class="editorial-lead">Technical and commercial content to support decisions, plan interventions, structure supply requests and improve operational management.</p>
     </section>
-    <section class="editorial-body" aria-labelledby="pages-en-blog-index-section-2-heading">
-      {featured ? (
-        <>
-          <div class="editorial-label">FEATURED ARTICLE · {featuredDate?.toUpperCase()}</div>
-          <article class="editorial-feature">
-            <p class="editorial-meta">{featured.data.category.toUpperCase()} · {featured.data.author.toUpperCase()}</p>
-            <h2 id="pages-en-blog-index-section-2-heading"><a href={`/en/blog/${featured.id}/`}>{featured.data.title}</a></h2>
-            <p>{featured.data.description}</p>
-            <a class="editorial-read-link" href={`/en/blog/${featured.id}/`}>Read the article <span aria-hidden="true">↗</span></a>
-          </article>
-        </>
-      ) : <p class="editorial-empty">There are no articles published in this language yet.</p>}
-
-      <div class="editorial-contact">
-        <p>For commercial enquiries or quotation requests, contact HMATIAS directly.</p>
-        <a class="button button-dark" href="/en/source-ao/smart-rfq/">Prepare a Smart RFQ <span aria-hidden="true">↗</span></a>
+    <section class="editorial-body" aria-label="Articles and topics">
+      {featured && <>
+        <div class="editorial-label">FEATURED · {featuredDate?.toUpperCase()}</div>
+        <article class="editorial-feature">
+          <p class="editorial-meta">{featured.data.contentType==="case-study"?"ILLUSTRATIVE CASE STUDY":"TECHNICAL GUIDE"} · {featured.data.category.toUpperCase()} · {featured.data.readingMinutes} MIN READ</p>
+          <h2><a href={"/en/blog/"+featured.id+"/"}>{featured.data.title}</a></h2>
+          <p>{featured.data.description}</p>
+          <a class="editorial-read-link" href={"/en/blog/"+featured.id+"/"}>Read the article <span aria-hidden="true">↗</span></a>
+        </article>
+      </>}
+      {categoryGroups.length>0 && <nav class="editorial-category-nav" aria-label="Browse by topic">
+        {categoryGroups.map((group)=><a href={"#"+group.id}>{group.name} <span>({group.items.length})</span></a>)}
+      </nav>}
+      <div class="editorial-archive">
+        {categoryGroups.map((group)=><section class="editorial-category" id={group.id} aria-labelledby={group.id+"-heading"}>
+          <div class="editorial-category-heading"><h2 id={group.id+"-heading"}>{group.name}</h2><span>{group.items.length} ARTICLE(S)</span></div>
+          <div class="editorial-card-grid">
+            {group.items.map((post)=><article class="editorial-card">
+              <p class="editorial-card-type">{post.data.contentType==="case-study"?"Illustrative case study":"Technical guide"}</p>
+              <h3><a href={"/en/blog/"+post.id+"/"}>{post.data.title}</a></h3>
+              <p class="editorial-card-description">{post.data.description}</p>
+              <div class="editorial-card-meta"><time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString("en",{day:"2-digit",month:"short",year:"numeric"})}</time><span>{post.data.readingMinutes} min read</span></div>
+              <a class="editorial-card-link" href={"/en/blog/"+post.id+"/"}>Read article <span aria-hidden="true">↗</span></a>
+            </article>)}
+          </div>
+        </section>)}
       </div>
+      <p class="editorial-archive-note">Case studies marked as illustrative explain methods and decision criteria. They do not represent HMATIAS projects, clients or commercial results.</p>
+      <div class="editorial-contact"><p>For a specific supply requirement, describe the items, quantities and delivery location in SOURCE AO.</p><a class="button button-dark" href="/en/source-ao/smart-rfq/">Prepare a Smart RFQ <span aria-hidden="true">↗</span></a></div>
     </section>
   </main>
   <SiteFooter />
