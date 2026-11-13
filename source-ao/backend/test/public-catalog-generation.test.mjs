@@ -1,0 +1,84 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { buildPublicCatalog, renderPublicCatalog } from "../../../platform/astro-preview/scripts/generate-public-catalog.mjs";
+
+test("public catalogue is an allowlisted projection and excludes the restricted chemical", () => {
+  const master = {
+    version: "1.0",
+    updated_at: "2026-11-13T10:00:00Z",
+    items: [
+      {
+        id: "item-public",
+        name: "Construction materials",
+        aliases: ["cimento"],
+        category: "construction",
+        subcategory: "general",
+        specification: "Exact brand and stock require confirmation.",
+        keywords: ["obra"],
+        name_pt: "Materiais de construção"
+      },
+      {
+        id: "item-formaldehyde",
+        name: "Formaldehyde",
+        aliases: ["formol"],
+        category: "industrial-supply",
+        subcategory: "chemicals",
+        specification: "Restricted entry.",
+        keywords: ["chemical"],
+        name_pt: "Formaldeído"
+      }
+    ]
+  };
+
+  const output = buildPublicCatalog(master);
+  assert.equal(output.items.length, 1);
+  assert.equal(output.items[0].id, "item-public");
+  assert.deepEqual(Object.keys(output.items[0]), [
+    "id", "name", "aliases", "category", "subcategory", "specification", "keywords", "name_pt"
+  ]);
+  assert.equal(JSON.stringify(output).includes("item-formaldehyde"), false);
+  assert.equal(JSON.stringify(output).includes("formol"), false);
+});
+
+test("public catalogue fails closed when a source item adds an unreviewed field", () => {
+  const master = {
+    version: "1.0",
+    updated_at: "2026-11-13T10:00:00Z",
+    items: [{
+      id: "item-a",
+      name: "Item A",
+      category: "other",
+      aliases: [],
+      keywords: [],
+      specification: "Specification",
+      internal_notes: "must never be exported"
+    }]
+  };
+
+  assert.throws(() => buildPublicCatalog(master), /not approved for public export: internal_notes/);
+});
+
+test("public catalogue rejects duplicate ids and incomplete public items", () => {
+  const base = {
+    version: "1.0",
+    updated_at: "2026-11-13T10:00:00Z",
+    items: [{
+      id: "item-a",
+      name: "Item A",
+      category: "other",
+      aliases: [],
+      keywords: [],
+      specification: "Specification"
+    }]
+  };
+  assert.doesNotThrow(() => buildPublicCatalog(base));
+  assert.throws(() => buildPublicCatalog({...base, items:[...base.items, ...base.items]}), /Duplicate catalogue item id/);
+  assert.throws(() => buildPublicCatalog({...base, items:[{...base.items[0], specification:""}]}), /has no specification/);
+});
+
+test("committed public catalogue matches the allowlisted master projection", () => {
+  const master = JSON.parse(readFileSync(new URL("../../data/catalog.json", import.meta.url), "utf8"));
+  const committed = readFileSync(new URL("../../data/public-catalog.json", import.meta.url), "utf8");
+  assert.equal(renderPublicCatalog(master), committed);
+});
