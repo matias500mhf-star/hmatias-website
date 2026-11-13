@@ -215,28 +215,12 @@
       "notes": "Termos EN recriados; validação jurídica antes de substituir publisher."
     },
     {
-      "source_url": "/source-ao/index.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
-      "in_legacy_sitemap": true,
-      "preserve_until_approved": true,
-      "notes": "SOURCE AO operacional permanece separado; arquitetura pública ainda não aprovada."
-    },
-    {
       "source_url": "/source-ao/opportunity-radar.html",
       "preview_target": null,
       "treatment": "preserve_official",
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
       "notes": "Radar de oportunidades permanece no publisher oficial até decisão de indexação e migração."
-    },
-    {
-      "source_url": "/source-ao/rfq.html",
-      "preview_target": null,
-      "treatment": "preserve_official",
-      "in_legacy_sitemap": true,
-      "preserve_until_approved": true,
-      "notes": "RFQ SOURCE AO multiartigo, registo e acompanhamento continuam operacionais no publisher oficial."
     },
     {
       "source_url": "/source-ao/privacy.html",
@@ -341,6 +325,22 @@
       "in_legacy_sitemap": false,
       "preserve_until_approved": true,
       "notes": "Página adicional no repositório; confirmar função, tráfego e equivalência."
+    },
+    {
+      "source_url": "/source-ao/index.html",
+      "preview_target": "/source-ao/",
+      "treatment": "preview_route_pending_operational_validation",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página SOURCE AO recriada em Astro; manter URL oficial até validação operacional, Search Console e aprovação."
+    },
+    {
+      "source_url": "/source-ao/rfq.html",
+      "preview_target": "/source-ao/smart-rfq/",
+      "treatment": "preview_route_with_staging_intake_only",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "RFQ multiartigo recriado no Astro com o contrato SOURCE AO; intake no preview só pode apontar para API de staging, nunca produção."
     }
   ],
   "launch_gates": [

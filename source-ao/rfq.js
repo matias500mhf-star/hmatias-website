@@ -2,7 +2,7 @@ import {MAX_ITEMS,UNITS,CATEGORY_LABELS,categoryLabel,itemLabel,validateRfq,vali
 
 const $=selector=>document.querySelector(selector);
 const params=new URLSearchParams(location.search);
-let en=params.get('lang')==='en';
+let en=params.get('lang')==='en'||(document.documentElement.lang||'').toLowerCase().startsWith('en');
 let catalog={items:[]};
 const PUBLIC_EXCLUDED_CATALOG_ITEMS=new Set(['item-formaldehyde']);
 let step=0;
@@ -239,7 +239,7 @@ showStep(0,false);
 const controller=new AbortController();
 const timeout=setTimeout(()=>controller.abort(),8000);
 try{
-  const response=await fetch('data/catalog.json',{cache:'no-store',signal:controller.signal});
+  const response=await fetch('/source-ao/data/catalog.json',{cache:'no-store',signal:controller.signal});
   if(!response.ok)throw new Error('catalog');
   const data=await response.json();
   if(!Array.isArray(data.items))throw new Error('catalog');
