@@ -278,10 +278,15 @@
     if (!productName) return;
     addToCart(productName);
     const previous = button.textContent;
+    const previousLabel = button.getAttribute('aria-label');
     button.textContent = copy.added;
+    // Keep the accessible name aligned with the visible confirmation text.
+    button.setAttribute('aria-label', `${copy.added}: ${productName}`);
     button.setAttribute('aria-live', 'polite');
     setTimeout(() => {
       button.textContent = previous;
+      if (previousLabel) button.setAttribute('aria-label', previousLabel);
+      else button.removeAttribute('aria-label');
       button.removeAttribute('aria-live');
     }, 1200);
   };
