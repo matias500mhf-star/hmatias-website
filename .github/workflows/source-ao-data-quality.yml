@@ -216,6 +216,7 @@ jobs:
           node --check source-ao/backend/src/sourcing.js
           node --check source-ao/backend/src/security.js
           node --check source-ao/backend/src/health.js
+          node --check source-ao/backend/src/automation-status.js
           node --check source-ao/backend/src/maintenance.js
           node --check source-ao/backend/src/opportunity-pipeline.js
           node --check source-ao/backend/src/partner-network.js
