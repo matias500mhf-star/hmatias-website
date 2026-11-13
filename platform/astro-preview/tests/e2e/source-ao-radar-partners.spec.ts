@@ -29,6 +29,11 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
       await expect(page.locator("#syncStatus")).toContainText(route.unavailable);
       await page.locator("#refreshRadar").click();
       await expect(page.locator("#syncStatus")).toContainText(route.unavailable);
+      await page.locator("#langToggle").click();
+      await expect(page.locator("html")).toHaveAttribute("lang", route.lang === "en" ? "pt-AO" : "en");
+      await expect(page.locator("#radarHomeLink")).toHaveAttribute("href", route.lang === "en" ? "/source-ao/" : "/en/source-ao/");
+      await expect(page.locator("#radarRfqLink")).toHaveAttribute("href", route.lang === "en" ? "/source-ao/smart-rfq/" : "/en/source-ao/smart-rfq/");
+      await expect(page.locator("#radarPartnerLink")).toHaveAttribute("href", route.lang === "en" ? "/source-ao/parceiros/" : "/en/source-ao/partners/");
       expect(errors).toEqual([]);
     });
   }
