@@ -103,22 +103,30 @@ test("all English routes expose matching language, brand descriptions and recipr
   for (const [englishRoute, portugueseRoute] of routes) {
     await page.goto(englishRoute);
     await expect(page.locator("html"), englishRoute).toHaveAttribute("lang", "en");
-    await expect(page.locator(".brand img"), englishRoute).toHaveAttribute(
-      "alt",
-      "HMATIAS — Construction, Facilities, Supply and Business Services",
-    );
-    await expect(page.locator(".footer-logo img"), englishRoute).toHaveAttribute(
-      "alt",
-      "HMATIAS — Construction, Facilities, Supply and Business Services",
-    );
     await expect(page.locator('meta[property="og:image:alt"]'), englishRoute).toHaveAttribute(
       "content",
       "HMATIAS — Construction, Facilities, Supply and Business Services",
     );
-    await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("href", portugueseRoute);
-    await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("lang", "pt-AO");
-    await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("aria-label", "PT — Switch to Portuguese");
-    await expect(page.locator(".footer-legal-id"), englishRoute).toContainText("Tax ID");
-    await expect(page.locator(".footer-legal-id"), englishRoute).toContainText("Commercial Registration");
+
+    if (englishRoute === "/en/source-ao/smart-rfq/") {
+      await expect(page.locator(".rfq-header img"), englishRoute).toHaveAttribute("alt", "SOURCE AO by HMATIAS");
+      await expect(page.locator("#rfqLanguage"), englishRoute).toBeVisible();
+      await expect(page.locator("#sourceAoPreviewHomeLink"), englishRoute).toHaveAttribute("href", "/en/source-ao/");
+      await expect(page.locator("#sourceAoSupplyLink"), englishRoute).toHaveAttribute("href", "/en/supply/");
+    } else {
+      await expect(page.locator(".brand img"), englishRoute).toHaveAttribute(
+        "alt",
+        "HMATIAS — Construction, Facilities, Supply and Business Services",
+      );
+      await expect(page.locator(".footer-logo img"), englishRoute).toHaveAttribute(
+        "alt",
+        "HMATIAS — Construction, Facilities, Supply and Business Services",
+      );
+      await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("href", portugueseRoute);
+      await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("lang", "pt-AO");
+      await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("aria-label", "PT — Switch to Portuguese");
+      await expect(page.locator(".footer-legal-id"), englishRoute).toContainText("Tax ID");
+      await expect(page.locator(".footer-legal-id"), englishRoute).toContainText("Commercial Registration");
+    }
   }
 });
