@@ -6,6 +6,8 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const masterPath = resolve(scriptDir, "../../../source-ao/data/catalog.json");
 const publicPath = resolve(scriptDir, "../../../source-ao/data/public-catalog.json");
 const EXCLUDED_IDS = new Set(["item-formaldehyde"]);
+const PUBLIC_RULE = "Only curated public supply families are exposed. Prices, suppliers, stock, availability and internal commercial data are not included.";
+const ALLOWED_MASTER_KEYS = ["version", "updated_at", "items", "taxonomy"];
 const ALLOWED_ITEM_KEYS = [
   "id",
   "name",
@@ -16,11 +18,26 @@ const ALLOWED_ITEM_KEYS = [
   "keywords",
   "name_pt"
 ];
+const ALLOWED_TAXONOMY_KEYS = ["id", "name_en", "name_pt", "aliases"];
+
+function assertOnlyKeys(record, allowed, context) {
+  const unsupported = Object.keys(record).filter((key) => !allowed.includes(key));
+  if (unsupported.length) {
+    throw new Error(context + " contains fields not approved for public export: " + unsupported.join(", "));
+  }
+}
+
+function assertStringArray(value, context) {
+  if (!Array.isArray(value) || value.some((entry) => typeof entry !== "string" || !entry.trim())) {
+    throw new Error(context + " must be an array of non-empty strings.");
+  }
+}
 
 export function buildPublicCatalog(master) {
   if (!master || typeof master !== "object" || Array.isArray(master)) {
     throw new Error("Master catalogue must be an object.");
   }
+  assertOnlyKeys(master, ALLOWED_MASTER_KEYS, "Master catalogue");
   if (typeof master.version !== "string" || !master.version.trim()) {
     throw new Error("Master catalogue version is required.");
   }
@@ -30,6 +47,9 @@ export function buildPublicCatalog(master) {
   if (!Array.isArray(master.items)) {
     throw new Error("Master catalogue items must be an array.");
   }
+  if (!Array.isArray(master.taxonomy)) {
+    throw new Error("Master catalogue taxonomy must be an array.");
+  }
 
   const seen = new Set();
   const items = [];
@@ -38,17 +58,14 @@ export function buildPublicCatalog(master) {
       throw new Error("Every catalogue item must be an object.");
     }
 
-    const unsupported = Object.keys(item).filter((key) => !ALLOWED_ITEM_KEYS.includes(key));
-    if (unsupported.length) {
-      throw new Error("Catalogue item contains fields not approved for public export: " + unsupported.join(", "));
-    }
+    assertOnlyKeys(item, ALLOWED_ITEM_KEYS, "Catalogue item");
     if (typeof item.id !== "string" || !item.id.trim()) {
       throw new Error("Every catalogue item must have a stable id.");
     }
     if (seen.has(item.id)) throw new Error("Duplicate catalogue item id: " + item.id);
     seen.add(item.id);
-
     if (EXCLUDED_IDS.has(item.id)) continue;
+
     if (typeof item.name !== "string" || !item.name.trim()) {
       throw new Error("Catalogue item " + item.id + " has no public name.");
     }
@@ -58,11 +75,8 @@ export function buildPublicCatalog(master) {
     if (typeof item.specification !== "string" || !item.specification.trim()) {
       throw new Error("Catalogue item " + item.id + " has no specification.");
     }
-    for (const key of ["aliases", "keywords"]) {
-      if (!Array.isArray(item[key]) || item[key].some((value) => typeof value !== "string")) {
-        throw new Error("Catalogue item " + item.id + " has invalid " + key + ".");
-      }
-    }
+    assertStringArray(item.aliases, "Catalogue item " + item.id + " aliases");
+    assertStringArray(item.keywords, "Catalogue item " + item.id + " keywords");
     if (item.name_pt != null && typeof item.name_pt !== "string") {
       throw new Error("Catalogue item " + item.id + " has invalid Portuguese name.");
     }
@@ -70,16 +84,34 @@ export function buildPublicCatalog(master) {
       throw new Error("Catalogue item " + item.id + " has invalid subcategory.");
     }
 
-    // Allowlist projection: any newly added field requires an explicit review above.
+    // Allowlist projection: any newly added field requires explicit review above.
     items.push(Object.fromEntries(
       ALLOWED_ITEM_KEYS.filter((key) => Object.hasOwn(item, key)).map((key) => [key, item[key]])
     ));
   }
 
+  const taxonomy = master.taxonomy.map((entry, index) => {
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
+      throw new Error("Catalogue taxonomy entry " + index + " must be an object.");
+    }
+    assertOnlyKeys(entry, ALLOWED_TAXONOMY_KEYS, "Catalogue taxonomy entry");
+    for (const key of ["id", "name_en", "name_pt"]) {
+      if (typeof entry[key] !== "string" || !entry[key].trim()) {
+        throw new Error("Catalogue taxonomy entry " + index + " is missing " + key + ".");
+      }
+    }
+    assertStringArray(entry.aliases, "Catalogue taxonomy entry " + index + " aliases");
+    return Object.fromEntries(
+      ALLOWED_TAXONOMY_KEYS.filter((key) => Object.hasOwn(entry, key)).map((key) => [key, entry[key]])
+    );
+  });
+
   return {
     version: master.version,
     updated_at: master.updated_at,
-    items
+    items,
+    taxonomy,
+    public_rule: PUBLIC_RULE
   };
 }
 
