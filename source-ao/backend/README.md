@@ -162,3 +162,15 @@ The production deploy job also runs read-only health, private-outbox and search 
 ## Autonomous website updates and monitoring
 
 See [AUTOMATION.md](./AUTOMATION.md) for the scheduled Worker jobs, five-minute Radar refresh, public automation-health endpoint, and the boundaries between automated data refresh and human-approved publication.
+
+
+## Live public catalog
+
+- `GET /api/catalog` returns only D1 catalog entries whose `public_visible` flag is enabled. The response is a safe projection with bilingual names, category, specification, unit, aliases and keywords; it excludes prices, supplier data, availability and internal notes.
+- `GET /api/admin/catalog/items` and `PATCH /api/admin/catalog/items/:id` require `ADMIN_API_TOKEN`. The SOURCE AO Ops page provides the editor after the admin session is established.
+- `POST /api/admin/items` creates an admin-managed catalog item. New items are private unless `public_visible: true` is explicitly supplied.
+- RFQ form and server validation use the same public catalog. The form keeps a static fallback if the API is unavailable; the backend fails closed if it cannot load the published catalog.
+- Admin-managed catalog values and visibility survive subsequent seed deployments. Seed-managed values continue to receive reviewed updates from the versioned catalogue.
+- The excluded `item-formaldehyde` item cannot be published. No pricing, stock, supplier identity, contacts, delivery promises or margins are part of the public catalog contract.
+
+See [AUTOMATION.md](./AUTOMATION.md) for the update model and publication boundaries.
