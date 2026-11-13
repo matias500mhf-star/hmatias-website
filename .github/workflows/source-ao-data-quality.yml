@@ -13,6 +13,8 @@ on:
       - 'source-ao/*.css'
       - 'source-ao/data-contract.json'
       - 'source-ao/validate-data.mjs'
+      - 'platform/astro-preview/scripts/generate-public-catalog.mjs'
+      - 'source-ao/backend/test/public-catalog-generation.test.mjs'
       - '.github/workflows/source-ao-staging-deploy.yml'
       - '.github/workflows/source-ao-data-quality.yml'
 
@@ -36,6 +38,8 @@ jobs:
         run: python3 source-ao/backend/scripts/test-website-leads-migration.py
       - name: Validate synthetic RFQ alert isolation
         run: python3 source-ao/backend/scripts/test-synthetic-alert-migration.py
+      - name: Regenerate sanitised public catalogue from canonical data
+        run: node platform/astro-preview/scripts/generate-public-catalog.mjs
       - name: Validate sanitised static public catalog parity
         shell: bash
         run: |
@@ -252,6 +256,7 @@ jobs:
           node --check source-ao/backend/src/security.js
           node --check source-ao/backend/src/health.js
           node --check source-ao/backend/src/catalog.js
+          node --check platform/astro-preview/scripts/generate-public-catalog.mjs
           node --check source-ao/backend/src/automation-status.js
           node --check source-ao/backend/src/maintenance.js
           node --check source-ao/backend/src/opportunity-pipeline.js
