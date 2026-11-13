@@ -11,6 +11,7 @@
   let localById=new Map();
   let syncState='idle';
   let lastSyncAt=null;
+  let backendAutomation=null;
   let refreshing=false;
   const AUTO_REFRESH_MS=5*60*1000;
 
@@ -140,11 +141,30 @@
       if(liveLabel)liveLabel.textContent=t('liveUpdating');
     }
 
+    if(backendAutomation?.ok){
+      const checked=backendAutomation.sources?.last_success_at;
+      const automationLabel=backendAutomation.status==='operational'
+        ?(lang==='pt'?'Automação activa':'Automation active')
+        :(lang==='pt'?'Automação a verificar':'Automation needs attention');
+      const checkedLabel=checked?(lang==='pt'?'última verificação':'last check')+' '+clock(checked):'';
+      meta.textContent=[meta.textContent,automationLabel,checkedLabel].filter(Boolean).join(' · ');
+    }
+
     if(button){
       button.disabled=refreshing;
       button.setAttribute('aria-busy',refreshing?'true':'false');
     }
     if(buttonLabel)buttonLabel.textContent=refreshing?t('refreshing'):t('refreshNow');
+  }
+
+  async function refreshAutomationStatus(){
+    if(!window.SourceAOAPI?.isConfigured?.()||!window.SourceAOAPI?.automationStatus)return;
+    try{
+      backendAutomation=await window.SourceAOAPI.automationStatus();
+    }catch{
+      backendAutomation=null;
+    }
+    updateSyncUI();
   }
 
   async function refreshLiveData(){
@@ -435,8 +455,9 @@
     syncState='syncing';
     applyLanguage();
     await refreshLiveData();
+    await refreshAutomationStatus();
 
-    $$('[data-market]').forEach(btn=>btn.addEventListener('click',()=>{
+    $('[data-market]').forEach(btn=>btn.addEventListener('click',()=>{
       market=btn.dataset.market;
       $$('[data-market]').forEach(b=>b.classList.toggle('active',b===btn));
       render();
@@ -459,12 +480,18 @@
     $('#refreshRadar')?.addEventListener('click',()=>refreshLiveData());
 
     setInterval(()=>{
-      if(document.visibilityState==='visible')refreshLiveData();
+      if(document.visibilityState==='visible'){
+        refreshLiveData();
+        refreshAutomationStatus();
+      }
     },AUTO_REFRESH_MS);
 
     document.addEventListener('visibilitychange',()=>{
       if(document.visibilityState!=='visible')return;
-      if(!lastSyncAt||Date.now()-lastSyncAt.getTime()>=AUTO_REFRESH_MS)refreshLiveData();
+      if(!lastSyncAt||Date.now()-lastSyncAt.getTime()>=AUTO_REFRESH_MS){
+        refreshLiveData();
+        refreshAutomationStatus();
+      }
     });
   });
 })();
