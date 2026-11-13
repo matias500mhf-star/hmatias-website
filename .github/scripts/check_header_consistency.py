@@ -20,7 +20,7 @@ for page in sorted(ROOT.glob("*.html")):
         problems.append(f"{page.name}: missing shared navigation/action structure")
         continue
     labels = [re.sub(r"<[^>]+>", "", item).strip() for item in re.findall(r"<a\b[^>]*>(.*?)</a>", nav.group(), re.S)]
-    expected_labels = ["Home", "About us", "Services", "Projects"] if re.search(r'<html\b[^>]*lang="en"', html) else ["Início", "Sobre nós", "Serviços", "Projetos"]
+    expected_labels = ["Home", "Company", "Services", "Projects", "Catalogues", "Contact"] if re.search(r'<html\b[^>]*lang="en"', html) else ["Início", "Empresa", "Serviços", "Projectos", "Catálogos", "Contactos"]
     if labels != expected_labels:
         problems.append(f"{page.name}: inconsistent corporate navigation {labels!r}; expected {expected_labels!r}")
     switches = re.findall(r'<a\b[^>]*class="lang-switch"[^>]*>', actions.group())
@@ -36,8 +36,8 @@ for page in sorted(ROOT.glob("*.html")):
     if not re.search(r"script\.js\?v=.+", html):
         problems.append(f"{page.name}: stale mobile navigation controller")
     if page.name in ("en.html", "credibility.html", "work-catalogue.html", "karta-en.html"):
-        if 'About us' not in nav.group():
-            problems.append(f"{page.name}: mixed English About us navigation")
+        if 'Company' not in nav.group():
+            problems.append(f"{page.name}: mixed English Company navigation")
 
 if len(pages) < 22:
     problems.append(f"Expected at least 22 institutional/home pages with shared navigation, found {len(pages)}")
