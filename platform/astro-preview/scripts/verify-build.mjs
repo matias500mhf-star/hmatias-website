@@ -207,7 +207,7 @@ assert.match(radarScript, /\/en\/source-ao\/smart-rfq\//, "English Radar must pr
 const partnerScript = readFileSync(new URL("../../../source-ao/partner-application.js", import.meta.url), "utf8");
 assert.match(partnerScript, /privacy_consent:consent/, "Partner application must transmit explicit privacy consent");
 assert.match(sourceRfqScript, /apiBase\(\)\+'\/api\/catalog'/, "SOURCE AO RFQ must prefer the live catalog API when configured");
-assert.match(sourceRfqScript, /staticCatalogUrl=.*'\/source-ao\/data\/catalog\.json'/, "SOURCE AO RFQ must retain the local catalogue fallback");
+assert.match(sourceRfqScript, /staticCatalogUrl=.*'\/source-ao\/data\/public-catalog\.json'/, "SOURCE AO RFQ must retain the sanitised local catalogue fallback");
 assert.match(sourceRfqScript, /loadCatalog\(staticCatalogUrl\)/, "SOURCE AO RFQ must retry the local catalogue when the live API is unavailable");
 const previewCatalogEndpoint = readFileSync(new URL('../src/pages/api/source-ao/catalog.json.ts', import.meta.url), 'utf8');
 assert.ok(previewCatalogEndpoint.includes('public-catalog.json'), 'Astro fallback must use the sanitised public catalogue');
