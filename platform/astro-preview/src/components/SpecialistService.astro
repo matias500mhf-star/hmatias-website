@@ -225,7 +225,8 @@ const whatsappText = en
   ? "Hello HMATIAS. I would like to prepare a request for: " + item.title + " Location, scope, quantities or dimensions, access conditions and preferred timing:"
   : "Olá HMATIAS. Pretendo preparar um pedido para: " + item.title + " Localização, âmbito, quantidades ou dimensões, condições de acesso e prazo pretendido:";
 const whatsappUrl = "https://wa.me/244948806673?text=" + encodeURIComponent(whatsappText);
-const rfqUrl = smartRfq + "?service=" + item.area + "&project=" + encodeURIComponent(item.title);
+const rfqCategory = item.area === "construction" ? "construction" : item.area === "facilities" ? "cleaning-facilities" : "industrial-supply";
+const rfqUrl = smartRfq + "?category=" + encodeURIComponent(rfqCategory) + "&request=" + encodeURIComponent(item.title);
 const title = item.title + " | HMATIAS";
 ---
 <BaseLayout title={title} description={item.description} lang={lang}>
