@@ -4,7 +4,6 @@ import logo from "../../../../logo-hmatias.png";
 import { company } from "../data/site";
 const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const isEnglish = pathname.startsWith("/en/");
-const isBlogIndex = pathname === "/blog/" || pathname === "/en/blog/";
 const homeUrl = isEnglish ? "/en/" : "/";
 const links = isEnglish
   ? {
@@ -34,10 +33,6 @@ const links = isEnglish
       <p class="footer-summary">{isEnglish
         ? "Construction, Facilities, Supply and Business Services for companies and projects in Angola."
         : "Construção, Facilities, Supply e Business Services para empresas e projetos em Angola."}</p>
-      <a class="footer-platform-link" href={company.sourceAoUrl}>SOURCE AO <span>↗</span></a>
-      <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
-      <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
-      <a href={links.blog}>{isEnglish ? (isBlogIndex ? "Practical sourcing guides" : "Insights and articles") : (isBlogIndex ? "Blog · Guias práticos" : "Blog · Perspetivas empresariais")}</a>
     </div>
 
     <nav class="footer-column" aria-label={isEnglish ? "Construction services" : "Construção"}>
@@ -55,6 +50,14 @@ const links = isEnglish
       <a href={links.business}>Business Services</a>
       <a href={links.smart}>Smart RFQ</a>
       <a href={links.contact}>{isEnglish ? "Request a quotation" : "Solicitar orçamento"}</a>
+    </nav>
+
+    <nav class="footer-column footer-explore" aria-label={isEnglish ? "Explore HMATIAS" : "Explorar HMATIAS"}>
+      <h2>{isEnglish ? "Explore" : "Explorar"}</h2>
+      <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
+      <a href={company.sourceAoUrl}>SOURCE AO</a>
+      <a href={links.blog}>{isEnglish ? "Blog · Business perspectives" : "Blog · Perspetivas empresariais"}</a>
+      <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
     </nav>
 
     <section class="footer-column footer-contacts"  aria-labelledby="components-sitefooter-section-2-heading">
