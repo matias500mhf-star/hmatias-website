@@ -11,6 +11,16 @@ const partnerRoutes = [
 ];
 
 test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
+  test("SOURCE AO landing page exposes the real Radar, RFQ and partner routes", async ({ page }) => {
+    await page.goto("/source-ao/");
+    await expect(page.getByRole("link", { name: "Iniciar pedido" })).toHaveAttribute("href", "/source-ao/smart-rfq/");
+    await expect(page.getByRole("link", { name: "Consultar Radar de Oportunidades" })).toHaveAttribute("href", "/source-ao/radar/");
+    await expect(page.getByRole("link", { name: "Candidatura de parceiros" })).toHaveAttribute("href", "/source-ao/parceiros/");
+    await page.goto("/en/source-ao/");
+    await expect(page.getByRole("link", { name: "View Opportunity Radar" })).toHaveAttribute("href", "/en/source-ao/radar/");
+    await expect(page.getByRole("link", { name: "Partner application" })).toHaveAttribute("href", "/en/source-ao/partners/");
+  });
+
   for (const route of radarRoutes) {
     test(`Radar ${route.lang} is isolated, honest about live status and operational`, async ({ page }) => {
       const errors: string[] = [];
