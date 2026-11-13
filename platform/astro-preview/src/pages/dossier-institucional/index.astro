@@ -4,6 +4,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import logo from "../../../../../logo-hmatias.png";
+import coverPhoto from "../../../../../images/catalogue/pavilhoes-rurais-concluidos.webp";
 import { company } from "../../data/site";
 import { projects } from "../../data/projects";
 ---
@@ -16,6 +17,9 @@ import { projects } from "../../data/projects";
   <SiteHeader />
   <main class="dossier-page">
     <section class="dossier-cover dossier-sheet" aria-labelledby="dossier-cover-heading">
+      <figure class="cover-image">
+        <Picture src={coverPhoto} alt="Pavilhões rurais concluídos, com cobertura metálica e laterais ventiladas" widths={[720, 1080, 1440]} sizes="100vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={84} decoding="async" loading="eager" />
+      </figure>
       <div class="cover-top">
         <Image src={logo} alt="HMATIAS — Prestação de Serviços" widths={[128, 192]} sizes="120px" format="webp" quality={86} />
         <span>DOCUMENTO INSTITUCIONAL<br />EDIÇÃO 2026</span>
@@ -50,7 +54,7 @@ import { projects } from "../../data/projects";
         </div>
         <aside class="identity-panel" aria-label="Identificação da sociedade">
           <p class="panel-label">IDENTIFICAÇÃO DA SOCIEDADE</p>
-          <h3>{company.legalName}</h3>
+          <h3>HMATIAS – Prestação de Serviços, (SU), Lda.</h3>
           <dl>
             <div><dt>NIF</dt><dd>{company.taxNumber}</dd></div>
             <div><dt>Registo comercial</dt><dd>{company.commercialRegistration}</dd></div>
@@ -163,7 +167,7 @@ import { projects } from "../../data/projects";
         <p>Para pedidos de cotação, qualificação de fornecedor, parcerias ou informação institucional, utilize os canais oficiais da HMATIAS.</p>
       </div>
       <div class="contact-grid">
-        <div><span>DENOMINAÇÃO</span><strong>{company.legalName}</strong></div>
+        <div><span>DENOMINAÇÃO</span><strong>HMATIAS – Prestação de Serviços, (SU), Lda.</strong></div>
         <div><span>NIF</span><strong>{company.taxNumber}</strong></div>
         <div><span>SEDE</span><strong>{company.address}</strong></div>
         <div><span>TELEFONE</span><strong><a href={company.telephoneUri}>{company.phone}</a></strong></div>
@@ -192,8 +196,12 @@ import { projects } from "../../data/projects";
 <style>
 .dossier-page { padding:30px var(--hm-gutter) 76px; background:var(--hm-light); }
 .dossier-sheet { position:relative; max-width:1120px; margin:0 auto 22px; padding:clamp(30px,5.3vw,68px); background:var(--hm-paper); border:1px solid var(--hm-line); }
-.dossier-cover { min-height:680px; display:flex; flex-direction:column; justify-content:space-between; color:#fff; background:linear-gradient(110deg,rgba(4,33,61,.94),rgba(4,33,61,.54)),url("/images/catalogue/pavilhoes-rurais-concluidos.webp") center/cover; border:0; }
+.dossier-cover { position:relative; overflow:hidden; min-height:680px; display:flex; flex-direction:column; justify-content:space-between; color:#fff; background:var(--hm-navy); border:0; }
+.cover-image { position:absolute; inset:0; z-index:0; margin:0; }
+.cover-image img { display:block; width:100%; height:100%; object-fit:cover; }
+.cover-image:after { position:absolute; inset:0; content:""; background:linear-gradient(110deg,rgba(4,33,61,.94),rgba(4,33,61,.54)); }
 .cover-top,.cover-bottom,.sheet-head { display:flex; justify-content:space-between; align-items:center; gap:24px; }
+.cover-top,.cover-bottom,.cover-copy,.cover-action { position:relative; z-index:1; }
 .cover-top img { width:118px; height:auto; padding:9px; background:#fff; }
 .cover-top > span,.cover-bottom { color:#dceafa; font-size:9px; font-weight:700; line-height:1.8; letter-spacing:.14em; }
 .cover-top > span { text-align:right; }
@@ -293,6 +301,7 @@ import { projects } from "../../data/projects";
   .dossier-sheet { width:210mm; max-width:none; min-height:297mm; margin:0; padding:18mm 17mm; border:0; box-shadow:none; break-after:page; page-break-after:always; }
   .dossier-sheet:last-child { break-after:auto; page-break-after:auto; }
   .dossier-cover { min-height:297mm; padding:18mm 17mm; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .cover-image:after { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
   .contacts-sheet,.supply-method { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
   .work-card,.service-grid article,.management-card,.integrity-card,.identity-panel { break-inside:avoid; page-break-inside:avoid; }
   .works-grid { gap:8mm; }
