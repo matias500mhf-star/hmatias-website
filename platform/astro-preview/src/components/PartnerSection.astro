@@ -1,0 +1,25 @@
+---
+import { Image } from "astro:assets";
+import miliartLogo from "../../../../images/partners/miliart-logo.jpg";
+import { company } from "../data/site";
+const isEnglish = Astro.url.pathname.startsWith("/en/");
+---
+<section class="partner-section" aria-labelledby="partner-section-heading">
+  <div class="partner-section-head"><div>
+    <p class="section-kicker">{isEnglish ? "PARTNER NETWORK" : "REDE DE PARCEIROS"}</p>
+    <h2 id="partner-section-heading">{isEnglish ? <>Working together.<br /><em>Delivering with reach.</em></> : <>Parcerias que ampliam<br /><em>a capacidade de resposta.</em></>}</h2>
+    <p>{isEnglish ? "A network of specialist companies supports selected requirements across supply, technical solutions and project delivery. Each engagement is confirmed against the scope of the specific project." : "Uma rede de empresas especializadas apoia necessidades seleccionadas em fornecimento, soluções técnicas e execução de projetos. A participação de cada entidade é confirmada em função do âmbito de cada trabalho."}</p>
+  </div></div>
+  <div class="partner-logos" aria-label={isEnglish ? "Featured partner identities" : "Identidades de parceiros em destaque"}>
+    <a class="partner-logo" href="https://www.miliart-angola.com/" target="_blank" rel="noopener noreferrer" aria-label="Miliart — website oficial">
+      <Image src={miliartLogo} alt="Miliart" widths={[240,360]} sizes="(max-width: 750px) 80vw, 360px" format="webp" quality={88} />
+    </a>
+    <a class="partner-logo partner-logo-synvor" href="https://synvor-industrial.com/" target="_blank" rel="noopener noreferrer" aria-label="Synvor Industrial — website oficial">
+      <img src="https://synvor-industrial.com/__l5e/assets-v1/4ff3ac72-00c2-4415-818b-40a2cdfc1dbb/synvor-logo-negativo.png" alt="Synvor Industrial" width="360" height="160" loading="lazy" decoding="async" />
+    </a>
+  </div>
+  <div class="partner-section-foot">
+    <p>{isEnglish ? "Partner participation depends on the project scope, technical fit and confirmation of availability." : "A participação de cada parceiro depende do âmbito do projeto, da adequação técnica e da confirmação de disponibilidade."}</p>
+    <a href={isEnglish ? company.partnerApplicationEnUrl : company.partnerApplicationUrl}>{isEnglish ? "Become a partner" : "Apresentar candidatura a parceiro"} <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
