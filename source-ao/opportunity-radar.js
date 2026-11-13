@@ -336,6 +336,7 @@
       if(value)node.setAttribute('placeholder',value);
     });
     $('#langToggle').textContent=lang==='pt'?'EN':'PT';
+    $('#langToggle').setAttribute('aria-label',lang==='pt'?'EN — Mudar para inglês':'PT — Switch to Portuguese');
     const home=lang==='en'?'/en/source-ao/':'/source-ao/';
     const rfq=lang==='en'?'/en/source-ao/smart-rfq/':'/source-ao/smart-rfq/';
     const partners=lang==='en'?'/en/source-ao/partners/':'/source-ao/parceiros/';
