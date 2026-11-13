@@ -62,6 +62,7 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
       await expect(page.locator("#partnerForm button[type='submit']")).toBeDisabled();
       await expect(page.locator(".partner-stage-note")).toContainText(/staging/i);
       await expect(page.locator(".consent a")).toHaveAttribute("href", route.privacy);
+      await expect(page.locator(".consent")).toContainText(/eventual relação comercial|potential commercial relationship/i);
       await expect(page.locator(".language-switch")).toHaveAttribute(
         "href",
         route.lang === "en" ? "/source-ao/parceiros/" : "/en/source-ao/partners/"
