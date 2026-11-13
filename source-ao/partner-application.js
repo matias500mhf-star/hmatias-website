@@ -97,7 +97,15 @@
         capabilities_required:copy.capabilities,
         privacy_consent_required:english?'Privacy consent is required.':'É necessário aceitar a Política de Privacidade.',
         email_invalid:english?'Enter a valid email address.':'Indique um email válido.',
-        privacy_key_unavailable:english?'Secure application intake is temporarily unavailable.':'O registo seguro de candidaturas está temporariamente indisponível.'
+        privacy_key_unavailable:english?'Secure application intake is temporarily unavailable.':'O registo seguro de candidaturas está temporariamente indisponível.',
+      company_required:english?'Legal company name is required.':'O nome legal da empresa é obrigatório.',
+      country_invalid:english?'Select a supported country.':'Seleccione um país suportado.',
+      locality_required:english?'Province or city is required.':'A província ou cidade é obrigatória.',
+      type_invalid:english?'Select a valid partner type.':'Seleccione um tipo de parceiro válido.',
+      contact_name_required:english?'Contact person's name is required.':'O nome do responsável é obrigatório.',
+      website_invalid:english?'Enter a valid company website URL.':'Indique um endereço válido para o website da empresa.',
+      portfolio_invalid:english?'Enter a valid portfolio or reference URL.':'Indique um endereço válido para o portfólio ou referências.',
+      field_too_long:english?'One or more fields exceed the allowed length.':'Um ou mais campos excedem o limite permitido.'
       };
       message(validation[error?.code]||(error instanceof TypeError?copy.failed:(error?.message||copy.failed)),'error');
     }finally{
