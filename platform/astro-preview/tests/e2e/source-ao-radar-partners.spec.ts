@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const radarRoutes = [
-  { path: "/source-ao/radar/", lang: "pt-AO", unavailable: "Ligação live temporariamente indisponível" },
-  { path: "/en/source-ao/radar/", lang: "en", unavailable: "Live connection temporarily unavailable" },
+  { path: "/source-ao/radar/", lang: "pt-AO", unavailable: "API de staging não configurada" },
+  { path: "/en/source-ao/radar/", lang: "en", unavailable: "Staging API not configured" },
 ];
 const partnerRoutes = [
   { path: "/source-ao/parceiros/", lang: "pt-AO", privacy: "/privacidade/", title: "Apresente a sua empresa para avaliação." },
