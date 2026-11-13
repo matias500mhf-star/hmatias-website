@@ -108,7 +108,7 @@ export async function createPartnerApplication(request,env){
       website_invalid:'Website must be a valid HTTP/HTTPS URL.',
       portfolio_invalid:'Portfolio/reference URL must be a valid HTTP/HTTPS URL.',
       capabilities_required:'Select at least one business capability.',
-      privacy_consent_required:'Privacy consent is required.'
+      privacy_consent_required:'Privacy consent is required.',
       field_too_long:'One or more fields exceed the allowed length.'
     };
     return fail(env,400,valid.code,messages[valid.code]||'Invalid partner application.');
@@ -162,6 +162,8 @@ const publicRow=row=>({
   status:row.status,
   commercial_partner_id:row.commercial_partner_id,
   submitted_at:row.submitted_at,
+  privacy_consent_at:row.privacy_consent_at||null,
+  privacy_notice_version:row.privacy_notice_version||null,
   reviewed_at:row.reviewed_at,
   reviewed_by:row.reviewed_by
 });
