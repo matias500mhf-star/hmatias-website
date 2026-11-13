@@ -157,3 +157,8 @@ The production deploy job also runs read-only health, private-outbox and search 
 2. In GitHub repository Settings → Secrets and variables → Actions, add a new repository secret named `SOURCE_AO_RESEND_API_KEY`. Never paste the secret into commits, issues, chats or Action logs.
 3. With the secret configured, run the existing **Source AO Production Deploy** workflow using its approval gate or bump `.source-ao-production-release`. This transfers the token to the Worker through `wrangler secret put` and retains the verified-domain defaults.
 4. Verify the admin endpoint returns `configured:true`. Then confirm one labelled test email and provider delivery status before treating the commercial inbox as alerted. Backlogged D1 alerts remain pending until processed by the scheduled job.
+
+
+## Autonomous website updates and monitoring
+
+See [AUTOMATION.md](./AUTOMATION.md) for the scheduled Worker jobs, five-minute Radar refresh, public automation-health endpoint, and the boundaries between automated data refresh and human-approved publication.
