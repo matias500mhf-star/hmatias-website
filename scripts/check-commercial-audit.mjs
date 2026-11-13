@@ -93,6 +93,10 @@ assert.ok(read('script.js').includes('const existing=target.querySelector'));
 assert.ok(read('growth-intelligence.js').includes('[data-hmatias-email-alternative]'));
 assert.ok(client.includes("id:'cleanQuoteForm'"));
 assert.ok(client.includes("id:'smartRfqForm'"));
+const cleanCatalog=read('platform/astro-preview/src/scripts/clean-catalog.js');
+assert.ok(cleanCatalog.includes("p('Dish Ninja','T518','kitchen','Líquido antimicrobiano para loiça, eficaz mesmo em água fria.','Anti-microbial dishwashing liquid that works even in cold water.','750ml | 3L | 5L | 25L')"),'Dish Ninja pack sizes must match the linked manufacturer catalogue');
+assert.ok(cleanCatalog.includes("p('Shabba Delight','T517','kitchen','Limpador de forno e grelha de utilização simples, sem necessidade de pré-aquecimento.','User-friendly oven and grill cleaner that can be used without preheating.','500ml | 1L | 5L | 25L')"),'Shabba Delight pack sizes must match the linked manufacturer catalogue');
+
 
 for(const [path,anchors,labels] of [
   ['credibilidade.html',['orientacao-institucional','projetos-digitais'],['Capacidades apresentadas com limites claros.','Escopo explícito','Stock, preço, origem, prazo e logística requerem confirmação.']],
