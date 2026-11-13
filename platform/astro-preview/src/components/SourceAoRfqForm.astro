@@ -2,11 +2,10 @@
 import sourceLogo from "../../../../images/source-ao-logo.svg";
 
 interface Props {
-  lang?: "pt" | "en";
   apiBase?: string;
 }
 
-const { lang = "pt", apiBase = "" } = Astro.props;
+const { apiBase = "" } = Astro.props;
 ---
 
 <a class="skip-link" href="#rfqForm">Ir para o pedido</a>
