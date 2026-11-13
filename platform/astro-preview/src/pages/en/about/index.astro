@@ -31,10 +31,10 @@ import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-conc
 
     <section class="ceo-message section-pad" aria-labelledby="ceo-message-heading">
       <div class="ceo-message-inner">
-        <p class="section-kicker">A MESSAGE FROM MANAGEMENT</p>
-        <h2 id="ceo-message-heading">Leadership close to <em>the operation.</em></h2>
-        <p class="ceo-message-copy">Henrique Matias is the Sole Shareholder, CEO &amp; Managing Director of HMATIAS – Prestação de Serviços, SU, LDA. He leads the company's strategy, business development and operational coordination, focusing on practical and efficient solutions for clients and partners.</p>
-        <div class="ceo-signature"><strong>Henrique Matias</strong><span>Sole Shareholder · CEO &amp; Managing Director</span></div>
+        <p class="section-kicker">A NOTE ABOUT OUR COMPANY</p>
+        <h2 id="ceo-message-heading">Built with purpose. <em>Growing through trust.</em></h2>
+        <p class="ceo-message-copy">We believe a company is built every day through responsibility, dedication and respect for every commitment made. At HMATIAS, we aim to turn needs into practical solutions, bring people and opportunities closer, and make a positive contribution through every project we undertake. Our path is shaped by serious work, trusted relationships and the constant determination to do better.</p>
+        <div class="ceo-signature"><strong>CEO — Henrique Fernandes</strong></div>
       </div>
     </section>
   </main>
@@ -51,7 +51,7 @@ import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-conc
 .about-actions { display:flex; flex-wrap:wrap; align-items:center; gap:22px; margin-top:32px; }
 .about-visual { position:relative; margin:0; padding:0 16px 16px 0; }
 .about-visual:after { position:absolute; z-index:0; content:""; inset:16px 0 0 16px; border:1px solid #83c6f277; pointer-events:none; }
-.about-visual img { position:relative; z-index:1; width:100%; aspect-ratio:1.12; object-fit:cover; background:#0b477c; }
+.about-visual img { position:relative; z-index:1; display:block; width:100%; height:clamp(420px,42vw,590px); aspect-ratio:4 / 3; object-fit:cover; object-position:center 52%; background:#0b477c; }
 .about-visual figcaption { position:relative; z-index:2; display:flex; justify-content:space-between; gap:12px; padding:15px 17px; color:var(--hm-navy); background:var(--hm-paper); font-size:8px; font-weight:700; letter-spacing:.13em; }
 .about-section-head { display:flex; justify-content:space-between; align-items:end; gap:45px; }
 .about-section-head h2,.ceo-message h2 { margin:22px 0 0; font-size:clamp(36px,4.7vw,62px); line-height:1.08; font-weight:520; letter-spacing:-.06em; }
@@ -110,7 +110,7 @@ import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-conc
   .about-actions { gap:15px; margin-top:24px; }
   .about-visual { width:100%; max-width:none; margin:0; padding:0 8px 8px 0; overflow:hidden; }
   .about-visual:after { inset:8px 0 0 8px; }
-  .about-visual img { display:block; width:100%; height:190px; max-height:190px; aspect-ratio:auto; object-fit:cover; object-position:center 45%; }
+  .about-visual img { display:block; width:100%; height:clamp(220px,58vw,320px); max-height:320px; aspect-ratio:16 / 10; object-fit:cover; object-position:center 48%; }
   .about-visual figcaption { min-height:36px; padding:9px 10px; font-size:7px; }
   .about-section-head { display:block; }
   .about-section-head > p { margin-top:18px; }
