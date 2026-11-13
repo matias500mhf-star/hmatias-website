@@ -84,7 +84,7 @@ export default {
           response=await listPublicCatalog(request,env);
         }else if(request.method==='GET' && url.pathname==='/api/admin/catalog/items'){
           response=await listAdminCatalog(request,env);
-        }else if(/^\\/api\\/admin\\/catalog\\/items\\/[A-Za-z0-9_-]+$/.test(url.pathname) && request.method==='PATCH'){
+        }else if(/^\/api\/admin\/catalog\/items\/[A-Za-z0-9_-]+$/.test(url.pathname) && request.method==='PATCH'){
           response=await updateCatalogItem(request,env,url.pathname.split('/').pop());
         }else if(request.method==='GET' && url.pathname==='/internal/website-leads'){
           response=websiteLeadDesk();
