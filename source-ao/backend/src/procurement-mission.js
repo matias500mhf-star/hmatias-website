@@ -249,6 +249,7 @@ export function publicProcurementMission(mission){
     })),
     rfq:mission.rfq,
     verification_required:mission.verification_required,
+    manual_review:mission.manual_review||null,
     truth_rule:mission.truth_rule
   };
 }
