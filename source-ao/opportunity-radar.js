@@ -289,7 +289,8 @@
 
   function requestHref(o){
     const tags=areaTags(o);
-    const category=tags.includes('construction')?'construction'
+    const category=o.type==='supply-request'?'industrial-supply'
+      :tags.includes('construction')?'construction'
       :tags.includes('facilities')?'cleaning-facilities'
       :tags.includes('supply')?'industrial-supply'
       :tags.includes('electrical-hvac')?'hvac-electrical'
