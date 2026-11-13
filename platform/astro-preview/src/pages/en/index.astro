@@ -3,6 +3,7 @@ import { Picture } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+import PartnerSection from "../../components/PartnerSection.astro";
 import heroPhoto from "../../../../../images/catalogue/instalacoes-embutidas-construcao.webp";
 import metalStructure from "../../../../../images/catalogue/galpao-estrutura-metalica.webp";
 import sitePreparation from "../../../../../images/catalogue/terraplanagem-preparacao-terreno.webp";
@@ -76,6 +77,8 @@ import { company } from "../../data/site";
       <div class="portfolio-note"><span>REAL WORK RECORDS</span><span>HMATIAS · ANGOLA</span></div>
       <a class="underlined-link" href="/en/works-catalogue/">View the works catalogue <span aria-hidden="true">↗</span></a>
     </section>
+
+    <PartnerSection />
 
     <section class="statement" aria-labelledby="pages-en-index-section-5-heading">
       <div class="statement-mark" aria-hidden="true">“</div>
