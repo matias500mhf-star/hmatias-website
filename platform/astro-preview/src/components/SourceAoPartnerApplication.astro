@@ -1,0 +1,148 @@
+---
+interface Props {
+  apiBase?: string;
+  lang?: "pt-AO" | "en";
+}
+const { apiBase = "", lang = "pt-AO" } = Astro.props;
+const english = lang === "en";
+const homeUrl = english ? "/en/source-ao/" : "/source-ao/";
+const oppositeUrl = english ? "/source-ao/parceiros/" : "/en/source-ao/partners/";
+const privacyUrl = english ? "/en/privacy/" : "/privacidade/";
+const capabilities = [
+  ["construction", "Construção / obras civis", "Construction / civil works"],
+  ["facilities", "Facilities / manutenção", "Facilities / maintenance"],
+  ["plumbing", "Canalização / hidráulica", "Plumbing / hydraulics"],
+  ["electrical", "Eletricidade", "Electrical"],
+  ["hvac", "Climatização / HVAC", "HVAC / air conditioning"],
+  ["painting", "Pintura / acabamentos", "Painting / finishes"],
+  ["cleaning", "Limpeza / higiene", "Cleaning / hygiene"],
+  ["materials-supply", "Materiais de construção", "Construction materials"],
+  ["industrial-supply", "Fornecimento industrial", "Industrial supply"],
+  ["equipment", "Equipamentos / ferramentas", "Equipment / tools"],
+  ["uniforms", "Uniformes / fardamento", "Uniforms / workwear"],
+  ["professional-services", "Serviços empresariais / técnicos", "Business / technical services"]
+];
+---
+
+<div class="partner-preview">
+  <div class="partner-preview-bar">
+    <a href={homeUrl}>SOURCE AO</a>
+    <span>{english ? "PRIVATE PARTNER INTAKE · PREVIEW" : "CANDIDATURA PRIVADA DE PARCEIROS · PRÉ-VISUALIZAÇÃO"}</span>
+  </div>
+  {!apiBase && <p class="partner-stage-note" role="status">{english ? "Isolated preview: submission is disabled until a staging API is configured. No application is sent to the production database." : "Pré-visualização isolada: a submissão fica desactivada até existir uma API de staging configurada. Nenhuma candidatura é enviada para a base de dados de produção."}</p>}
+  {apiBase && <p class="partner-stage-note" role="status">{english ? "Staging environment: submitted applications are stored privately for HMATIAS review. This is not an approval or a commercial commitment." : "Ambiente de staging: as candidaturas são guardadas de forma privada para avaliação da HMATIAS. O registo não representa aprovação nem compromisso comercial."}</p>}
+
+  <header class="top">
+    <a class="brand" href={homeUrl}><span>SOURCE AO</span><small>by HMATIAS</small></a>
+    <a class="back" href={homeUrl}>{english ? "← Back to SOURCE AO" : "← Voltar ao SOURCE AO"}</a>
+    <a class="back language-switch" href={oppositeUrl}>{english ? "PT" : "EN"}</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="partner-title">
+      <p class="eyebrow">{english ? "COMMERCIAL NETWORK · APPLICATION" : "REDE COMERCIAL · CANDIDATURA"}</p>
+      <h1 id="partner-title">{english ? "Submit your company for assessment." : "Apresente a sua empresa para avaliação."}</h1>
+      <p>{english ? "HMATIAS assesses suppliers, subcontractors and service providers against verifiable capacity, documentation and fit with actual requirements. Submission does not create an automatic partnership." : "A HMATIAS avalia fornecedores, subempreiteiros e prestadores com base na capacidade comprovável, documentação e adequação a necessidades reais. A submissão não cria uma parceria automática."}</p>
+      <p class="partner-international-note">{english ? "The operational application network covers Angola, Namibia and South Africa. Companies based elsewhere may send an introduction to the HMATIAS commercial email for initial screening." : "A rede operacional da candidatura cobre Angola, Namíbia e África do Sul. Empresas de outros mercados podem enviar uma apresentação para o e-mail comercial da HMATIAS, para triagem inicial."} <a href="mailto:geral@comercialhmatiasps.com">geral@comercialhmatiasps.com</a></p>
+      <div class="rules" aria-label={english ? "Application stages" : "Etapas da candidatura"}>
+        <span>01 · {english ? "Company identity" : "Identificação empresarial"}</span>
+        <span>02 · {english ? "Verifiable capacity" : "Capacidade comprovável"}</span>
+        <span>03 · {english ? "HMATIAS review" : "Revisão HMATIAS"}</span>
+        <span>04 · {english ? "Activation after approval" : "Activação após aprovação"}</span>
+      </div>
+    </section>
+
+    <section class="form-shell">
+      <form id="partnerForm" aria-label={english ? "Partner network application form" : "Formulário de candidatura à rede de parceiros"}>
+        <div class="section-head">
+          <p class="eyebrow dark">{english ? "IDENTIFICATION" : "IDENTIFICAÇÃO"}</p>
+          <h2>{english ? "Company details" : "Dados da empresa"}</h2>
+        </div>
+        <div class="grid">
+          <label class="wide">{english ? "Legal company name" : "Nome legal da empresa"}<input name="company_name" maxlength="220" required /></label>
+          <label>{english ? "Tax / registration number" : "NIF / Registo comercial"}<input name="registration_number" maxlength="120" required /></label>
+          <label>{english ? "Partner type" : "Tipo de parceiro"}
+            <select name="partner_type" required>
+              <option value="">{english ? "Select" : "Selecionar"}</option>
+              <option value="supplier">{english ? "Supplier" : "Fornecedor"}</option>
+              <option value="subcontractor">{english ? "Subcontractor" : "Subempreiteiro"}</option>
+              <option value="service_provider">{english ? "Service provider" : "Prestador de serviços"}</option>
+              <option value="technical_partner">{english ? "Technical partner" : "Parceiro técnico"}</option>
+              <option value="strategic_partner">{english ? "Strategic partner" : "Parceiro estratégico"}</option>
+            </select>
+          </label>
+          <label>{english ? "Country" : "País"}
+            <select name="country_code" required>
+              <option value="">{english ? "Select country" : "Selecionar país"}</option>
+              <option value="AO">Angola</option>
+              <option value="NA">{english ? "Namibia" : "Namíbia"}</option>
+              <option value="ZA">{english ? "South Africa" : "África do Sul"}</option>
+            </select>
+          </label>
+          <label>{english ? "Province / city" : "Província / cidade"}<input name="locality" maxlength="180" required placeholder={english ? "E.g. Luanda" : "Ex.: Luanda"} /></label>
+          <label class="wide">{english ? "Company website" : "Website da empresa"}<input name="website" type="url" maxlength="600" placeholder="https://" /></label>
+        </div>
+
+        <div class="section-head">
+          <p class="eyebrow dark">{english ? "CAPACITY" : "CAPACIDADE"}</p>
+          <h2>{english ? "What can your company deliver?" : "O que a empresa consegue executar ou fornecer?"}</h2>
+          <p>{english ? "Select only capabilities that you can support with commercial or technical evidence." : "Seleccione apenas actividades que consegue comprovar comercial ou tecnicamente."}</p>
+        </div>
+        <div class="checks" id="capabilities" aria-label={english ? "Company capabilities" : "Capacidades da empresa"}>
+          {capabilities.map(([value, pt, en]) => <label><input type="checkbox" value={value} /> {english ? en : pt}</label>)}
+        </div>
+
+        <div class="section-head">
+          <p class="eyebrow dark">{english ? "CONTACT & EVIDENCE" : "CONTACTO E EVIDÊNCIA"}</p>
+          <h2>{english ? "Application contact" : "Responsável pela candidatura"}</h2>
+        </div>
+        <div class="grid">
+          <label>{english ? "Contact person's name" : "Nome do responsável"}<input name="contact_name" maxlength="180" required /></label>
+          <label>{english ? "Role" : "Função"}<input name="contact_role" maxlength="120" /></label>
+          <label>{english ? "Email" : "Email"}<input name="email" type="email" maxlength="180" /></label>
+          <label>{english ? "WhatsApp / phone" : "WhatsApp / telefone"}<input name="whatsapp" maxlength="80" inputmode="tel" /></label>
+          <label class="wide">{english ? "Portfolio / references URL" : "Portfólio / página de referências"}<input name="portfolio_url" type="url" maxlength="600" placeholder="https://" /></label>
+          <label class="wide">{english ? "Commercial note" : "Nota comercial"}<textarea name="note" maxlength="1600" rows="5" placeholder={english ? "Experience, geographic coverage, team and main capabilities" : "Experiência, cobertura geográfica, equipa e principais capacidades"}></textarea></label>
+        </div>
+
+        <label class="consent"><input id="confirmAccuracy" name="privacy_consent" type="checkbox" value="true" required /><span>{english ? "I confirm that the information is accurate and authorise HMATIAS to use it solely to assess this application, in accordance with the " : "Confirmo que a informação é verdadeira e autorizo a HMATIAS a utilizá-la exclusivamente para avaliar esta candidatura, nos termos da "}<a href={privacyUrl} target="_blank" rel="noopener">{english ? "Privacy Policy" : "Política de Privacidade"}</a>.</span></label>
+        <p class="privacy-note">{english ? "Do not submit identity documents, passports, bank details or confidential files here. Supporting documents may be requested separately after initial screening." : "Não envie documentos de identificação, passaportes, dados bancários ou ficheiros confidenciais nesta página. Documentação de suporte poderá ser solicitada separadamente após a triagem inicial."}</p>
+
+        <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+        <button id="submitPartner" type="submit" disabled={!apiBase}>{english ? "Submit application" : "Submeter candidatura"}</button>
+      </form>
+
+      <aside aria-label={english ? "What happens after applying" : "O que acontece depois da candidatura"}>
+        <p class="eyebrow dark">{english ? "REVIEW PROCESS" : "PROCESSO"}</p>
+        <h2>{english ? "What happens next?" : "O que acontece depois?"}</h2>
+        <ol>
+          <li><strong>{english ? "Screening" : "Triagem"}</strong><span>{english ? "Identity, capacity and commercial fit." : "Identidade, capacidade e aderência comercial."}</span></li>
+          <li><strong>{english ? "Review" : "Revisão"}</strong><span>{english ? "HMATIAS may request portfolio, documents or references." : "A HMATIAS pode solicitar portfólio, documentos ou referências."}</span></li>
+          <li><strong>{english ? "Classification" : "Classificação"}</strong><span>{english ? "Assessment by capability and collaboration type." : "Enquadramento por capacidade e tipo de colaboração."}</span></li>
+          <li><strong>{english ? "Activation" : "Activação"}</strong><span>{english ? "Only approved companies join the operational network." : "Só empresas aprovadas entram na rede operacional."}</span></li>
+        </ol>
+        <div class="warning"><strong>{english ? "Important" : "Importante"}</strong><p>{english ? "Registration does not guarantee an award, exclusivity, work volume or invitations to every procurement process." : "O registo não garante adjudicação, exclusividade, volume de trabalho ou convite para todos os processos."}</p></div>
+      </aside>
+    </section>
+  </main>
+  <footer><span>© 2026 SOURCE AO · HMATIAS</span><a href={privacyUrl}>{english ? "Privacy" : "Privacidade"}</a><a href="mailto:geral@comercialhmatiasps.com">geral@comercialhmatiasps.com</a></footer>
+</div>
+
+<script is:inline define:vars={{ apiBase }}>
+  window.SOURCE_AO_RUNTIME = Object.freeze({ environment: "preview", apiBase: typeof apiBase === "string" ? apiBase : "" });
+</script>
+<script>
+  import "../../../../source-ao/partner-application.js";
+</script>
+<style>
+  @import "../../../../source-ao/partner-application.css";
+  .partner-preview-bar{display:flex;justify-content:space-between;gap:18px;padding:10px clamp(16px,5vw,72px);background:#061827;color:#c8d7e4;font-size:10px;font-weight:750;letter-spacing:.12em}
+  .partner-preview-bar a{color:#fff;text-decoration:none}
+  .partner-stage-note{margin:0;padding:11px clamp(16px,5vw,72px);background:#f6f9fb;border-bottom:1px solid #dce5ec;color:#526879;font-size:11px;line-height:1.55}
+  .partner-preview .top{display:flex;gap:18px}
+  .partner-preview .language-switch{margin-left:auto}
+  .partner-preview .back{white-space:nowrap}
+  .partner-preview .hero p a{color:#fff;text-decoration:underline}
+  .partner-preview button:disabled{opacity:.48;cursor:not-allowed}
+  @media(max-width:560px){.partner-preview-bar{flex-direction:column;gap:5px}.partner-preview .top{padding:0 16px}.partner-preview .brand small{display:none}.partner-preview .top .back{font-size:11px}}
+</style>
