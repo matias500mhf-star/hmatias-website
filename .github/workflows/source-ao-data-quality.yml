@@ -207,6 +207,18 @@ jobs:
           ! grep -Eq 'INSERT[[:space:]]+(OR[[:space:]]+IGNORE[[:space:]]+)?INTO[[:space:]]+commercial_partners|UPDATE[[:space:]]+commercial_partners[[:space:]]+SET' source-ao/backend/migrations/0011_commercial_partner_network.sql source-ao/backend/migrations/0012_partner_followup_pipeline.sql
           ! grep -Eq '@|\+244[0-9]' source-ao/backend/migrations/0011_commercial_partner_network.sql source-ao/backend/migrations/0012_partner_followup_pipeline.sql
 
+      - name: Validate live catalog publication boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "ALTER TABLE items ADD COLUMN public_visible" source-ao/backend/migrations/0028_public_catalog.sql
+          grep -q "ALTER TABLE items ADD COLUMN management_mode" source-ao/backend/migrations/0028_public_catalog.sql
+          grep -q "WHERE public_visible=1" source-ao/backend/src/catalog.js
+          grep -q "item-formaldehyde" source-ao/backend/src/catalog.js
+          grep -q "management_mode='managed'" source-ao/backend/src/catalog.js
+          grep -q "api/catalog" source-ao/backend/src/router.js
+          grep -q "PUBLIC_EXCLUDED_CATALOG_ITEMS" source-ao/backend/scripts/export-seed-sql.mjs
+
       - name: Validate backend syntax
         run: |
           node --check source-ao/backend/src/index.js
@@ -216,6 +228,7 @@ jobs:
           node --check source-ao/backend/src/sourcing.js
           node --check source-ao/backend/src/security.js
           node --check source-ao/backend/src/health.js
+          node --check source-ao/backend/src/catalog.js
           node --check source-ao/backend/src/automation-status.js
           node --check source-ao/backend/src/maintenance.js
           node --check source-ao/backend/src/opportunity-pipeline.js
