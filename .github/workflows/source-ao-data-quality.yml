@@ -218,6 +218,11 @@ jobs:
           grep -q "management_mode='managed'" source-ao/backend/src/catalog.js
           grep -q "api/catalog" source-ao/backend/src/router.js
           grep -q "PUBLIC_EXCLUDED_CATALOG_ITEMS" source-ao/backend/scripts/export-seed-sql.mjs
+          grep -q "catalogDesk" source-ao/ops.html
+          grep -q "loadAdminCatalog" source-ao/ops.js
+          grep -q "api('/api/admin/catalog/items'" source-ao/ops.js
+          grep -q "public_visible:values('public_visible').checked" source-ao/ops.js
+          grep -q "loadPublicCatalogData(env)" source-ao/backend/src/sourcing.js
 
       - name: Validate backend syntax
         run: |
