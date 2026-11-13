@@ -6,9 +6,15 @@
     opportunities:'data/opportunities.json',
     registry:'data/source-registry.json'
   };
-
+  const CATALOG_REFRESH_MS=5*60*1000;
+  const apiBase=()=>String(window.SOURCE_AO_RUNTIME?.apiBase||'').replace(/\\/$/,'');
+  const liveCatalogUrl=()=>/^https:\\/\\//i.test(apiBase())?apiBase()+'/api/catalog':'';
   const db={catalog:{items:[],taxonomy:[]},opportunities:{opportunities:[]},registry:{source_types:[],verification_rules:{}}};
   let ready=false;
+  let catalogSource='unavailable';
+  let catalogUpdatedAt=null;
+  let catalogLastRefresh=0;
+  let refreshTimer=null;
 
   const normalize=value=>(value||'')
     .toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
@@ -27,10 +33,49 @@
     }
   }
 
+  async function loadCatalog(){
+    const liveUrl=liveCatalogUrl();
+    const candidates=liveUrl?[{url:liveUrl,source:'live'},{url:paths.catalog,source:'static'}]:[{url:paths.catalog,source:'static'}];
+    for(const candidate of candidates){
+      try{
+        const res=await fetch(candidate.url,{cache:'no-store',headers:{accept:'application/json'}});
+        if(!res.ok)throw new Error(candidate.url+': '+res.status);
+        const data=await res.json();
+        if(!Array.isArray(data.items)||!Array.isArray(data.taxonomy))throw new Error('Invalid catalogue response');
+        db.catalog=data;
+        catalogSource=candidate.source;
+        catalogUpdatedAt=data.updated_at||null;
+        catalogLastRefresh=Date.now();
+        return true;
+      }catch(err){
+        console.warn('[Source AO catalogue]',err.message);
+      }
+    }
+    return false;
+  }
+
+  async function refreshCatalog(){
+    if(document.visibilityState==='hidden'||!liveCatalogUrl())return false;
+    return loadCatalog();
+  }
+
+  function startCatalogRefresh(){
+    if(refreshTimer||!liveCatalogUrl())return;
+    refreshTimer=setInterval(()=>{if(document.visibilityState==='visible')refreshCatalog();},CATALOG_REFRESH_MS);
+    document.addEventListener('visibilitychange',()=>{
+      if(document.visibilityState==='visible'&&Date.now()-catalogLastRefresh>=CATALOG_REFRESH_MS)refreshCatalog();
+    });
+  }
+
   async function init(){
     if(ready) return db;
-    await Promise.all(Object.entries(paths).map(([name,path])=>load(name,path)));
+    await Promise.all([
+      loadCatalog(),
+      load('opportunities',paths.opportunities),
+      load('registry',paths.registry)
+    ]);
     ready=true;
+    startCatalogRefresh();
     return db;
   }
 
@@ -96,5 +141,5 @@
     });
   }
 
-  window.SourceAOData={init,search,classify,activeOpportunities,isReady:()=>ready,db:()=>db,normalize};
+  window.SourceAOData={init,search,classify,activeOpportunities,refreshCatalog,isReady:()=>ready,db:()=>db,normalize,catalogStatus:()=>({source:catalogSource,updated_at:catalogUpdatedAt,last_refresh_at:catalogLastRefresh?new Date(catalogLastRefresh).toISOString():null})};
 })();
