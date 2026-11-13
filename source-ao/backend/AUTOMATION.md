@@ -15,7 +15,7 @@ The SOURCE AO Radar requests live opportunities from the API and refreshes its v
 
 ## What remains release-driven
 
-The HMATIAS institutional pages and product imagery remain release assets. The SOURCE AO product-family catalogue now has a live database-backed path: the RFQ prefers `GET /api/catalog` and falls back to the parity-checked `source-ao/data/public-catalog.json` projection if the API is unavailable. The backend validates each RFQ against the same public-visible D1 records, so a newly published family is accepted without a website rebuild. This catalogue is not a stock or supplier inventory.
+The HMATIAS institutional pages and product imagery remain release assets. The SOURCE AO product-family catalogue now has a live database-backed path: the homepage and RFQ prefer `GET /api/catalog` and fall back to the parity-checked `source-ao/data/public-catalog.json` projection if the API is unavailable. The homepage refreshes the catalogue every five minutes while visible, retains the last-known-good live copy during a temporary API outage, and uses the local projection only when no live copy is available. The backend validates each RFQ against the same public-visible D1 records, so a newly published family is accepted without a website rebuild. This catalogue is not a stock or supplier inventory.
 
 Prices, stock, supplier lead times and transport conditions must never be inferred from a catalogue entry or automatically published as confirmed facts. They require current evidence and appropriate commercial approval.
 
@@ -35,7 +35,7 @@ The internal **SOURCE AO Ops → Catálogo público** panel requires the same ad
 
 Only rows with `public_visible=1` enter the public RFQ catalogue. The excluded `item-formaldehyde` identifier cannot be published. The public projection contains no prices, supplier identities, contacts, stock levels, lead times, margins or internal notes.
 
-The RFQ prefers the live catalogue API when configured. When the API is unavailable, it falls back to the static public catalogue. The server-side RFQ validator reads the same published D1 records; private items are rejected even when a client manually submits their IDs.
+The SOURCE AO homepage and RFQ prefer the live catalogue API when configured. The homepage refreshes it every five minutes and preserves the last-known-good live dataset on temporary API failure; initial load falls back to the static public catalogue. The static fallback is generated from the canonical master catalogue before Astro and backend validation/build steps, using an explicit item and taxonomy allowlist. The server-side RFQ validator reads the same published D1 records; private items are rejected even when a client manually submits their IDs.
 
 Administrator tokens remain in page memory only. Do not store them in localStorage, sessionStorage, source files or browser exports.
 
@@ -66,5 +66,5 @@ The endpoint is read-only and uses a generic unavailable response if D1 cannot b
 1. Pass backend tests, data-quality checks and Astro QA.
 2. Deploy the backend change to the isolated SOURCE AO staging environment; confirm the endpoint returns aggregate data and no private fields.
 3. Verify the scheduled trigger executions and the public Radar refresh in staging.
-4. Keep catalog/page publishing release-driven until an approved content-management source and editorial permissions are implemented.
-5. Promote to production only through the separate production release gate and an approved rollout window.
+4. Use the protected SOURCE AO Ops catalogue editor for managed product-family changes; keep institutional page copy, legal terms, project claims and imagery release-driven until an approved editorial workflow exists.
+5. Promote the backend and frontend integration to production only through the separate production release gate and an approved rollout window.
