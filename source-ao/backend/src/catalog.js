@@ -107,6 +107,7 @@ export async function listAdminCatalog(request,env){
       ok:true,
       items:(result.results||[]).map(row=>({
         ...publicItem(row),
+        name_pt:row.name_pt||'',
         public_visible:Number(row.public_visible)===1,
         updated_at:row.updated_at||null
       }))
