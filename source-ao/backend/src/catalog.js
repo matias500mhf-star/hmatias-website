@@ -66,25 +66,29 @@ function publicItem(row){
   };
 }
 
+export async function loadPublicCatalogData(env){
+  if(!env?.SOURCE_AO_DB)throw new Error('catalog_database_unavailable');
+  const result=await env.SOURCE_AO_DB.prepare(`
+    SELECT id,name,name_pt,category,specification,unit,aliases_json,keywords_json,public_visible,updated_at
+    FROM items
+    WHERE public_visible=1 AND id NOT IN ('item-formaldehyde')
+    ORDER BY category ASC,name ASC
+  `).all();
+  const rows=(result.results||[]).filter(row=>Number(row.public_visible)===1&&!PUBLIC_EXCLUDED_ITEMS.has(row.id));
+  const timestamps=rows.map(row=>row.updated_at).filter(Boolean).sort();
+  return {
+    ok:true,
+    version:1,
+    updated_at:timestamps.at(-1)||null,
+    items:rows.map(publicItem)
+  };
+}
+
 export async function listPublicCatalog(request,env){
   if(request.method!=='GET')return fail(env,405,'method_not_allowed');
-  if(!env?.SOURCE_AO_DB)return fail(env,503,'catalog_unavailable');
-
   try{
-    const result=await env.SOURCE_AO_DB.prepare(`
-      SELECT id,name,name_pt,category,specification,unit,aliases_json,keywords_json,public_visible,updated_at
-      FROM items
-      WHERE public_visible=1 AND id NOT IN ('item-formaldehyde')
-      ORDER BY category ASC,name ASC
-    `).all();
-    const rows=(result.results||[]).filter(row=>Number(row.public_visible)===1&&!PUBLIC_EXCLUDED_ITEMS.has(row.id));
-    const timestamps=rows.map(row=>row.updated_at).filter(Boolean).sort();
-    return response(env,{
-      ok:true,
-      version:1,
-      updated_at:timestamps.at(-1)||null,
-      items:rows.map(publicItem)
-    },200,{publicRead:true});
+    const data=await loadPublicCatalogData(env);
+    return response(env,data,200,{publicRead:true});
   }catch{
     return fail(env,503,'catalog_unavailable');
   }
