@@ -1,0 +1,916 @@
+{
+  "version": "0.6",
+  "updated_at": "2026-09-27T09:15:00+01:00",
+  "items": [
+    {
+      "id": "item-construction-general",
+      "name": "Construction materials",
+      "aliases": [
+        "materiais de construção",
+        "construction supplies",
+        "cimento",
+        "cement",
+        "blocos",
+        "blocks",
+        "argamassa",
+        "mortar",
+        "tintas",
+        "paint"
+      ],
+      "category": "construction",
+      "subcategory": "general",
+      "specification": "General product family. Exact brand, measure and stock require confirmation.",
+      "keywords": [
+        "obra",
+        "building",
+        "civil construction"
+      ],
+      "name_pt": "Materiais de construção"
+    },
+    {
+      "id": "item-pipes-profiles",
+      "name": "Pipes & metal profiles",
+      "aliases": [
+        "pipes",
+        "pipe",
+        "tubos",
+        "tubo",
+        "pvc pipe",
+        "tubo pvc",
+        "chapas",
+        "sheets",
+        "varões",
+        "varoes",
+        "rebar",
+        "cantoneira",
+        "angle bar",
+        "perfis",
+        "profiles"
+      ],
+      "category": "construction",
+      "subcategory": "pipes-profiles",
+      "specification": "General product family. Material, diameter, thickness and stock require confirmation.",
+      "keywords": [
+        "steel",
+        "ferro",
+        "pvc",
+        "metal"
+      ],
+      "name_pt": "Tubos e perfis metálicos"
+    },
+    {
+      "id": "item-electrical-materials",
+      "name": "Electrical materials",
+      "aliases": [
+        "material eléctrico",
+        "material eletrico",
+        "electrical material",
+        "cabo",
+        "cable",
+        "disjuntor",
+        "breaker",
+        "iluminação",
+        "lighting"
+      ],
+      "category": "hvac-electrical",
+      "subcategory": "electrical",
+      "specification": "General electrical supply family. Exact reference and stock require confirmation.",
+      "keywords": [
+        "electrical",
+        "electricidade",
+        "automation",
+        "automação"
+      ],
+      "name_pt": "Materiais elétricos"
+    },
+    {
+      "id": "item-hvac",
+      "name": "HVAC & air-conditioning equipment",
+      "aliases": [
+        "air conditioner",
+        "ar condicionado",
+        "ac",
+        "split",
+        "hvac",
+        "climatização",
+        "climatizacao",
+        "refrigeração",
+        "refrigeracao",
+        "btu"
+      ],
+      "category": "hvac-electrical",
+      "subcategory": "hvac",
+      "specification": "General HVAC family. Capacity, model and stock require confirmation.",
+      "keywords": [
+        "cooling",
+        "ventilation",
+        "climate"
+      ],
+      "name_pt": "Climatização e ar condicionado"
+    },
+    {
+      "id": "item-tools-equipment",
+      "name": "Tools & equipment",
+      "aliases": [
+        "tools",
+        "tool",
+        "ferramentas",
+        "ferramenta",
+        "machines",
+        "máquinas",
+        "maquinas",
+        "equipment",
+        "equipamento",
+        "drill",
+        "berbequim"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "general",
+      "specification": "General tools and equipment family. Exact model and stock require confirmation.",
+      "keywords": [
+        "workshop",
+        "obra",
+        "industrial"
+      ],
+      "name_pt": "Ferramentas e equipamentos"
+    },
+    {
+      "id": "item-pvc-polymer",
+      "name": "PVC resin and polymer material",
+      "aliases": [
+        "PVC",
+        "PVC resin",
+        "PVC granules",
+        "PVC pellets",
+        "policloreto de vinilo",
+        "policloreto de vinila",
+        "resina PVC",
+        "granulado PVC",
+        "composto PVC"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "polymers-plastics",
+      "specification": "Material family only. Confirm whether the requester means PVC resin, compound, granules, flexible sheet or another PVC product. Grade, additives, form, packaging and stock require commercial verification.",
+      "keywords": [
+        "plastic",
+        "polymer",
+        "resina",
+        "granulado",
+        "composto",
+        "industrial"
+      ],
+      "name_pt": "PVC — resina e material polimérico"
+    },
+    {
+      "id": "item-industrial-supply",
+      "name": "Industrial equipment & supplies",
+      "aliases": [
+        "industrial equipment",
+        "equipamento industrial",
+        "industrial supplies",
+        "fornecimento industrial",
+        "pump",
+        "bomba",
+        "valve",
+        "válvula",
+        "valvula",
+        "filter",
+        "filtro",
+        "chemical",
+        "químico",
+        "quimico"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "general",
+      "specification": "General industrial supply family. Technical specification and stock require confirmation.",
+      "keywords": [
+        "industry",
+        "oil and gas",
+        "mining",
+        "maintenance"
+      ],
+      "name_pt": "Equipamentos e fornecimento industrial"
+    },
+    {
+      "id": "item-packaging-strapping",
+      "name": "Packaging strapping",
+      "aliases": [
+        "cinta de arquear",
+        "cinta de arqueação",
+        "cinta de arqueacao",
+        "cinta pp",
+        "fita de arquear",
+        "fita de arqueação",
+        "fita de arqueacao",
+        "fita pp",
+        "pp strap",
+        "pp strapping",
+        "polypropylene strap",
+        "polypropylene strapping"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "packaging-strapping",
+      "specification": "Packaging strapping family. Material, width, thickness, colour, roll length, stock and machine compatibility require confirmation.",
+      "keywords": [
+        "polipropileno",
+        "polypropylene",
+        "packaging",
+        "embalagem",
+        "strapping",
+        "arqueação",
+        "arqueacao"
+      ],
+      "name_pt": "Cintas de embalagem"
+    },
+    {
+      "id": "item-vci-corrosion-protection",
+      "name": "VCI corrosion protection",
+      "aliases": [
+        "proteção VCI",
+        "protecao VCI",
+        "vapor corrosion inhibitor",
+        "VCI film",
+        "VCI packaging",
+        "corrosion inhibitor packaging",
+        "proteção anticorrosiva VCI",
+        "protecao anticorrosiva VCI"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "corrosion-protection",
+      "specification": "VCI corrosion-protection family for metal parts, equipment, storage and transport. Exact format, substrate compatibility, quantity, brand/origin, stock and lead time require confirmation.",
+      "keywords": [
+        "corrosion",
+        "corrosão",
+        "corrosao",
+        "VCI",
+        "preservation",
+        "preservação",
+        "preservacao",
+        "storage",
+        "shipping",
+        "metal protection"
+      ],
+      "name_pt": "Proteção anticorrosiva VCI"
+    },
+    {
+      "id": "item-industrial-protective-coatings",
+      "name": "Industrial protective coatings & rust-stabilising primers",
+      "aliases": [
+        "revestimento anticorrosivo",
+        "revestimento anti corrosão",
+        "primer anticorrosivo",
+        "rust stabilising primer",
+        "rust stabilizing primer",
+        "protective coating",
+        "corrosion coating",
+        "coating industrial"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "protective-coatings",
+      "specification": "Protective coating and rust-stabilising primer family for steel, piping, tanks, structures and industrial maintenance. Surface preparation, operating environment, coating system, colour, quantity and technical data require confirmation.",
+      "keywords": [
+        "coatings",
+        "primer",
+        "rust",
+        "ferrugem",
+        "steel",
+        "aço",
+        "aco",
+        "pipeline",
+        "tank",
+        "industrial maintenance"
+      ],
+      "name_pt": "Coatings anticorrosivos e primários"
+    },
+    {
+      "id": "item-flange-piping-protection",
+      "name": "Flange & piping corrosion protection",
+      "aliases": [
+        "proteção de flange",
+        "protecao de flange",
+        "flange protection",
+        "pipe protection",
+        "piping protection",
+        "proteção de tubagem",
+        "protecao de tubagem",
+        "pipeline corrosion protection"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "piping-protection",
+      "specification": "Corrosion-protection solutions for flanges, piping and related industrial assets. Diameter, service environment, temperature, materials, installation conditions and availability require confirmation.",
+      "keywords": [
+        "flange",
+        "piping",
+        "pipeline",
+        "corrosion",
+        "maintenance",
+        "oil and gas",
+        "industrial"
+      ],
+      "name_pt": "Proteção de flanges e tubagens"
+    },
+    {
+      "id": "item-hydrotest-corrosion-treatment",
+      "name": "Hydrotest corrosion-control treatment",
+      "aliases": [
+        "tratamento anticorrosivo hidroteste",
+        "hydrotest corrosion inhibitor",
+        "hydrostatic test corrosion protection",
+        "water treatment hydrotest",
+        "pressure vessel corrosion treatment"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "hydrotest-treatment",
+      "specification": "Water-treatment and corrosion-control products for hydrostatic testing of pipes, tanks, heat exchangers and pressure vessels. Metallurgy, water chemistry, dosage, compatibility and regulatory requirements must be confirmed before supply.",
+      "keywords": [
+        "hydrotest",
+        "hydrostatic",
+        "pressure vessel",
+        "pipe",
+        "tank",
+        "heat exchanger",
+        "corrosion inhibitor"
+      ],
+      "name_pt": "Tratamento anticorrosivo para hidrotestes"
+    },
+    {
+      "id": "item-rust-preventive-storage",
+      "name": "Rust preventive for storage & transport",
+      "aliases": [
+        "preventivo de ferrugem",
+        "rust preventive",
+        "sprayable rust preventive",
+        "corrosion preventive grease",
+        "long term storage protection",
+        "shipping corrosion protection"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "storage-preservation",
+      "specification": "Removable rust-preventive products for machinery, metal parts and equipment during storage or transport. Substrate, exposure, protection period, removal method, packaging and availability require confirmation.",
+      "keywords": [
+        "storage",
+        "transport",
+        "shipping",
+        "machinery",
+        "equipment",
+        "rust",
+        "corrosion",
+        "preservation"
+      ],
+      "name_pt": "Preservação em armazenamento e transporte"
+    },
+    {
+      "id": "item-industrial-cleaner-flash-rust",
+      "name": "Industrial cleaner with flash-rust inhibition",
+      "aliases": [
+        "limpador industrial anticorrosivo",
+        "industrial cleaner corrosion inhibitor",
+        "flash rust inhibitor",
+        "surface cleaner corrosion control",
+        "chloride removal cleaner"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "surface-preparation",
+      "specification": "Industrial cleaning and surface-preparation family for removal of oils, chlorides and contaminants while reducing flash-rust risk. Substrate, dilution, operating temperature, application and technical compatibility require confirmation.",
+      "keywords": [
+        "cleaner",
+        "surface preparation",
+        "chloride",
+        "oil removal",
+        "flash rust",
+        "corrosion",
+        "maintenance"
+      ],
+      "name_pt": "Limpeza industrial e preparação de superfícies"
+    },
+    {
+      "id": "item-ppe-workplace-safety",
+      "name": "PPE & workplace safety equipment",
+      "aliases": [
+        "EPI",
+        "EPIs",
+        "equipamento de proteção individual",
+        "equipamentos de protecao individual",
+        "personal protective equipment",
+        "PPE",
+        "workplace safety equipment",
+        "safety equipment",
+        "helmet",
+        "safety helmet",
+        "hard hat",
+        "industrial safety helmet",
+        "capacete de segurança",
+        "capacete de protecao",
+        "capacete de proteção",
+        "capacete EPI"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "ppe-safety",
+      "specification": "Workplace PPE and safety-equipment family. Exact type, protection class, standard, size, quantity, brand, certification and stock require confirmation.",
+      "keywords": [
+        "safety",
+        "segurança",
+        "seguranca",
+        "PPE",
+        "EPI",
+        "construction",
+        "industrial",
+        "facilities"
+      ],
+      "name_pt": "EPI e segurança profissional"
+    },
+    {
+      "id": "item-industrial-maintenance-consumables",
+      "name": "Industrial & maintenance consumables",
+      "aliases": [
+        "consumíveis industriais",
+        "consumiveis industriais",
+        "maintenance consumables",
+        "industrial consumables",
+        "consumíveis de manutenção",
+        "consumiveis de manutencao",
+        "consumables"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "consumables",
+      "specification": "General industrial and maintenance consumables. Exact reference, technical compatibility, packaging, quantity and stock require confirmation.",
+      "keywords": [
+        "consumables",
+        "maintenance",
+        "industrial",
+        "facilities",
+        "operations"
+      ],
+      "name_pt": "Consumíveis industriais e de manutenção"
+    },
+    {
+      "id": "item-professional-workwear-uniforms",
+      "name": "Professional workwear & uniforms",
+      "aliases": [
+        "fardamento profissional",
+        "uniformes profissionais",
+        "uniformes corporativos",
+        "uniformes escolares",
+        "uniformes de segurança",
+        "uniformes de seguranca",
+        "uniformes hotelaria",
+        "uniformes saúde",
+        "uniformes saude",
+        "uniformes indústria",
+        "uniformes industria",
+        "uniformes construção",
+        "uniformes construcao",
+        "workwear",
+        "corporate uniforms",
+        "security uniforms",
+        "hospitality uniforms",
+        "healthcare uniforms",
+        "industrial uniforms",
+        "construction workwear",
+        "sportswear"
+      ],
+      "category": "industrial-supply",
+      "subcategory": "workwear-uniforms",
+      "specification": "Professional workwear and uniform solutions. Sector, fabric, model, sizes, branding/personalisation, quantity, delivery schedule and commercial conditions require confirmation.",
+      "keywords": [
+        "uniform",
+        "workwear",
+        "fardamento",
+        "construction",
+        "industry",
+        "security",
+        "hospitality",
+        "healthcare"
+      ],
+      "name_pt": "Fardamento e uniformes profissionais"
+    },
+    {
+      "id": "item-furniture-workspaces",
+      "name": "Office, residential & hospitality furniture",
+      "aliases": [
+        "mobiliário de escritório",
+        "mobiliario de escritorio",
+        "office furniture",
+        "residential furniture",
+        "mobiliário residencial",
+        "mobiliario residencial",
+        "hotel furniture",
+        "restaurant furniture",
+        "mobiliário hoteleiro",
+        "mobiliario hoteleiro"
+      ],
+      "category": "construction",
+      "subcategory": "furniture-interiors",
+      "specification": "Furniture solutions for offices, residences, hotels and restaurants. Layout, dimensions, materials, finishes, quantity, installation and lead time require confirmation.",
+      "keywords": [
+        "furniture",
+        "mobiliário",
+        "mobiliario",
+        "office",
+        "hotel",
+        "restaurant",
+        "interiors"
+      ],
+      "name_pt": "Mobiliário e espaços"
+    },
+    {
+      "id": "item-partition-systems",
+      "name": "Integrated partition systems",
+      "aliases": [
+        "divisórias integradas",
+        "divisorias integradas",
+        "office partitions",
+        "partition systems",
+        "divisórias de escritório",
+        "divisorias de escritorio"
+      ],
+      "category": "construction",
+      "subcategory": "partitions",
+      "specification": "Integrated partition systems for corporate and interior spaces. Layout, dimensions, acoustic requirement, finish, hardware, installation and lead time require confirmation.",
+      "keywords": [
+        "partitions",
+        "divisórias",
+        "divisorias",
+        "office",
+        "interiors",
+        "acoustic"
+      ],
+      "name_pt": "Sistemas de divisórias"
+    },
+    {
+      "id": "item-floor-coverings",
+      "name": "Vinyl flooring & carpet",
+      "aliases": [
+        "pavimento vinílico",
+        "pavimento vinilico",
+        "vinyl flooring",
+        "carpet",
+        "carpete",
+        "floor coverings",
+        "revestimento de pavimento"
+      ],
+      "category": "construction",
+      "subcategory": "floor-coverings",
+      "specification": "Floor-covering family including vinyl and carpet solutions. Area, substrate, finish, traffic class, installation system, quantity and availability require confirmation.",
+      "keywords": [
+        "flooring",
+        "vinyl",
+        "carpet",
+        "interiors",
+        "office",
+        "hospitality"
+      ],
+      "name_pt": "Pavimento vinílico e carpete"
+    },
+    {
+      "id": "item-acoustic-solutions",
+      "name": "Acoustic products & solutions",
+      "aliases": [
+        "produtos acústicos",
+        "produtos acusticos",
+        "acoustic products",
+        "acoustic panels",
+        "painéis acústicos",
+        "paineis acusticos",
+        "acoustic treatment"
+      ],
+      "category": "construction",
+      "subcategory": "acoustic-solutions",
+      "specification": "Acoustic-product family for interior spaces. Acoustic objective, area, substrate, finish, fire/technical requirements, installation and lead time require confirmation.",
+      "keywords": [
+        "acoustic",
+        "acústica",
+        "acustica",
+        "interiors",
+        "office",
+        "hospitality"
+      ],
+      "name_pt": "Soluções acústicas"
+    },
+    {
+      "id": "item-metal-ceilings-technical-floors",
+      "name": "Metal ceilings & technical flooring",
+      "aliases": [
+        "tetos metálicos",
+        "tectos metálicos",
+        "tetos metalicos",
+        "metal ceilings",
+        "technical floors",
+        "pavimentos técnicos",
+        "pavimentos tecnicos",
+        "raised floors"
+      ],
+      "category": "construction",
+      "subcategory": "technical-interiors",
+      "specification": "Metal ceiling and technical-flooring systems. Module, finish, load, access, installation, area and project specification require confirmation.",
+      "keywords": [
+        "ceiling",
+        "flooring",
+        "technical",
+        "raised floor",
+        "interiors",
+        "commercial"
+      ],
+      "name_pt": "Tetos metálicos e pavimentos técnicos"
+    },
+    {
+      "id": "item-decorative-surfaces",
+      "name": "Quartz, natural stone & ultracompact surfaces",
+      "aliases": [
+        "quartzo decorativo",
+        "quartz surfaces",
+        "pedra natural",
+        "natural stone",
+        "ultracompact surfaces",
+        "superfícies ultracompactas",
+        "superficies ultracompactas",
+        "revestimento decorativo"
+      ],
+      "category": "construction",
+      "subcategory": "decorative-surfaces",
+      "specification": "Decorative surface family for walls, floors and fit-out applications. Material, thickness, finish, dimensions, fabrication, installation and availability require confirmation.",
+      "keywords": [
+        "quartz",
+        "stone",
+        "pedra",
+        "surfaces",
+        "interiors",
+        "fit-out"
+      ],
+      "name_pt": "Superfícies em quartzo, pedra e ultracompactos"
+    },
+    {
+      "id": "item-custom-kitchens-wardrobes",
+      "name": "Custom kitchens & wardrobes",
+      "aliases": [
+        "cozinhas por medida",
+        "custom kitchens",
+        "roupeiros por medida",
+        "custom wardrobes",
+        "kitchens",
+        "wardrobes",
+        "cozinhas",
+        "roupeiros"
+      ],
+      "category": "construction",
+      "subcategory": "joinery-fitout",
+      "specification": "Made-to-measure kitchen and wardrobe solutions. Site measurement, layout, carcass/door materials, hardware, finishes, installation and lead time require confirmation.",
+      "keywords": [
+        "kitchen",
+        "wardrobe",
+        "cozinha",
+        "roupeiro",
+        "joinery",
+        "interiors"
+      ],
+      "name_pt": "Cozinhas e roupeiros por medida"
+    },
+    {
+      "id": "item-blinds-curtains",
+      "name": "Blinds & curtains",
+      "aliases": [
+        "estores",
+        "cortinados",
+        "blinds",
+        "curtains",
+        "window coverings",
+        "cortinas"
+      ],
+      "category": "construction",
+      "subcategory": "window-coverings",
+      "specification": "Blind and curtain solutions for corporate, residential and hospitality spaces. Opening dimensions, fabric/material, control system, finish, installation and lead time require confirmation.",
+      "keywords": [
+        "blinds",
+        "curtains",
+        "estores",
+        "cortinados",
+        "interiors"
+      ],
+      "name_pt": "Estores e cortinados"
+    },
+    {
+      "id": "item-smart-home",
+      "name": "Smart-home solutions",
+      "aliases": [
+        "smart home",
+        "smarthome",
+        "automação residencial",
+        "automacao residencial",
+        "home automation"
+      ],
+      "category": "hvac-electrical",
+      "subcategory": "smart-home",
+      "specification": "Smart-home solution family. Functions, compatibility, electrical/integration requirements, devices, installation, commissioning and lead time require confirmation.",
+      "keywords": [
+        "automation",
+        "smart home",
+        "electrical",
+        "integration",
+        "residential"
+      ],
+      "name_pt": "Soluções Smart Home"
+    }
+  ],
+  "taxonomy": [
+    {
+      "id": "construction",
+      "name_en": "Construction materials",
+      "name_pt": "Materiais de construção",
+      "aliases": [
+        "cement",
+        "cimento",
+        "concrete",
+        "betão",
+        "betao",
+        "blocks",
+        "blocos",
+        "brick",
+        "tijolo",
+        "sand",
+        "areia",
+        "steel",
+        "ferro",
+        "rebar",
+        "varão",
+        "varao",
+        "sheet",
+        "chapa",
+        "tile",
+        "telha",
+        "paint",
+        "tinta",
+        "mortar",
+        "argamassa",
+        "pvc",
+        "pipe",
+        "tubo",
+        "mobiliário",
+        "mobiliario",
+        "furniture",
+        "divisórias",
+        "divisorias",
+        "partitions",
+        "pavimento vinílico",
+        "vinyl flooring",
+        "carpet",
+        "acoustic",
+        "acústica",
+        "quartzo",
+        "quartz",
+        "pedra natural",
+        "cozinhas",
+        "roupeiros",
+        "estores",
+        "cortinados"
+      ]
+    },
+    {
+      "id": "hvac-electrical",
+      "name_en": "HVAC & electrical",
+      "name_pt": "Climatização e elétrica",
+      "aliases": [
+        "air conditioner",
+        "ar condicionado",
+        "btu",
+        "hvac",
+        "split",
+        "compressor",
+        "refrigerant",
+        "r410",
+        "r32",
+        "cable",
+        "cabo",
+        "breaker",
+        "disjuntor",
+        "electrical",
+        "elétrica",
+        "eletrica",
+        "generator",
+        "gerador",
+        "smart home",
+        "smarthome",
+        "automação residencial",
+        "automacao residencial"
+      ]
+    },
+    {
+      "id": "tools-equipment",
+      "name_en": "Tools & equipment",
+      "name_pt": "Ferramentas e equipamentos",
+      "aliases": [
+        "tool",
+        "ferramenta",
+        "drill",
+        "berbequim",
+        "machine",
+        "máquina",
+        "maquina",
+        "equipment",
+        "equipamento",
+        "welding",
+        "solda",
+        "grinder",
+        "rebarbadora"
+      ]
+    },
+    {
+      "id": "cleaning-facilities",
+      "name_en": "Cleaning & facilities",
+      "name_pt": "Limpeza e facilities",
+      "aliases": [
+        "cleaning",
+        "limpeza",
+        "detergent",
+        "detergente",
+        "disinfectant",
+        "desinfetante",
+        "facility",
+        "facilities",
+        "hygiene",
+        "higiene"
+      ]
+    },
+    {
+      "id": "services-contractors",
+      "name_en": "Services & contractors",
+      "name_pt": "Serviços e empreiteiros",
+      "aliases": [
+        "service",
+        "serviço",
+        "servico",
+        "contractor",
+        "empreiteiro",
+        "maintenance",
+        "manutenção",
+        "manutencao",
+        "painting",
+        "pintura",
+        "installation",
+        "instalação",
+        "instalacao"
+      ]
+    },
+    {
+      "id": "industrial-supply",
+      "name_en": "Industrial supply",
+      "name_pt": "Fornecimento industrial",
+      "aliases": [
+        "industrial",
+        "valve",
+        "válvula",
+        "valvula",
+        "pump",
+        "bomba",
+        "bearing",
+        "rolamento",
+        "filter",
+        "filtro",
+        "chemical",
+        "químico",
+        "quimico",
+        "formaldehyde",
+        "formaldeído",
+        "formaldeido",
+        "cinta",
+        "cinta pp",
+        "cinta de arquear",
+        "cinta de arqueação",
+        "cinta de arqueacao",
+        "fita de arquear",
+        "fita de arqueação",
+        "fita de arqueacao",
+        "fita pp",
+        "polipropileno",
+        "polypropylene",
+        "pp strap",
+        "pp strapping",
+        "strapping",
+        "packaging",
+        "embalagem",
+        "formol",
+        "formalin",
+        "CAS 50-00-0",
+        "corrosion",
+        "corrosão",
+        "corrosao",
+        "VCI",
+        "protective coating",
+        "primer anticorrosivo",
+        "flange protection",
+        "piping protection",
+        "hydrotest",
+        "rust preventive",
+        "preservação industrial",
+        "preservacao industrial",
+        "EPI",
+        "PPE",
+        "fardamento",
+        "uniformes",
+        "workwear",
+        "consumíveis industriais",
+        "consumiveis industriais"
+      ]
+    }
+  ],
+  "public_rule": "Only curated public supply families are exposed. Prices, suppliers, stock, availability and internal commercial data are not included."
+}
