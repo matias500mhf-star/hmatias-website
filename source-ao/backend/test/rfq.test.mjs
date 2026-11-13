@@ -5,6 +5,7 @@ import {readFileSync,readdirSync} from 'node:fs';
 import catalog from '../../data/catalog.json' with {type:'json'};
 import {validateRfq,UNITS,CATEGORY_LABELS} from '../../rfq-model.js';
 import {createSourcingRequest,getSourcingRequest,listSourcingRequests,updateSourcingRequestStatus} from '../src/sourcing.js';
+import core from '../src/index.js';
 import {runMaintenance} from '../src/maintenance.js';
 
 // A real SQLite database exercises migrations, bindings, deduplication and retention.
@@ -12,6 +13,14 @@ export function testEnvironment(){
   const db=new DatabaseSync(':memory:');
   const migrations=new URL('../migrations/',import.meta.url);
   for(const file of readdirSync(migrations).filter(f=>f.endsWith('.sql')).sort())db.exec(readFileSync(new URL(file,migrations),'utf8'));
+  const seedItem=db.prepare(`INSERT INTO items(
+    id,name,name_pt,category,specification,unit,aliases_json,keywords_json,search_text,public_visible,management_mode
+  ) VALUES(?,?,?,?,?,?,?,?,?,1,'seed')`);
+  for(const item of catalog.items.filter(row=>row.id!=='item-formaldehyde')){
+    const searchText=[item.name,item.name_pt,item.specification,...(item.aliases||[]),...(item.keywords||[])].filter(Boolean).join(' ').toLowerCase();
+    seedItem.run(item.id,item.name,item.name_pt||item.name,item.category,item.specification||null,item.unit||null,
+      JSON.stringify(item.aliases||[]),JSON.stringify(item.keywords||[]),searchText);
+  }
   const adapter={prepare(sql){return {bind(...args){return {
     async run(){const result=db.prepare(sql).run(...args);return {meta:{changes:Number(result.changes)}};},
     async first(){return db.prepare(sql).get(...args)||null;},
@@ -83,6 +92,42 @@ test('every customer-visible RFQ select option satisfies the shared API contract
     const candidate={...input,items:input.items.map(item=>({...item,unit}))};
     assert.equal(validateRfq(candidate,catalog).ok,true,'RFQ unit '+unit+' must be accepted');
   }
+});
+
+test('a catalog family created and published in Ops Desk is accepted by the live RFQ validator',async()=>{
+  const {db,env}=testEnvironment();
+  const itemId='item-live-catalog-test';
+  const created=await core.fetch(new Request('https://api.test/api/admin/items',{
+    method:'POST',
+    headers:{authorization:'Bearer synthetic-test-admin-token','content-type':'application/json'},
+    body:JSON.stringify({
+      id:itemId,name:'Live catalog test item',name_pt:'Artigo de teste live',
+      category:'construction',specification:'A database-managed item',unit:'un',
+      aliases:['live test'],keywords:['dynamic'],public_visible:true
+    })
+  }),env);
+  assert.equal(created.status,201);
+
+  const input=rfqFixture();
+  input.items=[{...input.items[0],catalog_item_id:itemId,category:'construction',description:'Artigo de teste live'}];
+  const result=await createSourcingRequest(request(input),env);
+  assert.equal(result.status,201);
+  const stored=db.prepare('SELECT count(*) n FROM sourcing_requests').get().n;
+  assert.equal(stored,1);
+  db.close();
+});
+
+test('a private catalog family cannot be selected in a public RFQ',async()=>{
+  const {db,env}=testEnvironment();
+  const itemId='item-private-catalog-test';
+  db.prepare(`INSERT INTO items(id,name,category,search_text,public_visible,management_mode)
+    VALUES(?,?,?,?,0,'managed')`).run(itemId,'Private item','construction','private item');
+  const input=rfqFixture();
+  input.items=[{...input.items[0],catalog_item_id:itemId,category:'construction',description:'Private item'}];
+  const result=await createSourcingRequest(request(input),env);
+  assert.equal(result.status,400);
+  assert.equal((await result.json()).error.code,'invalid_catalog_item');
+  db.close();
 });
 
 test('RFQ persists once, encrypts qualification and restricts disclosure to admin',async()=>{
