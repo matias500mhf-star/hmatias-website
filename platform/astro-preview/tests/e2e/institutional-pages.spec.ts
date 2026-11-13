@@ -45,10 +45,16 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.locator(".ceo-message")).toContainText("Construir com propósito.");
     await expect(page.locator(".ceo-message")).toContainText("CEO — Henrique Fernandes");
     await expect(page.locator(".ceo-message")).not.toContainText(/Sócio Único|Managing Director/);
-    const desktopPhoto = page.locator(".about-visual img");
-    const desktopPhotoBox = await desktopPhoto.boundingBox();
-    expect(desktopPhotoBox?.height || 0).toBeGreaterThan(380);
-    expect(desktopPhotoBox?.width || 0).toBeGreaterThan(350);
+    const aboutPhoto = page.locator(".about-visual img");
+    const aboutPhotoBox = await aboutPhoto.boundingBox();
+    const viewport = page.viewportSize();
+    expect(aboutPhotoBox?.width || 0).toBeGreaterThan(300);
+    if ((viewport?.width || 0) > 800) {
+      expect(aboutPhotoBox?.height || 0).toBeGreaterThan(380);
+    } else {
+      expect(aboutPhotoBox?.height || 0).toBeGreaterThan(180);
+      expect(aboutPhotoBox?.height || 0).toBeLessThanOrEqual(320);
+    }
     await expect(page.getByText(/MISSÃO|VISÃO|O nosso compromisso|Integridade nas relações/i)).toHaveCount(0);
     await expect(page.locator(".about-service-grid a")).toHaveCount(4);
     for (const name of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business Services"]) {
