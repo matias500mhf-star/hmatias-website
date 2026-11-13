@@ -26,14 +26,15 @@ O protótipo gera agora 44 páginas estáticas: 22 em Português (pt-AO) e 22 em
 | Business Services | `/business-services/` | `/en/business-services/` | Seis áreas de serviço e ligações para os canais de pedido existentes |
 | Catálogo de Obras | `/catalogo-obras/` | `/en/works-catalogue/` | Doze registos fotográficos do arquivo |
 | Blog | `/blog/` | `/en/blog/` | Listagem e artigo de orientação sobre pedidos de cotação |
-| Smart RFQ | `/source-ao/smart-rfq/` | `/en/source-ao/smart-rfq/` | Formulário bilingue autónomo para Construção, Facilities e Supply; gera briefing local e oferece envio manual por e-mail ou WhatsApp |
+| SOURCE AO | `/source-ao/` | `/en/source-ao/` | Página própria de sourcing e cobertura de mercado, com percurso dedicado para RFQ multiartigo |
+| SOURCE AO RFQ | `/source-ao/smart-rfq/` | `/en/source-ao/smart-rfq/` | Formulário multiartigo bilingue; regista no backend SOURCE AO quando a API de staging estiver configurada; sem ligação à base de produção a partir do preview |
 | Acessibilidade | `/acessibilidade/` | `/en/accessibility/` | Compromisso e canal para comunicar dificuldades |
 | Privacidade | `/privacidade/` | `/en/privacy/` | Política em português e inglês, com distinção entre preview e site oficial |
 | Termos | `/termos/` | `/en/terms/` | Termos gerais em português e inglês |
 
 O alternador de idioma associa as páginas PT e EN correspondentes, incluindo os dois slugs do artigo do Blog. A tradução das páginas acima está criada, mas a revisão editorial bilingue integral e a validação de todas as ligações continuam a fazer parte da revisão final.
 
-O Smart RFQ geral é um formulário de preparação de pedido independente: recolhe os dados no navegador, valida os campos da área selecionada, gera um resumo e uma referência local e só abre o canal escolhido pelo utilizador (e-mail ou WhatsApp). Não envia dados para um servidor, não regista pedidos, não gera cotações e não confirma stock nem prazos. O formulário multiartigo, o registo e o acompanhamento do SOURCE AO continuam no fluxo operacional separado em `/source-ao/rfq.html`.
+O Smart RFQ geral é um formulário de preparação de pedido independente: recolhe os dados no navegador, valida os campos da área selecionada, gera um resumo e uma referência local e só abre o canal escolhido pelo utilizador (e-mail ou WhatsApp). Não envia dados para um servidor, não regista pedidos, não gera cotações e não confirma stock nem prazos. O formulário multiartigo e o contrato de registo do SOURCE AO foram integrados no novo percurso Astro. No preview, a API fica desactivada por omissão e só aceita uma base HTTPS de staging explicitamente configurada; o publisher oficial continua operacional até validação e aprovação da migração.
 
 ## 2. Funcionalidades que permanecem no domínio oficial
 
@@ -44,7 +45,7 @@ Estas ligações foram mantidas intencionalmente para não substituir formulári
 | Formulário de contacto principal | `https://comercialhmatiasps.com/#contacto` |
 | Pedido de orçamento Business Services | `https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business` |
 | Agendamento Business Services | `https://comercialhmatiasps.com/agendamento.html` |
-| Smart RFQ / pedidos de fornecimento operacionais | `https://comercialhmatiasps.com/source-ao/rfq.html` |
+| RFQ SOURCE AO operacional | `/source-ao/rfq.html` no domínio oficial; preview em `/source-ao/smart-rfq/` e `/en/source-ao/smart-rfq/` |
 | Formulário RFQ em inglês | `https://comercialhmatiasps.com/rfq-en.html` |
 | SOURCE AO | `/source-ao/index.html` no domínio oficial |
 | Radar de oportunidades SOURCE AO | `/source-ao/opportunity-radar.html` no domínio oficial |
