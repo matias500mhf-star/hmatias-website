@@ -14,6 +14,7 @@
   let catalogSource='unavailable';
   let catalogUpdatedAt=null;
   let catalogLastRefresh=0;
+  let catalogLastAttempt=0;
   let refreshTimer=null;
 
   const normalize=value=>(value||'')
@@ -34,6 +35,7 @@
   }
 
   async function loadCatalog(){
+    catalogLastAttempt=Date.now();
     const liveUrl=liveCatalogUrl();
     const candidates=liveUrl?[{url:liveUrl,source:'live'},{url:paths.catalog,source:'static'}]:[{url:paths.catalog,source:'static'}];
     for(const candidate of candidates){
@@ -52,7 +54,6 @@
         // Keep the last-known-good live catalogue instead of replacing it with
         // an older static snapshot during a temporary API outage.
         if(candidate.source==='live'&&catalogSource==='live'&&db.catalog.items.length){
-          catalogLastRefresh=Date.now();
           return false;
         }
       }
@@ -69,7 +70,7 @@
     if(refreshTimer||!liveCatalogUrl())return;
     refreshTimer=setInterval(()=>{if(document.visibilityState==='visible')refreshCatalog();},CATALOG_REFRESH_MS);
     document.addEventListener('visibilitychange',()=>{
-      if(document.visibilityState==='visible'&&Date.now()-catalogLastRefresh>=CATALOG_REFRESH_MS)refreshCatalog();
+      if(document.visibilityState==='visible'&&Date.now()-catalogLastAttempt>=CATALOG_REFRESH_MS)refreshCatalog();
     });
   }
 
@@ -147,5 +148,5 @@
     });
   }
 
-  window.SourceAOData={init,search,classify,activeOpportunities,refreshCatalog,isReady:()=>ready,db:()=>db,normalize,catalogStatus:()=>({source:catalogSource,updated_at:catalogUpdatedAt,last_refresh_at:catalogLastRefresh?new Date(catalogLastRefresh).toISOString():null})};
+  window.SourceAOData={init,search,classify,activeOpportunities,refreshCatalog,isReady:()=>ready,db:()=>db,normalize,catalogStatus:()=>({source:catalogSource,updated_at:catalogUpdatedAt,last_refresh_at:catalogLastRefresh?new Date(catalogLastRefresh).toISOString():null,last_attempt_at:catalogLastAttempt?new Date(catalogLastAttempt).toISOString():null})};
 })();
