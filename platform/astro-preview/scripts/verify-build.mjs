@@ -206,7 +206,9 @@ assert.match(radarScript, /\/source-ao\/smart-rfq\//, "Portuguese Radar must pre
 assert.match(radarScript, /\/en\/source-ao\/smart-rfq\//, "English Radar must prefill Smart RFQ internally");
 const partnerScript = readFileSync(new URL("../../../source-ao/partner-application.js", import.meta.url), "utf8");
 assert.match(partnerScript, /privacy_consent:consent/, "Partner application must transmit explicit privacy consent");
-assert.match(sourceRfqScript, /fetch\(window\.SOURCE_AO_RUNTIME\?\.catalogUrl\|\|'\/source-ao\/data\/catalog\.json'/, "SOURCE AO RFQ must support a configured catalogue endpoint with a local fallback");
+assert.match(sourceRfqScript, /apiBase\(\)\+'\/api\/catalog'/, "SOURCE AO RFQ must prefer the live catalog API when configured");
+assert.match(sourceRfqScript, /staticCatalogUrl=.*'\/source-ao\/data\/catalog\.json'/, "SOURCE AO RFQ must retain the local catalogue fallback");
+assert.match(sourceRfqScript, /loadCatalog\(staticCatalogUrl\)/, "SOURCE AO RFQ must retry the local catalogue when the live API is unavailable");
 assert.match(sourceRfqScript, /fetch\(apiBase\(\)\+'\/api\/sourcing-requests'/, "SOURCE AO RFQ must post requests to its configured API");
 assert.match(sourceRfqScript, /result\?\.ok!==true/, "SOURCE AO RFQ must require a confirmed API response");
 assert.match(sourceRfqScript, /trackingUrl\(result\.request\.status_path\)/, "SOURCE AO RFQ must validate and expose the private tracking link");
