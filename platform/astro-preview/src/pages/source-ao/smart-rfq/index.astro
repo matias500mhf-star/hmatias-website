@@ -18,7 +18,7 @@ try {
   description="Registe um pedido de sourcing multiartigo, com especificações, quantidades, destino e prazo. A HMATIAS valida as opções de fornecimento antes de apresentar uma proposta."
 >
   <div class="source-rfq-preview-bar">
-    <a href="/source-ao/" aria-label="Voltar ao SOURCE AO">SOURCE AO</a>
+    <a id="sourceAoPreviewHomeLink" href="/source-ao/" aria-label="Voltar ao SOURCE AO">SOURCE AO</a>
     <span>PEDIDO DE SOURCING · HMATIAS</span>
   </div>
   {!sourceAoApiBase && <p class="source-rfq-stage-note" role="status">Pré-visualização isolada: o registo online só será activado quando a API de staging estiver configurada. Esta página não envia pedidos para a base de dados de produção.</p>}
