@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync} from 'node:fs';
 import catalog from '../../data/catalog.json' with {type:'json'};
+import publicCatalog from '../../data/public-catalog.json' with {type:'json'};
 import {validateRfq,UNITS,CATEGORY_LABELS} from '../../rfq-model.js';
 import {createSourcingRequest,getSourcingRequest,listSourcingRequests,updateSourcingRequestStatus} from '../src/sourcing.js';
 import core from '../src/index.js';
@@ -58,6 +59,8 @@ test('every customer-visible RFQ select option satisfies the shared API contract
   assert.ok(publicScript.includes('Artigo / material / serviço'),'the required description must refer to the requested item');
   assert.ok(publicScript.includes("PUBLIC_EXCLUDED_CATALOG_ITEMS=new Set(['item-formaldehyde'])"),'formaldehyde must not be offered or inferred as a public catalogue family');
   assert.ok(publicScript.includes('!PUBLIC_EXCLUDED_CATALOG_ITEMS.has(item.id)'),'public catalogue and inference must exclude restricted families');
+  assert.equal(publicCatalog.items.some(item=>item.id==='item-formaldehyde'),false,'static public fallback must exclude the restricted family');
+  assert.equal(publicScript.includes("'/source-ao/data/public-catalog.json'"),true,'RFQ must default to the sanitised static public catalogue');
 
   const source=readFileSync(new URL('../../rfq.js',import.meta.url),'utf8');
   const review=readFileSync(new URL('../../requests.js',import.meta.url),'utf8');
