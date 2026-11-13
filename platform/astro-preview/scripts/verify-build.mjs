@@ -131,27 +131,31 @@ assert.equal(supplyImgWithAltCount, supplyImgCount, "Every Supply page image mus
 assert.equal((supplyHtml.match(/class="supply-evidence-photo"/g) || []).length, 2, "Two Supply evidence photographs are expected");
 
 const smartRfqPath = join(outDir, "source-ao", "smart-rfq", "index.html");
-assert.ok(existsSync(smartRfqPath), "Smart RFQ page must be generated");
+assert.ok(existsSync(smartRfqPath), "SOURCE AO Smart RFQ page must be generated");
 const smartRfqHtml = readFileSync(smartRfqPath, "utf8");
-assert.match(smartRfqHtml, /Transforme a necessidade num pedido claro/i, "Smart RFQ heading is missing");
-assert.match(smartRfqHtml, /id="smartRfqForm"/, "The browser-based Smart RFQ form is missing");
-assert.match(smartRfqHtml, /id="rfqService"/, "Smart RFQ service selector is missing");
-assert.match(smartRfqHtml, /id="rfqEmailSend"/, "Smart RFQ email handoff is missing");
-assert.match(smartRfqHtml, /id="rfqWhatsapp"/, "Smart RFQ WhatsApp handoff is missing");
-assert.match(smartRfqHtml, /Nada é enviado até escolher e-mail ou WhatsApp/i, "Smart RFQ manual-send disclosure is missing");
-assert.match(smartRfqHtml, /A referência é gerada apenas no navegador/i, "Smart RFQ local reference disclosure is missing");
-assert.doesNotMatch(smartRfqHtml, /Até 20 linhas|ligação privada de acompanhamento|source-ao\/rfq\.html/i, "Supply-only Source AO claims must not appear in the general Smart RFQ");
-assert.match(smartRfqHtml, /\/business-services\//, "Smart RFQ must link to the Business Services page");
-const smartRfqImgCount = (smartRfqHtml.match(/<img\b/g) || []).length;
-const smartRfqImgWithAltCount = (smartRfqHtml.match(/<img\b[^>]*\balt=/g) || []).length;
-assert.equal(smartRfqImgWithAltCount, smartRfqImgCount, "Every Smart RFQ page image must have an alt attribute");
+assert.match(smartRfqHtml, /<h1[^>]*data-en="What do you need to source\?"/, "SOURCE AO RFQ heading must describe the sourcing task");
+for (const id of ["rfqForm", "rfqItems", "addItem", "deliveryFields", "contactFields", "rfqReview", "rfqConsent", "rfqSubmit", "rfqResult", "rfqNext", "rfqBack", "catalogStatus", "rfqLanguage"]) {
+  assert.ok(smartRfqHtml.includes('id="' + id + '"'), "SOURCE AO RFQ control is missing: " + id);
+}
+assert.match(smartRfqHtml, /Your item list|A sua lista de artigos/, "RFQ item stage is missing");
+assert.match(smartRfqHtml, /Delivery and purchasing needs|Entrega e condições do pedido/, "RFQ delivery stage is missing");
+assert.match(smartRfqHtml, /Who should receive the proposal|Quem deve receber a proposta/, "RFQ contact stage is missing");
+assert.match(smartRfqHtml, /Pré-visualização isolada|isolated preview/i, "RFQ preview must disclose its isolated staging state");
+assert.doesNotMatch(smartRfqHtml, /id="smartRfqForm"|id="rfqEmailSend"|id="rfqWhatsapp"/, "Obsolete browser-only Smart RFQ controls must not return");
+assert.doesNotMatch(smartRfqHtml, /comercialhmatiasps\.com\/(?:rfq|rfq-en)\.html/i, "SOURCE AO RFQ must not link to the legacy RFQ pages");
+
+const sourceRfqScript = readFileSync(join(projectRoot, "..", "..", "source-ao", "rfq.js"), "utf8");
+assert.match(sourceRfqScript, /fetch\('\/source-ao\/data\/catalog\.json'/, "SOURCE AO RFQ must load the local catalogue endpoint");
+assert.match(sourceRfqScript, /fetch\(apiBase\(\)\+'\/api\/sourcing-requests'/, "SOURCE AO RFQ must post requests to its configured API");
+assert.match(sourceRfqScript, /result\?\.ok!==true/, "SOURCE AO RFQ must require a confirmed API response");
+assert.match(sourceRfqScript, /trackingUrl\(result\.request\.status_path\)/, "SOURCE AO RFQ must validate and expose the private tracking link");
 
 const englishSmartRfqHtml = readFileSync(join(outDir, "en", "source-ao", "smart-rfq", "index.html"), "utf8");
-assert.match(englishSmartRfqHtml, /Turn your requirement into a clear request/i, "English Smart RFQ heading is missing");
-assert.match(englishSmartRfqHtml, /id="smartRfqForm"/, "English Smart RFQ form is missing");
-assert.match(englishSmartRfqHtml, /Nothing is sent until you choose email or WhatsApp/i, "English Smart RFQ manual-send disclosure is missing");
-assert.doesNotMatch(englishSmartRfqHtml, /comercialhmatiasps\.com\/(?:rfq-en|source-ao\/rfq)\.html/i, "English Smart RFQ must not redirect to the official legacy form");
-
+assert.match(englishSmartRfqHtml, /<html lang="en"/, "English SOURCE AO RFQ must declare its language");
+assert.match(englishSmartRfqHtml, /data-en="What do you need to source\?"/, "English SOURCE AO RFQ heading is missing");
+assert.match(englishSmartRfqHtml, /id="rfqForm"/, "English SOURCE AO RFQ form is missing");
+assert.match(englishSmartRfqHtml, /id="rfqSubmit"/, "English SOURCE AO RFQ submit control is missing");
+assert.doesNotMatch(englishSmartRfqHtml, /comercialhmatiasps\.com\/(?:rfq|rfq-en)\.html/i, "English SOURCE AO RFQ must not redirect to the official legacy form");
 const businessPath = join(outDir, "business-services", "index.html");
 assert.ok(existsSync(businessPath), "Business Services page must be generated");
 const businessHtml = readFileSync(businessPath, "utf8");
@@ -334,7 +338,7 @@ const englishFacilities = readFileSync(join(outDir, "en", "facilities", "index.h
 assert.match(englishFacilities, /href="https:\/\/wa\.me\/244948806673\?text=/, "English Facilities WhatsApp enquiry must include a prefilled service brief");
 
 const englishArticle = readFileSync(join(outDir, "en", "blog", "how-to-prepare-a-comparable-supply-quotation", "index.html"), "utf8");
-assert.ok(englishArticle.includes('href="https://comercialhmatiasps.com/rfq-en.html"'), "English article must link to the English operational RFQ form");
+assert.ok(englishArticle.includes('href="/en/source-ao/smart-rfq/"'), "English article must link to the English SOURCE AO RFQ page");
 
 const htmlImgCount = (html.match(/<img\b/g) || []).length;
 const htmlImgWithAltCount = (html.match(/<img\b[^>]*\balt=/g) || []).length;
