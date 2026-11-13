@@ -22,7 +22,7 @@ const dateLabel = post.data.pubDate.toLocaleDateString("en", { day:"2-digit", mo
       <p class="eyebrow"><span class="eyebrow-line"></span> {post.data.category.toUpperCase()}</p>
       <h1 id="pages-en-blog-slug-section-1-heading">{post.data.title}</h1>
       <p class="article-deck">{post.data.description}</p>
-      <div class="article-meta"><span>{post.data.author.toUpperCase()}</span><time datetime={post.data.pubDate.toISOString()}>{dateLabel}</time></div>
+      <div class="article-meta"><span>{post.data.author.toUpperCase()}</span><time datetime={post.data.pubDate.toISOString()}>{dateLabel}</time><span>{post.data.readingMinutes} min read</span><span>{post.data.contentType === "case-study" ? "Illustrative case study" : "Technical guide"}</span></div>
     </section>
     <article class="article-content">
       <Content />
