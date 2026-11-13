@@ -185,7 +185,7 @@ for (const [route, language, privacyHref, languageHref] of partnerRoutes) {
 }
 
 const lighthouseConfig = readFileSync(new URL("../lighthouserc.cjs", import.meta.url), "utf8");
-const lighthouseRoutes = [...lighthouseConfig.matchAll(/http:\/\/127\\.0\\.0\\.1:4321([^"]+)/g)].map((match) => match[1]);
+const lighthouseRoutes = [...lighthouseConfig.matchAll(/http:\/\/127\.0\.0\.1:4321([^"]+)/g)].map((match) => match[1]);
 assert.equal(lighthouseRoutes.length, 50, "Lighthouse must audit all 50 generated PT/EN routes");
 assert.equal(new Set(lighthouseRoutes).size, 50, "Lighthouse route list must not contain duplicates");
 for (const route of [
