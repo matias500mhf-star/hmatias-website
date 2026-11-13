@@ -72,12 +72,12 @@ export async function listPublicCatalog(request,env){
 
   try{
     const result=await env.SOURCE_AO_DB.prepare(`
-      SELECT id,name,name_pt,category,specification,unit,aliases_json,keywords_json,updated_at
+      SELECT id,name,name_pt,category,specification,unit,aliases_json,keywords_json,public_visible,updated_at
       FROM items
       WHERE public_visible=1 AND id NOT IN ('item-formaldehyde')
       ORDER BY category ASC,name ASC
     `).all();
-    const rows=result.results||[];
+    const rows=(result.results||[]).filter(row=>Number(row.public_visible)===1&&!PUBLIC_EXCLUDED_ITEMS.has(row.id));
     const timestamps=rows.map(row=>row.updated_at).filter(Boolean).sort();
     return response(env,{
       ok:true,
@@ -152,7 +152,7 @@ export async function updateCatalogItem(request,env,itemId){
     await env.SOURCE_AO_DB.prepare(`
       UPDATE items
       SET name=?,name_pt=?,category=?,specification=?,unit=?,aliases_json=?,keywords_json=?,
-          search_text=?,public_visible=?,updated_at=CURRENT_TIMESTAMP
+          search_text=?,public_visible=?,management_mode='managed',updated_at=CURRENT_TIMESTAMP
       WHERE id=?
     `).bind(
       name,namePt,category,specification,unit,JSON.stringify(aliases),JSON.stringify(keywords),
