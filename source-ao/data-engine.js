@@ -7,8 +7,8 @@
     registry:'data/source-registry.json'
   };
   const CATALOG_REFRESH_MS=5*60*1000;
-  const apiBase=()=>String(window.SOURCE_AO_RUNTIME?.apiBase||'').replace(/\\/$/,'');
-  const liveCatalogUrl=()=>/^https:\\/\\//i.test(apiBase())?apiBase()+'/api/catalog':'';
+  const apiBase=()=>String(window.SOURCE_AO_RUNTIME?.apiBase||'').replace(/\/$/,'');
+  const liveCatalogUrl=()=>/^https:\/\//i.test(apiBase())?apiBase()+'/api/catalog':'';
   const db={catalog:{items:[],taxonomy:[]},opportunities:{opportunities:[]},registry:{source_types:[],verification_rules:{}}};
   let ready=false;
   let catalogSource='unavailable';
