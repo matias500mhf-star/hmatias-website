@@ -38,7 +38,8 @@ const { apiBase = "" } = Astro.props;
 <script is:inline define:vars={{ apiBase }}>
   window.SOURCE_AO_RUNTIME = Object.freeze({
     environment: "preview",
-    apiBase: typeof apiBase === "string" ? apiBase : ""
+    apiBase: typeof apiBase === "string" ? apiBase : "",
+    catalogUrl: "/api/source-ao/catalog.json"
   });
 </script>
 <script>
