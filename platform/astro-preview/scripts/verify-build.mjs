@@ -144,7 +144,7 @@ assert.match(smartRfqHtml, /Pré-visualização isolada|isolated preview/i, "RFQ
 assert.doesNotMatch(smartRfqHtml, /id="smartRfqForm"|id="rfqEmailSend"|id="rfqWhatsapp"/, "Obsolete browser-only Smart RFQ controls must not return");
 assert.doesNotMatch(smartRfqHtml, /comercialhmatiasps\.com\/(?:rfq|rfq-en)\.html/i, "SOURCE AO RFQ must not link to the legacy RFQ pages");
 
-const sourceRfqScript = readFileSync(join(projectRoot, "..", "..", "source-ao", "rfq.js"), "utf8");
+const sourceRfqScript = readFileSync(new URL("../../../source-ao/rfq.js", import.meta.url), "utf8");
 assert.match(sourceRfqScript, /fetch\('\/source-ao\/data\/catalog\.json'/, "SOURCE AO RFQ must load the local catalogue endpoint");
 assert.match(sourceRfqScript, /fetch\(apiBase\(\)\+'\/api\/sourcing-requests'/, "SOURCE AO RFQ must post requests to its configured API");
 assert.match(sourceRfqScript, /result\?\.ok!==true/, "SOURCE AO RFQ must require a confirmed API response");
