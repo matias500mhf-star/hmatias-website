@@ -32,23 +32,9 @@ import { company } from "../../../data/site";
       <div class="credibility-limits-copy"><p class="section-kicker">03 / COMMERCIAL TRANSPARENCY</p><h2 id="pages-en-credibility-index-section-4-heading">Information before<br /><em>any commitment.</em></h2></div>
       <div class="credibility-limits-text"><p>HMATIAS Supply operates on a request basis. Stock is not presented as guaranteed availability without confirmation. Stock status, origin, price, lead time and logistics are checked for each request.</p><p>For construction, remodelling and maintenance, scope and conditions depend on the technical and operational assessment applicable to the requested work.</p><p>Proposals should identify the service or supply, agreed conditions and relevant limitations before acceptance.</p></div>
     </section>
-    <section class="credibility-dossier section-pad" aria-labelledby="pages-en-credibility-index-section-5-heading">
-      <div class="credibility-dossier-copy">
-        <p class="section-kicker">04 / INSTITUTIONAL DOSSIER</p>
-        <h2 id="pages-en-credibility-index-section-5-heading">The company,<br /><em>clearly documented.</em></h2>
-        <p>Consult the institutional dossier for a consolidated view of HMATIAS' legal identity, service areas, documented work records, operating method and official contacts.</p>
-      </div>
-      <article class="dossier-download">
-        <p class="section-kicker">2026 EDITION</p>
-        <h3>HMATIAS Institutional Dossier</h3>
-        <p>A structured company presentation for procurement teams, prospective clients, partners and institutional enquiries.</p>
-        <a href={company.dossierEnUrl}>View institutional dossier <span aria-hidden="true">↗</span></a>
-        <small>Print-ready page · Browser option to save as PDF</small>
-      </article>
-    </section>
 
     <section class="credibility-contact section-pad" aria-labelledby="pages-en-credibility-index-section-6-heading">
-      <div><p class="section-kicker">05 / OFFICIAL CONTACT</p><h2 id="pages-en-credibility-index-section-6-heading">Speak directly<br /><em>with HMATIAS.</em></h2><p>To verify company details, submit a request or ask for institutional information, use the company's official contact channels.</p></div>
+      <div><p class="section-kicker">04 / OFFICIAL CONTACT</p><h2 id="pages-en-credibility-index-section-6-heading">Speak directly<br /><em>with HMATIAS.</em></h2><p>To verify company details, submit a request or ask for institutional information, use the company's official contact channels.</p></div>
       <div class="credibility-contact-links">
         <a href={"mailto:"+company.commercialEmail}>Commercial email <strong>{company.commercialEmail} ↗</strong></a>
         <a href={"mailto:"+company.institutionalEmail}>Institutional email <strong>{company.institutionalEmail} ↗</strong></a>
@@ -92,18 +78,7 @@ import { company } from "../../../data/site";
 .credibility-contact-links > a { display:flex; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid #b9d8ed; font-size:11px; }
 .credibility-contact-links strong { font-weight:650; text-align:right; overflow-wrap:anywhere; }
 .credibility-contact-links > a:hover { color:var(--hm-blue); }
-.credibility-dossier { display:grid; grid-template-columns:.9fr 1.1fr; align-items:center; gap:clamp(35px,7vw,95px); background:var(--hm-sky-soft); }
-.credibility-dossier-copy h2 { margin:22px 0 0; font-size:clamp(35px,4.4vw,58px); line-height:1.08; font-weight:520; letter-spacing:-.06em; }
-.credibility-dossier-copy h2 em { color:var(--hm-blue); font-family:var(--hm-serif); font-weight:400; }
-.credibility-dossier-copy > p:last-child { max-width:560px; margin:20px 0 0; color:var(--hm-muted); font-size:12px; line-height:1.9; }
-.dossier-download { padding:clamp(24px,3.5vw,40px); background:var(--hm-paper); border:1px solid #b9d8ed; }
-.dossier-download h3 { margin:18px 0 10px; font-size:20px; letter-spacing:-.035em; }
-.dossier-download > p:not(.section-kicker) { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
-.dossier-download > a { display:flex; justify-content:space-between; gap:20px; margin-top:25px; padding-bottom:10px; color:var(--hm-blue); border-bottom:1px solid var(--hm-blue); font-size:11px; font-weight:750; }
-.dossier-download small { display:block; margin-top:12px; color:var(--hm-muted); font-size:9px; line-height:1.6; }
-@media (max-width:800px) {
-  .credibility-identity,.credibility-method,.credibility-limits,.credibility-dossier,.credibility-contact { grid-template-columns:1fr; gap:30px; }
-}
+
 @media (max-width:520px) {
   .identity-card { padding:22px 18px; }
   .identity-card dl div { grid-template-columns:1fr; gap:5px; }
