@@ -53,7 +53,7 @@ for (const project of ["Galpão com estrutura metálica", "Preparação de terre
 const blogPath = join(outDir, "blog", "index.html");
 assert.ok(existsSync(blogPath), "Blog page must be generated");
 const blogHtml = readFileSync(blogPath, "utf8");
-assert.match(blogHtml, /Guias práticos para/, "Blog page content is missing");
+assert.match(blogHtml, /Perspetivas empresariais/, "Blog page content is missing");
 assert.ok(blogHtml.includes("/blog/como-preparar-um-pedido-de-cotacao/"), "Blog must link to its published Supply guide");
 assert.ok(!blogHtml.includes("EM PREPARAÇÃO"), "The blog must not present the featured article as a placeholder");
 
