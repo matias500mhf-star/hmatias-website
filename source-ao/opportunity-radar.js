@@ -447,17 +447,10 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded',async()=>{
-    await window.SourceAOData?.init();
-    const local=window.SourceAOData?.activeOpportunities?.()||[];
-    localById=new Map(local.map(row=>[row.id,row]));
-    opportunities=local.filter(row=>inferredCountry(row)==='AO');
-    syncState='syncing';
-    applyLanguage();
-    await refreshLiveData();
-    await refreshAutomationStatus();
-
-    $('[data-market]').forEach(btn=>btn.addEventListener('click',()=>{
+  document.addEventListener('DOMContentLoaded',()=>{
+    // Bind controls synchronously: the live feed may take time to initialise.
+    // A missing optional market filter must never prevent the PT/EN control.
+    $$('[data-market]').forEach(btn=>btn.addEventListener('click',()=>{
       market=btn.dataset.market;
       $$('[data-market]').forEach(b=>b.classList.toggle('active',b===btn));
       render();
@@ -476,7 +469,10 @@
       query=event.target.value.trim();
       render();
     });
-    $('#langToggle')?.addEventListener('click',()=>{lang=lang==='pt'?'en':'pt';applyLanguage();});
+    $('#langToggle')?.addEventListener('click',()=>{
+      lang=lang==='pt'?'en':'pt';
+      applyLanguage();
+    });
     $('#refreshRadar')?.addEventListener('click',()=>refreshLiveData());
 
     setInterval(()=>{
@@ -492,6 +488,26 @@
         refreshLiveData();
         refreshAutomationStatus();
       }
+    });
+
+    syncState='syncing';
+    applyLanguage();
+    render();
+    updateSyncUI();
+
+    (async()=>{
+      await window.SourceAOData?.init();
+      const local=window.SourceAOData?.activeOpportunities?.()||[];
+      localById=new Map(local.map(row=>[row.id,row]));
+      opportunities=local.filter(row=>inferredCountry(row)==='AO');
+      render();
+      await refreshLiveData();
+      await refreshAutomationStatus();
+    })().catch(error=>{
+      console.warn('[Source AO Radar] initialisation failed',error);
+      syncState='fallback';
+      render();
+      updateSyncUI();
     });
   });
 })();
