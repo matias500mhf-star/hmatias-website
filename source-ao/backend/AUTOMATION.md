@@ -15,7 +15,7 @@ The SOURCE AO Radar requests live opportunities from the API and refreshes its v
 
 ## What remains release-driven
 
-The HMATIAS institutional pages and product imagery remain release assets. The SOURCE AO product-family catalogue now has a live database-backed path: the RFQ prefers `GET /api/catalog` and falls back to the versioned static catalogue if the API is unavailable. The backend validates each RFQ against the same public-visible D1 records, so a newly published family is accepted without a website rebuild. This catalogue is not a stock or supplier inventory.
+The HMATIAS institutional pages and product imagery remain release assets. The SOURCE AO product-family catalogue now has a live database-backed path: the RFQ prefers `GET /api/catalog` and falls back to the parity-checked `source-ao/data/public-catalog.json` projection if the API is unavailable. The backend validates each RFQ against the same public-visible D1 records, so a newly published family is accepted without a website rebuild. This catalogue is not a stock or supplier inventory.
 
 Prices, stock, supplier lead times and transport conditions must never be inferred from a catalogue entry or automatically published as confirmed facts. They require current evidence and appropriate commercial approval.
 
