@@ -25,6 +25,12 @@ assert.match(html, /Voltar ao topo/, "Footer back-to-top link is missing");
 assert.match(html, /mailto:geral@comercialhmatiasps\.com/, "Footer commercial mail link is missing");
 assert.match(html, /tel:\+244948806673/, "Footer telephone link is missing");
 assert.match(html, /SOURCE AO/, "Source AO footer link is missing");
+const sourceAoLanding = readFileSync(join(outDir, "source-ao", "index.html"), "utf8");
+assert.ok(sourceAoLanding.includes('href="/source-ao/radar/"'), "SOURCE AO landing page must link to the opportunity Radar");
+assert.ok(sourceAoLanding.includes('href="/source-ao/parceiros/"'), "SOURCE AO landing page must link to the partner application");
+const sourceAoLandingEn = readFileSync(join(outDir, "en", "source-ao", "index.html"), "utf8");
+assert.ok(sourceAoLandingEn.includes('href="/en/source-ao/radar/"'), "English SOURCE AO landing page must link to the opportunity Radar");
+assert.ok(sourceAoLandingEn.includes('href="/en/source-ao/partners/"'), "English SOURCE AO landing page must link to the partner application");
 assert.match(html, /Blog · Perspetivas empresariais/, "Blog footer link is missing");
 assert.match(html, /KARTA Wallet · Projeto Alpha/, "KARTA Alpha project footer link is missing");
 assert.match(html, /href="\/estaleiro\//, "Footer project link must point to the Integrated Yard preview");
@@ -271,7 +277,7 @@ assert.match(compiledCss, /HMATIAS IBM Plex Mono/, "Local IBM Plex Mono utility 
 assert.ok(assets.some((file) => file.includes("manrope-latin-variable")), "Manrope font asset must be emitted");
 assert.ok(assets.some((file) => file.includes("ibm-plex-mono-latin-600")), "IBM Plex Mono font asset must be emitted");
 
-for (const route of ["construcao", "facilities", "coberturas-industriais", "limpeza-pos-obra", "fornecimento-de-epi-e-fardamento", "remodelacao-de-escritorios", "supply", "business-services", "catalogo-obras", "empresa", "credibilidade", "blog", "blog/como-preparar-um-pedido-de-cotacao", "acessibilidade", "privacidade", "termos", "source-ao/smart-rfq"]) {
+for (const route of ["construcao", "facilities", "coberturas-industriais", "limpeza-pos-obra", "fornecimento-de-epi-e-fardamento", "remodelacao-de-escritorios", "supply", "business-services", "catalogo-obras", "empresa", "credibilidade", "blog", "blog/como-preparar-um-pedido-de-cotacao", "acessibilidade", "privacidade", "termos", "source-ao/smart-rfq", "source-ao/radar", "source-ao/parceiros"]) {
   const content = readFileSync(join(outDir, route, "index.html"), "utf8");
   assert.doesNotMatch(
     content,
