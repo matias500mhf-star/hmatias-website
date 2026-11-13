@@ -60,8 +60,6 @@ export const company = {
   privacyUrl: "/privacidade/",
   termsUrl: "/termos/",
   aboutUrl: "/empresa/",
-  dossierUrl: "/dossier-institucional/",
-  dossierEnUrl: "/en/institutional-dossier/",
   credibilityUrl: "/credibilidade/",
   smartRfqUrl: "/source-ao/smart-rfq/",
   sourceAoRfqUrl: "/source-ao/smart-rfq/",
