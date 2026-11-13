@@ -148,38 +148,40 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.getByText(/does not submit a server request or register an order/)).toBeVisible();
   });
 
-  test("specialist service pages preserve scope and preselect the Smart RFQ", async ({ page }) => {
+  test("specialist service pages prefill the SOURCE AO request category and description", async ({ page }) => {
     const pages = [
-      ["/coberturas-industriais/", /Coberturas industriais: avaliação/, "construction"],
-      ["/limpeza-pos-obra/", /Limpeza pós-obra para espaços empresariais/, "facilities"],
-      ["/fornecimento-de-epi-e-fardamento/", /Fornecimento de EPI e fardamento/, "supply"],
-      ["/remodelacao-de-escritorios/", /Remodelação de escritórios e espaços comerciais/, "construction"],
+      ["/coberturas-industriais/", /Coberturas industriais: avaliação/, "construction", "Coberturas industriais: avaliação, reparação e manutenção."],
+      ["/limpeza-pos-obra/", /Limpeza pós-obra para espaços empresariais/, "cleaning-facilities", "Limpeza pós-obra para espaços empresariais."],
+      ["/fornecimento-de-epi-e-fardamento/", /Fornecimento de EPI e fardamento/, "industrial-supply", "Fornecimento de EPI e fardamento para empresas."],
+      ["/remodelacao-de-escritorios/", /Remodelação de escritórios e espaços comerciais/, "construction", "Remodelação de escritórios e espaços comerciais."],
     ] as const;
-    for (const [route, heading, service] of pages) {
+    for (const [route, heading, category, description] of pages) {
       await page.goto(route);
       await expect(page.getByRole("heading", { level: 1 })).toContainText(heading);
       await expect(page.locator(".specialist-condition")).toBeVisible();
       await page.locator(".specialist-actions .button").click();
-      await expect(page.locator("#rfqService")).toHaveValue(service);
-      await expect(page.locator("#rfqProject")).not.toHaveValue("");
+      await expect(page).toHaveURL(/\/source-ao\/smart-rfq\//);
+      await expect(page.locator(".rfq-item .item-category")).toHaveValue(category);
+      await expect(page.locator(".rfq-item .item-description")).toHaveValue(description);
     }
   });
 
-  test("specialist English pages expose reciprocal language links and the correct RFQ area", async ({ page }) => {
+  test("specialist English pages prefill the English SOURCE AO request", async ({ page }) => {
     const pages = [
-      ["/en/industrial-roofing/", /Industrial roofing/, "/coberturas-industriais/", "construction"],
-      ["/en/post-construction-cleaning/", /Post-construction cleaning/, "/limpeza-pos-obra/", "facilities"],
-      ["/en/ppe-workwear/", /PPE and workwear supply/, "/fornecimento-de-epi-e-fardamento/", "supply"],
-      ["/en/office-remodelling/", /Office and commercial premises remodelling/, "/remodelacao-de-escritorios/", "construction"],
+      ["/en/industrial-roofing/", /Industrial roofing/, "/coberturas-industriais/", "construction", "Industrial roofing: assessment, repair and maintenance."],
+      ["/en/post-construction-cleaning/", /Post-construction cleaning/, "/limpeza-pos-obra/", "cleaning-facilities", "Post-construction cleaning for business premises."],
+      ["/en/ppe-workwear/", /PPE and workwear supply/, "/fornecimento-de-epi-e-fardamento/", "industrial-supply", "PPE and workwear supply for businesses."],
+      ["/en/office-remodelling/", /Office and commercial premises remodelling/, "/remodelacao-de-escritorios/", "construction", "Office and commercial premises remodelling."],
     ] as const;
-    for (const [route, heading, portugueseRoute, service] of pages) {
+    for (const [route, heading, portugueseRoute, category, description] of pages) {
       await page.goto(route);
       await expect(page.locator("html")).toHaveAttribute("lang", "en");
       await expect(page.getByRole("heading", { level: 1 })).toContainText(heading);
       await expect(page.locator(".language-switch")).toHaveAttribute("href", portugueseRoute);
       await page.locator(".specialist-actions .button").click();
-      await expect(page.locator("#rfqService")).toHaveValue(service);
-      await expect(page.locator("#rfqProject")).not.toHaveValue("");
+      await expect(page.locator("html")).toHaveAttribute("lang", "en");
+      await expect(page.locator(".rfq-item .item-category")).toHaveValue(category);
+      await expect(page.locator(".rfq-item .item-description")).toHaveValue(description);
     }
   });
 
