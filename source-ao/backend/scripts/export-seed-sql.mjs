@@ -27,6 +27,7 @@ const catalog=read('catalog.json').items||[];
 const observations=read('observations.json').observations||[];
 const services=read('services.json').providers||[];
 const opportunities=read('opportunities.json').opportunities||[];
+const PUBLIC_EXCLUDED_CATALOG_ITEMS=new Set(['item-formaldehyde']);
 
 const sql=[];
 sql.push('PRAGMA foreign_keys = ON;');
@@ -56,10 +57,12 @@ for(const s of suppliers){
 }
 
 for(const item of catalog){
-  const searchText=normalize([item.name,item.specification,...(item.aliases||[]),...(item.keywords||[])].join(' '));
-  upsert('items','id,name,category,specification,unit,aliases_json,search_text',[
-    esc(item.id),esc(item.name),esc(item.category),esc(item.specification),esc(item.unit),json(item.aliases),esc(searchText)
-  ]);
+  const searchText=normalize([item.name,item.name_pt,item.specification,...(item.aliases||[]),...(item.keywords||[])].join(' '));
+  const publicVisible=item.public_visible===false||PUBLIC_EXCLUDED_CATALOG_ITEMS.has(item.id)?0:1;
+  upsert('items','id,name,name_pt,category,specification,unit,aliases_json,keywords_json,search_text,public_visible',[
+    esc(item.id),esc(item.name),esc(item.name_pt||item.name),esc(item.category),esc(item.specification),esc(item.unit),
+    json(item.aliases),json(item.keywords),esc(searchText),String(publicVisible)
+  ],['public_visible']);
 }
 
 for(const o of observations){
