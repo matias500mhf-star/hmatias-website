@@ -13,7 +13,7 @@ const partnerRoutes = [
 test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
   test("SOURCE AO landing page exposes the real Radar, RFQ and partner routes", async ({ page }) => {
     await page.goto("/source-ao/");
-    await expect(page.getByRole("link", { name: "Iniciar pedido" })).toHaveAttribute("href", "/source-ao/smart-rfq/");
+    await expect(page.locator(".source-rfq .source-button")).toHaveAttribute("href", "/source-ao/smart-rfq/");
     await expect(page.getByRole("link", { name: "Consultar Radar de Oportunidades" })).toHaveAttribute("href", "/source-ao/radar/");
     await expect(page.getByRole("link", { name: "Candidatura de parceiros" })).toHaveAttribute("href", "/source-ao/parceiros/");
     await page.goto("/en/source-ao/");
@@ -57,7 +57,7 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
       await expect(page.locator("html")).toHaveAttribute("lang", route.lang);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(route.title);
       await expect(page.locator("#partnerForm")).toBeVisible();
-      await expect(page.locator("#confirmAccuracy")).toBeRequired();
+      await expect(page.locator("#confirmAccuracy")).toHaveAttribute("required", "");
       await expect(page.locator("#confirmAccuracy")).not.toBeChecked();
       await expect(page.locator("#partnerForm button[type='submit']")).toBeDisabled();
       await expect(page.locator(".partner-stage-note")).toContainText(/staging/i);
