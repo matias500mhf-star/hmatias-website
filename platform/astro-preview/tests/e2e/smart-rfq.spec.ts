@@ -81,8 +81,8 @@ test.describe("HMATIAS Smart RFQ", () => {
     await expect(page.locator("#rfqSummary")).toContainText("ficha técnica a validar");
     await expect(page.locator("#rfqSummary")).not.toContainText("Este conteúdo não pode integrar o pedido Supply.");
     await expect(page.locator("#rfqSummary")).toContainText("não constitui cotação");
-    await expect(page.locator("#rfqEmailSend")).toHaveAttribute("href", /^mailto:geral@comercialhmatiasps\\.com\\?/);
-    await expect(page.locator("#rfqWhatsapp")).toHaveAttribute("href", /^https:\\/\\/wa\\.me\\/244948806673\\?text=/);
+    await expect(page.locator("#rfqEmailSend")).toHaveAttribute("href", /^mailto:geral@comercialhmatiasps\.com\?/);
+    await expect(page.locator("#rfqWhatsapp")).toHaveAttribute("href", /^https:\/\/wa\.me\/244948806673\?text=/);
   });
 
   test("has no horizontal overflow on desktop and mobile viewports", async ({ page }) => {
