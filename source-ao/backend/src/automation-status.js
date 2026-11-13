@@ -52,7 +52,7 @@ export async function automationStatusResponse(env,now=Date.now()){
       env.SOURCE_AO_DB.prepare(`
         SELECT COUNT(*) AS active_angola,MAX(source_checked_at) AS last_source_checked_at
         FROM opportunities
-        WHERE status='active' AND country_code='AO' AND deadline>?
+        WHERE status='active' AND country_code='AO' AND datetime(deadline)>datetime(?)
       `).bind(iso(now)).first()
     ]);
 
