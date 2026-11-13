@@ -134,7 +134,7 @@ The public `POST /api/partner-applications` intake requires `privacy_consent: tr
 
 Company identity and application classification are used for the private review queue. Registration number, contact name, email, WhatsApp, portfolio URL and commercial note remain inside the encrypted private profile. The public submission response contains only the application reference and review status. Listing, reading and reviewing applications continue to require administrator authorization.
 
-The Astro preview partner form is intentionally disabled unless `PUBLIC_SOURCE_AO_API_BASE` points to an HTTPS staging Worker. For browser submissions to work, configure the staging environment's `SOURCE_AO_STAGING_PUBLIC_ORIGIN` to the exact HTTPS preview origin (for example, `https://hmatias-astro-preview.onrender.com`) and set the Astro preview's `PUBLIC_SOURCE_AO_API_BASE` to the deployed staging API URL. Apply migration 0027 to staging before enabling this form. Never point the preview at the production API.
+The Astro preview partner form is intentionally disabled unless `PUBLIC_SOURCE_AO_API_BASE` points to an HTTPS staging Worker. For browser submissions to work, configure the staging environment's `SOURCE_AO_STAGING_PUBLIC_ORIGIN` to the exact HTTPS hostname assigned to the Astro preview and set the Astro preview's `PUBLIC_SOURCE_AO_API_BASE` to the deployed staging API URL. Apply migration 0027 to staging before enabling this form. Never point the preview at the production API.
 
 ## Commercial RFQ and partner notifications (production)
 
