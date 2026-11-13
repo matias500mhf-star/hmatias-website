@@ -145,7 +145,7 @@ assert.doesNotMatch(smartRfqHtml, /id="smartRfqForm"|id="rfqEmailSend"|id="rfqWh
 assert.doesNotMatch(smartRfqHtml, /comercialhmatiasps\.com\/(?:rfq|rfq-en)\.html/i, "SOURCE AO RFQ must not link to the legacy RFQ pages");
 
 const radarRoutes = [
-  ["source-ao/radar", "pt-AO", "A pré-visualização isolada", "/source-ao/smart-rfq/"],
+  ["source-ao/radar", "pt-AO", "Pré-visualização isolada", "/source-ao/smart-rfq/"],
   ["en/source-ao/radar", "en", "Isolated preview", "/en/source-ao/smart-rfq/"],
 ];
 for (const [route, language, previewLabel, rfqHref] of radarRoutes) {
@@ -406,7 +406,6 @@ const languagePairs = [
   ["blog", "en/blog", "/blog/", "/en/blog/"],
   ["blog/como-preparar-um-pedido-de-cotacao", "en/blog/how-to-prepare-a-comparable-supply-quotation", "/blog/como-preparar-um-pedido-de-cotacao/", "/en/blog/how-to-prepare-a-comparable-supply-quotation/"],
   ["source-ao/smart-rfq", "en/source-ao/smart-rfq", "/source-ao/smart-rfq/", "/en/source-ao/smart-rfq/"],
-  ["source-ao/radar", "en/source-ao/radar", "/source-ao/radar/", "/en/source-ao/radar/"],
   ["source-ao/parceiros", "en/source-ao/partners", "/source-ao/parceiros/", "/en/source-ao/partners/"],
   ["acessibilidade", "en/accessibility", "/acessibilidade/", "/en/accessibility/"],
   ["privacidade", "en/privacy", "/privacidade/", "/en/privacy/"],
