@@ -22,7 +22,7 @@ const source=read('source-ao/index.html');
 const sourceJs=read('source-ao/sourceao.js');
 const partnerForm=read('source-ao/partner-application.html');
 const partnerApi=read('source-ao/backend/src/partner-applications.js');
-assert.ok(source.includes('Transforme a necessidade de compra numa cotação validada.'));
+assert.ok(source.includes('O SOURCE AO organiza os requisitos; a equipa HMATIAS valida potenciais fornecedores, disponibilidade, preço e condições antes de apresentar uma cotação.'));
 assert.ok(source.includes('A pesquisa pública é uma referência, não uma confirmação de fornecimento.'));
 assert.ok(sourceJs.includes("publicSearch:'Abrir pesquisa pública (Google)'"));
 assert.ok(sourceJs.includes("publicSearch:'Open public search (Google)'"));
