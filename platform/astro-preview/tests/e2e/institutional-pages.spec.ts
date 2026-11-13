@@ -98,6 +98,23 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.getByText("Registo Comercial", { exact: true })).toBeVisible();
   });
 
+  test("institutional dossier routes expose company evidence, language pairing and print actions", async ({ page }) => {
+    await page.goto("/dossier-institucional/");
+    await expect(page.locator("html")).toHaveAttribute("lang", "pt-AO");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(/Soluções para construir/);
+    await expect(page.getByText("HMATIAS – Prestação de Serviços, (SU), Lda.", { exact: true })).toBeVisible();
+    await expect(page.locator(".work-card")).toHaveCount(4);
+    await expect(page.getByRole("button", { name: /Imprimir \/ guardar em PDF/ })).toBeVisible();
+    await expect(page.locator(".language-switch")).toHaveAttribute("href", "/en/institutional-dossier/");
+
+    await page.goto("/en/institutional-dossier/");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(/Solutions to build/);
+    await expect(page.locator(".work-card")).toHaveCount(4);
+    await expect(page.getByRole("button", { name: /Print \/ save as PDF/ })).toBeVisible();
+    await expect(page.locator(".language-switch")).toHaveAttribute("href", "/dossier-institucional/");
+  });
+
   test("privacy, terms and accessibility pages are reachable from the shared footer", async ({ page }) => {
     await page.goto("/privacidade/");
     await expect(page.getByRole("heading", { level: 1, name: "Política de Privacidade" })).toBeVisible();
@@ -207,6 +224,7 @@ test.describe("HMATIAS institutional pages", () => {
     for (const route of [
       "/business-services/", "/en/business-services/",
       "/empresa/", "/en/about/",
+      "/dossier-institucional/", "/en/institutional-dossier/",
       "/construcao/", "/en/construction/",
       "/facilities/", "/en/facilities/",
       "/supply/", "/en/supply/",
@@ -227,6 +245,8 @@ test.describe("HMATIAS institutional pages", () => {
     for (const route of [
       "/business-services/",
       "/empresa/",
+      "/dossier-institucional/",
+      "/en/institutional-dossier/",
       "/privacidade/",
       "/termos/",
       "/catalogo-obras/",
