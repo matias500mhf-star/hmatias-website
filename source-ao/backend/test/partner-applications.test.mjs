@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createPartnerApplication} from '../src/partner-applications.js';
+import {readFile} from 'node:fs/promises';
 
 function request(body){
   return new Request('https://source.example/api/partner-applications',{
@@ -37,7 +38,7 @@ test('partner application requires explicit privacy consent',async()=>{
 });
 
 test('partner application does not expose private contact in response',async()=>{
-  let inserted=false,insertSql='';
+  let inserted=false,insertSql='',insertArgs=[];
   const env={
     PII_ENCRYPTION_KEY:'test-private-key',
     SOURCE_AO_DB:{
@@ -46,7 +47,7 @@ test('partner application does not expose private contact in response',async()=>
           bind(...args){
             return {
               async first(){return null},
-              async run(){inserted=sql.includes('INSERT INTO partner_applications');insertSql=sql;return {success:true}}
+              async run(){inserted=sql.includes('INSERT INTO partner_applications');insertSql=sql;insertArgs=args;return {success:true}}
             };
           }
         };
@@ -76,4 +77,14 @@ test('partner application does not expose private contact in response',async()=>
   assert.equal(Object.hasOwn(body,'whatsapp'),false);
   assert.equal(inserted,true);
   assert.match(insertSql,/privacy_consent_at/);
+  assert.match(insertSql,/privacy_notice_version/);
+  assert.equal(insertArgs.at(-1),'source-ao-partner-privacy-2026-11');
+});
+
+
+test('partner privacy migration adds nullable consent audit fields without backfilling old records',async()=>{
+  const sql=await readFile(new URL('../migrations/0027_partner_application_privacy_consent.sql',import.meta.url),'utf8');
+  assert.match(sql,/ALTER TABLE partner_applications ADD COLUMN privacy_consent_at TEXT/);
+  assert.match(sql,/ALTER TABLE partner_applications ADD COLUMN privacy_notice_version TEXT/);
+  assert.doesNotMatch(sql,/UPDATE partner_applications/i);
 });
