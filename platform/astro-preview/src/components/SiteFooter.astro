@@ -55,7 +55,7 @@ const links = isEnglish
     <nav class="footer-column footer-explore" aria-label={isEnglish ? "Explore HMATIAS" : "Explorar HMATIAS"}>
       <h2>{isEnglish ? "Explore" : "Explorar"}</h2>
       <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
-      <a href={company.sourceAoUrl}>SOURCE AO</a>
+      <a href={isEnglish ? "/en/source-ao/" : company.sourceAoUrl}>SOURCE AO</a>
       <a href={links.blog}>{isEnglish ? "Blog · Business perspectives" : "Blog · Perspetivas empresariais"}</a>
       <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
     </nav>
