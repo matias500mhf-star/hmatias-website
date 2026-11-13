@@ -67,6 +67,7 @@ jobs:
           node --check source-ao/requests.js
           node --check source-ao/rfq.js
           node --check source-ao/rfq-model.js
+          node --check source-ao/partner-application.js
       - name: Validate Ops Desk security contract
         shell: bash
         run: |
