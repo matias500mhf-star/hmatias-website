@@ -42,8 +42,13 @@ test.describe("HMATIAS institutional pages", () => {
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/Empresa angolana/);
     await expect(page.locator(".about-lead")).toContainText("HMATIAS – Prestação de Serviços SU, LDA");
     await expect(page.getByRole("heading", { name: "Áreas de serviço." })).toBeVisible();
-    await expect(page.locator(".ceo-message")).toContainText("Henrique Matias");
-    await expect(page.locator(".ceo-message")).toContainText("Sócio Único, CEO & Managing Director");
+    await expect(page.locator(".ceo-message")).toContainText("Construir com propósito.");
+    await expect(page.locator(".ceo-message")).toContainText("CEO — Henrique Fernandes");
+    await expect(page.locator(".ceo-message")).not.toContainText(/Sócio Único|Managing Director/);
+    const desktopPhoto = page.locator(".about-visual img");
+    const desktopPhotoBox = await desktopPhoto.boundingBox();
+    expect(desktopPhotoBox?.height || 0).toBeGreaterThan(380);
+    expect(desktopPhotoBox?.width || 0).toBeGreaterThan(350);
     await expect(page.getByText(/MISSÃO|VISÃO|O nosso compromisso|Integridade nas relações/i)).toHaveCount(0);
     await expect(page.locator(".about-service-grid a")).toHaveCount(4);
     for (const name of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business Services"]) {
