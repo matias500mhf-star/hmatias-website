@@ -47,6 +47,8 @@ test('every customer-visible RFQ select option satisfies the shared API contract
   assert.ok(publicPage.includes('artigo exato'),'RFQ must ask for the exact item specification');
   assert.ok(publicScript.includes('Famílias de fornecimento disponíveis'),'catalogue notice must not imply generic entries are exact products');
   assert.ok(publicScript.includes('Artigo / material / serviço'),'the required description must refer to the requested item');
+  assert.ok(publicScript.includes("PUBLIC_EXCLUDED_CATALOG_ITEMS=new Set(['item-formaldehyde'])"),'formaldehyde must not be offered or inferred as a public catalogue family');
+  assert.ok(publicScript.includes('!PUBLIC_EXCLUDED_CATALOG_ITEMS.has(item.id)'),'public catalogue and inference must exclude restricted families');
 
   const source=readFileSync(new URL('../../rfq.js',import.meta.url),'utf8');
   const review=readFileSync(new URL('../../requests.js',import.meta.url),'utf8');
