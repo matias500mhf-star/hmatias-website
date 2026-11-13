@@ -144,7 +144,47 @@ assert.match(smartRfqHtml, /Pré-visualização isolada|isolated preview/i, "RFQ
 assert.doesNotMatch(smartRfqHtml, /id="smartRfqForm"|id="rfqEmailSend"|id="rfqWhatsapp"/, "Obsolete browser-only Smart RFQ controls must not return");
 assert.doesNotMatch(smartRfqHtml, /comercialhmatiasps\.com\/(?:rfq|rfq-en)\.html/i, "SOURCE AO RFQ must not link to the legacy RFQ pages");
 
+const radarRoutes = [
+  ["source-ao/radar", "pt-AO", "A pré-visualização isolada", "/source-ao/smart-rfq/"],
+  ["en/source-ao/radar", "en", "Isolated preview", "/en/source-ao/smart-rfq/"],
+];
+for (const [route, language, previewLabel, rfqHref] of radarRoutes) {
+  const file = join(outDir, route, "index.html");
+  assert.ok(existsSync(file), `SOURCE AO Radar route must be generated: /${route}/`);
+  const content = readFileSync(file, "utf8");
+  assert.match(content, new RegExp(`<html lang="${language}"`), `Radar language is incorrect: /${route}/`);
+  assert.match(content, /data-radar-preview/, `Radar preview marker is missing: /${route}/`);
+  assert.match(content, /id="opList"/, `Radar opportunity list is missing: /${route}/`);
+  assert.match(content, /id="refreshRadar"/, `Radar refresh control is missing: /${route}/`);
+  assert.match(content, new RegExp(previewLabel), `Radar staging isolation notice is missing: /${route}/`);
+  assert.match(content, new RegExp(rfqHref.replaceAll("/", "\\/")), `Radar must link to the matching-language RFQ route: /${route}/`);
+}
+
+const partnerRoutes = [
+  ["source-ao/parceiros", "pt-AO", "/privacidade/", "/en/source-ao/partners/"],
+  ["en/source-ao/partners", "en", "/en/privacy/", "/source-ao/parceiros/"],
+];
+for (const [route, language, privacyHref, languageHref] of partnerRoutes) {
+  const file = join(outDir, route, "index.html");
+  assert.ok(existsSync(file), `SOURCE AO partner application route must be generated: /${route}/`);
+  const content = readFileSync(file, "utf8");
+  assert.match(content, new RegExp(`<html lang="${language}"`), `Partner application language is incorrect: /${route}/`);
+  for (const id of ["partnerForm", "confirmAccuracy", "formStatus", "submitPartner", "capabilities"]) {
+    assert.ok(content.includes(`id="${id}"`), `Partner application control ${id} is missing: /${route}/`);
+  }
+  assert.match(content, /name="privacy_consent"/, `Partner privacy consent field is missing: /${route}/`);
+  assert.ok(content.includes(`href="${privacyHref}"`), `Partner privacy link is incorrect: /${route}/`);
+  assert.ok(content.includes(`href="${languageHref}"`), `Partner language switch is incorrect: /${route}/`);
+  assert.match(content, /staging/i, `Partner application must disclose isolated staging state: /${route}/`);
+}
+
 const sourceRfqScript = readFileSync(new URL("../../../source-ao/rfq.js", import.meta.url), "utf8");
+const radarScript = readFileSync(new URL("../../../source-ao/opportunity-radar.js", import.meta.url), "utf8");
+assert.match(radarScript, /data-radar-preview/, "Radar preview must route analysis into local Smart RFQ");
+assert.match(radarScript, /\/source-ao\/smart-rfq\//, "Portuguese Radar must prefill Smart RFQ internally");
+assert.match(radarScript, /\/en\/source-ao\/smart-rfq\//, "English Radar must prefill Smart RFQ internally");
+const partnerScript = readFileSync(new URL("../../../source-ao/partner-application.js", import.meta.url), "utf8");
+assert.match(partnerScript, /privacy_consent:consent/, "Partner application must transmit explicit privacy consent");
 assert.match(sourceRfqScript, /fetch\('\/source-ao\/data\/catalog\.json'/, "SOURCE AO RFQ must load the local catalogue endpoint");
 assert.match(sourceRfqScript, /fetch\(apiBase\(\)\+'\/api\/sourcing-requests'/, "SOURCE AO RFQ must post requests to its configured API");
 assert.match(sourceRfqScript, /result\?\.ok!==true/, "SOURCE AO RFQ must require a confirmed API response");
@@ -366,6 +406,8 @@ const languagePairs = [
   ["blog", "en/blog", "/blog/", "/en/blog/"],
   ["blog/como-preparar-um-pedido-de-cotacao", "en/blog/how-to-prepare-a-comparable-supply-quotation", "/blog/como-preparar-um-pedido-de-cotacao/", "/en/blog/how-to-prepare-a-comparable-supply-quotation/"],
   ["source-ao/smart-rfq", "en/source-ao/smart-rfq", "/source-ao/smart-rfq/", "/en/source-ao/smart-rfq/"],
+  ["source-ao/radar", "en/source-ao/radar", "/source-ao/radar/", "/en/source-ao/radar/"],
+  ["source-ao/parceiros", "en/source-ao/partners", "/source-ao/parceiros/", "/en/source-ao/partners/"],
   ["acessibilidade", "en/accessibility", "/acessibilidade/", "/en/accessibility/"],
   ["privacidade", "en/privacy", "/privacidade/", "/en/privacy/"],
   ["termos", "en/terms", "/termos/", "/en/terms/"],
