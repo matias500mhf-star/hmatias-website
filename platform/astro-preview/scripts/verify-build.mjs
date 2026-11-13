@@ -387,10 +387,17 @@ for (const [ptRoute, enRoute, ptHref, enHref] of languagePairs) {
 
   const ptHtml = readFileSync(ptPath, "utf8");
   const enHtml = readFileSync(enPath, "utf8");
-  assert.equal(languageSwitchTarget(ptHtml, ptRoute), enHref,
-    `Portuguese language switch must lead to /${enRoute}/`);
-  assert.equal(languageSwitchTarget(enHtml, enRoute), ptHref,
-    `English language switch must lead to /${ptRoute}/`);
+  if (ptRoute === "source-ao/smart-rfq") {
+    assert.ok(ptHtml.includes('id="rfqLanguage"'), "Portuguese RFQ must expose its language control");
+    assert.ok(enHtml.includes('id="rfqLanguage"'), "English RFQ must expose its language control");
+    assert.match(sourceRfqScript, /\$\('#rfqLanguage'\)\.addEventListener\('click'/, "SOURCE AO RFQ language control must be interactive");
+    assert.match(sourceRfqScript, /en=!en;staticLanguage\(\)/, "SOURCE AO RFQ language control must switch the form language");
+  } else {
+    assert.equal(languageSwitchTarget(ptHtml, ptRoute), enHref,
+      `Portuguese language switch must lead to /${enRoute}/`);
+    assert.equal(languageSwitchTarget(enHtml, enRoute), ptHref,
+      `English language switch must lead to /${ptRoute}/`);
+  }
 }
 
 const specialistRoutes = [
