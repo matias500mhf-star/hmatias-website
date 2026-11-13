@@ -26,6 +26,15 @@ test('redeployment preserves commercial pursuits, evidence links and operational
   }
   const sql=execFileSync(process.execPath,[script],{encoding:'utf8'});
   db.exec(sql);
+  const publicItem=db.prepare("SELECT id,name,name_pt,public_visible FROM items WHERE id<>'item-formaldehyde' LIMIT 1").get();
+  assert.ok(publicItem, 'curated public catalog item must be seeded');
+  assert.equal(publicItem.public_visible,1);
+  db.prepare("UPDATE items SET name='Admin managed name',name_pt='Nome administrado',management_mode='managed',public_visible=0 WHERE id=?").run(publicItem.id);
+  const seedManaged=db.prepare("SELECT id,name FROM items WHERE id<>? AND id<>'item-formaldehyde' LIMIT 1").get(publicItem.id);
+  assert.ok(seedManaged, 'a second seed-managed catalog item must exist');
+  db.prepare("UPDATE items SET name='Stale seed value' WHERE id=?").run(seedManaged.id);
+  const excludedItem=db.prepare("SELECT public_visible FROM items WHERE id='item-formaldehyde'").get();
+  assert.equal(excludedItem.public_visible,0);
   const opportunity=db.prepare('SELECT id,title FROM opportunities LIMIT 1').get();
   db.prepare(`UPDATE opportunities SET title='Outdated seed title',fit_score=87,
     fit_tags_json='["synthetic-fit"]',created_at='2020-01-01' WHERE id=?`).run(opportunity.id);
@@ -59,5 +68,8 @@ test('redeployment preserves commercial pursuits, evidence links and operational
   assert.equal(collected.evidence_text,'Keep collected evidence');
   assert.equal(db.prepare("SELECT supplier_id FROM supplier_sources WHERE id='seed-test-additional-source'").get().supplier_id,source.supplier_id);
   assert.equal(db.prepare('SELECT count(*) n FROM supplier_sources').get().n,countSources);
+  const managedAfter=db.prepare('SELECT name,name_pt,management_mode,public_visible FROM items WHERE id=?').get(publicItem.id);
+  assert.deepEqual(managedAfter,{name:'Admin managed name',name_pt:'Nome administrado',management_mode:'managed',public_visible:0});
+  assert.equal(db.prepare('SELECT name FROM items WHERE id=?').get(seedManaged.id).name,seedManaged.name);
   assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(),[]);
 });
