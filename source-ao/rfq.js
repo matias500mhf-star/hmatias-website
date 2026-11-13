@@ -253,7 +253,7 @@ if(params.get('urgency')==='urgent')$('#rfqUrgency').value='urgent';
 if(/^\d{4}-\d{2}-\d{2}$/.test(params.get('needed_by')||''))$('#rfqDate').value=params.get('needed_by');
 showStep(0,false);
 
-const staticCatalogUrl=window.SOURCE_AO_RUNTIME?.catalogUrl||'/source-ao/data/catalog.json';
+const staticCatalogUrl=window.SOURCE_AO_RUNTIME?.catalogUrl||'/source-ao/data/public-catalog.json';
 const liveCatalogUrl=apiBase()?apiBase()+'/api/catalog':staticCatalogUrl;
 async function loadCatalog(url){
   const controller=new AbortController();
