@@ -1,4 +1,5 @@
 const PUBLIC_STATUSES = new Set(['source_checked','recently_seen','supplier_confirmed','in_stock_confirmed','needs_reconfirmation','unavailable']);
+const CATALOG_CATEGORIES = new Set(['construction','hvac-electrical','tools-equipment','cleaning-facilities','services-contractors','industrial-supply','other']);
 
 export function normalizeSearch(value='') {
   return value.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
@@ -258,7 +259,7 @@ async function createCatalogItem(request, env) {
   if (typeof data.name!=='string' || typeof data.category!=='string') return fail(env,400,'missing_fields','name and category are required.');
   const name=data.name.trim();
   const category=data.category.trim();
-  if (!name || !category || name.length>160 || category.length>100) return fail(env,400,'invalid_fields','Catalog name or category is invalid.');
+  if (!name || !category || name.length>160 || category.length>100 || !CATALOG_CATEGORIES.has(category)) return fail(env,400,'invalid_fields','Catalog name or category is invalid.');
   const specification=optionalText(data.specification,1200);
   const unit=optionalText(data.unit,40);
   const namePt=optionalText(data.name_pt,160);
