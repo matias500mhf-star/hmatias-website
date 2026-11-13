@@ -115,7 +115,7 @@
 
     const sourceAt=latestSourceCheckedAt();
     const sourceMeta=sourceAt?t('sourcesChecked')+' '+fmt(sourceAt)+' · '+clock(sourceAt):'';
-    document.body.classList.toggle('op-live-unavailable',syncState==='fallback');
+    document.body.classList.toggle('op-live-unavailable',syncState==='fallback'||syncState==='unconfigured');
     document.body.classList.toggle('op-live-syncing',syncState==='syncing');
 
     if(syncState==='syncing'){
