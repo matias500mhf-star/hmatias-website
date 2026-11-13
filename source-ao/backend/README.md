@@ -57,7 +57,7 @@ Use only a Gemini API key from an AI Studio project explicitly on the Free tier,
 
 Automated Google Search grounding is not enabled: Google's current Gemini API terms classify Search grounding through the API as a paid service. Source AO instead provides clearly labelled public Google search links and its local search/RFQ workflow. Do not activate grounding unless HMATIAS explicitly approves a paid Google project.
 
-Only `catalog.json`, `opportunities.json` and `source-registry.json` are copied into public production/staging assets. Offline search uses catalogue families without asserting stock. Supplier, service, observation and verification queue data remain excluded from those artifacts.
+Only the public-safe `catalog.json`, `public-catalog.json`, `opportunities.json` and `source-registry.json` are copied into public production/staging assets. The RFQ static fallback uses `public-catalog.json`, which is a parity-checked projection excluding `item-formaldehyde`. Offline search uses catalogue families without asserting stock. Supplier, service, observation and verification queue data remain excluded from those artifacts.
 
 This boundary does not conceal files or history in a public Git repository. Repository visibility/history and hosting support require separate review; do not commit new confidential sourcing relationships or contacts to seed files.
 
