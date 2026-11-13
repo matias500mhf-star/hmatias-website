@@ -1,4 +1,5 @@
 import {isAdmin} from './index.js';
+import publicCatalog from '../../data/public-catalog.json' with { type: 'json' };
 
 const PUBLIC_EXCLUDED_ITEMS=new Set(['item-formaldehyde']);
 const ALLOWED_CATEGORIES=new Set([
@@ -78,9 +79,11 @@ export async function loadPublicCatalogData(env){
   const timestamps=rows.map(row=>row.updated_at).filter(Boolean).sort();
   return {
     ok:true,
-    version:1,
-    updated_at:timestamps.at(-1)||null,
-    items:rows.map(publicItem)
+    version:publicCatalog.version,
+    updated_at:timestamps.at(-1)||publicCatalog.updated_at||null,
+    items:rows.map(publicItem),
+    taxonomy:publicCatalog.taxonomy||[],
+    public_rule:publicCatalog.public_rule
   };
 }
 
