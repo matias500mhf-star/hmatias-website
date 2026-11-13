@@ -440,6 +440,7 @@ const languagePairs = [
   ["blog/caso-pratico-intervencao-cobertura-industrial", "en/blog/industrial-roofing-intervention-case-study", "/blog/caso-pratico-intervencao-cobertura-industrial/", "/en/blog/industrial-roofing-intervention-case-study/"],
   ["blog/plano-manutencao-preventiva-instalacoes", "en/blog/preventive-facilities-maintenance-plan", "/blog/plano-manutencao-preventiva-instalacoes/", "/en/blog/preventive-facilities-maintenance-plan/"],
   ["blog/recepcao-e-conferencia-de-fornecimentos", "en/blog/receiving-and-inspecting-supply-deliveries", "/blog/recepcao-e-conferencia-de-fornecimentos/", "/en/blog/receiving-and-inspecting-supply-deliveries/"],
+  ["blog/caso-pratico-comparacao-tres-propostas-fornecimento", "en/blog/illustrative-case-study-comparing-three-supply-proposals", "/blog/caso-pratico-comparacao-tres-propostas-fornecimento/", "/en/blog/illustrative-case-study-comparing-three-supply-proposals/"],
   ["source-ao/smart-rfq", "en/source-ao/smart-rfq", "/source-ao/smart-rfq/", "/en/source-ao/smart-rfq/"],
   ["source-ao/parceiros", "en/source-ao/partners", "/source-ao/parceiros/", "/en/source-ao/partners/"],
   ["acessibilidade", "en/accessibility", "/acessibilidade/", "/en/accessibility/"],
