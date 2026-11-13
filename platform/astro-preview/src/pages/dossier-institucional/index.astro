@@ -1,0 +1,311 @@
+---
+import { Image, Picture } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import logo from "../../../../../logo-hmatias.png";
+import { company } from "../../data/site";
+import { projects } from "../../data/projects";
+---
+
+<BaseLayout
+  title="Dossier Institucional | HMATIAS — Construção, Facilities e Supply"
+  description="Dossier institucional da HMATIAS: identificação empresarial, áreas de atuação, registos de trabalhos, método de execução e contactos oficiais em Luanda, Angola."
+>
+  <div class="preview-bar"><span><i aria-hidden="true"></i> DOSSIER INSTITUCIONAL</span><span>LUANDA · ANGOLA · EDIÇÃO 2026</span></div>
+  <SiteHeader />
+  <main class="dossier-page">
+    <section class="dossier-cover dossier-sheet" aria-labelledby="dossier-cover-heading">
+      <div class="cover-top">
+        <Image src={logo} alt="HMATIAS — Prestação de Serviços" widths={[128, 192]} sizes="120px" format="webp" quality={86} />
+        <span>DOCUMENTO INSTITUCIONAL<br />EDIÇÃO 2026</span>
+      </div>
+      <div class="cover-copy">
+        <p class="section-kicker">CONSTRUÇÃO · INFRAESTRUTURA · FACILITIES · SUPPLY</p>
+        <h1 id="dossier-cover-heading">Soluções para construir,<br /><em>operar e evoluir.</em></h1>
+        <p>Apresentação da HMATIAS – Prestação de Serviços, (SU), Lda., sociedade angolana com atividade em construção, remodelação, facilities, fornecimento empresarial, procurement e apoio empresarial.</p>
+      </div>
+      <div class="cover-bottom">
+        <span>VIANA · LUANDA · ANGOLA</span>
+        <span>NIF {company.taxNumber}</span>
+        <span>comercialhmatiasps.com</span>
+      </div>
+      <div class="cover-action no-print">
+        <button type="button" class="print-button" data-print-dossier>Imprimir / guardar em PDF <span aria-hidden="true">↗</span></button>
+        <a href="/credibilidade/">Informação institucional <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="dossier-sheet profile-sheet" aria-labelledby="dossier-profile-heading">
+      <div class="sheet-head">
+        <p class="section-kicker">01 / PERFIL INSTITUCIONAL</p>
+        <span class="sheet-number">01</span>
+      </div>
+      <div class="profile-grid">
+        <div>
+          <h2 id="dossier-profile-heading">Uma estrutura<br /><em>orientada à execução.</em></h2>
+          <p class="lead">A HMATIAS organiza respostas a necessidades de empresas e projectos, articulando definição de âmbito, recursos, execução, procurement e acompanhamento da entrega, de acordo com as condições de cada operação.</p>
+          <p>A empresa foi constituída em 2023 e tem base operacional em Viana, Luanda. A sua atividade reúne execução de trabalhos, conservação de instalações, fornecimento empresarial e apoio operacional.</p>
+          <p class="note">O ano de registo da sociedade identifica a sua constituição; não representa, por si só, anos de experiência em todas as áreas de atividade apresentadas.</p>
+        </div>
+        <aside class="identity-panel" aria-label="Identificação da sociedade">
+          <p class="panel-label">IDENTIFICAÇÃO DA SOCIEDADE</p>
+          <h3>{company.legalName}</h3>
+          <dl>
+            <div><dt>NIF</dt><dd>{company.taxNumber}</dd></div>
+            <div><dt>Registo comercial</dt><dd>{company.commercialRegistration}</dd></div>
+            <div><dt>Matrícula</dt><dd>24094-23/230713</dd></div>
+            <div><dt>Sede</dt><dd>Rua A, Casa n.º 31, Bairro 1.º de Maio, Viana, Luanda</dd></div>
+            <div><dt>Representação</dt><dd>Henrique Fernandes Matias — Sócio Único e Gerente</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="dossier-sheet services-sheet" aria-labelledby="dossier-services-heading">
+      <div class="sheet-head">
+        <p class="section-kicker">02 / ÁREAS DE ACTUAÇÃO</p>
+        <span class="sheet-number">02</span>
+      </div>
+      <div class="services-intro">
+        <h2 id="dossier-services-heading">Serviços integrados<br /><em>por necessidade.</em></h2>
+        <p>A oferta institucional combina execução, apoio operacional e coordenação de fornecimentos. Cada serviço depende da definição de escopo, recursos, condições e requisitos aplicáveis.</p>
+      </div>
+      <div class="service-grid">
+        <article><span>01</span><h3>Construção civil</h3><p>Obras, betonagem, pavimentos, alvenaria, infraestruturas e trabalhos de apoio.</p></article>
+        <article><span>02</span><h3>Remodelação</h3><p>Adaptação, renovação e melhoria de espaços empresariais, comerciais e residenciais.</p></article>
+        <article><span>03</span><h3>Facilities services</h3><p>Manutenção, limpeza, conservação e apoio operacional a instalações de utilização contínua.</p></article>
+        <article><span>04</span><h3>Fornecimento empresarial</h3><p>Materiais, consumíveis, equipamentos e produtos necessários à operação de empresas e projectos.</p></article>
+        <article><span>05</span><h3>Procurement &amp; Supply</h3><p>Pesquisa de mercado, consulta e comparação de fornecedores, estruturação de propostas e coordenação de aquisições e entregas.</p></article>
+        <article><span>06</span><h3>Apoio empresarial</h3><p>Organização documental, apoio operacional e gestão de processos, conforme o âmbito contratado.</p></article>
+      </div>
+    </section>
+
+    <section class="dossier-sheet works-sheet" aria-labelledby="dossier-works-heading">
+      <div class="sheet-head">
+        <p class="section-kicker">03 / REGISTOS DE TRABALHOS</p>
+        <span class="sheet-number">03</span>
+      </div>
+      <div class="works-intro">
+        <h2 id="dossier-works-heading">Registos reais.<br /><em>Trabalho no terreno.</em></h2>
+        <p>Selecção de registos visuais da actividade da HMATIAS. As legendas descrevem os elementos observáveis e não atribuem clientes, valores, datas ou dimensões não documentados.</p>
+      </div>
+      <div class="works-grid">
+        {projects.map((project) => (
+          <article class="work-card">
+            <figure>
+              <Picture src={project.image} alt={project.alt} widths={[360, 560, 760]} sizes="(max-width: 680px) 100vw, 44vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" />
+            </figure>
+            <div><p class="work-category">{project.category}</p><h3>{project.title}</h3><p>{project.description}</p></div>
+          </article>
+        ))}
+      </div>
+      <p class="evidence-note">Os registos fotográficos demonstram tipologias e fases visíveis de trabalho. Não substituem contratos, autos de medição, termos de recepção, certificados ou outros comprovativos específicos.</p>
+    </section>
+
+    <section class="dossier-sheet method-sheet" aria-labelledby="dossier-method-heading">
+      <div class="sheet-head">
+        <p class="section-kicker">04 / MÉTODO DE TRABALHO</p>
+        <span class="sheet-number">04</span>
+      </div>
+      <div class="method-intro">
+        <h2 id="dossier-method-heading">Do pedido<br /><em>à entrega.</em></h2>
+        <p>A execução é organizada em função da necessidade real, dos requisitos do cliente e das condições confirmadas para cada operação.</p>
+      </div>
+      <ol class="method-steps">
+        <li><span>01</span><div><h3>Compreender a necessidade</h3><p>Analisar o pedido, o contexto, as especificações, quantidades, destino, prazo e prioridades.</p></div></li>
+        <li><span>02</span><div><h3>Definir o âmbito</h3><p>Clarificar trabalhos, entregáveis, recursos, responsabilidades, orçamento e condições de execução.</p></div></li>
+        <li><span>03</span><div><h3>Organizar e executar</h3><p>Articular os intervenientes, materiais e meios necessários, acompanhando a actividade de acordo com o escopo aceite.</p></div></li>
+        <li><span>04</span><div><h3>Acompanhar a entrega</h3><p>Manter comunicação sobre prazo, qualidade, documentação e conclusão dos elementos acordados.</p></div></li>
+      </ol>
+      <div class="supply-method">
+        <p class="panel-label">PROCUREMENT &amp; SUPPLY</p>
+        <h3>Encontrar. Comparar. Coordenar.</h3>
+        <p>Para pedidos de fornecimento, a HMATIAS clarifica especificações e quantidades, consulta o mercado, compara opções e coordena a aquisição e a entrega segundo as responsabilidades definidas para cada operação.</p>
+        <p class="note">A disponibilidade de stock, origem, preço, prazo e logística não é presumida: cada elemento é confirmado para o pedido em causa. O dossier não apresenta uma operação de Supply sem evidência documental como fornecimento executado.</p>
+      </div>
+    </section>
+
+    <section class="dossier-sheet governance-sheet" aria-labelledby="dossier-governance-heading">
+      <div class="sheet-head">
+        <p class="section-kicker">05 / GESTÃO E CREDIBILIDADE</p>
+        <span class="sheet-number">05</span>
+      </div>
+      <h2 id="dossier-governance-heading">Responsabilidade<br /><em>e rigor institucional.</em></h2>
+      <div class="governance-grid">
+        <div class="management-card">
+          <p class="panel-label">ESTRUTURA DE LIDERANÇA</p>
+          <h3>Henrique Fernandes Matias</h3>
+          <p>Sócio Único e Gerente</p>
+          <p>A gerência acompanha a organização administrativa, comercial e operacional da sociedade, incluindo a definição do âmbito e das condições de cada proposta.</p>
+        </div>
+        <div class="integrity-card">
+          <p class="panel-label">COMPROMISSOS DE APRESENTAÇÃO</p>
+          <ul>
+            <li>Não atribuir clientes, referências ou certificações sem documentação e autorização.</li>
+            <li>Não apresentar projectos em desenvolvimento como concluídos.</li>
+            <li>Não confundir capacidade de prestação de serviços com prova de execução.</li>
+            <li>Confirmar requisitos, habilitações, prazos e condições antes de assumir compromissos.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="legal-note">Este dossier tem função institucional. Não substitui alvarás, licenças, certidões, certificados, declarações, contratos ou outros documentos exigidos por cada cliente, entidade adjudicante ou procedimento de qualificação. A documentação legal e fiscal original prevalece para efeitos de verificação e contratação.</p>
+    </section>
+
+    <section class="dossier-sheet contacts-sheet" aria-labelledby="dossier-contacts-heading">
+      <div class="sheet-head">
+        <p class="section-kicker">06 / CONTACTO INSTITUCIONAL</p>
+        <span class="sheet-number">06</span>
+      </div>
+      <div class="contacts-copy">
+        <p class="section-kicker">HMATIAS · VIANA · LUANDA</p>
+        <h2 id="dossier-contacts-heading">Vamos analisar<br /><em>a sua necessidade.</em></h2>
+        <p>Para pedidos de cotação, qualificação de fornecedor, parcerias ou informação institucional, utilize os canais oficiais da HMATIAS.</p>
+      </div>
+      <div class="contact-grid">
+        <div><span>DENOMINAÇÃO</span><strong>{company.legalName}</strong></div>
+        <div><span>NIF</span><strong>{company.taxNumber}</strong></div>
+        <div><span>SEDE</span><strong>{company.address}</strong></div>
+        <div><span>TELEFONE</span><strong><a href={company.telephoneUri}>{company.phone}</a></strong></div>
+        <div><span>E-MAIL GERAL</span><strong><a href={"mailto:"+company.commercialEmail}>{company.commercialEmail}</a></strong></div>
+        <div><span>E-MAIL COMERCIAL</span><strong><a href={"mailto:"+company.institutionalEmail}>{company.institutionalEmail}</a></strong></div>
+        <div><span>WEBSITE</span><strong><a href="https://comercialhmatiasps.com">comercialhmatiasps.com</a></strong></div>
+        <div><span>REGISTO COMERCIAL</span><strong>{company.commercialRegistration}</strong></div>
+      </div>
+      <div class="closing-line"><span>CONSTRUÇÃO · INFRAESTRUTURA · FACILITIES · SUPPLY</span><span>EDIÇÃO INSTITUCIONAL · 2026</span></div>
+      <div class="final-actions no-print">
+        <button type="button" class="print-button" data-print-dossier>Imprimir / guardar em PDF <span aria-hidden="true">↗</span></button>
+        <a href={company.credibilityUrl}>Consultar informação institucional <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-print-dossier]").forEach((button) => {
+    button.addEventListener("click", () => window.print());
+  });
+</script>
+
+<style>
+.dossier-page { padding:30px var(--hm-gutter) 76px; background:var(--hm-light); }
+.dossier-sheet { position:relative; max-width:1120px; margin:0 auto 22px; padding:clamp(30px,5.3vw,68px); background:var(--hm-paper); border:1px solid var(--hm-line); }
+.dossier-cover { min-height:680px; display:flex; flex-direction:column; justify-content:space-between; color:#fff; background:linear-gradient(110deg,rgba(4,33,61,.94),rgba(4,33,61,.54)),url("/images/catalogue/pavilhoes-rurais-concluidos.webp") center/cover; border:0; }
+.cover-top,.cover-bottom,.sheet-head { display:flex; justify-content:space-between; align-items:center; gap:24px; }
+.cover-top img { width:118px; height:auto; padding:9px; background:#fff; }
+.cover-top > span,.cover-bottom { color:#dceafa; font-size:9px; font-weight:700; line-height:1.8; letter-spacing:.14em; }
+.cover-top > span { text-align:right; }
+.cover-copy { max-width:760px; margin:75px 0; }
+.section-kicker,.panel-label { margin:0; color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.16em; }
+.cover-copy .section-kicker { color:#a9d4f1; }
+.cover-copy h1 { margin:25px 0 0; font-size:clamp(42px,7vw,84px); line-height:.99; font-weight:520; letter-spacing:-.065em; }
+.cover-copy h1 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; }
+.cover-copy > p:last-child { max-width:590px; margin:27px 0 0; color:#e2edf7; font-size:14px; line-height:1.9; }
+.cover-bottom { flex-wrap:wrap; padding-top:20px; border-top:1px solid #ffffff55; }
+.cover-action,.final-actions { display:flex; align-items:center; flex-wrap:wrap; gap:22px; margin-top:26px; }
+.cover-action a,.final-actions a { color:inherit; font-size:11px; text-decoration:underline; text-underline-offset:4px; }
+.print-button { display:inline-flex; align-items:center; gap:22px; padding:14px 18px; color:#082f52; background:#d8ebf8; border:1px solid #b9d8ed; font:inherit; font-size:11px; font-weight:700; cursor:pointer; }
+.print-button:hover { background:#fff; }
+.sheet-head { padding-bottom:15px; border-bottom:1px solid var(--hm-line); }
+.sheet-number { color:var(--hm-blue); font-family:var(--hm-serif); font-size:20px; }
+.profile-grid { display:grid; grid-template-columns:1fr .9fr; gap:clamp(32px,6vw,76px); margin-top:54px; }
+.dossier-sheet h2 { margin:20px 0 0; color:var(--hm-ink); font-size:clamp(35px,5vw,60px); line-height:1.04; font-weight:520; letter-spacing:-.06em; }
+.dossier-sheet h2 em { color:var(--hm-blue); font-family:var(--hm-serif); font-weight:400; }
+.profile-grid .lead { max-width:610px; margin:25px 0 0; color:var(--hm-ink); font-size:16px; line-height:1.85; }
+.profile-grid > div > p:not(.lead) { max-width:610px; margin:17px 0 0; color:var(--hm-muted); font-size:12px; line-height:1.9; }
+.note,.legal-note,.evidence-note { color:var(--hm-muted); font-size:10px; line-height:1.8; }
+.identity-panel { align-self:start; padding:28px; background:var(--hm-light); border:1px solid var(--hm-line); }
+.identity-panel h3 { margin:16px 0 22px; font-size:19px; line-height:1.45; }
+.identity-panel dl { margin:0; border-top:1px solid var(--hm-line); }
+.identity-panel dl div { display:grid; grid-template-columns:.72fr 1.28fr; gap:16px; padding:12px 0; border-bottom:1px solid var(--hm-line); font-size:10px; }
+.identity-panel dt { color:var(--hm-muted); }
+.identity-panel dd { margin:0; text-align:right; font-weight:650; overflow-wrap:anywhere; }
+.services-intro,.works-intro,.method-intro { display:grid; grid-template-columns:1fr .8fr; align-items:end; gap:30px; margin:48px 0 35px; }
+.services-intro h2,.works-intro h2,.method-intro h2 { margin:0; }
+.services-intro > p,.works-intro > p,.method-intro > p { max-width:440px; margin:0; color:var(--hm-muted); font-size:12px; line-height:1.9; }
+.service-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.service-grid article { min-height:160px; padding:24px; border:1px solid var(--hm-line); background:#fff; }
+.service-grid article > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:20px; }
+.service-grid h3 { margin:20px 0 9px; font-size:15px; }
+.service-grid p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
+.works-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.work-card { overflow:hidden; border:1px solid var(--hm-line); background:#fff; }
+.work-card figure { margin:0; aspect-ratio:16/10; background:var(--hm-sky-soft); }
+.work-card img { display:block; width:100%; height:100%; object-fit:cover; }
+.work-card > div { padding:18px 20px 21px; }
+.work-category { margin:0; color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.12em; text-transform:uppercase; }
+.work-card h3 { margin:10px 0 7px; font-size:14px; }
+.work-card > div > p:last-child { margin:0; color:var(--hm-muted); font-size:10px; line-height:1.75; }
+.evidence-note { margin:20px 0 0; padding-top:16px; border-top:1px solid var(--hm-line); }
+.method-steps { margin:40px 0 0; padding:0; list-style:none; border-top:1px solid var(--hm-line); }
+.method-steps li { display:grid; grid-template-columns:48px 1fr; gap:18px; padding:22px 0; border-bottom:1px solid var(--hm-line); }
+.method-steps li > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:20px; }
+.method-steps h3 { margin:0 0 8px; font-size:14px; }
+.method-steps p { max-width:690px; margin:0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
+.supply-method { margin-top:34px; padding:26px; color:#fff; background:var(--hm-navy); }
+.supply-method .panel-label { color:#b9d8ed; }
+.supply-method h3 { margin:15px 0 12px; font-size:22px; font-weight:520; }
+.supply-method p:not(.panel-label) { max-width:760px; color:#dceafa; font-size:11px; line-height:1.85; }
+.supply-method .note { color:#b8cbdc !important; }
+.governance-sheet > h2 { margin-top:54px; }
+.governance-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:38px; }
+.management-card,.integrity-card { padding:27px; border:1px solid var(--hm-line); background:var(--hm-light); }
+.management-card h3 { margin:22px 0 6px; font-family:var(--hm-serif); font-size:25px; font-weight:400; }
+.management-card > p:not(.panel-label) { color:var(--hm-muted); font-size:11px; line-height:1.85; }
+.integrity-card ul { margin:18px 0 0; padding-left:18px; }
+.integrity-card li { margin:0 0 12px; color:var(--hm-muted); font-size:11px; line-height:1.8; }
+.legal-note { margin:30px 0 0; padding-top:18px; border-top:1px solid var(--hm-line); }
+.contacts-sheet { color:#fff; background:var(--hm-navy); border-color:var(--hm-navy); }
+.contacts-sheet .section-kicker { color:#a9d4f1; }
+.contacts-sheet h2 { color:#fff; }
+.contacts-sheet h2 em { color:#b9d8ed; }
+.contacts-copy { max-width:720px; margin:55px 0 36px; }
+.contacts-copy > p:last-child { max-width:520px; margin:20px 0 0; color:#dceafa; font-size:12px; line-height:1.9; }
+.contact-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border-top:1px solid #ffffff55; }
+.contact-grid > div { display:flex; flex-direction:column; gap:9px; padding:18px 18px 18px 0; border-bottom:1px solid #ffffff55; }
+.contact-grid span { color:#a9d4f1; font-size:8px; font-weight:750; letter-spacing:.14em; }
+.contact-grid strong { color:#fff; font-size:11px; font-weight:600; line-height:1.65; overflow-wrap:anywhere; }
+.contact-grid a { text-decoration:underline; text-underline-offset:3px; }
+.closing-line { display:flex; justify-content:space-between; gap:16px; margin-top:45px; padding-top:18px; border-top:1px solid #ffffff55; color:#dceafa; font-size:8px; font-weight:700; letter-spacing:.12em; }
+.final-actions { color:#fff; }
+.preview-disclaimer { max-width:1120px; margin:0 auto 28px; padding:0 var(--hm-gutter); color:var(--hm-muted); font-size:10px; text-align:center; }
+@media (max-width:760px) {
+  .dossier-page { padding:12px 10px 45px; }
+  .dossier-sheet { padding:27px 21px; margin-bottom:12px; }
+  .dossier-cover { min-height:600px; }
+  .profile-grid,.services-intro,.works-intro,.method-intro,.governance-grid { grid-template-columns:1fr; }
+  .profile-grid { margin-top:32px; }
+  .services-intro,.works-intro,.method-intro { margin:34px 0 24px; }
+  .works-grid,.service-grid,.contact-grid { grid-template-columns:1fr; }
+  .cover-copy h1 { font-size:clamp(39px,11vw,60px); }
+  .identity-panel { padding:21px; }
+  .identity-panel dl div { grid-template-columns:1fr; gap:5px; }
+  .identity-panel dd { text-align:left; }
+  .closing-line { flex-direction:column; }
+}
+@media print {
+  @page { size:A4; margin:0; }
+  html,body { width:210mm; margin:0 !important; background:#fff !important; }
+  .preview-bar,.site-header,.site-footer,.preview-disclaimer,.no-print { display:none !important; }
+  .dossier-page { padding:0 !important; background:#fff !important; }
+  .dossier-sheet { width:210mm; max-width:none; min-height:297mm; margin:0; padding:18mm 17mm; border:0; box-shadow:none; break-after:page; page-break-after:always; }
+  .dossier-sheet:last-child { break-after:auto; page-break-after:auto; }
+  .dossier-cover { min-height:297mm; padding:18mm 17mm; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .contacts-sheet,.supply-method { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .work-card,.service-grid article,.management-card,.integrity-card,.identity-panel { break-inside:avoid; page-break-inside:avoid; }
+  .works-grid { gap:8mm; }
+  .work-card figure { aspect-ratio:16/9; }
+  .work-card > div { padding:4mm; }
+  .work-card h3 { font-size:10pt; }
+  .work-card > div > p:last-child,.service-grid p,.method-steps p,.management-card > p:not(.panel-label),.integrity-card li { font-size:8pt; }
+  .service-grid article { min-height:36mm; padding:5mm; }
+  .service-grid h3 { margin:5mm 0 2mm; font-size:10pt; }
+  .sheet-head { margin-bottom:4mm; }
+  .dossier-sheet h2 { font-size:30pt; }
+  .contacts-copy { margin-top:32mm; }
+  a { color:inherit !important; }
+}
+@media (prefers-reduced-motion:reduce) { .print-button { scroll-behavior:auto; } }
+</style>
