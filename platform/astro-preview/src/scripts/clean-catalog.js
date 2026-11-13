@@ -3,7 +3,7 @@ const TAURUS_IMAGE='images/products/taurus-pine-gel-t563p-official.jpg?v=2026100
 const categories={kitchen:['Cozinha','Kitchen Care'],general:['Multiuso e desinfeção','General Purpose'],washroom:['Casas de banho e higiene','Washroom Care'],fabric:['Lavandaria, tecidos e ambiente','Fabric & Air Care'],vehicle:['Automóvel','Vehicle Care'],maintenance:['Manutenção, piscinas e drenagem','Maintenance, Pool & Drain'],floor:['Pisos e carpetes','Floor Care']};
 const p=(name,code,cat,pt,en,sizes)=>({name,code,cat,pt,en,sizes});
 const products=[
-p('Bundu Lodge','T215','kitchen','Detergente concentrado para loiça, sem fragrância, corantes e fosfatos.','Highly concentrated dishwashing detergent, fragrance, colourant and phosphate free.','5L | 25L'),
+p('Bundu Lodge','T215','kitchen','Detergente concentrado para lavagem manual da loiça, com citronela para ajudar a afastar moscas e outros insectos; sem perfumes, corantes ou fosfatos.','Natural concentrated dishwashing liquid with citronella to help keep flies and other insects at bay; free from perfumes, colourants and phosphates.','5L | 25L'),
 p('Tauradish','T415','kitchen','Líquido concentrado para lavagem manual da loiça, fragrância de limão e sem fosfatos.','Concentrated hand dishwashing liquid with lemon fragrance, phosphate free.','500ml | 750ml | 5L | 25L'),
 p('Dish Ninja','T518','kitchen','Líquido antimicrobiano para loiça, eficaz mesmo em água fria.','Anti-microbial dishwashing liquid that works even in cold water.','750ml | 3L | 5L | 25L'),
 p('Biodish','T315','kitchen','Líquido económico para loiça, fragrância de limão e sem fosfatos.','Economical dishwashing liquid with lemon fragrance, phosphate free.','500ml | 750ml | 5L | 25L'),
