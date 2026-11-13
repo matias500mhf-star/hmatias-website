@@ -65,9 +65,9 @@ function addItem(initial={}){
   const id=++rowNumber;
   const row=document.createElement('article');row.className='rfq-item';row.dataset.row=String(id);
   row.innerHTML=`<div class="item-heading"><h2></h2><button class="item-remove" type="button" aria-label="${copy('Remover artigo','Remove item')}">${copy('Remover','Remove')}</button></div><div class="field-grid">
-    <label>${copy('Categoria *','Category *')}<select class="item-category" required aria-label="${copy('Categoria do produto','Product category')}"></select></label>
-    <label>${copy('Família de fornecimento','Supply family')}<select class="item-product" aria-label="${copy('Família do catálogo','Catalogue family')}"></select></label>
-    <label class="full">${copy('Artigo / material / serviço *','Item / material / service *')}<input class="item-description" required maxlength="200" placeholder="${copy('Ex.: marca, modelo, referência ou especificação','Ex.: brand, model, reference or specification')}" aria-label="${copy('Descrição do produto','Product description')}" /></label>
+    <label>${copy('Categoria *','Category *')}<select class="item-category" required aria-label="${copy('Categoria do artigo','Item category')}"></select></label>
+    <label>${copy('Família de fornecimento','Supply family')}<select class="item-product" aria-label="${copy('Família de fornecimento','Supply family')}"></select></label>
+    <label class="full">${copy('Artigo / material / serviço *','Item / material / service *')}<input class="item-description" required maxlength="200" placeholder="${copy('Ex.: marca, modelo, referência ou especificação','Ex.: brand, model, reference or specification')}" aria-label="${copy('Descrição do artigo','Item description')}" /></label>
     <label>${copy('Quantidade *','Quantity *')}<input class="item-quantity" type="number" required min="0.000001" max="1000000000" step="any" inputmode="decimal" aria-label="${copy('Quantidade','Quantity')}" /></label>
     <label>${copy('Unidade *','Unit *')}<select class="item-unit" required aria-label="${copy('Unidade','Unit')}"></select></label>
     <label class="full">${copy('Especificação / referência (opcional)','Specification / reference (optional)')}<textarea class="item-specification" rows="2" maxlength="600" placeholder="${copy('Ex.: referência, norma, cor, dimensão','Ex.: reference, standard, colour, size')}" aria-label="${copy('Especificação ou referência','Specification or reference')}"></textarea></label>
@@ -105,7 +105,7 @@ function summary(){
   const items=readItems();
   $('#itemCount').textContent=items.length+' '+copy(items.length===1?'artigo':'artigos',items.length===1?'item':'items');
   $('#categorySummary').textContent=[...new Set(items.map(item=>item.category).filter(Boolean))].map(id=>categoryLabel(id,en)).join(' · ')||copy('Escolha uma categoria para começar.','Choose a category to begin.');
-  rows().forEach((row,index)=>{row.querySelector('h2').textContent=copy('Artigo ','Item ')+(index+1);row.querySelector('.item-remove').hidden=items.length===1; row.querySelector('.item-remove').setAttribute('aria-label', `${copy('Remover produto','Remove product')} ${index + 1}`);});
+  rows().forEach((row,index)=>{row.querySelector('h2').textContent=copy('Artigo ','Item ')+(index+1);row.querySelector('.item-remove').hidden=items.length===1; row.querySelector('.item-remove').setAttribute('aria-label', `${copy('Remover artigo','Remove item')} ${index + 1}`);});
   $('#addItem').disabled=items.length>=MAX_ITEMS;
 }
 function payload(){return {
@@ -175,7 +175,7 @@ function showFailure(data,status){
   const box=$('#rfqResult');box.replaceChildren();box.hidden=false;
   paragraph(box,status===429?copy('Limite temporário de pedidos. Aguarde alguns minutos antes de tentar novamente.','Temporary request limit. Wait a few minutes before retrying.'):copy('Não foi possível registar o seu pedido no momento. Pode continuar pela conversa no WhatsApp e enviar a lista abaixo.','The request could not be registered at the moment. You can continue via WhatsApp and send the list below.'));
   const full=message(data);const text=document.createElement('textarea');text.readOnly=true;text.rows=5;text.value=full;text.setAttribute('aria-label',copy('Lista para enviar à HMATIAS','List to send to HMATIAS'));
-  const a=link(copy('Abrir WhatsApp e enviar o pedido','Open WhatsApp and send the request'),whatsapp(full.length<6000?full:copy('Preciso de uma cotação no SOURCE AO. Vou enviar a minha lista de produtos abaixo.','I need a quote in SOURCE AO. I will send my product list below.')));
+  const a=link(copy('Abrir WhatsApp e enviar o pedido','Open WhatsApp and send the request'),whatsapp(full.length<6000?full:copy('Preciso de uma cotação no SOURCE AO. Vou enviar a minha lista de artigos abaixo.','I need a quote in SOURCE AO. I will send my item list below.')));
   box.append(text,a);if(full.length>=6000)paragraph(box,copy('Copie a lista acima e cole-a na conversa.','Copy the list above and paste it into the conversation.'));
   paragraph(box,copy('Abrir o WhatsApp não envia a mensagem. Confirme o envio na conversa.','Opening WhatsApp does not send the message. Confirm the send in the conversation.'));
 }
@@ -276,7 +276,7 @@ if(catalogLoaded){
 updateCatalogNotice();
 if(params.get('item')&&!catalog.items.some(item=>item.id===params.get('item'))){
   $('#catalogStatus').textContent=copy(
-    'A referência do catálogo já não está disponível. Seleccione outra família ou descreva o produto.',
-    'This catalogue reference is no longer available. Select another family or describe the product.'
+    'A família de fornecimento selecionada já não está disponível. Escolha outra família ou descreva o artigo exato.',
+    'This supply family is no longer available. Select another family or describe the exact item.'
   );
 }
