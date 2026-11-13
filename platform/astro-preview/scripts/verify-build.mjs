@@ -401,17 +401,30 @@ for (const [ptRoute, enRoute, ptHref, enHref] of languagePairs) {
 }
 
 const specialistRoutes = [
-  ["coberturas-industriais", /Coberturas industriais: avaliação, reparação e manutenção/],
-  ["limpeza-pos-obra", /Limpeza pós-obra para espaços empresariais/],
-  ["fornecimento-de-epi-e-fardamento", /Fornecimento de EPI e fardamento para empresas/],
-  ["remodelacao-de-escritorios", /Remodelação de escritórios e espaços comerciais/],
+  ["coberturas-industriais", /Coberturas industriais: avaliação, reparação e manutenção/, "construction"],
+  ["limpeza-pos-obra", /Limpeza pós-obra para espaços empresariais/, "cleaning-facilities"],
+  ["fornecimento-de-epi-e-fardamento", /Fornecimento de EPI e fardamento para empresas/, "industrial-supply"],
+  ["remodelacao-de-escritorios", /Remodelação de escritórios e espaços comerciais/, "construction"],
 ];
-for (const [route, heading] of specialistRoutes) {
+for (const [route, heading, category] of specialistRoutes) {
   const content = readFileSync(join(outDir, route, "index.html"), "utf8");
   assert.match(content, /<html lang="pt-AO"/, `Portuguese specialist route must use pt-AO: /${route}/`);
   assert.match(content, /name="robots" content="noindex, nofollow"/, `Preview route must remain noindex: /${route}/`);
   assert.match(content, heading, `Specialist page heading is missing: /${route}/`);
-  assert.match(content, /href="\/source-ao\/smart-rfq\/\?service=/, `Specialist request must link to Smart RFQ: /${route}/`);
+  assert.match(content, new RegExp(`href="\\/source-ao\\/smart-rfq\\/\\?category=${category}(?:&amp;|&)request=`), `Specialist request must prefill the SOURCE AO RFQ category: /${route}/`);
+}
+
+const englishSpecialistRoutes = [
+  ["en/industrial-roofing", /Industrial roofing: assessment, repair and maintenance/, "construction"],
+  ["en/post-construction-cleaning", /Post-construction cleaning for business premises/, "cleaning-facilities"],
+  ["en/ppe-workwear", /PPE and workwear supply for businesses/, "industrial-supply"],
+  ["en/office-remodelling", /Office and commercial premises remodelling/, "construction"],
+];
+for (const [route, heading, category] of englishSpecialistRoutes) {
+  const content = readFileSync(join(outDir, route, "index.html"), "utf8");
+  assert.match(content, /<html lang="en"/, `English specialist route must use en: /${route}/`);
+  assert.match(content, heading, `English specialist page heading is missing: /${route}/`);
+  assert.match(content, new RegExp(`href="\\/en\\/source-ao\\/smart-rfq\\/\\?category=${category}(?:&amp;|&)request=`), `English specialist request must prefill the English SOURCE AO RFQ category: /${route}/`);
 }
 
 console.log(`Astro static output verified: homepage has ${htmlImgCount} accessible images; ${assets.length} processed assets emitted.`);
