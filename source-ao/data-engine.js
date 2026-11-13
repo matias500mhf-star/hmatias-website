@@ -2,7 +2,7 @@
   'use strict';
 
   const paths={
-    catalog:'data/catalog.json',
+    catalog:'data/public-catalog.json',
     opportunities:'data/opportunities.json',
     registry:'data/source-registry.json'
   };
