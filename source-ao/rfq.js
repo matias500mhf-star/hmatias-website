@@ -253,16 +253,32 @@ if(params.get('urgency')==='urgent')$('#rfqUrgency').value='urgent';
 if(/^\d{4}-\d{2}-\d{2}$/.test(params.get('needed_by')||''))$('#rfqDate').value=params.get('needed_by');
 showStep(0,false);
 
-const controller=new AbortController();
-const timeout=setTimeout(()=>controller.abort(),8000);
+const staticCatalogUrl=window.SOURCE_AO_RUNTIME?.catalogUrl||'/source-ao/data/catalog.json';
+const liveCatalogUrl=apiBase()?apiBase()+'/api/catalog':staticCatalogUrl;
+async function loadCatalog(url){
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),6000);
+  try{
+    const response=await fetch(url,{cache:'no-store',signal:controller.signal});
+    if(!response.ok)throw new Error('catalog');
+    const data=await response.json();
+    if(!Array.isArray(data.items))throw new Error('catalog');
+    return data;
+  }finally{
+    clearTimeout(timeout);
+  }
+}
 try{
-  const response=await fetch(window.SOURCE_AO_RUNTIME?.catalogUrl||'/source-ao/data/catalog.json',{cache:'no-store',signal:controller.signal});
-  if(!response.ok)throw new Error('catalog');
-  const data=await response.json();
-  if(!Array.isArray(data.items))throw new Error('catalog');
-  catalog=data;
+  catalog=await loadCatalog(liveCatalogUrl);
   catalogLoaded=true;
-}catch{}finally{clearTimeout(timeout);}
+}catch{
+  if(liveCatalogUrl!==staticCatalogUrl){
+    try{
+      catalog=await loadCatalog(staticCatalogUrl);
+      catalogLoaded=true;
+    }catch{}
+  }
+}
 
 if(catalogLoaded){
   const normalize=text=>String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
