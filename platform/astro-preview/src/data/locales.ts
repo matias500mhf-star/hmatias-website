@@ -21,6 +21,8 @@ const ptToEn: Record<string, string> = {
   "/termos/": "/en/terms/",
   "/source-ao/": "/en/source-ao/",
   "/source-ao/smart-rfq/": "/en/source-ao/smart-rfq/",
+  "/source-ao/radar/": "/en/source-ao/radar/",
+  "/source-ao/parceiros/": "/en/source-ao/partners/",
   "/blog/como-preparar-um-pedido-de-cotacao/": "/en/blog/how-to-prepare-a-comparable-supply-quotation/",
 };
 
