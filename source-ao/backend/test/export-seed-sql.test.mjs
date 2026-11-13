@@ -69,7 +69,10 @@ test('redeployment preserves commercial pursuits, evidence links and operational
   assert.equal(db.prepare("SELECT supplier_id FROM supplier_sources WHERE id='seed-test-additional-source'").get().supplier_id,source.supplier_id);
   assert.equal(db.prepare('SELECT count(*) n FROM supplier_sources').get().n,countSources);
   const managedAfter=db.prepare('SELECT name,name_pt,management_mode,public_visible FROM items WHERE id=?').get(publicItem.id);
-  assert.deepEqual(managedAfter,{name:'Admin managed name',name_pt:'Nome administrado',management_mode:'managed',public_visible:0});
+  assert.equal(managedAfter.name,'Admin managed name');
+  assert.equal(managedAfter.name_pt,'Nome administrado');
+  assert.equal(managedAfter.management_mode,'managed');
+  assert.equal(managedAfter.public_visible,0);
   assert.equal(db.prepare('SELECT name FROM items WHERE id=?').get(seedManaged.id).name,seedManaged.name);
   assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(),[]);
 });
