@@ -9,6 +9,7 @@ import {
 import {enforceRateLimit,hardenResponse,safeRequestLog} from './security.js';
 import {readinessResponse} from './health.js';
 import {automationStatusResponse} from './automation-status.js';
+import {listPublicCatalog,listAdminCatalog,updateCatalogItem} from './catalog.js';
 import {runMaintenance} from './maintenance.js';
 import {sendPendingIntakeAlerts,intakeAlertStatus} from './intake-alerts.js';
 import {websiteLeadDesk} from './website-lead-desk.js';
@@ -79,6 +80,12 @@ export default {
           response=await readinessResponse(env);
         }else if(request.method==='GET' && url.pathname==='/api/automation/status'){
           response=await automationStatusResponse(env);
+        }else if(request.method==='GET' && url.pathname==='/api/catalog'){
+          response=await listPublicCatalog(request,env);
+        }else if(request.method==='GET' && url.pathname==='/api/admin/catalog/items'){
+          response=await listAdminCatalog(request,env);
+        }else if(/^\\/api\\/admin\\/catalog\\/items\\/[A-Za-z0-9_-]+$/.test(url.pathname) && request.method==='PATCH'){
+          response=await updateCatalogItem(request,env,url.pathname.split('/').pop());
         }else if(request.method==='GET' && url.pathname==='/internal/website-leads'){
           response=websiteLeadDesk();
         }else if(request.method==='GET' && url.pathname==='/api/admin/intake-alerts/status'){
