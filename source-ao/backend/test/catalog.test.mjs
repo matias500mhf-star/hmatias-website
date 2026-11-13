@@ -20,8 +20,8 @@ function databaseMock({items=[],item=null}={}){
 
 test('public catalog exposes only explicitly visible items and never the excluded chemical',async()=>{
   const env={PUBLIC_ORIGIN:'https://preview.example',SOURCE_AO_DB:databaseMock({items:[
-    {id:'item-a',name:'Paint',name_pt:'Tinta',category:'construction',aliases_json:'["paint"]',keywords_json:'["obra"]',updated_at:'2026-11-13 10:00:00'},
-    {id:'item-formaldehyde',name:'Formaldehyde',name_pt:'Formaldeído',category:'industrial-supply',aliases_json:'[]',keywords_json:'[]',updated_at:'2026-11-13 10:00:00'}
+    {id:'item-a',name:'Paint',name_pt:'Tinta',category:'construction',aliases_json:'["paint"]',keywords_json:'["obra"]',public_visible:1,updated_at:'2026-11-13 10:00:00'},
+    {id:'item-formaldehyde',name:'Formaldehyde',name_pt:'Formaldeído',category:'industrial-supply',aliases_json:'[]',keywords_json:'[]',public_visible:0,updated_at:'2026-11-13 10:00:00'}
   ]})};
   const response=await listPublicCatalog(new Request('https://api.example/api/catalog'),env);
   const body=await response.json();
@@ -30,8 +30,9 @@ test('public catalog exposes only explicitly visible items and never the exclude
   assert.equal(response.headers.get('cache-control'),'public, max-age=300, stale-while-revalidate=300');
   assert.equal(response.headers.get('access-control-allow-origin'),'https://preview.example');
   assert.equal(body.ok,true);
-  assert.equal(body.items.length,2); // the SQL query is scoped; the fake D1 returns rows as supplied.
+  assert.equal(body.items.length,1);
   assert.equal(body.items[0].name_pt,'Tinta');
+  assert.equal(body.items.some(item=>item.id==='item-formaldehyde'),false);
   assert.equal('public_visible' in body.items[0],false);
   assert.equal('updated_at' in body.items[0],false);
   assert.equal('price' in body.items[0],false);
