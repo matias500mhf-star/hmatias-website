@@ -49,6 +49,12 @@
         return true;
       }catch(err){
         console.warn('[Source AO catalogue]',err.message);
+        // Keep the last-known-good live catalogue instead of replacing it with
+        // an older static snapshot during a temporary API outage.
+        if(candidate.source==='live'&&catalogSource==='live'&&db.catalog.items.length){
+          catalogLastRefresh=Date.now();
+          return false;
+        }
       }
     }
     return false;
