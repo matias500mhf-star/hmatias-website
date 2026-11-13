@@ -247,8 +247,14 @@ for (const [route, heading, marker] of [
   assert.match(content, marker, `${route} legal content is incomplete`);
   if (route === "privacidade") {
     assert.match(content, /Microsoft Clarity/, "Privacy policy must disclose the consent-gated Clarity integration");
+    assert.match(content, /candidaturas à rede de parceiros SOURCE AO/i, "Privacy policy must describe SOURCE AO partner application data");
+    assert.match(content, /perfil privado cifrado/i, "Privacy policy must describe encrypted partner contact storage");
   }
 }
+
+const englishPrivacyHtml = readFileSync(join(outDir, "en", "privacy", "index.html"), "utf8");
+assert.match(englishPrivacyHtml, /SOURCE AO partner applications may collect/i, "English privacy policy must describe partner application data");
+assert.match(englishPrivacyHtml, /encrypted private profile/i, "English privacy policy must describe encrypted partner contact storage");
 
 const worksCataloguePath = join(outDir, "catalogo-obras", "index.html");
 assert.ok(existsSync(worksCataloguePath), "Works catalogue page must be generated");
