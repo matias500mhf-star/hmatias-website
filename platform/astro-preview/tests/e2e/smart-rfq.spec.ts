@@ -99,4 +99,56 @@ test.describe("SOURCE AO Smart RFQ", () => {
       expect(blocking, route).toEqual([]);
     }
   });
+
+  test("preview without a staging API prepares a complete manual handoff without attempting registration", async ({ page }) => {
+    const registrationRequests: string[] = [];
+    page.on("request", request => {
+      const url = new URL(request.url());
+      if (request.method() === "POST" && url.pathname === "/api/sourcing-requests") {
+        registrationRequests.push(request.url());
+      }
+    });
+
+    await page.goto("/source-ao/smart-rfq/");
+    await expect(page.locator(".source-rfq-stage-note")).toContainText("API de staging");
+    await expect(page.locator("#rfqSubmit")).toHaveText("Preparar envio manual");
+
+    const item = page.locator(".rfq-item").first();
+    await item.locator(".item-category").selectOption("diamond-tools");
+    await item.locator(".item-description").fill("Disco diamantado BETONSOL Ø600 mm");
+    await item.locator(".item-quantity").fill("76");
+    await item.locator(".item-unit").selectOption("un");
+    await item.locator(".item-specification").fill("Ref. 14475; ligação a confirmar.");
+
+    await page.locator("#rfqNext").click();
+    await page.locator("#rfqLocation").fill("Luanda");
+    await page.locator("#rfqDate").fill("2026-11-26");
+
+    await page.locator("#rfqNext").click();
+    await page.locator("#rfqName").fill("Contacto de teste");
+    await page.locator("#rfqCompany").fill("HMATIAS Teste");
+    await page.locator("#rfqChannel").selectOption("email");
+    await page.locator("#rfqContact").fill("teste@example.com");
+    await page.locator("#rfqConsent").check();
+
+    await page.locator("#rfqSubmit").click();
+
+    const result = page.locator("#rfqResult");
+    await expect(result).toBeVisible();
+    await expect(result.locator("h2")).toHaveText("Pedido preparado para envio manual.");
+    await expect(result).toContainText("não foi registado nem guardado");
+    await expect(result).not.toContainText("Não foi possível registar");
+    const manualMessage = await result.locator("textarea").inputValue();
+    expect(manualMessage).toContain("Contacto de teste");
+    expect(manualMessage).toContain("HMATIAS Teste");
+    expect(manualMessage).toContain("teste@example.com");
+    expect(manualMessage).toContain("Disco diamantado BETONSOL Ø600 mm");
+    expect(manualMessage).toContain("76 un");
+    expect(manualMessage).toContain("Luanda");
+    const whatsapp = new URL(await result.getByRole("link", { name: "Abrir WhatsApp com o pedido" }).getAttribute("href") || "");
+    expect(whatsapp.hostname).toBe("wa.me");
+    expect(whatsapp.searchParams.get("text")).toContain("teste@example.com");
+    expect(registrationRequests).toEqual([]);
+  });
+
 });
