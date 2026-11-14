@@ -61,7 +61,10 @@ for (const homepage of homepageRoutes) {
     await expect(page.locator(".karta-feature")).toBeVisible();
     await expect(page.locator(".karta-feature")).toContainText("Alpha");
     await expect(page.locator(".karta-feature a")).toHaveAttribute("href", homepage.language === "en" ? "/en/karta/" : "/karta/");
-    await expect(page.locator(".footer-explore a", { hasText: "KARTA Wallet" })).toHaveCount(0);
+    const kartaExploreLink = page.locator(".footer-explore a", { hasText: "KARTA Wallet" });
+    await expect(kartaExploreLink).toHaveCount(1);
+    await expect(kartaExploreLink).toHaveAttribute("href", homepage.language === "en" ? "/en/karta/" : "/karta/");
+    await expect(kartaExploreLink).toContainText(homepage.language === "en" ? "Alpha project" : "Projecto Alpha");
 
     await page.locator(".partner-logos").scrollIntoViewIfNeeded();
 
