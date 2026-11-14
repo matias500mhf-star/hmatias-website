@@ -24,7 +24,7 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
   test("public catalogue search stays safely disabled without the staging API", async ({ page }) => {
     let apiRequests = 0;
     page.on("request", request => {
-      if (/\\/api\\/(search|catalog|sourcing-requests)/.test(new URL(request.url()).pathname)) apiRequests += 1;
+      if (/\/api\/(search|catalog|sourcing-requests)/.test(new URL(request.url()).pathname)) apiRequests += 1;
     });
 
     for (const route of [
