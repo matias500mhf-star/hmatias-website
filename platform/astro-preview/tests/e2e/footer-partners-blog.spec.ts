@@ -118,9 +118,9 @@ for (const homepage of homepageRoutes) {
     await expect(page.locator(".footer-explore").getByRole("link", { name: /KARTA Wallet/ })).toContainText("Alpha");
 
     await expect(whatsapp).toHaveAttribute("aria-label", /WhatsApp/);
-    await expect(whatsapp.locator("img")).toHaveAttribute("src", /social-whatsapp\.svg/);
+    await expect(whatsapp.locator("img")).toHaveAttribute("src", /social-whatsapp\.[^.]+\.svg$/);
     await expect(instagram).toHaveAttribute("aria-label", "Instagram HMATIAS");
-    await expect(instagram.locator("img")).toHaveAttribute("src", /social-instagram\.svg/);
+    await expect(instagram.locator("img")).toHaveAttribute("src", /social-instagram\.[^.]+\.svg$/);
 
 
     const axe = await new AxeBuilder({ page })
