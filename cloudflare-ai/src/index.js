@@ -53,7 +53,7 @@ const SOURCE_AO_STOP_WORDS = new Set([
   "availability","help","can","could","would","preciso","precisa","precisamos",
   "procuro","procuramos","quero","queremos","necessito","necessitamos",
   "encontrar","pesquisar","pesquisa","cotacao","orcamento","preco","precos",
-  "disponibilidade","fornecedor","fornecedores","fornecimento","comprar",
+  "disponibilidade","luanda","viana","benguela","lobito","catumbela","huambo","lubango","namibe","cabinda","malanje","uige","saurimo","menongue","cuito","ndalatando","sumbe","soyo","dundo","moxico","waku","kungo","fornecedor","fornecedores","fornecimento","comprar",
   "compra","compras","sourcing","procurement","produto","produtos","artigo",
   "artigos","material","materiais","catalogo","catalog"
 ]);
@@ -83,7 +83,7 @@ function extractSearchLocation(message) {
   const knownLocations = [
     "waku kungo","luanda","viana","benguela","lobito","catumbela","huambo",
     "lubango","namibe","cabinda","malanje","uige","saurimo","menongue",
-    "cu ito","ndalatando","sumbe","soyo","dundo","moxico"
+    "cuito","ndalatando","sumbe","soyo","dundo","moxico"
   ];
   for (const location of knownLocations) {
     const pattern = new RegExp("\\b(?:em|para|no|na|in|at)\\s+" + location.replace(/\s+/g, "\\s+") + "\\b", "i");
