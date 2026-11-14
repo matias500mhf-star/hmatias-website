@@ -26,7 +26,7 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
     let staticCatalogueRequests = 0;
     page.on("request", request => {
       const pathname = new URL(request.url()).pathname;
-      if (/\\/api\\/(search|sourcing-requests)(?:$|\\?)/.test(pathname)) liveSearchRequests += 1;
+      if (pathname.endsWith("/api/search") || pathname.endsWith("/api/sourcing-requests")) liveSearchRequests += 1;
       if (pathname === "/api/source-ao/catalog.json") staticCatalogueRequests += 1;
     });
 
@@ -36,7 +36,7 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
         lang: "pt-AO",
         query: "discos diamantados 115 mm",
         result: "Carbodiam",
-        notice: /catálogo estático de pré-visualização \\(não consulta a D1\\)/i,
+        notice: "catálogo estático de pré-visualização (não consulta a D1)",
         rfq: "/source-ao/smart-rfq/",
       },
       {
@@ -44,7 +44,7 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
         lang: "en",
         query: "diamond discs 115 mm",
         result: "Carbodiam",
-        notice: /static preview catalogue \\(not a D1 search\\)/i,
+        notice: "static preview catalogue (not a D1 search)",
         rfq: "/en/source-ao/smart-rfq/",
       },
     ];
