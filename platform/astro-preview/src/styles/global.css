@@ -817,7 +817,7 @@ main li {
 .source-ao-highlight-link:hover{color:var(--hm-navy)}
 .source-ao-highlight-link span:last-child{font-size:16px}
 .footer-subnav{display:grid;gap:7px;margin:0 0 7px 13px;padding:2px 0 3px 12px;border-left:1px solid #ffffff40}
-.footer-subnav a{color:var(--hm-muted-on-dark);font-size:9px;line-height:1.6}
+.footer-subnav a{min-height:24px;padding:3px 0;display:inline-flex;align-items:center;color:var(--hm-muted-on-dark);font-size:9px;line-height:1.6}
 .footer-subnav a:hover{color:var(--hm-sky)}
 .footer-source-link{position:relative;padding-left:10px;color:var(--hm-sky)!important;font-weight:700}
 .footer-source-link::before{position:absolute;content:"";left:0;top:.35em;width:3px;height:3px;border-radius:50%;background:var(--hm-sky)}
