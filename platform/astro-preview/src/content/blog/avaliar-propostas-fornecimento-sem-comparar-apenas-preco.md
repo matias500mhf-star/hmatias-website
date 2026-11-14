@@ -12,7 +12,7 @@ draft: false
 
 Uma proposta mais barata não é automaticamente a melhor proposta. A decisão só é sólida quando as cotações respondem à mesma necessidade, incluem os mesmos elementos e podem ser executadas nas condições exigidas.
 
-O objectivo de uma análise comparativa é tornar as diferenças visíveis. Não serve apenas para ordenar preços: ajuda a identificar omissões, custos que surgem mais tarde e riscos que podem comprometer a entrega.
+O objetivo de uma análise comparativa é tornar as diferenças visíveis. Não serve apenas para ordenar preços: ajuda a identificar omissões, custos que surgem mais tarde e riscos que podem comprometer a entrega.
 
 ## 1. Comece pela conformidade técnica
 
@@ -57,6 +57,6 @@ A documentação deve corresponder ao produto efectivamente proposto, não apena
 
 ## 6. Registe a decisão
 
-A recomendação deve indicar a proposta seleccionada, os motivos, as reservas e os pontos ainda por confirmar. Se uma proposta for excluída, registe o critério objectivo que não cumpriu.
+A recomendação deve indicar a proposta selecionada, os motivos, as reservas e os pontos ainda por confirmar. Se uma proposta for excluída, registe o critério objetivo que não cumpriu.
 
 Este processo melhora a rastreabilidade e evita que a escolha seja justificada apenas por uma diferença de preço que pode não se manter até à entrega.

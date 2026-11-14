@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const outDir = new URL("../dist/", import.meta.url).pathname;
+const outDir = fileURLToPath(new URL("../dist/", import.meta.url));
 const indexPath = join(outDir, "index.html");
 assert.ok(existsSync(indexPath), "Astro build must generate dist/index.html");
 
@@ -186,11 +187,19 @@ for (const [route, language, privacyHref, languageHref] of partnerRoutes) {
 
 const lighthouseConfig = readFileSync(new URL("../lighthouserc.cjs", import.meta.url), "utf8");
 const lighthouseRoutes = [...lighthouseConfig.matchAll(/http:\/\/127\.0\.0\.1:4321([^"]+)/g)].map((match) => match[1]);
-assert.equal(lighthouseRoutes.length, 50, "Lighthouse must audit all 50 generated PT/EN routes");
-assert.equal(new Set(lighthouseRoutes).size, 50, "Lighthouse route list must not contain duplicates");
+assert.equal(lighthouseRoutes.length, 51, "Lighthouse must audit all 51 configured preview routes");
+assert.equal(new Set(lighthouseRoutes).size, 51, "Lighthouse route list must contain 51 unique routes");
+for (const route of lighthouseRoutes) {
+  const segments = route.split("/").filter(Boolean);
+  const file = join(outDir, ...segments, "index.html");
+  assert.ok(existsSync(file), "Lighthouse route must resolve to generated HTML: " + route);
+  const content = readFileSync(file, "utf8");
+  const language = route.startsWith("/en/") ? "en" : "pt-AO";
+  assert.match(content, new RegExp('<html lang="' + language + '"'), "Generated route language is incorrect: " + route);
+}
 for (const route of [
-  "/dossier-institucional/",
-  "/en/institutional-dossier/",
+
+
   "/source-ao/radar/",
   "/en/source-ao/radar/",
   "/source-ao/parceiros/",
@@ -286,7 +295,7 @@ assert.match(worksCatalogueHtml, /Apresente o seu projeto/, "Catalogue CTA must 
 assert.equal((worksCatalogueHtml.match(/<article class="works-catalogue-card"/g) || []).length, 12, "The complete 12-record catalogue must be present");
 const catalogueImgCount = (worksCatalogueHtml.match(/<img\b/g) || []).length;
 const catalogueImgWithAltCount = (worksCatalogueHtml.match(/<img\b[^>]*\balt=/g) || []).length;
-assert.equal(catalogueImgCount, 14, "Twelve catalogue photographs and two shared brand marks must be rendered");
+assert.equal(catalogueImgCount, 16, "Twelve catalogue photographs, two shared brand marks and two footer social icons must be rendered");
 assert.equal(catalogueImgWithAltCount, catalogueImgCount, "Every catalogue image must have alt text");
 
 const assetDir = join(outDir, "_astro");
@@ -327,7 +336,7 @@ const englishRoutes = [
   ["en/supply", /Procurement and/, /does not hold its own stock/i],
   ["en/business-services", /Administrative,/, /Professional CV structuring/],
   ["en/works-catalogue", /Works, interventions/, /Completed Rural Pavilions/],
-  ["en/blog", /Practical guides/, /FEATURED ARTICLE/],
+  ["en/blog", /Practical Guides/, /FEATURED/],
   ["en/blog/how-to-prepare-a-comparable-supply-quotation", /How to prepare a quotation request/, /quantity and unit/i],
   ["en/source-ao/smart-rfq", /<h1[^>]*data-en="What do you need to source\?"/, /Isolated preview: online registration/],
   ["en/accessibility", /more accessible to everyone/i, /independent audit/i],

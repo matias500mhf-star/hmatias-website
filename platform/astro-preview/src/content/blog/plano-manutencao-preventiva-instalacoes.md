@@ -36,7 +36,7 @@ Evite frequências arbitrárias. Uma periodicidade deve ter fundamento e ser rev
 
 Associe cada tarefa a uma data ou janela, responsável, recurso necessário e condição de acesso. Identifique actividades que exigem técnico habilitado, autorização, isolamento de energia ou interrupção de serviço.
 
-O calendário deve distinguir manutenção planeada, inspecção, reparação correctiva e resposta de emergência.
+O calendário deve distinguir manutenção planeada, inspeção, reparação corretiva e resposta de emergência.
 
 ## 5. Registe resultados e anomalias
 
@@ -51,7 +51,7 @@ Fotografias ajudam a documentar o estado, mas não substituem medições ou ensa
 | Tarefas planeadas concluídas | Cumprimento do calendário |
 | Avarias repetidas | Problemas que não foram eliminados na origem |
 | Tempo de indisponibilidade | Impacto na operação |
-| Intervenções urgentes | Pressão sobre a manutenção correctiva |
+| Intervenções urgentes | Pressão sobre a manutenção corretiva |
 | Pendências em aberto | Necessidade de decisão ou recurso |
 
-O plano deve ser revisto periodicamente. O objectivo não é produzir mais formulários: é reduzir falhas evitáveis, melhorar a previsibilidade e manter evidência suficiente para tomar decisões.
+O plano deve ser revisto periodicamente. O objetivo não é produzir mais formulários: é reduzir falhas evitáveis, melhorar a previsibilidade e manter evidência suficiente para tomar decisões.

@@ -56,6 +56,6 @@ Não substitua a data solicitada por uma promessa verbal sem confirmação.
 
 O relatório deve apresentar o que está confirmado, o que depende de esclarecimento e quais os critérios que impedem uma decisão imediata. Não deve declarar uma proposta vencedora enquanto requisitos essenciais permanecerem por validar.
 
-A conclusão pode recomendar esclarecimentos adicionais, reavaliação de prazo ou encerramento de uma proposta por incumprimento objectivo. O registo deve permitir que outra pessoa compreenda a decisão sem depender de conversas informais.
+A conclusão pode recomendar esclarecimentos adicionais, reavaliação de prazo ou encerramento de uma proposta por incumprimento objetivo. O registo deve permitir que outra pessoa compreenda a decisão sem depender de conversas informais.
 
 Este método torna o procurement mais transparente e comparável. O exemplo é ilustrativo: em processos reais, prevalecem as especificações, regras contratuais e aprovações aplicáveis.

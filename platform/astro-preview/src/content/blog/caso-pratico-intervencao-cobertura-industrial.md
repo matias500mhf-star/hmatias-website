@@ -1,6 +1,6 @@
 ---
 title: "Caso prático: preparar uma intervenção numa cobertura industrial"
-description: "Um cenário ilustrativo para estruturar a vistoria, o escopo, os materiais, a segurança e a recepção de uma intervenção numa cobertura."
+description: "Um cenário ilustrativo para estruturar a vistoria, o escopo, os materiais, a segurança e a receção de uma intervenção numa cobertura."
 pubDate: 2026-11-13
 category: "Obras e manutenção"
 author: "Equipa Editorial HMATIAS"
@@ -12,7 +12,7 @@ draft: false
 
 > **Nota editorial:** este é um caso prático fictício e didáctico. Não representa uma obra real, um cliente ou um resultado atribuído à HMATIAS.
 
-Imagine um edifício industrial com infiltrações reportadas em vários pontos da cobertura. A primeira decisão não deve ser comprar chapas ou contratar uma substituição integral. É necessário perceber a origem do problema, a extensão afectada e as condições de segurança.
+Imagine um edifício industrial com infiltrações reportadas em vários pontos da cobertura. A primeira decisão não deve ser comprar chapas ou contratar uma substituição integral. É necessário perceber a origem do problema, a extensão afetada e as condições de segurança.
 
 ## 1. Transforme o relato numa vistoria verificável
 
@@ -38,20 +38,20 @@ Antes de iniciar, avalie trabalho em altura, pontos de ancoragem, protecção co
 
 O plano deve prever interrupção por vento, chuva ou condições que comprometam a segurança. A pressa não substitui o controlo de risco.
 
-## 5. Controle a execução e a recepção
+## 5. Controle a execução e a receção
 
 Use uma lista de verificação para conferir materiais recebidos, quantidades instaladas, fixações, remates, limpeza, remoção de resíduos e registo fotográfico. Qualquer alteração ao escopo deve ser documentada e aprovada antes de executar trabalho adicional.
 
-A recepção deve registar pendências, responsáveis e prazo de correcção. O encerramento só deve ocorrer depois da verificação dos pontos acordados.
+A receção deve registar pendências, responsáveis e prazo de correção. O encerramento só deve ocorrer depois da verificação dos pontos acordados.
 
 ## Documentos úteis para organizar o trabalho
 
 | Etapa | Registo recomendado |
 |---|---|
-| Vistoria | Ficha de inspecção e fotografias |
+| Vistoria | Ficha de inspeção e fotografias |
 | Planeamento | Mapa de zonas, medições e riscos |
 | Aquisição | Especificação e mapa comparativo |
 | Execução | Ordem de trabalho e registo diário |
-| Recepção | Lista de verificação e termo de entrega |
+| Receção | Lista de verificação e termo de entrega |
 
 O valor do método está em reduzir decisões tomadas sem medição, sem especificação ou sem controlo de segurança. Em qualquer edifício real, o escopo final deve resultar de vistoria técnica e validação por profissionais competentes.

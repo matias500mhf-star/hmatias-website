@@ -6,7 +6,7 @@ Este inventário separa o que já foi recriado no protótipo Astro, o que contin
 
 ## 1. Páginas já recriadas no protótipo Astro
 
-O protótipo gera agora 50 páginas estáticas: 25 em Português (pt-AO) e 25 em Inglês.
+O protótipo gera agora 58 páginas estáticas: 29 em Português (pt-AO) e 29 em Inglês.
 
 | Área | Português | Inglês | Situação |
 |---|---|---|---|
@@ -15,7 +15,7 @@ O protótipo gera agora 50 páginas estáticas: 25 em Português (pt-AO) e 25 em
 | KARTA Wallet | `/karta/` | `/en/karta/` | Projeto Alpha; separa componentes em desenvolvimento de objetivos futuros, sem alegar disponibilidade pública |
 | Estaleiro Integrado | `/estaleiro/` | `/en/integrated-yard/` | Estudo preliminar com duas plantas vectoriais, áreas e ressalvas técnicas; não apresentado como obra executada |
 | Credibilidade | `/credibilidade/` | `/en/credibility/` | Identificação empresarial, contactos e dados de registo |
-| Dossier institucional | `/dossier-institucional/` | `/en/institutional-dossier/` | Documento institucional bilingue, preparado para impressão e gravação em PDF; referências a canais oficiais mantidas como texto de identificação |
+
 | Construção | `/construcao/` | `/en/construction/` | Serviços e registos de obras reais; ligação para coberturas industriais e remodelação de escritórios |
 | Coberturas industriais | `/coberturas-industriais/` | `/en/industrial-roofing/` | Avaliação, reparação localizada e manutenção programada, sujeitas a levantamento técnico |
 | Remodelação de escritórios | `/remodelacao-de-escritorios/` | `/en/office-remodelling/` | Organização do espaço, acabamentos, reparações e coordenação da intervenção |
@@ -26,7 +26,7 @@ O protótipo gera agora 50 páginas estáticas: 25 em Português (pt-AO) e 25 em
 | Supply | `/supply/` | `/en/supply/` | Categorias, procurement e encaminhamento para pedidos |
 | Business Services | `/business-services/` | `/en/business-services/` | Seis áreas de serviço e ligações para os canais de pedido existentes |
 | Catálogo de Obras | `/catalogo-obras/` | `/en/works-catalogue/` | Doze registos fotográficos do arquivo |
-| Blog (listagem e artigo) | `/blog/` | `/en/blog/` | Duas páginas por idioma: listagem e artigo de orientação sobre pedidos de cotação |
+| Blog (listagem e artigos) | `/blog/` | `/en/blog/` | Uma listagem e seis artigos técnicos e casos práticos bilingues por idioma, com ligações recíprocas |
 | SOURCE AO | `/source-ao/` | `/en/source-ao/` | Página própria de sourcing e cobertura de mercado, com percurso dedicado para RFQ multiartigo |
 | SOURCE AO RFQ | `/source-ao/smart-rfq/` | `/en/source-ao/smart-rfq/` | Formulário multiartigo bilingue; regista no backend SOURCE AO apenas quando a API de staging estiver configurada; sem ligação à base de produção a partir do preview |
 | SOURCE AO Radar | `/source-ao/radar/` | `/en/source-ao/radar/` | Oportunidades públicas aprovadas, activas, em Angola e com prazo válido; sem dados internos; encaminhamento contextual para Smart RFQ; feed identificado como não configurado até ligação ao staging |

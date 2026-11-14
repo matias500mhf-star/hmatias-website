@@ -1,8 +1,11 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../../../../logo-hmatias.png";
+import whatsappIcon from "../../../../images/social-whatsapp.svg";
+import instagramIcon from "../../../../images/social-instagram.svg";
 import { company } from "../data/site";
-const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
+
+const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : Astro.url.pathname + "/";
 const isEnglish = pathname.startsWith("/en/");
 const homeUrl = isEnglish ? "/en/" : "/";
 const links = isEnglish
@@ -26,7 +29,7 @@ const links = isEnglish
 <footer class="site-footer" data-language={isEnglish ? "en" : "pt"}>
   <div class="footer-main">
     <div class="footer-column footer-identity">
-      <a class="footer-logo" href={`${homeUrl}#inicio`} aria-label={isEnglish ? "HMATIAS — back to home" : "HMATIAS — voltar ao início"}>
+      <a class="footer-logo" href={homeUrl + "#inicio"} aria-label={isEnglish ? "HMATIAS — back to home" : "HMATIAS — voltar ao início"}>
         <Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services" : "HMATIAS — Prestação de Serviços"} widths={[96, 128]} sizes="64px" format="webp" quality={82} />
       </a>
       <p class="footer-company">{company.legalName}</p>
@@ -35,19 +38,17 @@ const links = isEnglish
         : "Construção, Facilities, Supply e Business Services para empresas e projetos em Angola."}</p>
     </div>
 
-    <nav class="footer-column" aria-label={isEnglish ? "Construction services" : "Construção"}>
-      <h2>{isEnglish ? "Construction" : "Construção"}</h2>
+    <nav class="footer-column footer-operations" aria-label={isEnglish ? "Operational areas and services" : "Áreas e serviços operacionais"}>
+      <h2>{isEnglish ? "Areas and services" : "Áreas e serviços"}</h2>
+      <h3>{isEnglish ? "Operational areas" : "Áreas operacionais"}</h3>
       <a href={links.construction}>{isEnglish ? "Civil Construction" : "Construção Civil"}</a>
       <a href={isEnglish ? "/en/construction/#remodelling" : company.remodelingUrl}>{isEnglish ? "Remodelling" : "Remodelação"}</a>
       <a href={links.facilities}>{isEnglish ? "Facilities and Maintenance" : "Facilities e Manutenção"}</a>
-      <a href={links.projects}>{isEnglish ? "Projects" : "Projetos"}</a>
-      <a href={isEnglish ? "/en/works-catalogue/" : company.worksCatalogueUrl}>{isEnglish ? "Works Catalogue" : "Catálogo de Obras"}</a>
-    </nav>
-
-    <nav class="footer-column" aria-label={isEnglish ? "Services" : "Serviços"}>
-      <h2>{isEnglish ? "Services" : "Serviços"}</h2>
       <a href={links.supply}>HMATIAS Supply</a>
       <a href={links.business}>Business Services</a>
+      <h3>{isEnglish ? "Projects and requests" : "Projetos e pedidos"}</h3>
+      <a href={links.projects}>{isEnglish ? "Projects" : "Projetos"}</a>
+      <a href={isEnglish ? "/en/works-catalogue/" : company.worksCatalogueUrl}>{isEnglish ? "Works Catalogue" : "Catálogo de Obras"}</a>
       <a href={links.smart}>Smart RFQ</a>
       <a href={links.contact}>{isEnglish ? "Request a quotation" : "Solicitar orçamento"}</a>
     </nav>
@@ -60,15 +61,19 @@ const links = isEnglish
       <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
     </nav>
 
-    <section class="footer-column footer-contacts"  aria-labelledby="components-sitefooter-section-2-heading">
-      <h2 id="components-sitefooter-section-2-heading">{isEnglish ? "Contact and location" : "Contacto e localização"}</h2>
+    <section class="footer-column footer-contacts" aria-labelledby="footer-contact-heading">
+      <h2 id="footer-contact-heading">{isEnglish ? "Contact and location" : "Contacto e localização"}</h2>
       <a href={company.telephoneUri}>{company.phone}</a>
-      <a class="footer-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">WhatsApp <span aria-hidden="true">↗</span></a>
-      <a href={`mailto:${company.commercialEmail}`}>{company.commercialEmail}</a>
-      <a href={`mailto:${company.institutionalEmail}`}>{company.institutionalEmail}</a>
+      <a class="footer-icon-link footer-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? "Contact HMATIAS on WhatsApp" : "Contactar a HMATIAS pelo WhatsApp"}>
+        <img src={whatsappIcon.src} width="26" height="26" alt="" aria-hidden="true" />
+      </a>
+      <a href={"mailto:" + company.commercialEmail}>{company.commercialEmail}</a>
+      <a href={"mailto:" + company.institutionalEmail}>{company.institutionalEmail}</a>
       <address>{company.address}</address>
       <div class="footer-socials" aria-label={isEnglish ? "Social media" : "Redes sociais"}>
-        <a href={company.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram HMATIAS">Instagram <span aria-hidden="true">↗</span></a>
+        <a class="footer-icon-link" href={company.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram HMATIAS">
+          <img src={instagramIcon.src} width="26" height="26" alt="" aria-hidden="true" />
+        </a>
       </div>
     </section>
   </div>
@@ -82,6 +87,6 @@ const links = isEnglish
       <a href={links.terms}>{isEnglish ? "Terms and Conditions" : "Termos e Condições"}</a>
       <a href={links.accessibility}>{isEnglish ? "Accessibility" : "Acessibilidade"}</a>
     </nav>
-    <a class="footer-back-top" href={`${homeUrl}#inicio`}>{isEnglish ? "Back to top" : "Voltar ao topo"} <span aria-hidden="true">↑</span></a>
+    <a class="footer-back-top" href={homeUrl + "#inicio"}>{isEnglish ? "Back to top" : "Voltar ao topo"} <span aria-hidden="true">↑</span></a>
   </div>
 </footer>

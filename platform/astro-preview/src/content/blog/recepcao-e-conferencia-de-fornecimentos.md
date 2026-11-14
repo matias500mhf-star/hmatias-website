@@ -1,6 +1,6 @@
 ---
-title: "Recepção de materiais: como conferir um fornecimento antes da aceitação"
-description: "Uma checklist para confirmar quantidades, especificações, estado, documentação e divergências na recepção de materiais e equipamentos."
+title: "Receção de materiais: como conferir um fornecimento antes da aceitação"
+description: "Uma checklist para confirmar quantidades, especificações, estado, documentação e divergências na receção de materiais e equipamentos."
 pubDate: 2026-11-13
 category: "Procurement e fornecimento"
 author: "Equipa Editorial HMATIAS"
@@ -10,9 +10,9 @@ language: "pt-AO"
 draft: false
 ---
 
-A recepção de um fornecimento é um ponto de controlo, não uma formalidade. Uma assinatura sem conferência pode transformar uma divergência detectável num problema difícil de resolver depois da descarga ou da utilização.
+A receção de um fornecimento é um ponto de controlo, não uma formalidade. Uma assinatura sem conferência pode transformar uma divergência detectável num problema difícil de resolver depois da descarga ou da utilização.
 
-O procedimento deve ser proporcional ao risco e ao tipo de artigo. Uma caixa de consumíveis e um equipamento técnico não exigem a mesma profundidade de inspecção.
+O procedimento deve ser proporcional ao risco e ao tipo de artigo. Uma caixa de consumíveis e um equipamento técnico não exigem a mesma profundidade de inspeção.
 
 ## Antes da chegada
 
@@ -24,15 +24,15 @@ Quando o artigo exigir condições especiais de transporte, embalagem ou armazen
 
 Verifique a identificação do artigo, referência, modelo, unidade, quantidade e embalagem. Observe danos, humidade, deformações, lacres violados ou sinais de manuseamento inadequado.
 
-Para equipamentos, confira números de série, acessórios, manuais, garantias e documentos técnicos exigidos. Quando a inspecção funcional for necessária, deve ser realizada por pessoa competente e segundo o procedimento aplicável.
+Para equipamentos, confira números de série, acessórios, manuais, garantias e documentos técnicos exigidos. Quando a inspeção funcional for necessária, deve ser realizada por pessoa competente e segundo o procedimento aplicável.
 
 ## Registe diferenças sem as normalizar
 
-Se houver falta, excesso, substituição, dano ou documento em falta, registe a divergência com descrição objectiva, quantidade afectada, fotografias e identificação do lote ou unidade. Não altere a especificação aprovada nem aceite uma substituição informalmente.
+Se houver falta, excesso, substituição, dano ou documento em falta, registe a divergência com descrição objetiva, quantidade afetada, fotografias e identificação do lote ou unidade. Não altere a especificação aprovada nem aceite uma substituição informalmente.
 
-A divergência deve ser comunicada ao fornecedor e encaminhada para decisão: correcção, substituição, entrega complementar, aceitação condicionada ou rejeição, conforme contrato e autorização aplicáveis.
+A divergência deve ser comunicada ao fornecedor e encaminhada para decisão: correção, substituição, entrega complementar, aceitação condicionada ou rejeição, conforme contrato e autorização aplicáveis.
 
-## Termo de recepção: elementos mínimos
+## Termo de receção: elementos mínimos
 
 | Campo | Evidência |
 |---|---|
@@ -44,4 +44,4 @@ A divergência deve ser comunicada ao fornecedor e encaminhada para decisão: co
 | Divergências | Descrição, fotos e responsável |
 | Decisão | Aceitação, reserva ou rejeição |
 
-A recepção deve terminar com uma decisão clara e um responsável por cada pendência. A documentação organizada protege o comprador e o fornecedor, reduz disputas e facilita o controlo de inventário.
+A receção deve terminar com uma decisão clara e um responsável por cada pendência. A documentação organizada protege o comprador e o fornecedor, reduz disputas e facilita o controlo de inventário.
