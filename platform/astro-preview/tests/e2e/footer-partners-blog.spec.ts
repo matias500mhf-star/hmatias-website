@@ -64,7 +64,7 @@ for (const homepage of homepageRoutes) {
     const kartaExploreLink = page.locator(".footer-explore a", { hasText: "KARTA Wallet" });
     await expect(kartaExploreLink).toHaveCount(1);
     await expect(kartaExploreLink).toHaveAttribute("href", homepage.language === "en" ? "/en/karta/" : "/karta/");
-    await expect(kartaExploreLink).toContainText(homepage.language === "en" ? "Alpha project" : "Projecto Alpha");
+    await expect(kartaExploreLink).toContainText(homepage.language === "en" ? "Alpha project" : "Projeto Alpha");
 
     await page.locator(".partner-logos").scrollIntoViewIfNeeded();
 
