@@ -100,14 +100,17 @@ for (const homepage of homepageRoutes) {
       expect(partnerGridColumns, "Partner columns at " + layout.width + "px").toBe(layout.partnerColumns);
 
       const contactRight = await page.locator(".footer-contacts").evaluate((element) => element.getBoundingClientRect().right);
-      const whatsappRight = await whatsapp.evaluate((element) => element.getBoundingClientRect().right);
-      const instagramRight = await instagram.evaluate((element) => element.getBoundingClientRect().right);
-      const whatsappTop = await whatsapp.evaluate((element) => element.getBoundingClientRect().top);
-      const instagramTop = await instagram.evaluate((element) => element.getBoundingClientRect().top);
+      const socials = page.locator(".footer-socials");
+      const socialsRight = await socials.evaluate((element) => element.getBoundingClientRect().right);
+      const whatsappBounds = await whatsapp.evaluate((element) => { const { left, right, top } = element.getBoundingClientRect(); return { left, right, top }; });
+      const instagramBounds = await instagram.evaluate((element) => { const { left, right, top } = element.getBoundingClientRect(); return { left, right, top }; });
+      const whatsappTop = whatsappBounds.top;
+      const instagramTop = instagramBounds.top;
       const addressBottom = await page.locator(".footer-contacts address").evaluate((element) => element.getBoundingClientRect().bottom);
-      const socialsTop = await page.locator(".footer-socials").evaluate((element) => element.getBoundingClientRect().top);
-      expect(Math.abs(contactRight - whatsappRight), "WhatsApp alignment at " + layout.width + "px").toBeLessThanOrEqual(1);
-      expect(Math.abs(contactRight - instagramRight), "Instagram alignment at " + layout.width + "px").toBeLessThanOrEqual(1);
+      const socialsTop = await socials.evaluate((element) => element.getBoundingClientRect().top);
+      expect(Math.abs(contactRight - socialsRight), "Social icon group alignment at " + layout.width + "px").toBeLessThanOrEqual(1);
+      expect(Math.abs(contactRight - instagramBounds.right), "Instagram closes the social group at " + layout.width + "px").toBeLessThanOrEqual(1);
+      expect(Math.abs(instagramBounds.left - whatsappBounds.right - 10), "Social icon spacing at " + layout.width + "px").toBeLessThanOrEqual(1);
       expect(Math.abs(whatsappTop - instagramTop), "Social icon row at " + layout.width + "px").toBeLessThanOrEqual(1);
       expect(socialsTop).toBeGreaterThan(addressBottom);
 
