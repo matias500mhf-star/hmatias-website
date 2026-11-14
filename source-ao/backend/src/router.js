@@ -58,6 +58,28 @@ function securityFailure(env,requestId){
   });
 }
 
+function sourcingRequestCors(request,env){
+  const allowedOrigin=env.PUBLIC_ORIGIN||'https://comercialhmatiasps.com';
+  const origin=request.headers.get('origin')||'';
+  const requestedMethod=(request.headers.get('access-control-request-method')||'').toUpperCase();
+  const requestedHeaders=(request.headers.get('access-control-request-headers')||'')
+    .split(',').map(value=>value.trim().toLowerCase()).filter(Boolean);
+  const allowedHeaders=new Set(['content-type']);
+
+  if(origin!==allowedOrigin||requestedMethod!=='POST'||requestedHeaders.some(value=>!allowedHeaders.has(value))){
+    return new Response(null,{status:403,headers:{'cache-control':'no-store','vary':'Origin'}});
+  }
+
+  return new Response(null,{status:204,headers:{
+    'access-control-allow-origin':allowedOrigin,
+    'access-control-allow-methods':'POST, OPTIONS',
+    'access-control-allow-headers':'content-type',
+    'access-control-max-age':'600',
+    'cache-control':'no-store',
+    'vary':'Origin'
+  }});
+}
+
 export default {
   async fetch(request,env){
     const started=Date.now();
@@ -127,6 +149,8 @@ export default {
           response=await procurementMission(request,env);
         }else if(request.method==='GET' && url.pathname==='/api/admin/procurement-mission'){
           response=await procurementMission(request,env,{privateView:true});
+        }else if(request.method==='OPTIONS' && url.pathname==='/api/sourcing-requests'){
+          response=sourcingRequestCors(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
           response=await createSourcingRequest(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/partner-applications'){

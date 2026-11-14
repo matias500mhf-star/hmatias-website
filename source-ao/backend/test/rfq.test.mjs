@@ -7,6 +7,7 @@ import publicCatalog from '../../data/public-catalog.json' with {type:'json'};
 import {validateRfq,UNITS,CATEGORY_LABELS} from '../../rfq-model.js';
 import {createSourcingRequest,getSourcingRequest,listSourcingRequests,updateSourcingRequestStatus} from '../src/sourcing.js';
 import core from '../src/index.js';
+import router from '../src/router.js';
 import {runMaintenance} from '../src/maintenance.js';
 
 // A real SQLite database exercises migrations, bindings, deduplication and retention.
@@ -37,6 +38,44 @@ export function rfqFixture(){return {
 };}
 const request=(data)=>new Request('https://api.test/api/sourcing-requests',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(data)});
 const admin=(url,options={})=>new Request('https://api.test'+url,{...options,headers:{authorization:'Bearer synthetic-test-admin-token','content-type':'application/json'}});
+
+test('public RFQ preflight allows only the configured origin and JSON POST contract',async()=>{
+  const env={PUBLIC_ORIGIN:'https://preview.example',SOURCE_AO_ENV:'staging'};
+  const request=new Request('https://api.example/api/sourcing-requests',{
+    method:'OPTIONS',
+    headers:{
+      origin:'https://preview.example',
+      'access-control-request-method':'POST',
+      'access-control-request-headers':'content-type'
+    }
+  });
+  const response=await router.fetch(request,env);
+  assert.equal(response.status,204);
+  assert.equal(response.headers.get('access-control-allow-origin'),'https://preview.example');
+  assert.match(response.headers.get('access-control-allow-methods')||'',/POST/);
+  assert.match(response.headers.get('access-control-allow-headers')||'',/content-type/i);
+
+  const foreign=await router.fetch(new Request('https://api.example/api/sourcing-requests',{
+    method:'OPTIONS',
+    headers:{
+      origin:'https://untrusted.example',
+      'access-control-request-method':'POST',
+      'access-control-request-headers':'content-type'
+    }
+  }),env);
+  assert.equal(foreign.status,403);
+  assert.equal(foreign.headers.get('access-control-allow-origin'),null);
+
+  const unsupportedHeader=await router.fetch(new Request('https://api.example/api/sourcing-requests',{
+    method:'OPTIONS',
+    headers:{
+      origin:'https://preview.example',
+      'access-control-request-method':'POST',
+      'access-control-request-headers':'authorization,content-type'
+    }
+  }),env);
+  assert.equal(unsupportedHeader.status,403);
+});
 
 test('RFQ validates catalog identity, strict quantities, contact, consent and dates',()=>{
   const input=rfqFixture();const result=validateRfq(input,catalog);
@@ -90,6 +129,10 @@ test('every customer-visible RFQ select option satisfies the shared API contract
   for(const category of Object.keys(CATEGORY_LABELS)){
     const candidate={...input,items:input.items.map(item=>({...item,catalog_item_id:null,category}))};
     assert.equal(validateRfq(candidate,catalog).ok,true,'RFQ category '+category+' must be accepted');
+  }
+  for(const category of ['diamond-tools','measurement-instruments']){
+    const candidate={...input,items:input.items.map(item=>({...item,catalog_item_id:null,category}))};
+    assert.equal(validateRfq(candidate,{items:[]}).ok,true,'Specialised D1 category '+category+' must be accepted');
   }
   for(const unit of UNITS){
     const candidate={...input,items:input.items.map(item=>({...item,unit}))};

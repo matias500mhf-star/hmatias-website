@@ -71,6 +71,23 @@ test('catalog update validates data and requires admin authentication',async()=>
   assert.deepEqual(body.item.aliases,['tinta']);
 });
 
+test('catalog administration accepts specialised D1 catalogue categories',async()=>{
+  const env={ADMIN_API_TOKEN:'a'.repeat(40),SOURCE_AO_DB:databaseMock({item:{
+    id:'item-special',name:'Special item',name_pt:'Artigo especial',category:'industrial-supply',
+    specification:'',unit:'un',aliases_json:'[]',keywords_json:'[]',public_visible:1
+  }})};
+
+  for(const category of ['diamond-tools','measurement-instruments']){
+    const response=await updateCatalogItem(new Request('https://api.example/api/admin/catalog/items/item-special',{
+      method:'PATCH',
+      headers:{authorization:'Bearer '+'a'.repeat(40),'content-type':'application/json'},
+      body:JSON.stringify({category})
+    }),env,'item-special');
+    assert.equal(response.status,200);
+    assert.equal((await response.json()).item.category,category);
+  }
+});
+
 test('excluded item can never be published even by an administrator',async()=>{
   const current={id:'item-formaldehyde',name:'Formaldehyde',name_pt:'Formaldeído',category:'industrial-supply',specification:'',unit:'',aliases_json:'[]',keywords_json:'[]',public_visible:0};
   const env={ADMIN_API_TOKEN:'a'.repeat(40),SOURCE_AO_DB:databaseMock({item:current})};

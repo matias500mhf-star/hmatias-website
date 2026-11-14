@@ -9,6 +9,8 @@ const ALLOWED_CATEGORIES=new Set([
   'cleaning-facilities',
   'services-contractors',
   'industrial-supply',
+  'diamond-tools',
+  'measurement-instruments',
   'other'
 ]);
 
