@@ -177,7 +177,6 @@ for (const route of [
     await expect(page.locator("html")).toHaveAttribute("lang", route.language);
     const covers = page.locator(".editorial-feature-visual img, .editorial-card-cover img");
     await expect(covers).toHaveCount(6);
-    await expect(covers).toHaveCount(6);
     const missingCredits = await page.locator(".editorial-feature-visual, .editorial-card-cover").evaluateAll((figures) =>
       figures.filter((figure) => !figure.querySelector("img[alt]")?.getAttribute("alt")?.trim() ||
         !figure.querySelector("figcaption a[href*='unsplash.com/photos/']"))
