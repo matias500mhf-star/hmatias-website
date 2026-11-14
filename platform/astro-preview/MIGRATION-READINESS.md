@@ -271,7 +271,7 @@ O Blog tem 12 artigos em seis pares PT/EN, com guias técnicos e casos práticos
 - O teste Playwright passou a validar o texto e o destino da ligação KARTA nas duas homepages.
 - O verificador estático passou a validar a ligação no rodapé e a sua ausência da coluna operacional.
 - A configuração Lighthouse foi completada para auditar todas as 58 rotas, em vez de deixar sete artigos fora da auditoria.
-- Estas alterações posteriores ao commit aprovado estão a aguardar o novo ciclo Astro prototype QA #884. Não declarar a nova cabeça aprovada até ao fim desse workflow.
+- Estas alterações posteriores ao commit aprovado foram submetidas ao Astro prototype QA #888, que revelou a contagem Lighthouse ainda fixada em 51 apesar das 58 rotas configuradas. A contagem foi alinhada para 58 e a verificação de idiomas foi reforçada para os 29 pares PT/EN. O commit `07c16c5b25a1ed7c3cf9e8ce4fba71f6f4ad41b0` aguarda novo ciclo Astro prototype QA; não declarar a nova cabeça aprovada até ao fim desse workflow.
 
 ### Estado de publicação
 
