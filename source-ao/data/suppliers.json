@@ -412,6 +412,30 @@
       "phone": "+244 952 824 464",
       "email": "Info@angoayiti.com",
       "contact_source": "https://www.angoayiti.com/contact"
+    },
+    {
+      "id": "sup-synvor-industrial",
+      "name": "SYNVOR Industrial",
+      "location": "Portugal — fornecimento para Angola",
+      "website": "https://synvor-industrial.com/",
+      "source_urls": [
+        "https://synvor-industrial.com/angola",
+        "https://synvor-industrial.com/discos-diamantados",
+        "https://synvor-industrial.com/coroas-diamantadas",
+        "https://synvor-industrial.com/desbaste-e-polimento"
+      ],
+      "category": [
+        "diamond-tools"
+      ],
+      "capabilities": [
+        "Carbodiam diamond cutting discs",
+        "SAMEDIA diamond cutting discs",
+        "Diamond core-drilling crowns",
+        "Diamond grinding cups and segments",
+        "Diamond polishing products"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-11-14"
     }
   ],
   "rules": {
