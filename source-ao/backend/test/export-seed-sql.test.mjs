@@ -76,3 +76,12 @@ test('redeployment preserves commercial pursuits, evidence links and operational
   assert.equal(db.prepare('SELECT name FROM items WHERE id=?').get(seedManaged.id).name,seedManaged.name);
   assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(),[]);
 });
+
+
+test('D1 seed exporter indexes diamond-tool dimensions using the API search token format',()=>{
+  const sql=execFileSync(process.execPath,[script],{encoding:'utf8',maxBuffer:8*1024*1024});
+  const itemBlock=sql.split('INSERT INTO items(').find(block=>block.includes("'item-diamond-tools'"));
+  assert.ok(itemBlock,'seed SQL must include the canonical diamond tools family');
+  assert.match(itemBlock,/'[^']*115mm[^']*'/,'seeded search_text must merge 115 mm into 115mm');
+  assert.match(itemBlock,/'diamond-tools'/,'seeded item must retain the dedicated category');
+});
