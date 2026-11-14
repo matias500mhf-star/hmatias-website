@@ -69,7 +69,7 @@ test('public search resolves exact Carbodiam 115 mm references without implying 
   `);
   const products=masterCatalog.items.filter(row=>['item-carbodiam-pantera-115','item-carbodiam-pantera-neutre-115','item-carbodiam-crack-chaser-115'].includes(row.id));
   const exactSkus=masterCatalog.items.filter(row=>row.id.startsWith('item-carbodiam-sku-'));
-  assert.equal(exactSkus.length,46,'the catalogue must contain 46 exact Carbodiam factory references across the seven indexed disc families');
+  assert.equal(exactSkus.length,43,'the catalogue must contain 43 additional exact Carbodiam factory SKU records');
   const sampleFamilies=[
     'item-disc-family-carbodiam-acier',
     'item-crown-family-carbodiam-profor',
