@@ -1,0 +1,16 @@
+---
+const isEnglish = Astro.url.pathname.startsWith("/en/");
+---
+<section class="source-ao-highlight" aria-labelledby="source-ao-highlight-heading">
+  <div class="source-ao-highlight-copy">
+    <p class="section-kicker">{isEnglish ? "HMATIAS · SOURCING AND PROCUREMENT" : "HMATIAS · SOURCING E PROCUREMENT"}</p>
+    <h2 id="source-ao-highlight-heading">{isEnglish ? "A clearer way to prepare a supply request." : "Uma forma mais clara de preparar um pedido de fornecimento."}</h2>
+    <p>{isEnglish
+      ? "Explore SOURCE AO to organise product requirements, specifications and delivery details before requesting a quotation."
+      : "Explore o SOURCE AO para organizar artigos, especificações e condições de entrega antes de pedir uma cotação."}</p>
+  </div>
+  <a class="source-ao-highlight-link" href={isEnglish ? "/en/source-ao/" : "/source-ao/"}>
+    <span>{isEnglish ? "Explore SOURCE AO" : "Explorar SOURCE AO"}</span>
+    <span aria-hidden="true">↗</span>
+  </a>
+</section>

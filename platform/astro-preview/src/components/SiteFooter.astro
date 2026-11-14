@@ -13,17 +13,17 @@ const links = isEnglish
       about: "/en/about/", credibility: "/en/credibility/", blog: "/en/blog/",
       construction: "/en/construction/", facilities: "/en/facilities/",
       supply: "/en/supply/", business: "/en/business-services/",
-      smart: "/en/source-ao/smart-rfq/", privacy: "/en/privacy/",
-      terms: "/en/terms/", accessibility: "/en/accessibility/",
-      contact: "/en/#contact", projects: "/en/integrated-yard/"
+      works: "/en/works-catalogue/", projects: "/en/integrated-yard/",
+      privacy: "/en/privacy/", terms: "/en/terms/", accessibility: "/en/accessibility/",
+      contact: "/en/#contact"
     }
   : {
       about: company.aboutUrl, credibility: company.credibilityUrl, blog: "/blog/",
       construction: company.constructionUrl, facilities: company.facilitiesUrl,
       supply: company.supplyUrl, business: company.businessServicesUrl,
-      smart: company.smartRfqUrl, privacy: company.privacyUrl,
-      terms: company.termsUrl, accessibility: "/acessibilidade/",
-      contact: "/#contacto", projects: "/estaleiro/"
+      works: company.worksCatalogueUrl, projects: "/estaleiro/",
+      privacy: company.privacyUrl, terms: company.termsUrl,
+      accessibility: "/acessibilidade/", contact: "/#contacto"
     };
 ---
 <footer class="site-footer" data-language={isEnglish ? "en" : "pt"}>
@@ -40,21 +40,22 @@ const links = isEnglish
 
     <nav class="footer-column footer-operations" aria-label={isEnglish ? "Operational areas and services" : "Áreas e serviços operacionais"}>
       <h2>{isEnglish ? "Areas and services" : "Áreas e serviços"}</h2>
-      <a href={links.construction}>{isEnglish ? "Construction and remodelling" : "Construção e remodelação"}</a>
-      <a href={links.facilities}>{isEnglish ? "Facilities and Maintenance" : "Facilities e Manutenção"}</a>
-      <a href={links.supply}>HMATIAS Supply</a>
-      <a href={links.business}>Business Services</a>
+      <a class="footer-area-link" href={links.construction}>{isEnglish ? "Construction and remodelling" : "Construção e remodelação"}</a>
+      <div class="footer-subnav" aria-label={isEnglish ? "Construction resources" : "Recursos de construção"}>
+        <a href={links.works}>{isEnglish ? "Works catalogue" : "Catálogo de Obras"}</a>
+        <a href={links.projects}>{isEnglish ? "Projects in development" : "Projetos em desenvolvimento"}</a>
+      </div>
+      <a class="footer-area-link" href={links.facilities}>{isEnglish ? "Facilities and Maintenance" : "Facilities e Manutenção"}</a>
+      <a class="footer-area-link" href={links.supply}>HMATIAS Supply</a>
+      <a class="footer-area-link" href={links.business}>Business Services</a>
     </nav>
 
     <nav class="footer-column footer-explore" aria-label={isEnglish ? "Explore HMATIAS" : "Explorar HMATIAS"}>
       <h2>{isEnglish ? "Explore" : "Explorar"}</h2>
       <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
-      <a href={links.projects}>{isEnglish ? "Projects" : "Projetos"}</a>
-      <a href={isEnglish ? "/en/works-catalogue/" : company.worksCatalogueUrl}>{isEnglish ? "Works Catalogue" : "Catálogo de Obras"}</a>
-      <a href={isEnglish ? "/en/source-ao/" : company.sourceAoUrl}>SOURCE AO</a>
+      <a class="footer-source-link" href={isEnglish ? "/en/source-ao/" : company.sourceAoUrl}>SOURCE AO</a>
       <a href={links.blog}>{isEnglish ? "Blog · Business perspectives" : "Blog · Perspetivas empresariais"}</a>
       <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
-      <a href={links.smart}>Smart RFQ</a>
     </nav>
 
     <section class="footer-column footer-contacts" aria-labelledby="footer-contact-heading">
