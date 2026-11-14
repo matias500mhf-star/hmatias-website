@@ -210,8 +210,8 @@ for (const [route, language, privacyHref, languageHref] of partnerRoutes) {
 
 const lighthouseConfig = readFileSync(new URL("../lighthouserc.cjs", import.meta.url), "utf8");
 const lighthouseRoutes = [...lighthouseConfig.matchAll(/http:\/\/127\.0\.0\.1:4321([^"]+)/g)].map((match) => match[1]);
-assert.equal(lighthouseRoutes.length, 51, "Lighthouse must audit all 51 configured preview routes");
-assert.equal(new Set(lighthouseRoutes).size, 51, "Lighthouse route list must contain 51 unique routes");
+assert.equal(lighthouseRoutes.length, 58, "Lighthouse must audit all 58 generated preview routes");
+assert.equal(new Set(lighthouseRoutes).size, 58, "Lighthouse route list must contain 58 unique routes");
 for (const route of lighthouseRoutes) {
   const segments = route.split("/").filter(Boolean);
   const file = join(outDir, ...segments, "index.html");
@@ -473,6 +473,8 @@ const languagePairs = [
   ["blog/plano-manutencao-preventiva-instalacoes", "en/blog/preventive-facilities-maintenance-plan", "/blog/plano-manutencao-preventiva-instalacoes/", "/en/blog/preventive-facilities-maintenance-plan/"],
   ["blog/recepcao-e-conferencia-de-fornecimentos", "en/blog/receiving-and-inspecting-supply-deliveries", "/blog/recepcao-e-conferencia-de-fornecimentos/", "/en/blog/receiving-and-inspecting-supply-deliveries/"],
   ["blog/caso-pratico-comparacao-tres-propostas-fornecimento", "en/blog/illustrative-case-study-comparing-three-supply-proposals", "/blog/caso-pratico-comparacao-tres-propostas-fornecimento/", "/en/blog/illustrative-case-study-comparing-three-supply-proposals/"],
+  ["source-ao", "en/source-ao", "/source-ao/", "/en/source-ao/"],
+  ["source-ao/radar", "en/source-ao/radar", "/source-ao/radar/", "/en/source-ao/radar/"],
   ["source-ao/smart-rfq", "en/source-ao/smart-rfq", "/source-ao/smart-rfq/", "/en/source-ao/smart-rfq/"],
   ["source-ao/parceiros", "en/source-ao/partners", "/source-ao/parceiros/", "/en/source-ao/partners/"],
   ["acessibilidade", "en/accessibility", "/acessibilidade/", "/en/accessibility/"],
@@ -487,6 +489,8 @@ function languageSwitchTarget(pageHtml, route) {
   assert.ok(match, `Language switch link is missing from /${route || ""}/`);
   return match[1];
 }
+
+assert.equal(languagePairs.length, 29, "All 29 Portuguese/English page pairs must be verified");
 
 for (const [ptRoute, enRoute, ptHref, enHref] of languagePairs) {
   const ptPath = join(outDir, ptRoute, "index.html");
