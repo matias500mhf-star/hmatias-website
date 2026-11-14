@@ -10,6 +10,7 @@ on:
       - "source-ao/opportunity-radar.js"
       - "source-ao/opportunity-radar.css"
       - "source-ao/api-client.js"
+      - "source-ao/astro-search.js"
       - "source-ao/data-engine.js"
       - "source-ao/rfq.js"
       - "source-ao/rfq-model.js"
