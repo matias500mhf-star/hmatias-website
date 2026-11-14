@@ -30,10 +30,16 @@ for(const row of rows){
 }
 
 const diamondSearch=await get('/api/search?q='+encodeURIComponent('discos diamantados 115 mm')+'&location='+encodeURIComponent('Luanda'));
-const diamondItem=(diamondSearch.results||[]).find(row=>row.id==='item-diamond-tools');
-if(!diamondItem) fail('diamond tools canonical catalogue item was not searchable in staging D1');
-if(diamondItem.category!=='diamond-tools'||diamondItem.status!=='discovered') fail('diamond tools search returned an unexpected category or verification state');
-if(['supplier','price','quantity_reported'].some(key=>Object.prototype.hasOwnProperty.call(diamondItem,key))) fail('diamond tools public result exposed private supplier/commercial fields');
+const diamondIds=['item-carbodiam-pantera-115','item-carbodiam-pantera-neutre-115','item-carbodiam-crack-chaser-115'];
+const diamondRows=(diamondSearch.results||[]).filter(row=>diamondIds.includes(row.id));
+if(diamondIds.some(id=>!diamondRows.some(row=>row.id===id))) fail('one or more exact Carbodiam 115 mm catalogue references are missing from staging D1');
+if(diamondRows.some(row=>row.category!=='diamond-tools'||row.status!=='discovered')) fail('Portugal catalogue references must remain discovered, not imply stock in Luanda');
+if(diamondRows.some(row=>['supplier','price','quantity_reported','evidence_reference'].some(key=>Object.prototype.hasOwnProperty.call(row,key)))) fail('diamond tools public result exposed private supplier/commercial fields');
+
+const panteraReference=await get('/api/search?q=9193&location=Portugal');
+const pantera=(panteraReference.results||[]).find(row=>row.id==='item-carbodiam-pantera-115');
+if(!pantera||pantera.status!=='source_checked'||pantera.verification?.source_type!=='supplier_official_channel') fail('Carbodiam PANTERA factory reference 9193 is not source-traceable');
+if(pantera.status==='in_stock_confirmed') fail('official catalogue entry must not be treated as confirmed stock');
 
 const formolMission=await get('/api/procurement-mission?q='+encodeURIComponent('formol 37% 1L urgente')+'&location='+encodeURIComponent('Luanda'));
 if(formolMission?.mission?.interpretation?.item_id!=='item-formaldehyde') fail('formaldehyde acceptance case was not interpreted correctly');
