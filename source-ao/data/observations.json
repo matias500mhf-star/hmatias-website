@@ -183,6 +183,45 @@
       "location": "Luanda, Angola",
       "verification_status": "needs_reconfirmation",
       "expires_at": "2026-10-02T19:50:00+01:00"
+    },
+    {
+      "id": "obs-synvor-carbodiam-pantera-9193-20261114",
+      "supplier_id": "sup-synvor-industrial",
+      "item_id": "item-carbodiam-pantera-115",
+      "observed_at": "2026-11-14T12:00:00+01:00",
+      "verified_at": "2026-11-14T12:00:00+01:00",
+      "source_type": "supplier_official_channel",
+      "source_url": "https://synvor-industrial.com/discos/carbodiam-pantera",
+      "evidence_reference": "SYNVOR official product listing identifies PANTERA DIA 115 MM, factory reference 9193; Ø115 mm is listed for an angle grinder. Source catalogue evidence only; no live stock, price or delivery claim.",
+      "location": "Portugal",
+      "verification_status": "source_checked",
+      "expires_at": "2026-11-21T12:00:00+01:00"
+    },
+    {
+      "id": "obs-synvor-carbodiam-pantera-neutre-15448-20261114",
+      "supplier_id": "sup-synvor-industrial",
+      "item_id": "item-carbodiam-pantera-neutre-115",
+      "observed_at": "2026-11-14T12:00:00+01:00",
+      "verified_at": "2026-11-14T12:00:00+01:00",
+      "source_type": "supplier_official_channel",
+      "source_url": "https://synvor-industrial.com/discos/carbodiam-pantera-neutre",
+      "evidence_reference": "SYNVOR official product listing identifies PANTERA NEUTRE DIA 115 MM, factory reference 15448; Ø115 mm is listed for an angle grinder. Source catalogue evidence only; no live stock, price or delivery claim.",
+      "location": "Portugal",
+      "verification_status": "source_checked",
+      "expires_at": "2026-11-21T12:00:00+01:00"
+    },
+    {
+      "id": "obs-synvor-carbodiam-crack-chaser-12000-20261114",
+      "supplier_id": "sup-synvor-industrial",
+      "item_id": "item-carbodiam-crack-chaser-115",
+      "observed_at": "2026-11-14T12:00:00+01:00",
+      "verified_at": "2026-11-14T12:00:00+01:00",
+      "source_type": "supplier_official_channel",
+      "source_url": "https://synvor-industrial.com/discos/carbodiam-crack-chaser",
+      "evidence_reference": "SYNVOR official product listing identifies CRACK CHASER DIA 115, factory reference 12000; Ø115 mm is listed for an angle grinder. Source catalogue evidence only; no live stock, price or delivery claim.",
+      "location": "Portugal",
+      "verification_status": "source_checked",
+      "expires_at": "2026-11-21T12:00:00+01:00"
     }
   ],
   "note": "Each observation is an immutable market fact captured at a point in time. Current availability is computed from verification status and freshness; it is never assumed."
