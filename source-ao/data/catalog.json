@@ -1,5 +1,5 @@
 {
-  "version": "0.7",
+  "version": "0.8",
   "updated_at": "2026-11-14",
   "items": [
     {
@@ -811,6 +811,100 @@
         "residential"
       ],
       "name_pt": "Soluções Smart Home"
+    },
+    {
+      "id": "item-carbodiam-pantera-115",
+      "name": "Carbodiam PANTERA diamond cutting disc Ø115 mm — Ref. 9193",
+      "name_pt": "Disco diamantado Carbodiam PANTERA Ø115 mm — Ref. 9193",
+      "aliases": [
+        "disco diamantado 115 mm",
+        "discos diamantados 115 mm",
+        "disco diamantado Carbodiam PANTERA 115 mm",
+        "discos diamantados Carbodiam PANTERA",
+        "Carbodiam PANTERA",
+        "PANTERA DIA 115 MM",
+        "9193",
+        "ref 9193",
+        "referência 9193",
+        "referencia 9193"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published factory reference: PANTERA DIA 115 MM, Carbodiam ref. 9193. SYNVOR indicates Ø115 mm as typically used with an angle grinder. The product page does not specify a bore dimension for this version. Confirm material/application, machine compatibility, fixing interface, wet/dry operation, quantity, stock and delivery before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "115 mm",
+        "9193",
+        "angle grinder",
+        "rebarbadora",
+        "diamond cutting disc",
+        "disco de corte diamantado"
+      ]
+    },
+    {
+      "id": "item-carbodiam-pantera-neutre-115",
+      "name": "Carbodiam PANTERA NEUTRE diamond cutting disc Ø115 mm — Ref. 15448",
+      "name_pt": "Disco diamantado Carbodiam PANTERA NEUTRE Ø115 mm — Ref. 15448",
+      "aliases": [
+        "disco diamantado 115 mm",
+        "discos diamantados 115 mm",
+        "disco diamantado Carbodiam PANTERA NEUTRE 115 mm",
+        "discos diamantados Carbodiam PANTERA NEUTRE",
+        "Carbodiam PANTERA NEUTRE",
+        "PANTERA NEUTRE DIA 115 MM",
+        "15448",
+        "ref 15448",
+        "referência 15448",
+        "referencia 15448"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published factory reference: PANTERA NEUTRE DIA 115 MM, Carbodiam ref. 15448. SYNVOR indicates Ø115 mm as typically used with an angle grinder. The product page does not specify a bore dimension for this version. Confirm material/application, machine compatibility, fixing interface, wet/dry operation, quantity, stock and delivery before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA NEUTRE",
+        "115 mm",
+        "15448",
+        "angle grinder",
+        "rebarbadora",
+        "diamond cutting disc",
+        "disco de corte diamantado"
+      ]
+    },
+    {
+      "id": "item-carbodiam-crack-chaser-115",
+      "name": "Carbodiam CRACK CHASER diamond cutting disc Ø115 mm — Ref. 12000",
+      "name_pt": "Disco diamantado Carbodiam CRACK CHASER Ø115 mm — Ref. 12000",
+      "aliases": [
+        "disco diamantado 115 mm",
+        "discos diamantados 115 mm",
+        "disco diamantado Carbodiam CRACK CHASER 115 mm",
+        "discos diamantados Carbodiam CRACK CHASER",
+        "Carbodiam CRACK CHASER",
+        "CRACK CHASER DIA 115",
+        "12000",
+        "ref 12000",
+        "referência 12000",
+        "referencia 12000"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published factory reference: CRACK CHASER DIA 115, Carbodiam ref. 12000. SYNVOR indicates Ø115 mm as typically used with an angle grinder. The product page does not specify a bore dimension for this version. Confirm the intended crack-chasing application, machine compatibility, fixing interface, wet/dry operation, quantity, stock and delivery before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "CRACK CHASER",
+        "115 mm",
+        "12000",
+        "angle grinder",
+        "rebarbadora",
+        "crack chasing",
+        "diamond cutting disc",
+        "disco de corte diamantado"
+      ]
     }
   ],
   "taxonomy": [
