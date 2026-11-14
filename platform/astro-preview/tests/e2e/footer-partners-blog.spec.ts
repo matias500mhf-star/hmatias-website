@@ -62,6 +62,8 @@ for (const homepage of homepageRoutes) {
     await expect(page.locator(".karta-feature")).toHaveCount(0);
     await expect(page.locator(".source-ao-highlight")).toBeVisible();
     await expect(page.locator(".source-ao-highlight-link")).toHaveAttribute("href", homepage.sourceHref);
+    await expect(page.locator("main a[href='/karta/'], main a[href='/en/karta/']")).toHaveCount(0);
+    await expect(page.locator("main img[src*='images.unsplash.com']")).toHaveCount(0);
     const kartaExploreLink = page.locator(".footer-explore a", { hasText: "KARTA Wallet" });
     await expect(kartaExploreLink).toHaveCount(1);
     await expect(kartaExploreLink).toHaveAttribute("href", homepage.language === "en" ? "/en/karta/" : "/karta/");
@@ -137,6 +139,10 @@ for (const homepage of homepageRoutes) {
       .toHaveAttribute("href", homepage.language === "en" ? "/en/works-catalogue/" : "/catalogo-obras/");
     await expect(operations.locator(".footer-subnav").getByRole("link", { name: /Projects in development|Projetos em desenvolvimento/ }))
       .toHaveAttribute("href", homepage.language === "en" ? "/en/integrated-yard/" : "/estaleiro/");
+    const submenuTargets = await operations.locator(".footer-subnav a").evaluateAll((links) =>
+      links.map((link) => link.getBoundingClientRect().height)
+    );
+    expect(submenuTargets.every((height) => height >= 24)).toBe(true);
     const explore = page.locator(".footer-explore");
     await expect(explore.locator("a")).toHaveCount(4);
     await expect(explore.getByRole("link", { name: /About HMATIAS|Sobre a HMATIAS/ })).toBeVisible();
@@ -158,6 +164,29 @@ for (const homepage of homepageRoutes) {
       .filter((violation) => violation.impact === "critical" || violation.impact === "serious")
       .map((violation) => ({ id: violation.id, help: violation.help, nodes: violation.nodes.map((node) => node.target) }));
     expect(seriousViolations).toEqual([]);
+  });
+}
+
+for (const route of [
+  { path: "/blog/", language: "pt-AO" },
+  { path: "/en/blog/", language: "en" },
+]) {
+  test("Blog " + route.language + " keeps illustrative photographs inside the editorial section", async ({ page }) => {
+    const response = await page.goto(route.path);
+    expect(response?.status()).toBe(200);
+    await expect(page.locator("html")).toHaveAttribute("lang", route.language);
+    const covers = page.locator(".editorial-feature-visual img, .editorial-card-cover img");
+    await expect(covers).toHaveCount(6);
+    await expect(covers).toHaveCount(6);
+    const missingCredits = await page.locator(".editorial-feature-visual, .editorial-card-cover").evaluateAll((figures) =>
+      figures.filter((figure) => !figure.querySelector("img[alt]")?.getAttribute("alt")?.trim() ||
+        !figure.querySelector("figcaption a[href*='unsplash.com/photos/']"))
+        .map((figure) => figure.textContent?.trim() || "Uncredited editorial image")
+    );
+    expect(missingCredits).toEqual([]);
+    await expect(page.locator(".editorial-archive-note")).toContainText(
+      route.language === "en" ? "do not represent HMATIAS projects" : "Não representam obras"
+    );
   });
 }
 
