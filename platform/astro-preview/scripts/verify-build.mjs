@@ -505,6 +505,12 @@ for (const [ptRoute, enRoute, ptHref, enHref] of languagePairs) {
     assert.ok(enHtml.includes('id="rfqLanguage"'), "English RFQ must expose its language control");
     assert.match(sourceRfqScript, /\$\('#rfqLanguage'\)\.addEventListener\('click'/, "SOURCE AO RFQ language control must be interactive");
     assert.match(sourceRfqScript, /en=!en;staticLanguage\(\)/, "SOURCE AO RFQ language control must switch the form language");
+  } else if (ptRoute === "source-ao") {
+    assert.ok(ptHtml.includes('class="source-lang" href="/en/source-ao/"'), "Portuguese SOURCE AO landing page must link to the English landing page");
+    assert.ok(enHtml.includes('class="source-lang" href="/source-ao/"'), "English SOURCE AO landing page must link to the Portuguese landing page");
+  } else if (ptRoute === "source-ao/radar") {
+    assert.ok(ptHtml.includes('id="langToggle"'), "Portuguese SOURCE AO Radar must expose its interactive language switch");
+    assert.ok(enHtml.includes('id="langToggle"'), "English SOURCE AO Radar must expose its interactive language switch");
   } else {
     assert.equal(languageSwitchTarget(ptHtml, ptRoute), enHref,
       `Portuguese language switch must lead to /${enRoute}/`);
