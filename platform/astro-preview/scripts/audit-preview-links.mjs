@@ -16,6 +16,11 @@ function walk(dir) {
 }
 walk(dist);
 const failures = [];
+const approvedOperationalContactForms = new Set([
+  "https://comercialhmatiasps.com/#contacto",
+  "https://comercialhmatiasps.com/en.html#contact",
+]);
+const approvedContactFormsUsed = new Set();
 let checked = 0;
 for (const file of htmlFiles) {
   const html = readFileSync(file, "utf8");
@@ -30,7 +35,12 @@ for (const file of htmlFiles) {
     let target;
     try { target = new URL(href, base); } catch { failures.push({ route, href, reason: "invalid URL" }); continue; }
     if (["comercialhmatiasps.com", "www.comercialhmatiasps.com"].includes(target.hostname.toLowerCase())) {
-      failures.push({ route, href, reason: "legacy official website destination" }); continue;
+      if (approvedOperationalContactForms.has(target.href)) {
+        approvedContactFormsUsed.add(target.href);
+        checked++;
+        continue;
+      }
+      failures.push({ route, href, reason: "unapproved legacy official website destination" }); continue;
     }
     if (target.origin !== "https://preview.invalid") continue;
     const pathname = decodeURIComponent(target.pathname);
@@ -40,9 +50,10 @@ for (const file of htmlFiles) {
     checked++;
   }
 }
+assert.equal(approvedContactFormsUsed.size, 2, "Both language versions must retain the two approved operational Resend contact-form destinations");
 if (failures.length) {
   console.error("Preview link audit FAILED:");
   for (const item of failures.slice(0, 100)) console.error("- " + item.route + " -> " + item.href + ": " + item.reason);
   assert.fail(failures.length + " broken/legacy links across " + htmlFiles.length + " pages");
 }
-console.log("Preview link audit PASS: " + checked + " local links checked across " + htmlFiles.length + " pages; no legacy-site links or missing local destinations.");
+console.log("Preview link audit PASS: " + checked + " local/approved operational links checked across " + htmlFiles.length + " pages; only the two explicit Resend contact-form handoffs may reach the official website.");
