@@ -16,7 +16,8 @@
         "label_en": "Availability on request"
       },
       "source_page": 3,
-      "source": "HMATIAS Supply Catalogue 2026, página 3"
+      "source": "HMATIAS Supply Catalogue 2026, página 3",
+      "filter": "diamond-cutting"
     },
     {
       "id": "item-carbodiam-spyrostar",
@@ -30,7 +31,8 @@
         "label_en": "Availability on request"
       },
       "source_page": 3,
-      "source": "HMATIAS Supply Catalogue 2026, página 3"
+      "source": "HMATIAS Supply Catalogue 2026, página 3",
+      "filter": "diamond-cutting"
     },
     {
       "id": "item-carbodiam-pro-bf1",
@@ -44,7 +46,8 @@
         "label_en": "Availability on request"
       },
       "source_page": 3,
-      "source": "HMATIAS Supply Catalogue 2026, página 3"
+      "source": "HMATIAS Supply Catalogue 2026, página 3",
+      "filter": "diamond-cutting"
     }
   ]
 }
