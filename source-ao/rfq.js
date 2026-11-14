@@ -44,6 +44,8 @@ function staticLanguage(){
     ['#rfqTermsLink', localizedLinks.terms]
   ];
   linkTargets.forEach(([selector, href]) => { const node=$(selector); if(node) node.href=href; });
+  const submitButton=$('#rfqSubmit');
+  if(submitButton) submitButton.textContent=/^https:\/\//.test(apiBase())?copy('Enviar pedido de cotação','Send quotation request'):copy('Preparar envio manual','Prepare manual request');
 }
 
 function setAccessibleLabel(input, labelText) {
@@ -170,7 +172,31 @@ function link(label,href,primary=false){const a=document.createElement('a');a.te
 function paragraph(parent,text){const p=document.createElement('p');p.textContent=text;parent.append(p);return p;}
 function whatsapp(message){return 'https://wa.me/244948806673?text='+encodeURIComponent(message);}
 function message(data){
-  return ['SOURCE AO · Pedido de cotação / RFQ',...data.items.map((item,i)=>`${i+1}. ${item.description} | ${item.quantity} ${item.unit}${item.specification?' | '+item.specification:''}`),`Local: ${data.location}`,`Necessário até: ${data.needed_by||copy('a confirmar','to confirm')}`].join('\n');
+  const buyer=data.buyer_type==='individual'?copy('Particular','Individual'):data.buyer_type==='institution'?copy('Instituição pública / estatal','Public institution / authority'):copy('Empresa','Company');
+  const channel=data.contact_channel==='email'?'E-mail':data.contact_channel==='phone'?copy('Telefone','Phone'):'WhatsApp';
+  const urgency=data.urgency==='urgent'?copy('Urgente','Urgent'):data.urgency==='planned'?copy('Compra programada','Scheduled purchase'):copy('Prazo normal','Standard timing');
+  const intent=data.intent==='budgeting'?copy('Consulta de orçamento','Budget estimate'):data.intent==='recurring'?copy('Fornecimento recorrente','Recurring supply'):copy('Comprar após aprovação da proposta','Purchase after proposal approval');
+  const alternatives=data.alternatives==='yes'?copy('Sim','Yes'):data.alternatives==='no'?copy('Não','No'):copy('Consultar antes de substituir','Discuss before replacing');
+  const itemLines=data.items.map((item,i)=>(i+1)+'. '+item.description+' | '+item.quantity+' '+item.unit+(item.specification?' | '+item.specification:''));
+  return [
+    'SOURCE AO · Pedido de cotação / RFQ',
+    copy('CONTACTO','CONTACT'),
+    'Nome: '+data.requester_name,
+    data.company?copy('Empresa / instituição: ','Company / institution: ')+data.company:null,
+    copy('Tipo de cliente: ','Customer type: ')+buyer,
+    copy('Contacto preferencial: ','Preferred contact: ')+channel+' — '+data.requester_contact,
+    '',
+    copy('ARTIGOS','ITEMS'),
+    ...itemLines,
+    '',
+    copy('Local de entrega: ','Delivery location: ')+data.location,
+    copy('Necessário até: ','Needed by: ')+(data.needed_by||copy('a confirmar','to be confirmed')),
+    copy('Urgência: ','Urgency: ')+urgency,
+    copy('Finalidade: ','Purpose: ')+intent,
+    copy('Alternativas equivalentes: ','Equivalent alternatives: ')+alternatives,
+    data.budget!==''&&data.budget!=null?copy('Orçamento indicativo: ','Indicative budget: ')+data.budget+' Kz':null,
+    data.notes?copy('Notas: ','Notes: ')+data.notes:null
+  ].filter(Boolean).join('\n');
 }
 function showSuccess(request,path){
   registered=true;$('#rfqForm').hidden=true;$('#catalogStatus').hidden=true;
@@ -189,13 +215,26 @@ function showSuccess(request,path){
   box.append(link(copy('Criar outro pedido','Create another request'),'rfq.html'+(en?'?lang=en':'')));
   box.focus();
 }
+function showPreviewManual(data){
+  const box=$('#rfqResult');box.replaceChildren();box.hidden=false;
+  const h=document.createElement('h2');h.textContent=copy('Pedido preparado para envio manual.','Request prepared for manual sending.');box.append(h);
+  paragraph(box,copy('Este preview está isolado e não tem uma API de staging ligada. O pedido não foi registado nem guardado na plataforma. Utilize o WhatsApp para o enviar à HMATIAS e confirme o envio na conversa.','This preview is isolated and has no staging API connected. The request has not been registered or stored on the platform. Use WhatsApp to send it to HMATIAS and confirm the message in the conversation.'));
+  const full=message(data);const text=document.createElement('textarea');text.readOnly=true;text.rows=7;text.value=full;text.setAttribute('aria-label',copy('Pedido completo para enviar à HMATIAS','Complete request to send to HMATIAS'));
+  const a=link(copy('Abrir WhatsApp com o pedido','Open WhatsApp with the request'),whatsapp(full.length<6000?full:copy('Preciso de uma cotação no SOURCE AO. Vou enviar a minha lista de artigos abaixo.','I need a quote in SOURCE AO. I will send my item list below.')),true);
+  a.target='_blank';a.rel='noopener noreferrer';
+  box.append(text,a);if(full.length>=6000)paragraph(box,copy('Copie a lista acima e cole-a na conversa.','Copy the list above and paste it into the conversation.'));
+  paragraph(box,copy('Abrir o WhatsApp não envia a mensagem. Confirme o envio na conversa.','Opening WhatsApp does not send the message. Confirm the send in the conversation.'));
+  box.focus();
+}
 function showFailure(data,status){
   const box=$('#rfqResult');box.replaceChildren();box.hidden=false;
   paragraph(box,status===429?copy('Limite temporário de pedidos. Aguarde alguns minutos antes de tentar novamente.','Temporary request limit. Wait a few minutes before retrying.'):copy('Não foi possível registar o seu pedido no momento. Pode continuar pela conversa no WhatsApp e enviar a lista abaixo.','The request could not be registered at the moment. You can continue via WhatsApp and send the list below.'));
-  const full=message(data);const text=document.createElement('textarea');text.readOnly=true;text.rows=5;text.value=full;text.setAttribute('aria-label',copy('Lista para enviar à HMATIAS','List to send to HMATIAS'));
+  const full=message(data);const text=document.createElement('textarea');text.readOnly=true;text.rows=7;text.value=full;text.setAttribute('aria-label',copy('Lista para enviar à HMATIAS','List to send to HMATIAS'));
   const a=link(copy('Abrir WhatsApp e enviar o pedido','Open WhatsApp and send the request'),whatsapp(full.length<6000?full:copy('Preciso de uma cotação no SOURCE AO. Vou enviar a minha lista de artigos abaixo.','I need a quote in SOURCE AO. I will send my item list below.')));
+  a.target='_blank';a.rel='noopener noreferrer';
   box.append(text,a);if(full.length>=6000)paragraph(box,copy('Copie a lista acima e cole-a na conversa.','Copy the list above and paste it into the conversation.'));
-  paragraph(box,copy('Abrir o WhatsApp não envia a mensagem. Confirme o envio na conversa.','Opening WhatsApp does not send the message. Confirm the send in the conversation.'));
+  paragraph(box,copy('Abrir o WhatsApp não envia a mensagem. Confirme o envio na conversa.','Opening WhatsApp does not send the message.'));
+  box.focus();
 }
 
 async function submit(event){
@@ -207,6 +246,11 @@ async function submit(event){
   data.client_token=clientToken;
   const validation=validateRfq(data,catalog,new Date(Date.now()+3600000));
   if(!validation.ok){error(copy('Verifique os campos e a data pretendida antes de enviar.','Check the fields and target date before sending.'));return;}
+  if(!/^https:\/\//.test(apiBase())){
+    track('source_rfq_preview_manual_handoff',{item_count:data.items.length,buyer_type:data.buyer_type,contact_channel:data.contact_channel,source_origin:data.origin,source_language:data.language});
+    showPreviewManual(data);
+    return;
+  }
   track('source_rfq_submit_attempt',{item_count:data.items.length,buyer_type:data.buyer_type,urgency:data.urgency,purchase_intent:data.intent,contact_channel:data.contact_channel,source_origin:data.origin,source_language:data.language});
   busy=true;$('#rfqSubmit').disabled=true;$('#rfqBack').disabled=true;$('#rfqLanguage').disabled=true;$('#rfqSubmit').textContent=copy('A registar…','Registering…');$('#rfqResult').hidden=true;error();
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
@@ -223,7 +267,7 @@ async function submit(event){
     track('source_rfq_registration_failed',{status_code:Number(failure.status)||0,source_origin:data.origin,source_language:data.language});
     showFailure(data,failure.status);
   }
-  finally{clearTimeout(timeout);busy=false;$('#rfqSubmit').disabled=false;$('#rfqBack').disabled=false;$('#rfqLanguage').disabled=registered;$('#rfqSubmit').textContent=copy('Enviar pedido de cotação','Send quotation request');}
+  finally{clearTimeout(timeout);busy=false;$('#rfqSubmit').disabled=false;$('#rfqBack').disabled=false;$('#rfqLanguage').disabled=registered;$('#rfqSubmit').textContent=/^https:\/\//.test(apiBase())?copy('Enviar pedido de cotação','Send quotation request'):copy('Preparar envio manual','Prepare manual request');}
 }
 
 $('#rfqNext').addEventListener('click',()=>{if(validateStep(step))showStep(step+1);});
