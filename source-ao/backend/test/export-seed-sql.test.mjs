@@ -84,6 +84,11 @@ test('D1 seed exporter indexes diamond-tool dimensions using the API search toke
   assert.ok(itemBlock,'seed SQL must include the canonical diamond tools family');
   assert.match(itemBlock,/'[^']*115mm[^']*'/,'seeded search_text must merge 115 mm into 115mm');
   assert.match(itemBlock,/'diamond-tools'/,'seeded item must retain the dedicated category');
+  const exactSkus=sql.split('INSERT INTO items(').filter(block=>/item-carbodiam-sku-[^']+'.*VALUES/.test(block));
+  assert.equal(exactSkus.length,46,'D1 seed must contain all 46 exact Carbodiam SKU variants');
+  for(const reference of ['9194','15449','11603','14491','19722','13745','5182']){
+    assert.ok(sql.includes("'"+reference+"'"),'D1 seed must contain factory reference '+reference);
+  }
   for(const id of [
     'item-disc-family-carbodiam-acier',
     'item-crown-family-carbodiam-profor',
