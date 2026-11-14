@@ -258,7 +258,7 @@ A rede de parceiros apresentada no preview inclui Miliart, FRANSGA, D&WOOD, Tele
 
 O Blog tem 12 artigos em seis pares PT/EN, com guias técnicos e casos práticos. Os casos ilustrativos estão identificados como tal e não devem ser interpretados como referências de clientes ou obras reais da HMATIAS.
 
-**Formulário de contacto no preview:** a chamada de contacto da homepage PT abre `https://comercialhmatiasps.com/#contacto`; a homepage EN abre `https://comercialhmatiasps.com/en.html#contact`. Os dois destinos são handoffs explícitos para os formulários oficiais já operacionais via Resend, abertos num novo separador. Esta excepção é intencional para preservar recepção real enquanto o preview continua isolado. O auditor de ligações só permite estes dois destinos exactos; qualquer outro redireccionamento para o publisher oficial continua a falhar a auditoria. Não foram alterados os formulários, Worker, segredos ou configuração Resend do domínio publicado.
+**Formulário de contacto no preview:** as chamadas de contacto das homepages PT/EN e do Catálogo de Obras abrem os formulários oficiais correspondentes (`https://comercialhmatiasps.com/#contacto` e `https://comercialhmatiasps.com/en.html#contact`). Os dois destinos são handoffs explícitos para os formulários oficiais já operacionais via Resend, abertos num novo separador. Esta excepção é intencional para preservar recepção real enquanto o preview continua isolado. O auditor de ligações só permite estes dois destinos exactos; qualquer outro redireccionamento para o publisher oficial continua a falhar a auditoria. Não foram alterados os formulários, Worker, segredos ou configuração Resend do domínio publicado.
 
 ### Validação automatizada
 
