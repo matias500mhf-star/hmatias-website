@@ -42,6 +42,7 @@
       <nav class="nav-links" id="mainNavigation" data-i18n-aria-label="mainNavigation" aria-label="Navegação principal">
         <a href="#search" data-i18n="navSearch">Pesquisa</a>
         <a href="#categories" data-i18n="navCategories">Categorias</a>
+        <a href="#product-catalogue" data-i18n="navCatalogue">Catálogo</a>
         <a href="#radar" data-i18n="navRadar">Radar</a>
         <a href="opportunity-radar.html" data-i18n="navOpportunities">Oportunidades</a>
       </nav>
@@ -172,6 +173,16 @@
       </div>
     </section>
 
+
+    <section class="partner-catalogue shell" id="product-catalogue" aria-labelledby="productCatalogueTitle">
+      <div class="section-heading">
+        <div><p class="eyebrow" data-i18n="catalogueEyebrow">CATÁLOGO HMATIAS SUPPLY</p><h2 id="productCatalogueTitle" data-i18n="catalogueTitle">Produtos e referências técnicas.</h2></div>
+        <p class="section-note" data-i18n="catalogueLead">Consulte referências documentadas no catálogo HMATIAS. Preço, disponibilidade e prazo são confirmados por pedido.</p>
+      </div>
+      <div class="catalogue-toolbar"><label class="catalogue-search-label" for="productCatalogueSearch" data-i18n="catalogueSearchLabel">Pesquisar produtos</label><input id="productCatalogueSearch" type="search" placeholder="Ex.: Red Line 17, Spyrostar…" data-i18n-placeholder="catalogueSearchPlaceholder"><div class="catalogue-filters" id="productCatalogueFilters" aria-label="Categorias do catálogo"><button type="button" class="is-active" data-filter="all" data-i18n="catalogueAll">Todos</button><button type="button" data-filter="diamond-cutting" data-i18n="catalogueDiamond">Ferramentas diamantadas</button></div></div>
+      <div class="catalogue-grid" id="productCatalogueGrid" aria-live="polite"><p class="catalogue-loading" data-i18n="catalogueLoading">A carregar referências documentadas…</p></div>
+      <p class="catalogue-disclaimer" data-i18n="catalogueDisclaimer">As fotografias e fichas técnicas são consultadas no catálogo PDF de referência. A presença nesta página não confirma stock, preço ou prazo de entrega.</p>
+    </section>
     <section class="radar-section" id="radar">
       <div class="shell radar-grid">
         <div class="radar-copy">
@@ -245,5 +256,6 @@
   <script src="data-engine.js" defer></script>
   <script src="sourceao.js?v=20261028-mobile-nav1" defer></script>
 <script src="verified-results.js?v=20261029-sourceao-api-status1" defer></script>
+  <script src="product-catalogue.js?v=20261114-1" defer></script>
 </body>
 </html>

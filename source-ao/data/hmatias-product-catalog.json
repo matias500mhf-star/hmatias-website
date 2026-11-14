@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-11-14T00:00:00+00:00",
+  "catalog_title": "HMATIAS Supply Catalogue 2026",
+  "products": [
+    {
+      "id": "item-carbodiam-red-line-17",
+      "name": "Carbodiam Red Line 17",
+      "brand": "Carbodiam",
+      "category": "Ferramentas diamantadas",
+      "description": "Disco diamantado para corte intensivo em materiais duros, betão e betão armado. Diâmetros indicados: Ø230, 300, 350 e 400 mm. Segmento: 17 mm. Confirmar furo, máquina e modo de corte.",
+      "availability": {
+        "status": "unknown",
+        "label_pt": "Disponibilidade sob consulta",
+        "label_en": "Availability on request"
+      },
+      "source_page": 3,
+      "source": "HMATIAS Supply Catalogue 2026, página 3",
+      "filter": "diamond-cutting"
+    },
+    {
+      "id": "item-carbodiam-spyrostar",
+      "name": "Carbodiam Spyrostar",
+      "brand": "Carbodiam",
+      "category": "Ferramentas diamantadas",
+      "description": "Disco diamantado para corte fino e de alta precisão. Diâmetros indicados: Ø125, 230, 350 e 400 mm. Compatibilidade com rebarbadoras e cortadoras, conforme referência.",
+      "availability": {
+        "status": "unknown",
+        "label_pt": "Disponibilidade sob consulta",
+        "label_en": "Availability on request"
+      },
+      "source_page": 3,
+      "source": "HMATIAS Supply Catalogue 2026, página 3",
+      "filter": "diamond-cutting"
+    },
+    {
+      "id": "item-carbodiam-pro-bf1",
+      "name": "Carbodiam PRO BF1",
+      "brand": "Carbodiam",
+      "category": "Ferramentas diamantadas",
+      "description": "Disco para serra de chão, destinado a pavimentos industriais duros. Diâmetros indicados: Ø300 e 350 mm. Confirmar máquina, furo e material.",
+      "availability": {
+        "status": "unknown",
+        "label_pt": "Disponibilidade sob consulta",
+        "label_en": "Availability on request"
+      },
+      "source_page": 3,
+      "source": "HMATIAS Supply Catalogue 2026, página 3",
+      "filter": "diamond-cutting"
+    }
+  ]
+}
