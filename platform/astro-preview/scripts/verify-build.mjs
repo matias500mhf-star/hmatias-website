@@ -37,7 +37,8 @@ assert.match(html, /Blog · Perspetivas empresariais/, "Blog footer link is miss
 const footerHtml = html.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
 assert.ok(footerHtml, "Homepage footer is missing");
 assert.equal((footerHtml.match(/class="footer-column footer-(?:identity|operations|explore|contacts)"/g) || []).length, 4, "Footer must have four organised columns");
-assert.doesNotMatch(footerHtml, /KARTA Wallet/, "KARTA must remain outside the operational footer");
+assert.match(footerHtml, /href="\\/karta\\/">KARTA Wallet · Projecto Alpha/, "Portuguese footer Explore must link to the independent KARTA Alpha project");
+assert.doesNotMatch(operationsHtml ?? "", /KARTA Wallet/, "KARTA must remain outside the four operational areas");
 const operationsHtml = footerHtml.match(/<nav class="footer-column footer-operations"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
 assert.ok(operationsHtml, "Operational areas footer column is missing");
 assert.equal((operationsHtml.match(/<a\b/g) || []).length, 4, "Footer must list only the four HMATIAS operational areas");
@@ -49,7 +50,11 @@ assert.match(footerHtml, /href="\/estaleiro\//, "Footer project link must preser
 const englishHomeHtml = readFileSync(join(outDir, "en", "index.html"), "utf8");
 const englishFooterHtml = englishHomeHtml.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
 assert.ok(englishFooterHtml, "English homepage footer is missing");
-assert.doesNotMatch(englishFooterHtml, /KARTA Wallet/, "KARTA must remain outside the English operational footer");
+assert.match(englishFooterHtml, /href="\\/en\\/karta\\/">KARTA Wallet · Alpha project/, "English footer Explore must link to the independent KARTA Alpha project");
+const englishOperationsHtml = englishFooterHtml.match(/<nav class="footer-column footer-operations"[^>]*>([\\s\\S]*?)<\\/nav>/)?.[1];
+assert.ok(englishOperationsHtml, "English operational areas footer column is missing");
+assert.equal((englishOperationsHtml.match(/<a\\b/g) || []).length, 4, "English footer must list only the four HMATIAS operational areas");
+assert.doesNotMatch(englishOperationsHtml, /KARTA Wallet/, "KARTA must remain outside the four English operational areas");
 assert.match(englishHomeHtml, /INDEPENDENT DIGITAL PROJECT · ALPHA/, "English homepage must identify KARTA as an independent Alpha project");
 assert.match(englishHomeHtml, /<a href="\/en\/karta\/"[^>]*>/, "English homepage must link to its KARTA Alpha page");
 assert.match(englishHomeHtml, /View the Alpha project/, "English KARTA Alpha link label is missing");
