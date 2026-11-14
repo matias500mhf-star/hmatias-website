@@ -37,7 +37,7 @@ assert.match(html, /Blog · Perspetivas empresariais/, "Blog footer link is miss
 const footerHtml = html.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
 assert.ok(footerHtml, "Homepage footer is missing");
 assert.equal((footerHtml.match(/class="footer-column footer-(?:identity|operations|explore|contacts)"/g) || []).length, 4, "Footer must have four organised columns");
-assert.ok(footerHtml.includes('href="/karta/">KARTA Wallet · Projecto Alpha'), "Portuguese footer Explore must link to the independent KARTA Alpha project");
+assert.ok(footerHtml.includes('href="/karta/">KARTA Wallet · Projeto Alpha'), "Portuguese footer Explore must link to the independent KARTA Alpha project");
 const operationsHtml = footerHtml.match(/<nav class="footer-column footer-operations"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
 assert.ok(operationsHtml, "Operational areas footer column is missing");
 assert.doesNotMatch(operationsHtml, /KARTA Wallet/, "KARTA must remain outside the four operational areas");
