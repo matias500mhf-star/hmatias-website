@@ -25,7 +25,7 @@ const apiConfigured = Boolean(apiBase);
   <p id="sourceAoSearchStatus" class="source-live-search-status" role="status" aria-live="polite">
     {apiConfigured
       ? (english ? "Staging API connected. Search uses published catalogue records only; this preview remains isolated from production." : "API de staging ligada. A pesquisa utiliza apenas artigos publicados; este preview mantém-se isolado da produção.")
-      : (english ? "Static preview catalogue search. This is not a D1 query; stock, price and delivery require commercial confirmation." : "Pesquisa no catálogo estático de pré-visualização. Não consulta a D1; stock, preço e entrega dependem de confirmação comercial.")}
+      : (english ? "Static preview catalogue search (not a D1 search); stock, price and delivery require commercial confirmation." : "Pesquisa no catálogo estático de pré-visualização (não consulta a D1); stock, preço e entrega dependem de confirmação comercial.")}
   </p>
   <div id="sourceAoSearchResults" class="source-live-search-results" aria-live="polite" hidden></div>
   <p class="source-live-search-footnote">{english ? "Search results are references, not a stock or price guarantee." : "Os resultados de pesquisa são referências, não uma garantia de stock ou preço."} <a href={english ? "/en/source-ao/smart-rfq/" : "/source-ao/smart-rfq/"}>{english ? "Submit a quotation request" : "Enviar pedido de cotação"}</a></p>
