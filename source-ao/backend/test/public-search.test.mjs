@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mapPublicItemRow} from '../src/public-search.js';
+import {DatabaseSync} from 'node:sqlite';
+import {mapPublicItemRow,publicSearch} from '../src/public-search.js';
 
 const base={
   item_id:'item_1',
@@ -52,4 +53,38 @@ test('item with no approved observation remains discovered',()=>{
   });
   assert.equal(result.status,'discovered');
   assert.equal(result.verification,null);
+});
+
+
+test('public catalogue search matches Portuguese plural queries against singular D1 records',async()=>{
+  const db=new DatabaseSync(':memory:');
+  db.exec(`
+    CREATE TABLE items(id TEXT,name TEXT,category TEXT,specification TEXT,unit TEXT,search_text TEXT);
+    CREATE TABLE suppliers(id TEXT,location TEXT);
+    CREATE TABLE observations(id TEXT,supplier_id TEXT,item_id TEXT,approved_at TEXT,location TEXT,
+      verification_status TEXT,verified_at TEXT,expires_at TEXT,source_type TEXT);
+    CREATE TABLE service_providers(service_category TEXT,last_verified_at TEXT,search_text TEXT,location TEXT);
+  `);
+  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?)').run(
+    'item-diamond','Disco diamantado 115 mm','diamond-tools','115 mm · segmento turbo','un','disco diamantado 115mm synvor'
+  );
+  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?)').run(
+    'item-unrelated','Disco de corte 115 mm','tools-equipment','115 mm','un','disco corte 115mm'
+  );
+  const adapter={
+    prepare(sql){
+      return {bind(...values){return {async all(){return {results:db.prepare(sql).all(...values)}}};}};
+    }
+  };
+  const request=new Request('https://api.test/api/search?q=discos%20diamantados%20115%20mm&location=Luanda');
+  const response=await publicSearch(request,{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
+  const body=await response.json();
+  assert.equal(response.status,200);
+  assert.deepEqual(body.results.map(row=>row.id),['item-diamond']);
+  assert.equal(body.results[0].status,'discovered');
+  assert.equal(body.results[0].category,'diamond-tools');
+  assert.equal(Object.hasOwn(body.results[0],'supplier'),false);
+  assert.equal(Object.hasOwn(body.results[0],'price'),false);
+  assert.equal(Object.hasOwn(body.results[0],'quantity_reported'),false);
+  db.close();
 });

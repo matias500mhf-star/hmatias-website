@@ -1,5 +1,5 @@
 const PUBLIC_STATUSES = new Set(['source_checked','recently_seen','supplier_confirmed','in_stock_confirmed','needs_reconfirmation','unavailable']);
-const CATALOG_CATEGORIES = new Set(['construction','hvac-electrical','tools-equipment','cleaning-facilities','services-contractors','industrial-supply','other']);
+const CATALOG_CATEGORIES = new Set(['construction','hvac-electrical','tools-equipment','cleaning-facilities','services-contractors','industrial-supply','diamond-tools','measurement-instruments','other']);
 
 export function normalizeSearch(value='') {
   return value.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')

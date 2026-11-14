@@ -3,6 +3,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import sourceLogo from "../../../../../images/source-ao-logo.svg";
 import { company } from "../../data/site";
+import SourceAoSearch from "../../components/SourceAoSearch.astro";
+const candidateApiBase = String(import.meta.env.PUBLIC_SOURCE_AO_API_BASE ?? "").trim();
+let sourceAoApiBase = "";
+try {
+  const parsed = new URL(candidateApiBase);
+  if (parsed.protocol === "https:" && parsed.hostname.toLowerCase().includes("staging")) sourceAoApiBase = parsed.origin;
+} catch {
+  sourceAoApiBase = "";
+}
 ---
 <BaseLayout title="SOURCE AO — Sourcing e validação de fornecimento em Angola" description="Estruture necessidades de compra, identifique referências e encaminhe pedidos de sourcing para validação comercial em Angola." lang="pt-AO">
   <div class="source-preview-bar"><span>SOURCE AO</span><span>PREVIEW · PRODUTO DIGITAL</span></div>
@@ -28,6 +37,7 @@ import { company } from "../../data/site";
         <a href="/source-ao/smart-rfq/">Preencher Smart RFQ ↗</a>
       </aside>
     </section>
+    <SourceAoSearch apiBase={sourceAoApiBase} lang="pt-AO" />
     <section class="source-process" id="processo" aria-labelledby="pages-source-ao-index-section-2-heading">
       <div class="source-section-label">02 / MÉTODO DE TRABALHO</div>
       <div class="source-process-head"><h2 id="pages-source-ao-index-section-2-heading">Quatro etapas.<br/><em>Sem promessas antecipadas.</em></h2><p>O SOURCE AO separa pesquisa, evidência e confirmação. Cada etapa tem um resultado identificável.</p></div>
