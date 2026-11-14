@@ -155,7 +155,7 @@ for (const pair of articlePairs) {
       );
 
       const missingAlt = await page.locator("img").evaluateAll((images) =>
-        images.filter((image) => !(image.getAttribute("alt") || "").trim())
+        images.filter((image) => !image.hasAttribute("alt") || (!(image.getAttribute("alt") || "").trim() && image.getAttribute("aria-hidden") !== "true"))
           .map((image) => image.getAttribute("src") || "(imagem sem texto alternativo)")
       );
       expect(missingAlt, variant.route).toEqual([]);

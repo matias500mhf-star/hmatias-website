@@ -805,3 +805,4 @@ main li {
 .partner-section-foot p{max-width:600px;margin:0;color:var(--hm-muted);font-size:11px;line-height:1.8}
 .partner-section-foot a{color:var(--hm-blue);font-size:11px;font-weight:700;white-space:nowrap}
 @media(max-width:750px){.partner-section-head{align-items:flex-start;flex-direction:column}.partner-logos{grid-template-columns:1fr}.partner-logo{min-height:120px}.partner-logo-miliart img,.partner-logo-dwood img{height:120px}.partner-section-foot{align-items:flex-start;flex-direction:column}}
+@media (min-width: 751px) and (max-width: 1100px){.partner-logos{grid-template-columns:repeat(2,minmax(0,1fr))}}

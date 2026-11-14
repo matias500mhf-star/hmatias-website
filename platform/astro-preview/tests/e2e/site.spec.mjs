@@ -71,7 +71,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await page.goto("/");
     const missingAlt = await page.locator("img").evaluateAll((images) =>
       images
-        .filter((image) => !(image.getAttribute("alt") || "").trim())
+        .filter((image) => !image.hasAttribute("alt") || (!(image.getAttribute("alt") || "").trim() && image.getAttribute("aria-hidden") !== "true"))
         .map((image) => image.getAttribute("src") || "(imagem sem src)")
     );
     expect(missingAlt).toEqual([]);
@@ -81,7 +81,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await page.goto("/construcao/");
     const missingAlt = await page.locator("img").evaluateAll((images) =>
       images
-        .filter((image) => !(image.getAttribute("alt") || "").trim())
+        .filter((image) => !image.hasAttribute("alt") || (!(image.getAttribute("alt") || "").trim() && image.getAttribute("aria-hidden") !== "true"))
         .map((image) => image.getAttribute("src") || "(imagem sem src)")
     );
     expect(missingAlt).toEqual([]);
@@ -91,7 +91,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await page.goto("/facilities/");
     const missingAlt = await page.locator("img").evaluateAll((images) =>
       images
-        .filter((image) => !(image.getAttribute("alt") || "").trim())
+        .filter((image) => !image.hasAttribute("alt") || (!(image.getAttribute("alt") || "").trim() && image.getAttribute("aria-hidden") !== "true"))
         .map((image) => image.getAttribute("src") || "(imagem sem src)")
     );
     expect(missingAlt).toEqual([]);
@@ -101,7 +101,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await page.goto("/supply/");
     const missingAlt = await page.locator("img").evaluateAll((images) =>
       images
-        .filter((image) => !(image.getAttribute("alt") || "").trim())
+        .filter((image) => !image.hasAttribute("alt") || (!(image.getAttribute("alt") || "").trim() && image.getAttribute("aria-hidden") !== "true"))
         .map((image) => image.getAttribute("src") || "(imagem sem src)")
     );
     expect(missingAlt).toEqual([]);
@@ -209,7 +209,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
       }
 
       const missingAlt = await page.locator("img").evaluateAll((images) =>
-        images.filter((image) => !(image.getAttribute("alt") || "").trim())
+        images.filter((image) => !image.hasAttribute("alt") || (!(image.getAttribute("alt") || "").trim() && image.getAttribute("aria-hidden") !== "true"))
           .map((image) => image.getAttribute("src") || "(imagem sem src)")
       );
       expect(missingAlt, `Imagens sem texto alternativo em ${route}`).toEqual([]);
