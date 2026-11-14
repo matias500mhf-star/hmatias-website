@@ -10,7 +10,7 @@ Este projeto é um protótipo isolado para avaliar uma arquitetura Astro para o 
 - Preservar as proporções das fotografias; a galeria não impõe cortes para preencher cartões.
 - Manter conteúdos e contactos em dados tipados.
 - Gerar HTML estático para as páginas institucionais, sem adicionar runtime React onde não existe necessidade de interação complexa.
-- Disponibilizar 22 rotas em Português (pt-AO) e 22 rotas em Inglês.
+- Disponibilizar 29 rotas em Português (pt-AO) e 29 rotas em Inglês (58 páginas estáticas).
 - Validar tipos, build e estrutura do artefacto em CI.
 - Testar navegação em Chromium desktop e WebKit móvel com Playwright.
 - Verificar acessibilidade automatizada com axe-core e recolher auditorias Lighthouse.
@@ -51,7 +51,9 @@ React não foi instalado nesta etapa. As páginas institucionais são maioritari
 
 - Esta pasta não está ligada ao publisher de produção.
 - Não executar `wrangler deploy`, não alterar DNS e não associar o domínio oficial.
-- O contacto principal, Business Services, agendamento e RFQ multi-produto operacional SOURCE AO continuam no website oficial. O Smart RFQ geral e o pedido multiartigo HMATIAS Clean são fluxos de preparação local, com envio manual e sem submissão automática ao servidor.
+- O formulário principal de contacto continua no website oficial e, segundo confirmação do proprietário, já recebe pedidos por e-mail através do Resend. O preview abre o formulário oficial correspondente em português ou inglês, num novo separador; não replica credenciais nem altera o fluxo operacional.
+- Business Services, agendamento e RFQ multi-produto operacional SOURCE AO continuam nos respectivos canais oficiais até existir equivalência validada em staging.
+- O Smart RFQ geral e o pedido multiartigo HMATIAS Clean são fluxos de preparação local, com envio manual e sem submissão automática ao servidor.
 - O preview mantém `noindex, nofollow`.
 - O resultado só pode ser considerado candidato a migração após validação visual, acessibilidade, SEO, performance, versões linguísticas, redirecionamentos e integrações.
 
@@ -71,6 +73,8 @@ O workflow `.github/workflows/astro-prototype-qa.yml` executa:
 
 Os relatórios Playwright e Lighthouse são guardados como artefactos do GitHub Actions por 14 dias. As ferramentas de QA são instaladas apenas no ambiente CI e não entram no bundle do website.
 
-**Estado atual:** o workflow Astro prototype QA #624 está a validar o head atual da branch. A execução anterior #599 registou 115 testes aprovados e duas falhas causadas por uma expectativa desatualizada que ainda procurava o antigo redireccionamento do Smart RFQ para o SOURCE AO. O teste foi atualizado para verificar o formulário autónomo. Não declarar Playwright, axe-core ou Lighthouse aprovados para este head até à conclusão do workflow #624. A revisão visual manual, a verificação integral por teclado e os testes reais dos canais de contacto continuam pendentes.
+**Estado atual — 14 de novembro de 2026:** o protótipo gera 58 páginas (29 PT-AO e 29 EN), com pares linguísticos verificados. O Astro prototype QA #882 aprovou um head anterior. Nos ajustes posteriores, o QA #890 passou type-check e build (58 páginas geradas), mas parou em `verify-build` porque a etiqueta antiga `Projecto Alpha` foi apanhada pela regra editorial. A etiqueta foi normalizada para `Projeto Alpha`; a lista Lighthouse cobre agora as 58 rotas. O preview mantém o formulário principal encaminhado para os formulários oficiais PT/EN que já recebem mensagens através do Resend. O novo QA do head actual deve concluir `verify`, Playwright, axe e Lighthouse antes de qualquer declaração de aprovação.
+
+A revisão visual manual em desktop/tablet/mobile e a navegação integral por teclado continuam pendentes. A recepção do formulário principal via Resend já está operacional; os percursos de Business Services, agendamento e SOURCE AO devem ser validados separadamente antes de migrar esses fluxos.
 
 A proteção `noindex, nofollow` deve manter-se durante toda a avaliação.

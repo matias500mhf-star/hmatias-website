@@ -258,6 +258,8 @@ A rede de parceiros apresentada no preview inclui Miliart, FRANSGA, D&WOOD, Tele
 
 O Blog tem 12 artigos em seis pares PT/EN, com guias técnicos e casos práticos. Os casos ilustrativos estão identificados como tal e não devem ser interpretados como referências de clientes ou obras reais da HMATIAS.
 
+**Formulário de contacto no preview:** a chamada de contacto da homepage PT abre `https://comercialhmatiasps.com/#contacto`; a homepage EN abre `https://comercialhmatiasps.com/en.html#contact`. Os dois destinos são handoffs explícitos para os formulários oficiais já operacionais via Resend, abertos num novo separador. Esta excepção é intencional para preservar recepção real enquanto o preview continua isolado. O auditor de ligações só permite estes dois destinos exactos; qualquer outro redireccionamento para o publisher oficial continua a falhar a auditoria. Não foram alterados os formulários, Worker, segredos ou configuração Resend do domínio publicado.
+
 ### Validação automatizada
 
 - Astro prototype QA #882: sucesso no commit `2d4e8fa7fd1b50e0d30380b6364366bc9623eaf0`; instalação, auditoria de dependências, type-check, build, verificação, contrato RFQ, Playwright desktop Chromium/mobile WebKit, axe e Lighthouse concluídos.
@@ -267,11 +269,11 @@ O Blog tem 12 artigos em seis pares PT/EN, com guias técnicos e casos práticos
 
 ### Ajustes de continuidade após QA #882
 
-- Foi acrescentada à coluna Explorar a ligação explícita para KARTA Wallet · Projecto Alpha em PT e EN, mantendo o projecto fora das quatro áreas operacionais.
+- Foi acrescentada à coluna Explorar a ligação explícita para KARTA Wallet · Projeto Alpha em PT e EN, mantendo o projecto fora das quatro áreas operacionais.
 - O teste Playwright passou a validar o texto e o destino da ligação KARTA nas duas homepages.
 - O verificador estático passou a validar a ligação no rodapé e a sua ausência da coluna operacional.
 - A configuração Lighthouse foi completada para auditar todas as 58 rotas, em vez de deixar sete artigos fora da auditoria.
-- Estas alterações posteriores ao commit aprovado foram submetidas ao Astro prototype QA #888, que revelou a contagem Lighthouse ainda fixada em 51 apesar das 58 rotas configuradas. A contagem foi alinhada para 58 e a verificação de idiomas foi reforçada para os 29 pares PT/EN. O commit `07c16c5b25a1ed7c3cf9e8ce4fba71f6f4ad41b0` aguarda novo ciclo Astro prototype QA; não declarar a nova cabeça aprovada até ao fim desse workflow.
+- Estas alterações posteriores ao commit aprovado foram submetidas ao QA #888, que revelou a contagem Lighthouse fixada em 51 apesar das 58 rotas configuradas. A contagem foi alinhada para 58 e a verificação dos 29 pares PT/EN reforçada. O QA #890 confirmou a geração das 58 páginas, mas a etapa `verify-build` falhou porque a etiqueta `Projecto Alpha` contrariava a regra editorial; a etiqueta foi corrigida para `Projeto Alpha`. O CTA de contacto do preview foi também corrigido para abrir os formulários oficiais PT/EN que já recebem pedidos por Resend. O novo QA do head actual tem de concluir todos os quality gates antes de considerar o preview aprovado.
 
 ### Estado de publicação
 
