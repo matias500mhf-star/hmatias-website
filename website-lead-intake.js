@@ -16,8 +16,6 @@
       email:'email',service:'service_type',details:'notes',location:'location',
       date:'preferred_date',channel:'meeting_mode',window:'time_window'},
     {id:'cleanQuoteForm',kind:'clean',name:'name',phone:'phone',location:'location'},
-    {id:'smartRfqForm',kind:'rfq',name:'requester_name',company:'company',
-      phone:'phone',email:'email',service:'service',location:'location'}
   ];
   const text=(pt,english)=>en?english:pt;
   // Campaign information is read only when the visitor submits a lead form.
@@ -56,10 +54,6 @@
         'Produtos: '+(items.length?items.join('; '):get('product')+' · Qtd: '+get('quantity')),
         'Local: '+get('location'),'Observações: '+get('note')
       ].join('\n').slice(0,2400);
-    }
-    if(config.kind==='rfq'){
-      const preview=document.getElementById('rfqSummary');
-      return (preview?.textContent||'').trim().slice(0,2400);
     }
     if(config.kind!=='appointment')return baseDetails;
     return [
@@ -102,24 +96,10 @@
     // A late capability response must preserve a manual request already prepared.
     if(form.querySelector('[data-hmatias-send-actions],[data-hmatias-clean-handoff]'))return;
     form.dataset.hmatiasWebsiteIntake='true';
-    const isRfq=config.kind==='rfq';
     let submit=form.querySelector('button[type="submit"]');
     if(!submit)return;
-    if(isRfq){
-      const previewPanel=document.querySelector('.rfq-preview');
-      if(!previewPanel)return;
-      const register=document.createElement('button');
-      register.type='button';
-      register.className='btn btn-primary';
-      register.dataset.hmatiasRfqRegister='true';
-      register.textContent=text('Registar RFQ na HMATIAS','Register RFQ with HMATIAS');
-      register.style.cssText='display:block;margin:18px 0 12px;width:100%';
-      previewPanel.appendChild(register);
-      submit=register;
-    }else{
-      submit.textContent=text('Registar pedido na HMATIAS','Register request with HMATIAS');
-    }
-    const parent=isRfq?submit:submit.closest('.form-actions,.booking-actions')||submit.parentElement;
+    submit.textContent=text('Registar pedido na HMATIAS','Register request with HMATIAS');
+    const parent=submit.closest('.form-actions,.booking-actions')||submit.parentElement;
     const existingConsent=form.querySelector('input[name="privacy_consent"]');
     let input=existingConsent;
     if(!input){
@@ -148,7 +128,6 @@
     parent.insertAdjacentElement('beforebegin',consent);
     }
     const status=notice(form);
-    if(isRfq)submit.insertAdjacentElement('afterend',status);
     const verification=document.createElement('div');
     verification.className='hmatias-turnstile';
     verification.style.gridColumn='1 / -1';
@@ -164,18 +143,10 @@
     let nonce=crypto.randomUUID();
     const submitRequest=async event=>{
       event.preventDefault();
-      if(!isRfq)event.stopImmediatePropagation();
+      event.stopImmediatePropagation();
       if(!form.reportValidity()||!input.checked){
         status.textContent=text('Preencha os campos obrigatórios e aceite a política de privacidade.','Complete the required fields and accept the privacy policy.');
         return;
-      }
-      if(isRfq){
-        const preview=document.getElementById('rfqSummary');
-        if(!preview||!preview.textContent.trim()||
-           preview.textContent.trim()===(preview.dataset.placeholder||'').trim()){
-          status.textContent=text('Gere primeiro o briefing RFQ para revisão.','Generate and review the RFQ brief first.');
-          return;
-        }
       }
       if(!challengeToken){
         status.textContent=text('Conclua a verificação de segurança antes de enviar.','Complete the security check before submitting.');
@@ -188,8 +159,7 @@
         attribution:campaignAttribution(),
         name:get(config.name),company:get(config.company),phone:get(config.phone),
         email:get(config.email),service:config.kind==='clean'?'HMATIAS Clean':
-          (config.kind==='rfq'?({construction:'Construção e Remodelação',facilities:'Facilities e Manutenção',supply:'Supply e Procurement'}[get(config.service)]||'Smart RFQ')
-            :get(config.service)||text('Contacto comercial','Business enquiry')),
+          get(config.service)||text('Contacto comercial','Business enquiry'),
         location:get(config.location),
         details:detail(form,config,fd)
       };
@@ -216,7 +186,7 @@
         nonce=crypto.randomUUID();
         // Consent-gated GA4 tracking receives no contact details or lead references.
         const leadTypes={contact:'general_quote',business:'business_services_request',
-          appointment:'appointment_request',clean:'clean_quote_request',rfq:'smart_rfq_request'};
+          appointment:'appointment_request',clean:'clean_quote_request'};
         window.hmatiasAnalytics?.confirmLead?.(leadTypes[config.kind]||'general_quote','website');
       }catch{
         status.textContent=text(
@@ -249,12 +219,7 @@
         submit.disabled=false;
       }
     };
-    if(isRfq)submit.addEventListener('click',submitRequest);
-    else form.addEventListener('submit',submitRequest,true);
-    if(isRfq)form.addEventListener('input',()=>{
-      const status=submit.parentElement.querySelector('[data-hmatias-website-lead-status]');
-      if(status)status.textContent='';
-    });
+    form.addEventListener('submit',submitRequest,true);
   }
   async function boot(){
     const available=configs.map(x=>({config:x,form:document.getElementById(x.id)}))
