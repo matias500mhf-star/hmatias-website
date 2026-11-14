@@ -116,3 +116,38 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
     }
   });
 });
+
+
+test("the public SOURCE AO catalogue contains reviewed SYNVOR families without private commercial fields", async ({ page }) => {
+  const response = await page.request.get("/api/source-ao/catalog.json");
+  expect(response.status()).toBe(200);
+  const catalogue = await response.json();
+
+  expect(catalogue.version).toBe("0.9");
+  expect(catalogue.items).toHaveLength(92);
+  expect(catalogue.items.filter((item: { id: string }) => item.id.startsWith("item-disc-family-"))).toHaveLength(8);
+  expect(catalogue.items.filter((item: { id: string }) => item.id.startsWith("item-crown-family-"))).toHaveLength(33);
+
+  const items = new Map(catalogue.items.map((item: { id: string }) => [item.id, item]));
+  for (const id of [
+    "item-carbodiam-pantera-115",
+    "item-carbodiam-pantera-neutre-115",
+    "item-carbodiam-crack-chaser-115",
+    "item-crown-family-carbodiam-profor",
+    "item-crown-family-samedia-master-dbk",
+    "item-synvor-diamond-grinding-cups",
+    "item-synvor-metal-grinding-segments",
+    "item-synvor-diamond-polishing-resins",
+    "item-carbodiam-multicut-400p",
+    "item-weka-dk17",
+  ]) {
+    expect(items.has(id), "missing public catalogue item " + id).toBe(true);
+  }
+
+  expect(items.has("item-formaldehyde")).toBe(false);
+  const allowed = new Set(["id", "name", "aliases", "category", "subcategory", "specification", "keywords", "name_pt"]);
+  for (const item of catalogue.items) {
+    for (const key of Object.keys(item)) expect(allowed.has(key), "unapproved public field " + key).toBe(true);
+  }
+  expect(catalogue.public_rule).toContain("Prices, suppliers, stock, availability and internal commercial data are not included");
+});
