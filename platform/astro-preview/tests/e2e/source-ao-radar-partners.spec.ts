@@ -123,16 +123,24 @@ test("the public SOURCE AO catalogue contains reviewed SYNVOR families without p
   expect(response.status()).toBe(200);
   const catalogue = await response.json();
 
-  expect(catalogue.version).toBe("0.9");
-  expect(catalogue.items).toHaveLength(92);
+  expect(catalogue.version).toBe("1.0");
+  expect(catalogue.items).toHaveLength(135);
   expect(catalogue.items.filter((item: { id: string }) => item.id.startsWith("item-disc-family-"))).toHaveLength(8);
   expect(catalogue.items.filter((item: { id: string }) => item.id.startsWith("item-crown-family-"))).toHaveLength(33);
+  expect(catalogue.items.filter((item: { id: string }) => item.id.startsWith("item-carbodiam-sku-"))).toHaveLength(46);
 
   const items = new Map(catalogue.items.map((item: { id: string }) => [item.id, item]));
   for (const id of [
     "item-carbodiam-pantera-115",
     "item-carbodiam-pantera-neutre-115",
     "item-carbodiam-crack-chaser-115",
+    "item-carbodiam-sku-pantera-pantera-125-ref-9194",
+    "item-carbodiam-sku-neutre-pantera-neutre-125-ref-15449",
+    "item-carbodiam-sku-crack-crack-chaser-125-ref-11603",
+    "item-carbodiam-sku-acier-acier-300-h20-ref-14491",
+    "item-carbodiam-sku-beton-beton-400-ref-19722",
+    "item-carbodiam-sku-betonsol-beton-sol-600-1-ref-13745",
+    "item-carbodiam-sku-incisor-incisor-125-ref-5182",
     "item-crown-family-carbodiam-profor",
     "item-crown-family-samedia-master-dbk",
     "item-synvor-diamond-grinding-cups",
