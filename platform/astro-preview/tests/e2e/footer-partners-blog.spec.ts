@@ -57,10 +57,11 @@ for (const homepage of homepageRoutes) {
     await expect(page.locator(".footer-operations h2")).toContainText(homepage.language === "en" ? "Areas and services" : "Áreas e serviços");
     await expect(page.locator(".footer-explore h2")).toHaveText(homepage.explore);
     await expect(page.locator(".footer-contacts h2")).toHaveText(homepage.contact);
-    await expect(page.locator(".footer-operations a")).toHaveCount(4);
-    await expect(page.locator(".karta-feature")).toBeVisible();
-    await expect(page.locator(".karta-feature")).toContainText("Alpha");
-    await expect(page.locator(".karta-feature a")).toHaveAttribute("href", homepage.language === "en" ? "/en/karta/" : "/karta/");
+    await expect(page.locator(".footer-operations .footer-area-link")).toHaveCount(4);
+    await expect(page.locator(".footer-operations .footer-subnav a")).toHaveCount(2);
+    await expect(page.locator(".karta-feature")).toHaveCount(0);
+    await expect(page.locator(".source-ao-highlight")).toBeVisible();
+    await expect(page.locator(".source-ao-highlight-link")).toHaveAttribute("href", homepage.sourceHref);
     const kartaExploreLink = page.locator(".footer-explore a", { hasText: "KARTA Wallet" });
     await expect(kartaExploreLink).toHaveCount(1);
     await expect(kartaExploreLink).toHaveAttribute("href", homepage.language === "en" ? "/en/karta/" : "/karta/");
@@ -132,9 +133,17 @@ for (const homepage of homepageRoutes) {
     await expect(operations.getByRole("link", { name: /Facilities/ })).toBeVisible();
     await expect(operations.getByRole("link", { name: "HMATIAS Supply" })).toBeVisible();
     await expect(operations.getByRole("link", { name: "Business Services" })).toBeVisible();
-    await expect(page.locator(".footer-explore").getByRole("link", { name: "Smart RFQ" })).toHaveAttribute("href", homepage.language === "en" ? "/en/source-ao/smart-rfq/" : "/source-ao/smart-rfq/");
-    await expect(page.locator(".footer-explore").getByRole("link", { name: homepage.language === "en" ? "Projects" : "Projetos" })).toHaveAttribute("href", homepage.language === "en" ? "/en/integrated-yard/" : "/estaleiro/");
-    await expect(page.locator(".footer-explore").getByRole("link", { name: /Works Catalogue|Catálogo de Obras/ })).toBeVisible();
+    await expect(operations.locator(".footer-subnav").getByRole("link", { name: /Works catalogue|Catálogo de Obras/ }))
+      .toHaveAttribute("href", homepage.language === "en" ? "/en/works-catalogue/" : "/catalogo-obras/");
+    await expect(operations.locator(".footer-subnav").getByRole("link", { name: /Projects in development|Projetos em desenvolvimento/ }))
+      .toHaveAttribute("href", homepage.language === "en" ? "/en/integrated-yard/" : "/estaleiro/");
+    const explore = page.locator(".footer-explore");
+    await expect(explore.locator("a")).toHaveCount(4);
+    await expect(explore.getByRole("link", { name: /About HMATIAS|Sobre a HMATIAS/ })).toBeVisible();
+    await expect(explore.getByRole("link", { name: "SOURCE AO" })).toBeVisible();
+    await expect(explore.getByRole("link", { name: /Blog/ })).toBeVisible();
+    await expect(explore.getByRole("link", { name: /KARTA Wallet/ })).toBeVisible();
+    await expect(explore.getByRole("link", { name: "Smart RFQ" })).toHaveCount(0);
 
     await expect(whatsapp).toHaveAttribute("aria-label", /WhatsApp/);
     await expect(whatsapp.locator("img")).toHaveAttribute("src", /social-whatsapp\.[^.]+\.svg$/);
@@ -167,6 +176,11 @@ for (const pair of articlePairs) {
       await expect(page.locator(".language-switch"), variant.route).toHaveAttribute("href", variant.counterpart);
       await expect(page.locator(".language-switch"), variant.route).toHaveAttribute("lang", variant.switchLanguage);
       await expect(page.locator(".article-content")).toBeVisible();
+      const articleCover = page.locator(".article-cover-figure");
+      await expect(articleCover).toBeVisible();
+      await expect(articleCover.locator("img")).toHaveAttribute("alt", /.+/);
+      await expect(articleCover.locator("figcaption")).toContainText(variant.language === "en" ? "Illustrative image" : "Imagem ilustrativa");
+      await expect(articleCover.locator("figcaption a").first()).toHaveAttribute("href", /https:\/\/unsplash.com\/photos\//);
       await expect(page.locator(".article-content h2").first()).toBeVisible();
       await expect(page.locator(".article-cta a.button-light")).toHaveAttribute(
         "href",

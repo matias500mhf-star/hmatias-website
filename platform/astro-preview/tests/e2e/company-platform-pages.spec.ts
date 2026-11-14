@@ -76,12 +76,16 @@ test.describe("HMATIAS company and platform pages", () => {
       expect(aboutPhotoBox?.height || 0).toBeGreaterThan(180);
       expect(aboutPhotoBox?.height || 0).toBeLessThanOrEqual(320);
     }
-    await expect(page.getByText(/MISSÃO|VISÃO|O nosso compromisso|Integridade nas relações/i)).toHaveCount(0);
+    await expect(page.locator(".about-purpose")).toBeVisible();
+    await expect(page.locator(".purpose-card")).toHaveCount(2);
+    await expect(page.locator(".purpose-card").filter({ hasText: "MISSÃO" })).toContainText("Transformar necessidades");
+    await expect(page.locator(".purpose-card").filter({ hasText: "VISÃO" })).toContainText("fiabilidade");
+    await expect(page.locator(".values-grid article")).toHaveCount(5);
+    await expect(page.locator(".values-grid")).toContainText("Integridade e transparência");
     await expect(page.locator(".about-service-grid a")).toHaveCount(4);
     for (const name of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business Services"]) {
       await expect(page.locator(".about-service-grid a").filter({ hasText: name })).toHaveCount(1);
     }
-    await expect(page.getByText(/MISSÃO|VISÃO/i)).toHaveCount(0);
   });
 
   test("KARTA page accurately presents Alpha status and future roadmap", async ({ page }) => {
@@ -117,6 +121,9 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(page.getByText("24.094-23", { exact: true })).toBeVisible();
     await expect(page.getByText("NIF", { exact: true })).toBeVisible();
     await expect(page.getByText("Registo Comercial", { exact: true })).toBeVisible();
+    await expect(page.locator(".credibility-principle")).toHaveCount(4);
+    await expect(page.locator(".credibility-principle").nth(0)).toContainText("Identidade empresarial");
+    await expect(page.locator(".credibility-principle").nth(2)).toContainText("Condições confirmadas");
   });
 
 
