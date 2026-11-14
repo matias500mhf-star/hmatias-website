@@ -84,4 +84,10 @@ test('D1 seed exporter indexes diamond-tool dimensions using the API search toke
   assert.ok(itemBlock,'seed SQL must include the canonical diamond tools family');
   assert.match(itemBlock,/'[^']*115mm[^']*'/,'seeded search_text must merge 115 mm into 115mm');
   assert.match(itemBlock,/'diamond-tools'/,'seeded item must retain the dedicated category');
+  for(const id of ['item-carbodiam-pantera-115','item-carbodiam-pantera-neutre-115','item-carbodiam-crack-chaser-115']){
+    const block=sql.split('INSERT INTO items(').find(candidate=>candidate.includes("'"+id+"'"));
+    assert.ok(block,'D1 seed SQL must include '+id);
+    assert.match(block,/'[^']*115mm[^']*'/,id+' must index the exact 115 mm dimension');
+    assert.match(block,/'diamond-tools'/,id+' must retain the diamond-tools category');
+  }
 });
