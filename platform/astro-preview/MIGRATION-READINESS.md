@@ -248,3 +248,31 @@ Os testes backend do ciclo passaram com **172 testes aprovados e zero falhas**, 
 - A PR #316 permanece aberta e em rascunho. Não foi feito merge, deploy do domínio oficial, alteração DNS, redirect ou substituição da homepage aprovada.
 
 **Estado:** funcionalidades integradas em preview e sujeitas a validação final. A migração e publicação em produção continuam não autorizadas.
+
+
+## 11. Estado actualizado do novo design — 14 de novembro de 2026
+
+A revisão de 14 de novembro consolida o protótipo em **58 páginas estáticas bilingues (29 PT-AO e 29 EN)**. A homepage inclui apresentação da empresa, as quatro áreas operacionais, projectos, parceiros, uma secção autónoma do KARTA Wallet e contacto. O rodapé tem quatro colunas responsivas; a coluna operacional mantém exclusivamente Construção, Facilities, Supply e Business Services. A coluna Explorar reúne páginas de identidade, projectos, catálogo, SOURCE AO, Blog, KARTA Wallet · Projecto Alpha e Smart RFQ.
+
+A rede de parceiros apresentada no preview inclui Miliart, FRANSGA, D&WOOD, Telewise, SYNVOR Industrial e Kent Offshore. Cinco identidades usam logótipos locais; Telewise é apresentado apenas por nome, sem logótipo. A participação de cada entidade continua condicionada ao âmbito e à confirmação de disponibilidade para cada projecto.
+
+O Blog tem 12 artigos em seis pares PT/EN, com guias técnicos e casos práticos. Os casos ilustrativos estão identificados como tal e não devem ser interpretados como referências de clientes ou obras reais da HMATIAS.
+
+### Validação automatizada
+
+- Astro prototype QA #882: sucesso no commit `2d4e8fa7fd1b50e0d30380b6364366bc9623eaf0`; instalação, auditoria de dependências, type-check, build, verificação, contrato RFQ, Playwright desktop Chromium/mobile WebKit, axe e Lighthouse concluídos.
+- Source AO Data Quality #1263: sucesso.
+- HMATIAS AI Worker Deploy #336: validações concluídas; o passo de deploy foi ignorado. Não equivale a novo deploy do Worker.
+- O Lighthouse passa agora a incluir as 58 rotas bilingues geradas, incluindo os 12 artigos do Blog; a configuração e o verificador devem manter contagem e unicidade alinhadas.
+
+### Ajustes de continuidade após QA #882
+
+- Foi acrescentada à coluna Explorar a ligação explícita para KARTA Wallet · Projecto Alpha em PT e EN, mantendo o projecto fora das quatro áreas operacionais.
+- O teste Playwright passou a validar o texto e o destino da ligação KARTA nas duas homepages.
+- O verificador estático passou a validar a ligação no rodapé e a sua ausência da coluna operacional.
+- A configuração Lighthouse foi completada para auditar todas as 58 rotas, em vez de deixar sete artigos fora da auditoria.
+- Estas alterações posteriores ao commit aprovado estão a aguardar o novo ciclo Astro prototype QA #884. Não declarar a nova cabeça aprovada até ao fim desse workflow.
+
+### Estado de publicação
+
+O preview permanece isolado e com `noindex,nofollow`. O PR #316 continua Draft e não integrado. Não houve alteração à homepage oficial, ao domínio `comercialhmatiasps.com`, DNS, redirects ou publicação em produção. A revisão humana de desktop/tablet/mobile, a equivalência funcional dos formulários, a aplicação das migrações apenas em staging e a decisão URL-a-URL continuam pendentes antes de qualquer migração.
