@@ -36,6 +36,23 @@ if(diamondIds.some(id=>!diamondRows.some(row=>row.id===id))) fail('one or more e
 if(diamondRows.some(row=>row.category!=='diamond-tools'||row.status!=='discovered')) fail('Portugal catalogue references must remain discovered, not imply stock in Luanda');
 if(diamondRows.some(row=>['supplier','price','quantity_reported','evidence_reference'].some(key=>Object.prototype.hasOwnProperty.call(row,key)))) fail('diamond tools public result exposed private supplier/commercial fields');
 
+const exactSkuChecks=[
+ ['9194','item-carbodiam-sku-pantera-pantera-125-ref-9194'],
+ ['15449','item-carbodiam-sku-neutre-pantera-neutre-125-ref-15449'],
+ ['11603','item-carbodiam-sku-crack-crack-chaser-125-ref-11603'],
+ ['14491','item-carbodiam-sku-acier-acier-300-h20-ref-14491'],
+ ['19722','item-carbodiam-sku-beton-beton-400-ref-19722'],
+ ['13745','item-carbodiam-sku-betonsol-beton-sol-600-1-ref-13745'],
+ ['5182','item-carbodiam-sku-incisor-incisor-125-ref-5182']
+];
+for(const [reference,itemId] of exactSkuChecks){
+  const byReference=await get('/api/search?q='+encodeURIComponent(reference)+'&location='+encodeURIComponent('Portugal'));
+  const result=(byReference.results||[]).find(row=>row.id===itemId);
+  if(!result||result.status!=='source_checked') fail('Carbodiam factory reference '+reference+' missing or not source-traceable in staging D1');
+  const local=await get('/api/search?q='+encodeURIComponent(reference)+'&location='+encodeURIComponent('Luanda'));
+  const localResult=(local.results||[]).find(row=>row.id===itemId);
+  if(!localResult||localResult.status!=='discovered') fail('Portugal catalogue reference '+reference+' incorrectly implies current Luanda stock');
+}
 const proforSearch=await get('/api/search?q='+encodeURIComponent('coroa diamantada PROFOR')+'&location='+encodeURIComponent('Portugal'));
 const proforItem=(proforSearch.results||[]).find(row=>row.id==='item-crown-family-carbodiam-profor');
 if(!proforItem||proforItem.status!=='source_checked') fail('Carbodiam PROFOR crown family is missing or not source-traceable in staging D1');
