@@ -2,7 +2,7 @@ import {copyFile,mkdir} from 'node:fs/promises';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import path from 'node:path';
 
-export const PUBLIC_DATA_FILES=Object.freeze(['catalog.json','opportunities.json','source-registry.json']);
+export const PUBLIC_DATA_FILES=Object.freeze(['catalog.json','partner-catalog.json','opportunities.json','source-registry.json']);
 const dataRoot=fileURLToPath(new URL('../../data/',import.meta.url));
 
 export async function copyPublicData(destination){
