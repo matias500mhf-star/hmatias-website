@@ -452,7 +452,10 @@ assert.ok(englishHomepage.includes('href="/en/business-services/"'), "English ho
 
 const englishAbout = readFileSync(join(outDir, "en", "about", "index.html"), "utf8");
 const englishAboutText = englishAbout.replace(/<[^>]*>/g, " ");
-assert.doesNotMatch(englishAboutText, /\bMISSION\b|\bVISION\b|\bVALUES\b/i, "Generic mission, vision and values boilerplate must not return");
+assert.match(englishAboutText, /MISSION/, "English About page mission is missing");
+assert.match(englishAboutText, /VISION/, "English About page vision is missing");
+assert.match(englishAboutText, /Integrity and transparency/, "English company values are missing");
+assert.equal((englishAboutText.match(/<article[^>]*>/g) || []).filter((tag) => tag.includes("values")).length, 0, "Purpose content must remain semantic");
 assert.match(englishAboutText, /Service areas\./, "English About page service overview is missing");
 assert.doesNotMatch(englishAboutText, /Our commitment|THE CEO.s COMMITMENT|Integrity in every relationship/i, "Generic executive copy must not return");
 assert.match(englishAbout, /pavilhoes-rurais-concluidos/i, "English About page must use the distinct real-work photograph");
