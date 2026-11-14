@@ -21,26 +21,57 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
     await expect(page.getByRole("link", { name: "Partner application" })).toHaveAttribute("href", "/en/source-ao/partners/");
   });
 
-  test("public catalogue search stays safely disabled without the staging API", async ({ page }) => {
-    let apiRequests = 0;
+  test("public catalogue search uses the sanitised static preview catalogue when staging API is absent", async ({ page }) => {
+    let liveSearchRequests = 0;
+    let staticCatalogueRequests = 0;
     page.on("request", request => {
-      if (/\/api\/(search|catalog|sourcing-requests)/.test(new URL(request.url()).pathname)) apiRequests += 1;
+      const pathname = new URL(request.url()).pathname;
+      if (/\\/api\\/(search|sourcing-requests)(?:$|\\?)/.test(pathname)) liveSearchRequests += 1;
+      if (pathname === "/api/source-ao/catalog.json") staticCatalogueRequests += 1;
     });
 
-    for (const route of [
-      { path: "/source-ao/", lang: "pt-AO", rfq: "/source-ao/smart-rfq/", notice: /aguarda a configuração da API de staging/i },
-      { path: "/en/source-ao/", lang: "en", rfq: "/en/source-ao/smart-rfq/", notice: /awaiting staging API configuration/i },
-    ]) {
+    const routes = [
+      {
+        path: "/source-ao/",
+        lang: "pt-AO",
+        query: "discos diamantados 115 mm",
+        result: "Carbodiam",
+        notice: /catálogo estático de pré-visualização \\(não consulta a D1\\)/i,
+        rfq: "/source-ao/smart-rfq/",
+      },
+      {
+        path: "/en/source-ao/",
+        lang: "en",
+        query: "diamond discs 115 mm",
+        result: "Carbodiam",
+        notice: /static preview catalogue \\(not a D1 search\\)/i,
+        rfq: "/en/source-ao/smart-rfq/",
+      },
+    ];
+
+    for (const route of routes) {
       await page.goto(route.path);
       await expect(page.locator("html")).toHaveAttribute("lang", route.lang);
       await expect(page.locator("#sourceAoSearchForm")).toBeVisible();
-      await expect(page.locator("#sourceAoSearchQuery")).toBeDisabled();
-      await expect(page.locator("#sourceAoSearchForm button[type='submit']")).toBeDisabled();
+      await expect(page.locator("#sourceAoSearchQuery")).toBeEnabled();
+      await expect(page.locator("#sourceAoSearchForm button[type='submit']")).toBeEnabled();
       await expect(page.locator("#sourceAoSearchStatus")).toContainText(route.notice);
+      await page.locator("#sourceAoSearchQuery").fill(route.query);
+      await page.locator("#sourceAoSearchForm button[type='submit']").click();
+
+      const results = page.locator("#sourceAoSearchResults");
+      await expect(results.locator("article").first()).toBeVisible();
+      await expect(results).toContainText(route.result);
+      await expect(results).toContainText(route.lang === "en" ? "Verification required" : "Requer verificação");
+      await expect(page.locator("#sourceAoSearchStatus")).toContainText(route.notice);
+      const quoteHref = await results.locator(".source-search-result-action").first().getAttribute("href");
+      expect(quoteHref).toContain(route.rfq);
+      expect(quoteHref).toContain("item=");
       await expect(page.locator(".source-live-search-footnote a")).toHaveAttribute("href", route.rfq);
     }
 
-    expect(apiRequests).toBe(0);
+    expect(staticCatalogueRequests).toBeGreaterThanOrEqual(2);
+    expect(liveSearchRequests).toBe(0);
   });
 
   for (const route of radarRoutes) {
