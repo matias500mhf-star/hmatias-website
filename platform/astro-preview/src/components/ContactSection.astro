@@ -1,5 +1,8 @@
 ---
 import { company } from "../data/site";
+
+const isEnglish = Astro.url.pathname.startsWith("/en/");
+const officialContactFormUrl = isEnglish ? company.contactFormEnUrl : company.contactFormUrl;
 ---
 <section class="contact section-pad" id="contacto" aria-labelledby="components-contactsection-section-1-heading">
   <div class="section-kicker">04 / CONTACTO</div>
@@ -33,8 +36,8 @@ import { company } from "../data/site";
       <a class="contact-action" href={`mailto:${company.commercialEmail}?subject=Pedido%20de%20informa%C3%A7%C3%A3o%20-%20HMATIAS`}>
         <span>Enviar e-mail</span><b aria-hidden="true">↗</b>
       </a>
-      <a class="contact-action" href={company.legacyContactFormUrl}>
-        <span>Preencher formulário de contacto</span><b aria-hidden="true">↗</b>
+      <a class="contact-action" href={officialContactFormUrl} target="_blank" rel="noopener noreferrer">
+        <span>{isEnglish ? "Open official contact form" : "Abrir formulário oficial de contacto"}</span><b aria-hidden="true">↗</b>
       </a>
       <div class="contact-small">{company.name}<br />Construção · Facilities · Supply · Business Services</div>
     </div>
