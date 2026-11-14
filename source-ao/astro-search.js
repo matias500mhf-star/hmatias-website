@@ -83,10 +83,6 @@
     const query=safeText(queryInput.value);
     const locationValue=safeText(locationInput.value)||'Luanda';
     if(query.length<2)return;
-    if(!window.SourceAOAPI?.isConfigured?.()){
-      statusNode.textContent=isEn?'The staging search service is not configured yet.':'O serviço de pesquisa de staging ainda não está configurado.';
-      return;
-    }
     const current=++sequence;
     statusNode.textContent=isEn?'Searching the published catalogue…':'A pesquisar no catálogo publicado…';
     resultsNode.hidden=true;
@@ -95,9 +91,16 @@
       if(current!==sequence)return;
       if(!payload?.ok||!Array.isArray(payload.results))throw new Error('invalid_search_response');
       render(payload.results);
-      statusNode.textContent=isEn
-        ?`${payload.results.length} public references. Supplier, stock and prices require commercial confirmation.`
-        :`${payload.results.length} referências públicas. Fornecedor, stock e preço dependem de confirmação comercial.`;
+      const count=payload.results.length;
+      if(payload.source==='static-preview'){
+        statusNode.textContent=isEn
+          ?`${count} references from the static preview catalogue (not a D1 search). Supplier, stock, prices and delivery require commercial confirmation.`
+          :`${count} referências do catálogo estático de pré-visualização (não consulta a D1). Fornecedor, stock, preço e entrega exigem confirmação comercial.`;
+      }else{
+        statusNode.textContent=isEn
+          ?`${count} public references from the staging API. Supplier, stock and prices require commercial confirmation.`
+          :`${count} referências públicas da API de staging. Fornecedor, stock e preço dependem de confirmação comercial.`;
+      }
     }catch{
       if(current!==sequence)return;
       resultsNode.hidden=true;
