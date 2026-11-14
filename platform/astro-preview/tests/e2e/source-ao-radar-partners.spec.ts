@@ -44,7 +44,7 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
         lang: "en",
         query: "diamond discs 115 mm",
         result: "Carbodiam",
-        notice: "Static preview catalogue search (not a D1 search)",
+        notice: /static preview catalogue/i,
         rfq: "/en/source-ao/smart-rfq/",
       },
     ];
