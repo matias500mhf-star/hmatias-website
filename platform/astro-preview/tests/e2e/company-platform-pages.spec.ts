@@ -88,6 +88,28 @@ test.describe("HMATIAS company and platform pages", () => {
     }
   });
 
+  test("English About page presents mission, vision, values and the restrained CEO message", async ({ page }) => {
+    await page.goto("/en/about/");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator(".about-purpose")).toBeVisible();
+    await expect(page.locator(".purpose-card")).toHaveCount(2);
+    await expect(page.locator(".purpose-card").filter({ hasText: "MISSION" })).toContainText("Turn requirements into practical solutions");
+    await expect(page.locator(".purpose-card").filter({ hasText: "VISION" })).toContainText("reliability and rigour");
+    await expect(page.locator(".values-grid article")).toHaveCount(5);
+    await expect(page.locator(".values-grid")).toContainText("Integrity and transparency");
+    await expect(page.locator(".ceo-message")).toContainText("Built with purpose.");
+    await expect(page.locator(".ceo-message")).toContainText("CEO — Henrique Fernandes");
+  });
+
+  test("English Credibility page uses verifiable information without publishing document scans", async ({ page }) => {
+    await page.goto("/en/credibility/");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.getByText("5001578065", { exact: true })).toBeVisible();
+    await expect(page.getByText("24.094-23", { exact: true })).toBeVisible();
+    await expect(page.locator(".credibility-principle")).toHaveCount(4);
+    await expect(page.locator("main img")).toHaveCount(0);
+  });
+
   test("KARTA page accurately presents Alpha status and future roadmap", async ({ page }) => {
     await page.goto("/karta/");
     await expect(page).toHaveTitle(/KARTA Wallet Mobile/);
