@@ -25,6 +25,10 @@ const dateLabel = post.data.pubDate.toLocaleDateString("en", { day:"2-digit", mo
       <div class="article-meta"><span>{post.data.author.toUpperCase()}</span><time datetime={post.data.pubDate.toISOString()}>{dateLabel}</time><span>{post.data.readingMinutes} min read</span><span>{post.data.contentType === "case-study" ? "Illustrative case study" : "Technical guide"}</span></div>
     </section>
     <article class="article-content">
+      <figure class="article-cover-figure">
+        <img src={post.data.coverImage} alt={post.data.coverAlt} width="1200" height="675" loading="eager" decoding="async" />
+        <figcaption>Illustrative image · Photo by <a href={post.data.photoCreditUrl} target="_blank" rel="noopener noreferrer">{post.data.photoCredit}</a> / <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash</a></figcaption>
+      </figure>
       <Content />
       <section class="article-cta" aria-labelledby="pages-en-blog-slug-section-2-heading">
         <div><p class="section-kicker">STRUCTURE YOUR REQUEST</p><h2 id="pages-en-blog-slug-section-2-heading">Several items to quote?</h2><p>The SOURCE AO Smart RFQ flow supports up to 20 product lines in one request, with quantities, specifications and delivery requirements.</p></div>
