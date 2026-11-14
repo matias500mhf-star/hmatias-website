@@ -29,6 +29,12 @@ for(const row of rows){
   }
 }
 
+const diamondSearch=await get('/api/search?q='+encodeURIComponent('discos diamantados 115 mm')+'&location='+encodeURIComponent('Luanda'));
+const diamondItem=(diamondSearch.results||[]).find(row=>row.id==='item-diamond-tools');
+if(!diamondItem) fail('diamond tools canonical catalogue item was not searchable in staging D1');
+if(diamondItem.category!=='diamond-tools'||diamondItem.status!=='discovered') fail('diamond tools search returned an unexpected category or verification state');
+if(['supplier','price','quantity_reported'].some(key=>Object.prototype.hasOwnProperty.call(diamondItem,key))) fail('diamond tools public result exposed private supplier/commercial fields');
+
 const formolMission=await get('/api/procurement-mission?q='+encodeURIComponent('formol 37% 1L urgente')+'&location='+encodeURIComponent('Luanda'));
 if(formolMission?.mission?.interpretation?.item_id!=='item-formaldehyde') fail('formaldehyde acceptance case was not interpreted correctly');
 if(!(formolMission.mission.exact_matches||[]).length) fail('formaldehyde acceptance case returned no exact source-checked match');
