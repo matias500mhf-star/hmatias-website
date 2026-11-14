@@ -2,6 +2,20 @@ import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 test.describe("HMATIAS company and platform pages", () => {
+  test("homepage preserves the operational Resend contact form in both languages", async ({ page }) => {
+    await page.goto("/");
+    const portugueseForm = page.getByRole("link", { name: "Abrir formulário oficial de contacto" });
+    await expect(portugueseForm).toHaveAttribute("href", "https://comercialhmatiasps.com/#contacto");
+    await expect(portugueseForm).toHaveAttribute("target", "_blank");
+    await expect(portugueseForm).toHaveAttribute("rel", /noopener noreferrer/);
+
+    await page.goto("/en/");
+    const englishForm = page.getByRole("link", { name: "Open official contact form" });
+    await expect(englishForm).toHaveAttribute("href", "https://comercialhmatiasps.com/en.html#contact");
+    await expect(englishForm).toHaveAttribute("target", "_blank");
+    await expect(englishForm).toHaveAttribute("rel", /noopener noreferrer/);
+  });
+
   test("homepage exposes all four service divisions and routes Business Services internally", async ({ page }) => {
     await page.goto("/");
     const businessLink = page.locator(".service-row").filter({ hasText: "Business Services" });
