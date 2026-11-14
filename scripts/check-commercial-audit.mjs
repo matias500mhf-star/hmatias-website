@@ -62,6 +62,11 @@ for(const path of allForms){
     'Analytics script must be versioned: '+path);
   if(path==='index.html'||path==='en.html'){
     assert.match(html,/site-bootstrap[.]js[?]v=[a-zA-Z0-9._-]+/);
+  }else if(path==='rfq.html'||path==='rfq-en.html'){
+    assert.ok(!html.includes('website-lead-client.js'),
+      'Smart RFQ must remain a local brief builder without a second registration / Turnstile flow: '+path);
+    assert.ok(html.includes('rfq.js'),
+      'Local Smart RFQ brief builder must remain available: '+path);
   }else{
     assert.match(html,/website-lead-client[.]js[?]v=[a-zA-Z0-9._-]+/,
       'Secure versioned client not loaded: '+path);
@@ -92,7 +97,10 @@ for(const path of ['index.html','en.html','credibilidade.html','credibility.html
 assert.ok(read('script.js').includes('const existing=target.querySelector'));
 assert.ok(read('growth-intelligence.js').includes('[data-hmatias-email-alternative]'));
 assert.ok(client.includes("id:'cleanQuoteForm'"));
-assert.ok(client.includes("id:'smartRfqForm'"));
+assert.ok(!loader.includes("'smartRfqForm'"),
+  'Smart RFQ is a local brief builder and must not be routed through the generic lead intake loader.');
+assert.ok(!client.includes('smartRfqForm'),
+  'The server lead intake must not inject a second RFQ registration or Turnstile challenge.');
 const cleanCatalog=read('platform/astro-preview/src/scripts/clean-catalog.js');
 assert.ok(cleanCatalog.includes("p('Dish Ninja','T518','kitchen','Líquido antimicrobiano para loiça, eficaz mesmo em água fria.','Anti-microbial dishwashing liquid that works even in cold water.','750ml | 3L | 5L | 25L')"),'Dish Ninja pack sizes must match the linked manufacturer catalogue');
 assert.ok(cleanCatalog.includes("p('Shabba Delight','T517','kitchen','Limpador de forno e grelha de utilização simples, sem necessidade de pré-aquecimento.','User-friendly oven and grill cleaner that can be used without preheating.','500ml | 5L | 25L')"),'Shabba Delight pack sizes must match the linked manufacturer catalogue');
