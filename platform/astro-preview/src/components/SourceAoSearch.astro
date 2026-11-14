@@ -5,27 +5,27 @@ interface Props {
 }
 const { apiBase = "", lang = "pt-AO" } = Astro.props;
 const english = lang === "en";
-const ready = Boolean(apiBase);
+const apiConfigured = Boolean(apiBase);
 ---
 <section class="source-live-search" aria-labelledby="source-live-search-title">
   <div class="source-live-search-head">
-    <span class="source-search-kicker">{english ? "01 / LIVE SUPPLY SEARCH" : "01 / PESQUISA DE FORNECIMENTO"}</span>
+    <span class="source-search-kicker">{english ? "01 / PUBLIC CATALOGUE SEARCH" : "01 / PESQUISA DE CATÁLOGO"}</span>
     <h2 id="source-live-search-title">{english ? "Search materials, equipment and supply families." : "Pesquise materiais, equipamentos e famílias de fornecimento."}</h2>
     <p>{english ? "Search the published SOURCE AO catalogue. Availability, stock and prices are only confirmed after commercial verification." : "Pesquise o catálogo publicado do SOURCE AO. Disponibilidade, stock e preços só são confirmados após validação comercial."}</p>
   </div>
   <form id="sourceAoSearchForm" class="source-live-search-form">
     <label for="sourceAoSearchQuery">{english ? "What are you looking for?" : "O que procura?"}
-      <input id="sourceAoSearchQuery" name="q" type="search" minlength="2" maxlength="180" required disabled={!ready} placeholder={english ? "E.g. diamond discs, Testo 440, PPE…" : "Ex.: discos diamantados, Testo 440, EPI…"} />
+      <input id="sourceAoSearchQuery" name="q" type="search" minlength="2" maxlength="180" required placeholder={english ? "E.g. diamond discs, Testo 440, PPE…" : "Ex.: discos diamantados, Testo 440, EPI…"} />
     </label>
     <label for="sourceAoSearchLocation">{english ? "Delivery location" : "Local de entrega"}
-      <input id="sourceAoSearchLocation" name="location" type="text" maxlength="120" value="Luanda" disabled={!ready} />
+      <input id="sourceAoSearchLocation" name="location" type="text" maxlength="120" value="Luanda" />
     </label>
-    <button type="submit" disabled={!ready}>{english ? "Search catalogue" : "Pesquisar catálogo"} <span aria-hidden="true">↗</span></button>
+    <button type="submit">{english ? "Search catalogue" : "Pesquisar catálogo"} <span aria-hidden="true">↗</span></button>
   </form>
   <p id="sourceAoSearchStatus" class="source-live-search-status" role="status" aria-live="polite">
-    {ready
-      ? (english ? "Staging API configured. Search uses published catalogue records only." : "API de staging configurada. A pesquisa utiliza apenas artigos publicados no catálogo.")
-      : (english ? "Live catalogue search is awaiting staging API configuration. You can still submit an exact requirement through Smart RFQ." : "A pesquisa live aguarda a configuração da API de staging. Pode enviar uma necessidade exacta através do Smart RFQ.")}
+    {apiConfigured
+      ? (english ? "Staging API connected. Search uses published catalogue records only; this preview remains isolated from production." : "API de staging ligada. A pesquisa utiliza apenas artigos publicados; este preview mantém-se isolado da produção.")
+      : (english ? "Static preview catalogue search. This is not a D1 query; stock, price and delivery require commercial confirmation." : "Pesquisa no catálogo estático de pré-visualização. Não consulta a D1; stock, preço e entrega dependem de confirmação comercial.")}
   </p>
   <div id="sourceAoSearchResults" class="source-live-search-results" aria-live="polite" hidden></div>
   <p class="source-live-search-footnote">{english ? "Search results are references, not a stock or price guarantee." : "Os resultados de pesquisa são referências, não uma garantia de stock ou preço."} <a href={english ? "/en/source-ao/smart-rfq/" : "/source-ao/smart-rfq/"}>{english ? "Submit a quotation request" : "Enviar pedido de cotação"}</a></p>
@@ -34,6 +34,7 @@ const ready = Boolean(apiBase);
   window.SOURCE_AO_RUNTIME = Object.freeze({
     environment: "preview",
     apiBase: typeof apiBase === "string" ? apiBase : "",
+    catalogUrl: "/api/source-ao/catalog.json",
     language: typeof lang === "string" ? lang : "pt-AO"
   });
 </script>
