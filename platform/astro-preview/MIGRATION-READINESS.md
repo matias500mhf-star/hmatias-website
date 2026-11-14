@@ -273,8 +273,17 @@ O Blog tem 12 artigos em seis pares PT/EN, com guias técnicos e casos práticos
 - O teste Playwright passou a validar o texto e o destino da ligação KARTA nas duas homepages.
 - O verificador estático passou a validar a ligação no rodapé e a sua ausência da coluna operacional.
 - A configuração Lighthouse foi completada para auditar todas as 58 rotas, em vez de deixar sete artigos fora da auditoria.
-- Estas alterações posteriores ao commit aprovado foram submetidas ao QA #888, que revelou a contagem Lighthouse fixada em 51 apesar das 58 rotas configuradas. A contagem foi alinhada para 58 e a verificação dos 29 pares PT/EN reforçada. O QA #890 confirmou a geração das 58 páginas, mas a etapa `verify-build` falhou porque a etiqueta `Projecto Alpha` contrariava a regra editorial; a etiqueta foi corrigida para `Projeto Alpha`. O CTA de contacto do preview foi também corrigido para abrir os formulários oficiais PT/EN que já recebem pedidos por Resend. O novo QA do head actual tem de concluir todos os quality gates antes de considerar o preview aprovado.
+- Após os ajustes ao rodapé, a configuração Lighthouse e o QA #888, as falhas #890/#899/#902/#903 foram corrigidas sucessivamente: etiqueta KARTA normalizada para `Projeto Alpha`; propriedade de formulário actualizada nas duas chamadas do Catálogo de Obras; e verificador adaptado aos controlos de idioma próprios do SOURCE AO. O QA #905 já passou auditoria de dependências, type-check, build das 58 páginas, verificação estática, inventário de migração e auditoria de links. Playwright desktop/mobile e axe estão em execução; Lighthouse CI ainda não foi executado neste ciclo. A validação integral permanece pendente até à conclusão dos dois últimos passos.
 
 ### Estado de publicação
 
-O preview permanece isolado e com `noindex,nofollow`. O PR #316 continua Draft e não integrado. Não houve alteração à homepage oficial, ao domínio `comercialhmatiasps.com`, DNS, redirects ou publicação em produção. O formulário principal continua operacional via Resend e deve ser preservado. Permanecem pendentes a revisão humana de desktop/tablet/mobile, a equivalência funcional dos fluxos de Business Services, agendamento e SOURCE AO, a aplicação das migrações apenas em staging e a decisão URL-a-URL antes de qualquer migração.
+O preview permanece isolado e com `noindex,nofollow`. O PR #316 continua Draft e não integrado. O Render está a construir automaticamente o commit actual para preview, por auto-deploy da branch; não foi disparado deploy manual. Não houve alteração à homepage oficial, ao domínio `comercialhmatiasps.com`, DNS, redirects ou publicação em produção. O formulário principal continua operacional via Resend e deve ser preservado. Permanecem pendentes a revisão humana de desktop/tablet/mobile, a equivalência funcional dos fluxos de Business Services, agendamento e SOURCE AO, a aplicação das migrações apenas em staging e a decisão URL-a-URL antes de qualquer migração.
+
+
+### Qualidade mais recente — QA #905 (14/11/2026)
+
+- Astro prototype QA #905, commit do PR `b2ebb48fd58c1ee0c5e403d8730715f12928b44c`: auditoria de dependências, type-check, build de 58 páginas, verificador estático, inventário de migração e auditoria de links concluídos com sucesso.
+- A auditoria de links confirmou os únicos dois handoffs oficiais permitidos (formulários Resend PT/EN); os restantes destinos para o domínio oficial continuam bloqueados.
+- Contrato/persistência RFQ passou. Source AO Data Quality #1286 passou. HMATIAS AI Worker validation #359 passou; o passo de deploy foi ignorado.
+- Playwright desktop/mobile e axe estão em execução; Lighthouse CI permanece pendente. Não declarar o QA completo até esses passos terminarem.
+- Render auto-deploy do preview está em construção para o commit `b2ebb48fd58c1ee0c5e403d8730715f12928b44c`. O site oficial não foi tocado.
