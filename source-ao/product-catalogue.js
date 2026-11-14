@@ -11,7 +11,7 @@
     const query=(search?.value||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().trim();
     const list=products.filter(p=>{
       const hay=[p.name,p.brand,p.category,p.description].join(' ').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
-      return (filter==='all'||p.id.includes(filter))&&(!query||hay.includes(query));
+      return (filter==='all'||p.filter===filter)&&(!query||hay.includes(query));
     });
     if(!list.length){grid.innerHTML='<p class="catalogue-empty">'+text('Não foram encontrados produtos com esses critérios.','No products match those filters.')+'</p>';return;}
     grid.innerHTML=list.map(p=>{
