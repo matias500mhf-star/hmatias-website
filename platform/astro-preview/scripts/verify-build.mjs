@@ -33,8 +33,24 @@ const sourceAoLandingEn = readFileSync(join(outDir, "en", "source-ao", "index.ht
 assert.ok(sourceAoLandingEn.includes('href="/en/source-ao/radar/"'), "English SOURCE AO landing page must link to the opportunity Radar");
 assert.ok(sourceAoLandingEn.includes('href="/en/source-ao/partners/"'), "English SOURCE AO landing page must link to the partner application");
 assert.match(html, /Blog · Perspetivas empresariais/, "Blog footer link is missing");
-assert.match(html, /KARTA Wallet · Projeto Alpha/, "KARTA Alpha project footer link is missing");
-assert.match(html, /href="\/estaleiro\//, "Footer project link must point to the Integrated Yard preview");
+
+const footerHtml = html.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
+assert.ok(footerHtml, "Homepage footer is missing");
+assert.equal((footerHtml.match(/class="footer-column footer-(?:identity|operations|explore|contacts)"/g) || []).length, 4, "Footer must have four organised columns");
+assert.doesNotMatch(footerHtml, /KARTA Wallet/, "KARTA must remain outside the operational footer");
+const operationsHtml = footerHtml.match(/<nav class="footer-column footer-operations"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+assert.ok(operationsHtml, "Operational areas footer column is missing");
+assert.equal((operationsHtml.match(/<a\b/g) || []).length, 4, "Footer must list only the four HMATIAS operational areas");
+assert.match(html, /<section class="karta-feature"/, "Homepage must present KARTA in its own Alpha project section");
+assert.match(html, /PROJECTO DIGITAL AUTÓNOMO · ALPHA/, "KARTA homepage section must identify it as an autonomous Alpha project");
+assert.ok(html.includes('href="/karta/">Conhecer o projecto Alpha'), "Portuguese homepage must link to the KARTA Alpha page");
+assert.match(footerHtml, /href="\/estaleiro\//, "Footer project link must preserve the Integrated Yard preview destination");
+const englishHomeHtml = readFileSync(join(outDir, "en", "index.html"), "utf8");
+const englishFooterHtml = englishHomeHtml.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
+assert.ok(englishFooterHtml, "English homepage footer is missing");
+assert.doesNotMatch(englishFooterHtml, /KARTA Wallet/, "KARTA must remain outside the English operational footer");
+assert.match(englishHomeHtml, /INDEPENDENT DIGITAL PROJECT · ALPHA/, "English homepage must identify KARTA as an independent Alpha project");
+assert.ok(englishHomeHtml.includes('href="/en/karta/">View the Alpha project'), "English homepage must link to its KARTA Alpha page");
 assert.ok(html.includes('href="/empresa/">Sobre a HMATIAS'), "Footer About link must point to the About page");
 assert.ok(html.includes('href="/credibilidade/">Credibilidade'), "Footer credibility link must point to the credibility page");
 assert.match(html, /Política de Privacidade/, "Privacy Policy footer link is missing");
