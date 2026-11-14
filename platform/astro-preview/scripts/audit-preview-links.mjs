@@ -21,6 +21,7 @@ const approvedOperationalContactForms = new Set([
   "https://comercialhmatiasps.com/en.html#contact",
 ]);
 const approvedContactFormsUsed = new Set();
+const observedOfficialDestinations = new Set();
 let checked = 0;
 for (const file of htmlFiles) {
   const html = readFileSync(file, "utf8");
@@ -35,6 +36,7 @@ for (const file of htmlFiles) {
     let target;
     try { target = new URL(href, base); } catch { failures.push({ route, href, reason: "invalid URL" }); continue; }
     if (["comercialhmatiasps.com", "www.comercialhmatiasps.com"].includes(target.hostname.toLowerCase())) {
+      observedOfficialDestinations.add(target.href);
       if (approvedOperationalContactForms.has(target.href)) {
         approvedContactFormsUsed.add(target.href);
         checked++;
@@ -50,7 +52,7 @@ for (const file of htmlFiles) {
     checked++;
   }
 }
-assert.equal(approvedContactFormsUsed.size, 2, "Both language versions must retain the two approved operational Resend contact-form destinations");
+assert.deepEqual([...approvedContactFormsUsed].sort(), [...approvedOperationalContactForms].sort(), "Both language versions must retain the two approved Resend contact-form destinations; observed official destinations: " + JSON.stringify([...observedOfficialDestinations]));
 if (failures.length) {
   console.error("Preview link audit FAILED:");
   for (const item of failures.slice(0, 100)) console.error("- " + item.route + " -> " + item.href + ": " + item.reason);
