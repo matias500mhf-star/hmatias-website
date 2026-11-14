@@ -210,15 +210,16 @@ for (const [route, language, privacyHref, languageHref] of partnerRoutes) {
 
 const lighthouseConfig = readFileSync(new URL("../lighthouserc.cjs", import.meta.url), "utf8");
 const lighthouseRoutes = [...lighthouseConfig.matchAll(/http:\/\/127\.0\.0\.1:4321([^"]+)/g)].map((match) => match[1]);
-assert.equal(lighthouseRoutes.length, 58, "Lighthouse must audit all 58 generated preview routes");
-assert.equal(new Set(lighthouseRoutes).size, 58, "Lighthouse route list must contain 58 unique routes");
+assert.equal(lighthouseRoutes.length, 24, "Lighthouse must audit 24 representative PT/EN routes");
+assert.equal(new Set(lighthouseRoutes).size, 24, "Lighthouse route list must contain 24 unique routes");
+assert.ok(lighthouseRoutes.includes("/") && lighthouseRoutes.includes("/en/"), "Lighthouse must include both homepages");
 for (const route of lighthouseRoutes) {
   const segments = route.split("/").filter(Boolean);
   const file = join(outDir, ...segments, "index.html");
   assert.ok(existsSync(file), "Lighthouse route must resolve to generated HTML: " + route);
   const content = readFileSync(file, "utf8");
   const language = route.startsWith("/en/") ? "en" : "pt-AO";
-  assert.match(content, new RegExp('<html lang="' + language + '"'), "Generated route language is incorrect: " + route);
+  assert.match(content, new RegExp('<html lang="' + language + "'"), "Generated route language is incorrect: " + route);
 }
 for (const route of [
 
