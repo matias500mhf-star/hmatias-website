@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {mapPublicItemRow,publicSearch} from '../src/public-search.js';
+import {normalizeSearch} from '../src/index.js';
+import masterCatalog from '../../data/catalog.json' with {type:'json'};
 
 const base={
   item_id:'item_1',
@@ -56,7 +58,7 @@ test('item with no approved observation remains discovered',()=>{
 });
 
 
-test('public catalogue search matches Portuguese plural queries against singular D1 records',async()=>{
+test('public search resolves diamond tools from canonical catalogue for plural Portuguese queries',async()=>{
   const db=new DatabaseSync(':memory:');
   db.exec(`
     CREATE TABLE items(id TEXT,name TEXT,category TEXT,specification TEXT,unit TEXT,search_text TEXT,public_visible INTEGER);
@@ -65,29 +67,28 @@ test('public catalogue search matches Portuguese plural queries against singular
       verification_status TEXT,verified_at TEXT,expires_at TEXT,source_type TEXT);
     CREATE TABLE service_providers(service_category TEXT,last_verified_at TEXT,search_text TEXT,location TEXT);
   `);
-  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run(
-    'item-diamond','Disco diamantado 115 mm','diamond-tools','115 mm · segmento turbo','un','disco diamantado 115mm synvor',1
-  );
-  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run(
-    'item-unrelated','Disco de corte 115 mm','tools-equipment','115 mm','un','disco corte 115mm',1
-  );
-  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run(
-    'item-private','Disco diamantado 115 mm — rascunho','diamond-tools','Registo privado','un','disco diamantado 115mm synvor',0
-  );
+  const item=masterCatalog.items.find(row=>row.id==='item-diamond-tools');
+  assert.ok(item,'diamond tools family must exist in canonical source catalogue');
+  const searchText=normalizeSearch([item.name,item.name_pt,item.specification,...item.aliases,...item.keywords].join(' '));
+  assert.match(searchText,/115mm/,'canonical search index must use same dimension token as API');
+  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run(item.id,item.name,item.category,item.specification,'un',searchText,1);
+  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run('item-private','Disco diamantado privado','diamond-tools','Registo privado','un',searchText,0);
   const adapter={
     prepare(sql){
       return {bind(...values){return {async all(){return {results:db.prepare(sql).all(...values)}}};}};
     }
   };
-  const request=new Request('https://api.test/api/search?q=discos%20diamantados%20115%20mm&location=Luanda');
-  const response=await publicSearch(request,{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
+  const response=await publicSearch(new Request('https://api.test/api/search?q=discos%20diamantados%20115%20mm&location=Luanda'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
   const body=await response.json();
   assert.equal(response.status,200);
-  assert.deepEqual(body.results.map(row=>row.id),['item-diamond']);
+  assert.deepEqual(body.results.map(row=>row.id),['item-diamond-tools']);
   assert.equal(body.results[0].status,'discovered');
   assert.equal(body.results[0].category,'diamond-tools');
-  assert.equal(Object.hasOwn(body.results[0],'supplier'),false);
-  assert.equal(Object.hasOwn(body.results[0],'price'),false);
-  assert.equal(Object.hasOwn(body.results[0],'quantity_reported'),false);
+  for(const key of ['supplier','price','quantity_reported']) assert.equal(Object.hasOwn(body.results[0],key),false);
+  for(const query of ['coroas diamantadas','copos de desbaste diamantados']){
+    const followUp=await publicSearch(new Request('https://api.test/api/search?q='+encodeURIComponent(query)+'&location=Luanda'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
+    const followUpBody=await followUp.json();
+    assert.ok(followUpBody.results.some(row=>row.id==='item-diamond-tools'),query+' should resolve to canonical diamond tools family');
+  }
   db.close();
 });
