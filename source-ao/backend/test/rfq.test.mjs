@@ -28,7 +28,7 @@ export function testEnvironment(){
     async first(){return db.prepare(sql).get(...args)||null;},
     async all(){return {results:db.prepare(sql).all(...args)};}
   };},async all(){return {results:db.prepare(sql).all()};}};},async batch(statements){return Promise.all(statements.map(s=>s.run()));}};
-  return {db,env:{SOURCE_AO_DB:adapter,PII_ENCRYPTION_KEY:'synthetic-test-encryption-key',ADMIN_API_TOKEN:'synthetic-test-admin-token',CONTACT_RETENTION_DAYS:'180'}};
+  return {db,env:{SOURCE_AO_DB:adapter,PII_ENCRYPTION_KEY:'synthetic-test-encryption-key',ADMIN_API_TOKEN:'synthetic-test-admin-token',CONFIRMATION_SECRET:'synthetic-test-confirmation-secret',CONTACT_RETENTION_DAYS:'180'}};
 }
 export function rfqFixture(){return {
   rfq_version:1,client_token:'a'.repeat(64),consent:true,website:'',
@@ -38,6 +38,43 @@ export function rfqFixture(){return {
 };}
 const request=(data)=>new Request('https://api.test/api/sourcing-requests',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(data)});
 const admin=(url,options={})=>new Request('https://api.test'+url,{...options,headers:{authorization:'Bearer synthetic-test-admin-token','content-type':'application/json'}});
+
+async function createSupplierVerificationFixture({available=true,quantity=25}={}) {
+  const {db,env}=testEnvironment();
+  const supplierId='supplier-stock-evidence-test';
+  const itemId=catalog.items[0].id;
+  const now=new Date().toISOString();
+  db.prepare('INSERT INTO suppliers(id,name,location,last_verified_at) VALUES(?,?,?,?)')
+    .run(supplierId,'Fornecedor de teste','Luanda',now);
+
+  const created=await core.fetch(new Request('https://api.test/api/admin/verification-requests',{
+    method:'POST',
+    headers:{authorization:'Bearer synthetic-test-admin-token','content-type':'application/json'},
+    body:JSON.stringify({
+      supplier_id:supplierId,item_id:itemId,requirement_text:'Material de teste',
+      specification:'Especificação sintética',quantity,unit:'un',location:'Luanda'
+    })
+  }),env);
+  assert.equal(created.status,201);
+  const requestPayload=await created.json();
+  const requestId=requestPayload.verification_request.id;
+  const confirmationUrl=new URL(requestPayload.verification_request.confirmation_path,'https://api.test');
+  const submitted=await core.fetch(new Request(confirmationUrl,{
+    method:'POST',
+    headers:{'content-type':'application/json'},
+    body:JSON.stringify({
+      available,
+      quantity_reported:available?quantity:null,
+      price_reported:null,
+      currency:null,
+      lead_time:'2 dias',
+      responded_by:'Contacto de teste',
+      note:'Resposta sintética para teste automatizado'
+    })
+  }),env);
+  assert.equal(submitted.status,200);
+  return {db,env,requestId,itemId};
+}
 
 test('public RFQ preflight allows only the configured origin and JSON POST contract',async()=>{
   const env={PUBLIC_ORIGIN:'https://preview.example',SOURCE_AO_ENV:'staging'};
@@ -198,6 +235,69 @@ test('RFQ persists once, encrypts qualification and restricts disclosure to admi
   db.prepare("UPDATE sourcing_requests SET updated_at='2020-01-01'").run();
   const maintenance=await runMaintenance(env);assert.equal(maintenance.purged_requester_contacts,1);
   const purged=db.prepare('SELECT * FROM sourcing_requests').get();assert.equal(purged.rfq_details_encrypted,'PURGED');assert.equal(purged.contact_encrypted,'PURGED');
+  db.close();
+});
+
+test('supplier-reported quantity remains supplier_confirmed until HMATIAS reviews physical stock evidence',async()=>{
+  const {db,env,requestId,itemId}=await createSupplierVerificationFixture();
+  const response=await core.fetch(new Request(`https://api.test/api/admin/verification/${requestId}/approve`,{
+    method:'POST',
+    headers:{authorization:'Bearer synthetic-test-admin-token','content-type':'application/json'},
+    body:JSON.stringify({item_id:itemId,reviewer:'HMATIAS test reviewer'})
+  }),env);
+  assert.equal(response.status,200);
+  const result=await response.json();
+  assert.equal(result.observation.verification_status,'supplier_confirmed');
+  assert.equal(result.observation.evidence_verified,false);
+  const stored=db.prepare('SELECT * FROM observations WHERE verification_request_id=?').get(requestId);
+  assert.equal(stored.verification_status,'supplier_confirmed');
+  assert.equal(stored.source_type,'direct_supplier_confirmation');
+  assert.equal(stored.evidence_reference,`verification_request:${requestId}`);
+  db.close();
+});
+
+test('physical stock becomes in_stock_confirmed only with reviewer attestation and dated evidence reference',async()=>{
+  const {db,env,requestId,itemId}=await createSupplierVerificationFixture();
+  const evidenceDate=new Date().toISOString().slice(0,10);
+  const response=await core.fetch(new Request(`https://api.test/api/admin/verification/${requestId}/approve`,{
+    method:'POST',
+    headers:{authorization:'Bearer synthetic-test-admin-token','content-type':'application/json'},
+    body:JSON.stringify({
+      item_id:itemId,reviewer:'HMATIAS test reviewer',evidence_verified:true,
+      evidence_type:'dated_photo',evidence_date:evidenceDate,evidence_reference:'DOC-TEST-STOCK-001'
+    })
+  }),env);
+  assert.equal(response.status,200);
+  const result=await response.json();
+  assert.equal(result.observation.verification_status,'in_stock_confirmed');
+  assert.equal(result.observation.evidence_verified,true);
+  const stored=db.prepare('SELECT * FROM observations WHERE verification_request_id=?').get(requestId);
+  assert.equal(stored.verification_status,'in_stock_confirmed');
+  assert.equal(stored.source_type,'supplier_evidence_review');
+  assert.deepEqual(JSON.parse(stored.evidence_reference),{
+    type:'dated_photo',date:evidenceDate,reference:'DOC-TEST-STOCK-001'
+  });
+  db.close();
+});
+
+test('in-stock evidence approval rejects missing references and future dates',async()=>{
+  const {db,env,requestId,itemId}=await createSupplierVerificationFixture();
+  const url=`https://api.test/api/admin/verification/${requestId}/approve`;
+  const headers={authorization:'Bearer synthetic-test-admin-token','content-type':'application/json'};
+  const missing=await core.fetch(new Request(url,{
+    method:'POST',headers,
+    body:JSON.stringify({item_id:itemId,evidence_verified:true,evidence_type:'dated_photo',evidence_date:new Date().toISOString().slice(0,10)})
+  }),env);
+  assert.equal(missing.status,400);
+  assert.equal((await missing.json()).error.code,'invalid_evidence');
+  const futureDate=new Date(Date.now()+86400000*3).toISOString().slice(0,10);
+  const future=await core.fetch(new Request(url,{
+    method:'POST',headers,
+    body:JSON.stringify({item_id:itemId,evidence_verified:true,evidence_type:'dated_photo',evidence_date:futureDate,evidence_reference:'DOC-TEST-FUTURE'})
+  }),env);
+  assert.equal(future.status,400);
+  assert.equal((await future.json()).error.code,'invalid_evidence_date');
+  assert.equal(db.prepare('SELECT COUNT(*) n FROM observations').get().n,0);
   db.close();
 });
 

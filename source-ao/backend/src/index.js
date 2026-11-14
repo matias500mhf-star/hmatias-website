@@ -1,5 +1,6 @@
 const PUBLIC_STATUSES = new Set(['source_checked','recently_seen','supplier_confirmed','in_stock_confirmed','needs_reconfirmation','unavailable']);
 const CATALOG_CATEGORIES = new Set(['construction','hvac-electrical','tools-equipment','cleaning-facilities','services-contractors','industrial-supply','diamond-tools','measurement-instruments','other']);
+const STOCK_EVIDENCE_TYPES = new Set(['dated_photo','warehouse_record','import_document','supplier_inventory_record','other']);
 
 export function normalizeSearch(value='') {
   return value.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
@@ -237,20 +238,83 @@ async function approveVerification(request, env, requestId) {
   if (reviewer.length>80) return fail(env,400,'invalid_reviewer','Reviewer name is too long.');
   const item=await env.SOURCE_AO_DB.prepare('SELECT id FROM items WHERE id=?').bind(itemId).first();
   if (!item) return fail(env,404,'item_not_found','Normalized item does not exist.');
+
+  if (Object.hasOwn(data,'evidence_verified') && typeof data.evidence_verified!=='boolean') {
+    return fail(env,400,'invalid_evidence_confirmation','Evidence confirmation must be a boolean.');
+  }
   const sr=JSON.parse(row.supplier_response_json);
+  const evidenceVerified=data.evidence_verified===true;
+  let evidenceType=null;
+  let evidenceDate=null;
+  let evidenceReference=null;
+
+  if (evidenceVerified) {
+    if (sr.available!==true) {
+      return fail(env,409,'evidence_requires_supplier_availability','Physical stock evidence cannot override a supplier response reporting unavailable.');
+    }
+    if (!(typeof sr.quantity_reported==='number' && Number.isFinite(sr.quantity_reported) && sr.quantity_reported>0)) {
+      return fail(env,400,'quantity_required_for_stock_evidence','A positive supplier-reported quantity is required before confirming physical stock.');
+    }
+    const type=optionalText(data.evidence_type,40);
+    const date=optionalText(data.evidence_date,10);
+    const reference=optionalText(data.evidence_reference,500);
+    if (!type.ok || !date.ok || !reference.ok || !STOCK_EVIDENCE_TYPES.has(type.value) || !reference.value) {
+      return fail(env,400,'invalid_evidence','Evidence type, date and reference are required for in-stock confirmation.');
+    }
+    const parsedDate=Date.parse(date.value+'T00:00:00.000Z');
+    if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(date.value) ||
+        !Number.isFinite(parsedDate) ||
+        new Date(parsedDate).toISOString().slice(0,10)!==date.value ||
+        parsedDate>Date.now()) {
+      return fail(env,400,'invalid_evidence_date','Evidence date must be a valid date that is not in the future.');
+    }
+    if (/^http:\\/\\//i.test(reference.value)) {
+      return fail(env,400,'evidence_reference_requires_https','Evidence URLs must use HTTPS.');
+    }
+    evidenceType=type.value;
+    evidenceDate=date.value;
+    evidenceReference=JSON.stringify({
+      type:evidenceType,
+      date:evidenceDate,
+      reference:reference.value
+    });
+  } else if (data.evidence_type!=null || data.evidence_date!=null || data.evidence_reference!=null) {
+    return fail(env,400,'evidence_confirmation_required','Evidence details require explicit reviewer confirmation.');
+  }
+
   let status='unavailable';
   let expiryHours=24;
-  if (sr.available===true && sr.quantity_reported!=null) status='in_stock_confirmed';
-  else if (sr.available===true) {status='supplier_confirmed';expiryHours=72;}
+  let sourceType='direct_supplier_confirmation';
+  let storedEvidenceReference=`verification_request:${row.id}`;
+  if (sr.available===true) {
+    if (evidenceVerified) {
+      status='in_stock_confirmed';
+      sourceType='supplier_evidence_review';
+      storedEvidenceReference=evidenceReference;
+    } else {
+      // A supplier's quantity statement is not physical proof of stock.
+      status='supplier_confirmed';
+      expiryHours=72;
+    }
+  }
+
   const observationId=id('obs');
   const now=iso();
   const expires=plusHours(expiryHours);
   await env.SOURCE_AO_DB.batch([
     env.SOURCE_AO_DB.prepare(`INSERT INTO observations(id,supplier_id,item_id,verification_request_id,observed_at,verified_at,source_type,verification_status,quantity_reported,price_reported,currency,location,evidence_reference,expires_at,approved_at,approved_by) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
-      .bind(observationId,row.supplier_id,itemId,row.id,row.responded_at||now,now,'direct_supplier_confirmation',status,sr.quantity_reported,sr.price_reported,sr.currency,row.location,`verification_request:${row.id}`,expires,now,reviewer),
+      .bind(observationId,row.supplier_id,itemId,row.id,row.responded_at||now,now,sourceType,status,sr.quantity_reported,sr.price_reported,sr.currency,row.location,storedEvidenceReference,expires,now,reviewer),
     env.SOURCE_AO_DB.prepare(`UPDATE verification_requests SET status='approved',reviewed_at=?,reviewed_by=?,updated_at=? WHERE id=? AND status='supplier_responded'`).bind(now,reviewer,now,row.id)
   ]);
-  return json(env,{ok:true,observation:{id:observationId,verification_status:status,verified_at:now,expires_at:expires}});
+  return json(env,{ok:true,observation:{
+    id:observationId,
+    verification_status:status,
+    verified_at:now,
+    expires_at:expires,
+    evidence_verified:evidenceVerified,
+    evidence_type:evidenceType,
+    evidence_date:evidenceDate
+  }});
 }
 
 async function createCatalogItem(request, env) {
