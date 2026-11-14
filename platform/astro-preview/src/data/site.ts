@@ -73,5 +73,6 @@ export const company = {
   businessServicesUrl: "/business-services/",
   businessServicesContactUrl: "https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business",
   businessServicesBookingUrl: "https://comercialhmatiasps.com/agendamento.html",
-  legacyContactFormUrl: "/#contacto"
+  contactFormUrl: "https://comercialhmatiasps.com/#contacto",
+  contactFormEnUrl: "https://comercialhmatiasps.com/en.html#contact"
 } as const;
