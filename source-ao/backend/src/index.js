@@ -262,13 +262,13 @@ async function approveVerification(request, env, requestId) {
       return fail(env,400,'invalid_evidence','Evidence type, date and reference are required for in-stock confirmation.');
     }
     const parsedDate=Date.parse(date.value+'T00:00:00.000Z');
-    if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(date.value) ||
+    if (!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(date.value) ||
         !Number.isFinite(parsedDate) ||
         new Date(parsedDate).toISOString().slice(0,10)!==date.value ||
         parsedDate>Date.now()) {
       return fail(env,400,'invalid_evidence_date','Evidence date must be a valid date that is not in the future.');
     }
-    if (/^http:\\/\\//i.test(reference.value)) {
+    if (reference.value.toLowerCase().startsWith('http://')) {
       return fail(env,400,'evidence_reference_requires_https','Evidence URLs must use HTTPS.');
     }
     evidenceType=type.value;
