@@ -67,16 +67,26 @@ test('public search resolves exact Carbodiam 115 mm references without implying 
       verification_status TEXT,verified_at TEXT,expires_at TEXT,source_type TEXT);
     CREATE TABLE service_providers(service_category TEXT,last_verified_at TEXT,search_text TEXT,location TEXT);
   `);
-  const products=masterCatalog.items.filter(row=>row.id.startsWith('item-carbodiam-'));
+  const products=masterCatalog.items.filter(row=>['item-carbodiam-pantera-115','item-carbodiam-pantera-neutre-115','item-carbodiam-crack-chaser-115'].includes(row.id));
+  const sampleFamilies=[
+    'item-disc-family-carbodiam-acier',
+    'item-crown-family-carbodiam-profor',
+    'item-synvor-diamond-grinding-cups',
+    'item-weka-dk17',
+    'item-carbodiam-multicut-400p'
+  ].map(id=>masterCatalog.items.find(row=>row.id===id));
+  assert.equal(masterCatalog.items.filter(row=>row.id.startsWith('item-disc-family-')).length,8,'the catalogue must include the eight SYNVOR-featured disc families');
+  assert.equal(masterCatalog.items.filter(row=>row.id.startsWith('item-crown-family-')).length,33,'the catalogue must include all 33 publicly listed crown families');
+  assert.ok(sampleFamilies.every(Boolean),'disc, crown, grinding, WEKA and saw models must exist in the canonical catalogue');
   assert.equal(products.length,3,'the canonical catalogue must contain the three published 115 mm references');
-  for(const item of [...products,masterCatalog.items.find(row=>row.id==='item-diamond-tools')]){
+  for(const item of [...products,...sampleFamilies,masterCatalog.items.find(row=>row.id==='item-diamond-tools')]){
     assert.ok(item);
     const searchText=normalizeSearch([item.name,item.name_pt,item.specification,...item.aliases,...item.keywords].join(' '));
     db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run(item.id,item.name,item.category,item.specification,'un',searchText,1);
   }
   db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run('item-private','Disco diamantado privado','diamond-tools','Registo privado','un','discos diamantados 115mm 9193',0);
   db.prepare('INSERT INTO suppliers VALUES(?,?)').run('sup-synvor-industrial','Portugal');
-  for(const item of products){
+  for(const item of [...products,...sampleFamilies]){
     db.prepare('INSERT INTO observations VALUES(?,?,?,?,?,?,?,?,?)').run(
       'obs-'+item.id,'sup-synvor-industrial',item.id,'2026-11-14T12:00:00+01:00','Portugal',
       'source_checked','2026-11-14T12:00:00+01:00','2026-11-21T12:00:00+01:00','supplier_official_channel'
@@ -106,6 +116,19 @@ test('public search resolves exact Carbodiam 115 mm references without implying 
   assert.equal(pantera.verification.verified_at,'2026-11-14T12:00:00+01:00');
   assert.equal(Object.hasOwn(pantera,'supplier'),false);
   assert.equal(Object.hasOwn(pantera,'price'),false);
+  const profor=await publicSearch(new Request('https://api.test/api/search?q='+encodeURIComponent('coroa diamantada PROFOR')+'&location=Portugal'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
+  const proforBody=await profor.json();
+  const proforRow=proforBody.results.find(row=>row.id==='item-crown-family-carbodiam-profor');
+  assert.ok(proforRow,'Carbodiam PROFOR crown family must be searchable by model');
+  assert.equal(proforRow.status,'source_checked');
+  const cups=await publicSearch(new Request('https://api.test/api/search?q='+encodeURIComponent('copos de desbaste diamantados')+'&location=Luanda'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
+  const cupsBody=await cups.json();
+  const cupsRow=cupsBody.results.find(row=>row.id==='item-synvor-diamond-grinding-cups');
+  assert.ok(cupsRow,'diamond grinding cups must be searchable');
+  assert.equal(cupsRow.status,'discovered','Portugal product family must not imply stock in Luanda');
+  const weka=await publicSearch(new Request('https://api.test/api/search?q='+encodeURIComponent('WEKA DK17')+'&location=Portugal'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
+  const wekaBody=await weka.json();
+  assert.ok(wekaBody.results.some(row=>row.id==='item-weka-dk17'),'WEKA model search must find its exact machine record');
   for(const query of ['coroas diamantadas','copos de desbaste diamantados']){
     const followUp=await publicSearch(new Request('https://api.test/api/search?q='+encodeURIComponent(query)+'&location=Luanda'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
     const followUpBody=await followUp.json();
