@@ -4,6 +4,10 @@ description: "Um roteiro para inventariar activos, definir criticidade, calendar
 pubDate: 2026-11-13
 category: "Gestão operacional"
 author: "Equipa Editorial HMATIAS"
+coverImage: "https://images.unsplash.com/photo-1764835994645-3faa2c40f708?auto=format&fit=crop&w=1440&q=82"
+coverAlt: "Imagem ilustrativa de maquinaria industrial numa unidade de produção."
+photoCredit: "xing bowen"
+photoCreditUrl: "https://unsplash.com/photos/industrial-machinery-in-a-large-factory-setting-mMgC9U15XR0"
 readingMinutes: 5
 contentType: "guide"
 language: "pt-AO"

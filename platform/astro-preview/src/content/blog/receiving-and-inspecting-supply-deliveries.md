@@ -4,6 +4,10 @@ description: "A checklist for confirming quantities, specifications, condition, 
 pubDate: 2026-11-13
 category: "Procurement and Supply"
 author: "HMATIAS Editorial Team"
+coverImage: "https://images.unsplash.com/photo-1721937127582-ed331de95a04?auto=format&fit=crop&w=1440&q=82"
+coverAlt: "Illustrative photograph of a warehouse aisle with pallets and shelving."
+photoCredit: "Ashley"
+photoCreditUrl: "https://unsplash.com/photos/a-warehouse-filled-with-lots-of-boxes-and-pallets-28b8xlTT5t4"
 readingMinutes: 4
 contentType: "guide"
 language: "en"

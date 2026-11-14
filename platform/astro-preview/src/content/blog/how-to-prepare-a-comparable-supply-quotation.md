@@ -4,6 +4,10 @@ description: "A practical guide to product specifications, quantities, delivery 
 pubDate: 2026-11-11
 category: "Procurement and Supply"
 author: "HMATIAS Commercial Team"
+coverImage: "https://images.unsplash.com/photo-1758609554326-ebf110a4c142?auto=format&fit=crop&w=1440&q=82"
+coverAlt: "Illustrative photograph of construction materials arranged for a supply delivery."
+photoCredit: "skstrannik"
+photoCreditUrl: "https://unsplash.com/photos/construction-materials-stacked-outdoors-near-a-wall-ZpTwV-4jU08"
 language: "en"
 draft: false
 ---
