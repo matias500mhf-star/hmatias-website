@@ -426,17 +426,24 @@
         "https://synvor-industrial.com/discos/carbodiam-pantera-neutre",
         "https://synvor-industrial.com/discos/carbodiam-crack-chaser",
         "https://synvor-industrial.com/coroas-diamantadas",
-        "https://synvor-industrial.com/perfuracao"
+        "https://synvor-industrial.com/perfuracao",
+        "https://synvor-industrial.com/desbaste-e-polimento",
+        "https://synvor-industrial.com/serras-e-maquinas",
+        "https://synvor-industrial.com/weka"
       ],
       "category": [
-        "diamond-tools"
+        "diamond-tools",
+        "tools-equipment"
       ],
       "capabilities": [
-        "Carbodiam diamond cutting discs",
-        "SAMEDIA diamond cutting discs",
-        "Diamond core-drilling crowns",
-        "Diamond grinding cups and segments",
-        "Diamond polishing products"
+        "Carbodiam diamond cutting discs and factory-referenced variants",
+        "SAMEDIA diamond cutting discs and factory-referenced variants",
+        "Carbodiam and SAMEDIA diamond core-drilling crowns",
+        "Diamond grinding cups, metal floor-grinding segments and polishing resins",
+        "Carbodiam diamond grinding plates",
+        "Carbodiam and WEKA saws and core-drilling machinery",
+        "Industrial dust, vacuum and slurry extraction equipment",
+        "Technical selection and quotation for Angola; stock, price and export lead time confirmed per order"
       ],
       "verification_status": "source_checked",
       "last_verified_at": "2026-11-14"
