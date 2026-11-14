@@ -89,6 +89,8 @@
     whatLooking:'Pesquise por categoria.',
     radarTitle:'Organize pedidos de sourcing que aguardam resposta comercial.',
     requestTitle:'Peça à HMATIAS a análise de um pedido de fornecimento estruturado.',
+    navCatalogue:'Catálogo',
+    catalogueEyebrow:'CATÁLOGO HMATIAS SUPPLY',catalogueTitle:'Produtos e referências técnicas.',catalogueLead:'Consulte referências documentadas no catálogo HMATIAS. Preço, disponibilidade e prazo são confirmados por pedido.',catalogueSearchLabel:'Pesquisar produtos',catalogueSearchPlaceholder:'Ex.: Red Line 17, Spyrostar…',catalogueAll:'Todos',catalogueDiamond:'Ferramentas diamantadas',catalogueLoading:'A carregar referências documentadas…',catalogueDisclaimer:'As fotografias e fichas técnicas constam do catálogo comercial de referência. A presença nesta página não confirma stock, preço ou prazo de entrega.',
     navCategories:'Categorias',
     menuLabel:'Abrir navegação'
   });
@@ -100,6 +102,8 @@
     whatLooking:'Search by category.',
     radarTitle:'Organise sourcing requests awaiting a commercial response.',
     requestTitle:'Ask HMATIAS to review a structured supply request.',
+    navCatalogue:'Catalogue',
+    catalogueEyebrow:'HMATIAS SUPPLY CATALOGUE',catalogueTitle:'Products and technical references.',catalogueLead:'Browse references documented in the HMATIAS catalogue. Price, availability and lead time are confirmed on request.',catalogueSearchLabel:'Search products',catalogueSearchPlaceholder:'E.g. Red Line 17, Spyrostar…',catalogueAll:'All',catalogueDiamond:'Diamond tools',catalogueLoading:'Loading documented references…',catalogueDisclaimer:'Product photographs and technical sheets are available in the commercial reference catalogue. Listing here does not confirm stock, price or delivery time.',
     navCategories:'Categories',
     menuLabel:'Open navigation'
   });
