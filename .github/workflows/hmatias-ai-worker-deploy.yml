@@ -34,6 +34,8 @@ jobs:
           node-version: '22'
       - name: Check assistant API bridge syntax
         run: node --check assistant-api-bridge.js
+      - name: Test assistant policy and SOURCE AO retrieval boundary
+        run: node --test cloudflare-ai/test/*.test.mjs
       - name: Validate assistant bridge loads before assistant
         run: |
           node --input-type=module <<'NODE'
