@@ -49,6 +49,11 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(page.locator(".works-catalogue-card")).toHaveCount(12);
     await expect(page.locator(".works-catalogue-card img[alt]")).toHaveCount(12);
     await expect(page.getByText(/não substitui contratos, autos de medição/)).toBeVisible();
+    const officialFormLinks = page.locator(".works-catalogue-hero a[href], .works-catalogue-cta a[href]").filter({ hasText: "Solicitar avaliação" });
+    await expect(officialFormLinks).toHaveCount(2);
+    await expect(officialFormLinks).toHaveAttribute("href", "https://comercialhmatiasps.com/#contacto");
+    await expect(officialFormLinks).toHaveAttribute("target", "_blank");
+    await expect(officialFormLinks).toHaveAttribute("rel", /noopener noreferrer/);
   });
 
   test("company page presents its registered identity and four service areas", async ({ page }) => {
