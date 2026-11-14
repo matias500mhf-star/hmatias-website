@@ -57,6 +57,11 @@ for (const homepage of homepageRoutes) {
     await expect(page.locator(".footer-operations h2")).toContainText(homepage.language === "en" ? "Areas and services" : "Áreas e serviços");
     await expect(page.locator(".footer-explore h2")).toHaveText(homepage.explore);
     await expect(page.locator(".footer-contacts h2")).toHaveText(homepage.contact);
+    await expect(page.locator(".footer-operations a")).toHaveCount(4);
+    await expect(page.locator(".karta-feature")).toBeVisible();
+    await expect(page.locator(".karta-feature")).toContainText("Alpha");
+    await expect(page.locator(".karta-feature a")).toHaveAttribute("href", homepage.language === "en" ? "/en/karta/" : "/karta/");
+    await expect(page.locator(".footer-explore a", { hasText: "KARTA Wallet" })).toHaveCount(0);
 
     await page.locator(".partner-logos").scrollIntoViewIfNeeded();
 
@@ -75,8 +80,9 @@ for (const homepage of homepageRoutes) {
       images.every((image) => image.complete && image.naturalWidth > 0)
     )).toBe(true);
 
-    const whatsapp = page.locator(".footer-contacts .footer-whatsapp");
-    const instagram = page.locator(".footer-socials a");
+    const whatsapp = page.locator(".footer-socials .footer-whatsapp");
+    const instagram = page.locator(".footer-socials a[aria-label^=\"Instagram\"]");
+    await expect(page.locator(".footer-socials a")).toHaveCount(2);
     const responsiveWidths = [
       { width: 1280, footerColumns: 4, partnerColumns: 3 },
       { width: 768, footerColumns: 2, partnerColumns: 2 },
@@ -96,8 +102,14 @@ for (const homepage of homepageRoutes) {
       const contactRight = await page.locator(".footer-contacts").evaluate((element) => element.getBoundingClientRect().right);
       const whatsappRight = await whatsapp.evaluate((element) => element.getBoundingClientRect().right);
       const instagramRight = await instagram.evaluate((element) => element.getBoundingClientRect().right);
+      const whatsappTop = await whatsapp.evaluate((element) => element.getBoundingClientRect().top);
+      const instagramTop = await instagram.evaluate((element) => element.getBoundingClientRect().top);
+      const addressBottom = await page.locator(".footer-contacts address").evaluate((element) => element.getBoundingClientRect().bottom);
+      const socialsTop = await page.locator(".footer-socials").evaluate((element) => element.getBoundingClientRect().top);
       expect(Math.abs(contactRight - whatsappRight), "WhatsApp alignment at " + layout.width + "px").toBeLessThanOrEqual(1);
       expect(Math.abs(contactRight - instagramRight), "Instagram alignment at " + layout.width + "px").toBeLessThanOrEqual(1);
+      expect(Math.abs(whatsappTop - instagramTop), "Social icon row at " + layout.width + "px").toBeLessThanOrEqual(1);
+      expect(socialsTop).toBeGreaterThan(addressBottom);
 
       const overflow = await page.evaluate(() => ({
         document: document.documentElement.scrollWidth,
@@ -110,12 +122,13 @@ for (const homepage of homepageRoutes) {
     await page.setViewportSize(projectViewport);
 
     const operations = page.locator(".footer-operations");
-    await expect(operations.getByRole("link", { name: /Construction|Construção Civil/ })).toBeVisible();
+    await expect(operations.getByRole("link", { name: /Construction|Construção/ })).toBeVisible();
     await expect(operations.getByRole("link", { name: /Facilities/ })).toBeVisible();
     await expect(operations.getByRole("link", { name: "HMATIAS Supply" })).toBeVisible();
     await expect(operations.getByRole("link", { name: "Business Services" })).toBeVisible();
-    await expect(operations.getByRole("link", { name: "Smart RFQ" })).toHaveAttribute("href", homepage.language === "en" ? "/en/source-ao/smart-rfq/" : "/source-ao/smart-rfq/");
-    await expect(page.locator(".footer-explore").getByRole("link", { name: /KARTA Wallet/ })).toContainText("Alpha");
+    await expect(page.locator(".footer-explore").getByRole("link", { name: "Smart RFQ" })).toHaveAttribute("href", homepage.language === "en" ? "/en/source-ao/smart-rfq/" : "/source-ao/smart-rfq/");
+    await expect(page.locator(".footer-explore").getByRole("link", { name: homepage.language === "en" ? "Projects" : "Projetos" })).toHaveAttribute("href", homepage.language === "en" ? "/en/#projects" : "/#projetos");
+    await expect(page.locator(".footer-explore").getByRole("link", { name: /Works Catalogue|Catálogo de Obras/ })).toBeVisible();
 
     await expect(whatsapp).toHaveAttribute("aria-label", /WhatsApp/);
     await expect(whatsapp.locator("img")).toHaveAttribute("src", /social-whatsapp\.[^.]+\.svg$/);

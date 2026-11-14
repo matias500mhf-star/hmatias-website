@@ -15,7 +15,7 @@ const links = isEnglish
       supply: "/en/supply/", business: "/en/business-services/",
       smart: "/en/source-ao/smart-rfq/", privacy: "/en/privacy/",
       terms: "/en/terms/", accessibility: "/en/accessibility/",
-      contact: "/en/#contact", projects: "/en/integrated-yard/"
+      contact: "/en/#contact", projects: "/en/#projects"
     }
   : {
       about: company.aboutUrl, credibility: company.credibilityUrl, blog: "/blog/",
@@ -23,7 +23,7 @@ const links = isEnglish
       supply: company.supplyUrl, business: company.businessServicesUrl,
       smart: company.smartRfqUrl, privacy: company.privacyUrl,
       terms: company.termsUrl, accessibility: "/acessibilidade/",
-      contact: "/#contacto", projects: "/estaleiro/"
+      contact: "/#contacto", projects: "/#projetos"
     };
 ---
 <footer class="site-footer" data-language={isEnglish ? "en" : "pt"}>
@@ -40,37 +40,33 @@ const links = isEnglish
 
     <nav class="footer-column footer-operations" aria-label={isEnglish ? "Operational areas and services" : "Áreas e serviços operacionais"}>
       <h2>{isEnglish ? "Areas and services" : "Áreas e serviços"}</h2>
-      <h3>{isEnglish ? "Operational areas" : "Áreas operacionais"}</h3>
-      <a href={links.construction}>{isEnglish ? "Civil Construction" : "Construção Civil"}</a>
-      <a href={isEnglish ? "/en/construction/#remodelling" : company.remodelingUrl}>{isEnglish ? "Remodelling" : "Remodelação"}</a>
+      <a href={links.construction}>{isEnglish ? "Construction and remodelling" : "Construção e remodelação"}</a>
       <a href={links.facilities}>{isEnglish ? "Facilities and Maintenance" : "Facilities e Manutenção"}</a>
       <a href={links.supply}>HMATIAS Supply</a>
       <a href={links.business}>Business Services</a>
-      <h3>{isEnglish ? "Projects and requests" : "Projetos e pedidos"}</h3>
-      <a href={links.projects}>{isEnglish ? "Projects" : "Projetos"}</a>
-      <a href={isEnglish ? "/en/works-catalogue/" : company.worksCatalogueUrl}>{isEnglish ? "Works Catalogue" : "Catálogo de Obras"}</a>
-      <a href={links.smart}>Smart RFQ</a>
-      <a href={links.contact}>{isEnglish ? "Request a quotation" : "Solicitar orçamento"}</a>
     </nav>
 
     <nav class="footer-column footer-explore" aria-label={isEnglish ? "Explore HMATIAS" : "Explorar HMATIAS"}>
       <h2>{isEnglish ? "Explore" : "Explorar"}</h2>
       <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
+      <a href={links.projects}>{isEnglish ? "Projects" : "Projetos"}</a>
+      <a href={isEnglish ? "/en/works-catalogue/" : company.worksCatalogueUrl}>{isEnglish ? "Works Catalogue" : "Catálogo de Obras"}</a>
       <a href={isEnglish ? "/en/source-ao/" : company.sourceAoUrl}>SOURCE AO</a>
       <a href={links.blog}>{isEnglish ? "Blog · Business perspectives" : "Blog · Perspetivas empresariais"}</a>
-      <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
+      <a href={links.smart}>Smart RFQ</a>
     </nav>
 
     <section class="footer-column footer-contacts" aria-labelledby="footer-contact-heading">
       <h2 id="footer-contact-heading">{isEnglish ? "Contact and location" : "Contacto e localização"}</h2>
       <a href={company.telephoneUri}>{company.phone}</a>
-      <a class="footer-icon-link footer-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? "Contact HMATIAS on WhatsApp" : "Contactar a HMATIAS pelo WhatsApp"}>
-        <img src={whatsappIcon.src} width="26" height="26" alt="" aria-hidden="true" />
-      </a>
       <a href={"mailto:" + company.commercialEmail}>{company.commercialEmail}</a>
       <a href={"mailto:" + company.institutionalEmail}>{company.institutionalEmail}</a>
       <address>{company.address}</address>
+      <a href={links.contact}>{isEnglish ? "Request a quotation" : "Solicitar orçamento"}</a>
       <div class="footer-socials" aria-label={isEnglish ? "Social media" : "Redes sociais"}>
+        <a class="footer-icon-link footer-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? "Contact HMATIAS on WhatsApp" : "Contactar a HMATIAS pelo WhatsApp"}>
+          <img src={whatsappIcon.src} width="26" height="26" alt="" aria-hidden="true" />
+        </a>
         <a class="footer-icon-link" href={company.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram HMATIAS">
           <img src={instagramIcon.src} width="26" height="26" alt="" aria-hidden="true" />
         </a>
