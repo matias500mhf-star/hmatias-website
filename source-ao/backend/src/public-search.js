@@ -73,7 +73,8 @@ export async function publicSearch(request,env){
       ORDER BY oo.verified_at DESC
       LIMIT 1
     )
-    WHERE ${itemSearchClause}
+    WHERE i.public_visible=1 AND i.id NOT IN ('item-formaldehyde')
+      AND ${itemSearchClause}
     ORDER BY CASE o.verification_status
       WHEN 'in_stock_confirmed' THEN 1
       WHEN 'supplier_confirmed' THEN 2

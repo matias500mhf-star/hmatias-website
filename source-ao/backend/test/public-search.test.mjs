@@ -59,17 +59,20 @@ test('item with no approved observation remains discovered',()=>{
 test('public catalogue search matches Portuguese plural queries against singular D1 records',async()=>{
   const db=new DatabaseSync(':memory:');
   db.exec(`
-    CREATE TABLE items(id TEXT,name TEXT,category TEXT,specification TEXT,unit TEXT,search_text TEXT);
+    CREATE TABLE items(id TEXT,name TEXT,category TEXT,specification TEXT,unit TEXT,search_text TEXT,public_visible INTEGER);
     CREATE TABLE suppliers(id TEXT,location TEXT);
     CREATE TABLE observations(id TEXT,supplier_id TEXT,item_id TEXT,approved_at TEXT,location TEXT,
       verification_status TEXT,verified_at TEXT,expires_at TEXT,source_type TEXT);
     CREATE TABLE service_providers(service_category TEXT,last_verified_at TEXT,search_text TEXT,location TEXT);
   `);
-  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?)').run(
-    'item-diamond','Disco diamantado 115 mm','diamond-tools','115 mm · segmento turbo','un','disco diamantado 115mm synvor'
+  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run(
+    'item-diamond','Disco diamantado 115 mm','diamond-tools','115 mm · segmento turbo','un','disco diamantado 115mm synvor',1
   );
-  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?)').run(
-    'item-unrelated','Disco de corte 115 mm','tools-equipment','115 mm','un','disco corte 115mm'
+  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run(
+    'item-unrelated','Disco de corte 115 mm','tools-equipment','115 mm','un','disco corte 115mm',1
+  );
+  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run(
+    'item-private','Disco diamantado 115 mm — rascunho','diamond-tools','Registo privado','un','disco diamantado 115mm synvor',0
   );
   const adapter={
     prepare(sql){
