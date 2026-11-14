@@ -58,7 +58,7 @@ test('item with no approved observation remains discovered',()=>{
 });
 
 
-test('public search resolves diamond tools from canonical catalogue for plural Portuguese queries',async()=>{
+test('public search resolves exact Carbodiam 115 mm references without implying Luanda stock',async()=>{
   const db=new DatabaseSync(':memory:');
   db.exec(`
     CREATE TABLE items(id TEXT,name TEXT,category TEXT,specification TEXT,unit TEXT,search_text TEXT,public_visible INTEGER);
@@ -67,24 +67,45 @@ test('public search resolves diamond tools from canonical catalogue for plural P
       verification_status TEXT,verified_at TEXT,expires_at TEXT,source_type TEXT);
     CREATE TABLE service_providers(service_category TEXT,last_verified_at TEXT,search_text TEXT,location TEXT);
   `);
-  const item=masterCatalog.items.find(row=>row.id==='item-diamond-tools');
-  assert.ok(item,'diamond tools family must exist in canonical source catalogue');
-  const searchText=normalizeSearch([item.name,item.name_pt,item.specification,...item.aliases,...item.keywords].join(' '));
-  assert.match(searchText,/115mm/,'canonical search index must use same dimension token as API');
-  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run(item.id,item.name,item.category,item.specification,'un',searchText,1);
-  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run('item-private','Disco diamantado privado','diamond-tools','Registo privado','un',searchText,0);
+  const products=masterCatalog.items.filter(row=>row.id.startsWith('item-carbodiam-'));
+  assert.equal(products.length,3,'the canonical catalogue must contain the three published 115 mm references');
+  for(const item of [...products,masterCatalog.items.find(row=>row.id==='item-diamond-tools')]){
+    assert.ok(item);
+    const searchText=normalizeSearch([item.name,item.name_pt,item.specification,...item.aliases,...item.keywords].join(' '));
+    db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run(item.id,item.name,item.category,item.specification,'un',searchText,1);
+  }
+  db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run('item-private','Disco diamantado privado','diamond-tools','Registo privado','un','discos diamantados 115mm 9193',0);
+  db.prepare('INSERT INTO suppliers VALUES(?,?)').run('sup-synvor-industrial','Portugal');
+  for(const item of products){
+    db.prepare('INSERT INTO observations VALUES(?,?,?,?,?,?,?,?,?)').run(
+      'obs-'+item.id,'sup-synvor-industrial',item.id,'2026-11-14T12:00:00+01:00','Portugal',
+      'source_checked','2026-11-14T12:00:00+01:00','2026-11-21T12:00:00+01:00','supplier_official_channel'
+    );
+  }
   const adapter={
     prepare(sql){
       return {bind(...values){return {async all(){return {results:db.prepare(sql).all(...values)}}};}};
     }
   };
-  const response=await publicSearch(new Request('https://api.test/api/search?q=discos%20diamantados%20115%20mm&location=Luanda'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
-  const body=await response.json();
-  assert.equal(response.status,200);
-  assert.deepEqual(body.results.map(row=>row.id),['item-diamond-tools']);
-  assert.equal(body.results[0].status,'discovered');
-  assert.equal(body.results[0].category,'diamond-tools');
-  for(const key of ['supplier','price','quantity_reported']) assert.equal(Object.hasOwn(body.results[0],key),false);
+  const luanda=await publicSearch(new Request('https://api.test/api/search?q='+encodeURIComponent('discos diamantados 115 mm')+'&location=Luanda'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
+  const localBody=await luanda.json();
+  const expectedIds=products.map(x=>x.id).sort();
+  const matchedIds=localBody.results.filter(x=>expectedIds.includes(x.id)).map(x=>x.id).sort();
+  assert.deepEqual(matchedIds,expectedIds);
+  assert.ok(localBody.results.some(row=>row.id==='item-diamond-tools'));
+  for(const row of localBody.results.filter(x=>expectedIds.includes(x.id))){
+    assert.equal(row.status,'discovered','Portugal catalogue records must not imply stock in Luanda');
+    for(const key of ['supplier','price','quantity_reported','evidence_reference']) assert.equal(Object.hasOwn(row,key),false);
+  }
+  const exact=await publicSearch(new Request('https://api.test/api/search?q=9193&location=Portugal'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
+  const exactBody=await exact.json();
+  const pantera=exactBody.results.find(row=>row.id==='item-carbodiam-pantera-115');
+  assert.ok(pantera,'factory reference 9193 must resolve to the exact PANTERA product');
+  assert.equal(pantera.status,'source_checked');
+  assert.equal(pantera.verification.source_type,'supplier_official_channel');
+  assert.equal(pantera.verification.verified_at,'2026-11-14T12:00:00+01:00');
+  assert.equal(Object.hasOwn(pantera,'supplier'),false);
+  assert.equal(Object.hasOwn(pantera,'price'),false);
   for(const query of ['coroas diamantadas','copos de desbaste diamantados']){
     const followUp=await publicSearch(new Request('https://api.test/api/search?q='+encodeURIComponent(query)+'&location=Luanda'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
     const followUpBody=await followUp.json();
