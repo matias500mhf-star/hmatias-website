@@ -26,6 +26,24 @@ assert.match(html, /Voltar ao topo/, "Footer back-to-top link is missing");
 assert.match(html, /mailto:geral@comercialhmatiasps\.com/, "Footer commercial mail link is missing");
 assert.match(html, /tel:\+244948806673/, "Footer telephone link is missing");
 assert.match(html, /SOURCE AO/, "Source AO footer link is missing");
+const publicSourceAoCatalogPath = join(outDir, "api", "source-ao", "catalog.json");
+assert.ok(existsSync(publicSourceAoCatalogPath), "Sanitised static SOURCE AO catalogue endpoint must be generated");
+const publicSourceAoCatalog = JSON.parse(readFileSync(publicSourceAoCatalogPath, "utf8"));
+assert.equal(publicSourceAoCatalog.version, "1.0", "Static public catalogue version must match the reviewed release");
+assert.equal(publicSourceAoCatalog.items.length, 135, "Static public catalogue must include all 135 approved public entries");
+assert.equal(publicSourceAoCatalog.items.filter((item) => item.id.startsWith("item-carbodiam-sku-")).length, 43,
+  "Static public catalogue must include all 43 exact Carbodiam SKU references");
+assert.ok(!publicSourceAoCatalog.items.some((item) => item.id === "item-formaldehyde"),
+  "Restricted chemical item must remain excluded from the public catalogue");
+const publicCatalogueItemKeys = new Set(["id", "name", "aliases", "category", "subcategory", "specification", "keywords", "name_pt"]);
+for (const item of publicSourceAoCatalog.items) {
+  for (const key of Object.keys(item)) {
+    assert.ok(publicCatalogueItemKeys.has(key), `Unapproved field ${key} in static public catalogue item ${item.id}`);
+  }
+}
+assert.match(publicSourceAoCatalog.public_rule, /Prices, suppliers, stock, availability and internal commercial data are not included/,
+  "Static public catalogue must declare its privacy boundary");
+
 const sourceAoLanding = readFileSync(join(outDir, "source-ao", "index.html"), "utf8");
 assert.ok(sourceAoLanding.includes('href="/source-ao/radar/"'), "SOURCE AO landing page must link to the opportunity Radar");
 assert.ok(sourceAoLanding.includes('href="/source-ao/parceiros/"'), "SOURCE AO landing page must link to the partner application");
