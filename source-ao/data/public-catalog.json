@@ -1,6 +1,6 @@
 {
-  "version": "0.6",
-  "updated_at": "2026-09-27T09:15:00+01:00",
+  "version": "0.7",
+  "updated_at": "2026-11-14",
   "items": [
     {
       "id": "item-construction-general",
@@ -133,6 +133,76 @@
         "industrial"
       ],
       "name_pt": "Ferramentas e equipamentos"
+    },
+    {
+      "id": "item-diamond-tools",
+      "name": "Diamond cutting, drilling and grinding tools",
+      "aliases": [
+        "disco diamantado",
+        "discos diamantados",
+        "disco diamantado 115 mm",
+        "discos diamantados 115 mm",
+        "disco de diamante",
+        "discos de diamante",
+        "serra diamantada",
+        "serras diamantadas",
+        "coroa diamantada",
+        "coroas diamantadas",
+        "broca diamantada",
+        "brocas diamantadas",
+        "copos de desbaste diamantados",
+        "copo diamantado",
+        "segmentos de desbaste diamantados",
+        "ferramenta diamantada",
+        "ferramentas diamantadas",
+        "rebolos diamantados",
+        "polimento diamantado",
+        "diamond disc",
+        "diamond discs",
+        "diamond blade",
+        "diamond blades",
+        "diamond core bit",
+        "diamond core bits",
+        "diamond drilling crown",
+        "diamond drilling crowns",
+        "diamond grinding cup",
+        "diamond grinding cups",
+        "diamond polishing resin",
+        "Carbodiam",
+        "SAMEDIA"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "cutting-drilling-grinding",
+      "specification": "Family of diamond tools for cutting, core drilling, grinding and polishing. The published SYNVOR catalogue includes Carbodiam and SAMEDIA ranges for concrete, asphalt, natural stone and ceramic applications, with model-dependent diameters and machine interfaces. Specify material, application, diameter, machine/model, bore or connection, wet/dry operation and quantity. Exact reference, stock, price and delivery lead time to Angola require direct commercial confirmation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "SAMEDIA",
+        "diamond tools",
+        "cutting discs",
+        "diamond discs",
+        "core drilling",
+        "drilling crowns",
+        "grinding cups",
+        "polishing resins",
+        "concrete",
+        "reinforced concrete",
+        "asphalt",
+        "natural stone",
+        "ceramic",
+        "porcelain",
+        "marble",
+        "granite",
+        "floor saw",
+        "wall saw",
+        "angle grinder",
+        "floor grinder",
+        "115 mm",
+        "coroas diamantadas",
+        "desbaste",
+        "polimento"
+      ],
+      "name_pt": "Ferramentas diamantadas para corte, perfuração e desbaste"
     },
     {
       "id": "item-pvc-polymer",
@@ -909,6 +979,26 @@
         "workwear",
         "consumíveis industriais",
         "consumiveis industriais"
+      ]
+    },
+    {
+      "id": "diamond-tools",
+      "name_en": "Diamond tools",
+      "name_pt": "Ferramentas diamantadas",
+      "aliases": [
+        "disco diamantado",
+        "discos diamantados",
+        "disco de diamante",
+        "diamond disc",
+        "diamond discs",
+        "diamond blade",
+        "coroa diamantada",
+        "coroas diamantadas",
+        "diamond core bit",
+        "ferramenta diamantada",
+        "ferramentas diamantadas",
+        "Carbodiam",
+        "SAMEDIA"
       ]
     }
   ],
