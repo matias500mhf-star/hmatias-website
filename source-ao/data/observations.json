@@ -1162,7 +1162,7 @@
     {
       "id": "obs-synvor-neutre-pantera-neutre-125-ref15449-15449-20261114",
       "supplier_id": "sup-synvor-industrial",
-      "item_id": "item-carbodiam-sku-neutre-pantera-neutre-125-ref15449-ref-15449",
+      "item_id": "item-carbodiam-sku-neutre-pantera-neutre-125-ref-15449",
       "observed_at": "2026-11-14T12:00:00+01:00",
       "verified_at": "2026-11-14T12:00:00+01:00",
       "source_type": "supplier_official_channel",
@@ -1175,7 +1175,7 @@
     {
       "id": "obs-synvor-neutre-pantera-neutre-125-ref20435-20435-20261114",
       "supplier_id": "sup-synvor-industrial",
-      "item_id": "item-carbodiam-sku-neutre-pantera-neutre-125-ref20435-ref-20435",
+      "item_id": "item-carbodiam-sku-neutre-pantera-neutre-125-alt-ref-20435",
       "observed_at": "2026-11-14T12:00:00+01:00",
       "verified_at": "2026-11-14T12:00:00+01:00",
       "source_type": "supplier_official_channel",
