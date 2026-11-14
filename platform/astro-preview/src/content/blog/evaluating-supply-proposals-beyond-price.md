@@ -4,6 +4,10 @@ description: "A method for comparing technical compliance, total cost, lead time
 pubDate: 2026-11-13
 category: "Procurement and Supply"
 author: "HMATIAS Editorial Team"
+coverImage: "https://images.unsplash.com/photo-1764835994645-3faa2c40f708?auto=format&fit=crop&w=1440&q=82"
+coverAlt: "Illustrative photograph of industrial machinery inside a production facility."
+photoCredit: "xing bowen"
+photoCreditUrl: "https://unsplash.com/photos/industrial-machinery-in-a-large-factory-setting-mMgC9U15XR0"
 readingMinutes: 5
 contentType: "guide"
 language: "en"
