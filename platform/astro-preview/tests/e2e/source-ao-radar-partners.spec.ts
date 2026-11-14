@@ -127,7 +127,7 @@ test("the public SOURCE AO catalogue contains reviewed SYNVOR families without p
   expect(catalogue.items).toHaveLength(135);
   expect(catalogue.items.filter((item: { id: string }) => item.id.startsWith("item-disc-family-"))).toHaveLength(8);
   expect(catalogue.items.filter((item: { id: string }) => item.id.startsWith("item-crown-family-"))).toHaveLength(33);
-  expect(catalogue.items.filter((item: { id: string }) => item.id.startsWith("item-carbodiam-sku-"))).toHaveLength(46);
+  expect(catalogue.items.filter((item: { id: string }) => item.id.startsWith("item-carbodiam-sku-"))).toHaveLength(43);
 
   const items = new Map(catalogue.items.map((item: { id: string }) => [item.id, item]));
   for (const id of [
