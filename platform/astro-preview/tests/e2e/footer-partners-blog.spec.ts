@@ -127,7 +127,7 @@ for (const homepage of homepageRoutes) {
     await expect(operations.getByRole("link", { name: "HMATIAS Supply" })).toBeVisible();
     await expect(operations.getByRole("link", { name: "Business Services" })).toBeVisible();
     await expect(page.locator(".footer-explore").getByRole("link", { name: "Smart RFQ" })).toHaveAttribute("href", homepage.language === "en" ? "/en/source-ao/smart-rfq/" : "/source-ao/smart-rfq/");
-    await expect(page.locator(".footer-explore").getByRole("link", { name: homepage.language === "en" ? "Projects" : "Projetos" })).toHaveAttribute("href", homepage.language === "en" ? "/en/#projects" : "/#projetos");
+    await expect(page.locator(".footer-explore").getByRole("link", { name: homepage.language === "en" ? "Projects" : "Projetos" })).toHaveAttribute("href", homepage.language === "en" ? "/en/integrated-yard/" : "/estaleiro/");
     await expect(page.locator(".footer-explore").getByRole("link", { name: /Works Catalogue|Catálogo de Obras/ })).toBeVisible();
 
     await expect(whatsapp).toHaveAttribute("aria-label", /WhatsApp/);
