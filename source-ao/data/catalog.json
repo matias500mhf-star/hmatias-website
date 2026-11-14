@@ -815,7 +815,6 @@
     {
       "id": "item-carbodiam-pantera-115",
       "name": "Carbodiam PANTERA diamond cutting disc Ø115 mm — Ref. 9193",
-      "name_pt": "Disco diamantado Carbodiam PANTERA Ø115 mm — Ref. 9193",
       "aliases": [
         "disco diamantado 115 mm",
         "discos diamantados 115 mm",
@@ -841,12 +840,12 @@
         "rebarbadora",
         "diamond cutting disc",
         "disco de corte diamantado"
-      ]
+      ],
+      "name_pt": "Disco diamantado Carbodiam PANTERA Ø115 mm — Ref. 9193"
     },
     {
       "id": "item-carbodiam-pantera-neutre-115",
       "name": "Carbodiam PANTERA NEUTRE diamond cutting disc Ø115 mm — Ref. 15448",
-      "name_pt": "Disco diamantado Carbodiam PANTERA NEUTRE Ø115 mm — Ref. 15448",
       "aliases": [
         "disco diamantado 115 mm",
         "discos diamantados 115 mm",
@@ -872,12 +871,12 @@
         "rebarbadora",
         "diamond cutting disc",
         "disco de corte diamantado"
-      ]
+      ],
+      "name_pt": "Disco diamantado Carbodiam PANTERA NEUTRE Ø115 mm — Ref. 15448"
     },
     {
       "id": "item-carbodiam-crack-chaser-115",
       "name": "Carbodiam CRACK CHASER diamond cutting disc Ø115 mm — Ref. 12000",
-      "name_pt": "Disco diamantado Carbodiam CRACK CHASER Ø115 mm — Ref. 12000",
       "aliases": [
         "disco diamantado 115 mm",
         "discos diamantados 115 mm",
@@ -904,7 +903,8 @@
         "crack chasing",
         "diamond cutting disc",
         "disco de corte diamantado"
-      ]
+      ],
+      "name_pt": "Disco diamantado Carbodiam CRACK CHASER Ø115 mm — Ref. 12000"
     }
   ],
   "taxonomy": [
