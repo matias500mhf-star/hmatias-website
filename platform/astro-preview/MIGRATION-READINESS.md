@@ -55,7 +55,7 @@ Estas ligações foram mantidas intencionalmente para não substituir formulári
 | Candidaturas de parceiros SOURCE AO | `/source-ao/partner-application.html` no domínio oficial; preview Astro em `/source-ao/parceiros/` e `/en/source-ao/partners/` |
 | Privacidade e termos específicos do SOURCE AO | `/source-ao/privacy.html` e `/source-ao/terms.html` no domínio oficial |
 
-Os formulários dependem de integrações de receção segura, consentimento, Cloudflare Turnstile, Cloudflare D1 e, conforme o fluxo, notificações. A migração só deve ocorrer depois de testar origem permitida pela API, consentimento, registo, referência de confirmação, tratamento de falhas e canal manual alternativo.
+**Formulário principal de contacto:** encontra-se operacional no website oficial. O proprietário confirmou que os pedidos submetidos estão a ser recebidos por e-mail através do Resend. Esta integração não é uma funcionalidade por construir nem um bloqueio de receção; não deve ser substituída ou alterada durante a modernização. Antes de migrar o publisher, deve preservar-se o fluxo Resend e confirmar a entrega no ambiente de destino, sem expor chaves ou credenciais.\n\nOs fluxos de Business Services, agendamento e SOURCE AO têm requisitos próprios. A validação desses percursos deve cobrir origem permitida, consentimento, registo, referência de confirmação, notificações e tratamento de falhas. A confirmação do formulário principal via Resend não é usada como prova de que todos os restantes fluxos estão validados.
 
 ## 3. Páginas e funções ainda não recriadas
 
@@ -87,7 +87,7 @@ Não remover nem desindexar estas páginas antes de decidir o destino de cada um
 
 - Cookiebot e bloqueio de tags conforme o consentimento.
 - Google Tag Manager e GA4, incluindo validação de eventos e exclusão de dados pessoais.
-- Website Lead API, Cloudflare Turnstile e Cloudflare D1 para contacto, Business Services e agendamento.
+- Formulário principal de contacto: manter a integração Resend já operacional e confirmar a continuidade da entrega de e-mails no publisher de destino. Não recriar nem substituir o formulário oficial nesta fase.\n- Business Services e agendamento: validar separadamente Website Lead API, Cloudflare Turnstile, Cloudflare D1 e notificações, conforme o fluxo actual.
 - SOURCE AO API, RFQ multiartigo, referência privada, acompanhamento e respostas de erro.
 - Assistente virtual e ponte API atualmente utilizada.
 - Formulários manuais de contacto via WhatsApp e e-mail como alternativa.
@@ -174,7 +174,7 @@ No mesmo head foram concluídos com sucesso:
 ### Bloqueios ainda abertos para produção
 
 1. Validar a equivalência editorial e funcional de HMATIAS Clean, das quatro páginas especializadas, KARTA e Estaleiro Integrado; preservar agendamento/booking até existir substituto equivalente, sem inventar conteúdo ou substituir funções por demonstrações.
-2. Testar de ponta a ponta o formulário de contacto, Business Services, agendamento, RFQ operacional SOURCE AO, consentimento, tracking, notificações e alternativa manual.
+2. O formulário principal de contacto já está operacional e a receber pedidos por e-mail através do Resend, conforme confirmação do proprietário; não é um bloqueio de implementação. Antes da migração, preservar e validar essa entrega no publisher de destino. Continuam pendentes os testes separados de Business Services, agendamento, RFQ operacional SOURCE AO, consentimento, tracking, notificações e alternativas manuais.
 3. Obter exportação do Search Console e relatório de backlinks/referral traffic; completar a decisão de migração URL a URL.
 4. Executar revisão visual manual desktop/tablet/mobile, navegação integral por teclado e verificação com tecnologias de apoio.
 5. Validar legalmente as políticas e os termos, e confirmar a equivalência bilingue final.
@@ -252,7 +252,7 @@ Os testes backend do ciclo passaram com **172 testes aprovados e zero falhas**, 
 
 ## 11. Estado actualizado do novo design — 14 de novembro de 2026
 
-A revisão de 14 de novembro consolida o protótipo em **58 páginas estáticas bilingues (29 PT-AO e 29 EN)**. A homepage inclui apresentação da empresa, as quatro áreas operacionais, projectos, parceiros, uma secção autónoma do KARTA Wallet e contacto. O rodapé tem quatro colunas responsivas; a coluna operacional mantém exclusivamente Construção, Facilities, Supply e Business Services. A coluna Explorar reúne páginas de identidade, projectos, catálogo, SOURCE AO, Blog, KARTA Wallet · Projecto Alpha e Smart RFQ.
+A revisão de 14 de novembro consolida o protótipo em **58 páginas estáticas bilingues (29 PT-AO e 29 EN)**. A homepage inclui apresentação da empresa, as quatro áreas operacionais, projectos, parceiros, uma secção autónoma do KARTA Wallet e contacto. O rodapé tem quatro colunas responsivas; a coluna operacional mantém exclusivamente Construção, Facilities, Supply e Business Services. A coluna Explorar reúne páginas de identidade, projectos, catálogo, SOURCE AO, Blog, KARTA Wallet · Projeto Alpha e Smart RFQ.
 
 A rede de parceiros apresentada no preview inclui Miliart, FRANSGA, D&WOOD, Telewise, SYNVOR Industrial e Kent Offshore. Cinco identidades usam logótipos locais; Telewise é apresentado apenas por nome, sem logótipo. A participação de cada entidade continua condicionada ao âmbito e à confirmação de disponibilidade para cada projecto.
 
@@ -275,4 +275,4 @@ O Blog tem 12 artigos em seis pares PT/EN, com guias técnicos e casos práticos
 
 ### Estado de publicação
 
-O preview permanece isolado e com `noindex,nofollow`. O PR #316 continua Draft e não integrado. Não houve alteração à homepage oficial, ao domínio `comercialhmatiasps.com`, DNS, redirects ou publicação em produção. A revisão humana de desktop/tablet/mobile, a equivalência funcional dos formulários, a aplicação das migrações apenas em staging e a decisão URL-a-URL continuam pendentes antes de qualquer migração.
+O preview permanece isolado e com `noindex,nofollow`. O PR #316 continua Draft e não integrado. Não houve alteração à homepage oficial, ao domínio `comercialhmatiasps.com`, DNS, redirects ou publicação em produção. O formulário principal continua operacional via Resend e deve ser preservado. Permanecem pendentes a revisão humana de desktop/tablet/mobile, a equivalência funcional dos fluxos de Business Services, agendamento e SOURCE AO, a aplicação das migrações apenas em staging e a decisão URL-a-URL antes de qualquer migração.
