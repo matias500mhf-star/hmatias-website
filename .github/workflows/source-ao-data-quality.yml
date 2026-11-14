@@ -58,6 +58,7 @@ jobs:
         run: |
           node --check source-ao/data-engine.js
           node --check source-ao/sourceao.js
+          node --check source-ao/product-catalogue.js
           node --check source-ao/verified-results.js
           node --check source-ao/runtime-config.js
           node --check source-ao/api-client.js
@@ -250,6 +251,8 @@ jobs:
           test -f .staging-web/privacy.html
           test -f .staging-web/terms.html
           test -f .staging-web/data/catalog.json
+          test -f .staging-web/data/hmatias-product-catalog.json
+          test -f .staging-web/data/partner-catalog.json
           test -f .staging-web/rfq.html
           test -f .staging-web/rfq-model.js
           test ! -e .staging-web/backend
