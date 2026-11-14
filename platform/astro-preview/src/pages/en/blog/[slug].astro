@@ -1,0 +1,64 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import { company } from "../../../data/site";
+type Props = { post: CollectionEntry<"blog"> };
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft && data.language === "en");
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props as Props;
+const { Content } = await render(post);
+const dateLabel = post.data.pubDate.toLocaleDateString("en", { day:"2-digit", month:"long", year:"numeric" });
+---
+<BaseLayout title={`${post.data.title} | HMATIAS Blog`} description={post.data.description} lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS BLOG</span><span>{post.data.category.toUpperCase()}</span></div>
+  <SiteHeader />
+  <main class="article-page">
+    <section class="article-hero" aria-labelledby="pages-en-blog-slug-section-1-heading">
+      <nav class="article-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span aria-hidden="true">/</span><a href="/en/blog/">Blog</a><span aria-hidden="true">/</span><span>{post.data.category}</span></nav>
+      <p class="eyebrow"><span class="eyebrow-line"></span> {post.data.category.toUpperCase()}</p>
+      <h1 id="pages-en-blog-slug-section-1-heading">{post.data.title}</h1>
+      <p class="article-deck">{post.data.description}</p>
+      <div class="article-meta"><span>{post.data.author.toUpperCase()}</span><time datetime={post.data.pubDate.toISOString()}>{dateLabel}</time><span>{post.data.readingMinutes} min read</span><span>{post.data.contentType === "case-study" ? "Illustrative case study" : "Technical guide"}</span></div>
+    </section>
+    <article class="article-content">
+      <Content />
+      <section class="article-cta" aria-labelledby="pages-en-blog-slug-section-2-heading">
+        <div><p class="section-kicker">STRUCTURE YOUR REQUEST</p><h2 id="pages-en-blog-slug-section-2-heading">Several items to quote?</h2><p>The SOURCE AO Smart RFQ flow supports up to 20 product lines in one request, with quantities, specifications and delivery requirements.</p></div>
+        <a class="button button-light" href={company.sourceAoRfqEnUrl}>Open English Smart RFQ <span aria-hidden="true">↗</span></a>
+      </section>
+    </article>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+</BaseLayout>
+<style>
+.article-hero { padding:clamp(60px,8vw,104px) var(--hm-gutter) 54px; color:#fff; background:var(--hm-navy); }
+.article-breadcrumb { display:flex; flex-wrap:wrap; gap:11px; margin-bottom:42px; color:#b9d8ed; font-size:10px; }
+.article-breadcrumb a:hover { color:#fff; }
+.article-hero h1 { max-width:920px; margin:0; font-size:clamp(42px,6vw,78px); font-weight:550; line-height:1.02; letter-spacing:-.06em; }
+.article-deck { max-width:720px; margin:25px 0 0; color:#dceafa; font-size:15px; line-height:1.85; }
+.article-meta { display:flex; flex-wrap:wrap; gap:16px 32px; margin-top:37px; padding-top:17px; border-top:1px solid #ffffff2c; color:#b9d8ed; font-family:var(--hm-mono); font-size:9px; letter-spacing:.08em; }
+.article-content { max-width:860px; margin:0 auto; padding:clamp(50px,7vw,88px) 28px; }
+.article-content p { color:var(--hm-muted); font-size:14px; line-height:1.95; }
+.article-content > p:first-of-type { margin:0 0 48px; color:var(--hm-ink); font-size:18px; line-height:1.8; }
+.article-content h2 { margin:0 0 16px; color:var(--hm-ink); font-size:clamp(22px,3vw,31px); font-weight:600; line-height:1.2; letter-spacing:-.04em; }
+.article-content section { margin:0 0 42px; }
+.article-content table { width:100%; margin:22px 0 32px; border-collapse:collapse; text-align:left; }
+.article-content th,.article-content td { padding:13px 14px; border-bottom:1px solid var(--hm-line); font-size:12px; line-height:1.6; }
+.article-content th { color:var(--hm-blue); font-weight:700; }
+.article-content td { color:var(--hm-muted); }
+.article-content a:not(.button) { color:var(--hm-blue); text-decoration:underline; text-underline-offset:3px; }
+.article-cta { display:flex; justify-content:space-between; align-items:center; gap:30px; margin-top:58px; padding:clamp(26px,4vw,42px); color:#fff; background:var(--hm-navy); }
+.article-cta h2 { margin:17px 0 0; color:#fff; }
+.article-cta p:not(.section-kicker) { max-width:520px; color:#dceafa; font-size:12px; line-height:1.8; }
+.article-cta .section-kicker { color:#9ecff2; }
+@media(max-width:650px) {
+  .article-content { padding-inline:22px; }
+  .article-content table { display:block; overflow-x:auto; }
+  .article-cta { flex-direction:column; align-items:flex-start; }
+}
+</style>

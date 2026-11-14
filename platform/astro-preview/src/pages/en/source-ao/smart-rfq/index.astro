@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import SourceAoRfqForm from "../../../../components/SourceAoRfqForm.astro";
+
+const candidateApiBase = String(import.meta.env.PUBLIC_SOURCE_AO_API_BASE ?? "").trim();
+let sourceAoApiBase = "";
+try {
+  const parsed = new URL(candidateApiBase);
+  if (parsed.protocol === "https:" && parsed.hostname.toLowerCase().includes("staging")) {
+    sourceAoApiBase = parsed.origin;
+  }
+} catch {
+  sourceAoApiBase = "";
+}
+---
+<BaseLayout
+  title="Quotation Request / RFQ · SOURCE AO"
+  description="Submit a multi-item sourcing request with specifications, quantities, destination and timing. HMATIAS verifies supply options before preparing a proposal."
+  lang="en"
+>
+  <div class="source-rfq-preview-bar">
+    <a id="sourceAoPreviewHomeLink" href="/en/source-ao/" aria-label="Back to SOURCE AO">SOURCE AO</a>
+    <span>SOURCING REQUEST · HMATIAS</span>
+  </div>
+  {!sourceAoApiBase && <p class="source-rfq-stage-note" role="status">Isolated preview: online registration will only be enabled when the staging API is configured. This page does not submit requests to the production database.</p>}
+  <SourceAoRfqForm apiBase={sourceAoApiBase} />
+</BaseLayout>
+<style>
+.source-rfq-preview-bar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:12px clamp(16px,5vw,72px);background:#061827;color:#c8d7e4;font-size:10px;font-weight:750;letter-spacing:.13em}
+.source-rfq-preview-bar a{color:#fff;text-decoration:none}
+.source-rfq-stage-note{margin:0;padding:12px clamp(16px,5vw,72px);background:#fff7e8;border-bottom:1px solid #ead8b8;color:#654a1d;font-size:12px;line-height:1.6}
+@media(max-width:520px){.source-rfq-preview-bar{align-items:flex-start;flex-direction:column;gap:5px}}
+</style>

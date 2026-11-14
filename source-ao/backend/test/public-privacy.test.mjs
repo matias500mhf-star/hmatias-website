@@ -26,14 +26,15 @@ function assertPublic(value){
 function fixture(t){
   const db=new DatabaseSync(':memory:');t.after(()=>db.close());
   db.exec(`
-    CREATE TABLE items(id TEXT,name TEXT,category TEXT,specification TEXT,unit TEXT,search_text TEXT);
+    CREATE TABLE items(id TEXT,name TEXT,category TEXT,specification TEXT,unit TEXT,search_text TEXT,name_pt TEXT,keywords_json TEXT NOT NULL DEFAULT '[]',public_visible INTEGER NOT NULL DEFAULT 0,management_mode TEXT NOT NULL DEFAULT 'seed');
     CREATE TABLE suppliers(id TEXT,name TEXT,location TEXT,website TEXT,public_status TEXT,last_verified_at TEXT,categories_json TEXT,capabilities_json TEXT,phone TEXT,whatsapp TEXT,email TEXT);
     CREATE TABLE observations(id TEXT,item_id TEXT,supplier_id TEXT,approved_at TEXT,verification_status TEXT,quantity_reported REAL,price_reported REAL,currency TEXT,location TEXT,verified_at TEXT,expires_at TEXT,source_type TEXT);
     CREATE TABLE service_providers(id TEXT,name TEXT,service_category TEXT,specialties_json TEXT,location TEXT,website TEXT,verification_status TEXT,last_verified_at TEXT,search_text TEXT);
   `);
   const now=new Date().toISOString(),future=new Date(Date.now()+3600000).toISOString();
-  db.prepare('INSERT INTO items VALUES (?,?,?,?,?,?)').run('item-packaging-strapping','PP strapping','industrial-supply','9 mm','roll','cinta pp 9mm');
-  db.prepare('INSERT INTO items VALUES (?,?,?,?,?,?)').run('item-unknown','PP strapping 12 mm','industrial-supply','12 mm','roll','cinta pp 12mm');
+  db.prepare('INSERT INTO items(id,name,category,specification,unit,search_text,public_visible) VALUES (?,?,?,?,?,?,?)').run('item-packaging-strapping','PP strapping','industrial-supply','9 mm','roll','cinta pp 9mm',1);
+  db.prepare('INSERT INTO items(id,name,category,specification,unit,search_text,public_visible) VALUES (?,?,?,?,?,?,?)').run('item-unknown','PP strapping 12 mm','industrial-supply','12 mm','roll','cinta pp 12mm',1);
+  db.prepare('INSERT INTO items(id,name,category,specification,unit,search_text,public_visible) VALUES (?,?,?,?,?,?,?)').run('item-private','Disco diamantado 115 mm — rascunho','diamond-tools','115 mm','un','disco diamantado 115mm synvor',0);
   for(const id of ['private-supplier-1','private-supplier-2']) db.prepare('INSERT INTO suppliers VALUES (?,?,?,?,?,?,?,?,?,?,?)').run(id,secretName,'Luanda',secretUrl,'source_checked',now,'["industrial-supply"]','["polypropylene packaging"]','123456789','123456789',secretEmail);
   db.prepare('INSERT INTO observations VALUES (?,?,?,?,?,?,?,?,?,?,?,?)').run('private-observation','item-packaging-strapping','private-supplier-1',now,'in_stock_confirmed',15,123456789,'AOA','Luanda',now,future,'direct_supplier_confirmation');
   for(const id of ['private-service-1','private-service-2']) db.prepare('INSERT INTO service_providers VALUES (?,?,?,?,?,?,?,?,?)').run(id,secretName,'hvac','["AVAC"]','Luanda',secretUrl,'supplier_confirmed',now,'manutencao avac');
@@ -59,6 +60,15 @@ test('current and legacy search routes conceal supplier identity and cost, prese
     assert.equal(data.results[0].specification,'9 mm');
     assert.ok(data.results[0].verified_at&&data.results[0].expires_at);
   }
+});
+
+test('private catalog records never appear in public search even when every search term matches',async t=>{
+  const env=fixture(t);
+  const response=await router.fetch(new Request('https://source.example/api/search?q=disco%20diamantado%20115mm&location=Luanda'),env);
+  assert.equal(response.status,200);
+  const data=await response.json();
+  assertPublic(data);
+  assert.deepEqual(data.results,[]);
 });
 
 test('unconfirmed products do not disclose a supplier shortlist; service matches aggregate by category',async t=>{

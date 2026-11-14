@@ -1,0 +1,243 @@
+---
+import { Picture } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "./SiteHeader.astro";
+import SiteFooter from "./SiteFooter.astro";
+import taurusPineImage from "../../../../images/products/taurus-pine-gel-t563p-official.jpg";
+
+interface Props {
+  lang?: "pt-AO" | "en";
+}
+const { lang = "pt-AO" } = Astro.props;
+const isEn = lang === "en";
+const privacyHref = isEn ? "/en/privacy/" : "/privacidade/";
+---
+<BaseLayout
+  title={isEn ? "HMATIAS Clean | Professional Cleaning and Hygiene Products" : "HMATIAS Clean | Produtos Profissionais de Limpeza e Higiene"}
+  description={isEn
+    ? "Professional cleaning and hygiene product references in Angola. Search the Taurus catalogue and prepare a multi-item quotation request for manual review and sending."
+    : "Referências profissionais de limpeza e higiene em Angola. Pesquise o catálogo Taurus e prepare um pedido de cotação com vários artigos para revisão e envio manual."}
+  lang={lang}
+>
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS CLEAN</span><span>{isEn ? "PROFESSIONAL PRODUCT REFERENCES" : "REFERÊNCIAS PROFISSIONAIS DE PRODUTOS"}</span></div>
+  <SiteHeader />
+  <main class="clean-page">
+    <section class="clean-hero" aria-labelledby="clean-hero-heading">
+      <div class="clean-hero-copy">
+        <nav class="clean-breadcrumb" aria-label={isEn ? "Breadcrumb" : "Navegação estrutural"}>
+          <a href={isEn ? "/en/facilities/" : "/facilities/"}>{isEn ? "Facilities & Maintenance" : "Facilities e Manutenção"}</a>
+          <span aria-hidden="true">/</span><span>HMATIAS Clean</span>
+        </nav>
+        <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS CLEAN</p>
+        <h1 id="clean-hero-heading">{isEn ? "Cleaning and hygiene products for business supply." : "Produtos de limpeza e higiene para fornecimento empresarial."}</h1>
+        <p class="clean-lead">{isEn
+          ? "Product references and consumables for companies and facilities. Identify the item, required quantity, format and delivery location to request a quotation."
+          : "Referências de produtos e consumíveis para empresas e instalações. Identifique o artigo, a quantidade, o formato e o local de entrega para solicitar cotação."}</p>
+        <div class="clean-hero-actions">
+          <a class="button button-light" href="#products">{isEn ? "Browse products" : "Consultar produtos"} <span aria-hidden="true">↓</span></a>
+          <a class="text-link text-link-light" href="#quotation">{isEn ? "Prepare a request" : "Preparar pedido"} <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="clean-hero-meta">
+          <span>{isEn ? "Supply on request" : "Fornecimento sob consulta"}</span>
+          <span>{isEn ? "Prices and stock confirmed before quotation" : "Preço e stock confirmados antes da cotação"}</span>
+        </div>
+      </div>
+      <aside class="clean-hero-panel" aria-label={isEn ? "Supply conditions" : "Condições de fornecimento"}>
+        <span class="clean-panel-label">{isEn ? "COMMERCIAL CONDITIONS" : "CONDIÇÕES COMERCIAIS"}</span>
+        <strong>{isEn ? <>Reference first.<br />Confirmation before supply.</> : <>Referência primeiro.<br />Confirmação antes do fornecimento.</>}</strong>
+        <p>{isEn
+          ? "Pack size, price, availability, lead time and delivery are checked for each request. No stock or price is assumed by this catalogue."
+          : "Formato, preço, disponibilidade, prazo e entrega são verificados em cada pedido. Este catálogo não pressupõe stock nem preços."}</p>
+        <span class="clean-panel-rule"></span>
+        <div><small>HMATIAS</small><small>LUANDA · ANGOLA</small></div>
+      </aside>
+    </section>
+
+    <section class="clean-featured section-pad" id="products" aria-labelledby="clean-featured-heading">
+      <div class="clean-section-heading">
+        <div><p class="section-kicker">01 / {isEn ? "FEATURED REFERENCES" : "REFERÊNCIAS EM DESTAQUE"}</p>
+          <h2 id="clean-featured-heading">{isEn ? "Featured product references." : "Produtos em destaque."}</h2></div>
+        <p>{isEn
+          ? "Photographs support product identification. Prices, pack sizes and availability are confirmed before quotation."
+          : "As fotografias apoiam a identificação dos produtos. Preços, formatos e disponibilidade são confirmados antes da cotação."}</p>
+      </div>
+      <div class="clean-feature-grid">
+        <article class="clean-feature-card">
+          <div class="clean-product-image">
+            <img src="https://www.cosmeticconnection.co.za/cdn/shop/products/123-pine-gel-500ml-6009602763867-1420-33327311978646.jpg?v=1655459672"
+              referrerpolicy="no-referrer" alt={isEn ? "123 Pine Gel 500 ml — reference product photograph" : "123 Pine Gel 500 ml — fotografia de referência do produto"}
+              width="560" height="560" loading="lazy" decoding="async" />
+            <span>{isEn ? "REFERENCE PHOTO · 500 ML" : "FOTOGRAFIA DE REFERÊNCIA · 500 ML"}</span>
+          </div>
+          <div class="clean-feature-content">
+            <div class="clean-product-tags"><span>{isEn ? "MULTIPURPOSE CLEANER" : "LIMPEZA MULTIUSOS"}</span><span>500 ml</span></div>
+            <h3>123 Pine Gel <small>500 ml</small></h3>
+            <p>{isEn
+              ? "Multipurpose gel cleaner for household and professional cleaning. Follow the instructions on the product label."
+              : "Gel de limpeza multiusos para utilização doméstica e profissional. Respeitar as instruções indicadas no rótulo."}</p>
+            <div class="clean-product-status"><span>{isEn ? "Supply on request" : "Fornecimento sob consulta"}</span><span>{isEn ? "Availability to be confirmed" : "Disponibilidade a confirmar"}</span></div>
+            <div class="clean-product-price"><span>{isEn ? "Price" : "Preço"}</span><strong>{isEn ? "On request" : "Sob consulta"}</strong></div>
+            <button class="button button-dark" type="button" data-clean-product="123 Pine Gel 500 ml">{isEn ? "Add to request" : "Adicionar ao pedido"} <span aria-hidden="true">＋</span></button>
+          </div>
+        </article>
+        <article class="clean-feature-card">
+          <div class="clean-product-image clean-product-image-light">
+            <Picture src={taurusPineImage} alt={isEn ? "Taurus Pine Gel T563P — manufacturer product packaging" : "Taurus Pine Gel T563P — embalagem do fabricante"}
+              widths={[360, 520, 680]} sizes="(max-width: 760px) 100vw, 48vw"
+              formats={["avif", "webp"]} fallbackFormat="jpg" quality={84} loading="lazy" decoding="async" />
+            <span>{isEn ? "MANUFACTURER PHOTO · T563P" : "FOTOGRAFIA DO FABRICANTE · T563P"}</span>
+          </div>
+          <div class="clean-feature-content">
+            <div class="clean-product-tags"><span>{isEn ? "PROFESSIONAL CLEANING" : "LIMPEZA PROFISSIONAL"}</span><span>T563P</span></div>
+            <h3>Taurus Pine Gel <small>T563P</small></h3>
+            <p>{isEn
+              ? "All-purpose cleaning gel with pine fragrance and pH 7. Listed pack sizes are 500 g, 1 kg, 5 kg and 20 kg; availability must be confirmed. Follow the manufacturer's dilution and use instructions. Not recommended for food-contact surfaces."
+              : "Gel de limpeza multiusos Taurus T563P, com fragrância a pinho e pH 7. Formatos indicados: 500 g, 1 kg, 5 kg e 20 kg; a disponibilidade deve ser confirmada. Seguir as diluições e instruções do fabricante. Não recomendado para superfícies em contacto com alimentos."}</p>
+            <div class="clean-product-status"><span>{isEn ? "Supply on request" : "Fornecimento sob consulta"}</span><span>{isEn ? "Pack size and stock to be confirmed" : "Formato e stock a confirmar"}</span></div>
+            <div class="clean-product-price"><span>{isEn ? "Price / pack size" : "Preço / formato"}</span><strong>{isEn ? "On request" : "Sob consulta"}</strong></div>
+            <div class="clean-feature-actions">
+              <button class="button button-dark" type="button" data-clean-product="Taurus Pine Gel T563P">{isEn ? "Add to request" : "Adicionar ao pedido"} <span aria-hidden="true">＋</span></button>
+              <a class="clean-manufacturer-link" href="https://www.tmpn.com/contents/en-us/p65055_t563p-pinegel.html" target="_blank" rel="noopener noreferrer">{isEn ? "Manufacturer information" : "Informação do fabricante"} ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="clean-catalog-section section-pad" aria-labelledby="clean-catalog-heading">
+      <div class="clean-section-heading">
+        <div><p class="section-kicker">02 / {isEn ? "TAURUS PROFESSIONAL CATALOGUE" : "CATÁLOGO PROFISSIONAL TAURUS"}</p>
+          <h2 id="clean-catalog-heading">{isEn ? "Search the product catalogue." : "Pesquise o catálogo de produtos."}</h2></div>
+        <p>{isEn
+          ? "The catalogue describes manufacturer references. Pack formats and supply conditions are confirmed individually."
+          : "O catálogo apresenta referências do fabricante. Os formatos e as condições de fornecimento são confirmados individualmente."}</p>
+      </div>
+      <div class="clean-catalog-tools">
+        <label class="clean-search-field" for="clean-catalog-search">
+          <span>{isEn ? "Search by product, code or description" : "Pesquisar por produto, código ou descrição"}</span>
+          <input id="clean-catalog-search" type="search" autocomplete="off" placeholder={isEn ? "E.g. Pine Gel, T563P, floor care" : "Ex.: Pine Gel, T563P, limpeza de pisos"} />
+        </label>
+        <p id="clean-catalog-count" class="clean-catalog-count" aria-live="polite">{isEn ? "Loading catalogue…" : "A carregar catálogo…"}</p>
+      </div>
+      <div id="clean-catalog-tabs" class="clean-catalog-tabs" role="group" aria-label={isEn ? "Product categories" : "Categorias de produtos"}></div>
+      <div id="clean-catalog-results" class="clean-catalog-results" aria-live="polite"></div>
+    </section>
+    <div id="clean-cart-mount"></div>
+
+    <section class="clean-pdf-section" id="manufacturer-catalogue" aria-labelledby="clean-pdf-heading">
+      <div class="clean-pdf-card">
+        <div><p class="section-kicker">03 / {isEn ? "TECHNICAL REFERENCE" : "REFERÊNCIA TÉCNICA"}</p>
+          <h2 id="clean-pdf-heading">{isEn ? "Taurus technical catalogue." : "Catálogo técnico Taurus."}</h2>
+          <p>{isEn
+            ? "Consult the manufacturer's full PDF catalogue for technical categories, references and product descriptions."
+            : "Consulte o catálogo PDF completo do fabricante para conhecer as categorias, referências e descrições técnicas."}</p>
+          <small>{isEn
+            ? "The Taurus name identifies manufacturer products and does not imply exclusive representation, partnership or commercial exclusivity. Supply conditions are confirmed by HMATIAS case by case."
+            : "A referência à Taurus identifica produtos do fabricante e não implica representação exclusiva, parceria ou exclusividade comercial. As condições de fornecimento são confirmadas pela HMATIAS caso a caso."}</small></div>
+        <a class="button button-dark" href="https://www.tmpn.com/resources/taurus-catalogue.pdf" target="_blank" rel="noopener noreferrer">{isEn ? "Open full PDF catalogue" : "Abrir catálogo PDF completo"} <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="clean-quote-section section-pad" id="quotation" aria-labelledby="clean-quote-heading">
+      <div class="clean-quote-layout">
+        <div class="clean-quote-copy">
+          <p class="section-kicker">04 / {isEn ? "QUOTATION REQUEST" : "PEDIDO DE COTAÇÃO"}</p>
+          <h2 id="clean-quote-heading">{isEn ? "Prepare a multi-item request." : "Prepare um pedido com vários artigos."}</h2>
+          <p>{isEn
+            ? "Add the required references to your list, then provide the contact and delivery details. Review the message before sending it through WhatsApp or email."
+            : "Adicione as referências pretendidas à lista e indique os dados de contacto e entrega. Reveja a mensagem antes de a enviar pelo WhatsApp ou e-mail."}</p>
+          <ul><li>{isEn ? "Up to 20 items in one request" : "Até 20 artigos no mesmo pedido"}</li><li>{isEn ? "Pack size and quantity per item" : "Formato e quantidade por artigo"}</li><li>{isEn ? "Stock, price and delivery subject to confirmation" : "Stock, preço e entrega sujeitos a confirmação"}</li></ul>
+          <p class="clean-manual-note">{isEn
+            ? "This form prepares a message in your browser. It does not submit a server request or register an order."
+            : "Este formulário prepara uma mensagem no navegador. Não submete dados a um servidor nem regista uma encomenda."}</p>
+        </div>
+        <form class="clean-quote-form" id="cleanQuoteForm">
+          <div class="clean-form-grid">
+            <label for="clean-name">{isEn ? "Name / company *" : "Nome / empresa *"}<input id="clean-name" name="name" type="text" autocomplete="name" required maxlength="160" placeholder={isEn ? "Name or company" : "Nome ou empresa"} /></label>
+            <label for="clean-client-type">{isEn ? "Client type *" : "Tipo de cliente *"}<select id="clean-client-type" name="clientType" required><option value="">{isEn ? "Select" : "Selecione"}</option><option>{isEn ? "Individual" : "Particular"}</option><option>{isEn ? "Company" : "Empresa"}</option></select></label>
+            <label for="clean-product">{isEn ? "Single product (optional)" : "Produto único (opcional)"}<select id="clean-product" name="product"><option value="">{isEn ? "Select if not using the multi-item list" : "Selecione se não utilizar a lista multiartigo"}</option><option>123 Pine Gel 500 ml</option><option>Taurus Pine Gel — pack size on request</option><option>{isEn ? "Other catalogue product" : "Outro produto do catálogo"}</option></select></label>
+            <label for="clean-quantity">{isEn ? "Quantity *" : "Quantidade *"}<input id="clean-quantity" name="quantity" type="number" min="1" step="1" required placeholder={isEn ? "E.g. 4" : "Ex.: 4"} /></label>
+            <label for="clean-request">{isEn ? "Request type *" : "Tipo de pedido *"}<select id="clean-request" name="requestType" required><option value="">{isEn ? "Select" : "Selecione"}</option><option>{isEn ? "Ask for price" : "Consultar preço"}</option><option>{isEn ? "Confirm availability" : "Confirmar stock"}</option><option>{isEn ? "Request a quotation" : "Pedir cotação"}</option><option>{isEn ? "Order request — subject to commercial confirmation" : "Pedido de encomenda — sujeito a confirmação comercial"}</option></select></label>
+            <label for="clean-location">{isEn ? "Delivery location *" : "Local de entrega *"}<input id="clean-location" name="location" type="text" required maxlength="180" placeholder={isEn ? "E.g. Viana, Luanda" : "Ex.: Viana, Luanda"} /></label>
+            <label class="clean-form-full" for="clean-phone">{isEn ? "Phone / WhatsApp *" : "Telefone / WhatsApp *"}<input id="clean-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="60" placeholder="+244 ..." /></label>
+            <label class="clean-form-full" for="clean-note">{isEn ? "Additional information" : "Observações"}<textarea id="clean-note" name="note" rows="3" maxlength="1200" placeholder={isEn ? "Catalogue code, technical reference or delivery conditions" : "Código do catálogo, referência técnica ou condições de entrega"}></textarea></label>
+          </div>
+          <label class="clean-consent" for="clean-privacy-consent"><input id="clean-privacy-consent" type="checkbox" name="privacy_consent" required /><span>{isEn ? "I authorise HMATIAS to process these details to respond to this commercial request, under its" : "Autorizo a HMATIAS a tratar estes dados para responder a este pedido comercial, nos termos da"} <a href={privacyHref}>{isEn ? "Privacy Policy" : "Política de Privacidade"}</a>.</span></label>
+          <button class="button button-dark clean-submit" type="submit">{isEn ? "Prepare quotation request" : "Preparar pedido de cotação"} <span aria-hidden="true">↗</span></button>
+          <p id="clean-form-status" class="clean-form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">{isEn ? "Independent technology preview. It does not replace or modify the official HMATIAS website." : "Pré-visualização tecnológica independente. Não substitui nem modifica o website oficial da HMATIAS."}</div>
+
+  <script>
+    import "../scripts/clean-catalog.js";
+    import "../scripts/clean-store.js";
+  </script>
+
+  <style>
+    .clean-page{color:var(--hm-ink);background:var(--hm-paper)}
+    .clean-hero{padding:clamp(58px,7vw,94px) var(--hm-gutter);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(270px,.62fr);align-items:center;gap:clamp(30px,6vw,84px);color:#fff;background:var(--hm-navy)}
+    .clean-hero-copy{max-width:790px}.clean-breadcrumb{display:flex;gap:10px;align-items:center;margin-bottom:32px;color:#d7e5f1;font-size:10px}.clean-breadcrumb a{color:#d7e5f1;text-decoration:underline;text-underline-offset:3px}.clean-hero .eyebrow{margin:0 0 20px;color:var(--hm-sky)}
+    .clean-hero h1{max-width:790px;margin:0;font-size:clamp(42px,6vw,76px);line-height:1.02;font-weight:520;letter-spacing:-.065em}
+    .clean-lead{max-width:620px;margin:24px 0 0;color:#e5eff7;font-size:14px;line-height:1.85}
+    .clean-hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:22px;margin-top:30px}.clean-hero .button-light{color:var(--hm-navy);background:#fff}
+    .clean-text-link{color:#e5eff7}.clean-hero-meta{display:flex;flex-wrap:wrap;gap:18px;margin-top:34px;color:#b9d8ed;font-size:9px;letter-spacing:.06em}
+    .clean-hero-panel{padding:28px;color:var(--hm-ink);background:var(--hm-paper);border-left:3px solid var(--hm-sky)}
+    .clean-panel-label{display:block;margin-bottom:19px;color:var(--hm-blue);font-family:var(--hm-mono);font-size:9px;font-weight:700;letter-spacing:.14em}
+    .clean-hero-panel strong{display:block;font-size:21px;line-height:1.35;font-weight:650}.clean-hero-panel p{margin:15px 0;color:var(--hm-muted);font-size:11px;line-height:1.75}
+    .clean-panel-rule{display:block;height:1px;margin:23px 0;background:var(--hm-line)}.clean-hero-panel div{display:flex;justify-content:space-between;gap:10px;color:var(--hm-blue);font-size:9px;font-weight:700;letter-spacing:.11em}
+    .clean-section-heading{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:30px}.clean-section-heading .section-kicker{margin:0 0 14px}.clean-section-heading h2{margin:0;font-size:clamp(30px,4vw,48px);font-weight:520;letter-spacing:-.05em}.clean-section-heading>p{max-width:390px;margin:0;color:var(--hm-muted);font-size:12px;line-height:1.75}
+    .clean-featured{background:var(--hm-paper)}.clean-feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.clean-feature-card{min-width:0;display:grid;grid-template-rows:auto 1fr;background:#fff;border:1px solid var(--hm-line)}
+    .clean-product-image{position:relative;display:flex;align-items:center;justify-content:center;min-height:270px;padding:20px;background:#f3f6f8;overflow:hidden}.clean-product-image img{display:block;width:100%;max-width:390px;max-height:310px;object-fit:contain}.clean-product-image>span{position:absolute;left:16px;bottom:12px;color:#4d6275;font-size:8px;font-weight:700;letter-spacing:.13em}.clean-product-image-light{background:#fff}
+    .clean-feature-content{padding:23px;display:flex;flex-direction:column;align-items:flex-start}.clean-product-tags{display:flex;flex-wrap:wrap;gap:7px}.clean-product-tags span{padding:7px 9px;color:var(--hm-blue);background:var(--hm-sky-soft);font-size:8px;font-weight:700;letter-spacing:.08em}.clean-feature-content h3{margin:16px 0 10px;font-size:24px;font-weight:600;letter-spacing:-.04em}.clean-feature-content h3 small{color:var(--hm-muted);font-family:var(--hm-mono);font-size:11px;font-weight:500}
+    .clean-feature-content>p{margin:0;color:var(--hm-muted);font-size:11px;line-height:1.8}.clean-product-status{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px;color:#526b7d;font-size:9px}.clean-product-status span:first-child{font-weight:700;color:var(--hm-blue)}
+    .clean-product-price{width:100%;display:flex;justify-content:space-between;gap:10px;margin:17px 0;padding-top:13px;border-top:1px solid var(--hm-line);font-size:10px}.clean-product-price strong{color:var(--hm-blue)}
+    .clean-feature-content>.button{margin-top:auto}.clean-feature-actions{display:flex;flex-wrap:wrap;align-items:center;gap:13px;margin-top:auto}.clean-manufacturer-link{color:var(--hm-blue);font-size:10px;font-weight:650;text-decoration:underline;text-underline-offset:3px}
+    .clean-catalog-section{background:#f1f5f8}.clean-catalog-tools{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 0 20px}.clean-search-field{display:grid;gap:7px;width:min(100%,520px);color:#28455f;font-size:10px;font-weight:700}.clean-search-field input{width:100%;min-height:45px;padding:10px 13px;border:1px solid #bdcbd8;background:#fff;font:inherit;font-weight:400;font-size:12px}.clean-catalog-count{margin:0;color:var(--hm-muted);font-family:var(--hm-mono);font-size:10px}
+    .clean-catalog-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+    .clean-catalog-tabs :global(button){min-height:34px;padding:8px 12px;color:#31506a;background:#fff;border:1px solid var(--hm-line);font:inherit;font-size:9px;font-weight:650;cursor:pointer}
+    .clean-catalog-tabs :global(button.active),.clean-catalog-tabs :global(button[aria-pressed="true"]){color:#fff;background:var(--hm-navy);border-color:var(--hm-navy)}
+    .clean-catalog-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .clean-catalog-results :global(.clean-catalog-item){padding:17px;background:#fff;border:1px solid var(--hm-line);min-width:0;display:flex;flex-direction:column}
+    .clean-catalog-results :global(.clean-catalog-item-head){display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+    .clean-catalog-results :global(.clean-catalog-item-head>div>span){color:var(--hm-blue);font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+    .clean-catalog-results :global(.clean-catalog-item h3){margin:6px 0 2px;font-size:15px;font-weight:650}
+    .clean-catalog-results :global(.clean-catalog-item small){color:var(--hm-muted);font-family:var(--hm-mono);font-size:9px}
+    .clean-catalog-results :global(.clean-order-status){flex:0 0 auto;padding:6px 8px;color:#465f72;background:#eef3f7;font-size:8px}
+    .clean-catalog-results :global(.clean-catalog-item>p){margin:12px 0;color:var(--hm-muted);font-size:10px;line-height:1.7}
+    .clean-catalog-results :global(.clean-catalog-meta){display:flex;flex-wrap:wrap;gap:9px;margin-top:auto;padding-top:10px;border-top:1px solid var(--hm-line);font-size:9px}
+    .clean-catalog-results :global(.clean-catalog-meta strong){color:#314f68}
+    .clean-catalog-results :global(.clean-catalog-meta span){color:var(--hm-muted)}
+    .clean-catalog-results :global(.clean-catalog-item>a){display:inline-flex;align-self:flex-start;margin-top:13px;padding:8px 10px;color:#fff;background:var(--hm-navy);font-size:9px;font-weight:700;text-decoration:none}
+    .clean-catalog-results :global(.clean-catalog-empty){padding:24px;color:var(--hm-muted);background:#fff}
+    :global(.clean-cart-eyebrow){color:#17456d!important}
+    .clean-pdf-section{padding:0 var(--hm-gutter) 38px;background:#f1f5f8}.clean-pdf-card{max-width:1300px;margin:0 auto;padding:clamp(22px,4vw,36px);display:flex;justify-content:space-between;align-items:center;gap:25px;background:#fff;border:1px solid var(--hm-line)}.clean-pdf-card h2{margin:0 0 10px;font-size:clamp(24px,3vw,34px);font-weight:550;letter-spacing:-.04em}.clean-pdf-card p{margin:0 0 10px;color:var(--hm-muted);font-size:11px;line-height:1.7}.clean-pdf-card small{display:block;max-width:760px;color:var(--hm-muted);font-size:9px;line-height:1.6}
+    .clean-quote-section{background:var(--hm-paper)}.clean-quote-layout{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(0,1.2fr);gap:clamp(30px,6vw,80px);align-items:start}.clean-quote-copy h2{margin:0 0 16px;font-size:clamp(30px,4.3vw,48px);line-height:1.08;font-weight:520;letter-spacing:-.05em}.clean-quote-copy>p:not(.section-kicker){color:var(--hm-muted);font-size:12px;line-height:1.8}.clean-quote-copy ul{padding-left:18px;color:#405b71;font-size:10px;line-height:2}.clean-manual-note{padding:13px;border-left:2px solid var(--hm-blue);background:var(--hm-light)}
+    .clean-quote-form{padding:clamp(20px,3vw,30px);background:#fff;border:1px solid var(--hm-line);border-top:3px solid var(--hm-blue)}.clean-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.clean-form-grid label{display:flex;flex-direction:column;gap:7px;color:#28455f;font-size:10px;font-weight:700}.clean-form-grid .clean-form-full{grid-column:1/-1}.clean-form-grid input,.clean-form-grid select,.clean-form-grid textarea{width:100%;min-height:43px;padding:10px 12px;color:var(--hm-ink);background:#fff;border:1px solid #bdcbd8;font:inherit;font-size:12px}.clean-form-grid textarea{min-height:90px;resize:vertical}.clean-form-grid input:focus,.clean-form-grid select:focus,.clean-form-grid textarea:focus,.clean-search-field input:focus{outline:2px solid #1678c8;outline-offset:2px;border-color:#1678c8}
+    .clean-consent{display:flex;align-items:flex-start;gap:9px;margin:18px 0;color:var(--hm-muted);font-size:10px;line-height:1.65}.clean-consent input{width:17px;height:17px;flex:0 0 auto;accent-color:var(--hm-blue)}.clean-consent a{color:var(--hm-blue);text-decoration:underline;text-underline-offset:3px}.clean-submit{min-height:45px}.clean-form-status{min-height:18px;margin:10px 0 0;color:var(--hm-blue);font-size:10px}
+    :global(.clean-cart-section){padding:0 var(--hm-gutter) 38px;background:#f1f5f8}
+    :global(.clean-cart-card){max-width:1300px;margin:0 auto;padding:clamp(20px,3vw,28px);background:#fff;border:1px solid var(--hm-line);border-top:3px solid var(--hm-blue)}
+    :global(.clean-cart-head){display:flex;justify-content:space-between;align-items:center;gap:20px}
+    :global(.clean-cart-head h3){margin:8px 0 0;font-size:clamp(22px,3vw,30px)}
+    :global(.clean-cart-count){display:grid;place-items:center;min-width:36px;height:36px;border-radius:50%;color:#fff;background:var(--hm-navy);font-weight:700}
+    :global(.clean-cart-list){display:grid;gap:10px;margin-top:18px}
+    :global(.clean-cart-item){display:grid;grid-template-columns:minmax(160px,1.5fr) minmax(130px,.8fr) minmax(90px,.5fr) 34px;gap:12px;align-items:end;padding:14px;background:var(--hm-light);border:1px solid var(--hm-line)}
+    :global(.clean-cart-item-main){display:grid;gap:5px}
+    :global(.clean-cart-item-main strong){font-size:12px}
+    :global(.clean-cart-item-main small){color:var(--hm-muted);font-size:9px}
+    :global(.clean-cart-item label){display:grid;gap:5px;color:#37536a;font-size:9px;font-weight:700}
+    :global(.clean-cart-item input){width:100%;min-height:38px;padding:8px;border:1px solid #bdcbd8;background:#fff;font:inherit;font-size:11px}
+    :global(.clean-cart-remove){width:34px;height:34px;border:1px solid #cad5df;color:var(--hm-muted);background:#fff;cursor:pointer}
+    :global(.clean-cart-empty){margin:18px 0 0;color:var(--hm-muted);font-size:11px}
+    :global(.clean-cart-actions){display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:12px}
+    :global(.clean-cart-actions p){margin:0;color:var(--hm-muted);font-size:10px}
+    :global(.clean-cart-clear){min-height:36px;padding:8px 12px;background:#fff;border:1px solid var(--hm-line);color:var(--hm-blue);font:inherit;font-size:9px;font-weight:700;cursor:pointer}
+    :global(.clean-cart-summary){margin-bottom:14px;padding:12px;background:var(--hm-sky-soft);color:#27465e;font-size:11px;line-height:1.6}
+    :global(.clean-cart-handoff){margin-top:14px;padding:17px;background:var(--hm-light);border:1px solid var(--hm-line)}
+    @media(max-width:900px){.clean-hero{grid-template-columns:1fr}.clean-hero-panel{max-width:620px}.clean-quote-layout{grid-template-columns:1fr}.clean-section-heading{display:block}.clean-section-heading>p{margin-top:13px}.clean-pdf-card{align-items:flex-start;flex-direction:column}}
+    @media(max-width:650px){.clean-hero h1{font-size:clamp(40px,11vw,58px)}.clean-feature-grid,.clean-catalog-results{grid-template-columns:1fr}.clean-catalog-tools{align-items:flex-start;flex-direction:column}.clean-form-grid{grid-template-columns:1fr}.clean-form-grid .clean-form-full{grid-column:auto}:global(.clean-cart-item){grid-template-columns:1fr 1fr}:global(.clean-cart-item-main){grid-column:1/-1}:global(.clean-cart-remove){justify-self:end}:global(.clean-cart-actions){align-items:flex-start;flex-direction:column}.clean-feature-content{padding:20px}.clean-hero-meta{flex-direction:column;gap:8px}}
+  </style>
+</BaseLayout>

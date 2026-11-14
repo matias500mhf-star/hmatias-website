@@ -1,0 +1,399 @@
+/* HMATIAS Clean — multi-item quotation workflow with WhatsApp handoff. */
+(() => {
+  'use strict';
+
+  const q = selector => document.querySelector(selector);
+  const qa = selector => [...document.querySelectorAll(selector)];
+  const form = q('#cleanQuoteForm');
+  if (!form) return;
+
+  const product = q('#clean-product');
+  const qty = q('#clean-quantity');
+  const request = q('#clean-request');
+  const name = q('#clean-name');
+  const client = q('#clean-client-type');
+  const locationField = q('#clean-location');
+  const phone = q('#clean-phone');
+  const note = q('#clean-note');
+  const status = q('#clean-form-status');
+  const isEn = (document.documentElement.lang || '').toLowerCase().startsWith('en');
+  const wa = '244948806673';
+  const storageKey = 'hmatiasCleanQuoteCartV1';
+
+  const copy = isEn ? {
+    eyebrow: 'QUOTE REQUEST',
+    title: 'Items selected for quotation',
+    empty: 'No item has been added yet. Choose a product above or use the quotation form for a single item.',
+    format: 'Format / reference',
+    quantity: 'Quantity',
+    formatPlaceholder: 'e.g. 1 kg, 5 kg, catalogue code',
+    remove: 'Remove item',
+    clear: 'Clear request',
+    helper: 'Add all required products before completing your contact details.',
+    selected: 'selected item(s)',
+    add: 'Add to quote request →',
+    added: 'Added to request',
+    summary: 'Your quotation request contains',
+    submit: 'Prepare quotation request →',
+    status: 'Request prepared. Choose a channel below to send it; nothing has been registered automatically.',
+    requestOrder: 'Order request — subject to commercial confirmation',
+    messageTitle: 'HMATIAS CLEAN — QUOTATION REQUEST',
+    name: 'Name / Entity',
+    client: 'Client type',
+    request: 'Request',
+    location: 'Location',
+    phone: 'Phone / WhatsApp',
+    items: 'ITEMS',
+    formatLine: 'Format / reference',
+    quantityLine: 'Quantity',
+    note: 'Additional information',
+    singleProduct: 'Product',
+    notProvided: 'Not provided'
+  } : {
+    eyebrow: 'PEDIDO DE COTAÇÃO',
+    title: 'Itens selecionados para cotação',
+    empty: 'Ainda não foi adicionado nenhum item. Escolha um produto acima ou utilize o formulário para um único item.',
+    format: 'Formato / referência',
+    quantity: 'Quantidade',
+    formatPlaceholder: 'Ex.: 1 kg, 5 kg, código do catálogo',
+    remove: 'Remover item',
+    clear: 'Limpar pedido',
+    helper: 'Adicione todos os produtos pretendidos antes de preencher os seus dados de contacto.',
+    selected: 'item(ns) selecionado(s)',
+    add: 'Adicionar ao pedido →',
+    added: 'Adicionado ao pedido',
+    summary: 'O pedido de cotação contém',
+    submit: 'Preparar pedido de cotação →',
+    status: 'Pedido preparado. Escolha abaixo o canal de envio; ainda não foi registado automaticamente.',
+    requestOrder: 'Pedido de encomenda — sujeito a confirmação comercial',
+    messageTitle: 'HMATIAS CLEAN — PEDIDO DE COTAÇÃO',
+    name: 'Nome / Entidade',
+    client: 'Tipo de cliente',
+    request: 'Pedido',
+    location: 'Localização',
+    phone: 'Telefone / WhatsApp',
+    items: 'ITENS',
+    formatLine: 'Formato / referência',
+    quantityLine: 'Quantidade',
+    note: 'Informação adicional',
+    singleProduct: 'Produto',
+    notProvided: 'Não indicado'
+  };
+
+  // Cart presentation is supplied by the Astro page; no legacy CSS is injected.
+  qa('[data-product-image]').forEach(img => {
+    img.addEventListener('error', () => img.closest('.product-media,.clean-intro-image')?.classList.add('image-failed'));
+  });
+
+  const safeParse = value => {
+    try {
+      const parsed = JSON.parse(value || '[]');
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const readStoredCart = () => {
+    try { return sessionStorage.getItem(storageKey) || '[]'; }
+    catch { return '[]'; }
+  };
+
+  let cart = safeParse(readStoredCart())
+    .filter(item => item && typeof item.name === 'string')
+    .slice(0, 20)
+    .map(item => ({
+      id: String(item.id || `${Date.now()}-${Math.random()}`),
+      name: String(item.name || '').slice(0, 180),
+      format: String(item.format || '').slice(0, 120),
+      quantity: Math.max(1, Number.parseInt(item.quantity, 10) || 1)
+    }));
+
+  const save = () => {
+    try { sessionStorage.setItem(storageKey, JSON.stringify(cart)); } catch {}
+  };
+
+  const cartMount = q('#clean-cart-mount');
+  const productsSection = q('.clean-featured') || q('.commerce-products');
+  const pdfSection = q('.clean-pdf-section');
+  const cartSection = document.createElement('section');
+  cartSection.className = 'clean-cart-section';
+  cartSection.id = isEn ? 'quote-cart' : 'pedido-cotacao';
+  cartSection.innerHTML = `
+    <div class="container">
+      <div class="clean-cart-card">
+        <div class="clean-cart-head">
+          <div><span class="eyebrow clean-cart-eyebrow">${copy.eyebrow}</span><h3>${copy.title}</h3></div>
+          <span class="clean-cart-count" id="cleanCartCount" aria-live="polite">0</span>
+        </div>
+        <div class="clean-cart-list" id="cleanCartList"></div>
+        <p class="clean-cart-empty" id="cleanCartEmpty">${copy.empty}</p>
+        <div class="clean-cart-actions" id="cleanCartActions" hidden><p>${copy.helper}</p><button class="clean-cart-clear" id="cleanCartClear" type="button">${copy.clear}</button></div>
+      </div>
+    </div>`;
+
+  if (cartMount) {
+    cartMount.replaceWith(cartSection);
+  } else if (pdfSection?.parentNode) {
+    pdfSection.parentNode.insertBefore(cartSection, pdfSection);
+  } else if (productsSection?.parentNode) {
+    productsSection.parentNode.insertBefore(cartSection, productsSection.nextSibling);
+  }
+
+  const cartList = q('#cleanCartList');
+  const cartEmpty = q('#cleanCartEmpty');
+  const cartCount = q('#cleanCartCount');
+  const cartActions = q('#cleanCartActions');
+  const cartClear = q('#cleanCartClear');
+
+  const singleProductLabel = product?.closest('label');
+  const singleQtyLabel = qty?.closest('label');
+  singleProductLabel?.setAttribute('data-single-item-field', 'true');
+  singleQtyLabel?.setAttribute('data-single-item-field', 'true');
+
+  const summary = document.createElement('div');
+  summary.className = 'clean-cart-summary';
+  summary.hidden = true;
+  // Place the summary before the form grid. The first label is nested
+  // inside that grid and is not a direct child of the form element.
+  const formGrid = form.querySelector('.clean-form-grid');
+  if (formGrid?.parentNode === form) form.insertBefore(summary, formGrid);
+  else form.prepend(summary);
+
+  if (request) {
+    const orderOption = [...request.options].find(option => /comprar|buy/i.test(option.textContent || ''));
+    if (orderOption) orderOption.textContent = copy.requestOrder;
+  }
+
+  const defaultFormatFor = productName => {
+    if (/123\s+pine\s+gel/i.test(productName)) return '500 ml';
+    return '';
+  };
+
+  const render = () => {
+    cartList.innerHTML = '';
+    cartCount.textContent = String(cart.length);
+    cartEmpty.hidden = cart.length > 0;
+    cartActions.hidden = cart.length === 0;
+    form.classList.toggle('cart-active', cart.length > 0);
+    summary.hidden = cart.length === 0;
+
+    if (product) product.required = cart.length === 0;
+    if (qty) qty.required = cart.length === 0;
+
+    if (cart.length) {
+      summary.innerHTML = `<strong>${copy.summary} ${cart.length} ${copy.selected}.</strong> ${copy.helper}`;
+    } else {
+      summary.textContent = '';
+    }
+
+    cart.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'clean-cart-item';
+      row.dataset.cartId = item.id;
+
+      const main = document.createElement('div');
+      main.className = 'clean-cart-item-main';
+      const title = document.createElement('strong');
+      title.textContent = item.name;
+      const helper = document.createElement('small');
+      helper.textContent = isEn ? 'Quotation item' : 'Item para cotação';
+      main.append(title, helper);
+
+      const formatLabel = document.createElement('label');
+      formatLabel.textContent = copy.format;
+      const formatInput = document.createElement('input');
+      formatInput.type = 'text';
+      formatInput.maxLength = 120;
+      formatInput.placeholder = copy.formatPlaceholder;
+      formatInput.value = item.format;
+      formatInput.addEventListener('input', () => {
+        item.format = formatInput.value.slice(0, 120);
+        save();
+      });
+      formatLabel.appendChild(formatInput);
+
+      const qtyLabel = document.createElement('label');
+      qtyLabel.textContent = copy.quantity;
+      const qtyInput = document.createElement('input');
+      qtyInput.type = 'number';
+      qtyInput.min = '1';
+      qtyInput.step = '1';
+      qtyInput.value = String(item.quantity);
+      qtyInput.addEventListener('input', () => {
+        item.quantity = Math.max(1, Number.parseInt(qtyInput.value, 10) || 1);
+        save();
+      });
+      qtyLabel.appendChild(qtyInput);
+
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'clean-cart-remove';
+      remove.textContent = '×';
+      remove.title = copy.remove;
+      remove.setAttribute('aria-label', copy.remove);
+      remove.addEventListener('click', () => {
+        cart = cart.filter(entry => entry.id !== item.id);
+        save();
+        render();
+      });
+
+      row.append(main, formatLabel, qtyLabel, remove);
+      cartList.appendChild(row);
+    });
+  };
+
+  const addToCart = value => {
+    const productName = String(value || '').trim();
+    if (!productName) return;
+    if (cart.length >= 20 && !cart.some(item => item.name === productName && item.format === defaultFormatFor(productName))) {
+      if (status) status.textContent = isEn ? 'A request can contain up to 20 items.' : 'O pedido pode conter até 20 itens.';
+      return;
+    }
+    const existing = cart.find(item => item.name === productName && item.format === defaultFormatFor(productName));
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        name: productName,
+        format: defaultFormatFor(productName),
+        quantity: 1
+      });
+    }
+    save();
+    render();
+    cartSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  qa('[data-clean-product]').forEach(button => {
+    button.textContent = copy.add;
+    button.setAttribute('aria-label', `${copy.add.replace(/\s*→$/, '')}: ${button.dataset.cleanProduct || ''}`);
+  });
+
+  const handleCleanProductAdd = event => {
+    event.preventDefault();
+    const button = event.currentTarget;
+    const productName = button?.getAttribute('data-clean-product') || '';
+    if (!productName) return;
+    addToCart(productName);
+    const previous = button.textContent;
+    const previousLabel = button.getAttribute('aria-label');
+    button.textContent = copy.added;
+    // Keep the accessible name aligned with the visible confirmation text.
+    button.setAttribute('aria-label', `${copy.added}: ${productName}`);
+    button.setAttribute('aria-live', 'polite');
+    setTimeout(() => {
+      button.textContent = previous;
+      if (previousLabel) button.setAttribute('aria-label', previousLabel);
+      else button.removeAttribute('aria-label');
+      button.removeAttribute('aria-live');
+    }, 1200);
+  };
+
+  const bindCleanProductButtons = root => {
+    root.querySelectorAll('[data-clean-product]').forEach(button => {
+      if (button.dataset.hmatiasCleanBound === 'true') return;
+      button.dataset.hmatiasCleanBound = 'true';
+      button.addEventListener('click', handleCleanProductAdd);
+    });
+  };
+
+  // Product cards are rebuilt when the catalogue search or category changes.
+  const catalogRoot = q('#clean-catalog-results');
+  if (catalogRoot) {
+    bindCleanProductButtons(catalogRoot);
+    const catalogueObserver = new MutationObserver(() => bindCleanProductButtons(catalogRoot));
+    catalogueObserver.observe(catalogRoot, { childList: true, subtree: true });
+  }
+  // Featured products are static elements outside the rendered catalogue.
+  qa('.clean-featured [data-clean-product]').forEach(button => {
+    if (button.dataset.hmatiasCleanBound === 'true') return;
+    button.dataset.hmatiasCleanBound = 'true';
+    button.addEventListener('click', handleCleanProductAdd);
+  });
+
+  cartClear?.addEventListener('click', () => {
+    cart = [];
+    save();
+    render();
+  });
+
+  render();
+
+  form.querySelector('button[type="submit"]')?.replaceChildren(document.createTextNode(copy.submit));
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const clean = value => String(value || '').trim().replace(/\s+/g, ' ');
+    const lines = [
+      copy.messageTitle,
+      '',
+      `${copy.name}: ${clean(name?.value)}`,
+      `${copy.client}: ${clean(client?.value)}`,
+      `${copy.request}: ${clean(request?.value)}`,
+      `${copy.location}: ${clean(locationField?.value)}`,
+      `${copy.phone}: ${clean(phone?.value)}`,
+      ''
+    ];
+
+    if (cart.length) {
+      lines.push(copy.items);
+      cart.forEach((item, index) => {
+        lines.push(`${index + 1}. ${item.name}`);
+        lines.push(`   ${copy.formatLine}: ${clean(item.format) || copy.notProvided}`);
+        lines.push(`   ${copy.quantityLine}: ${Math.max(1, Number.parseInt(item.quantity, 10) || 1)}`);
+      });
+    } else {
+      lines.push(`${copy.singleProduct}: ${clean(product?.value)}`);
+      lines.push(`${copy.quantityLine}: ${clean(qty?.value)}`);
+    }
+
+    const extra = clean(note?.value);
+    if (extra) {
+      lines.push('', `${copy.note}: ${extra}`);
+    }
+
+    lines.push('', isEn
+      ? 'Price, availability, lead time and delivery conditions are subject to HMATIAS commercial confirmation.'
+      : 'Preço, disponibilidade, prazo e condições de entrega ficam sujeitos a confirmação comercial da HMATIAS.');
+
+    if (status) status.textContent = copy.status;
+    let panel=form.querySelector('[data-hmatias-clean-handoff]');
+    if(!panel){
+      panel=document.createElement('section');
+      panel.dataset.hmatiasCleanHandoff='true';
+      panel.setAttribute('aria-label',isEn?'Send Clean quotation request':'Enviar pedido de cotação Clean');
+      panel.style.cssText='grid-column:1/-1;margin:16px 0;padding:20px;border:1px solid #d8e1e6;border-radius:12px;background:#f6f9fb;color:#182c3a';
+      const title=document.createElement('strong');
+      title.textContent=isEn?'Quotation request ready':'Pedido de cotação preparado';
+      title.style.cssText='display:block;font-size:1.1rem;margin-bottom:8px';
+      const guidance=document.createElement('p');
+      guidance.textContent=isEn
+        ?'Complete the send on WhatsApp or in your email application. Nothing has been submitted automatically.'
+        :'Conclua o envio pelo WhatsApp ou pela aplicação de e-mail. O pedido não foi submetido automaticamente.';
+      const actions=document.createElement('div');
+      actions.style.cssText='display:flex;gap:10px;flex-wrap:wrap;margin:12px 0';
+      const whatsapp=document.createElement('a');whatsapp.className='btn btn-primary';whatsapp.dataset.cleanSendWhatsapp='true';
+      whatsapp.rel='noopener noreferrer';whatsapp.target='_blank';
+      whatsapp.textContent=isEn?'Send on WhatsApp':'Enviar pelo WhatsApp';
+      const email=document.createElement('a');email.className='btn btn-outline';email.dataset.cleanSendEmail='true';
+      email.textContent=isEn?'Send by email':'Enviar por e-mail';
+      const review=document.createElement('details');review.style.marginTop='10px';
+      const label=document.createElement('summary');label.textContent=isEn?'Review request':'Rever pedido';
+      const preview=document.createElement('pre');preview.dataset.cleanRequestPreview='true';
+      preview.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:.85rem;line-height:1.6';
+      review.append(label,preview);
+      actions.append(whatsapp,email);panel.append(title,guidance,actions,review);form.append(panel);
+    }
+    const body=lines.join('\n');
+    panel.querySelector('[data-clean-send-whatsapp]').href='https://wa.me/'+wa+'?text='+encodeURIComponent(body.slice(0,3400));
+    panel.querySelector('[data-clean-send-email]').href='mailto:geral@comercialhmatiasps.com?subject='+
+      encodeURIComponent(isEn?'HMATIAS Clean quotation request':'Pedido de cotação HMATIAS Clean')+
+      '&body='+encodeURIComponent(body.slice(0,3500));
+    panel.querySelector('[data-clean-request-preview]').textContent=body;
+    panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+})();

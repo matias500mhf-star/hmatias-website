@@ -1,0 +1,119 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import { company } from "../../../data/site";
+const businessWhatsapp = company.whatsappUri + "?text=" + encodeURIComponent(
+  "Hello HMATIAS. I would like to request an assessment from Business Services. Service required, documents or source information, volume, preferred format and deadline:"
+);
+const serviceItems = [
+  ["01","Administrative documentation and business correspondence","Preparation, editing and organisation of drafts, letters, declarations, notices and other administrative documents."],
+  ["02","Professional CV structuring","Organisation and presentation of a professional profile using information supplied by the client."],
+  ["03","Document management and organisation","Sorting, digitisation, file naming and preparation of document sets for administrative use."],
+  ["04","Commercial proposals and business support","Preparation of quotations, commercial proposals, supporting documentation and materials for business opportunities."],
+  ["05","Business presentations","Visual and documentary structuring of institutional and commercial presentations."],
+  ["06","Ongoing administrative support for SMEs","Recurring administrative support with a monthly scope agreed in advance."]
+];
+---
+<BaseLayout title="Business Services | HMATIAS Administrative and Business Support" description="Administrative documentation, professional CVs, document organisation, commercial proposals and recurring support for small and medium-sized businesses." lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS BUSINESS SERVICES</span><span>ADMINISTRATIVE · DOCUMENTARY · BUSINESS SUPPORT</span></div>
+  <SiteHeader />
+  <main class="business-page">
+    <section class="business-hero" aria-labelledby="pages-en-business-services-index-section-1-heading">
+      <div class="business-hero-copy">
+        <nav class="business-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span>/</span><span>Business Services</span></nav>
+        <p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS BUSINESS SERVICES</p>
+        <h1 id="pages-en-business-services-index-section-1-heading">Administrative,<br /><em>documentary and business support.</em></h1>
+        <p class="business-lead">Document organisation, institutional correspondence and preparation of commercial materials for professionals and small and medium-sized businesses.</p>
+        <div class="hero-actions"><a class="button button-light" href={businessWhatsapp} target="_blank" rel="noopener noreferrer">Enquire via WhatsApp <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="#services">View services <span aria-hidden="true">↓</span></a></div>
+        <div class="business-meta"><span>Enquiries from across Angola</span><span>Remote support where applicable</span></div>
+      </div>
+      <aside class="business-hero-panel"><span class="business-panel-label">SERVICE SCOPE</span><strong>Clear deliverables.<br />Agreed conditions.</strong><p>The service, workload, required documents and deadline are defined after the request is reviewed.</p><span class="business-panel-rule"></span><div><small>HMATIAS</small><small>LUANDA · ANGOLA</small></div></aside>
+    </section>
+
+    <section class="business-intro section-pad" aria-labelledby="pages-en-business-services-index-section-2-heading">
+      <div class="section-kicker">01 / BUSINESS SUPPORT</div>
+      <div class="business-intro-content"><h2 id="pages-en-business-services-index-section-2-heading">Administrative work<br /><em>also needs a method.</em></h2><div><p>HMATIAS Business Services organises administrative and documentary tasks that require clarity, careful presentation and compliance with requirements defined by the client.</p><p>Each request is assessed individually. Scope, deliverables, timing and commercial conditions are confirmed before work begins.</p></div></div>
+    </section>
+
+    <section class="business-services section-pad" id="services" aria-labelledby="pages-en-business-services-index-section-3-heading">
+      <div class="section-heading"><div><div class="section-kicker">02 / SERVICES</div><h2 id="pages-en-business-services-index-section-3-heading">Services adapted<br /><em>to the requirement.</em></h2></div><p>Select the area you need. A proposal is prepared after the request and expected workload have been understood.</p></div>
+      <div class="business-service-grid">
+        {serviceItems.map(([number,title,description]) => <article class="business-service-card"><span>{number}</span><h3>{title}</h3><p>{description}</p></article>)}
+      </div>
+    </section>
+
+    <section class="business-process section-pad" aria-labelledby="pages-en-business-services-index-section-4-heading">
+      <div class="section-heading"><div><div class="section-kicker">03 / INFORMATION FOR ASSESSMENT</div><h2 id="pages-en-business-services-index-section-4-heading">What to include<br /><em>in your request.</em></h2></div><p>These details help estimate the work and define deliverables and timing.</p></div>
+      <div class="business-process-list">
+        <article><span>01</span><div><h3>Service required</h3><p>Identify the document, administrative task or commercial material to be prepared.</p></div></article>
+        <article><span>02</span><div><h3>Source information</h3><p>Explain the context and identify the information or content already available.</p></div></article>
+        <article><span>03</span><div><h3>Volume and format</h3><p>Indicate the number of documents, pages or items and the required delivery format.</p></div></article>
+        <article><span>04</span><div><h3>Deadline and priority</h3><p>Provide the target date and any presentation or submission requirements.</p></div></article>
+      </div>
+    </section>
+
+    <section class="business-contact-cta section-pad" id="request" aria-labelledby="pages-en-business-services-index-section-5-heading">
+      <div>
+        <p class="section-kicker">04 / REQUEST AN ASSESSMENT</p>
+        <h2 id="pages-en-business-services-index-section-5-heading">Tell us what you need,<br /><em>and the expected scope.</em></h2>
+        <p>Send the service required, available source information, document volume, preferred format and deadline. HMATIAS will review the scope before confirming deliverables and commercial conditions.</p>
+        <div class="hero-actions">
+          <a class="button button-light" href={businessWhatsapp} target="_blank" rel="noopener noreferrer">Enquire via WhatsApp <span aria-hidden="true">↗</span></a>
+          <a class="text-link text-link-light" href={"mailto:"+company.commercialEmail+"?subject=Business%20Services%20enquiry"}>Contact by email <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <aside>
+        <span>BEFORE SENDING</span>
+        <p>Do not send identity documents, passwords or banking details at the first stage. Share only the information needed to understand your request.</p>
+        <a href={company.privacyUrl}>Read the Privacy Policy <span aria-hidden="true">↗</span></a>
+      </aside>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. Enquiries are directed to HMATIAS through the contact channels shown on this page.</div>
+</BaseLayout>
+<style>
+.business-hero { min-height:560px; padding:clamp(62px,8vw,100px) var(--hm-gutter); display:grid; grid-template-columns:minmax(0,1.2fr) minmax(290px,.7fr); align-items:center; gap:clamp(40px,8vw,120px); color:#fff; background:var(--hm-navy); }
+.business-hero-copy { max-width:740px; }
+.business-breadcrumb { display:flex; gap:11px; margin:0 0 34px; color:#b9d8ed; font-size:10px; }
+.business-breadcrumb a:hover { color:#fff; }
+.business-hero .eyebrow { margin-bottom:27px; }
+.business-hero h1 { margin:0; font-size:clamp(44px,5.7vw,76px); font-weight:520; line-height:1.02; letter-spacing:-.065em; }
+.business-hero h1 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; letter-spacing:-.055em; }
+.business-lead { max-width:570px; margin:25px 0 0; color:#dceafa; font-size:14px; line-height:1.85; }
+.business-meta { display:flex; flex-wrap:wrap; gap:12px 25px; margin-top:58px; padding-top:19px; border-top:1px solid #ffffff30; color:#b9d8ed; font-size:9px; letter-spacing:.1em; text-transform:uppercase; }
+.business-hero-panel { padding:clamp(25px,4vw,40px); color:var(--hm-ink); background:var(--hm-paper); box-shadow:18px 18px 0 #0b477c; }
+.business-panel-label,.business-hero-panel small { color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.14em; }
+.business-hero-panel strong { display:block; margin:27px 0 17px; font-family:var(--hm-serif); font-size:clamp(23px,3vw,32px); line-height:1.3; font-weight:400; }
+.business-hero-panel p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.85; }
+.business-panel-rule { display:block; height:1px; margin:28px 0 18px; background:var(--hm-line); }
+.business-hero-panel div { display:flex; justify-content:space-between; gap:12px; }
+.business-hero-panel small:last-child { color:var(--hm-muted); }
+.business-intro { display:grid; grid-template-columns:1fr 3fr; gap:35px; }
+.business-intro-content { display:grid; grid-template-columns:1.1fr .75fr; align-items:end; gap:clamp(30px,7vw,110px); }
+.business-intro h2,.business-contact-cta h2 { margin:0; font-size:clamp(36px,4.6vw,62px); line-height:1.08; font-weight:520; letter-spacing:-.06em; }
+.business-intro h2 em { color:#005aa8; font-family:var(--hm-serif); font-weight:400; }
+.business-intro-content p { margin:0 0 14px; color:var(--hm-muted); font-size:12px; line-height:1.85; }
+.business-services { background:var(--hm-light); }
+.business-service-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:52px; }
+.business-service-card { min-height:225px; padding:25px 23px; background:var(--hm-paper); border:1px solid var(--hm-line); }
+.business-service-card > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:17px; }
+.business-service-card h3 { max-width:280px; margin:30px 0 12px; font-size:16px; line-height:1.35; font-weight:650; letter-spacing:-.025em; }
+.business-service-card p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
+.business-process-list { margin-top:45px; border-top:1px solid var(--hm-line); }
+.business-process-list article { display:grid; grid-template-columns:55px 1fr; gap:15px; padding:22px 0; border-bottom:1px solid var(--hm-line); }
+.business-process-list article > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:17px; }
+.business-process-list h3 { margin:0 0 7px; font-size:14px; font-weight:650; }
+.business-process-list p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.75; }
+.business-contact-cta { display:grid; grid-template-columns:minmax(0,1fr) minmax(250px,.55fr); align-items:center; gap:clamp(35px,7vw,100px); color:#fff; background:var(--hm-navy); }
+.business-contact-cta .section-kicker { margin:0 0 23px; padding:0; color:#b9d8ed; }
+.business-contact-cta h2 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; }
+.business-contact-cta > div:first-child > p:not(.section-kicker) { max-width:610px; margin:20px 0 0; color:#dceafa; font-size:12px; line-height:1.85; }
+.business-contact-cta aside { padding:26px; border:1px solid #ffffff44; }
+.business-contact-cta aside span { color:#b9d8ed; font-size:9px; letter-spacing:.14em; }
+.business-contact-cta aside p { margin:17px 0 20px; color:#e0edf8; font-size:11px; line-height:1.8; }
+.business-contact-cta aside a { color:#fff; font-size:10px; text-decoration:underline; text-underline-offset:4px; }
+@media(max-width:900px) { .business-hero { grid-template-columns:1fr; } .business-hero-panel { max-width:600px; } .business-intro { grid-template-columns:1fr; } .business-intro-content { grid-template-columns:1fr 1fr; } }
+@media(max-width:680px) { .business-hero { min-height:0; padding-top:55px; padding-bottom:60px; } .business-hero h1 { font-size:clamp(42px,12vw,59px); } .business-hero-panel { padding:24px 20px; box-shadow:10px 10px 0 #0b477c; } .business-meta { margin-top:40px; } .business-intro-content,.business-service-grid,.business-contact-cta { grid-template-columns:1fr; } .business-service-grid { margin-top:35px; } .business-service-card { min-height:0; } .business-service-card h3 { margin-top:18px; } }
+</style>

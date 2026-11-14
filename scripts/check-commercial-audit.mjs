@@ -22,8 +22,10 @@ const source=read('source-ao/index.html');
 const sourceJs=read('source-ao/sourceao.js');
 const partnerForm=read('source-ao/partner-application.html');
 const partnerApi=read('source-ao/backend/src/partner-applications.js');
-assert.ok(source.includes('Transforme a necessidade de compra numa cotação validada.'));
+assert.ok(source.includes('O SOURCE AO organiza os requisitos; a equipa HMATIAS valida potenciais fornecedores, disponibilidade, preço e condições antes de apresentar uma cotação.'));
 assert.ok(source.includes('A pesquisa pública é uma referência, não uma confirmação de fornecimento.'));
+assert.ok(!source.includes('formol 37% 1L urgente'),'Do not use an unreviewed regulated chemical as a public example search.');
+assert.ok(!source.includes('químicos · embalagem · componentes'),'Public Source AO category copy must not imply a verified chemical catalogue.');
 assert.ok(sourceJs.includes("publicSearch:'Abrir pesquisa pública (Google)'"));
 assert.ok(sourceJs.includes("publicSearch:'Open public search (Google)'"));
 assert.ok(!source.includes('<strong data-i18n="cap2t">Supplier Discovery</strong>'));
@@ -91,6 +93,12 @@ assert.ok(read('script.js').includes('const existing=target.querySelector'));
 assert.ok(read('growth-intelligence.js').includes('[data-hmatias-email-alternative]'));
 assert.ok(client.includes("id:'cleanQuoteForm'"));
 assert.ok(client.includes("id:'smartRfqForm'"));
+const cleanCatalog=read('platform/astro-preview/src/scripts/clean-catalog.js');
+assert.ok(cleanCatalog.includes("p('Dish Ninja','T518','kitchen','Líquido antimicrobiano para loiça, eficaz mesmo em água fria.','Anti-microbial dishwashing liquid that works even in cold water.','750ml | 3L | 5L | 25L')"),'Dish Ninja pack sizes must match the linked manufacturer catalogue');
+assert.ok(cleanCatalog.includes("p('Shabba Delight','T517','kitchen','Limpador de forno e grelha de utilização simples, sem necessidade de pré-aquecimento.','User-friendly oven and grill cleaner that can be used without preheating.','500ml | 5L | 25L')"),'Shabba Delight pack sizes must match the linked manufacturer catalogue');
+assert.ok(cleanCatalog.includes("com citronela para ajudar a afastar moscas e outros insectos"),'Bundu Lodge copy must reflect the manufacturer description');
+assert.ok(cleanCatalog.includes("with citronella to help keep flies and other insects at bay"),'Bundu Lodge EN copy must reflect the manufacturer description');
+
 
 for(const [path,anchors,labels] of [
   ['credibilidade.html',['orientacao-institucional','projetos-digitais'],['Capacidades apresentadas com limites claros.','Escopo explícito','Stock, preço, origem, prazo e logística requerem confirmação.']],

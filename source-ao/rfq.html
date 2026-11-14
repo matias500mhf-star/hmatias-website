@@ -6,7 +6,7 @@
   <script src="/tag-manager.js?v=20260928-consent1" defer data-cookieconsent="ignore"></script>
   <script src="/analytics.js?v=20260928-commercial1" defer data-cookieconsent="ignore"></script>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Peça uma cotação à HMATIAS no SOURCE AO. Selecione produtos do catálogo, quantidades, especificações e prazo de entrega em Angola.">
+  <meta name="description" content="Peça uma cotação à HMATIAS no SOURCE AO. Indique uma família de fornecimento ou descreva o artigo exato, quantidade, especificação e destino.">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#071f34">
   <title>Pedido de Cotação / RFQ · SOURCE AO</title>
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="rfq.css?v=20261010-stability1">
   <link rel="stylesheet" href="../site-improvements.css?v=20261029-editorial2">
   <meta property="og:title" content="Pedido de Cotação / RFQ · SOURCE AO">
-  <meta property="og:description" content="Peça uma cotação à HMATIAS no SOURCE AO. Selecione produtos do catálogo, quantidades, especificações e prazo de entrega em Angola.">
+  <meta property="og:description" content="Peça uma cotação à HMATIAS no SOURCE AO. Indique uma família de fornecimento ou descreva o artigo exato, quantidade, especificação e destino.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://comercialhmatiasps.com/source-ao/rfq.html">
   <meta property="og:image" content="https://comercialhmatiasps.com/og-hmatias.jpg">
@@ -25,7 +25,7 @@
   <meta property="og:locale" content="pt_AO">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Pedido de Cotação / RFQ · SOURCE AO">
-  <meta name="twitter:description" content="Peça uma cotação à HMATIAS no SOURCE AO. Selecione produtos do catálogo, quantidades, especificações e prazo de entrega em Angola.">
+  <meta name="twitter:description" content="Peça uma cotação à HMATIAS no SOURCE AO. Indique uma família de fornecimento ou descreva o artigo exato, quantidade, especificação e destino.">
   <meta name="twitter:image" content="https://comercialhmatiasps.com/og-hmatias.jpg">
   <meta name="twitter:image:alt" content="SOURCE AO by HMATIAS — sourcing e oportunidades em Angola">
 </head>
@@ -36,13 +36,13 @@
     <nav><a class="source-header-email" href="mailto:geral@comercialhmatiasps.com" aria-label="E-mail geral HMATIAS" title="E-mail geral HMATIAS"><img src="../images/contact-email.svg" width="18" height="18" alt="" aria-hidden="true"></a><a href="index.html" data-en="Back to Source AO">Voltar ao Source AO</a><button id="rfqLanguage" type="button" aria-label="Mudar para EN — English">EN</button></nav>
   </header>
   <main class="rfq-shell">
-    <div class="rfq-heading"><span class="eyebrow">HMATIAS SUPPLY · RFQ</span><h1 data-en="What do you need to buy?">O que precisa de comprar?</h1><p data-en="Send your list. HMATIAS will confirm specifications, availability and delivery before preparing a proposal.">Envie a sua lista. A HMATIAS confirma a especificação, a disponibilidade e a entrega antes de preparar a proposta.</p></div>
+    <div class="rfq-heading"><span class="eyebrow">HMATIAS SUPPLY · RFQ</span><h1 data-en="What do you need to source?">O que precisa de encontrar?</h1><p data-en="Select a supply family or describe the exact item. HMATIAS reviews the specification and confirms supply and delivery conditions before preparing a proposal.">Indique uma família de fornecimento ou descreva o artigo exato. A HMATIAS analisa a especificação e confirma as condições de fornecimento e entrega antes de preparar uma proposta.</p></div>
     <div class="rfq-layout">
       <section class="rfq-workspace" aria-label="Pedido de cotação">
-        <ol class="rfq-progress" aria-label="Etapas do pedido"><li aria-current="step"><span>1</span><b data-en="Products">Produtos</b></li><li><span>2</span><b data-en="Delivery">Entrega</b></li><li><span>3</span><b data-en="Contact & review">Contacto e revisão</b></li></ol>
-        <p id="catalogStatus" class="rfq-notice" role="status" data-en="Loading product categories…">A carregar categorias do catálogo…</p>
+        <ol class="rfq-progress" aria-label="Etapas do pedido"><li aria-current="step"><span>1</span><b data-en="Items">Artigos</b></li><li><span>2</span><b data-en="Delivery">Entrega</b></li><li><span>3</span><b data-en="Contact & review">Contacto e revisão</b></li></ol>
+        <p id="catalogStatus" class="rfq-notice" role="status" data-en="Loading supply families…">A carregar famílias de fornecimento…</p>
         <form id="rfqForm" novalidate>
-          <fieldset data-step="0"><legend data-en="Your product list">A sua lista de produtos</legend><p class="field-help" data-en="Select a catalogue family or describe another requirement. Fields marked * are required.">Escolha uma família do catálogo ou descreva outra necessidade. Os campos com * são obrigatórios.</p><div id="rfqItems"></div><button class="text-button" id="addItem" type="button" data-en="+ Add another product">+ Adicionar outro produto</button></fieldset>
+          <fieldset data-step="0"><legend data-en="Your item list">A sua lista de artigos</legend><p class="field-help" data-en="Choose a supply family or describe the exact item. Fields marked * are required.">Escolha uma família de fornecimento ou descreva o artigo exato. Os campos com * são obrigatórios.</p><div id="rfqItems"></div><button class="text-button" id="addItem" type="button" data-en="+ Add another item">+ Adicionar outro artigo</button></fieldset>
           <fieldset data-step="1" hidden><legend data-en="Delivery and purchasing needs">Entrega e condições do pedido</legend><div id="deliveryFields" class="field-grid"></div></fieldset>
           <fieldset data-step="2" hidden><legend data-en="Who should receive the proposal?">Quem deve receber a proposta?</legend><div id="contactFields" class="field-grid"></div><div id="rfqReview" class="rfq-review"></div><label class="consent"><input id="rfqConsent" type="checkbox" required><span data-en="I authorise HMATIAS to use these details to assess and respond to this request. I have read the Privacy notice.">Autorizo a HMATIAS a utilizar estes dados para avaliar e responder ao pedido. Li o aviso de Privacidade.</span></label><p class="field-help"><a href="privacy.html" target="_blank" rel="noopener" data-en="Read Privacy notice">Ler aviso de Privacidade</a> · <a href="terms.html" target="_blank" rel="noopener" data-en="Terms">Termos</a></p></fieldset>
           <div class="honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
@@ -52,7 +52,7 @@
         <div id="rfqResult" class="rfq-result" tabindex="-1" hidden aria-live="polite"></div>
         <noscript><p>Ative JavaScript para registar o pedido ou contacte a HMATIAS pelo <a href="https://wa.me/244948806673">WhatsApp (+244) 948 806 673</a>.</p></noscript>
       </section>
-      <aside class="rfq-aside"><div class="aside-card"><span class="eyebrow" data-en="YOUR REQUEST">O SEU PEDIDO</span><strong id="itemCount">1 produto</strong><p id="categorySummary" data-en="Choose a category to get started.">Escolha uma categoria para começar.</p><hr><h2 data-en="What happens next?">O que acontece a seguir?</h2><ol><li data-en="We check the quantities and technical requirements.">Validamos as quantidades e os requisitos técnicos.</li><li data-en="We confirm supply options and delivery terms.">Confirmamos as opções de fornecimento e entrega.</li><li data-en="You receive a proposal to review and approve.">Recebe uma proposta para analisar e adjudicar.</li></ol><p class="aside-note" data-en="A quotation request is not a purchase. Prices and lead times require confirmation.">O pedido de cotação não constitui uma compra. Preços e prazos dependem de confirmação.</p></div><p class="contact-note" data-en="Your details are used for this request. Save the private tracking link after sending.">Os seus dados são usados neste pedido. Após enviar, guarde o link privado de acompanhamento.</p></aside>
+      <aside class="rfq-aside"><div class="aside-card"><span class="eyebrow" data-en="YOUR REQUEST">O SEU PEDIDO</span><strong id="itemCount">1 artigo</strong><p id="categorySummary" data-en="Choose a supply family to get started.">Escolha uma família de fornecimento para começar.</p><hr><h2 data-en="What happens next?">O que acontece a seguir?</h2><ol><li data-en="We check the quantities and technical requirements.">Validamos as quantidades e os requisitos técnicos.</li><li data-en="We confirm supply options and delivery terms.">Confirmamos as opções de fornecimento e entrega.</li><li data-en="You receive a proposal to review and approve.">Recebe uma proposta para analisar e adjudicar.</li></ol><p class="aside-note" data-en="A quotation request is not a purchase. Prices and lead times require confirmation.">O pedido de cotação não constitui uma compra. Preços e prazos dependem de confirmação.</p></div><p class="contact-note" data-en="Your details are used for this request. Save the private tracking link after sending.">Os seus dados são usados neste pedido. Após enviar, guarde o link privado de acompanhamento.</p></aside>
     </div>
   </main>
   <footer class="rfq-footer"><span>SOURCE AO · HMATIAS</span><a href="../supply.html" data-en="HMATIAS Supply">HMATIAS Supply</a><a href="privacy.html" data-en="Privacy">Privacidade</a><div class="sitewide-contact-details" style="display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;justify-content:center;padding:10px 0"><a href="mailto:geral@comercialhmatiasps.com" style="display:inline-flex;align-items:center;gap:0"><img class="contact-icon" src="../images/contact-email.svg" width="16" height="16" alt="" aria-hidden="true" style="width:16px;height:16px;flex:0 0 16px;vertical-align:middle;margin-right:7px;filter:brightness(0) invert(1);">geral@comercialhmatiasps.com</a><a href="mailto:info@comercialhmatiasps.com" style="display:inline-flex;align-items:center;gap:0"><img class="contact-icon" src="../images/contact-email.svg" width="16" height="16" alt="" aria-hidden="true" style="width:16px;height:16px;flex:0 0 16px;vertical-align:middle;margin-right:7px;filter:brightness(0) invert(1);">info@comercialhmatiasps.com · Informação institucional</a></div></footer>

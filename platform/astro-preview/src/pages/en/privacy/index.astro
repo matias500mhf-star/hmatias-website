@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import { company } from "../../../data/site";
+---
+<BaseLayout title="Privacy Policy | HMATIAS" description="Privacy information for visitors and clients contacting HMATIAS – Prestação de Serviços SU, LDA." lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS / PRIVACY</span><span>PERSONAL DATA · CONSENT · CONTACT</span></div>
+  <SiteHeader />
+  <main class="legal-page section-pad"><div class="legal-content">
+    <p class="legal-meta">Last updated: 13 November 2026</p>
+    <h1>Privacy Policy</h1>
+    <p>HMATIAS – Prestação de Serviços SU, LDA seeks to handle responsibly the information received through its website and contact channels.</p>
+    <p><strong>Preview notice:</strong> this page describes the policy applicable to the official website. The Astro prototype under review does not currently load Cookiebot, Google Tag Manager, Google Analytics 4 or Microsoft Clarity. Operational forms remain on the official domain. Consent and measurement integrations will only be considered migrated after implementation and testing.</p>
+
+    <h2>1. Information you may provide</h2>
+    <p>When contacting HMATIAS, you may voluntarily provide information such as your name, company, email address, telephone or WhatsApp number, operational or delivery location, and details needed to describe a service, product, project, supply requirement or appointment request.</p>
+    <h2>2. Purpose of processing</h2>
+    <p>This information is used to respond to enquiries, prepare quotations, assess availability, organise commercial contact, manage appointment requests and follow up on requested services or supplies.</p>
+    <h2>3. Forms, quotation requests and WhatsApp</h2>
+    <p>Website forms may organise the information supplied and prepare a structured message for HMATIAS' business WhatsApp account. The visitor reviews the message and decides whether to send it. The final transmission takes place through WhatsApp and is subject to that platform's terms and privacy policy.</p>
+    <p>HMATIAS Clean and HMATIAS Supply enquiries may include product lists, materials, technical references, quantities, locations and commercial notes. The HMATIAS Clean quotation basket uses temporary browser-session storage to retain selected items during the visit; it is not used as a payment system or customer account.</p>
+    <p>When secure request intake is active, the contact, Business Services and appointment forms display a consent option. When a request is submitted through that channel, HMATIAS records contact details, requested service, location and description in a Cloudflare D1 database. Personal fields are protected through encryption and access is restricted to authorised personnel. The visitor receives a reference confirming only that the request was recorded in the database; it does not confirm an award, acceptance or email notification.</p>
+    <p>SOURCE AO partner applications may collect the legal company name, tax or registration number, country, locality, website, partner type, capabilities, contact person and role, email or telephone/WhatsApp, portfolio and a commercial note. This information is used to verify identity, capability and commercial fit, assess the application and, where relevant, manage follow-up and a potential commercial relationship. The registration number, personal contact details, portfolio and commercial note are stored in an encrypted private profile; company identity and capability details are available only to authorised reviewers. HMATIAS records the date and notice version associated with consent. The public response contains only an application reference and review status; an application is not published in a directory and does not guarantee approval, an invitation or an award.</p>
+    <p>Where campaign parameters are present on the page from which a request is submitted, the commercial record may include only UTM source, medium and campaign codes, the public page path and the referring domain. These details are used to identify the request source and support commercial follow-up. The full referrer address, search terms, advertising click identifiers and free-form URL parameters are not stored. Their absence does not prevent submission.</p>
+    <p>Internal notifications may be processed by Resend when the service is configured. Automatic notification delivery is not guaranteed without service confirmation. Institutional requests are automatically deleted from the operational database within a maximum period of 180 days, except where information must be retained in another record under an applicable legal obligation. HMATIAS uses the data to respond to the request and organise commercial follow-up; it does not sell personal information to third parties.</p>
+
+    <h2>4. Appointment requests</h2>
+    <p>The appointment form collects only the information needed to request a preferred time. Submission does not automatically confirm a date, time, contract or payment.</p>
+    <h2>5. Virtual assistant</h2>
+    <p>The website provides a virtual assistant for initial guidance on services, products and quotation requests. Messages sent to the assistant may be processed by technology infrastructure used by HMATIAS to generate a response. Do not submit passwords, banking details, identity documents or other sensitive information through the assistant.</p>
+    <h2>6. External links</h2>
+    <p>The website may contain links to external services such as WhatsApp, LinkedIn, Instagram, manufacturer catalogues and other relevant pages. When you open these services, the providers' respective terms and privacy policies apply.</p>
+    <h2>7. Retention and access</h2>
+    <p>HMATIAS retains commercial information only for as long as necessary to handle the enquiry, maintain the business relationship or meet applicable obligations. Access should be limited to people who need the information to provide the requested support or service.</p>
+    <h2>8. Cookies, consent and usage statistics</h2>
+    <p>The official website uses Cookiebot as its consent management platform. Cookies and technologies classified as statistical remain blocked until the visitor authorises that category. Preferences may be refused or changed later using the consent mechanism provided on the website.</p>
+    <p>After consent to statistics, the website may load Google Tag Manager to manage authorised tags and use Google Analytics 4 to understand pages viewed, visit sources, technical device characteristics and general commercial interactions. HMATIAS' integration keeps Google Signals and advertising personalisation signals disabled.</p>
+    <p>To support usability analysis, the website may also use Microsoft Clarity, only after consent to statistics. The tool helps understand browsing and interaction patterns. Under the current configuration, it is not loaded on pages marked noindex or in operational or private areas. See the <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement</a>.</p>
+    <p>Analytics events use only technical and commercial categories, such as contact type, service, form or internal project identifier. The integration does not send names, telephone numbers, email addresses, form content, WhatsApp message text, quotation requests or assistant conversations to Google Analytics as custom parameters. See also <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">How Google uses information from sites that use its services</a>.</p>
+    <h2>9. Privacy enquiries</h2>
+    <p>For questions about information provided to HMATIAS, contact <a href={"mailto:"+company.commercialEmail}>{company.commercialEmail}</a>.</p>
+    <a class="legal-back" href="/en/">← Back to HMATIAS</a>
+  </div></main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+</BaseLayout>
+<style>
+.legal-page { background:var(--hm-light); }
+.legal-content { width:min(900px,100%); margin:0 auto; padding:clamp(28px,5vw,56px); background:var(--hm-paper); border:1px solid var(--hm-line); }
+.legal-meta { margin:0 0 18px; color:var(--hm-muted); font-size:11px; }
+.legal-content h1 { margin:0 0 28px; font-size:clamp(36px,5vw,56px); line-height:1.05; letter-spacing:-.06em; font-weight:520; }
+.legal-content h2 { margin:33px 0 10px; font-size:17px; line-height:1.35; font-weight:650; letter-spacing:-.025em; }
+.legal-content p { color:var(--hm-muted); font-size:12px; line-height:1.9; }
+.legal-content a:not(.legal-back) { color:var(--hm-blue); text-decoration:underline; text-underline-offset:3px; }
+.legal-back { display:inline-flex; margin-top:28px; padding:13px 18px; color:#fff; background:var(--hm-navy); font-size:11px; font-weight:650; }
+</style>

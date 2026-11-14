@@ -93,7 +93,7 @@
     $('#cockpitOutstanding').textContent=fmtMoney(d.collections?.outstanding_aoa);
     $('#cockpitOverdue').textContent=fmtMoney(d.collections?.overdue_aoa);
     $('#cockpitOverdueCount').textContent=(d.collections?.overdue_count||0)+' vencida(s) · '+(d.collections?.paid_count||0)+' paga(s)';
-    $('#cockpitAsOf').textContent=d.as_of?'Atualizado '+fmtDate(d.as_of):'Atualizado';
+    $('#cockpitAsOf').textContent=d.as_of?'Actualizado '+fmtDate(d.as_of):'Actualizado';
     $('#realizedProfit').classList.toggle('negative',Number(d.execution?.realized_gross_profit_aoa)<0);
   }
 
@@ -105,11 +105,11 @@
     if(actionLoadState!=='ready'){
       count.textContent='—';
       list.innerHTML=actionLoadState==='error'
-        ?'<div class="cockpit-empty" role="alert">Não foi possível carregar as ações comerciais. Atualize os pedidos para tentar novamente.</div>'
+        ?'<div class="cockpit-empty" role="alert">Não foi possível carregar as ações comerciais. Actualize os pedidos para tentar novamente.</div>'
         :'<div class="cockpit-empty">A carregar ações comerciais…</div>';
       return;
     }
-    count.textContent=String(commercialActions.length)+' ação(ões)';
+    count.textContent=String(commercialActions.length)+' acção(ões)';
     if(!commercialActions.length){
       list.innerHTML='<div class="cockpit-empty">Sem ações comerciais prioritárias nesta janela.</div>';
       return;
@@ -122,7 +122,7 @@
       const badge=document.createElement('span');badge.className='commercial-action-priority';badge.textContent=labels[action.priority]||action.priority||'Normal';
       const ref=document.createElement('small');ref.textContent=action.reference||action.request_id;
       top.append(badge,ref);
-      const title=document.createElement('strong');title.textContent=action.title||'Ação comercial';
+      const title=document.createElement('strong');title.textContent=action.title||'Acção comercial';
       const requirement=document.createElement('p');requirement.textContent=action.requirement_text||'—';
       const why=document.createElement('p');why.className='commercial-action-why';why.textContent=action.why||'';
       const next=document.createElement('p');next.className='commercial-action-next';next.textContent=action.recommended_action||'';
@@ -144,7 +144,7 @@
     const row=requests.find(item=>item.id===action.request_id);
     const card=[...document.querySelectorAll('.request-card')].find(item=>item.dataset.requestId===action.request_id);
     if(!row||!card){
-      setApiStatus('A ação refere um pedido fora da janela atual. Atualize a fila ou filtre pelo estado.','error');
+      setApiStatus('A ação refere um pedido fora da janela actual. Actualize a fila ou filtre pelo estado.','error');
       return;
     }
     card.scrollIntoView({behavior:'smooth',block:'start'});
@@ -246,7 +246,7 @@
         <div class="collections-head">
           <div>
             <small>COBRANÇA & CAIXA</small>
-            <h4>Fatura → pagamentos → saldo → atraso</h4>
+            <h4>Factura → pagamentos → saldo → atraso</h4>
             <p>Receita final não é tratada como dinheiro recebido. Cada pagamento exige referência, valor e data confirmados.</p>
           </div>
           <button class="btn btn-outline btn-small open-collections" type="button">Abrir cobrança</button>
@@ -543,9 +543,9 @@
         <label>Alfândega real (AOA)<input class="fulfillment-customs" type="number" min="0" step="0.01" placeholder="0 ou valor real"></label>
         <label>Impostos/taxas reais (AOA)<input class="fulfillment-tax" type="number" min="0" step="0.01" placeholder="0 ou valor real"></label>
         <label>Outros custos reais (AOA)<input class="fulfillment-other" type="number" min="0" step="0.01" placeholder="0 ou valor real"></label>
-        <label>Ref. entrega<input class="fulfillment-delivery-ref" maxlength="160" placeholder="Guia / receção / entrega"></label>
+        <label>Ref. entrega<input class="fulfillment-delivery-ref" maxlength="160" placeholder="Guia / recepção / entrega"></label>
         <label>Data entrega<input class="fulfillment-delivered-at" type="datetime-local"></label>
-        <label>Receita final (AOA)<input class="fulfillment-final-revenue" type="number" min="0" step="0.01" placeholder="Valor final faturado/aceite"></label>
+        <label>Receita final (AOA)<input class="fulfillment-final-revenue" type="number" min="0" step="0.01" placeholder="Valor final facturado/aceite"></label>
         <label class="commercial-notes">Notas internas<textarea class="fulfillment-notes" rows="2" maxlength="1600" placeholder="Ocorrências, confirmação de entrega, desvios e fecho"></textarea></label>
       </div>
       <div class="fulfillment-actions">
@@ -633,7 +633,7 @@
     try{
       const payload=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/fulfillment');
       renderFulfillment(card,row,commercialPanel,payload);
-      button.textContent='Atualizar execução';
+      button.textContent='Actualizar execução';
     }catch(error){
       panel.hidden=false;
       panel.innerHTML='<div class="empty-state compact"><strong>Não foi possível carregar a execução.</strong><p>Confirme a sessão privada e tente novamente.</p></div>';
@@ -657,7 +657,7 @@
     const invoice=payload?.invoice||{};
     const summary=payload?.summary||{};
     const request=payload?.request||{};
-    const statusLabels={not_invoiced:'Não faturado',issued:'Emitida',partial:'Pagamento parcial',overdue:'Vencida',paid:'Paga'};
+    const statusLabels={not_invoiced:'Não facturado',issued:'Emitida',partial:'Pagamento parcial',overdue:'Vencida',paid:'Paga'};
     panel.innerHTML=`
       <div class="collections-statusbar">
         <span>Execução: <strong class="collections-stage"></strong></span>
@@ -671,13 +671,13 @@
         <article><small>ATRASO</small><strong class="collections-overdue">—</strong></article>
       </div>
       <form class="invoice-form">
-        <div class="collections-subhead"><small>FATURA</small><strong>Registo de faturação</strong></div>
+        <div class="collections-subhead"><small>FATURA</small><strong>Registo de facturação</strong></div>
         <label>Referência fatura<input class="invoice-ref" maxlength="160" placeholder="Ex.: FT 2026/..." required></label>
         <label>Data fatura<input class="invoice-date" type="date" required></label>
         <label>Vencimento<input class="invoice-due-date" type="date"></label>
-        <label>Valor faturado (AOA)<input class="invoice-amount" type="number" min="0.01" step="0.01" placeholder="Valor confirmado" required></label>
+        <label>Valor facturado (AOA)<input class="invoice-amount" type="number" min="0.01" step="0.01" placeholder="Valor confirmado" required></label>
         <label class="commercial-notes">Notas internas<textarea class="invoice-notes" rows="2" maxlength="1600" placeholder="Condições, documento emitido, observações"></textarea></label>
-        <div class="collections-actions"><button class="btn btn-primary btn-small save-invoice" type="submit">Guardar fatura</button><span class="collections-message invoice-message"></span></div>
+        <div class="collections-actions"><button class="btn btn-primary btn-small save-invoice" type="submit">Guardar factura</button><span class="collections-message invoice-message"></span></div>
       </form>
       <form class="payment-form">
         <div class="collections-subhead"><small>PAGAMENTO</small><strong>Registar recebimento confirmado</strong></div>
@@ -814,7 +814,7 @@
     try{
       const payload=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/collections');
       renderCollections(card,row,commercialPanel,payload);
-      button.textContent='Atualizar cobrança';
+      button.textContent='Actualizar cobrança';
     }catch(error){
       panel.hidden=false;
       panel.innerHTML='<div class="empty-state compact"><strong>Não foi possível carregar a cobrança.</strong><p>Confirme a sessão privada e tente novamente.</p></div>';
@@ -830,7 +830,7 @@
     try{
       const payload=await api('/api/admin/sourcing-requests/'+encodeURIComponent(row.id)+'/commercial-case');
       renderCommercialCase(card,row,payload);
-      button.textContent='Atualizar caso comercial';
+      button.textContent='Actualizar caso comercial';
     }catch(error){
       panel.hidden=false;
       panel.innerHTML='<div class="empty-state compact"><strong>Não foi possível carregar o caso comercial.</strong><p>Confirme a sessão privada e tente novamente.</p></div>';
@@ -856,7 +856,7 @@
     card.querySelector('.internal-notes').value=row.internal_notes||'';
     if(row.rfq){
       const rfq=row.rfq;card.querySelector('.rfq-qualification').hidden=false;
-      const labels={company:'Empresa',individual:'Particular',institution:'Instituição',ready:'Compra após aprovação',budgeting:'Consulta de orçamento',recurring:'Fornecimento recorrente',urgent:'Urgente',normal:'Prazo normal',planned:'Compra programada',yes:'Aceita equivalentes',no:'Referência exata',discuss:'Consultar antes de substituir'};
+      const labels={company:'Empresa',individual:'Particular',institution:'Instituição pública / estatal',ready:'Compra após aprovação',budgeting:'Consulta de orçamento para projecto / instalação',recurring:'Fornecimento recorrente',urgent:'Urgente',normal:'Prazo normal',planned:'Compra programada',yes:'Aceita equivalentes',no:'Referência exacta',discuss:'Consultar antes de substituir'};
       card.querySelector('.rfq-buyer').textContent=[rfq.requester_name,rfq.company,labels[rfq.buyer_type]].filter(Boolean).join(' · ');
       for(const item of rfq.items||[]){const li=document.createElement('li');li.textContent=`${item.quantity} ${item.unit} · ${item.description}${item.specification?' — '+item.specification:''}`;card.querySelector('.rfq-lines').append(li);}
       card.querySelector('.rfq-conditions').textContent=[labels[rfq.intent],labels[rfq.urgency],labels[rfq.alternatives],rfq.budget==null?'Orçamento a confirmar':Number(rfq.budget).toLocaleString('pt-AO')+' Kz',rfq.origin].filter(Boolean).join(' · ');
@@ -904,7 +904,7 @@
     const list=$('#requestList');list.innerHTML='';
     if(requestLoadState!=='ready'){
       list.innerHTML=requestLoadState==='error'
-        ?'<div class="empty-state" role="alert"><strong>Não foi possível carregar os pedidos.</strong><p>Volte a ligar a sessão ou atualize a fila. A quantidade de pedidos está indisponível.</p></div>'
+        ?'<div class="empty-state" role="alert"><strong>Não foi possível carregar os pedidos.</strong><p>Volte a ligar a sessão ou actualize a fila. A quantidade de pedidos está indisponível.</p></div>'
         :'<div class="empty-state"><strong>A carregar pedidos…</strong><p>Os contactos permanecem apenas na sessão autenticada.</p></div>';
       return;
     }
@@ -916,7 +916,7 @@
     const list=$('#demandList');list.innerHTML='';
     if(demandLoadState!=='ready'){
       list.innerHTML=demandLoadState==='error'
-        ?'<div class="empty-state" role="alert"><strong>Não foi possível carregar a procura.</strong><p>Volte a ligar a sessão ou atualize para tentar novamente.</p></div>'
+        ?'<div class="empty-state" role="alert"><strong>Não foi possível carregar a procura.</strong><p>Volte a ligar a sessão ou actualize para tentar novamente.</p></div>'
         :'<div class="empty-state"><strong>A carregar procura…</strong></div>';
       return;
     }
@@ -1009,7 +1009,7 @@
     if(!adminToken)setApiStatus('Token rejected','error');
     else if(requestLoadState!=='ready')setApiStatus('Não foi possível carregar os pedidos. Volte a ligar a sessão.','error');
     else if(demandLoadState!=='ready')setApiStatus('Não foi possível carregar a procura. Volte a ligar a sessão.','error');
-    else if(!commercialDashboard||actionLoadState!=='ready')setApiStatus('Sessão ligada · informação comercial incompleta. Atualize os pedidos.','error');
+    else if(!commercialDashboard||actionLoadState!=='ready')setApiStatus('Sessão ligada · informação comercial incompleta. Actualize os pedidos.','error');
     else setApiStatus('Connected · private operations loaded','connected');
     return authorized;
   }

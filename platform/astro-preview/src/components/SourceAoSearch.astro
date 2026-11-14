@@ -1,0 +1,69 @@
+---
+interface Props {
+  apiBase?: string;
+  lang?: "pt-AO" | "en";
+}
+const { apiBase = "", lang = "pt-AO" } = Astro.props;
+const english = lang === "en";
+const apiConfigured = Boolean(apiBase);
+---
+<section class="source-live-search" aria-labelledby="source-live-search-title">
+  <div class="source-live-search-head">
+    <span class="source-search-kicker">{english ? "01 / PUBLIC CATALOGUE SEARCH" : "01 / PESQUISA DE CATÁLOGO"}</span>
+    <h2 id="source-live-search-title">{english ? "Search materials, equipment and supply families." : "Pesquise materiais, equipamentos e famílias de fornecimento."}</h2>
+    <p>{english ? "Search the published SOURCE AO catalogue. Availability, stock and prices are only confirmed after commercial verification." : "Pesquise o catálogo publicado do SOURCE AO. Disponibilidade, stock e preços só são confirmados após validação comercial."}</p>
+  </div>
+  <form id="sourceAoSearchForm" class="source-live-search-form">
+    <label for="sourceAoSearchQuery">{english ? "What are you looking for?" : "O que procura?"}
+      <input id="sourceAoSearchQuery" name="q" type="search" minlength="2" maxlength="180" required placeholder={english ? "E.g. diamond discs, Testo 440, PPE…" : "Ex.: discos diamantados, Testo 440, EPI…"} />
+    </label>
+    <label for="sourceAoSearchLocation">{english ? "Delivery location" : "Local de entrega"}
+      <input id="sourceAoSearchLocation" name="location" type="text" maxlength="120" value="Luanda" />
+    </label>
+    <button type="submit">{english ? "Search catalogue" : "Pesquisar catálogo"} <span aria-hidden="true">↗</span></button>
+  </form>
+  <p id="sourceAoSearchStatus" class="source-live-search-status" role="status" aria-live="polite">
+    {apiConfigured
+      ? (english ? "Staging API connected. Search uses published catalogue records only; this preview remains isolated from production." : "API de staging ligada. A pesquisa utiliza apenas artigos publicados; este preview mantém-se isolado da produção.")
+      : (english ? "Static preview catalogue search (not a D1 search); stock, price and delivery require commercial confirmation." : "Pesquisa no catálogo estático de pré-visualização (não consulta a D1); stock, preço e entrega dependem de confirmação comercial.")}
+  </p>
+  <div id="sourceAoSearchResults" class="source-live-search-results" aria-live="polite" hidden></div>
+  <p class="source-live-search-footnote">{english ? "Search results are references, not a stock or price guarantee." : "Os resultados de pesquisa são referências, não uma garantia de stock ou preço."} <a href={english ? "/en/source-ao/smart-rfq/" : "/source-ao/smart-rfq/"}>{english ? "Submit a quotation request" : "Enviar pedido de cotação"}</a></p>
+</section>
+<script is:inline define:vars={{ apiBase, lang }}>
+  window.SOURCE_AO_RUNTIME = Object.freeze({
+    environment: "preview",
+    apiBase: typeof apiBase === "string" ? apiBase : "",
+    catalogUrl: "/api/source-ao/catalog.json",
+    language: typeof lang === "string" ? lang : "pt-AO"
+  });
+</script>
+<script>
+  import "../../../../source-ao/api-client.js";
+  import "../../../../source-ao/astro-search.js";
+</script>
+<style>
+.source-live-search{padding:56px clamp(20px,8vw,120px);border-bottom:1px solid #d7e0e8;background:#f6f9fb}
+.source-live-search-head{max-width:780px}.source-search-kicker{font-size:9px;font-weight:750;letter-spacing:.16em;color:#1265a5}
+.source-live-search h2{max-width:760px;margin:16px 0;font-size:clamp(28px,3.8vw,44px);line-height:1.08;letter-spacing:-.055em;font-weight:560;color:#10283b}
+.source-live-search-head p{max-width:650px;color:#5d6d7d;font-size:12px;line-height:1.8}
+.source-live-search-form{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(160px,.65fr) auto;gap:12px;align-items:end;margin-top:28px}
+.source-live-search-form label{display:grid;gap:8px;font-size:10px;font-weight:700;color:#10283b}
+.source-live-search-form input{height:48px;min-width:0;padding:0 14px;border:1px solid #cbd8e3;border-radius:0;background:#fff;color:#10283b;font:inherit;font-size:13px}
+.source-live-search-form input:focus{outline:2px solid #1265a5;outline-offset:2px}
+.source-live-search-form input:disabled{background:#edf1f4;color:#758594}
+.source-live-search-form button{height:48px;padding:0 20px;border:0;background:#0b2b45;color:#fff;font-size:11px;font-weight:750;cursor:pointer}
+.source-live-search-form button:disabled{background:#9aa8b4;cursor:not-allowed}
+.source-live-search-status{margin:14px 0 0;color:#5d6d7d;font-size:10px;line-height:1.7}
+.source-live-search-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:22px}
+.source-live-search-results article{display:flex;justify-content:space-between;gap:20px;padding:18px;background:#fff;border:1px solid #d7e0e8}
+.source-search-result-copy{min-width:0}.source-search-result-copy small{display:block;color:#5d6d7d;font-size:9px;line-height:1.6}
+.source-search-result-copy h3{margin:6px 0;font-size:14px;color:#10283b}
+.source-search-result-copy p{margin:0;color:#5d6d7d;font-size:10px;line-height:1.6}
+.source-search-result-action{align-self:center;flex:0 0 auto;color:#1265a5;font-size:10px;font-weight:750;text-decoration:none}
+.source-search-result-status{display:inline-block;margin-top:10px;padding:5px 7px;background:#edf3f7;color:#264a66;font-size:9px;font-weight:700}
+.source-live-search-empty{padding:18px;background:#fff;border:1px solid #d7e0e8;color:#5d6d7d;font-size:11px;line-height:1.7}
+.source-live-search-footnote{margin:17px 0 0;color:#5d6d7d;font-size:10px}.source-live-search-footnote a{color:#1265a5;font-weight:750;text-decoration:none}
+@media(max-width:800px){.source-live-search-form{grid-template-columns:1fr 1fr}.source-live-search-form label:first-child{grid-column:1/-1}.source-live-search-form button{grid-column:1/-1}.source-live-search-results{grid-template-columns:1fr}}
+@media(max-width:520px){.source-live-search{padding-top:42px;padding-bottom:42px}.source-live-search-form{grid-template-columns:1fr}.source-live-search-form label:first-child,.source-live-search-form button{grid-column:auto}.source-live-search-results article{flex-direction:column;gap:12px}.source-search-result-action{align-self:flex-start}}
+</style>

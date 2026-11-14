@@ -29,6 +29,46 @@ for(const row of rows){
   }
 }
 
+const diamondSearch=await get('/api/search?q='+encodeURIComponent('discos diamantados 115 mm')+'&location='+encodeURIComponent('Luanda'));
+const diamondIds=['item-carbodiam-pantera-115','item-carbodiam-pantera-neutre-115','item-carbodiam-crack-chaser-115'];
+const diamondRows=(diamondSearch.results||[]).filter(row=>diamondIds.includes(row.id));
+if(diamondIds.some(id=>!diamondRows.some(row=>row.id===id))) fail('one or more exact Carbodiam 115 mm catalogue references are missing from staging D1');
+if(diamondRows.some(row=>row.category!=='diamond-tools'||row.status!=='discovered')) fail('Portugal catalogue references must remain discovered, not imply stock in Luanda');
+if(diamondRows.some(row=>['supplier','price','quantity_reported','evidence_reference'].some(key=>Object.prototype.hasOwnProperty.call(row,key)))) fail('diamond tools public result exposed private supplier/commercial fields');
+
+const exactSkuChecks=[
+ ['9194','item-carbodiam-sku-pantera-pantera-125-ref-9194'],
+ ['15449','item-carbodiam-sku-neutre-pantera-neutre-125-ref-15449'],
+ ['11603','item-carbodiam-sku-crack-crack-chaser-125-ref-11603'],
+ ['14491','item-carbodiam-sku-acier-acier-300-h20-ref-14491'],
+ ['19722','item-carbodiam-sku-beton-beton-400-ref-19722'],
+ ['13745','item-carbodiam-sku-betonsol-beton-sol-600-1-ref-13745'],
+ ['5182','item-carbodiam-sku-incisor-incisor-125-ref-5182']
+];
+for(const [reference,itemId] of exactSkuChecks){
+  const byReference=await get('/api/search?q='+encodeURIComponent(reference)+'&location='+encodeURIComponent('Portugal'));
+  const result=(byReference.results||[]).find(row=>row.id===itemId);
+  if(!result||result.status!=='source_checked') fail('Carbodiam factory reference '+reference+' missing or not source-traceable in staging D1');
+  const local=await get('/api/search?q='+encodeURIComponent(reference)+'&location='+encodeURIComponent('Luanda'));
+  const localResult=(local.results||[]).find(row=>row.id===itemId);
+  if(!localResult||localResult.status!=='discovered') fail('Portugal catalogue reference '+reference+' incorrectly implies current Luanda stock');
+}
+const proforSearch=await get('/api/search?q='+encodeURIComponent('coroa diamantada PROFOR')+'&location='+encodeURIComponent('Portugal'));
+const proforItem=(proforSearch.results||[]).find(row=>row.id==='item-crown-family-carbodiam-profor');
+if(!proforItem||proforItem.status!=='source_checked') fail('Carbodiam PROFOR crown family is missing or not source-traceable in staging D1');
+
+const grindingSearch=await get('/api/search?q='+encodeURIComponent('copos de desbaste diamantados')+'&location='+encodeURIComponent('Luanda'));
+const grindingItem=(grindingSearch.results||[]).find(row=>row.id==='item-synvor-diamond-grinding-cups');
+if(!grindingItem||grindingItem.status!=='discovered') fail('Diamond grinding-cup family is missing or incorrectly marked as locally available');
+
+const wekaSearch=await get('/api/search?q='+encodeURIComponent('WEKA DK17')+'&location='+encodeURIComponent('Portugal'));
+if(!(wekaSearch.results||[]).some(row=>row.id==='item-weka-dk17')) fail('WEKA DK17 model is not searchable in staging D1');
+
+const panteraReference=await get('/api/search?q=9193&location=Portugal');
+const pantera=(panteraReference.results||[]).find(row=>row.id==='item-carbodiam-pantera-115');
+if(!pantera||pantera.status!=='source_checked'||pantera.verification?.source_type!=='supplier_official_channel') fail('Carbodiam PANTERA factory reference 9193 is not source-traceable');
+if(pantera.status==='in_stock_confirmed') fail('official catalogue entry must not be treated as confirmed stock');
+
 const formolMission=await get('/api/procurement-mission?q='+encodeURIComponent('formol 37% 1L urgente')+'&location='+encodeURIComponent('Luanda'));
 if(formolMission?.mission?.interpretation?.item_id!=='item-formaldehyde') fail('formaldehyde acceptance case was not interpreted correctly');
 if(!(formolMission.mission.exact_matches||[]).length) fail('formaldehyde acceptance case returned no exact source-checked match');

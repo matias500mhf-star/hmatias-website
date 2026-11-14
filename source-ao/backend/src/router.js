@@ -8,6 +8,8 @@ import {
 } from './sourcing.js';
 import {enforceRateLimit,hardenResponse,safeRequestLog} from './security.js';
 import {readinessResponse} from './health.js';
+import {automationStatusResponse} from './automation-status.js';
+import {listPublicCatalog,listAdminCatalog,updateCatalogItem} from './catalog.js';
 import {runMaintenance} from './maintenance.js';
 import {sendPendingIntakeAlerts,intakeAlertStatus} from './intake-alerts.js';
 import {websiteLeadDesk} from './website-lead-desk.js';
@@ -56,6 +58,28 @@ function securityFailure(env,requestId){
   });
 }
 
+function sourcingRequestCors(request,env){
+  const allowedOrigin=env.PUBLIC_ORIGIN||'https://comercialhmatiasps.com';
+  const origin=request.headers.get('origin')||'';
+  const requestedMethod=(request.headers.get('access-control-request-method')||'').toUpperCase();
+  const requestedHeaders=(request.headers.get('access-control-request-headers')||'')
+    .split(',').map(value=>value.trim().toLowerCase()).filter(Boolean);
+  const allowedHeaders=new Set(['content-type']);
+
+  if(origin!==allowedOrigin||requestedMethod!=='POST'||requestedHeaders.some(value=>!allowedHeaders.has(value))){
+    return new Response(null,{status:403,headers:{'cache-control':'no-store','vary':'Origin'}});
+  }
+
+  return new Response(null,{status:204,headers:{
+    'access-control-allow-origin':allowedOrigin,
+    'access-control-allow-methods':'POST, OPTIONS',
+    'access-control-allow-headers':'content-type',
+    'access-control-max-age':'600',
+    'cache-control':'no-store',
+    'vary':'Origin'
+  }});
+}
+
 export default {
   async fetch(request,env){
     const started=Date.now();
@@ -76,6 +100,14 @@ export default {
           response=collectorResponse;
         }else if(request.method==='GET' && url.pathname==='/ready'){
           response=await readinessResponse(env);
+        }else if(request.method==='GET' && url.pathname==='/api/automation/status'){
+          response=await automationStatusResponse(env);
+        }else if(request.method==='GET' && url.pathname==='/api/catalog'){
+          response=await listPublicCatalog(request,env);
+        }else if(request.method==='GET' && url.pathname==='/api/admin/catalog/items'){
+          response=await listAdminCatalog(request,env);
+        }else if(/^\/api\/admin\/catalog\/items\/[A-Za-z0-9_-]+$/.test(url.pathname) && request.method==='PATCH'){
+          response=await updateCatalogItem(request,env,url.pathname.split('/').pop());
         }else if(request.method==='GET' && url.pathname==='/internal/website-leads'){
           response=websiteLeadDesk();
         }else if(request.method==='GET' && url.pathname==='/api/admin/intake-alerts/status'){
@@ -117,6 +149,8 @@ export default {
           response=await procurementMission(request,env);
         }else if(request.method==='GET' && url.pathname==='/api/admin/procurement-mission'){
           response=await procurementMission(request,env,{privateView:true});
+        }else if(request.method==='OPTIONS' && url.pathname==='/api/sourcing-requests'){
+          response=sourcingRequestCors(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
           response=await createSourcingRequest(request,env);
         }else if(request.method==='POST' && url.pathname==='/api/partner-applications'){

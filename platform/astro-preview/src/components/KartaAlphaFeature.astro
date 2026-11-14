@@ -1,0 +1,23 @@
+---
+const isEnglish = Astro.url.pathname.startsWith("/en/");
+---
+<section class="karta-feature" aria-labelledby="karta-feature-title">
+  <div class="karta-feature-copy">
+    <span>{isEnglish ? "INDEPENDENT DIGITAL PROJECT · ALPHA" : "PROJECTO DIGITAL AUTÓNOMO · ALPHA"}</span>
+    <h2 id="karta-feature-title">KARTA Wallet</h2>
+    <p>{isEnglish
+      ? "A digital identity wallet in development, presented separately from HMATIAS operational services."
+      : "Uma carteira digital de identidade em desenvolvimento, apresentada separadamente dos serviços operacionais da HMATIAS."}</p>
+  </div>
+  <a href={isEnglish ? "/en/karta/" : "/karta/"}>{isEnglish ? "View the Alpha project" : "Conhecer o projecto Alpha"}<span aria-hidden="true">↗</span></a>
+</section>
+
+<style>
+  .karta-feature { padding: 34px var(--hm-gutter); display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 24px; border-top: 1px solid var(--hm-line); border-bottom: 1px solid var(--hm-line); background: var(--hm-light); }
+  .karta-feature-copy > span { color: var(--hm-blue-accessible); font-size: 9px; font-weight: 700; letter-spacing: .13em; }
+  .karta-feature h2 { margin: 9px 0 0; color: var(--hm-ink); font-size: clamp(23px,3vw,32px); font-weight: 550; letter-spacing: -.04em; }
+  .karta-feature p { max-width: 610px; margin: 8px 0 0; color: var(--hm-muted); font-size: 12px; line-height: 1.75; }
+  .karta-feature > a { display: inline-flex; align-items: center; gap: 18px; padding-bottom: 8px; border-bottom: 1px solid var(--hm-blue); color: var(--hm-blue-accessible); font-size: 11px; font-weight: 700; }
+  .karta-feature > a span { font-size: 16px; font-weight: 400; }
+  @media (max-width: 650px) { .karta-feature { grid-template-columns: 1fr; gap: 18px; } .karta-feature > a { justify-self: start; } }
+</style>

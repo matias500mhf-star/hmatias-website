@@ -100,6 +100,34 @@ function mapObservation(row,now=Date.now()){
 
 export async function buildProcurementMission(env,{query,location='Luanda',neededBy='',quantity=null}={}){
   const plan=buildSmartSearchPlan({query,location,neededBy,quantity});
+  if(plan.interpretation.requires_manual_compliance_review){
+    return {
+      mission_id:`mission_${crypto.randomUUID()}`,
+      created_at:new Date().toISOString(),
+      status:'manual_compliance_review_required',
+      urgency:plan.urgency,
+      interpretation:plan.interpretation,
+      requirement:{
+        query:plan.query,
+        location:plan.location,
+        needed_by:neededBy||null,
+        quantity:quantity??plan.interpretation.quantity??null,
+        specifications:plan.interpretation.specifications
+      },
+      exact_matches:[],
+      supplier_candidates:[],
+      contactable_candidates:0,
+      rfq:null,
+      verification_required:unique(plan.verification_required),
+      fast_path:null,
+      manual_review:{
+        required:true,
+        reason:'Chemical identity, intended use, handling requirements and applicable legal/compliance conditions must be reviewed before supplier discovery.',
+        supplier_discovery_paused:true
+      },
+      truth_rule:'No supplier search, supplier shortlist or supplier RFQ is generated until manual compliance review is completed.'
+    };
+  }
   const normalizedLocation=normalizeSearch(plan.location);
   const locationLike=`%${normalizedLocation}%`;
   const exact=[];
@@ -221,6 +249,7 @@ export function publicProcurementMission(mission){
     })),
     rfq:mission.rfq,
     verification_required:mission.verification_required,
+    manual_review:mission.manual_review||null,
     truth_rule:mission.truth_rule
   };
 }

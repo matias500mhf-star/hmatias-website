@@ -7,10 +7,11 @@
   let query='';
   let market='AO';
   let opportunities=[];
-  let lang='pt';
+  let lang=document.documentElement?.lang==='en'?'en':'pt';
   let localById=new Map();
   let syncState='idle';
   let lastSyncAt=null;
+  let backendAutomation=null;
   let refreshing=false;
   const AUTO_REFRESH_MS=5*60*1000;
 
@@ -18,12 +19,13 @@
     pt:{
       live:'Intelligence live',
       liveUpdating:'A sincronizar',
-      liveFallback:'Dados disponíveis',
+      liveFallback:'Sem ligação',
+      apiNotConfigured:'API de staging não configurada',noLiveData:'O feed público será ligado quando o ambiente de staging estiver configurado.',
       back:'← Source AO',
       eyebrow:'SOURCE AO · INTELLIGENCE RADAR',
       title:'Não veja apenas oportunidades.\nEntenda quais merecem ação.',
       lead:'O Radar cruza prazo, fonte, setor, localização e compatibilidade comercial para transformar anúncios dispersos em prioridades de negócio verificáveis.',
-      engineState:'Motor ativo',
+      engineState:'Triagem comercial',
       statActive:'Oportunidades ativas',statActiveNote:'com prazo válido',
       statHighFit:'Fit elevado',statHighFitNote:'score ≥ 80',
       statUrgent:'Ação urgente',statUrgentNote:'≤ 5 dias',
@@ -54,12 +56,13 @@
     en:{
       live:'Intelligence live',
       liveUpdating:'Syncing',
-      liveFallback:'Available data',
+      liveFallback:'Not connected',
+      apiNotConfigured:'Staging API not configured',noLiveData:'The public feed will be enabled when the staging environment is configured.',
       back:'← Source AO',
       eyebrow:'SOURCE AO · INTELLIGENCE RADAR',
       title:'Do not just see opportunities.\nKnow which ones deserve action.',
       lead:'The Radar combines deadline, source, sector, location and commercial fit to turn scattered notices into verifiable business priorities.',
-      engineState:'Engine active',
+      engineState:'Commercial triage',
       statActive:'Active opportunities',statActiveNote:'valid deadline',
       statHighFit:'High fit',statHighFitNote:'score ≥ 80',
       statUrgent:'Urgent action',statUrgentNote:'≤ 5 days',
@@ -113,7 +116,7 @@
 
     const sourceAt=latestSourceCheckedAt();
     const sourceMeta=sourceAt?t('sourcesChecked')+' '+fmt(sourceAt)+' · '+clock(sourceAt):'';
-    document.body.classList.toggle('op-live-unavailable',syncState==='fallback');
+    document.body.classList.toggle('op-live-unavailable',syncState==='fallback'||syncState==='unconfigured');
     document.body.classList.toggle('op-live-syncing',syncState==='syncing');
 
     if(syncState==='syncing'){
@@ -124,6 +127,10 @@
       status.textContent=t('liveSynced')+(lastSyncAt?' · '+clock(lastSyncAt):'');
       meta.textContent=[t('autoRefresh'),sourceMeta].filter(Boolean).join(' · ');
       if(liveLabel)liveLabel.textContent=t('live');
+    }else if(syncState==='unconfigured'){
+      status.textContent=t('apiNotConfigured');
+      meta.textContent=t('noLiveData');
+      if(liveLabel)liveLabel.textContent=t('liveFallback');
     }else if(syncState==='fallback'){
       status.textContent=t('liveUnavailable');
       meta.textContent=[t('fallbackNote'),sourceMeta].filter(Boolean).join(' · ');
@@ -134,11 +141,30 @@
       if(liveLabel)liveLabel.textContent=t('liveUpdating');
     }
 
+    if(backendAutomation?.ok){
+      const checked=backendAutomation.sources?.last_success_at;
+      const automationLabel=backendAutomation.status==='operational'
+        ?(lang==='pt'?'Automação activa':'Automation active')
+        :(lang==='pt'?'Automação a verificar':'Automation needs attention');
+      const checkedLabel=checked?(lang==='pt'?'última verificação':'last check')+' '+clock(checked):'';
+      meta.textContent=[meta.textContent,automationLabel,checkedLabel].filter(Boolean).join(' · ');
+    }
+
     if(button){
       button.disabled=refreshing;
       button.setAttribute('aria-busy',refreshing?'true':'false');
     }
     if(buttonLabel)buttonLabel.textContent=refreshing?t('refreshing'):t('refreshNow');
+  }
+
+  async function refreshAutomationStatus(){
+    if(!window.SourceAOAPI?.isConfigured?.()||!window.SourceAOAPI?.automationStatus)return;
+    try{
+      backendAutomation=await window.SourceAOAPI.automationStatus();
+    }catch{
+      backendAutomation=null;
+    }
+    updateSyncUI();
   }
 
   async function refreshLiveData(){
@@ -147,7 +173,10 @@
     syncState='syncing';
     updateSyncUI();
     try{
-      if(!window.SourceAOAPI?.isConfigured?.())throw new Error('live_api_not_configured');
+      if(!window.SourceAOAPI?.isConfigured?.()){
+        syncState='unconfigured';
+        return;
+      }
       const payload=await window.SourceAOAPI.opportunities();
       const live=Array.isArray(payload)?payload:(payload?.results||payload?.opportunities||[]);
       if(!Array.isArray(live))throw new Error('invalid_opportunity_payload');
@@ -279,7 +308,30 @@
   }
 
   function requestHref(o){
-    const params=new URLSearchParams({request:o.title||'',ref:o.reference||'',location:o.location||'Angola'});
+    const tags=areaTags(o);
+    const category=o.type==='supply-request'?'industrial-supply'
+      :tags.includes('construction')?'construction'
+      :tags.includes('facilities')?'cleaning-facilities'
+      :tags.includes('supply')?'industrial-supply'
+      :tags.includes('electrical-hvac')?'hvac-electrical'
+      :tags.includes('subcontracting')?'services-contractors':'';
+    const context=[
+      o.reference?'Referência: '+o.reference:'',
+      o.source_url?'Fonte pública: '+o.source_url:'',
+      o.deadline?'Prazo indicado: '+fmt(o.deadline):''
+    ].filter(Boolean).join(' | ');
+    const params=new URLSearchParams({
+      request:(o.title||'').slice(0,200),
+      location:(o.location||'Angola').slice(0,100),
+      specification:context.slice(0,600)
+    });
+    if(category)params.set('category',category);
+    const preview=Boolean(document.querySelector('[data-radar-preview]'));
+    if(preview){
+      const path=lang==='en'?'/en/source-ao/smart-rfq/':'/source-ao/smart-rfq/';
+      return path+'?'+params.toString();
+    }
+    params.set('ref',o.reference||'');
     return 'index.html?'+params.toString()+'#request';
   }
 
@@ -304,6 +356,13 @@
       if(value)node.setAttribute('placeholder',value);
     });
     $('#langToggle').textContent=lang==='pt'?'EN':'PT';
+    $('#langToggle').setAttribute('aria-label',lang==='pt'?'EN — Mudar para inglês':'PT — Switch to Portuguese');
+    const home=lang==='en'?'/en/source-ao/':'/source-ao/';
+    const rfq=lang==='en'?'/en/source-ao/smart-rfq/':'/source-ao/smart-rfq/';
+    const partners=lang==='en'?'/en/source-ao/partners/':'/source-ao/parceiros/';
+    ['#radarHomeLink','#radarBrandLink','#radarBackLink','#radarFooterHomeLink'].forEach(id=>{const node=$(id);if(node)node.href=home;});
+    const rfqLink=$('#radarRfqLink');if(rfqLink)rfqLink.href=rfq;
+    const partnerLink=$('#radarPartnerLink');if(partnerLink)partnerLink.href=partners;
     render();
     updateSyncUI();
   }
@@ -388,15 +447,9 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded',async()=>{
-    await window.SourceAOData?.init();
-    const local=window.SourceAOData?.activeOpportunities?.()||[];
-    localById=new Map(local.map(row=>[row.id,row]));
-    opportunities=local.filter(row=>inferredCountry(row)==='AO');
-    syncState='syncing';
-    applyLanguage();
-    await refreshLiveData();
-
+  document.addEventListener('DOMContentLoaded',()=>{
+    // Bind controls synchronously: the live feed may take time to initialise.
+    // A missing optional market filter must never prevent the PT/EN control.
     $$('[data-market]').forEach(btn=>btn.addEventListener('click',()=>{
       market=btn.dataset.market;
       $$('[data-market]').forEach(b=>b.classList.toggle('active',b===btn));
@@ -416,16 +469,45 @@
       query=event.target.value.trim();
       render();
     });
-    $('#langToggle')?.addEventListener('click',()=>{lang=lang==='pt'?'en':'pt';applyLanguage();});
+    $('#langToggle')?.addEventListener('click',()=>{
+      lang=lang==='pt'?'en':'pt';
+      applyLanguage();
+    });
     $('#refreshRadar')?.addEventListener('click',()=>refreshLiveData());
 
     setInterval(()=>{
-      if(document.visibilityState==='visible')refreshLiveData();
+      if(document.visibilityState==='visible'){
+        refreshLiveData();
+        refreshAutomationStatus();
+      }
     },AUTO_REFRESH_MS);
 
     document.addEventListener('visibilitychange',()=>{
       if(document.visibilityState!=='visible')return;
-      if(!lastSyncAt||Date.now()-lastSyncAt.getTime()>=AUTO_REFRESH_MS)refreshLiveData();
+      if(!lastSyncAt||Date.now()-lastSyncAt.getTime()>=AUTO_REFRESH_MS){
+        refreshLiveData();
+        refreshAutomationStatus();
+      }
+    });
+
+    syncState='syncing';
+    applyLanguage();
+    render();
+    updateSyncUI();
+
+    (async()=>{
+      await window.SourceAOData?.init();
+      const local=window.SourceAOData?.activeOpportunities?.()||[];
+      localById=new Map(local.map(row=>[row.id,row]));
+      opportunities=local.filter(row=>inferredCountry(row)==='AO');
+      render();
+      await refreshLiveData();
+      await refreshAutomationStatus();
+    })().catch(error=>{
+      console.warn('[Source AO Radar] initialisation failed',error);
+      syncState='fallback';
+      render();
+      updateSyncUI();
     });
   });
 })();

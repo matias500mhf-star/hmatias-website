@@ -1,6 +1,6 @@
 /* HMATIAS — premium corporate cleanup: concise homepage, verification-led trust page. */
 
-/* Homepage: keep About focused on identity, not a second institutional dossier. */
+
 .hmatias-home #empresa.company{padding:88px 0!important}
 .hmatias-home #empresa .company-impact-grid{grid-template-columns:minmax(0,820px)!important;justify-content:center!important}
 .hmatias-home #empresa .company-impact-grid>div:first-child{max-width:820px!important}

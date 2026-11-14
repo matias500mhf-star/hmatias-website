@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { company } from "../../data/site";
+---
+<BaseLayout title="Termos e Condições | HMATIAS" description="Consulte os termos de utilização do website HMATIAS, as regras dos pedidos de orçamento e as condições gerais aplicáveis aos serviços e fornecimentos.">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> INFORMAÇÃO LEGAL</span><span>Termos e Condições</span></div>
+  <SiteHeader />
+  <main class="legal-page section-pad">
+    <div class="legal-content">
+      <p class="legal-meta">Última atualização: 10 de outubro de 2026</p>
+      <h1>Termos &amp; Condições</h1>
+      <p>Estes termos apresentam as condições gerais de utilização do website e de contacto comercial com a HMATIAS – Prestação de Serviços SU, LDA. Condições específicas de cada obra, serviço, produto ou fornecimento são definidas na respetiva proposta, cotação, fatura, contrato ou confirmação comercial.</p>
+      <h2>1. Informação do website</h2>
+      <p>O conteúdo do website tem finalidade institucional e comercial. A HMATIAS procura manter as informações atualizadas, mas disponibilidade, especificações, preços, prazos e condições podem ser alterados ou depender de confirmação.</p>
+      <h2>2. Produtos, preços e stock</h2>
+      <p>Quaisquer referências a preços ou produtos publicadas no website têm caráter informativo e não constituem, por si só, uma proposta comercial vinculativa. Antes da confirmação de uma encomenda, a HMATIAS valida produto, especificação, quantidade, disponibilidade, transporte, local de entrega, prazo e demais condições aplicáveis.</p>
+      <h2>3. Pedidos de cotação e sourcing</h2>
+      <p>Os sistemas de HMATIAS Clean e HMATIAS Supply permitem estruturar pedidos com vários itens, referências, especificações e quantidades. O envio desses dados representa um pedido de informação, pesquisa ou cotação e não uma ordem automaticamente aceite. A operação só é considerada confirmada após comunicação das condições finais pela HMATIAS e aceitação pelo cliente.</p>
+      <h2>4. Pedidos por WhatsApp, e-mail ou formulário</h2>
+      <p>Uma mensagem preparada pelo website e enviada por WhatsApp ou e-mail é revista pelo utilizador antes do envio. O website não conclui automaticamente contratos, encomendas ou pagamentos.</p>
+      <h2>5. Entrega e transporte</h2>
+      <p>Custos, zona de entrega, prazo e modalidade de transporte são definidos de acordo com a localização, quantidade, disponibilidade do produto e natureza do fornecimento.</p>
+      <h2>6. Business Services e pedidos de atendimento</h2>
+      <p>Os serviços administrativos e empresariais são orçamentados individualmente após avaliação do âmbito, volume, complexidade e prazo. O formulário de atendimento constitui um pedido de preferência; a data e a hora só ficam confirmadas mediante comunicação expressa da HMATIAS.</p>
+      <h2>7. Serviços de construção, facilities e supply</h2>
+      <p>Obras, manutenção, facilities, procurement e fornecimentos empresariais dependem de avaliação de escopo. Quando aplicável, a execução segue orçamento, proposta ou contrato específico.</p>
+      <h2>8. Marcas e fornecedores externos</h2>
+      <p>A referência a produtos, marcas, fornecedores ou websites de terceiros serve para identificação comercial ou técnica quando relevante. Não implica parceria, representação, exclusividade ou autorização institucional, salvo quando essa relação estiver formalmente estabelecida.</p>
+      <h2>9. Utilização de produtos</h2>
+      <p>O cliente deve respeitar as instruções, precauções, rotulagem e recomendações do fabricante de cada produto. As descrições comerciais do website não substituem as instruções constantes da embalagem ou documentação técnica.</p>
+      <h2>10. Pagamento</h2>
+      <p>O website não disponibiliza checkout ou processamento de pagamento online nesta fase. Quaisquer condições de pagamento são comunicadas pela HMATIAS no contexto da respetiva cotação, proposta, fatura ou confirmação comercial.</p>
+      <h2>11. Propriedade intelectual</h2>
+      <p>Salvo indicação em contrário ou direitos pertencentes a terceiros, o código original do website, textos, estrutura, identidade visual implementada, grafismos, documentação, fotografias pertencentes à HMATIAS e demais conteúdos originais disponibilizados neste website são protegidos e reservados à HMATIAS – Prestação de Serviços SU, LDA. A consulta pública do website ou do respetivo repositório não constitui licença open source nem autorização para copiar, reproduzir, adaptar, redistribuir, republicar, explorar comercialmente ou reutilizar partes substanciais desses materiais sem autorização escrita da HMATIAS, sem prejuízo das utilizações permitidas por lei.</p>
+      <p>Marcas, bibliotecas, fotografias, ícones, serviços e outros materiais de terceiros permanecem sujeitos aos direitos e licenças dos respetivos titulares.</p>
+      <h2>12. Contacto</h2>
+      <p>Questões comerciais ou pedidos de autorização relativos ao conteúdo do website podem ser dirigidos a <a href={"mailto:"+company.commercialEmail}>{company.commercialEmail}</a> ou ao WhatsApp {company.phone}.</p>
+      <a class="legal-back" href="/">← Voltar à HMATIAS</a>
+    </div>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Protótipo tecnológico independente. Texto transposto dos termos actualmente publicados pela HMATIAS; sujeito à revisão final antes da migração.</div>
+</BaseLayout>
+<style>
+.legal-page { background:var(--hm-light); }
+.legal-content { width:min(900px,100%); margin:0 auto; padding:clamp(28px,5vw,56px); background:var(--hm-paper); border:1px solid var(--hm-line); }
+.legal-meta { margin:0 0 18px; color:var(--hm-muted); font-size:11px; }
+.legal-content h1 { margin:0 0 28px; font-size:clamp(36px,5vw,56px); line-height:1.05; letter-spacing:-.06em; font-weight:520; }
+.legal-content h2 { margin:33px 0 10px; font-size:17px; line-height:1.35; font-weight:650; letter-spacing:-.025em; }
+.legal-content p { color:var(--hm-muted); font-size:12px; line-height:1.9; }
+.legal-content a:not(.legal-back) { color:var(--hm-blue); text-decoration:underline; text-underline-offset:3px; }
+.legal-back { display:inline-flex; margin-top:28px; padding:13px 18px; color:#fff; background:var(--hm-navy); font-size:11px; font-weight:650; }
+</style>

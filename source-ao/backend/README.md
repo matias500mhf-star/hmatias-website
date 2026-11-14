@@ -57,7 +57,7 @@ Use only a Gemini API key from an AI Studio project explicitly on the Free tier,
 
 Automated Google Search grounding is not enabled: Google's current Gemini API terms classify Search grounding through the API as a paid service. Source AO instead provides clearly labelled public Google search links and its local search/RFQ workflow. Do not activate grounding unless HMATIAS explicitly approves a paid Google project.
 
-Only `catalog.json`, `opportunities.json` and `source-registry.json` are copied into public production/staging assets. Offline search uses catalogue families without asserting stock. Supplier, service, observation and verification queue data remain excluded from those artifacts.
+Only the public-safe `catalog.json`, `public-catalog.json`, `opportunities.json` and `source-registry.json` are copied into public production/staging assets. The RFQ static fallback uses `public-catalog.json`, which is a parity-checked projection excluding `item-formaldehyde`. Offline search uses catalogue families without asserting stock. Supplier, service, observation and verification queue data remain excluded from those artifacts.
 
 This boundary does not conceal files or history in a public Git repository. Repository visibility/history and hosting support require separate review; do not commit new confidential sourcing relationships or contacts to seed files.
 
@@ -128,6 +128,14 @@ Do not deploy until all of the following are true:
 The public HMATIAS website does not depend on this backend. If the backend deployment fails, remove/disable the Source AO API endpoint or frontend API configuration; the HMATIAS main site remains unaffected.
 
 
+## Public partner applications and privacy consent
+
+The public `POST /api/partner-applications` intake requires `privacy_consent: true`. The API records the consent timestamp and notice version (`source-ao-partner-privacy-2026-11`) alongside each new application through migration `0027_partner_application_privacy_consent.sql`. Historical rows remain nullable; prior consent must not be inferred or backfilled.
+
+Company identity and application classification are used for the private review queue. Registration number, contact name, email, WhatsApp, portfolio URL and commercial note remain inside the encrypted private profile. The public submission response contains only the application reference and review status. Listing, reading and reviewing applications continue to require administrator authorization.
+
+The Astro preview partner form is intentionally disabled unless `PUBLIC_SOURCE_AO_API_BASE` points to an HTTPS staging Worker. For browser submissions to work, configure the staging environment's `SOURCE_AO_STAGING_PUBLIC_ORIGIN` to the exact HTTPS hostname assigned to the Astro preview and set the Astro preview's `PUBLIC_SOURCE_AO_API_BASE` to the deployed staging API URL. Apply migration 0027 to staging before enabling this form. Never point the preview at the production API.
+
 ## Commercial RFQ and partner notifications (production)
 
 The Source AO API stores sourcing requests and partner applications in private D1 tables. Migration `0023_intake_alert_queue.sql` creates a durable notification outbox from both tables. **A stored SAO reference is not proof that the HMATIAS commercial inbox was notified.**
@@ -149,3 +157,20 @@ The production deploy job also runs read-only health, private-outbox and search 
 2. In GitHub repository Settings → Secrets and variables → Actions, add a new repository secret named `SOURCE_AO_RESEND_API_KEY`. Never paste the secret into commits, issues, chats or Action logs.
 3. With the secret configured, run the existing **Source AO Production Deploy** workflow using its approval gate or bump `.source-ao-production-release`. This transfers the token to the Worker through `wrangler secret put` and retains the verified-domain defaults.
 4. Verify the admin endpoint returns `configured:true`. Then confirm one labelled test email and provider delivery status before treating the commercial inbox as alerted. Backlogged D1 alerts remain pending until processed by the scheduled job.
+
+
+## Autonomous website updates and monitoring
+
+See [AUTOMATION.md](./AUTOMATION.md) for the scheduled Worker jobs, five-minute Radar refresh, public automation-health endpoint, and the boundaries between automated data refresh and human-approved publication.
+
+
+## Live public catalog
+
+- `GET /api/catalog` returns only D1 catalog entries whose `public_visible` flag is enabled. The response is a safe projection with bilingual names, category, specification, unit, aliases and keywords; it excludes prices, supplier data, availability and internal notes.
+- `GET /api/admin/catalog/items` and `PATCH /api/admin/catalog/items/:id` require `ADMIN_API_TOKEN`. The SOURCE AO Ops page provides the editor after the admin session is established.
+- `POST /api/admin/items` creates an admin-managed catalog item. New items are private unless `public_visible: true` is explicitly supplied.
+- RFQ form and server validation use the same public catalog. The form keeps a static fallback if the API is unavailable; the backend fails closed if it cannot load the published catalog.
+- Admin-managed catalog values and visibility survive subsequent seed deployments. Seed-managed values continue to receive reviewed updates from the versioned catalogue.
+- The excluded `item-formaldehyde` item cannot be published. No pricing, stock, supplier identity, contacts, delivery promises or margins are part of the public catalog contract.
+
+See [AUTOMATION.md](./AUTOMATION.md) for the update model and publication boundaries.

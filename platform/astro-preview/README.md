@@ -1,19 +1,23 @@
 # HMATIAS — Protótipo tecnológico Astro
 
-Este projeto é um protótipo isolado para comparar uma arquitetura Astro com o website institucional atual. **Não é o publisher oficial e não altera o website em produção.**
+Este projeto é um protótipo isolado para avaliar uma arquitetura Astro para o website institucional. **Não é o publisher oficial e não altera o website em produção.**
 
 ## Objetivo desta fase
 
-- Recriar a homepage aprovada em componentes Astro reutilizáveis.
-- Preservar o azul institucional, a tipografia Inter local, o logótipo e as fotografias reais.
-- Preservar as proporções originais das fotografias. A galeria não impõe alturas fixas nem corta a imagem para preencher cartões.
+- Recriar a estrutura institucional com componentes Astro reutilizáveis.
+- Preservar o azul institucional, o logótipo e as fotografias reais.
+- Utilizar tipografia local: Manrope nos títulos, Inter no texto e IBM Plex Mono nos elementos técnicos.
+- Preservar as proporções das fotografias; a galeria não impõe cortes para preencher cartões.
 - Manter conteúdos e contactos em dados tipados.
-- Renderizar a página como HTML estático, sem runtime React no conteúdo institucional.
-- Validar tipos, build e estrutura do artefacto em GitHub Actions.
+- Gerar HTML estático para as páginas institucionais, sem adicionar runtime React onde não existe necessidade de interação complexa.
+- Disponibilizar 29 rotas em Português (pt-AO) e 29 rotas em Inglês (58 páginas estáticas).
+- Validar tipos, build e estrutura do artefacto em CI.
+- Testar navegação em Chromium desktop e WebKit móvel com Playwright.
+- Verificar acessibilidade automatizada com axe-core e recolher auditorias Lighthouse.
 
 ## Requisitos
 
-- Node.js 22.22.0 ou superior. O workflow CI usa Node.js 24.
+- Node.js 26.13.0 (fixado em `.node-version` e alinhado com o runtime do preview).
 - npm.
 
 ## Comandos
@@ -27,22 +31,50 @@ npm run verify
 npm run preview
 ```
 
-O lockfile `package-lock.json` está versionado. As instalações repetíveis devem usar `npm ci`. O build produz `dist/`. O comando `verify` verifica o HTML, as quatro áreas de atividade, os contactos, as fotografias e os recursos processados.
+O lockfile `package-lock.json` está versionado. As instalações repetíveis devem usar `npm ci`. O build produz `dist/`. O comando `verify` verifica o HTML, as rotas PT/EN, conteúdos essenciais, alternadores de idioma, fotografias, textos alternativos, ligações RFQ e recursos processados.
 
 ## Estrutura
 
 - `src/layouts/`: layout e metadados comuns.
-- `src/components/`: cabeçalho, atividades, galeria, contactos e rodapé.
+- `src/components/`: cabeçalho, serviços, galeria, contactos, HMATIAS Clean e páginas especializadas bilingues.
 - `src/data/`: dados e tipos partilhados.
+- `src/content/`: artigos PT e EN do Blog.
 - `src/pages/`: rotas do website.
-- `src/styles/`: tokens e estilos institucionais.
+- `src/styles/`: tokens, tipografia local e estilos institucionais.
+- `tests/e2e/`: testes de navegação, idioma, responsividade e acessibilidade.
 
 ## Decisão sobre React
 
-React não foi instalado nesta etapa. A homepage institucional é maioritariamente conteúdo e navegação; Astro produz HTML estático e evita enviar um runtime de interface desnecessário. React será avaliado como ilha interativa quando a fase Smart RFQ exigir estado complexo, validações dinâmicas ou fluxos multi-etapa.
+React não foi instalado nesta etapa. As páginas institucionais são maioritariamente conteúdo e navegação; Astro produz HTML estático e evita enviar um runtime de interface desnecessário. A página Smart RFQ contém agora um formulário bilingue próprio para Construção, Facilities e Supply. Valida os campos da área escolhida, gera no navegador um resumo estruturado e uma referência local e permite ao utilizador optar pelo envio por e-mail ou WhatsApp. Não submete dados a um servidor, não cria encomendas, não calcula cotações e não confirma stock ou prazos. O RFQ multi-produto operacional do SOURCE AO em `/source-ao/rfq.html` mantém-se separado. React não foi adicionado porque a interação atual não justifica um runtime adicional. A HMATIAS Clean inclui um catálogo de 100 referências Taurus e um carrinho de preparação de pedido multiartigo (máximo de 20 itens), com handoff manual por WhatsApp ou e-mail; não submete dados a servidor nem regista encomendas. As páginas especializadas de Coberturas Industriais, Limpeza Pós-Obra, EPI/Fardamento e Remodelação de Escritórios usam Smart RFQ com área e serviço pré-seleccionados por query string; a confirmação e o envio continuam sempre sob controlo do visitante.
 
 ## Limites de publicação
 
 - Esta pasta não está ligada ao publisher de produção.
 - Não executar `wrangler deploy`, não alterar DNS e não associar o domínio oficial.
-- O resultado só pode ser considerado candidato a migração após comparação visual, acessibilidade, SEO, performance, formulários e integrações.
+- O formulário principal de contacto continua no website oficial e, segundo confirmação do proprietário, já recebe pedidos por e-mail através do Resend. O preview abre o formulário oficial correspondente em português ou inglês, num novo separador; não replica credenciais nem altera o fluxo operacional.
+- Business Services, agendamento e RFQ multi-produto operacional SOURCE AO continuam nos respectivos canais oficiais até existir equivalência validada em staging.
+- O Smart RFQ geral e o pedido multiartigo HMATIAS Clean são fluxos de preparação local, com envio manual e sem submissão automática ao servidor.
+- O preview mantém `noindex, nofollow`.
+- O resultado só pode ser considerado candidato a migração após validação visual, acessibilidade, SEO, performance, versões linguísticas, redirecionamentos e integrações.
+
+## Migração e rotas pendentes
+
+Consultar [`MIGRATION-READINESS.md`](./MIGRATION-READINESS.md) para o inventário das páginas já migradas, funcionalidades preservadas no domínio oficial e bloqueios para publicação.
+
+## Quality Engineering
+
+O workflow `.github/workflows/astro-prototype-qa.yml` executa:
+
+- Auditoria de dependências, Astro Check, build estático e verificação do artefacto.
+- Testes automatizados do contrato e persistência do SOURCE AO.
+- Playwright 1.65.0 em Chromium desktop e WebKit móvel.
+- axe-core 4.14.0 nas rotas cobertas pelos testes.
+- Lighthouse CI 0.16.0 nas rotas definidas em `lighthouserc.cjs`.
+
+Os relatórios Playwright e Lighthouse são guardados como artefactos do GitHub Actions por 14 dias. As ferramentas de QA são instaladas apenas no ambiente CI e não entram no bundle do website.
+
+**Estado atual — 14 de novembro de 2026:** o protótipo gera 58 páginas (29 PT-AO e 29 EN), com os 29 pares linguísticos verificados. No Astro prototype QA #905 passaram auditoria de dependências, type-check, build, `verify-build`, inventário de migração (37 URLs antigas e 30 destinos preview), auditoria de links e contrato/persistência RFQ. Playwright desktop/mobile e axe estão agora em execução; Lighthouse CI é o passo seguinte. Não declarar o QA integral aprovado até todos os gates terminarem.
+
+O formulário principal oficial recebe pedidos por e-mail através do Resend, conforme confirmação do proprietário. O preview encaminha para os formulários oficiais PT/EN em novo separador, e o auditor permite apenas esses dois destinos exactos. Nenhum formulário, segredo, Worker ou configuração Resend do domínio publicado foi alterado. Business Services, agendamento e SOURCE AO continuam a exigir validação autónoma antes de qualquer migração. A revisão visual manual em desktop/tablet/mobile e a navegação integral por teclado continuam pendentes.
+
+A proteção `noindex, nofollow` deve manter-se durante toda a avaliação.

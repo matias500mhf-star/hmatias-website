@@ -1,60 +1,89 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../../../../logo-hmatias.png";
+import whatsappIcon from "../../../../images/social-whatsapp.svg";
+import instagramIcon from "../../../../images/social-instagram.svg";
 import { company } from "../data/site";
----
 
-<footer class="site-footer">
+const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : Astro.url.pathname + "/";
+const isEnglish = pathname.startsWith("/en/");
+const homeUrl = isEnglish ? "/en/" : "/";
+const links = isEnglish
+  ? {
+      about: "/en/about/", credibility: "/en/credibility/", blog: "/en/blog/",
+      construction: "/en/construction/", facilities: "/en/facilities/",
+      supply: "/en/supply/", business: "/en/business-services/",
+      smart: "/en/source-ao/smart-rfq/", privacy: "/en/privacy/",
+      terms: "/en/terms/", accessibility: "/en/accessibility/",
+      contact: "/en/#contact", projects: "/en/integrated-yard/"
+    }
+  : {
+      about: company.aboutUrl, credibility: company.credibilityUrl, blog: "/blog/",
+      construction: company.constructionUrl, facilities: company.facilitiesUrl,
+      supply: company.supplyUrl, business: company.businessServicesUrl,
+      smart: company.smartRfqUrl, privacy: company.privacyUrl,
+      terms: company.termsUrl, accessibility: "/acessibilidade/",
+      contact: "/#contacto", projects: "/estaleiro/"
+    };
+---
+<footer class="site-footer" data-language={isEnglish ? "en" : "pt"}>
   <div class="footer-main">
-    <section class="footer-column footer-identity" aria-label="Identidade e plataformas HMATIAS">
-      <a class="footer-logo" href="#inicio" aria-label="HMATIAS — voltar ao início">
-        <Image src={logo} alt="HMATIAS — Prestação de Serviços" width={200} height={190} />
+    <div class="footer-column footer-identity">
+      <a class="footer-logo" href={homeUrl + "#inicio"} aria-label={isEnglish ? "HMATIAS — back to home" : "HMATIAS — voltar ao início"}>
+        <Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services" : "HMATIAS — Prestação de Serviços"} widths={[96, 128]} sizes="64px" format="webp" quality={82} />
       </a>
       <p class="footer-company">{company.legalName}</p>
-      <p class="footer-summary">Construção, Facilities, Supply e Business Services para empresas e projetos em Angola.</p>
-      <a class="footer-platform-link" href={company.sourceAoUrl}>SOURCE AO <span>↗</span></a>
-      <a href="/blog/">Blog · Perspetivas empresariais</a>
-    </section>
+      <p class="footer-summary">{isEnglish
+        ? "Construction, Facilities, Supply and Business Services for companies and projects in Angola."
+        : "Construção, Facilities, Supply e Business Services para empresas e projetos em Angola."}</p>
+    </div>
 
-    <nav class="footer-column" aria-label="Construção">
-      <h2>Construção</h2>
-      <a href={company.constructionUrl}>Construção Civil</a>
-      <a href={company.remodelingUrl}>Remodelação</a>
-      <a href={company.facilitiesUrl}>Facilities e Manutenção</a>
-      <a href={company.projectsUrl}>Projetos</a>
-      <a href={company.worksCatalogueUrl}>Catálogo de Obras</a>
+    <nav class="footer-column footer-operations" aria-label={isEnglish ? "Operational areas and services" : "Áreas e serviços operacionais"}>
+      <h2>{isEnglish ? "Areas and services" : "Áreas e serviços"}</h2>
+      <a href={links.construction}>{isEnglish ? "Construction and remodelling" : "Construção e remodelação"}</a>
+      <a href={links.facilities}>{isEnglish ? "Facilities and Maintenance" : "Facilities e Manutenção"}</a>
+      <a href={links.supply}>HMATIAS Supply</a>
+      <a href={links.business}>Business Services</a>
     </nav>
 
-    <nav class="footer-column" aria-label="Serviços">
-      <h2>Serviços</h2>
-      <a href={company.supplyUrl}>HMATIAS Supply</a>
-      <a href={company.businessServicesUrl}>Business Services</a>
-      <a href={company.smartRfqUrl}>Smart RFQ</a>
-      <a href="#contacto">Solicitar orçamento</a>
+    <nav class="footer-column footer-explore" aria-label={isEnglish ? "Explore HMATIAS" : "Explorar HMATIAS"}>
+      <h2>{isEnglish ? "Explore" : "Explorar"}</h2>
+      <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
+      <a href={links.projects}>{isEnglish ? "Projects" : "Projetos"}</a>
+      <a href={isEnglish ? "/en/works-catalogue/" : company.worksCatalogueUrl}>{isEnglish ? "Works Catalogue" : "Catálogo de Obras"}</a>
+      <a href={isEnglish ? "/en/source-ao/" : company.sourceAoUrl}>SOURCE AO</a>
+      <a href={links.blog}>{isEnglish ? "Blog · Business perspectives" : "Blog · Perspetivas empresariais"}</a>
+      <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
+      <a href={links.smart}>Smart RFQ</a>
     </nav>
 
-    <section class="footer-column footer-contacts" aria-label="Contacto e localização">
-      <h2>Contacto e localização</h2>
+    <section class="footer-column footer-contacts" aria-labelledby="footer-contact-heading">
+      <h2 id="footer-contact-heading">{isEnglish ? "Contact and location" : "Contacto e localização"}</h2>
       <a href={company.telephoneUri}>{company.phone}</a>
-      <a class="footer-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">WhatsApp <span aria-hidden="true">↗</span></a>
-      <a href={`mailto:${company.commercialEmail}`}>{company.commercialEmail}</a>
-      <a href={`mailto:${company.institutionalEmail}`}>{company.institutionalEmail}</a>
+      <a href={"mailto:" + company.commercialEmail}>{company.commercialEmail}</a>
+      <a href={"mailto:" + company.institutionalEmail}>{company.institutionalEmail}</a>
       <address>{company.address}</address>
-      <div class="footer-socials" aria-label="Redes sociais">
-        <a href={company.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram HMATIAS">Instagram <span aria-hidden="true">↗</span></a>
+      <a href={links.contact}>{isEnglish ? "Request a quotation" : "Solicitar orçamento"}</a>
+      <div class="footer-socials" aria-label={isEnglish ? "Social media" : "Redes sociais"}>
+        <a class="footer-icon-link footer-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? "Contact HMATIAS on WhatsApp" : "Contactar a HMATIAS pelo WhatsApp"}>
+          <img src={whatsappIcon.src} width="26" height="26" alt="" aria-hidden="true" />
+        </a>
+        <a class="footer-icon-link" href={company.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram HMATIAS">
+          <img src={instagramIcon.src} width="26" height="26" alt="" aria-hidden="true" />
+        </a>
       </div>
     </section>
   </div>
 
   <div class="footer-bottom">
-    <p class="footer-legal-id">© {new Date().getFullYear()} {company.legalName} · NIF {company.taxNumber} · Registo Comercial {company.commercialRegistration}. Todos os direitos reservados.</p>
-    <nav class="footer-legal-links" aria-label="Informação legal">
-      <a href={company.partnerApplicationUrl}>Parcerias</a>
-      <a href={company.credibilityUrl}>Credibilidade</a>
-      <a href={company.privacyUrl}>Política de Privacidade</a>
-      <a href={company.termsUrl}>Termos e Condições</a>
-      <a href="/acessibilidade/">Acessibilidade</a>
+    <p class="footer-legal-id">© {new Date().getFullYear()} {company.legalName} · {isEnglish ? "Tax ID" : "NIF"} {company.taxNumber} · {isEnglish ? "Commercial Registration" : "Registo Comercial"} {company.commercialRegistration}. {isEnglish ? "All rights reserved." : "Todos os direitos reservados."}</p>
+    <nav class="footer-legal-links" aria-label={isEnglish ? "Legal information" : "Informação legal"}>
+      <a href={company.partnerApplicationUrl}>{isEnglish ? "Partnerships" : "Parcerias"}</a>
+      <a href={links.credibility}>{isEnglish ? "Company information" : "Credibilidade"}</a>
+      <a href={links.privacy}>{isEnglish ? "Privacy Policy" : "Política de Privacidade"}</a>
+      <a href={links.terms}>{isEnglish ? "Terms and Conditions" : "Termos e Condições"}</a>
+      <a href={links.accessibility}>{isEnglish ? "Accessibility" : "Acessibilidade"}</a>
     </nav>
-    <a class="footer-back-top" href="#inicio">Voltar ao topo <span aria-hidden="true">↑</span></a>
+    <a class="footer-back-top" href={homeUrl + "#inicio"}>{isEnglish ? "Back to top" : "Voltar ao topo"} <span aria-hidden="true">↑</span></a>
   </div>
 </footer>

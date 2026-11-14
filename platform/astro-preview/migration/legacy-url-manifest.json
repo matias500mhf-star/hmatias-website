@@ -1,0 +1,357 @@
+{
+  "schema_version": 1,
+  "scope": "HMATIAS Astro preview — inventory of legacy URLs and migration safeguards",
+  "source_document": "docs/HMATIAS-URL-MIGRATION-MAP-2026-11-12.md",
+  "legacy_sitemap_expected_count": 37,
+  "production_changes_permitted": false,
+  "preview_must_remain_noindex": true,
+  "routes": [
+    {
+      "source_url": "/",
+      "preview_target": "/",
+      "treatment": "preview_route",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Homepage da pré-visualização; manter o URL raiz."
+    },
+    {
+      "source_url": "/en.html",
+      "preview_target": "/en/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página inglesa recriada; redirect só depois de validação de equivalência e aprovação."
+    },
+    {
+      "source_url": "/construcao.html",
+      "preview_target": "/construcao/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página de construção recriada; confirmar formulários e dados de Search Console."
+    },
+    {
+      "source_url": "/construction.html",
+      "preview_target": "/en/construction/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página inglesa de construção recriada; confirmar equivalência."
+    },
+    {
+      "source_url": "/facilities.html",
+      "preview_target": "/facilities/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página Facilities recriada em PT; confirmar equivalência."
+    },
+    {
+      "source_url": "/facilities-en.html",
+      "preview_target": "/en/facilities/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página Facilities recriada em EN; confirmar equivalência."
+    },
+    {
+      "source_url": "/supply.html",
+      "preview_target": "/supply/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página Supply recriada em PT; manter disclosure de sourcing sob consulta."
+    },
+    {
+      "source_url": "/supply-en.html",
+      "preview_target": "/en/supply/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página Supply recriada em EN; manter disclosure de sourcing sob consulta."
+    },
+    {
+      "source_url": "/rfq.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Construtor RFQ legado não é equivalente ao Smart RFQ explicativo; manter operacional."
+    },
+    {
+      "source_url": "/rfq-en.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Formulário RFQ inglês permanece operacional no publisher oficial."
+    },
+    {
+      "source_url": "/catalogo-obras.html",
+      "preview_target": "/catalogo-obras/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Catálogo recriado; validar os doze registos e direitos de divulgação."
+    },
+    {
+      "source_url": "/work-catalogue.html",
+      "preview_target": "/en/works-catalogue/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Catálogo inglês recriado; validar os doze registos e direitos de divulgação."
+    },
+    {
+      "source_url": "/credibilidade.html",
+      "preview_target": "/credibilidade/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página de credibilidade recriada; validar dados legais."
+    },
+    {
+      "source_url": "/credibility.html",
+      "preview_target": "/en/credibility/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página inglesa de credibilidade recriada; validar dados legais."
+    },
+    {
+      "source_url": "/clean.html",
+      "preview_target": "/clean/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página HMATIAS Clean recriada no Astro com catálogo de 100 referências Taurus, produtos em destaque e pedido multiartigo manual até 20 itens; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar migração."
+    },
+    {
+      "source_url": "/clean-en.html",
+      "preview_target": "/en/clean/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página HMATIAS Clean em inglês recriada no Astro com catálogo de 100 referências Taurus, produtos em destaque e pedido multiartigo manual até 20 itens; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar migração."
+    },
+    {
+      "source_url": "/karta.html",
+      "preview_target": "/karta/",
+      "treatment": "preview_route_pending_product_state_validation",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página KARTA recriada no preview com o estado Alpha e roadmap separados; qualquer substituição/redirect oficial depende de revisão do estado comercial e aprovação."
+    },
+    {
+      "source_url": "/karta-en.html",
+      "preview_target": "/en/karta/",
+      "treatment": "preview_route_pending_product_state_validation",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página KARTA recriada no preview com o estado Alpha e roadmap separados; qualquer substituição/redirect oficial depende de revisão do estado comercial e aprovação."
+    },
+    {
+      "source_url": "/servicos-administrativos.html",
+      "preview_target": "/business-services/",
+      "treatment": "preview_route_with_official_intake",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Conteúdo Business Services recriado; formulário de pedido continua no publisher oficial."
+    },
+    {
+      "source_url": "/business-services.html",
+      "preview_target": "/en/business-services/",
+      "treatment": "preview_route_with_official_intake",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Conteúdo Business Services EN recriado; intake continua no publisher oficial."
+    },
+    {
+      "source_url": "/agendamento.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Agendamento e disponibilidade ainda dependem do fluxo oficial."
+    },
+    {
+      "source_url": "/booking.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Booking e disponibilidade ainda dependem do fluxo oficial."
+    },
+    {
+      "source_url": "/privacidade.html",
+      "preview_target": "/privacidade/",
+      "treatment": "preview_route_pending_legal_validation",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Política PT recriada; validar integrações efetivas, consentimento e tracking."
+    },
+    {
+      "source_url": "/privacy.html",
+      "preview_target": "/en/privacy/",
+      "treatment": "preview_route_pending_legal_validation",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Política EN recriada; validar integrações efetivas, consentimento e tracking."
+    },
+    {
+      "source_url": "/termos.html",
+      "preview_target": "/termos/",
+      "treatment": "preview_route_pending_legal_validation",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Termos PT recriados; validação jurídica antes de substituir publisher."
+    },
+    {
+      "source_url": "/terms.html",
+      "preview_target": "/en/terms/",
+      "treatment": "preview_route_pending_legal_validation",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Termos EN recriados; validação jurídica antes de substituir publisher."
+    },
+    {
+      "source_url": "/source-ao/opportunity-radar.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Radar de oportunidades permanece no publisher oficial até decisão de indexação e migração."
+    },
+    {
+      "source_url": "/source-ao/privacy.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Política específica SOURCE AO permanece até haver equivalente validado."
+    },
+    {
+      "source_url": "/source-ao/terms.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Termos específicos SOURCE AO permanecem até haver equivalente validado."
+    },
+    {
+      "source_url": "/coberturas-industriais.html",
+      "preview_target": "/coberturas-industriais/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página especializada recriada no preview em PT/EN; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar a migração."
+    },
+    {
+      "source_url": "/limpeza-pos-obra.html",
+      "preview_target": "/limpeza-pos-obra/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página especializada recriada no preview em PT/EN; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar a migração."
+    },
+    {
+      "source_url": "/fornecimento-de-epi-e-fardamento.html",
+      "preview_target": "/fornecimento-de-epi-e-fardamento/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página especializada recriada no preview em PT/EN; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar a migração."
+    },
+    {
+      "source_url": "/remodelacao-de-escritorios.html",
+      "preview_target": "/remodelacao-de-escritorios/",
+      "treatment": "preview_route_pending_redirect_approval",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página especializada recriada no preview em PT/EN; manter URL oficial até validar equivalência, Search Console, backlinks e aprovar a migração."
+    },
+    {
+      "source_url": "/estaleiro-integrado.html",
+      "preview_target": "/estaleiro/",
+      "treatment": "preview_route_pending_project_status_validation",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Projeto recriado no preview com estudo preliminar, duas plantas e ressalvas técnicas; a URL oficial mantém-se sem redirect até aprovação da migração."
+    },
+    {
+      "source_url": "/integrated-yard.html",
+      "preview_target": "/en/integrated-yard/",
+      "treatment": "preview_route_pending_project_status_validation",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Projeto recriado no preview com estudo preliminar, duas plantas e ressalvas técnicas; a URL oficial mantém-se sem redirect até aprovação da migração."
+    },
+    {
+      "source_url": "/hmatias-clean.html",
+      "preview_target": null,
+      "treatment": "unverified_repository_page",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Página adicional no repositório; verificar Search Console, tráfego e equivalência."
+    },
+    {
+      "source_url": "/hmatias-clean-en.html",
+      "preview_target": null,
+      "treatment": "unverified_repository_page",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Página adicional no repositório; verificar Search Console, tráfego e equivalência."
+    },
+    {
+      "source_url": "/politica-privacidade.html",
+      "preview_target": null,
+      "treatment": "unverified_repository_page",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Página adicional no repositório; verificar se recebe tráfego ou possui backlinks."
+    },
+    {
+      "source_url": "/termos-condicoes.html",
+      "preview_target": null,
+      "treatment": "unverified_repository_page",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Página adicional no repositório; verificar se recebe tráfego ou possui backlinks."
+    },
+    {
+      "source_url": "/procura.html",
+      "preview_target": null,
+      "treatment": "unverified_repository_page",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Página adicional no repositório; confirmar função, tráfego e equivalência."
+    },
+    {
+      "source_url": "/source-ao/index.html",
+      "preview_target": "/source-ao/",
+      "treatment": "preview_route_pending_operational_validation",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "Página SOURCE AO recriada em Astro; manter URL oficial até validação operacional, Search Console e aprovação."
+    },
+    {
+      "source_url": "/source-ao/rfq.html",
+      "preview_target": "/source-ao/smart-rfq/",
+      "treatment": "preview_route_with_staging_intake_only",
+      "in_legacy_sitemap": true,
+      "preserve_until_approved": true,
+      "notes": "RFQ multiartigo recriado no Astro com o contrato SOURCE AO; intake no preview só pode apontar para API de staging, nunca produção."
+    }
+  ],
+  "launch_gates": [
+    "Google Search Console page export reviewed (clicks, impressions, CTR, position)",
+    "Backlinks and referral traffic reviewed for every historical URL",
+    "Content and functional equivalence approved URL by URL",
+    "Contact, Business Services, booking and RFQ production submissions tested end to end",
+    "Cookie consent, GTM, GA4 and event payloads verified without personal data leakage",
+    "Manual desktop, tablet and mobile visual review completed",
+    "Keyboard-only and assistive-technology review completed",
+    "301 redirects, canonicals, reciprocal hreflang and final sitemap tested with rollback plan",
+    "Explicit production migration approval recorded"
+  ]
+}

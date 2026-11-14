@@ -1,0 +1,64 @@
+---
+import { Picture } from "astro:assets";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import { company } from "../../../data/site";
+
+const facilitiesWhatsapp = company.whatsappUri + "?text=" + encodeURIComponent(
+  "Hello HMATIAS. I would like to request an assessment for facilities or maintenance. Premises type and location, areas involved, service required, preferred frequency, operating hours, and available photographs:"
+);
+import heroPhoto from "../../../../../../images/catalogue/caixilharia-vidro-fumado.webp";
+import roofMaintenance from "../../../../../../images/catalogue/cobertura-metalica-substituicao.webp";
+import annexStructure from "../../../../../../images/catalogue/anexo-coberto-estrutura-metalica.webp";
+---
+<BaseLayout title="Facilities and Maintenance Services | HMATIAS Angola" description="Facilities management, building maintenance, cleaning and operational support for business and institutional premises in Angola." lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS FACILITIES</span><span>MAINTENANCE · CLEANING · OPERATIONS</span></div>
+  <SiteHeader />
+  <main class="facilities-page">
+    <section class="construction-hero" id="inicio" aria-labelledby="pages-en-facilities-index-section-1-heading">
+      <div class="construction-hero-copy">
+        <nav class="construction-breadcrumb" aria-label="Breadcrumb"><a href="/en/">Home</a><span>/</span><span>Facilities and Maintenance</span></nav>
+        <p class="eyebrow"><span class="eyebrow-line"></span> FACILITIES · BUILDING MAINTENANCE</p>
+        <h1 id="pages-en-facilities-index-section-1-heading">Facilities and<br /><em>maintenance.</em></h1>
+        <p class="hero-lead">Maintenance, upkeep and operational support for business and institutional premises.</p>
+        <div class="hero-actions"><a class="button button-light" href="#request">Request an assessment <span aria-hidden="true">↓</span></a><a class="text-link text-link-light" href="#evidence">View recorded interventions <span aria-hidden="true">↘</span></a></div>
+        <div class="hero-meta"><span>Maintenance · Cleaning · Operational support</span><span>Luanda · Angola</span></div>
+      </div>
+      <figure class="construction-hero-image"><Picture src={heroPhoto} alt="Aluminium window framing and tinted glass in a building" widths={[640,960,1280]} sizes="(max-width:900px) 100vw, 48vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={84} loading="eager" fetchpriority="high" decoding="async" /><figcaption><span>01</span> HMATIAS INTERVENTION RECORD</figcaption></figure>
+      <span class="construction-hero-note" aria-hidden="true">UPKEEP · MAINTENANCE · OPERATIONS</span>
+    </section>
+    <section class="construction-intro section-pad" id="company" aria-labelledby="pages-en-facilities-index-section-2-heading">
+      <div class="section-kicker">01 / SERVICE AREA</div>
+      <div class="construction-intro-content"><h2 id="pages-en-facilities-index-section-2-heading">Well-maintained premises.<br /><em>Clearly defined services.</em></h2><div class="construction-intro-copy"><p>HMATIAS provides facilities and maintenance services for companies and institutions. The scope includes building maintenance, professional cleaning, roof upkeep and operational support.</p><p>Frequency, areas, resources, materials and responsibilities are defined before each service begins.</p><a class="underlined-link" href="#evidence">Review documented interventions <span aria-hidden="true">↘</span></a></div></div>
+    </section>
+    <section class="construction-scopes section-pad" id="services" aria-labelledby="pages-en-facilities-index-section-3-heading">
+      <div class="section-heading"><div><div class="section-kicker">02 / SERVICES</div><h2 id="pages-en-facilities-index-section-3-heading">Maintenance and operations<br /><em>for the working environment.</em></h2></div><p>Services are organised according to the condition of the premises and the requirements identified.</p></div>
+      <div class="construction-scope-grid">
+        <article class="construction-scope-card"><span>01</span><h3>Building maintenance</h3><p>Preventive or corrective interventions, planned or one-off, according to the agreed scope.</p></article>
+        <article class="construction-scope-card"><span>02</span><h3>Cleaning and upkeep</h3><p>Cleaning of offices, facilities and frequently used areas, with an agreed service frequency.</p></article>
+        <article class="construction-scope-card"><span>03</span><h3>Operational support</h3><p>Requirements assessment, intervention coordination and follow-up of the agreed work.</p></article>
+        <article class="construction-scope-card"><span>04</span><h3>Roofing and structural maintenance</h3><p>Localised interventions in roof coverings, metal structures and supporting elements.</p></article>
+      </div>
+      <div class="facilities-clean-link">
+        <div><p class="section-kicker">HMATIAS FACILITIES</p><h3>Cleaning services and hygiene products.</h3><p>Request post-construction cleaning or consult the HMATIAS Clean catalogue of 100 professional product references.</p></div>
+        <a class="underlined-link" href="/en/post-construction-cleaning/">Post-construction cleaning <span aria-hidden="true">↗</span></a>
+        <a class="underlined-link" href="/en/clean/">Explore HMATIAS Clean <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+    <section class="construction-work section-pad" id="evidence" aria-labelledby="pages-en-facilities-index-section-4-heading">
+      <div class="section-heading"><div><div class="section-kicker">03 / RECORDED INTERVENTIONS</div><h2 id="pages-en-facilities-index-section-4-heading">Work documented<br /><em>on existing premises.</em></h2></div><p>Selected photographs showing the type of intervention recorded by HMATIAS.</p></div>
+      <div class="construction-work-grid">
+        <article class="construction-work-card"><figure><Picture src={roofMaintenance} alt="Localised replacement of metal roof sheets on an existing facility" widths={[640,960]} sizes="(max-width:650px) 100vw,50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure><div class="construction-work-caption"><span>ROOF MAINTENANCE</span><h3>Localised roof replacement</h3><p>Replacement of metal roof sheets on an existing installation.</p></div></article>
+        <article class="construction-work-card"><figure><Picture src={annexStructure} alt="Metal roof structure over a covered annex beside an existing building" widths={[640,960]} sizes="(max-width:650px) 100vw,50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure><div class="construction-work-caption"><span>STRUCTURAL INTERVENTION</span><h3>Covered annex structure</h3><p>Metal roofing structure applied to an annex supporting the existing premises.</p></div></article>
+      </div>
+    </section>
+
+    <section class="construction-request section-pad" id="request" aria-labelledby="pages-en-facilities-index-section-5-heading">
+      <div class="construction-request-copy"><p class="section-kicker">04 / SERVICE ENQUIRIES</p><h2 id="pages-en-facilities-index-section-5-heading">Let's assess<br /><em>your premises.</em></h2><p>Share the location, the areas involved, the type of service required and the preferred frequency. HMATIAS can review the scope and identify the information needed for a proposal.</p><div class="construction-request-actions"><a class="button button-light" href={facilitiesWhatsapp} target="_blank" rel="noopener noreferrer">Contact via WhatsApp <span aria-hidden="true">↗</span></a><a class="construction-email-link" href={`mailto:${company.commercialEmail}?subject=Facilities%20service%20enquiry`}>Send an email <span>↗</span></a></div></div>
+      <aside class="construction-request-guide"><h3>Information to include</h3><ul><li>Premises location</li><li>Areas and type of facility</li><li>Tasks or issues identified</li><li>Required frequency</li><li>Preferred start date</li></ul><p>The service scope and operating conditions are subject to assessment and agreement.</p></aside>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+</BaseLayout>
