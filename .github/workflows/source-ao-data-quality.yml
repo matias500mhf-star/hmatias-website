@@ -33,6 +33,8 @@ jobs:
         run: node source-ao/validate-data.mjs
       - name: Validate public partner catalogue
         run: node source-ao/validate-partner-catalog.mjs
+      - name: Validate partner catalogue validator syntax
+        run: node --check source-ao/validate-partner-catalog.mjs
       - name: Validate institutional website leads migration
         run: python3 source-ao/backend/scripts/test-website-leads-migration.py
       - name: Validate synthetic RFQ alert isolation
