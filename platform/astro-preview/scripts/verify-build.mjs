@@ -219,7 +219,7 @@ for (const route of lighthouseRoutes) {
   assert.ok(existsSync(file), "Lighthouse route must resolve to generated HTML: " + route);
   const content = readFileSync(file, "utf8");
   const language = route.startsWith("/en/") ? "en" : "pt-AO";
-  assert.match(content, new RegExp('<html lang="' + language + "'"), "Generated route language is incorrect: " + route);
+  assert.match(content, new RegExp('<html lang="' + language + '"'), "Generated route language is incorrect: " + route);
 }
 for (const route of [
 
