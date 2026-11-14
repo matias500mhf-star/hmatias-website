@@ -419,10 +419,14 @@
       "location": "Portugal — fornecimento para Angola",
       "website": "https://synvor-industrial.com/",
       "source_urls": [
+        "https://synvor-industrial.com/",
         "https://synvor-industrial.com/angola",
         "https://synvor-industrial.com/discos-diamantados",
+        "https://synvor-industrial.com/discos/carbodiam-pantera",
+        "https://synvor-industrial.com/discos/carbodiam-pantera-neutre",
+        "https://synvor-industrial.com/discos/carbodiam-crack-chaser",
         "https://synvor-industrial.com/coroas-diamantadas",
-        "https://synvor-industrial.com/desbaste-e-polimento"
+        "https://synvor-industrial.com/perfuracao"
       ],
       "category": [
         "diamond-tools"
