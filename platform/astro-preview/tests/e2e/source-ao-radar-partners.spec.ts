@@ -21,6 +21,28 @@ test.describe("SOURCE AO — Radar e candidaturas de parceiros", () => {
     await expect(page.getByRole("link", { name: "Partner application" })).toHaveAttribute("href", "/en/source-ao/partners/");
   });
 
+  test("public catalogue search stays safely disabled without the staging API", async ({ page }) => {
+    let apiRequests = 0;
+    page.on("request", request => {
+      if (/\\/api\\/(search|catalog|sourcing-requests)/.test(new URL(request.url()).pathname)) apiRequests += 1;
+    });
+
+    for (const route of [
+      { path: "/source-ao/", lang: "pt-AO", rfq: "/source-ao/smart-rfq/", notice: /aguarda a configuração da API de staging/i },
+      { path: "/en/source-ao/", lang: "en", rfq: "/en/source-ao/smart-rfq/", notice: /awaiting staging API configuration/i },
+    ]) {
+      await page.goto(route.path);
+      await expect(page.locator("html")).toHaveAttribute("lang", route.lang);
+      await expect(page.locator("#sourceAoSearchForm")).toBeVisible();
+      await expect(page.locator("#sourceAoSearchQuery")).toBeDisabled();
+      await expect(page.locator("#sourceAoSearchForm button[type='submit']")).toBeDisabled();
+      await expect(page.locator("#sourceAoSearchStatus")).toContainText(route.notice);
+      await expect(page.locator(".source-live-search-footnote a")).toHaveAttribute("href", route.rfq);
+    }
+
+    expect(apiRequests).toBe(0);
+  });
+
   for (const route of radarRoutes) {
     test(`Radar ${route.lang} is isolated, honest about live status and operational`, async ({ page }) => {
       const errors: string[] = [];
