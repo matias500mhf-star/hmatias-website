@@ -429,7 +429,11 @@
         "https://synvor-industrial.com/perfuracao",
         "https://synvor-industrial.com/desbaste-e-polimento",
         "https://synvor-industrial.com/serras-e-maquinas",
-        "https://synvor-industrial.com/weka"
+        "https://synvor-industrial.com/weka",
+        "https://synvor-industrial.com/discos/carbodiam-acier",
+        "https://synvor-industrial.com/discos/carbodiam-beton",
+        "https://synvor-industrial.com/discos/carbodiam-beton-sol",
+        "https://synvor-industrial.com/discos/carbodiam-incisor"
       ],
       "category": [
         "diamond-tools",
