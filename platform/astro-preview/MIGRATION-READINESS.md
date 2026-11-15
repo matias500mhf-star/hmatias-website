@@ -256,7 +256,7 @@ Os testes backend do ciclo passaram com **172 testes aprovados e zero falhas**, 
 
 ## 11. Estado actualizado do novo design — 14 de novembro de 2026
 
-A revisão de 15 de novembro consolida o protótipo em **58 rotas de conteúdo bilingues (29 PT-AO e 29 EN), mais uma página 404 própria — 59 ficheiros HTML estáticos**. A homepage inclui apresentação da empresa, as quatro áreas operacionais, projectos, parceiros, contacto. O rodapé tem quatro colunas responsivas; a coluna operacional mantém exclusivamente Construção, Facilities, Supply e Business Services. A coluna Explorar reúne páginas de identidade, projectos, catálogo, SOURCE AO, Blog, KARTA Wallet · Projeto Alpha e Smart RFQ.
+A revisão de 15 de novembro consolida o protótipo em **58 rotas de conteúdo bilingues (29 PT-AO e 29 EN), mais uma página 404 própria — 59 ficheiros HTML estáticos**. A homepage inclui apresentação da empresa, as quatro áreas operacionais, projectos, parceiros, contacto. O rodapé tem quatro colunas responsivas, por esta ordem: Explorar, Identidade HMATIAS, Áreas operacionais e Contactos. A coluna operacional mantém exclusivamente Construção, Facilities, Supply e Business Services. A coluna Explorar reúne páginas de identidade, projectos, catálogo, SOURCE AO, Blog, KARTA Wallet · Projeto Alpha e Smart RFQ.
 
 A rede de parceiros apresentada no preview inclui Miliart, FRANSGA, D&WOOD, Telewise, SYNVOR Industrial e Kent Offshore. Cinco identidades usam logótipos locais; Telewise é apresentado apenas por nome, sem logótipo. A participação de cada entidade continua condicionada ao âmbito e à confirmação de disponibilidade para cada projecto.
 
