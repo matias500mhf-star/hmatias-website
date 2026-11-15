@@ -27,10 +27,10 @@ import { company } from "../../data/site";
         <Picture
           src={aboutPhoto}
           alt="Pavilhões rurais concluídos, com cobertura metálica e áreas laterais ventiladas"
-          widths={[640, 960, 1280]}
-          sizes="(max-width: 900px) 100vw, 44vw"
+          widths={[480, 640, 960, 1280]}
+          sizes="(max-width: 700px) calc(100vw - 44px), (max-width: 1000px) 52vw, 44vw"
           formats={["avif", "webp"]} fallbackFormat="jpg"
-          quality={84} decoding="async" loading="eager" fetchpriority="high" />
+          quality={80} decoding="async" loading="eager" fetchpriority="high" />
         <figcaption><span>HMATIAS</span><span>TRABALHO NO TERRENO</span></figcaption>
       </figure>
     </section>
@@ -171,4 +171,30 @@ import { company } from "../../data/site";
 @media (max-width:700px) { .ceo-message-inner { padding-left:20px; } .ceo-message h2 { font-size:clamp(29px,8vw,38px); } }
 
 
+
+@media (max-width:700px) {
+  .about-hero { padding:36px var(--hm-gutter) 38px; gap:20px; }
+  .about-copy h1 { font-size:clamp(32px,8.7vw,39px); line-height:1.08; letter-spacing:-.05em; }
+  .about-lead { margin-top:16px; }
+  .about-actions { gap:13px; margin-top:20px; }
+  .about-visual img { height:clamp(180px,52vw,250px); max-height:250px; aspect-ratio:16/10; }
+  .about-page .section-pad { padding-block:clamp(42px,10vw,54px); }
+  .about-section-head h2 { margin-top:14px; font-size:clamp(29px,8vw,35px); line-height:1.12; }
+  .about-service-grid { gap:10px; margin-top:24px; }
+  .about-service-grid a { padding:18px; }
+  .about-service-grid h3 { margin-top:15px; }
+  .purpose-grid { grid-template-columns:1fr; gap:12px; margin-top:24px; }
+  .purpose-card { min-height:0; padding:20px; }
+  .purpose-card h3 { margin:18px 0 12px; font-size:clamp(22px,6.2vw,27px); line-height:1.2; }
+  .purpose-card p { line-height:1.7; }
+  .values-heading { margin:38px 0 16px; padding-bottom:14px; }
+  .values-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+  .values-grid article { min-height:0; padding:16px 14px; }
+  .values-grid h4 { margin:16px 0 9px; }
+  .ceo-message .section-kicker { line-height:1.6; }
+  .ceo-message-inner { padding-left:16px; }
+  .ceo-message h2 { margin-top:15px; font-size:clamp(26px,7.2vw,33px); line-height:1.15; }
+  .ceo-message-copy { margin-top:16px; line-height:1.7; }
+  .ceo-signature { margin-top:20px; }
+}
 </style>
