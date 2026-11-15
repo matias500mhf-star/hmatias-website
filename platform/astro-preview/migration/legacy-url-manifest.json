@@ -349,6 +349,70 @@
       "in_legacy_sitemap": false,
       "preserve_until_approved": true,
       "notes": "Candidatura de parceiros ligada a partir do website oficial e marcada noindex; o formulário Astro existe, mas permanece desactivado sem API de staging. Preservar a rota oficial até validar a migração 0027, CORS, consentimento e submissão no staging."
+    },
+    {
+      "source_url": "/404.html",
+      "preview_target": "/404.html",
+      "treatment": "preview_route_pending_error_page_validation",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Página de erro 404 recriada no Astro; deve ser validada no host de preview antes da migração."
+    },
+    {
+      "source_url": "/source-ao/ops.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Painel interno de operações e verificação; exige autenticação do backend. Preservar ou re-hospedar como aplicação privada antes de substituir o publisher."
+    },
+    {
+      "source_url": "/source-ao/requests.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Fila interna de pedidos e dados comerciais privados; manter protegida e fora do sitemap público."
+    },
+    {
+      "source_url": "/source-ao/review.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Área de revisão humana de respostas de fornecedores; manter protegida e fora do sitemap público."
+    },
+    {
+      "source_url": "/source-ao/supplier-discovery.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Ferramenta interna de pesquisa de fornecedores; requer autenticação e deve permanecer fora do site público."
+    },
+    {
+      "source_url": "/source-ao/website-leads.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Painel interno de pedidos institucionais; manter protegido e fora do sitemap público."
+    },
+    {
+      "source_url": "/source-ao/track.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Página privada de acompanhamento de pedidos por link/token; preservar até existir equivalência funcional segura."
+    },
+    {
+      "source_url": "/source-ao/confirm.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Página tokenizada de confirmação de fornecedor; preservar até migrar o percurso com as validações backend equivalentes."
     }
   ],
   "launch_gates": [
