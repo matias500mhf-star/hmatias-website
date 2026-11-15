@@ -294,7 +294,14 @@ for (const service of ["Expediente Administrativo e Redação Institucional", "E
 assert.match(businessHtml, /wa\.me\/244948806673/, "Business Services WhatsApp enquiry channel is missing");
 assert.match(businessHtml, /mailto:geral@comercialhmatiasps\.com/, "Business Services email enquiry channel is missing");
 assert.match(businessHtml, /Consultar Política de Privacidade/, "Business Services privacy notice is missing");
-assert.doesNotMatch(businessHtml, /servicos-administrativos\.html#contacto-business/, "Business Services must not send visitors to the legacy intake form");
+assert.ok(businessHtml.includes('href="https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business"'), "Business Services must preserve the exact approved official request form until an equivalent intake is validated");
+assert.ok(businessHtml.includes('href="https://comercialhmatiasps.com/agendamento.html"'), "Business Services must preserve the official appointment route until an equivalent booking flow is validated");
+assert.doesNotMatch(businessHtml, /comercialhmatiasps\.com\/(?:rfq|rfq-en)\.html/i, "Business Services must not be diverted to either legacy Smart RFQ form");
+const englishBusinessPath = join(outDir, "en", "business-services", "index.html");
+assert.ok(existsSync(englishBusinessPath), "English Business Services page must be generated");
+const englishBusinessHtml = readFileSync(englishBusinessPath, "utf8");
+assert.ok(englishBusinessHtml.includes('href="https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business"'), "English Business Services must preserve the exact approved official request form");
+assert.ok(englishBusinessHtml.includes('href="https://comercialhmatiasps.com/agendamento.html"'), "English Business Services must preserve the official appointment route");
 
 const aboutPath = join(outDir, "empresa", "index.html");
 assert.ok(existsSync(aboutPath), "About page must be generated");
