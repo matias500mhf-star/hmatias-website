@@ -16,8 +16,19 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(englishForm).toHaveAttribute("rel", /noopener noreferrer/);
   });
 
-  test("homepage exposes all four service divisions and routes Business Services internally", async ({ page }) => {
+  test("homepage preserves the approved four-area service sequence and routes Business Services internally", async ({ page }) => {
     await page.goto("/");
+    const serviceRows = page.locator(".service-row");
+    await expect(serviceRows).toHaveCount(4);
+    const serviceHrefs = await serviceRows.evaluateAll((rows) => rows.map((row) => row.getAttribute("href")));
+    expect(serviceHrefs).toEqual(["/construcao/", "/facilities/", "/supply/", "/business-services/"]);
+    const serviceTitles = await serviceRows.locator("strong").allTextContents();
+    expect(serviceTitles).toEqual([
+      "Construção e remodelação",
+      "Facilities e manutenção",
+      "Supply e procurement",
+      "Business Services",
+    ]);
     const businessLink = page.locator(".service-row").filter({ hasText: "Business Services" });
     await expect(businessLink).toHaveAttribute("href", "/business-services/");
     await businessLink.click();
@@ -94,6 +105,26 @@ test.describe("HMATIAS company and platform pages", () => {
     for (const name of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business Services"]) {
       await expect(page.locator(".about-service-grid a").filter({ hasText: name })).toHaveCount(1);
     }
+  });
+
+  test("English homepage preserves the same four-area service sequence", async ({ page }) => {
+    await page.goto("/en/");
+    const serviceRows = page.locator(".service-row");
+    await expect(serviceRows).toHaveCount(4);
+    const serviceHrefs = await serviceRows.evaluateAll((rows) => rows.map((row) => row.getAttribute("href")));
+    expect(serviceHrefs).toEqual([
+      "/en/construction/",
+      "/en/facilities/",
+      "/en/supply/",
+      "/en/business-services/",
+    ]);
+    const serviceTitles = await serviceRows.locator("strong").allTextContents();
+    expect(serviceTitles).toEqual([
+      "Construction and remodelling",
+      "Facilities and maintenance",
+      "Supply and procurement",
+      "Business Services",
+    ]);
   });
 
   test("English About page presents mission, vision, values and the restrained CEO message", async ({ page }) => {
