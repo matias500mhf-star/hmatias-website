@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../../../../logo-hmatias.png";
-import { company } from "../data/site";
 import { getLanguageSwitchPath } from "../data/locales";
 
 const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
@@ -25,7 +24,6 @@ const contactAnchor = isEnglish ? "contact" : "contacto";
       <a href={`${homeUrl}#${servicesAnchor}`}>{isEnglish ? "Services" : "Serviços"}</a>
       <a href={`${homeUrl}#${projectsAnchor}`}>{isEnglish ? "Projects" : "Projetos"}</a>
       <a href={`${homeUrl}#${companyAnchor}`}>{isEnglish ? "Company" : "Empresa"}</a>
-      <a href={company.sourceAoUrl}>SOURCE AO</a>
     </nav>
     <div class="header-actions">
       <a class="language-switch" href={languageHref} lang={isEnglish ? "pt-AO" : "en"} aria-label={isEnglish ? "PT — Switch to Portuguese" : "EN — Mudar para inglês"}>{isEnglish ? "PT" : "EN"}</a>
