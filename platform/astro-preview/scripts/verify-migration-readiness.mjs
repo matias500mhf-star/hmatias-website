@@ -51,7 +51,7 @@ for (const route of manifest.routes) {
     const errorHtml = readFileSync(errorPagePath, "utf8");
     assert.match(
       errorHtml,
-      /<meta[^>]+name=["']robots["'][^>]+content=["']noindex,\\s*nofollow["']/i,
+      /<meta[^>]+name=["']robots["'][^>]+content=["']noindex,\s*nofollow["']/i,
       "The custom 404 page must remain noindex,nofollow"
     );
     continue;
