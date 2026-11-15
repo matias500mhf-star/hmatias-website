@@ -74,7 +74,15 @@ test.describe("HMATIAS company and platform pages", () => {
       expect(aboutPhotoBox?.height || 0).toBeGreaterThan(380);
     } else {
       expect(aboutPhotoBox?.height || 0).toBeGreaterThan(180);
-      expect(aboutPhotoBox?.height || 0).toBeLessThanOrEqual(320);
+      expect(aboutPhotoBox?.height || 0).toBeLessThanOrEqual(260);
+      const aboutTitleSize = await page.locator(".about-copy h1").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+      expect(aboutTitleSize).toBeLessThanOrEqual(40);
+      const heroPaddingTop = await page.locator(".about-hero").evaluate((element) => parseFloat(getComputedStyle(element).paddingTop));
+      expect(heroPaddingTop).toBeLessThanOrEqual(40);
+      const sectionPaddingTop = await page.locator(".about-services").evaluate((element) => parseFloat(getComputedStyle(element).paddingTop));
+      expect(sectionPaddingTop).toBeLessThanOrEqual(55);
+      const pageWidth = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
+      expect(pageWidth.scroll).toBeLessThanOrEqual(pageWidth.client + 1);
     }
     await expect(page.locator(".about-purpose")).toBeVisible();
     await expect(page.locator(".purpose-card")).toHaveCount(2);
@@ -99,6 +107,13 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(page.locator(".values-grid")).toContainText("Integrity and transparency");
     await expect(page.locator(".ceo-message")).toContainText("Built with purpose.");
     await expect(page.locator(".ceo-message")).toContainText("CEO — Henrique Fernandes");
+    await page.setViewportSize({ width: 390, height: 844 });
+    const aboutTitleSize = await page.locator(".about-copy h1").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+    expect(aboutTitleSize).toBeLessThanOrEqual(40);
+    const aboutImage = await page.locator(".about-visual img").boundingBox();
+    expect(aboutImage?.height || 0).toBeLessThanOrEqual(260);
+    const pageWidth = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
+    expect(pageWidth.scroll).toBeLessThanOrEqual(pageWidth.client + 1);
   });
 
   test("English Credibility page uses verifiable information without publishing document scans", async ({ page }) => {
