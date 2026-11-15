@@ -7,6 +7,17 @@ const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const distRoot = join(projectRoot, "dist");
 const manifestPath = join(projectRoot, "migration", "legacy-url-manifest.json");
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+const configuredSite = new URL(
+  process.env.ASTRO_SITE_URL
+    ?? process.env.ASTRO_PREVIEW_SITE_URL
+    ?? "https://hmatias-astro-preview.onrender.com"
+);
+const productionIndexingEnabled = process.env.PUBLIC_INDEXING_ENABLED === "true"
+  && configuredSite.protocol === "https:"
+  && configuredSite.hostname === "comercialhmatiasps.com";
+const expectedRobotsPattern = productionIndexingEnabled
+  ? /<meta[^>]+name=["']robots["'][^>]+content=["']index,\\s*follow["']/i
+  : /<meta[^>]+name=["']robots["'][^>]+content=["']noindex,\\s*nofollow["']/i;
 
 assert.equal(manifest.production_changes_permitted, false, "The prototype must never authorize production changes");
 assert.equal(manifest.preview_must_remain_noindex, true, "The preview must remain protected from indexing");
@@ -77,7 +88,7 @@ for (const route of manifest.routes) {
 
   const targetHtml = readFileSync(targetPath, "utf8");
   assert.match(
-    targetHtml,
+    expectedRobotsPattern,
     /<meta[^>]+name=["']robots["'][^>]+content=["']noindex,\s*nofollow["']/i,
     `Preview target must remain noindex,nofollow: ${route.preview_target}`
   );
