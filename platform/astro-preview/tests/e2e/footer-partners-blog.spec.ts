@@ -190,6 +190,32 @@ for (const route of [
     await expect(page.locator(".editorial-archive-note")).toContainText(
       route.language === "en" ? "do not represent HMATIAS projects" : "Não representam obras"
     );
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    const blogTitleSize = await page.locator(".editorial-hero h1").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+    expect(blogTitleSize).toBeLessThanOrEqual(40);
+    const featuredImage = await page.locator(".editorial-feature-visual img").boundingBox();
+    expect(featuredImage?.height || 0).toBeLessThanOrEqual(215);
+    const featuredSrcSet = await page.locator(".editorial-feature-visual img").getAttribute("srcset");
+    expect(featuredSrcSet).toContain("w=480");
+    const archiveImage = await page.locator(".editorial-card-cover img").first().boundingBox();
+    expect(archiveImage?.height || 0).toBeLessThanOrEqual(185);
+    const archiveSrcSet = await page.locator(".editorial-card-cover img").first().getAttribute("srcset");
+    expect(archiveSrcSet).toContain("w=480");
+    const archiveOverflow = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
+    expect(archiveOverflow.scroll).toBeLessThanOrEqual(archiveOverflow.client + 1);
+
+    const articleUrl = await page.locator(".editorial-feature h2 a").getAttribute("href");
+    expect(articleUrl).toBeTruthy();
+    await page.goto(articleUrl!);
+    const articleTitleSize = await page.locator(".article-hero h1").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+    expect(articleTitleSize).toBeLessThanOrEqual(38);
+    const articleImage = await page.locator(".article-cover-figure img").boundingBox();
+    expect(articleImage?.height || 0).toBeLessThanOrEqual(225);
+    const articleSrcSet = await page.locator(".article-cover-figure img").getAttribute("srcset");
+    expect(articleSrcSet).toContain("w=480");
+    const articleOverflow = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
+    expect(articleOverflow.scroll).toBeLessThanOrEqual(articleOverflow.client + 1);
   });
 }
 
