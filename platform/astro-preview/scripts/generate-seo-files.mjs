@@ -51,7 +51,7 @@ for (const file of await collectHtml(distRoot)) {
 
   const html = await readFile(file, "utf8");
   const robotsMatch = html.match(/<meta[^>]+name=["']robots["'][^>]+content=["']([^"']+)["']/i);
-  if (!robotsMatch || !/^index,\\s*follow$/i.test(robotsMatch[1])) continue;
+  if (!robotsMatch || !/^index,\s*follow$/i.test(robotsMatch[1])) continue;
 
   const canonicalMatch = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i);
   assert.ok(canonicalMatch, `Indexable page is missing canonical: ${relativePath}`);
@@ -71,7 +71,7 @@ const xml = [
   ...[...urls].sort().map((url) => `  <url><loc>${url.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</loc></url>`),
   '</urlset>',
   ''
-].join("\\n");
+].join("\n");
 
 await writeFile(sitemapPath, xml, "utf8");
 console.log(`SEO files generated: production robots.txt and sitemap.xml with ${urls.size} canonical, indexable URLs.`);
