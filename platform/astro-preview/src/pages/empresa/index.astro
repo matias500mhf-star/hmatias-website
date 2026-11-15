@@ -47,31 +47,16 @@ import { company } from "../../data/site";
       </div>
     </section>
 
-    <section class="about-purpose section-pad" aria-labelledby="about-purpose-heading">
+    <section class="about-proof section-pad" aria-labelledby="about-proof-heading">
       <div class="about-section-head">
-        <div><p class="section-kicker">A NOSSA DIREÇÃO</p><h2 id="about-purpose-heading">O que nos orienta.</h2></div>
-        <p>Princípios simples para orientar a forma como assumimos, executamos e acompanhamos cada compromisso.</p>
+        <div><p class="section-kicker">TRABALHO DOCUMENTADO</p><h2 id="about-proof-heading">Actividade que se pode<br /><em>verificar.</em></h2></div>
+        <p>Alguns exemplos de trabalhos apresentados no portefólio de Construção da HMATIAS.</p>
       </div>
-      <div class="purpose-grid">
-        <article class="purpose-card"><span>MISSÃO</span><h3>Transformar necessidades em soluções concretas.</h3><p>Responder às necessidades de empresas e instituições nas quatro áreas da HMATIAS — Construção e Remodelação, Facilities e Manutenção, Supply e Procurement e Business Services — com escopo claro, comunicação direta e acompanhamento responsável.</p></article>
-        <article class="purpose-card purpose-vision"><span>VISÃO</span><h3>Ser reconhecida pela fiabilidade e pelo rigor.</h3><p>Consolidar a HMATIAS como uma empresa angolana reconhecida pela capacidade de resposta, seriedade na execução e relações duradouras, criando valor para clientes e parceiros.</p></article>
-      </div>
-      <div class="values-heading"><p class="section-kicker">VALORES HMATIAS</p><h3>Princípios que orientam cada relação.</h3></div>
-      <div class="values-grid">
-        <article><span>01</span><h4>Responsabilidade</h4><p>Assumir compromissos com clareza e acompanhar o trabalho acordado até ao seu encerramento.</p></article>
-        <article><span>02</span><h4>Integridade e transparência</h4><p>Comunicar condições, limites e informação confirmada, sem promessas que não possam ser sustentadas.</p></article>
-        <article><span>03</span><h4>Rigor e qualidade</h4><p>Trabalhar com especificações, planeamento e verificação proporcionais a cada necessidade.</p></article>
-        <article><span>04</span><h4>Proximidade</h4><p>Ouvir, esclarecer e manter uma comunicação direta com clientes, equipas e parceiros.</p></article>
-        <article><span>05</span><h4>Melhoria contínua</h4><p>Aprender com cada intervenção e aperfeiçoar métodos, organização e capacidade de resposta.</p></article>
-      </div>
-    </section>
-
-    <section class="ceo-message section-pad" aria-labelledby="ceo-message-heading">
-      <div class="ceo-message-inner">
-        <p class="section-kicker">UMA NOTA SOBRE A NOSSA EMPRESA</p>
-        <h2 id="ceo-message-heading">Construir com propósito. <em>Crescer com confiança.</em></h2>
-        <p class="ceo-message-copy">Acreditamos que uma empresa se constrói todos os dias, com responsabilidade, dedicação e respeito por cada compromisso assumido. Na HMATIAS, procuramos transformar necessidades em soluções concretas, aproximar pessoas e oportunidades e deixar uma marca positiva em cada trabalho realizado. O nosso caminho faz-se com trabalho sério, relações de confiança e vontade constante de fazer melhor.</p>
-        <div class="ceo-signature"><strong>CEO — Henrique Fernandes</strong></div>
+      <div class="about-proof-list">
+        <article><span>01 / ESTRUTURAS</span><div><h3>Galpão com estrutura metálica</h3><p>Montagem de estrutura metálica, cobertura e fechamentos em chapa, com alvenaria de apoio.</p></div><a href={company.constructionUrl + "#trabalhos"}>Ver registo ↗</a></article>
+        <article><span>02 / INFRAESTRUTURA</span><div><h3>Preparação de terreno</h3><p>Mobilização de retroescavadora para movimentação de terras e regularização inicial do terreno.</p></div><a href={company.constructionUrl + "#trabalhos"}>Ver registo ↗</a></article>
+        <article><span>03 / COBERTURAS</span><div><h3>Substituição de cobertura</h3><p>Substituição localizada de chapas de cobertura, com integração na estrutura existente.</p></div><a href={company.constructionUrl + "#trabalhos"}>Ver registo ↗</a></article>
+        <article><span>04 / CONSTRUÇÃO RURAL</span><div><h3>Pavilhões rurais concluídos</h3><p>Registo exterior de pavilhões com cobertura metálica e áreas laterais ventiladas.</p></div><a href={company.constructionUrl + "#trabalhos"}>Ver registo ↗</a></article>
       </div>
     </section>
   </main>
@@ -172,6 +157,18 @@ import { company } from "../../data/site";
 
 
 
+.about-proof { background:var(--hm-paper); }
+.about-proof-list { margin-top:38px; border-top:1px solid var(--hm-line); }
+.about-proof-list article { display:grid; grid-template-columns:minmax(130px,.55fr) minmax(0,1.45fr) auto; align-items:center; gap:24px; padding:22px 0; border-bottom:1px solid var(--hm-line); }
+.about-proof-list article > span { color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.12em; }
+.about-proof-list h3 { margin:0 0 7px; font-size:15px; }
+.about-proof-list p { margin:0; color:var(--hm-muted); font-size:12px; line-height:1.75; }
+.about-proof-list a { color:var(--hm-blue); font-size:10px; font-weight:700; white-space:nowrap; }
+@media (max-width:700px) {
+  .about-proof-list { margin-top:24px; }
+  .about-proof-list article { grid-template-columns:1fr; gap:8px; padding:17px 0; }
+  .about-proof-list h3 { font-size:14px; }
+}
 @media (max-width:700px) {
   .about-hero { padding:36px var(--hm-gutter) 38px; gap:20px; }
   .about-copy h1 { font-size:clamp(32px,8.7vw,39px); line-height:1.08; letter-spacing:-.05em; }
