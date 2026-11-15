@@ -256,7 +256,7 @@ Os testes backend do ciclo passaram com **172 testes aprovados e zero falhas**, 
 
 ## 11. Estado actualizado do novo design — 14 de novembro de 2026
 
-A revisão de 14 de novembro consolida o protótipo em **58 páginas estáticas bilingues (29 PT-AO e 29 EN)**. A homepage inclui apresentação da empresa, as quatro áreas operacionais, projectos, parceiros, uma secção autónoma do KARTA Wallet e contacto. O rodapé tem quatro colunas responsivas; a coluna operacional mantém exclusivamente Construção, Facilities, Supply e Business Services. A coluna Explorar reúne páginas de identidade, projectos, catálogo, SOURCE AO, Blog, KARTA Wallet · Projeto Alpha e Smart RFQ.
+A revisão de 14 de novembro consolida o protótipo em **58 páginas estáticas bilingues (29 PT-AO e 29 EN)**. A homepage inclui apresentação da empresa, as quatro áreas operacionais, projectos, parceiros, contacto. O rodapé tem quatro colunas responsivas; a coluna operacional mantém exclusivamente Construção, Facilities, Supply e Business Services. A coluna Explorar reúne páginas de identidade, projectos, catálogo, SOURCE AO, Blog, KARTA Wallet · Projeto Alpha e Smart RFQ.
 
 A rede de parceiros apresentada no preview inclui Miliart, FRANSGA, D&WOOD, Telewise, SYNVOR Industrial e Kent Offshore. Cinco identidades usam logótipos locais; Telewise é apresentado apenas por nome, sem logótipo. A participação de cada entidade continua condicionada ao âmbito e à confirmação de disponibilidade para cada projecto.
 
@@ -273,8 +273,8 @@ O Blog tem 12 artigos em seis pares PT/EN, com guias técnicos e casos práticos
 
 ### Ajustes de continuidade após QA #882
 
-- Foi acrescentada à coluna Explorar a ligação explícita para KARTA Wallet · Projeto Alpha em PT e EN, mantendo o projecto fora das quatro áreas operacionais.
-- O teste Playwright passou a validar o texto e o destino da ligação KARTA nas duas homepages.
+- A ligação KARTA Wallet · Projeto Alpha permanece exclusivamente na coluna Explorar em PT e EN, fora das quatro áreas operacionais e sem criar uma secção adicional na homepage.
+- O teste Playwright valida o texto e o destino da ligação KARTA no rodapé das duas homepages, confirmando que não existe uma secção KARTA no conteúdo principal.
 - O verificador estático passou a validar a ligação no rodapé e a sua ausência da coluna operacional.
 - A configuração Lighthouse foi completada para auditar todas as 58 rotas, em vez de deixar sete artigos fora da auditoria.
 - Após os ajustes ao rodapé, a configuração Lighthouse e o QA #888, as falhas #890/#899/#902/#903 foram corrigidas sucessivamente: etiqueta KARTA normalizada para `Projeto Alpha`; propriedade de formulário actualizada nas duas chamadas do Catálogo de Obras; e verificador adaptado aos controlos de idioma próprios do SOURCE AO. O QA #905 já passou auditoria de dependências, type-check, build das 58 páginas, verificação estática, inventário de migração e auditoria de links. Playwright desktop/mobile e axe estão em execução; Lighthouse CI ainda não foi executado neste ciclo. A validação integral permanece pendente até à conclusão dos dois últimos passos.
