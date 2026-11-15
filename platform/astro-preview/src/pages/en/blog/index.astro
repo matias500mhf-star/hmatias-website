@@ -3,6 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 import { getCollection } from "astro:content";
+import { getResponsiveUnsplashSrcSet } from "../../../data/responsive-images";
 const posts = (await getCollection("blog", ({ data }) => !data.draft && data.language === "en")).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
 const featured = posts[0];
 const featuredDate = featured?.data.pubDate.toLocaleDateString("en",{day:"2-digit",month:"long",year:"numeric"});
@@ -23,7 +24,7 @@ const categoryGroups = categories.map((category)=>({name:category,id:"category-"
         <div class="editorial-label">FEATURED · {featuredDate?.toUpperCase()}</div>
         <article class="editorial-feature">
           <figure class="editorial-feature-visual">
-            <img src={featured.data.coverImage} alt={featured.data.coverAlt} width="1200" height="675" loading="eager" decoding="async" />
+            <img src={featured.data.coverImage} srcset={getResponsiveUnsplashSrcSet(featured.data.coverImage)} sizes="(max-width: 760px) calc(100vw - 44px), 42vw" alt={featured.data.coverAlt} width="1200" height="675" loading="eager" fetchpriority="high" decoding="async" />
             <figcaption>Illustrative image · Photo by <a href={featured.data.photoCreditUrl} target="_blank" rel="noopener noreferrer">{featured.data.photoCredit}</a> / <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash</a></figcaption>
           </figure>
           <p class="editorial-meta">{featured.data.contentType==="case-study"?"ILLUSTRATIVE CASE STUDY":"TECHNICAL GUIDE"} · {featured.data.category.toUpperCase()} · {featured.data.readingMinutes} MIN READ</p>
@@ -41,7 +42,7 @@ const categoryGroups = categories.map((category)=>({name:category,id:"category-"
           <div class="editorial-card-grid">
             {group.items.map((post)=><article class="editorial-card">
               <figure class="editorial-card-cover">
-                <img src={post.data.coverImage} alt={post.data.coverAlt} width="1200" height="675" loading="lazy" decoding="async" />
+                <img src={post.data.coverImage} srcset={getResponsiveUnsplashSrcSet(post.data.coverImage)} sizes="(max-width: 650px) calc(100vw - 44px), (max-width: 900px) calc((100vw - 72px) / 2), 30vw" alt={post.data.coverAlt} width="1200" height="675" loading="lazy" decoding="async" />
                 <figcaption>Illustrative image · Photo by <a href={post.data.photoCreditUrl} target="_blank" rel="noopener noreferrer">{post.data.photoCredit}</a> / <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash</a></figcaption>
               </figure>
               <p class="editorial-card-type">{post.data.contentType==="case-study"?"Illustrative case study":"Technical guide"}</p>
