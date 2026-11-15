@@ -4,6 +4,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 import { company } from "../../../data/site";
+import { getResponsiveUnsplashSrcSet } from "../../../data/responsive-images";
 type Props = { post: CollectionEntry<"blog"> };
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft && data.language === "en");
@@ -26,7 +27,7 @@ const dateLabel = post.data.pubDate.toLocaleDateString("en", { day:"2-digit", mo
     </section>
     <article class="article-content">
       <figure class="article-cover-figure">
-        <img src={post.data.coverImage} alt={post.data.coverAlt} width="1200" height="675" loading="eager" decoding="async" />
+        <img src={post.data.coverImage} srcset={getResponsiveUnsplashSrcSet(post.data.coverImage)} sizes="(max-width: 900px) calc(100vw - 44px), 804px" alt={post.data.coverAlt} width="1200" height="675" loading="eager" fetchpriority="high" decoding="async" />
         <figcaption>Illustrative image · Photo by <a href={post.data.photoCreditUrl} target="_blank" rel="noopener noreferrer">{post.data.photoCredit}</a> / <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash</a></figcaption>
       </figure>
       <Content />
@@ -64,5 +65,24 @@ const dateLabel = post.data.pubDate.toLocaleDateString("en", { day:"2-digit", mo
   .article-content { padding-inline:22px; }
   .article-content table { display:block; overflow-x:auto; }
   .article-cta { flex-direction:column; align-items:flex-start; }
+}
+
+@media(max-width:650px) {
+  .article-hero { padding:40px var(--hm-gutter) 32px; }
+  .article-breadcrumb { gap:8px; margin-bottom:24px; line-height:1.6; }
+  .article-hero h1 { max-width:22ch; font-size:clamp(30px,8.5vw,36px); line-height:1.08; letter-spacing:-.045em; overflow-wrap:anywhere; }
+  .article-deck { margin-top:16px; font-size:15px; line-height:1.7; }
+  .article-meta { gap:9px 14px; margin-top:22px; padding-top:13px; line-height:1.55; }
+  .article-content { padding:36px var(--hm-gutter) 48px; }
+  .article-content p { font-size:15px; line-height:1.75; }
+  .article-content > p:first-of-type { margin-bottom:25px; font-size:16px; line-height:1.7; }
+  .article-content h2 { margin-bottom:12px; font-size:22px; line-height:1.25; }
+  .article-content section { margin-bottom:30px; }
+  .article-content th,.article-content td { padding:10px; }
+  .article-cover-figure { margin-bottom:28px; }
+  .article-cover-figure img { max-height:220px; aspect-ratio:16/9; }
+  .article-cta { gap:14px; margin-top:30px; padding:20px; }
+  .article-cta h2 { font-size:24px; }
+  .article-cta p:not(.section-kicker) { font-size:14px; line-height:1.7; }
 }
 </style>
