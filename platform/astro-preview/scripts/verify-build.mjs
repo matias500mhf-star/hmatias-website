@@ -21,6 +21,22 @@ const expectedRobotsPattern = productionIndexingEnabled
   : /name="robots" content="noindex, nofollow"/;
 assert.match(html, /<html lang="pt-AO"/, "Portuguese Angola document language must be present");
 assert.match(html, expectedRobotsPattern, productionIndexingEnabled ? "Official production build must be indexable" : "Preview must not be indexed");
+const robotsTxtPath = join(outDir, "robots.txt");
+assert.ok(existsSync(robotsTxtPath), "Every deployment must publish an explicit robots.txt");
+const robotsTxt = readFileSync(robotsTxtPath, "utf8");
+if (productionIndexingEnabled) {
+  assert.match(robotsTxt, /User-agent: \\*\\s+Allow: \\//, "Production robots.txt must allow crawling");
+  assert.match(robotsTxt, /Sitemap: https:\\/\\/comercialhmatiasps\\.com\\/sitemap\\.xml/, "Production robots.txt must reference the official sitemap");
+  const sitemapPath = join(outDir, "sitemap.xml");
+  assert.ok(existsSync(sitemapPath), "Indexable production build must generate sitemap.xml");
+  const sitemapXml = readFileSync(sitemapPath, "utf8");
+  assert.match(sitemapXml, /<urlset[^>]+sitemaps.org\\/schemas\\/sitemap\\/0.9/, "Production sitemap XML namespace is missing");
+  assert.match(sitemapXml, /https:\\/\\/comercialhmatiasps\\.com\\//, "Production sitemap must include canonical official URLs");
+  assert.ok((sitemapXml.match(/<url>/g) || []).length >= 40, "Production sitemap must include the complete public page set");
+} else {
+  assert.match(robotsTxt, /User-agent: \\*\\s+Disallow: \\//, "Preview robots.txt must block crawling");
+  assert.ok(!existsSync(join(outDir, "sitemap.xml")), "No indexable sitemap may be emitted for a noindex preview");
+}
 assert.match(html, /property="og:title"/, "Open Graph title is missing");
 assert.match(html, /property="og:description"/, "Open Graph description is missing");
 assert.match(html, /name="twitter:card" content="summary_large_image"/, "Twitter card metadata is missing");
