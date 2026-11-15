@@ -17,6 +17,10 @@ const brandImageAlt = isEnglish
   ? "HMATIAS — Construction, Facilities, Supply and Business Services"
   : "HMATIAS — Prestação de Serviços";
 const siteUrl = Astro.site ?? new URL("https://hmatias-astro-preview.onrender.com");
+const indexingEnabled = import.meta.env.PUBLIC_INDEXING_ENABLED === "true"
+  && siteUrl.protocol === "https:"
+  && siteUrl.hostname === "comercialhmatiasps.com";
+const robotsContent = indexingEnabled ? "index, follow" : "noindex, nofollow";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const languagePair = getLanguagePair(Astro.url.pathname);
 const ptUrl = languagePair ? new URL(languagePair.pt, siteUrl).toString() : undefined;
@@ -57,7 +61,7 @@ const structuredData = JSON.stringify({
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content={robotsContent} />
     <meta name="theme-color" content="#062d56" />
     <meta name="description" content={description} />
     <meta property="og:type" content="website" />
