@@ -78,3 +78,26 @@ Os relatórios Playwright e Lighthouse são guardados como artefactos do GitHub 
 O formulário principal oficial recebe pedidos por e-mail através do Resend, conforme confirmação do proprietário. O preview encaminha para os formulários oficiais PT/EN em novo separador, e o auditor permite apenas esses dois destinos exactos. Nenhum formulário, segredo, Worker ou configuração Resend do domínio publicado foi alterado. Business Services, agendamento e SOURCE AO continuam a exigir validação autónoma antes de qualquer migração. A revisão visual manual em desktop/tablet/mobile e a navegação integral por teclado continuam pendentes.
 
 A proteção `noindex, nofollow` deve manter-se durante toda a avaliação.
+
+## Relatório GA4 (Google Analytics Data API)
+
+O relatório inicial consulta, em modo apenas de leitura, utilizadores ativos por país nos últimos sete dias completos (de `7daysAgo` até `yesterday`).
+
+Configuração local (não guardar credenciais no repositório):
+
+- `GA4_PROPERTY_ID`: ID numérico da propriedade GA4; não usar o ID do fluxo de dados.
+- `GOOGLE_CLOUD_PROJECT`: projeto Google Cloud associado à utilização da API (opcional quando não exigido por quota/billing).
+- Autenticação: `GA4_ACCESS_TOKEN` temporário ou Application Default Credentials via Google Cloud CLI.
+
+Exemplo:
+
+```bash
+export GA4_PROPERTY_ID="ID_DA_PROPRIEDADE"
+export GOOGLE_CLOUD_PROJECT="ID_DO_PROJECTO"
+gcloud auth application-default login --scopes=https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/cloud-platform
+npm run analytics:ga4:country
+```
+
+Também é possível fornecer um token de acesso temporário em `GA4_ACCESS_TOKEN`, sem o colocar em ficheiros versionados. A API requer que a Google Analytics Data API esteja activada no projecto e que a conta autenticada tenha, no mínimo, permissão de leitura na propriedade GA4.
+
+O script não envia eventos, não altera configurações do GA4 e não grava dados pessoais em ficheiros. Em caso de erro, apresenta a mensagem devolvida pela API sem imprimir o token.
