@@ -29,31 +29,16 @@ import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-conc
       </div>
     </section>
 
-    <section class="about-purpose section-pad" aria-labelledby="about-purpose-heading">
+    <section class="about-proof section-pad" aria-labelledby="about-proof-heading">
       <div class="about-section-head">
-        <div><p class="section-kicker">OUR DIRECTION</p><h2 id="about-purpose-heading">What guides our work.</h2></div>
-        <p>Simple principles that shape how we accept, deliver and follow up on every commitment.</p>
+        <div><p class="section-kicker">DOCUMENTED WORK</p><h2 id="about-proof-heading">Activity that can be<br /><em>reviewed.</em></h2></div>
+        <p>Selected examples shown in HMATIAS’ Construction portfolio.</p>
       </div>
-      <div class="purpose-grid">
-        <article class="purpose-card"><span>MISSION</span><h3>Turn requirements into practical solutions.</h3><p>Respond to business and institutional requirements across HMATIAS’ four areas — Construction and Remodelling, Facilities and Maintenance, Supply and Procurement, and Business Services — through clear scope, direct communication and responsible follow-up.</p></article>
-        <article class="purpose-card purpose-vision"><span>VISION</span><h3>Be recognised for reliability and rigour.</h3><p>Build HMATIAS into an Angolan company recognised for responsiveness, disciplined delivery and lasting relationships, creating value for customers and partners.</p></article>
-      </div>
-      <div class="values-heading"><p class="section-kicker">HMATIAS VALUES</p><h3>Principles behind every relationship.</h3></div>
-      <div class="values-grid">
-        <article><span>01</span><h4>Responsibility</h4><p>Make clear commitments and follow agreed work through to completion.</p></article>
-        <article><span>02</span><h4>Integrity and transparency</h4><p>Communicate conditions, limits and verified information without unsupported promises.</p></article>
-        <article><span>03</span><h4>Rigour and quality</h4><p>Work with specifications, planning and checks proportionate to each requirement.</p></article>
-        <article><span>04</span><h4>Proximity</h4><p>Listen, clarify and maintain direct communication with customers, teams and partners.</p></article>
-        <article><span>05</span><h4>Continuous improvement</h4><p>Learn from each intervention and improve methods, organisation and responsiveness.</p></article>
-      </div>
-    </section>
-
-    <section class="ceo-message section-pad" aria-labelledby="ceo-message-heading">
-      <div class="ceo-message-inner">
-        <p class="section-kicker">A NOTE ABOUT OUR COMPANY</p>
-        <h2 id="ceo-message-heading">Built with purpose. <em>Growing through trust.</em></h2>
-        <p class="ceo-message-copy">We believe a company is built every day through responsibility, dedication and respect for every commitment made. At HMATIAS, we aim to turn needs into practical solutions, bring people and opportunities closer, and make a positive contribution through every project we undertake. Our path is shaped by serious work, trusted relationships and the constant determination to do better.</p>
-        <div class="ceo-signature"><strong>CEO — Henrique Fernandes</strong></div>
+      <div class="about-proof-list">
+        <article><span>01 / STRUCTURES</span><div><h3>Metal-frame building</h3><p>Assembly of a metal structure, roofing and sheet-metal cladding, with supporting masonry.</p></div><a href="/en/construction/#trabalhos">View record ↗</a></article>
+        <article><span>02 / INFRASTRUCTURE</span><div><h3>Site preparation</h3><p>Excavator deployment for earthmoving and initial site levelling.</p></div><a href="/en/construction/#trabalhos">View record ↗</a></article>
+        <article><span>03 / ROOFING</span><div><h3>Roof replacement</h3><p>Localised replacement of roofing sheets, integrated with the existing structure.</p></div><a href="/en/construction/#trabalhos">View record ↗</a></article>
+        <article><span>04 / RURAL CONSTRUCTION</span><div><h3>Completed rural pavilions</h3><p>Exterior record of completed pavilions with metal roofing and ventilated side areas.</p></div><a href="/en/construction/#trabalhos">View record ↗</a></article>
       </div>
     </section>
   </main>
@@ -154,6 +139,18 @@ import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-conc
 
 
 
+.about-proof { background:var(--hm-paper); }
+.about-proof-list { margin-top:38px; border-top:1px solid var(--hm-line); }
+.about-proof-list article { display:grid; grid-template-columns:minmax(130px,.55fr) minmax(0,1.45fr) auto; align-items:center; gap:24px; padding:22px 0; border-bottom:1px solid var(--hm-line); }
+.about-proof-list article > span { color:var(--hm-blue); font-size:9px; font-weight:750; letter-spacing:.12em; }
+.about-proof-list h3 { margin:0 0 7px; font-size:15px; }
+.about-proof-list p { margin:0; color:var(--hm-muted); font-size:12px; line-height:1.75; }
+.about-proof-list a { color:var(--hm-blue); font-size:10px; font-weight:700; white-space:nowrap; }
+@media (max-width:700px) {
+  .about-proof-list { margin-top:24px; }
+  .about-proof-list article { grid-template-columns:1fr; gap:8px; padding:17px 0; }
+  .about-proof-list h3 { font-size:14px; }
+}
 @media (max-width:700px) {
   .about-hero { padding:36px var(--hm-gutter) 38px; gap:20px; }
   .about-copy h1 { font-size:clamp(32px,8.7vw,39px); line-height:1.08; letter-spacing:-.05em; }
