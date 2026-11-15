@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
 
-const propertyId = process.env.GA4_PROPERTY_ID;
+const propertyId = process.env.GA4_PROPERTY_ID ?? "405650096";
 const projectId = process.env.GOOGLE_CLOUD_PROJECT;
 const accessToken = process.env.GA4_ACCESS_TOKEN ?? getGcloudAccessToken();
 
