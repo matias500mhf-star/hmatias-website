@@ -50,7 +50,7 @@ assert.match(html, /Serviços/, "Footer services links are missing");
 assert.match(html, /Contacto e localização/, "Footer contact column is missing");
 assert.match(html, /Todos os direitos reservados/, "Footer legal copyright line is missing");
 assert.match(html, /Voltar ao topo/, "Footer back-to-top link is missing");
-const mainNavHtml = html.match(/<nav class="main-nav"[^>]*>([\\s\\S]*?)<\\/nav>/)?.[1];
+const mainNavHtml = html.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
 assert.ok(mainNavHtml, "Primary navigation is missing");
 assert.doesNotMatch(mainNavHtml, /SOURCE AO/i, "SOURCE AO must not appear in the primary navigation");
 assert.match(html, /mailto:geral@comercialhmatiasps\.com/, "Footer commercial mail link is missing");
