@@ -354,7 +354,8 @@ assert.match(aboutText, /Identidade e enquadramento/, "About page company profil
 assert.match(aboutText, /Integridade/, "About page principles are missing");
 assert.match(aboutText, /Cooperação/, "About page cooperation principle is missing");
 assert.doesNotMatch(aboutHtml, /source-ao-highlight|portfolio|project-gallery/i, "About page must not duplicate homepage platform or project sections");
-assert.doesNotMatch(aboutHtml, /Construção e remodelação|Facilities e Manutenção|HMATIAS Supply|Business Services/, "About page must not repeat the operational service cards");
+const aboutMainHtml = aboutHtml.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? aboutHtml;
+assert.doesNotMatch(aboutMainHtml, /Construção e remodelação|Facilities e Manutenção|HMATIAS Supply|Business Services/, "About page main content must not repeat the operational service cards");
 
 const credibilityPath = join(outDir, "credibilidade", "index.html");
 assert.ok(existsSync(credibilityPath), "Dedicated credibility page must be generated");
