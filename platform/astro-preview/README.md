@@ -85,7 +85,7 @@ O relatório inicial consulta, em modo apenas de leitura, utilizadores ativos po
 
 Configuração local (não guardar credenciais no repositório):
 
-- `GA4_PROPERTY_ID`: ID numérico da propriedade GA4; não usar o ID do fluxo de dados.
+- `GA4_PROPERTY_ID`: ID numérico da propriedade GA4; o valor confirmado para HMATIAS é `405650096` (pode ser substituído por variável de ambiente). Não usar o ID do fluxo de dados.
 - `GOOGLE_CLOUD_PROJECT`: projeto Google Cloud associado à utilização da API (opcional quando não exigido por quota/billing).
 - Autenticação: `GA4_ACCESS_TOKEN` temporário ou Application Default Credentials via Google Cloud CLI.
 
