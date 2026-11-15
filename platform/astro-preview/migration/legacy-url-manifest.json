@@ -341,6 +341,14 @@
       "in_legacy_sitemap": true,
       "preserve_until_approved": true,
       "notes": "RFQ multiartigo recriado no Astro com o contrato SOURCE AO; intake no preview só pode apontar para API de staging, nunca produção."
+    },
+    {
+      "source_url": "/source-ao/partner-application.html",
+      "preview_target": null,
+      "treatment": "preserve_official",
+      "in_legacy_sitemap": false,
+      "preserve_until_approved": true,
+      "notes": "Candidatura de parceiros ligada a partir do website oficial e marcada noindex; o formulário Astro existe, mas permanece desactivado sem API de staging. Preservar a rota oficial até validar a migração 0027, CORS, consentimento e submissão no staging."
     }
   ],
   "launch_gates": [
