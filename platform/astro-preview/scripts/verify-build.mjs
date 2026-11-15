@@ -422,7 +422,7 @@ for (const route of ["construcao", "facilities", "coberturas-industriais", "limp
     /informacção|instalacção|criaccção|relacção|configuracção|pre-visualizacção|Prestacção|projecto|projectos|Seleccione|Selecção|directa|optimizada|facturas|recepção|actualizados|actualização/i,
     `Malformed words detected in ${route}`
   );
-  assert.equal(content.includes("</p>\n"), false, `Literal newline escape detected in ${route}`);
+  assert.equal(content.includes("</p>\\n"), false, `Literal newline escape detected in ${route}`);
 }
 
 // English routes must exist as independently translated pages, not as Portuguese pages with a changed label.
