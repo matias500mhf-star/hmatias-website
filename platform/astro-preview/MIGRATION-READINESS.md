@@ -56,7 +56,7 @@ Estas ligações foram mantidas intencionalmente para não substituir formulári
 
 | SOURCE AO — ferramentas internas | `/source-ao/ops.html`, `/requests.html`, `/review.html`, `/supplier-discovery.html`, `/website-leads.html` | Não são páginas públicas; preservar ou re-hospedar com autenticação antes de retirar os ficheiros do publisher actual |
 | SOURCE AO — percursos tokenizados | `/source-ao/track.html`, `/confirm.html` | Acompanhamento privado e confirmação de fornecedor; preservar até equivalência funcional segura |
-| Página 404 | `/404.html` | Recriada no Astro e validada no build; testar a resposta 404 no host final |
+| Página 404 | `/404.html` | Recriada no Astro; o verificador aceita os formatos estáticos 404.html e 404/index.html e exige noindex; falta testar a resposta HTTP 404 no host final |
 | Privacidade e termos específicos do SOURCE AO | `/source-ao/privacy.html` e `/source-ao/terms.html` no domínio oficial |
 
 **Formulário principal de contacto:** encontra-se operacional no website oficial. O proprietário confirmou que os pedidos submetidos estão a ser recebidos por e-mail através do Resend. Esta integração não é uma funcionalidade por construir nem um bloqueio de receção; não deve ser substituída ou alterada durante a modernização. Antes de migrar o publisher, deve preservar-se o fluxo Resend e confirmar a entrega no ambiente de destino, sem expor chaves ou credenciais.\n\nOs fluxos de Business Services, agendamento e SOURCE AO têm requisitos próprios. A validação desses percursos deve cobrir origem permitida, consentimento, registo, referência de confirmação, notificações e tratamento de falhas. A confirmação do formulário principal via Resend não é usada como prova de que todos os restantes fluxos estão validados.
