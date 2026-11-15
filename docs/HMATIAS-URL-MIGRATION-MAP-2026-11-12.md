@@ -4,7 +4,7 @@ Branch: feat/hmatias-platform-modernization-20261111
 Estado: plano de migração em preparação; não aplicar redirects nem alterar o domínio de produção nesta fase.
 
 ## Objetivo
-Preservar o histórico orgânico do domínio comercialhmatiasps.com durante a transição para a nova estrutura Astro. O sitemap legado contém 37 URLs. O repositório também contém páginas HTML adicionais que devem ser verificadas no Search Console e nos registos de tráfego antes de qualquer remoção.
+Preservar o histórico orgânico do domínio comercialhmatiasps.com durante a transição para a nova estrutura Astro. O sitemap legado contém 37 URLs. O repositório também contém páginas adicionais fora do sitemap: páginas de apoio, páginas privadas do SOURCE AO e a página 404. Estas rotas têm decisões próprias e não podem ser removidas por uma substituição genérica do publisher.
 
 ## Regras obrigatórias
 1. Nenhuma URL indexada, com impressões, cliques, backlinks ou tráfego de referência pode ser descartada sem destino equivalente ou decisão documentada.
