@@ -849,3 +849,39 @@ main li {
  .editorial-feature-visual{grid-row:auto}
 }
 @media(max-width:600px){.credibility-principle-grid{grid-template-columns:1fr}.credibility-principle{min-height:0}}
+
+
+/* Mobile editorial refinement — compact layouts without reducing reading comfort. */
+@media (max-width:650px) {
+  .editorial-hero { padding:42px var(--hm-gutter) 40px; }
+  .editorial-hero h1 { margin:18px 0 14px; font-size:clamp(32px,8.7vw,39px); line-height:1.08; letter-spacing:-.05em; }
+  .editorial-lead { max-width:38ch; font-size:15px; line-height:1.7; }
+  .editorial-body { padding:40px var(--hm-gutter) 48px; }
+  .editorial-label { margin-bottom:14px; line-height:1.55; }
+  .editorial-feature { gap:14px; padding:18px; }
+  .editorial-feature-visual img { max-height:210px; aspect-ratio:16/9; }
+  .editorial-feature-visual figcaption { font-size:10px; line-height:1.5; }
+  .editorial-feature h2 { margin-bottom:12px; font-size:clamp(22px,6vw,27px); line-height:1.2; }
+  .editorial-feature p { margin:0 0 14px; line-height:1.7; }
+  .editorial-meta { margin-bottom:12px; line-height:1.55; }
+  .editorial-category-nav { gap:8px; margin-top:22px; }
+  .editorial-category-nav a { min-height:34px; padding:7px 10px; font-size:10px; }
+  .editorial-archive { margin-top:36px; }
+  .editorial-category { margin-top:32px; }
+  .editorial-category-heading { gap:7px; margin-bottom:14px; padding-bottom:12px; }
+  .editorial-category-heading h2 { font-size:23px; line-height:1.2; }
+  .editorial-card-grid { gap:12px; }
+  .editorial-card { padding:16px; }
+  .editorial-card-cover { margin-bottom:12px; }
+  .editorial-card-cover img { max-height:180px; aspect-ratio:16/9; }
+  .editorial-card-cover figcaption { font-size:9px; line-height:1.5; }
+  .editorial-card-type { margin-bottom:9px; }
+  .editorial-card h3 { font-size:17px; line-height:1.3; }
+  .editorial-card-description { margin:9px 0 13px; line-height:1.65; }
+  .editorial-card-meta { gap:7px 12px; padding-top:11px; }
+  .editorial-card-link { margin-top:12px; font-size:12px; }
+  .editorial-archive-note { margin-top:20px; padding:13px 14px; line-height:1.65; }
+  .editorial-contact { gap:13px; margin-top:30px; padding-top:20px; }
+  .editorial-contact p { line-height:1.65; }
+  .editorial-feature-visual,.editorial-card-cover { min-width:0; }
+}
