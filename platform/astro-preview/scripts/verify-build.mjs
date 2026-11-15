@@ -8,8 +8,19 @@ const indexPath = join(outDir, "index.html");
 assert.ok(existsSync(indexPath), "Astro build must generate dist/index.html");
 
 const html = readFileSync(indexPath, "utf8");
+const configuredSite = new URL(
+  process.env.ASTRO_SITE_URL
+    ?? process.env.ASTRO_PREVIEW_SITE_URL
+    ?? "https://hmatias-astro-preview.onrender.com"
+);
+const productionIndexingEnabled = process.env.PUBLIC_INDEXING_ENABLED === "true"
+  && configuredSite.protocol === "https:"
+  && configuredSite.hostname === "comercialhmatiasps.com";
+const expectedRobotsPattern = productionIndexingEnabled
+  ? /name="robots" content="index, follow"/
+  : /name="robots" content="noindex, nofollow"/;
 assert.match(html, /<html lang="pt-AO"/, "Portuguese Angola document language must be present");
-assert.match(html, /name="robots" content="noindex, nofollow"/, "Prototype must not be indexed");
+assert.match(html, expectedRobotsPattern, productionIndexingEnabled ? "Official production build must be indexable" : "Preview must not be indexed");
 assert.match(html, /property="og:title"/, "Open Graph title is missing");
 assert.match(html, /property="og:description"/, "Open Graph description is missing");
 assert.match(html, /name="twitter:card" content="summary_large_image"/, "Twitter card metadata is missing");
@@ -447,7 +458,7 @@ assert.match(cleanPortuguese, /clean-catalog-results/);
 assert.match(cleanPortuguese, /cleanQuoteForm/);
 assert.match(cleanPortuguese, /clean-privacy-consent/);
 assert.match(cleanPortuguese, /Não submete dados a um servidor nem regista uma encomenda/);
-assert.match(cleanPortuguese, /noindex, nofollow/);
+assert.match(cleanPortuguese, expectedRobotsPattern);
 assert.match(cleanPortuguese, /href="https:\/\/www\.tmpn\.com\/resources\/taurus-catalogue\.pdf"/);
 assert.match(cleanEnglish, /HMATIAS Clean/);
 assert.match(cleanEnglish, /Featured product references|Featured product/);
@@ -457,7 +468,7 @@ assert.match(cleanEnglish, /clean-catalog-results/);
 assert.match(cleanEnglish, /cleanQuoteForm/);
 assert.match(cleanEnglish, /clean-privacy-consent/);
 assert.match(cleanEnglish, /does not submit a server request or register an order/);
-assert.match(cleanEnglish, /noindex, nofollow/);
+assert.match(cleanEnglish, expectedRobotsPattern);
 
 const englishHomepage = readFileSync(join(outDir, "en", "index.html"), "utf8");
 assert.ok(englishHomepage.includes('href="/en/construction/"'), "English homepage must link to English construction");
@@ -587,7 +598,7 @@ const specialistRoutes = [
 for (const [route, heading, category] of specialistRoutes) {
   const content = readFileSync(join(outDir, route, "index.html"), "utf8");
   assert.match(content, /<html lang="pt-AO"/, `Portuguese specialist route must use pt-AO: /${route}/`);
-  assert.match(content, /name="robots" content="noindex, nofollow"/, `Preview route must remain noindex: /${route}/`);
+  assert.match(content, expectedRobotsPattern, `Robots policy mismatch: /${route}/`);
   assert.match(content, heading, `Specialist page heading is missing: /${route}/`);
   assert.match(content, new RegExp(`href="\\/source-ao\\/smart-rfq\\/\\?category=${category}(?:&amp;|&)request=`), `Specialist request must prefill the SOURCE AO RFQ category: /${route}/`);
 }
