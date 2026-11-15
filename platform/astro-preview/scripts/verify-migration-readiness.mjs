@@ -90,8 +90,9 @@ for (const route of manifest.routes) {
   assert.match(
     targetHtml,
     expectedRobotsPattern,
-    \`Robots policy mismatch: \${route.preview_target}\`
-  );}
+    `Robots policy mismatch: ${route.preview_target}`
+  );
+}
 
 assert.ok(manifest.launch_gates.length >= 8, "Production launch gates must be explicit");
 console.log(
