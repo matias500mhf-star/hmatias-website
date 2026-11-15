@@ -54,6 +54,10 @@ assert.match(html, /Blog · Perspetivas empresariais/, "Blog footer link is miss
 
 const footerHtml = html.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
 assert.ok(footerHtml, "Homepage footer is missing");
+const portugueseFooterOrder = ["footer-explore", "footer-identity", "footer-operations", "footer-contacts"]
+  .map((className) => footerHtml.indexOf('class="footer-column ' + className + '"'));
+assert.ok(portugueseFooterOrder.every((position) => position >= 0), "Every Portuguese footer column must be present");
+assert.ok(portugueseFooterOrder.every((position, index) => index === 0 || position > portugueseFooterOrder[index - 1]), "Portuguese footer order must be Explore, Identity, Operational Areas, Contact");
 assert.equal((footerHtml.match(/class="footer-column footer-(?:identity|operations|explore|contacts)"/g) || []).length, 4, "Footer must have four organised columns");
 const operationsHtml = footerHtml.match(/<nav class="footer-column footer-operations"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
 assert.ok(operationsHtml, "Operational areas footer column is missing");
@@ -73,6 +77,10 @@ assert.match(html, /class="source-ao-highlight"/, "Portuguese homepage must incl
 const englishHomeHtml = readFileSync(join(outDir, "en", "index.html"), "utf8");
 const englishFooterHtml = englishHomeHtml.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
 assert.ok(englishFooterHtml, "English homepage footer is missing");
+const englishFooterOrder = ["footer-explore", "footer-identity", "footer-operations", "footer-contacts"]
+  .map((className) => englishFooterHtml.indexOf('class="footer-column ' + className + '"'));
+assert.ok(englishFooterOrder.every((position) => position >= 0), "Every English footer column must be present");
+assert.ok(englishFooterOrder.every((position, index) => index === 0 || position > englishFooterOrder[index - 1]), "English footer order must be Explore, Identity, Operational Areas, Contact");
 assert.ok(englishFooterHtml.includes('href="/en/karta/">KARTA Wallet · Alpha project'), "English footer Explore must link to KARTA Alpha");
 const englishOperationsHtml = englishFooterHtml.match(/<nav class="footer-column footer-operations"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
 assert.ok(englishOperationsHtml, "English operational areas footer column is missing");
