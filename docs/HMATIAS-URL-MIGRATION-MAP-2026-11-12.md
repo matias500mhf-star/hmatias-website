@@ -64,6 +64,7 @@ Estas páginas não aparecem entre as 37 URLs do sitemap consultado, mas devem s
 - /politica-privacidade.html
 - /termos-condicoes.html
 - /procura.html
+- /source-ao/partner-application.html — formulário de candidatura a parceiros ligado a partir do site oficial; permanece noindex e deve ser preservado até o formulário Astro estar ligado e validado em staging (migração 0027 e CORS).
 
 ## Rotas novas já presentes na estrutura Astro
 Na revisão atual, o protótipo gera 44 páginas estáticas, organizadas em 22 pares PT/EN. A cobertura inclui páginas institucionais, Construção, Facilities, Supply, HMATIAS Clean, Business Services, Catálogo de Obras, Blog, Smart RFQ, páginas especializadas de serviços, KARTA e Estaleiro Integrado. A existência de uma rota no preview não autoriza eliminar ou redirecionar uma URL antiga sem confirmar a equivalência, os dados de tráfego e os backlinks.
