@@ -291,3 +291,40 @@ O preview permanece isolado e com `noindex,nofollow`. O PR #316 continua Draft e
 - Contrato/persistência RFQ passou. Source AO Data Quality #1286 passou. HMATIAS AI Worker validation #359 passou; o passo de deploy foi ignorado.
 - Playwright desktop/mobile e axe estão em execução; Lighthouse CI permanece pendente. Não declarar o QA completo até esses passos terminarem.
 - Render auto-deploy do preview está em construção para o commit `b2ebb48fd58c1ee0c5e403d8730715f12928b44c`. O site oficial não foi tocado.
+
+
+## 12. Verificação de continuidade e prontidão — 15 de novembro de 2026
+
+### Revisão de QA do código
+
+- **Astro prototype QA #1025**, no commit de código `15e95d2504a9a6a678066f720aacb2dc670cfa52`: concluído com sucesso.
+- Playwright: **188 testes aprovados**, incluindo Chromium desktop e WebKit móvel.
+- Os testes cobrem navegação PT/EN, menu móvel, páginas institucionais, Blog, rodapé, sequência das quatro áreas operacionais, ausência de overflow horizontal, Smart RFQ, Radar, candidaturas e verificações axe nas rotas cobertas.
+- Lighthouse CI: **48 relatórios**. As verificações de SEO reportaram 66/100 nas páginas do preview, por causa de `noindex,nofollow`; a proteção é deliberada e não deve ser removida durante a validação.
+- Source AO Data Quality #1406 e HMATIAS Lead Intake Safety #396: sucesso.
+- HMATIAS AI Worker Deploy #479: workflow concluído; o passo de deploy foi ignorado. Não representa novo deploy do Worker.
+
+### Verificação do preview actual
+
+- O deployment Vercel do commit `60a96bb6f8efc982069d0a2d7da01dcb71d8f4f8` está **Ready** no projecto separado `hmatias-astro-preview`.
+- Foram confirmadas respostas HTTP 200 para homepage PT, Sobre a HMATIAS, Blog, Construção, Facilities, Supply, Business Services, SOURCE AO, Smart RFQ, Radar, homepage EN, About EN e Blog EN.
+- As respostas mantêm `noindex,nofollow` e metadados PT-AO/EN.
+- O Render não conseguiu construir os commits documentais mais recentes porque o workspace esgotou os minutos de build incluídos no plano. Não foi feita alteração de plano nem despesa. O Vercel continua a fornecer o preview isolado actualizado.
+- A tentativa de integração GA4 Data API foi retirada do código, do comando npm e da documentação. Não é requisito nem bloqueio desta fase.
+
+### Funcionalidades e impedimentos que continuam deliberadamente protegidos
+
+- O formulário principal continua a encaminhar para o formulário oficial, que o proprietário confirmou estar operacional via Resend. Não foi substituído.
+- Smart RFQ geral e pedido HMATIAS Clean continuam a preparar pedidos localmente e a abrir o canal manual escolhido; não simulam submissão ao servidor, cotação, stock ou prazo.
+- SOURCE AO RFQ no Astro só regista pedidos quando uma API HTTPS de staging estiver configurada. Sem essa API, o percurso permanece em modo seguro/manual.
+- A candidatura de parceiros permanece desactivada até à migração D1 `0027`, CORS e teste de submissão no staging.
+- O Radar não deve apresentar oportunidades inventadas: sem feed de staging ligado, informa que os dados live não estão disponíveis.
+- Business Services, agendamento/booking, RFQ legado, ferramentas internas e percursos tokenizados continuam preservados no publisher oficial. Não existe ainda equivalência funcional validada para todos estes percursos.
+- O sitemap, canonicals, hreflang, redirects 301 e activação de indexação de produção continuam por executar após decisão URL-a-URL e plano de rollback.
+- A revisão manual final de desktop/tablet/mobile, navegação apenas por teclado e tecnologias de apoio continua pendente. Os testes automatizados não substituem essa revisão.
+
+### Decisão
+
+**O protótipo está tecnicamente validado pelos testes automatizados disponíveis e pode avançar para a fase de revisão humana e validação funcional em staging. Ainda não está pronto para substituir o publisher de produção.** Os bloqueios acima não são erros ocultos: são dependências explicitamente desactivadas ou preservadas para evitar perda de pedidos, dados, URLs e funções internas.
+
+Nenhuma alteração foi feita ao domínio oficial, DNS, redirects, formulários de produção, Resend, D1 de produção ou indexação. O PR #316 permanece Draft e sem merge.
