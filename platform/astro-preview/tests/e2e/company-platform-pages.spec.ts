@@ -54,6 +54,14 @@ test.describe("HMATIAS company and platform pages", () => {
       .toHaveAttribute("href", "/privacidade/");
   });
 
+  test("English Business Services uses the English official contact route", async ({ page }) => {
+    await page.goto("/en/business-services/");
+    const contact = page.getByRole("link", { name: "Open English contact form" });
+    await expect(contact).toHaveAttribute("href", "https://comercialhmatiasps.com/en.html#contact");
+    await expect(contact).toHaveAttribute("target", "_blank");
+    await expect(contact).toHaveAttribute("rel", /noopener noreferrer/);
+  });
+
   test("works catalogue preserves all twelve archive records and image descriptions", async ({ page }) => {
     await page.goto("/catalogo-obras/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/Obras, intervenções/);
