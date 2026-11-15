@@ -6,7 +6,7 @@ Este inventário separa o que já foi recriado no protótipo Astro, o que contin
 
 ## 1. Páginas já recriadas no protótipo Astro
 
-O protótipo gera agora 58 páginas estáticas: 29 em Português (pt-AO) e 29 em Inglês.
+O protótipo gera 59 ficheiros HTML estáticos: 29 páginas de conteúdo em Português (pt-AO), 29 em Inglês e uma página 404 própria.
 
 | Área | Português | Inglês | Situação |
 |---|---|---|---|
@@ -256,7 +256,7 @@ Os testes backend do ciclo passaram com **172 testes aprovados e zero falhas**, 
 
 ## 11. Estado actualizado do novo design — 14 de novembro de 2026
 
-A revisão de 14 de novembro consolida o protótipo em **58 páginas estáticas bilingues (29 PT-AO e 29 EN)**. A homepage inclui apresentação da empresa, as quatro áreas operacionais, projectos, parceiros, contacto. O rodapé tem quatro colunas responsivas; a coluna operacional mantém exclusivamente Construção, Facilities, Supply e Business Services. A coluna Explorar reúne páginas de identidade, projectos, catálogo, SOURCE AO, Blog, KARTA Wallet · Projeto Alpha e Smart RFQ.
+A revisão de 15 de novembro consolida o protótipo em **58 rotas de conteúdo bilingues (29 PT-AO e 29 EN), mais uma página 404 própria — 59 ficheiros HTML estáticos**. A homepage inclui apresentação da empresa, as quatro áreas operacionais, projectos, parceiros, contacto. O rodapé tem quatro colunas responsivas; a coluna operacional mantém exclusivamente Construção, Facilities, Supply e Business Services. A coluna Explorar reúne páginas de identidade, projectos, catálogo, SOURCE AO, Blog, KARTA Wallet · Projeto Alpha e Smart RFQ.
 
 A rede de parceiros apresentada no preview inclui Miliart, FRANSGA, D&WOOD, Telewise, SYNVOR Industrial e Kent Offshore. Cinco identidades usam logótipos locais; Telewise é apresentado apenas por nome, sem logótipo. A participação de cada entidade continua condicionada ao âmbito e à confirmação de disponibilidade para cada projecto.
 
@@ -277,7 +277,7 @@ O Blog tem 12 artigos em seis pares PT/EN, com guias técnicos e casos práticos
 - O teste Playwright valida o texto e o destino da ligação KARTA no rodapé das duas homepages, confirmando que não existe uma secção KARTA no conteúdo principal.
 - O verificador estático passou a validar a ligação no rodapé e a sua ausência da coluna operacional.
 - A configuração Lighthouse foi completada para auditar todas as 58 rotas, em vez de deixar sete artigos fora da auditoria.
-- Após os ajustes ao rodapé, a configuração Lighthouse e o QA #888, as falhas #890/#899/#902/#903 foram corrigidas sucessivamente: etiqueta KARTA normalizada para `Projeto Alpha`; propriedade de formulário actualizada nas duas chamadas do Catálogo de Obras; e verificador adaptado aos controlos de idioma próprios do SOURCE AO. O QA #905 já passou auditoria de dependências, type-check, build das 58 páginas, verificação estática, inventário de migração e auditoria de links. Playwright desktop/mobile e axe estão em execução; Lighthouse CI ainda não foi executado neste ciclo. A validação integral permanece pendente até à conclusão dos dois últimos passos.
+- Após os ajustes ao rodapé, a configuração Lighthouse e o QA #888, as falhas #890/#899/#902/#903 foram corrigidas sucessivamente: etiqueta KARTA normalizada para `Projeto Alpha`; propriedade de formulário actualizada nas duas chamadas do Catálogo de Obras; e verificador adaptado aos controlos de idioma próprios do SOURCE AO. O QA #905 já passou auditoria de dependências, type-check, build das 59 páginas HTML, verificação estática, inventário de migração e auditoria de links. Playwright desktop/mobile e axe estão em execução; Lighthouse CI ainda não foi executado neste ciclo. A validação integral permanece pendente até à conclusão dos dois últimos passos.
 
 ### Estado de publicação
 
@@ -286,7 +286,7 @@ O preview permanece isolado e com `noindex,nofollow`. O PR #316 continua Draft e
 
 ### Qualidade mais recente — QA #905 (14/11/2026)
 
-- Astro prototype QA #905, commit do PR `b2ebb48fd58c1ee0c5e403d8730715f12928b44c`: auditoria de dependências, type-check, build de 58 páginas, verificador estático, inventário de migração e auditoria de links concluídos com sucesso.
+- Astro prototype QA #905, commit do PR `b2ebb48fd58c1ee0c5e403d8730715f12928b44c`: auditoria de dependências, type-check, build de 59 páginas HTML (58 rotas de conteúdo + 404), verificador estático, inventário de migração e auditoria de links concluídos com sucesso.
 - A auditoria de links confirmou os únicos dois handoffs oficiais permitidos (formulários Resend PT/EN); os restantes destinos para o domínio oficial continuam bloqueados.
 - Contrato/persistência RFQ passou. Source AO Data Quality #1286 passou. HMATIAS AI Worker validation #359 passou; o passo de deploy foi ignorado.
 - Playwright desktop/mobile e axe estão em execução; Lighthouse CI permanece pendente. Não declarar o QA completo até esses passos terminarem.
