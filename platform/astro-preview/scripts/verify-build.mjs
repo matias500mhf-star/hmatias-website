@@ -25,7 +25,7 @@ const robotsTxtPath = join(outDir, "robots.txt");
 assert.ok(existsSync(robotsTxtPath), "Every deployment must publish an explicit robots.txt");
 const robotsTxt = readFileSync(robotsTxtPath, "utf8");
 if (productionIndexingEnabled) {
-  assert.ok(robotsTxt.includes("User-agent: *\\nAllow: /"), "Production robots.txt must allow crawling");
+  assert.ok(robotsTxt.includes("User-agent: *\nAllow: /"), "Production robots.txt must allow crawling");
   assert.ok(robotsTxt.includes("Sitemap: https://comercialhmatiasps.com/sitemap.xml"), "Production robots.txt must reference the official sitemap");
   const sitemapPath = join(outDir, "sitemap.xml");
   assert.ok(existsSync(sitemapPath), "Indexable production build must generate sitemap.xml");
@@ -34,7 +34,7 @@ if (productionIndexingEnabled) {
   assert.ok(sitemapXml.includes("https://comercialhmatiasps.com/"), "Production sitemap must include canonical official URLs");
   assert.ok((sitemapXml.match(/<url>/g) || []).length >= 40, "Production sitemap must include the complete public page set");
 } else {
-  assert.ok(robotsTxt.includes("User-agent: *\\nDisallow: /"), "Preview robots.txt must block crawling");
+  assert.ok(robotsTxt.includes("User-agent: *\nDisallow: /"), "Preview robots.txt must block crawling");
   assert.ok(!existsSync(join(outDir, "sitemap.xml")), "No indexable sitemap may be emitted for a noindex preview");
 }
 assert.match(html, /property="og:title"/, "Open Graph title is missing");
@@ -409,7 +409,7 @@ assert.ok(assets.length >= 5, "Expected optimized local project images, fonts or
 const compiledCss = assets
   .filter((file) => file.endsWith(".css"))
   .map((file) => readFileSync(join(assetDir, file), "utf8"))
-  .join("\\n");
+  .join("\n");
 assert.match(compiledCss, /HMATIAS Manrope/, "Local Manrope display font must be active");
 assert.match(compiledCss, /HMATIAS IBM Plex Mono/, "Local IBM Plex Mono utility font must be active");
 assert.ok(assets.some((file) => file.includes("manrope-latin-variable")), "Manrope font asset must be emitted");
@@ -422,7 +422,7 @@ for (const route of ["construcao", "facilities", "coberturas-industriais", "limp
     /informacção|instalacção|criaccção|relacção|configuracção|pre-visualizacção|Prestacção|projecto|projectos|Seleccione|Selecção|directa|optimizada|facturas|recepção|actualizados|actualização/i,
     `Malformed words detected in ${route}`
   );
-  assert.equal(content.includes("</p>\\n"), false, `Literal newline escape detected in ${route}`);
+  assert.equal(content.includes("</p>\n"), false, `Literal newline escape detected in ${route}`);
 }
 
 // English routes must exist as independently translated pages, not as Portuguese pages with a changed label.
