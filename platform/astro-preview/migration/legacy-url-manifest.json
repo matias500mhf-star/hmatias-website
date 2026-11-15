@@ -353,7 +353,7 @@
     {
       "source_url": "/404.html",
       "preview_target": "/404.html",
-      "treatment": "preview_route_pending_error_page_validation",
+      "treatment": "preview_error_page",
       "in_legacy_sitemap": false,
       "preserve_until_approved": true,
       "notes": "Página de erro 404 recriada no Astro; deve ser validada no host de preview antes da migração."
