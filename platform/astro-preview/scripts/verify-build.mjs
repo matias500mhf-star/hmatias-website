@@ -418,8 +418,8 @@ assert.ok(assets.some((file) => file.includes("ibm-plex-mono-latin-600")), "IBM 
 for (const route of ["construcao", "facilities", "coberturas-industriais", "limpeza-pos-obra", "fornecimento-de-epi-e-fardamento", "remodelacao-de-escritorios", "supply", "business-services", "catalogo-obras", "empresa", "credibilidade", "blog", "blog/como-preparar-um-pedido-de-cotacao", "acessibilidade", "privacidade", "termos", "source-ao/smart-rfq", "source-ao/radar", "source-ao/parceiros"]) {
   const content = readFileSync(join(outDir, route, "index.html"), "utf8");
   const visibleText = content
-    .replace(/<script\\b[\\s\\S]*?<\\/script>/gi, " ")
-    .replace(/<style\\b[\\s\\S]*?<\\/style>/gi, " ")
+    .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
     .replace(/<[^>]*>/g, " ")
     .replace(/&(?:amp|nbsp|quot|#39);/g, " ");
   assert.doesNotMatch(
