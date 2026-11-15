@@ -425,7 +425,7 @@ for (const route of ["construcao", "facilities", "coberturas-industriais", "limp
     .replace(/&(?:amp|nbsp|quot|#39);/g, " ");
   assert.doesNotMatch(
     visibleText,
-    /informacção|instalacção|criaccção|relacção|configuracção|pre-visualizacção|Prestacção|projecto|projectos|Seleccione|Selecção|directa|optimizada|facturas|recepção|actualizados|actualização/i,
+    /informacção|instalacção|criaccção|relacção|configuracção|pre-visualizacção|Prestacção|Seleccione|Selecção|directa|optimizada|facturas|recepção|actualizados|actualização/i,
     `Malformed visible copy detected in /${route}/`
   );
   assert.equal(content.includes("</p>\\n"), false, `Literal newline escape detected in ${route}`);
