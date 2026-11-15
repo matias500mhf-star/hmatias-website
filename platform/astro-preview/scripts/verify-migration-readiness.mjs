@@ -41,6 +41,22 @@ for (const route of manifest.routes) {
     continue;
   }
 
+  if (route.treatment === "preview_error_page") {
+    const candidates = [
+      join(distRoot, "404.html"),
+      join(distRoot, "404", "index.html")
+    ];
+    const errorPagePath = candidates.find((candidate) => existsSync(candidate));
+    assert.ok(errorPagePath, "The Astro preview must emit its custom 404 page");
+    const errorHtml = readFileSync(errorPagePath, "utf8");
+    assert.match(
+      errorHtml,
+      /<meta[^>]+name=["']robots["'][^>]+content=["']noindex,\\s*nofollow["']/i,
+      "The custom 404 page must remain noindex,nofollow"
+    );
+    continue;
+  }
+
   assert.ok(route.preview_target?.startsWith("/"), `Preview target missing for ${route.source_url}`);
   assert.ok(!route.preview_target.startsWith("//"), "Protocol-relative preview targets are not allowed");
 
