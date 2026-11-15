@@ -2,6 +2,26 @@ import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 test.describe("HMATIAS company and platform pages", () => {
+
+  test("floating WhatsApp contact remains accessible across company and SOURCE AO pages", async ({ page }) => {
+    for (const route of ["/", "/empresa/", "/source-ao/", "/en/source-ao/"]) {
+      await page.goto(route);
+      const whatsapp = page.getByRole("link", { name: /Contactar a HMATIAS pelo WhatsApp|Contact HMATIAS on WhatsApp/ });
+      await expect(whatsapp).toBeVisible();
+      await expect(whatsapp).toHaveAttribute("href", "https://wa.me/244948806673");
+      await expect(whatsapp).toHaveAttribute("target", "_blank");
+      await expect(whatsapp).toHaveAttribute("rel", /noopener noreferrer/);
+      const box = await whatsapp.boundingBox();
+      expect(box?.width || 0).toBeGreaterThanOrEqual(48);
+      expect(box?.height || 0).toBeGreaterThanOrEqual(48);
+    }
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/source-ao/");
+    const whatsapp = page.getByRole("link", { name: "Contactar a HMATIAS pelo WhatsApp" });
+    await expect(whatsapp).toBeVisible();
+    await expect(whatsapp).toHaveCSS("border-radius", "50%");
+  });
+
   test("homepage preserves the operational Resend contact form in both languages", async ({ page }) => {
     await page.goto("/");
     const portugueseForm = page.getByRole("link", { name: "Abrir formulário oficial de contacto" });
@@ -82,7 +102,7 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/Empresa angolana/);
     await expect(page.locator(".about-lead")).toContainText("HMATIAS – Prestação de Serviços SU, LDA");
     await expect(page.getByRole("heading", { name: "Áreas de serviço." })).toBeVisible();
-    await expect(page.locator(".ceo-message")).toContainText("Construir com propósito.");
+    await expect(page.locator(".ceo-message")).toContainText("Uma empresa construída");
     await expect(page.locator(".ceo-message")).toContainText("CEO — Henrique Fernandes");
     await expect(page.locator(".ceo-message")).not.toContainText(/Sócio Único|Managing Director/);
     const aboutPhoto = page.locator(".about-visual img");
@@ -105,8 +125,8 @@ test.describe("HMATIAS company and platform pages", () => {
     }
     await expect(page.locator(".about-purpose")).toBeVisible();
     await expect(page.locator(".purpose-card")).toHaveCount(2);
-    await expect(page.locator(".purpose-card").filter({ hasText: "MISSÃO" })).toContainText("Transformar necessidades");
-    await expect(page.locator(".purpose-card").filter({ hasText: "VISÃO" })).toContainText("fiabilidade");
+    await expect(page.locator(".purpose-card").filter({ hasText: "MISSÃO" })).toContainText("Dar resposta estruturada");
+    await expect(page.locator(".purpose-card").filter({ hasText: "VISÃO" })).toContainText("quatro áreas complementares");
     await expect(page.locator(".values-grid article")).toHaveCount(5);
     await expect(page.locator(".values-grid")).toContainText("Integridade e transparência");
     await expect(page.locator(".about-service-grid a")).toHaveCount(4);
@@ -140,11 +160,11 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
     await expect(page.locator(".about-purpose")).toBeVisible();
     await expect(page.locator(".purpose-card")).toHaveCount(2);
-    await expect(page.locator(".purpose-card").filter({ hasText: "MISSION" })).toContainText("Turn requirements into practical solutions");
-    await expect(page.locator(".purpose-card").filter({ hasText: "VISION" })).toContainText("reliability and rigour");
+    await expect(page.locator(".purpose-card").filter({ hasText: "MISSION" })).toContainText("structured response to business requirements");
+    await expect(page.locator(".purpose-card").filter({ hasText: "VISION" })).toContainText("four complementary areas");
     await expect(page.locator(".values-grid article")).toHaveCount(5);
     await expect(page.locator(".values-grid")).toContainText("Integrity and transparency");
-    await expect(page.locator(".ceo-message")).toContainText("Built with purpose.");
+    await expect(page.locator(".ceo-message")).toContainText("A company built");
     await expect(page.locator(".ceo-message")).toContainText("CEO — Henrique Fernandes");
     await page.setViewportSize({ width: 390, height: 844 });
     const aboutTitleSize = await page.locator(".about-copy h1").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
