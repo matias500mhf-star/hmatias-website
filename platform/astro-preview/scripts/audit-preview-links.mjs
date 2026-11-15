@@ -20,7 +20,12 @@ const approvedOperationalContactForms = new Set([
   "https://comercialhmatiasps.com/#contacto",
   "https://comercialhmatiasps.com/en.html#contact",
 ]);
+const approvedBusinessServiceHandoffs = new Set([
+  "https://comercialhmatiasps.com/servicos-administrativos.html#contacto-business",
+  "https://comercialhmatiasps.com/agendamento.html",
+]);
 const approvedContactFormsUsed = new Set();
+const approvedBusinessHandoffsUsed = new Set();
 const observedOfficialDestinations = new Set();
 let checked = 0;
 for (const file of htmlFiles) {
@@ -42,6 +47,11 @@ for (const file of htmlFiles) {
         checked++;
         continue;
       }
+      if (approvedBusinessServiceHandoffs.has(target.href)) {
+        approvedBusinessHandoffsUsed.add(target.href);
+        checked++;
+        continue;
+      }
       failures.push({ route, href, reason: "unapproved legacy official website destination" }); continue;
     }
     if (target.origin !== "https://preview.invalid") continue;
@@ -53,9 +63,10 @@ for (const file of htmlFiles) {
   }
 }
 assert.deepEqual([...approvedContactFormsUsed].sort(), [...approvedOperationalContactForms].sort(), "Both language versions must retain the two approved Resend contact-form destinations; observed official destinations: " + JSON.stringify([...observedOfficialDestinations]));
+assert.deepEqual([...approvedBusinessHandoffsUsed].sort(), [...approvedBusinessServiceHandoffs].sort(), "Business Services must preserve exactly the approved official request and booking handoffs; observed official destinations: " + JSON.stringify([...observedOfficialDestinations]));
 if (failures.length) {
   console.error("Preview link audit FAILED:");
   for (const item of failures.slice(0, 100)) console.error("- " + item.route + " -> " + item.href + ": " + item.reason);
   assert.fail(failures.length + " broken/legacy links across " + htmlFiles.length + " pages");
 }
-console.log("Preview link audit PASS: " + checked + " local/approved operational links checked across " + htmlFiles.length + " pages; only the two explicit Resend contact-form handoffs may reach the official website.");
+console.log("Preview link audit PASS: " + checked + " local/approved operational links checked across " + htmlFiles.length + " pages; only the two Resend contact forms and two exact Business Services request/booking handoffs may reach the official website.");
