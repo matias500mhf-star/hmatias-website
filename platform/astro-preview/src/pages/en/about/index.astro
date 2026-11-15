@@ -41,6 +41,32 @@ import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-conc
         <article><span>04 / RURAL CONSTRUCTION</span><div><h3>Completed rural pavilions</h3><p>Exterior record of completed pavilions with metal roofing and ventilated side areas.</p></div><a href="/en/construction/#trabalhos">View record ↗</a></article>
       </div>
     </section>
+    <section class="about-purpose section-pad" aria-labelledby="about-purpose-heading">
+      <div class="about-section-head">
+        <div><p class="section-kicker">DIRECTION AND COMMITMENT</p><h2 id="about-purpose-heading">What guides<br /><em>HMATIAS’ work.</em></h2></div>
+        <p>A direction connected to the company’s work: defining requirements, organising delivery and following up on services and supply.</p>
+      </div>
+      <div class="purpose-grid">
+        <article class="purpose-card"><span>MISSION</span><h3>Provide a structured response to business requirements.</h3><p>Scope requests for construction, maintenance, supply and business support; clarify the requirements; and coordinate an appropriate response to each enquiry.</p></article>
+        <article class="purpose-card purpose-vision"><span>VISION</span><h3>Consolidate an Angolan company with response capacity across four complementary areas.</h3><p>Develop HMATIAS through demonstrable work, better organised processes and business relationships built on clear terms.</p></article>
+      </div>
+      <div class="values-heading"><p class="section-kicker">VALUES IN PRACTICE</p><h3>How these principles apply to our work.</h3></div>
+      <div class="values-grid">
+        <article><span>01</span><h4>Clear scope</h4><p>Define the request, specifications, limits and expected outcomes before work begins.</p></article>
+        <article><span>02</span><h4>Verified information</h4><p>Distinguish market references from prices, stock, lead times or terms that have actually been confirmed.</p></article>
+        <article><span>03</span><h4>Responsibility</h4><p>Make commitments that can be scoped and followed up by the team and partners involved.</p></article>
+        <article><span>04</span><h4>Coordination</h4><p>Coordinate customers, teams, service providers and suppliers according to the agreed service.</p></article>
+        <article><span>05</span><h4>Follow-up</h4><p>Communicate progress, relevant changes and completion of the agreed work.</p></article>
+      </div>
+    </section>
+    <section class="ceo-message section-pad" aria-labelledby="ceo-message-heading">
+      <div class="ceo-message-inner">
+        <p class="section-kicker">MESSAGE FROM THE CEO</p>
+        <h2 id="ceo-message-heading">A company built<br /><em>through work and responsibility.</em></h2>
+        <p class="ceo-message-copy">HMATIAS has been organised to respond to practical requirements from businesses and projects in Angola. Our Construction, Facilities, Supply and Business Services areas allow us to scope different needs, from work on an existing facility to the research and coordination of a supply request. Our commitment is to handle each enquiry with a clear scope, verified information and follow-up appropriate to the agreed work. This is how we intend to consolidate the company and develop lasting relationships with customers and partners.</p>
+        <div class="ceo-signature"><strong>Henrique Fernandes</strong><span>CEO · HMATIAS – Prestação de Serviços SU, LDA</span></div>
+      </div>
+    </section>
   </main>
   <SiteFooter />
   <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
@@ -150,6 +176,40 @@ import aboutPhoto from "../../../../../../images/catalogue/pavilhoes-rurais-conc
   .about-proof-list { margin-top:24px; }
   .about-proof-list article { grid-template-columns:1fr; gap:8px; padding:17px 0; }
   .about-proof-list h3 { font-size:14px; }
+}
+.about-purpose{background:var(--hm-paper)}
+.purpose-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:38px}
+.purpose-card{min-height:245px;padding:clamp(22px,3vw,38px);border:1px solid var(--hm-line);background:var(--hm-light)}
+.purpose-card>span,.values-grid article>span{color:var(--hm-blue);font-size:9px;font-weight:750;letter-spacing:.15em}
+.purpose-card h3{max-width:480px;margin:26px 0 13px;font-family:var(--hm-serif);font-size:clamp(23px,2.5vw,32px);font-weight:400;line-height:1.24}
+.purpose-card p{max-width:560px;margin:0;color:var(--hm-muted);font-size:12px;line-height:1.85}
+.purpose-vision{color:#fff;background:var(--hm-navy);border-color:var(--hm-navy)}
+.purpose-vision>span{color:#9ecff2}.purpose-vision h3{color:#fff}.purpose-vision p{color:#d2e1ef}
+.values-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin:48px 0 18px;padding-bottom:16px;border-bottom:1px solid var(--hm-line)}
+.values-heading .section-kicker{margin:0}.values-heading h3{margin:0;font-size:14px;font-weight:600}
+.values-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.values-grid article{min-height:170px;padding:17px 14px;border:1px solid var(--hm-line);background:#fff}
+.values-grid article>span{font-family:var(--hm-serif);font-size:17px;letter-spacing:0}
+.values-grid h4{margin:19px 0 8px;font-size:12px;line-height:1.35}
+.values-grid p{margin:0;color:var(--hm-muted);font-size:10px;line-height:1.7}
+.ceo-message{background:var(--hm-light);border-top:1px solid var(--hm-line)}
+.ceo-message-inner{max-width:900px;margin:0 auto;padding-left:clamp(20px,5vw,60px);border-left:2px solid var(--hm-blue)}
+.ceo-message .section-kicker{margin:0;color:var(--hm-blue);font-size:9px;font-weight:750;letter-spacing:.15em}
+.ceo-message h2{max-width:760px;margin:18px 0 0;font-size:clamp(30px,4vw,48px);line-height:1.12;font-weight:520;letter-spacing:-.055em}
+.ceo-message h2 em{color:var(--hm-blue);font-family:var(--hm-serif);font-weight:400}
+.ceo-message-copy{max-width:760px;margin:20px 0 0;color:var(--hm-muted);font-size:13px;line-height:1.9}
+.ceo-signature{display:flex;flex-direction:column;gap:5px;margin-top:24px;padding-top:18px;border-top:1px solid var(--hm-line)}
+.ceo-signature strong{color:var(--hm-ink);font-family:var(--hm-serif);font-size:21px;font-weight:400}
+.ceo-signature span{color:var(--hm-muted);font-size:10px}
+@media(max-width:1000px){.values-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){
+ .purpose-grid{grid-template-columns:1fr;gap:11px;margin-top:24px}
+ .purpose-card{min-height:0;padding:21px}.purpose-card h3{margin:18px 0 11px;font-size:25px}
+ .values-heading{display:block;margin:34px 0 15px}.values-heading h3{margin-top:12px}
+ .values-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .values-grid article{min-height:0;padding:15px 12px}.values-grid h4{margin:14px 0 7px}
+ .ceo-message-inner{padding-left:16px}.ceo-message h2{font-size:clamp(27px,7.5vw,35px)}
+ .ceo-message-copy{font-size:12px;line-height:1.75}
 }
 @media (max-width:700px) {
   .about-hero { padding:36px var(--hm-gutter) 38px; gap:20px; }
