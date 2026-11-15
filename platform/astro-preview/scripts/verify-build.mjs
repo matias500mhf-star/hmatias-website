@@ -50,6 +50,9 @@ assert.match(html, /Serviços/, "Footer services links are missing");
 assert.match(html, /Contacto e localização/, "Footer contact column is missing");
 assert.match(html, /Todos os direitos reservados/, "Footer legal copyright line is missing");
 assert.match(html, /Voltar ao topo/, "Footer back-to-top link is missing");
+const mainNavHtml = html.match(/<nav class="main-nav"[^>]*>([\\s\\S]*?)<\\/nav>/)?.[1];
+assert.ok(mainNavHtml, "Primary navigation is missing");
+assert.doesNotMatch(mainNavHtml, /SOURCE AO/i, "SOURCE AO must not appear in the primary navigation");
 assert.match(html, /mailto:geral@comercialhmatiasps\.com/, "Footer commercial mail link is missing");
 assert.match(html, /tel:\+244948806673/, "Footer telephone link is missing");
 assert.match(html, /SOURCE AO/, "Source AO footer link is missing");
@@ -100,7 +103,7 @@ assert.equal((exploreHtml.match(/<a\b/g) || []).length, 4, "Explore must contain
 assert.match(exploreHtml, /footer-source-link/, "SOURCE AO must receive a restrained Explore accent");
 assert.doesNotMatch(exploreHtml, /Smart RFQ|Projetos|Catálogo de Obras/, "Construction resources must not be duplicated in Explore");
 assert.doesNotMatch(html, /<section class="karta-feature"/, "KARTA must not be a homepage section");
-assert.doesNotMatch(html.match(/<main[\\s\\S]*?<\\/main>/)?.[0] ?? "", /SOURCE AO|source-ao-highlight/i, "Portuguese homepage main content must not promote SOURCE AO");
+assert.doesNotMatch(html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "", /SOURCE AO|source-ao-highlight/i, "Portuguese homepage main content must not promote SOURCE AO");
 assert.match(footerHtml ?? "", /footer-source-link/, "SOURCE AO must remain accessible from the footer");
 const englishHomeHtml = readFileSync(join(outDir, "en", "index.html"), "utf8");
 const englishFooterHtml = englishHomeHtml.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
@@ -118,7 +121,7 @@ assert.match(englishOperationsHtml, /href="\/en\/integrated-yard\//, "English pr
 const englishExploreHtml = englishFooterHtml.match(/<nav class="footer-column footer-explore"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
 assert.ok(englishExploreHtml, "English Explore footer column is missing");
 assert.equal((englishExploreHtml.match(/<a\b/g) || []).length, 4, "English Explore must contain exactly four links");
-assert.doesNotMatch(englishHomeHtml.match(/<main[\\s\\S]*?<\\/main>/)?.[0] ?? "", /SOURCE AO|source-ao-highlight/i, "English homepage main content must not promote SOURCE AO");
+assert.doesNotMatch(englishHomeHtml.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "", /SOURCE AO|source-ao-highlight/i, "English homepage main content must not promote SOURCE AO");
 assert.doesNotMatch(englishHomeHtml, /<section class="karta-feature"/, "KARTA must not be an English homepage section");
 assert.ok(html.includes('href="/empresa/">Sobre a HMATIAS'), "Footer About link must point to the About page");
 assert.ok(html.includes('href="/credibilidade/">Credibilidade'), "Footer credibility link must point to the credibility page");
