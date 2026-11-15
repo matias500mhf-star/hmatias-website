@@ -28,6 +28,14 @@ const links = isEnglish
 ---
 <footer class="site-footer" data-language={isEnglish ? "en" : "pt"}>
   <div class="footer-main">
+    <nav class="footer-column footer-explore" aria-label={isEnglish ? "Explore HMATIAS" : "Explorar HMATIAS"}>
+      <h2>{isEnglish ? "Explore" : "Explorar"}</h2>
+      <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
+      <a class="footer-source-link" href={isEnglish ? "/en/source-ao/" : company.sourceAoUrl}>SOURCE AO</a>
+      <a href={links.blog}>{isEnglish ? "Blog · Business perspectives" : "Blog · Perspetivas empresariais"}</a>
+      <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
+    </nav>
+
     <div class="footer-column footer-identity">
       <a class="footer-logo" href={homeUrl + "#inicio"} aria-label={isEnglish ? "HMATIAS — back to home" : "HMATIAS — voltar ao início"}>
         <Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services" : "HMATIAS — Prestação de Serviços"} widths={[96, 128]} sizes="64px" format="webp" quality={82} />
@@ -50,13 +58,6 @@ const links = isEnglish
       <a class="footer-area-link" href={links.business}>Business Services</a>
     </nav>
 
-    <nav class="footer-column footer-explore" aria-label={isEnglish ? "Explore HMATIAS" : "Explorar HMATIAS"}>
-      <h2>{isEnglish ? "Explore" : "Explorar"}</h2>
-      <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
-      <a class="footer-source-link" href={isEnglish ? "/en/source-ao/" : company.sourceAoUrl}>SOURCE AO</a>
-      <a href={links.blog}>{isEnglish ? "Blog · Business perspectives" : "Blog · Perspetivas empresariais"}</a>
-      <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
-    </nav>
 
     <section class="footer-column footer-contacts" aria-labelledby="footer-contact-heading">
       <h2 id="footer-contact-heading">{isEnglish ? "Contact and location" : "Contacto e localização"}</h2>
