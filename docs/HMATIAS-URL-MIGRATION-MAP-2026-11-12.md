@@ -27,8 +27,8 @@ Preservar o histórico orgânico do domínio comercialhmatiasps.com durante a tr
 | /facilities-en.html | /en/facilities/ | 301 após validação |
 | /supply.html | /supply/ | 301 após validação |
 | /supply-en.html | /en/supply/ | 301 após validação |
-| /rfq.html | /source-ao/smart-rfq/ | 301 apenas após confirmar equivalência funcional e formulários |
-| /rfq-en.html | /en/source-ao/smart-rfq/ | 301 apenas após confirmar equivalência funcional e formulários |
+| /rfq.html | Manter /rfq.html; o Smart RFQ geral deve preservar Construção, Facilities, Supply, revisão e envio por e-mail/WhatsApp | Preservar até existir equivalência funcional validada |
+| /rfq-en.html | Manter /rfq-en.html; o Smart RFQ geral em inglês deve preservar as mesmas áreas, revisão e canais de envio | Preservar até existir equivalência funcional validada |
 | /catalogo-obras.html | /catalogo-obras/ | 301 após validar arquivo e conteúdo |
 | /work-catalogue.html | /en/works-catalogue/ | 301 após validar arquivo e conteúdo |
 | /credibilidade.html | /credibilidade/ | 301 após validar dados institucionais |
