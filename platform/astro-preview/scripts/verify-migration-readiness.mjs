@@ -44,9 +44,11 @@ for (const route of manifest.routes) {
   assert.ok(route.preview_target?.startsWith("/"), `Preview target missing for ${route.source_url}`);
   assert.ok(!route.preview_target.startsWith("//"), "Protocol-relative preview targets are not allowed");
 
-  const relativeTarget = route.preview_target === "/"
-    ? "index.html"
-    : join(route.preview_target.replace(/^\/+|\/+$/g, ""), "index.html");
+  const relativeTarget = route.preview_target.endsWith(".html")
+    ? route.preview_target.replace(/^\//, "")
+    : route.preview_target === "/"
+      ? "index.html"
+      : join(route.preview_target.replace(/^\/+|\/+$/g, ""), "index.html");
   const targetPath = resolve(distRoot, relativeTarget);
   assert.ok(
     targetPath.startsWith(distRoot + sep) || targetPath === join(distRoot, "index.html"),
