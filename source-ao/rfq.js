@@ -194,7 +194,10 @@ async function submit(event){
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
   try{
     if(!/^https:\/\//.test(apiBase()))throw new Error('unconfigured');
-    const response=await fetch(apiBase()+'/api/sourcing-requests',{method:'POST',headers:{'content-type':'application/json',accept:'application/json'},body:JSON.stringify(data),cache:'no-store',signal:controller.signal});
+    const headers={'content-type':'application/json',accept:'application/json'};
+    const authorization=await window.SourceAOAuth?.getAuthorizationHeader?.();
+    if(authorization) headers.authorization=authorization;
+    const response=await fetch(apiBase()+'/api/sourcing-requests',{method:'POST',headers,body:JSON.stringify(data),cache:'no-store',signal:controller.signal});
     const result=await response.json().catch(()=>null);
     if(!response.ok)throw Object.assign(new Error('registration_failed'),{status:response.status});
     if(result?.ok!==true || result.request?.rfq_version!==1 || !result.request.reference || !result.request.status_path)throw new Error('unconfirmed');
