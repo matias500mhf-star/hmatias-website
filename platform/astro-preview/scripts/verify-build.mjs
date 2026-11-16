@@ -684,13 +684,6 @@ for (const pagePath of generatedPages) {
 }
 console.log("Shared footer structure and language verified on all " + generatedPages.length + " generated HTML pages.");
 
-const specialistRoutes = [") + '")[^>]*>'));
-  assert.ok(contactLink, `Quotation CTA must preserve the approved official form handoff: ${relativePagePath}`);
-  assert.match(contactLink[0], /target="_blank"/, `Official form must open in a new tab: ${relativePagePath}`);
-  assert.match(contactLink[0], /rel="noopener noreferrer"/, `Official form handoff must be isolated from the preview tab: ${relativePagePath}`);
-}
-console.log(`Shared footer structure and language verified on all ${generatedPages.length} generated HTML pages.`);
-
 const specialistRoutes = [
   ["coberturas-industriais", /Coberturas industriais: avaliação, reparação e manutenção/, "construction"],
   ["limpeza-pos-obra", /Limpeza pós-obra para espaços empresariais/, "cleaning-facilities"],
