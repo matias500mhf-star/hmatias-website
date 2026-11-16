@@ -650,32 +650,41 @@ const generatedPages = collectGeneratedHtml(outDir);
 assert.ok(generatedPages.length >= 59, "The complete 59-page PT/EN route set must be generated before footer auditing");
 for (const pagePath of generatedPages) {
   const pageHtml = readFileSync(pagePath, "utf8");
-  const relativePagePath = pagePath.slice(outDir.length).replaceAll("\\\\", "/");
+  const relativePagePath = pagePath.slice(outDir.length).replaceAll("\\", "/");
   const isEnglishPage = relativePagePath.startsWith("/en/");
   const expectedLanguage = isEnglishPage ? "en" : "pt";
-  const pageFooterMatches = [...pageHtml.matchAll(/<footer\\b(?=[^>]*\\bclass="site-footer")[^>]*>[\\s\\S]*?<\\/footer>/g)];
-  assert.equal(pageFooterMatches.length, 1, `Every generated page must render exactly one shared footer: ${relativePagePath}`);
+  const pageFooterMatches = [...pageHtml.matchAll(/<footer\b(?=[^>]*\bclass="site-footer")[^>]*>[\s\S]*?<\/footer>/g)];
+  assert.equal(pageFooterMatches.length, 1, "Every generated page must render exactly one shared footer: " + relativePagePath);
   const pageFooter = pageFooterMatches[0][0];
-  assert.match(pageFooter, new RegExp('data-language="' + expectedLanguage + '"'), `Footer language must match the page language: ${relativePagePath}`);
+  assert.match(pageFooter, new RegExp('data-language="' + expectedLanguage + '"'), "Footer language must match the page language: " + relativePagePath);
 
   const columnNames = ["explore", "identity", "operations", "contacts"];
   const columnPositions = columnNames.map((name) => pageFooter.indexOf('class="footer-column footer-' + name + '"'));
-  assert.ok(columnPositions.every((position) => position >= 0), `All four footer columns must exist: ${relativePagePath}`);
+  assert.ok(columnPositions.every((position) => position >= 0), "All four footer columns must exist: " + relativePagePath);
   assert.ok(columnPositions.every((position, index) => index === 0 || position > columnPositions[index - 1]),
-    `Footer column order must remain Explore, Identity, Operations, Contacts: ${relativePagePath}`);
+    "Footer column order must remain Explore, Identity, Operations, Contacts: " + relativePagePath);
   assert.equal((pageFooter.match(/class="footer-column footer-(?:explore|identity|operations|contacts)"/g) || []).length, 4,
-    `Footer must contain exactly four main columns: ${relativePagePath}`);
+    "Footer must contain exactly four main columns: " + relativePagePath);
   assert.equal((pageFooter.match(/class="footer-legal-links"/g) || []).length, 1,
-    `Footer must contain one legal navigation: ${relativePagePath}`);
+    "Footer must contain one legal navigation: " + relativePagePath);
   assert.equal((pageFooter.match(/class="footer-socials"/g) || []).length, 1,
-    `Footer must contain one social group: ${relativePagePath}`);
+    "Footer must contain one social group: " + relativePagePath);
   assert.equal((pageFooter.match(/class="footer-icon-link/g) || []).length, 2,
-    `Footer must contain the approved WhatsApp and Instagram links: ${relativePagePath}`);
+    "Footer must contain the approved WhatsApp and Instagram links: " + relativePagePath);
 
   const expectedContactForm = isEnglishPage
     ? "https://comercialhmatiasps.com/en.html#contact"
     : "https://comercialhmatiasps.com/#contacto";
-  const contactLink = pageFooter.match(new RegExp('<a\\\\b(?=[^>]*\\\\bhref="' + expectedContactForm.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\const specialistRoutes = [") + '")[^>]*>'));
+  const contactLinkStart = pageFooter.indexOf('<a href="' + expectedContactForm + '"');
+  assert.ok(contactLinkStart >= 0, "Quotation CTA must preserve the approved official form handoff: " + relativePagePath);
+  const contactLinkEnd = pageFooter.indexOf(">", contactLinkStart);
+  const contactLink = pageFooter.slice(contactLinkStart, contactLinkEnd + 1);
+  assert.match(contactLink, /target="_blank"/, "Official form must open in a new tab: " + relativePagePath);
+  assert.match(contactLink, /rel="noopener noreferrer"/, "Official form handoff must be isolated from the preview tab: " + relativePagePath);
+}
+console.log("Shared footer structure and language verified on all " + generatedPages.length + " generated HTML pages.");
+
+const specialistRoutes = [") + '")[^>]*>'));
   assert.ok(contactLink, `Quotation CTA must preserve the approved official form handoff: ${relativePagePath}`);
   assert.match(contactLink[0], /target="_blank"/, `Official form must open in a new tab: ${relativePagePath}`);
   assert.match(contactLink[0], /rel="noopener noreferrer"/, `Official form handoff must be isolated from the preview tab: ${relativePagePath}`);
