@@ -653,17 +653,27 @@ for (const pagePath of generatedPages) {
   const relativePagePath = pagePath.slice(outDir.length).replaceAll("\\", "/");
   const isEnglishPage = relativePagePath.startsWith("en/");
   const expectedLanguage = isEnglishPage ? "en" : "pt";
-  // SOURCE AO landing pages intentionally use a dedicated product footer rather than the corporate footer.
-  if (relativePagePath === "source-ao/index.html" || relativePagePath === "en/source-ao/index.html") {
-    const sourceFooterMatches = [...pageHtml.matchAll(/<footer[^>]*class="source-footer"[^>]*>[\s\S]*?<\/footer>/g)];
-    assert.equal(sourceFooterMatches.length, 1, "SOURCE AO landing page must render exactly one product footer: " + relativePagePath);
+  // SOURCE AO standalone product routes use dedicated footers, not the corporate footer.
+  const isSourceAoLanding = relativePagePath === "source-ao/index.html" || relativePagePath === "en/source-ao/index.html";
+  const isSourceAoPartner = relativePagePath === "source-ao/parceiros/index.html" || relativePagePath === "en/source-ao/partners/index.html";
+  if (isSourceAoLanding || isSourceAoPartner) {
+    const sourceFooterMatches = [...pageHtml.matchAll(/<footer\b[^>]*>[\s\S]*?<\/footer>/g)];
+    assert.equal(sourceFooterMatches.length, 1, "SOURCE AO standalone page must render exactly one product footer: " + relativePagePath);
     const sourceFooter = sourceFooterMatches[0][0];
-    assert.match(sourceFooter, isEnglishPage ? /A sourcing platform operated by HMATIAS/ : /Uma plataforma de sourcing operada pela HMATIAS/,
-      "SOURCE AO footer description must match the page language: " + relativePagePath);
-    assert.match(sourceFooter, /href="[^"]*privacy[^"]*"/i, "SOURCE AO footer must provide a privacy link: " + relativePagePath);
-    assert.match(sourceFooter, /href="[^"]*terms[^"]*"/i, "SOURCE AO footer must provide a terms link: " + relativePagePath);
-    assert.ok(sourceFooter.includes('href="https://wa.me/244948806673') || sourceFooter.includes('href="mailto:'),
-      "SOURCE AO footer must provide a commercial contact route: " + relativePagePath);
+    if (isSourceAoLanding) {
+      assert.match(sourceFooter, isEnglishPage ? /A sourcing platform operated by HMATIAS/ : /Uma plataforma de sourcing operada pela HMATIAS/,
+        "SOURCE AO footer description must match the page language: " + relativePagePath);
+      assert.match(sourceFooter, /href="[^"]*privacy[^"]*"/i, "SOURCE AO footer must provide a privacy link: " + relativePagePath);
+      assert.match(sourceFooter, /href="[^"]*terms[^"]*"/i, "SOURCE AO footer must provide a terms link: " + relativePagePath);
+      assert.ok(sourceFooter.includes('href="https://wa.me/244948806673') || sourceFooter.includes('href="mailto:'),
+        "SOURCE AO footer must provide a commercial contact route: " + relativePagePath);
+    } else {
+      assert.match(sourceFooter, /© 2026 SOURCE AO · HMATIAS/, "Partner application footer must identify SOURCE AO and HMATIAS: " + relativePagePath);
+      assert.match(sourceFooter, /href="[^"]*privacy[^"]*"|href="[^"]*privacidade[^"]*"/i,
+        "Partner application footer must provide a privacy link: " + relativePagePath);
+      assert.match(sourceFooter, /href="mailto:geral@comercialhmatiasps\.com"/,
+        "Partner application footer must provide the institutional contact email: " + relativePagePath);
+    }
     continue;
   }
 
