@@ -43,7 +43,9 @@ module.exports = {
         "categories:performance": ["warn", { minScore: 0.75 }],
         "categories:accessibility": ["warn", { minScore: 0.9 }],
         "categories:best-practices": ["warn", { minScore: 0.9 }],
-        "categories:seo": ["warn", { minScore: 0.75 }],
+        // Preview is intentionally noindex; measured SEO baseline is 0.66–0.69 solely because is-crawlable is blocked.
+        // Keep this guard below that expected preview baseline; production SEO is reviewed separately before release.
+        "categories:seo": ["warn", { minScore: 0.65 }],
         "largest-contentful-paint": ["warn", { maxNumericValue: 4000 }],
         "cumulative-layout-shift": ["warn", { maxNumericValue: 0.1 }],
       },
