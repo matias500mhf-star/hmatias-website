@@ -38,7 +38,7 @@ const links = isEnglish
 
     <div class="footer-column footer-identity">
       <a class="footer-logo" href={homeUrl + "#inicio"} aria-label={isEnglish ? "HMATIAS — back to home" : "HMATIAS — voltar ao início"}>
-        <Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services" : "HMATIAS — Prestação de Serviços"} widths={[96, 128]} sizes="64px" format="webp" quality={82} />
+        <Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services in Angola" : "HMATIAS — Construção, Facilities, Supply e Business Services em Angola"} widths={[96, 128]} sizes="64px" format="webp" quality={82} />
       </a>
       <p class="footer-company">{company.legalName}</p>
       <p class="footer-summary">{isEnglish
@@ -65,7 +65,7 @@ const links = isEnglish
       <a href={"mailto:" + company.commercialEmail}>{company.commercialEmail}</a>
       <a href={"mailto:" + company.institutionalEmail}>{company.institutionalEmail}</a>
       <address>{company.address}</address>
-      <a href={links.contact}>{isEnglish ? "Request a quotation" : "Solicitar orçamento"}</a>
+      <a href={isEnglish ? company.contactFormEnUrl : company.contactFormUrl} target="_blank" rel="noopener noreferrer">{isEnglish ? "Request a quotation" : "Solicitar orçamento"}</a>
       <div class="footer-socials" aria-label={isEnglish ? "Social media" : "Redes sociais"}>
         <a class="footer-icon-link footer-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? "Contact HMATIAS on WhatsApp" : "Contactar a HMATIAS pelo WhatsApp"}>
           <img src={whatsappIcon.src} width="26" height="26" alt="" aria-hidden="true" />
