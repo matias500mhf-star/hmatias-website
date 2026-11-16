@@ -1,4 +1,8 @@
-# Pesquisa ChatGPT: páginas públicas permitidas; áreas operacionais privadas excluídas.
+# HMATIAS — política pública de rastreio e descoberta
+# Conteúdo institucional e comercial público pode ser rastreado.
+# Áreas operacionais e informação interna permanecem excluídas.
+
+# Pesquisa do ChatGPT: permitir descoberta e citações de páginas públicas.
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /admin/
@@ -12,8 +16,16 @@ Disallow: /source-ao/supplier-discovery.html
 Disallow: /source-ao/backend/
 Disallow: /source-ao/docs/
 
-# Conteúdo público igualmente acessível ao Bing e Google pelo grupo genérico.
-# HMATIAS Website Robots.txt
+# GPTBot: não autorizar utilização do conteúdo para treino de modelos OpenAI.
+# Esta regra é independente da permissão de pesquisa definida para OAI-SearchBot.
+User-agent: GPTBot
+Disallow: /
+
+# Google-Extended herda as regras públicas do grupo genérico.
+# Assim, a descoberta em experiências Google com IA mantém-se permitida,
+# sem abrir as rotas operacionais privadas excluídas no grupo genérico.
+
+# Googlebot, Bingbot e restantes crawlers seguem a política pública geral.
 User-agent: *
 Allow: /
 Disallow: /admin/
@@ -27,5 +39,4 @@ Disallow: /source-ao/supplier-discovery.html
 Disallow: /source-ao/backend/
 Disallow: /source-ao/docs/
 
-# Sitemap
 Sitemap: https://comercialhmatiasps.com/sitemap.xml

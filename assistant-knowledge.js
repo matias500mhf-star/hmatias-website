@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: public website, project status, service pages and commercial rules, reviewed 2026-11-06. */
+   Source of truth: public website, project status, service pages and commercial rules, reviewed 2026-11-10. */
 (() => {
   'use strict';
 
@@ -14,8 +14,8 @@
   ];
 
   const kb = {
-    version: '2026-11-02.1',
-    updated: '2026-11-06',
+    version: '2026-11-10.1',
+    updated: '2026-11-10',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
       location: 'Viana, Bairro 1 de Maio, Casa n.º 31, Luanda – Angola',
@@ -75,7 +75,7 @@
       brandNotePt: 'A referência à Taurus identifica produtos do fabricante e não implica representação exclusiva, parceria ou exclusividade comercial.', cleanCatalog
     },
     businessServices: {
-      summaryPt: 'Apoio administrativo, documental e empresarial para profissionais, empreendedores e empresas, presencial em Luanda e remoto quando aplicável.',
+      summaryPt: 'Apoio administrativo, documental e empresarial para profissionais, empreendedores e empresas. Consultas de todo o país, com atendimento presencial em Luanda e suporte remoto quando aplicável. O escopo é confirmado antes da execução.',
       servicesPt: ['Expediente administrativo e redação institucional','Estruturação de CV profissional','Gestão e organização documental','Propostas comerciais e apoio empresarial','Apresentações empresariais','Apoio administrativo recorrente para PME'],
       pricingRulePt: 'A HMATIAS não publica uma tabela de preços do Business Services. Cada serviço é orçamentado após avaliação do âmbito, volume documental, complexidade e prazo. Solicitar proposta pelos canais comerciais.',
     },
