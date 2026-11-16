@@ -77,8 +77,8 @@ export default {
           response=collectorResponse;
         }else if(request.method==='POST' && url.pathname==='/api/auth/session'){
           response=await createFirebaseSession(request,env);
-        }else if(request.method==='POST' && /^\\/api\\/admin\\/identities\\/[^/]+\\/role$/.test(url.pathname)){
-          const identityRole=url.pathname.match(/^\\/api\\/admin\\/identities\\/([^/]+)\\/role$/);
+        }else if(request.method==='POST' && /^\/api\/admin\/identities\/[^/]+\/role$/.test(url.pathname)){
+          const identityRole=url.pathname.match(/^\/api\/admin\/identities\/([^/]+)\/role$/);
           response=isAdmin(request,env)
             ? await setFirebaseIdentityRole(request,env,decodeURIComponent(identityRole[1]))
             : new Response(JSON.stringify({ok:false,error:{code:'unauthorized',message:'Admin authorization required.'}}),{status:401,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','access-control-allow-origin':env.PUBLIC_ORIGIN||'https://comercialhmatiasps.com'}});
