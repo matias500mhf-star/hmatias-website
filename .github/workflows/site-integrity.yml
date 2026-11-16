@@ -77,8 +77,8 @@ jobs:
               fail('robots.txt must not block all OAI-SearchBot access')
           if not has_robot_rule('GPTBot', 'Disallow: /'):
               fail('robots.txt must keep the explicit GPTBot training policy')
-          if not has_robot_rule('Google-Extended', 'Disallow: /'):
-              fail('robots.txt must keep the explicit Google-Extended policy')
+          if 'Google-Extended' in robot_groups:
+              fail('Google-Extended should inherit the wildcard group to preserve AI discovery and private-route exclusions')
           if not has_robot_rule('*', 'Allow: /'):
               fail('robots.txt must allow general public crawling')
           if has_robot_rule('*', 'Disallow: /'):
