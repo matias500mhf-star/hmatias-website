@@ -46,8 +46,8 @@ jobs:
           grep -q '"item-vci-corrosion-protection"' source-ao/data/catalog.json
           grep -q '"item-industrial-protective-coatings"' source-ao/data/catalog.json
           grep -q '"item-hydrotest-corrosion-treatment"' source-ao/data/catalog.json
-          grep -q 'LINHAS COMPLEMENTARES DE FORNECIMENTO' supply.html
-          grep -q 'COMPLEMENTARY SUPPLY LINES' supply-en.html
+          grep -q 'Fornecimento Nacional' supply.html
+          grep -q 'Local Supply' supply-en.html
           ! grep -RqiE 'commercial_priority|next_action|relationship_stage|private_contact|internal_notes' source-ao/data/catalog.json supply.html supply-en.html
 
       - name: Validate frontend scripts syntax
@@ -57,6 +57,8 @@ jobs:
           node --check source-ao/verified-results.js
           node --check source-ao/runtime-config.js
           node --check source-ao/api-client.js
+          node --check source-ao/firebase-auth.js
+          node --check source-ao/account.js
           node --check source-ao/ops.js
           node --check source-ao/opportunity-radar.js
           node --check source-ao/confirm.js
@@ -213,6 +215,7 @@ jobs:
           node --check source-ao/backend/src/intake-alerts.js
           node --check source-ao/backend/src/sourcing.js
           node --check source-ao/backend/src/security.js
+          node --check source-ao/backend/src/firebase-auth.js
           node --check source-ao/backend/src/health.js
           node --check source-ao/backend/src/maintenance.js
           node --check source-ao/backend/src/opportunity-pipeline.js
@@ -225,6 +228,18 @@ jobs:
           node --check source-ao/backend/src/commercial-actions.js
           node --check source-ao/backend/src/intelligence.js
           node --check source-ao/backend/src/intelligence-route.js
+      - name: Validate Firebase Worker routing and RFQ identity association
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "'/api/auth/session'" source-ao/backend/src/router.js
+          grep -q 'setFirebaseIdentityRole' source-ao/backend/src/router.js
+          grep -q 'getFirebasePrincipalFromRequest' source-ao/backend/src/router.js
+          grep -q 'firebase_uid' source-ao/backend/src/sourcing.js
+          grep -q 'FIREBASE_PROJECT_ID' source-ao/backend/wrangler.jsonc
+          grep -q 'FIREBASE_PROJECT_ID' source-ao/backend/wrangler.staging.jsonc
+      - name: Validate Firebase ID token verification tests
+        run: node --test source-ao/backend/test/firebase-auth.test.mjs
       - name: Validate staging scripts syntax
         run: |
           node --check source-ao/backend/scripts/smoke-staging.mjs
