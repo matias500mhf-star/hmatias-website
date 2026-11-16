@@ -651,7 +651,7 @@ assert.ok(generatedPages.length >= 59, "The complete 59-page PT/EN route set mus
 for (const pagePath of generatedPages) {
   const pageHtml = readFileSync(pagePath, "utf8");
   const relativePagePath = pagePath.slice(outDir.length).replaceAll("\\", "/");
-  const isEnglishPage = relativePagePath.startsWith("/en/");
+  const isEnglishPage = relativePagePath.startsWith("en/");
   const expectedLanguage = isEnglishPage ? "en" : "pt";
   const pageFooterMatches = [...pageHtml.matchAll(/<footer\b(?=[^>]*\bclass="site-footer")[^>]*>[\s\S]*?<\/footer>/g)];
   assert.equal(pageFooterMatches.length, 1, "Every generated page must render exactly one shared footer: " + relativePagePath);
