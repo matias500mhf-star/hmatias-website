@@ -6,7 +6,7 @@ test.describe("HMATIAS company and platform pages", () => {
   test("floating WhatsApp contact remains accessible across company and SOURCE AO pages", async ({ page }) => {
     for (const route of ["/", "/empresa/", "/source-ao/", "/en/source-ao/"]) {
       await page.goto(route);
-      const whatsapp = page.locator("a.whatsapp-float");
+      const whatsapp = page.locator("a.hm-floating-whatsapp");
       await expect(whatsapp).toBeVisible();
       await expect(whatsapp).toHaveAttribute("aria-label", /WhatsApp/);
       await expect(whatsapp).toHaveAttribute("href", "https://wa.me/244948806673");
@@ -18,7 +18,7 @@ test.describe("HMATIAS company and platform pages", () => {
     }
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/source-ao/");
-    const whatsapp = page.locator("a.whatsapp-float");
+    const whatsapp = page.locator("a.hm-floating-whatsapp");
     await expect(whatsapp).toBeVisible();
     await expect(whatsapp).toHaveAttribute("aria-label", /WhatsApp/);
     await expect(whatsapp).toHaveCSS("border-radius", "50%");
