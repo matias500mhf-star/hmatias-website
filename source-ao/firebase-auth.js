@@ -69,13 +69,11 @@ export async function createAccount(email, password, displayName) {
   const cleanName = String(displayName || '').trim().slice(0, 120);
   if (cleanName) await updateProfile(credential.user, { displayName: cleanName });
   await sendEmailVerification(credential.user);
-  await syncApiSession(credential.user);
   return credential.user;
 }
 
 export async function signIn(email, password) {
   const credential = await signInWithEmailAndPassword(auth, email, password);
-  await syncApiSession(credential.user);
   return credential.user;
 }
 
