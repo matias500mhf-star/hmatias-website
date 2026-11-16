@@ -21,10 +21,9 @@ Disallow: /source-ao/docs/
 User-agent: GPTBot
 Disallow: /
 
-# Google-Extended: não autorizar treino nem grounding em produtos Google controlados por este token.
-# Esta regra não bloqueia Googlebot nem a inclusão no Google Search.
-User-agent: Google-Extended
-Disallow: /
+# Google-Extended herda as regras públicas do grupo genérico.
+# Assim, a descoberta em experiências Google com IA mantém-se permitida,
+# sem abrir as rotas operacionais privadas excluídas no grupo genérico.
 
 # Googlebot, Bingbot e restantes crawlers seguem a política pública geral.
 User-agent: *
