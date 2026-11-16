@@ -655,19 +655,19 @@ for (const pagePath of generatedPages) {
   const expectedLanguage = isEnglishPage ? "en" : "pt";
   // SOURCE AO landing pages intentionally use a dedicated product footer rather than the corporate footer.
   if (relativePagePath === "source-ao/index.html" || relativePagePath === "en/source-ao/index.html") {
-    const sourceFooterMatches = [...pageHtml.matchAll(/<footer\\b(?=[^>]*\\bclass="source-footer")[^>]*>[\\s\\S]*?<\\/footer>/g)];
+    const sourceFooterMatches = [...pageHtml.matchAll(/<footer[^>]*class="source-footer"[^>]*>[\s\S]*?<\/footer>/g)];
     assert.equal(sourceFooterMatches.length, 1, "SOURCE AO landing page must render exactly one product footer: " + relativePagePath);
     const sourceFooter = sourceFooterMatches[0][0];
     assert.match(sourceFooter, isEnglishPage ? /A sourcing platform operated by HMATIAS/ : /Uma plataforma de sourcing operada pela HMATIAS/,
       "SOURCE AO footer description must match the page language: " + relativePagePath);
     assert.match(sourceFooter, /href="[^"]*privacy[^"]*"/i, "SOURCE AO footer must provide a privacy link: " + relativePagePath);
     assert.match(sourceFooter, /href="[^"]*terms[^"]*"/i, "SOURCE AO footer must provide a terms link: " + relativePagePath);
-    assert.match(sourceFooter, /href="https:\\/\\/wa\\.me\\/244948806673|href="mailto:/,
+    assert.ok(sourceFooter.includes('href="https://wa.me/244948806673') || sourceFooter.includes('href="mailto:'),
       "SOURCE AO footer must provide a commercial contact route: " + relativePagePath);
     continue;
   }
 
-  const pageFooterMatches = [...pageHtml.matchAll(/<footer\\b(?=[^>]*\\bclass="site-footer")[^>]*>[\\s\\S]*?<\\/footer>/g)];
+  const pageFooterMatches = [...pageHtml.matchAll(/<footer\b(?=[^>]*\bclass="site-footer")[^>]*>[\s\S]*?<\/footer>/g)];
   assert.equal(pageFooterMatches.length, 1, "Every generated corporate page must render exactly one shared footer: " + relativePagePath);
   const pageFooter = pageFooterMatches[0][0];
   const columnNames = ["explore", "identity", "operations", "contacts"];
