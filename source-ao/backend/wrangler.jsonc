@@ -20,6 +20,7 @@
   "vars": {
     "PUBLIC_ORIGIN": "https://comercialhmatiasps.com",
     "SOURCE_AO_ENV": "production",
+    "FIREBASE_PROJECT_ID": "hmatias-c660a",
     "SOURCE_AO_RELEASE": "source-ao-v1",
     "CONTACT_RETENTION_DAYS": "180"
   },
