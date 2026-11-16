@@ -149,3 +149,17 @@ The production deploy job also runs read-only health, private-outbox and search 
 2. In GitHub repository Settings → Secrets and variables → Actions, add a new repository secret named `SOURCE_AO_RESEND_API_KEY`. Never paste the secret into commits, issues, chats or Action logs.
 3. With the secret configured, run the existing **Source AO Production Deploy** workflow using its approval gate or bump `.source-ao-production-release`. This transfers the token to the Worker through `wrangler secret put` and retains the verified-domain defaults.
 4. Verify the admin endpoint returns `configured:true`. Then confirm one labelled test email and provider delivery status before treating the commercial inbox as alerted. Backlogged D1 alerts remain pending until processed by the scheduled job.
+
+
+## Firebase Authentication (SOURCE AO shared identity)
+
+The website and Flutter mobile app use Firebase Authentication project `hmatias-c660a` as their identity provider. The Cloudflare Worker validates Firebase ID tokens against Google's Secure Token JWKS; it does not trust a UID or role supplied in request JSON.
+
+- `POST /api/auth/session` verifies an ID token and creates/updates the default `customer` identity in D1.
+- Signed-in RFQs store the verified Firebase UID with the private request record. Anonymous RFQ intake remains available.
+- `POST /api/admin/identities/:uid/role` requires the existing `ADMIN_API_TOKEN` and supports only `customer`, `supplier`, or `hm_operator`. Role changes are audited in D1. A user cannot change their own role.
+- Existing admin endpoints continue to require `ADMIN_API_TOKEN`; Firebase sign-in alone never grants internal or financial access.
+- Worker variable `FIREBASE_PROJECT_ID=hmatias-c660a` is configured in both staging and production. This identifier is not a secret.
+- Apply migration `0027_firebase_identities.sql` before deploying these routes.
+
+The static web client uses Firebase's versioned modular browser SDK. Firebase Analytics is not initialized by this change; it must be gated by the existing Cookiebot consent before activation.

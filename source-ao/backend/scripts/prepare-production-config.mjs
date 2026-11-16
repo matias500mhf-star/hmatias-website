@@ -24,6 +24,7 @@ const config={
   vars:{
     PUBLIC_ORIGIN:'https://comercialhmatiasps.com',
     SOURCE_AO_ENV:'production',
+    FIREBASE_PROJECT_ID:'hmatias-c660a',
     SOURCE_AO_RELEASE:release,
     CONTACT_RETENTION_DAYS:'180',
     WEBSITE_LEAD_INTAKE_ENABLED:'false'
