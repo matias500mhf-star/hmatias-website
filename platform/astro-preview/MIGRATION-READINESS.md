@@ -328,3 +328,37 @@ O preview permanece isolado e com `noindex,nofollow`. O PR #316 continua Draft e
 **O protótipo está tecnicamente validado pelos testes automatizados disponíveis e pode avançar para a fase de revisão humana e validação funcional em staging. Ainda não está pronto para substituir o publisher de produção.** Os bloqueios acima não são erros ocultos: são dependências explicitamente desactivadas ou preservadas para evitar perda de pedidos, dados, URLs e funções internas.
 
 Nenhuma alteração foi feita ao domínio oficial, DNS, redirects, formulários de produção, Resend, D1 de produção ou indexação. O PR #316 permanece Draft e sem merge.
+
+
+## 13. Canonical por ambiente, QA e disponibilidade do preview — 16 de novembro de 2026
+
+### Canonical, hreflang e isolamento por ambiente
+
+- Foi identificada uma divergência potencial no preview Vercel: sem um endereço explícito, a configuração Astro usava o host de fallback Render para construir canonical e hreflang, mesmo quando o HTML fosse servido pelo Vercel.
+- A resolução foi centralizada em `scripts/site-url.mjs`: prevalece `ASTRO_SITE_URL`, depois `ASTRO_PREVIEW_SITE_URL`; em Vercel production usa `VERCEL_PROJECT_PRODUCTION_URL`; nos restantes deployments Vercel usa `VERCEL_URL`; o endereço Render mantém-se como fallback quando não existem metadados Vercel. Os endereços explícitos têm de usar HTTPS.
+- Foram acrescentados cinco testes unitários para prioridade do endereço explícito, host único Vercel de preview, domínio Vercel de produção, fallback Render e rejeição de HTTP.
+- O comando `npm run verify` passou a validar canonical e os três alternates (`pt-AO`, `en`, `x-default`) nos 29 pares PT/EN, sempre contra o host resolvido do deployment. O QA #1077 completou dependências, type-check, build e verificação estática com sucesso antes de entrar na instalação dos browsers; os testes de browser/axe e Lighthouse ainda decorrem neste ciclo.
+- O preview continua sempre `noindex,nofollow`; esta alteração não activa indexação nem sitemap de produção e não altera o domínio oficial.
+
+### Referência de qualidade automatizada — QA #1071
+
+- No commit documental `d4b1f0790b685046f12a6af72cbe00cce64a2e97`, o Astro prototype QA #1071 concluiu com sucesso: **194 testes Playwright passaram e 14 foram ignorados** por serem específicos do outro perfil desktop/mobile; axe não reportou violações críticas ou graves nos percursos abrangidos.
+- Foram emitidos **48 relatórios Lighthouse** (24 URLs, duas medições por URL): Performance média 100/100, Acessibilidade 100/100, Boas Práticas 100/100 e SEO média 68,75/100. O único audit SEO reprovado foi `is-crawlable`, devido ao bloqueio intencional de indexação do preview. O LCP máximo observado foi 648 ms, CLS máximo 0,0578 e TBT máximo 28 ms.
+- A guarda Lighthouse do preview foi ajustada para 0,65, abaixo da linha de base observada (0,66–0,69), porque a política de noindex é intencional. A verificação SEO de produção continua a ser um gate separado antes de qualquer lançamento.
+
+### Disponibilidade dos ambientes de pré-visualização
+
+- A tentativa Vercel para o commit `2725ecb005fceb29f01992dc7e00e51ed7e0a5ac` foi bloqueada pelo limite de builds do plano nos projectos `hmatias-astro-preview` e `hmatias-site-test`. Não foi criado deployment novo para esse commit.
+- O serviço Render `hmatias-astro-preview` também não consegue iniciar novos builds enquanto o workspace estiver sem minutos de build no período de facturação.
+- Não foi activado upgrade nem despesa. O último preview Vercel anteriormente confirmado como Ready corresponde ao commit documental anterior; não deve ser apresentado como contendo a correcção canonical mais recente até existir novo deployment.
+- O GitHub Actions mantém-se como ambiente de build/QA independente. O PR continua Draft e nenhum destes bloqueios altera o publisher oficial.
+
+### Portas ainda abertas
+
+1. Concluir Playwright desktop/mobile, axe e Lighthouse no QA #1077; registar os resultados finais deste commit.
+2. Reabrir a pré-visualização pública no Vercel ou Render quando a quota de builds permitir, confirmando canonical/hreflang com o hostname efectivo do deployment.
+3. Concluir revisão visual manual desktop/tablet/mobile e conteúdo PT/EN.
+4. Aplicar migrações e testar submissões apenas na D1/API de staging depois de confirmar configuração, CORS, health/readiness e rollback; o preview nunca deve apontar à produção.
+5. Validar as 37 URLs históricas, Search Console e backlinks antes de decidir redirects, sitemap ou indexação. Não publicar nem fazer merge sem aprovação explícita.
+
+**Estado:** a resolução de canonical por ambiente está implementada; o build e o verificador passaram no QA #1077. A bateria de browser/Lighthouse e a publicação do preview desse commit permanecem pendentes. O domínio público, DNS, redirects, formulários oficiais, Resend e D1 de produção não foram alterados.
