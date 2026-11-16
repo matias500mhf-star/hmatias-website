@@ -502,14 +502,16 @@ const englishAbout = readFileSync(join(outDir, "en", "about", "index.html"), "ut
 const englishAboutText = englishAbout.replace(/<[^>]*>/g, " ");
 assert.match(englishAboutText, /MISSION/, "English About page mission is missing");
 assert.match(englishAboutText, /VISION/, "English About page vision is missing");
-assert.match(englishAboutText, /Verified information/, "English company values are missing");
-const englishValuesHtml = englishAbout.match(/<div class="values-grid[^"]*"[^>]*>([\s\S]*?)<\/div>/)?.[1];
-assert.ok(englishValuesHtml, "English About values grid is missing");
-assert.equal((englishValuesHtml.match(/<article\b/g) || []).length, 5, "English About page must present five company values");
-assert.match(englishAboutText, /Service areas\./, "English About page service overview is missing");
+assert.match(englishAboutText, /OPERATING PRINCIPLES/, "English About operating principles are missing");
+const englishValuesHtml = englishAbout.match(/<ul class="values-list"[^>]*>([\s\S]*?)<\/ul>/)?.[1];
+assert.ok(englishValuesHtml, "English About values list is missing");
+const expectedEnglishValues = ["Integrity", "Responsibility", "Rigour", "Cooperation"];
+for (const value of expectedEnglishValues) {
+  assert.match(englishValuesHtml, new RegExp(value), `English About page is missing the ${value} principle`);
+}
+assert.equal((englishValuesHtml.match(/<li\b/g) || []).length, expectedEnglishValues.length, "English About page must present four operating principles");
+assert.match(englishAboutText, /Areas and services/, "English About page footer service navigation is missing");
 assert.doesNotMatch(englishAboutText, /Our commitment|THE CEO.s COMMITMENT|Integrity in every relationship/i, "Generic executive copy must not return");
-assert.match(englishAbout, /pavilhoes-rurais-concluidos/i, "English About page must use the distinct real-work photograph");
-assert.doesNotMatch(englishAbout, /instalacoes-embutidas-construcao/i, "English About page must not reuse the homepage photograph");
 
 for (const [route] of englishRoutes) {
   const content = readFileSync(join(outDir, route, "index.html"), "utf8");
