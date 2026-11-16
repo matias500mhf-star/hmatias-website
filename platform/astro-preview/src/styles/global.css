@@ -885,3 +885,188 @@ main li {
   .editorial-contact p { line-height:1.65; }
   .editorial-feature-visual,.editorial-card-cover { min-width:0; }
 }
+
+
+/* Site-wide editorial alignment and reading consistency */
+:where(main) {
+  min-width: 0;
+}
+:where(main p, main li, main dd, main dt, main figcaption) {
+  text-align: start;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+}
+:where(main h1, main h2, main h3, main h4, main h5, main h6) {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+:where(main p, main li) {
+  text-wrap: pretty;
+}
+:where(main ul, main ol) {
+  padding-inline-start: 1.35em;
+}
+:where(main li + li) {
+  margin-block-start: .45em;
+}
+
+/* Blog archive: consistent card rhythm and readable copy widths. */
+.editorial-feature,
+.editorial-card,
+.editorial-category,
+.article-content {
+  min-width: 0;
+}
+.editorial-feature h2,
+.editorial-card h3 {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.editorial-feature > p:not(.editorial-meta) {
+  max-width: 62ch;
+}
+.editorial-card h3 {
+  min-height: 2.5em;
+}
+.editorial-card-description {
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+.editorial-card-meta,
+.editorial-card-link {
+  margin-top: auto;
+}
+.editorial-card-link {
+  align-self: flex-start;
+}
+.editorial-category-heading h2 {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.editorial-category-heading span {
+  flex: 0 0 auto;
+}
+
+/* Long-form articles: a stable reading measure and complete Markdown styling. */
+.article-content {
+  width: min(100%, 860px);
+  min-width: 0;
+}
+.article-content :is(p, li, blockquote, figcaption) {
+  max-width: 72ch;
+  text-align: start;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+}
+.article-content :is(h2, h3, h4) {
+  max-width: 30ch;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.article-content h3 {
+  margin: 30px 0 12px;
+  color: var(--hm-ink);
+  font-size: clamp(19px, 2.4vw, 24px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -.025em;
+}
+.article-content h4 {
+  margin: 24px 0 10px;
+  color: var(--hm-ink);
+  font-size: 17px;
+  line-height: 1.35;
+}
+.article-content :is(ul, ol) {
+  max-width: 72ch;
+  margin: 16px 0 28px;
+  padding-inline-start: 1.5em;
+  color: var(--hm-muted);
+}
+.article-content li {
+  padding-inline-start: .2em;
+  line-height: 1.8;
+}
+.article-content blockquote {
+  max-width: 72ch;
+  margin: 26px 0;
+  padding: 8px 0 8px 22px;
+  border-left: 2px solid var(--hm-blue);
+  color: var(--hm-muted);
+}
+.article-content blockquote p {
+  margin: 0;
+}
+.article-content :not(pre) > code {
+  padding: .12em .35em;
+  border: 1px solid var(--hm-line);
+  border-radius: 4px;
+  background: var(--hm-light);
+  font-family: var(--hm-mono);
+  font-size: .88em;
+  overflow-wrap: anywhere;
+}
+.article-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 18px;
+  border: 1px solid var(--hm-line);
+  background: var(--hm-light);
+  line-height: 1.65;
+}
+.article-content pre code {
+  font-family: var(--hm-mono);
+  font-size: 12px;
+  white-space: pre;
+}
+.article-content hr {
+  margin: 36px 0;
+  border: 0;
+  border-top: 1px solid var(--hm-line);
+}
+.article-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.article-content th {
+  white-space: normal;
+  text-align: start;
+}
+.article-content td {
+  vertical-align: top;
+  text-align: start;
+}
+.article-content :is(img, video) {
+  max-width: 100%;
+  height: auto;
+}
+.article-content > :last-child {
+  margin-bottom: 0;
+}
+@media (max-width: 650px) {
+  .editorial-card h3 {
+    min-height: 0;
+  }
+  .editorial-card-description {
+    max-width: none;
+  }
+  .article-content {
+    width: 100%;
+  }
+  .article-content :is(p, li, blockquote) {
+    max-width: none;
+    line-height: 1.75;
+  }
+  .article-content :is(h2, h3, h4) {
+    max-width: 26ch;
+  }
+  .article-content pre {
+    padding: 14px;
+  }
+}
