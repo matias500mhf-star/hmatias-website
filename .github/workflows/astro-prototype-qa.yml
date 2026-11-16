@@ -28,6 +28,11 @@ concurrency:
 jobs:
   build-and-verify:
     runs-on: ubuntu-latest
+    # Simulate the Vercel preview environment so the generated canonical/hreflang
+    # URLs are verified against a deployment hostname rather than the Render fallback.
+    env:
+      VERCEL_ENV: preview
+      VERCEL_URL: astro-preview-qa.hmatias.invalid
     defaults:
       run:
         working-directory: platform/astro-preview
