@@ -51,8 +51,8 @@ jobs:
               robots = robots_path.read_text(encoding='utf-8')
               if 'Sitemap: https://comercialhmatiasps.com/sitemap.xml' not in robots:
                   fail('robots.txt does not advertise the canonical sitemap')
-              if re.search(r'(?im)^\s*Disallow:\s*/\s*$', robots):
-                  fail('robots.txt blocks the entire site')
+              # A crawler-specific Disallow: / may be intentional (training policy);
+              # public access is validated against the wildcard group below.
 
           # Keep discovery policy explicit: search crawlers remain allowed,
           # while training/other reuse tokens follow the owner's separate policy.
@@ -81,6 +81,8 @@ jobs:
               fail('robots.txt must keep the explicit Google-Extended policy')
           if not has_robot_rule('*', 'Allow: /'):
               fail('robots.txt must allow general public crawling')
+          if has_robot_rule('*', 'Disallow: /'):
+              fail('robots.txt wildcard group must not block the entire site')
           for private_path in (
               '/admin/', '/source-ao/ops.html', '/source-ao/review.html',
               '/source-ao/requests.html', '/source-ao/website-leads.html',
