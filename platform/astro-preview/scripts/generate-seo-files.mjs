@@ -1,13 +1,10 @@
 import assert from "node:assert/strict";
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
+import { resolveSiteUrl } from "./site-url.mjs";
 
 const distRoot = new URL("../dist/", import.meta.url);
-const configuredSite = new URL(
-  process.env.ASTRO_SITE_URL
-    ?? process.env.ASTRO_PREVIEW_SITE_URL
-    ?? "https://hmatias-astro-preview.onrender.com"
-);
+const configuredSite = new URL(resolveSiteUrl(process.env));
 const productionIndexingEnabled = process.env.PUBLIC_INDEXING_ENABLED === "true"
   && configuredSite.protocol === "https:"
   && configuredSite.hostname === "comercialhmatiasps.com";
