@@ -36,8 +36,38 @@ import { company } from "../../data/site";
       </div>
     </section>
 
+
+    <section class="credibility-mpme section-pad" aria-labelledby="credibility-mpme-heading">
+      <div class="credibility-mpme-intro">
+        <p class="section-kicker">02 / ESTATUTO E CERTIFICAÇÃO EMPRESARIAL</p>
+        <h2 id="credibility-mpme-heading">Microempresa<br /><em>certificada.</em></h2>
+        <p>A HMATIAS está enquadrada no sistema de Micro, Pequenas e Médias Empresas (MPME), ao abrigo da Lei n.º 30/11, de 13 de Setembro. Esta certificação reconhece formalmente o seu enquadramento como microempresa no sistema nacional de MPME.</p>
+        <div class="mpme-seal"><span>MPME</span><strong>MICROEMPRESA</strong><small>REPÚBLICA DE ANGOLA · MINISTÉRIO DA INDÚSTRIA E COMÉRCIO</small></div>
+      </div>
+      <div class="mpme-details">
+        <div class="mpme-certificate">
+          <span class="identity-label">CERTIFICAÇÃO OFICIAL</span>
+          <h3>Certificado MPME n.º 3451/2026</h3>
+          <dl>
+            <div><dt>Classificação</dt><dd>Microempresa</dd></div>
+            <div><dt>Data de emissão</dt><dd>16 de Novembro de 2026</dd></div>
+            <div><dt>Enquadramento legal</dt><dd>Lei n.º 30/11, de 13 de Setembro</dd></div>
+            <div><dt>Actividade indicada no cartão</dt><dd>Outras actividades de serviços de apoio prestados às empresas, n.e.</dd></div>
+            <div><dt>Localização registada</dt><dd>Município de Viana · Província de Luanda</dd></div>
+          </dl>
+        </div>
+        <div class="mpme-incentives">
+          <h3>Incentivos identificados na certificação</h3>
+          <div><strong>Incentivos fiscais</strong><p>O Cartão de Identidade MPME indica, para o Imposto Industrial, o pagamento por recurso ao Imposto Especial por Conta, à taxa de 2% sobre as vendas brutas, nos termos da alínea a) do n.º 1 do artigo 42.º do Código dos Benefícios Fiscais. Indica também isenção do Imposto de Selo sobre recibos de quitação, nos termos do n.º 2 do mesmo artigo.</p><small>Período indicado: 16/11/2026 a 16/11/2028.</small></div>
+          <div><strong>Emolumentos</strong><p>Isenção de emolumentos e encargos legais no acto de aumento do capital social, nos termos do artigo 19.º da Lei das MPME.</p></div>
+          <div><strong>Desenvolvimento empresarial</strong><p>A certificação identifica ainda incentivos financeiros, organizacionais, de inovação e de capacitação tecnológica.</p><small>Período indicado: 16/11/2026 a 16/11/2027.</small></div>
+        </div>
+        <p class="mpme-note">Os benefícios acima são apresentados de acordo com o Cartão de Identidade MPME emitido em 16/11/2026. A sua aplicação concreta depende do cumprimento dos requisitos legais, fiscais e procedimentais aplicáveis e da confirmação pelas entidades competentes. A certificação, por si só, não representa aprovação automática de crédito, subsídio ou financiamento.</p>
+      </div>
+    </section>
+
     <section class="credibility-method section-pad" aria-labelledby="pages-credibilidade-index-section-3-heading">
-      <div class="credibility-heading"><p class="section-kicker">02 / FORMA DE TRABALHO</p><h2 id="pages-credibilidade-index-section-3-heading">Clareza em cada<br /><em>etapa.</em></h2></div>
+      <div class="credibility-heading"><p class="section-kicker">03 / FORMA DE TRABALHO</p><h2 id="pages-credibilidade-index-section-3-heading">Clareza em cada<br /><em>etapa.</em></h2></div>
       <div class="credibility-principle-grid">
         <article class="credibility-principle"><span>01</span><h3>Identidade empresarial</h3><p>A HMATIAS apresenta a sua denominação, identificação fiscal, registo comercial e canais institucionais para facilitar a verificação da empresa.</p></article>
         <article class="credibility-principle"><span>02</span><h3>Âmbito definido</h3><p>Necessidades, especificações, localização, entregáveis e responsabilidades são clarificados antes de estruturar uma proposta.</p></article>
@@ -48,7 +78,7 @@ import { company } from "../../data/site";
 
     <section class="credibility-limits section-pad" aria-labelledby="pages-credibilidade-index-section-4-heading">
       <div class="credibility-limits-copy">
-        <p class="section-kicker">03 / TRANSPARÊNCIA COMERCIAL</p>
+        <p class="section-kicker">04 / TRANSPARÊNCIA COMERCIAL</p>
         <h2 id="pages-credibilidade-index-section-4-heading">Informação antes<br /><em>de qualquer compromisso.</em></h2>
       </div>
       <div class="credibility-limits-text">
@@ -59,7 +89,7 @@ import { company } from "../../data/site";
     </section>
 
     <section class="credibility-contact section-pad" aria-labelledby="pages-credibilidade-index-section-6-heading">
-      <div><p class="section-kicker">04 / CONTACTO OFICIAL</p><h2 id="pages-credibilidade-index-section-6-heading">Fale diretamente<br /><em>com a HMATIAS.</em></h2><p>Para confirmar dados, apresentar um pedido ou solicitar informação institucional, utilize os canais oficiais da empresa.</p></div>
+      <div><p class="section-kicker">05 / CONTACTO OFICIAL</p><h2 id="pages-credibilidade-index-section-6-heading">Fale diretamente<br /><em>com a HMATIAS.</em></h2><p>Para confirmar dados, apresentar um pedido ou solicitar informação institucional, utilize os canais oficiais da empresa.</p></div>
       <div class="credibility-contact-links">
         <a href={"mailto:"+company.commercialEmail}>E-mail comercial <strong>{company.commercialEmail} ↗</strong></a>
         <a href={"mailto:"+company.institutionalEmail}>E-mail institucional <strong>{company.institutionalEmail} ↗</strong></a>
@@ -88,6 +118,27 @@ import { company } from "../../data/site";
 .identity-card dt { color:var(--hm-muted); }
 .identity-card dd { margin:0; text-align:right; font-weight:600; overflow-wrap:anywhere; }
 .identity-card dd a { text-decoration:underline; text-decoration-color:#91bfe5; text-underline-offset:3px; }
+
+.credibility-mpme { display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(35px,7vw,95px); background:var(--hm-light); }
+.credibility-mpme-intro > p:last-of-type { max-width:470px; color:var(--hm-muted); font-size:13px; line-height:1.9; }
+.mpme-seal { display:flex; flex-direction:column; align-items:flex-start; gap:5px; margin-top:30px; padding:20px 22px; border-left:3px solid var(--hm-blue); background:var(--hm-paper); }
+.mpme-seal span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:34px; line-height:1; }
+.mpme-seal strong { font-size:10px; letter-spacing:.12em; }
+.mpme-seal small { color:var(--hm-muted); font-size:8px; letter-spacing:.06em; line-height:1.6; }
+.mpme-certificate { padding:28px; border:1px solid var(--hm-line); background:var(--hm-paper); }
+.mpme-certificate h3 { margin:14px 0 22px; font-size:21px; letter-spacing:-.035em; }
+.mpme-certificate dl { margin:0; border-top:1px solid var(--hm-line); }
+.mpme-certificate dl div { display:grid; grid-template-columns:minmax(125px,.75fr) minmax(0,1.25fr); gap:18px; padding:12px 0; border-bottom:1px solid var(--hm-line); font-size:11px; }
+.mpme-certificate dt { color:var(--hm-muted); }
+.mpme-certificate dd { margin:0; text-align:right; font-weight:600; overflow-wrap:anywhere; }
+.mpme-incentives { margin-top:22px; padding:26px 28px; background:var(--hm-paper); border:1px solid var(--hm-line); }
+.mpme-incentives h3 { margin:0 0 18px; font-size:17px; letter-spacing:-.025em; }
+.mpme-incentives > div { padding:15px 0; border-top:1px solid var(--hm-line); }
+.mpme-incentives strong { font-size:12px; }
+.mpme-incentives p { margin:7px 0; color:var(--hm-muted); font-size:11px; line-height:1.85; }
+.mpme-incentives small { color:var(--hm-blue); font-size:10px; font-weight:650; }
+.mpme-note { margin:14px 0 0; color:var(--hm-muted); font-size:10px; line-height:1.8; }
+
 .credibility-method { display:grid; grid-template-columns:.75fr 1.25fr; gap:clamp(35px,7vw,95px); background:var(--hm-light); }
 .method-list { margin:0; padding:0; list-style:none; border-top:1px solid var(--hm-line); }
 .method-list li { display:grid; grid-template-columns:40px 1fr; gap:18px; padding:23px 0; border-bottom:1px solid var(--hm-line); }
@@ -106,6 +157,12 @@ import { company } from "../../data/site";
 
 @media (max-width:520px) {
   .identity-card { padding:22px 18px; }
+
+  .credibility-mpme { grid-template-columns:1fr; }
+  .mpme-certificate,.mpme-incentives { padding:22px 18px; }
+  .mpme-certificate dl div { grid-template-columns:1fr; gap:5px; }
+  .mpme-certificate dd { text-align:left; }
+
   .identity-card dl div { grid-template-columns:1fr; gap:5px; }
   .identity-card dd { text-align:left; }
   .credibility-contact-links > a { flex-direction:column; gap:7px; }
