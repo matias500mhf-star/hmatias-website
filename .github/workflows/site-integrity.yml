@@ -54,6 +54,42 @@ jobs:
               if re.search(r'(?im)^\s*Disallow:\s*/\s*$', robots):
                   fail('robots.txt blocks the entire site')
 
+          # Keep discovery policy explicit: search crawlers remain allowed,
+          # while training/other reuse tokens follow the owner's separate policy.
+          robot_groups = {}
+          active_agent = None
+          for raw_line in robots.splitlines():
+              line = raw_line.strip()
+              if not line or line.startswith('#'):
+                  continue
+              if line.lower().startswith('user-agent:'):
+                  active_agent = line.split(':', 1)[1].strip()
+                  robot_groups.setdefault(active_agent, [])
+              elif active_agent:
+                  robot_groups[active_agent].append(line.lower())
+
+          def has_robot_rule(agent, directive):
+              return directive.lower() in robot_groups.get(agent, [])
+
+          if not has_robot_rule('OAI-SearchBot', 'Allow: /'):
+              fail('robots.txt must allow OAI-SearchBot to discover public HMATIAS pages')
+          if has_robot_rule('OAI-SearchBot', 'Disallow: /'):
+              fail('robots.txt must not block all OAI-SearchBot access')
+          if not has_robot_rule('GPTBot', 'Disallow: /'):
+              fail('robots.txt must keep the explicit GPTBot training policy')
+          if not has_robot_rule('Google-Extended', 'Disallow: /'):
+              fail('robots.txt must keep the explicit Google-Extended policy')
+          if not has_robot_rule('*', 'Allow: /'):
+              fail('robots.txt must allow general public crawling')
+          for private_path in (
+              '/admin/', '/source-ao/ops.html', '/source-ao/review.html',
+              '/source-ao/requests.html', '/source-ao/website-leads.html',
+              '/source-ao/supplier-discovery.html', '/source-ao/backend/',
+              '/source-ao/docs/'
+          ):
+              if not has_robot_rule('*', f'Disallow: {private_path}'):
+                  fail(f'robots.txt must keep private path excluded: {private_path}')
+
           # Parse sitemap and validate canonical URLs + multilingual alternates.
           sitemap_path = ROOT / 'sitemap.xml'
           if not sitemap_path.exists():
