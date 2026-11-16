@@ -7,11 +7,7 @@ const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const distRoot = join(projectRoot, "dist");
 const manifestPath = join(projectRoot, "migration", "legacy-url-manifest.json");
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
-const configuredSite = new URL(
-  process.env.ASTRO_SITE_URL
-    ?? process.env.ASTRO_PREVIEW_SITE_URL
-    ?? "https://hmatias-astro-preview.onrender.com"
-);
+const configuredSite = new URL(resolveSiteUrl(process.env));
 const productionIndexingEnabled = process.env.PUBLIC_INDEXING_ENABLED === "true"
   && configuredSite.protocol === "https:"
   && configuredSite.hostname === "comercialhmatiasps.com";
