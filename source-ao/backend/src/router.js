@@ -40,6 +40,7 @@ import {getCommercialDashboard} from './commercial-dashboard.js';
 import {getCollectionsCase,upsertInvoice,addPayment,voidPayment} from './collections.js';
 import {getCommercialActions} from './commercial-actions.js';
 import {listOpportunityPursuits,upsertOpportunityPursuit} from './opportunity-pursuits.js';
+import {getFirebasePrincipalFromRequest,upsertFirebaseIdentity,createFirebaseSession,setFirebaseIdentityRole} from './firebase-auth.js';
 
 function securityFailure(env,requestId){
   return new Response(JSON.stringify({
@@ -74,6 +75,13 @@ export default {
         const collectorResponse=await collectorRoute(request,env,url.pathname);
         if(collectorResponse){
           response=collectorResponse;
+        }else if(request.method==='POST' && url.pathname==='/api/auth/session'){
+          response=await createFirebaseSession(request,env);
+        }else if(request.method==='POST' && /^\\/api\\/admin\\/identities\\/[^/]+\\/role$/.test(url.pathname)){
+          const identityRole=url.pathname.match(/^\\/api\\/admin\\/identities\\/([^/]+)\\/role$/);
+          response=isAdmin(request,env)
+            ? await setFirebaseIdentityRole(request,env,decodeURIComponent(identityRole[1]))
+            : new Response(JSON.stringify({ok:false,error:{code:'unauthorized',message:'Admin authorization required.'}}),{status:401,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','access-control-allow-origin':env.PUBLIC_ORIGIN||'https://comercialhmatiasps.com'}});
         }else if(request.method==='GET' && url.pathname==='/ready'){
           response=await readinessResponse(env);
         }else if(request.method==='GET' && url.pathname==='/internal/website-leads'){
@@ -118,7 +126,13 @@ export default {
         }else if(request.method==='GET' && url.pathname==='/api/admin/procurement-mission'){
           response=await procurementMission(request,env,{privateView:true});
         }else if(request.method==='POST' && url.pathname==='/api/sourcing-requests'){
-          response=await createSourcingRequest(request,env);
+          const principal=await getFirebasePrincipalFromRequest(request,env,{optional:true});
+          if(principal.response){
+            response=principal.response;
+          }else{
+            if(principal.claims) await upsertFirebaseIdentity(env,principal.claims);
+            response=await createSourcingRequest(request,env,{firebaseUid:principal.claims?.uid||null});
+          }
         }else if(request.method==='POST' && url.pathname==='/api/partner-applications'){
           response=await createPartnerApplication(request,env);
         }else{
