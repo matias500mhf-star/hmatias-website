@@ -43,10 +43,87 @@
   <link rel="stylesheet" href="home-details.css?v=20261026-contact-icons1" data-hmatias-brand-lock="true" data-hmatias-premium-editorial="true">
   <link rel="stylesheet" href="site-improvements.css?v=20261102-development-projects1">
   <script src="site-bootstrap.js?v=20261029-email-icon-preserve1" defer data-hmatias-site-bootstrap="true"></script>
+
+  <style id="hmatias-update-notice-styles">
+    .hmatias-update-notice {
+      background: #f2f6fa;
+      border-bottom: 1px solid #dce5ee;
+      color: #193d60;
+    }
+    .hmatias-update-notice-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 11px;
+      padding-bottom: 11px;
+    }
+    .hmatias-update-notice-copy {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+    .hmatias-update-notice-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0;
+      font-size: clamp(.82rem, 1.1vw, .92rem);
+      line-height: 1.4;
+    }
+    .hmatias-update-notice-dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 8px;
+      border-radius: 50%;
+      background: #3d76aa;
+      box-shadow: 0 0 0 4px rgba(61, 118, 170, .12);
+    }
+    .hmatias-update-notice-description {
+      margin: 0 0 0 17px;
+      color: #52677d;
+      font-size: .82rem;
+      line-height: 1.5;
+    }
+    .hmatias-update-notice-contact {
+      flex: 0 0 auto;
+      color: #164d7a;
+      font-size: .82rem;
+      font-weight: 650;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      white-space: nowrap;
+    }
+    .hmatias-update-notice-contact:focus-visible {
+      outline: 2px solid #164d7a;
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
+    @media (max-width: 640px) {
+      .hmatias-update-notice-inner {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 7px 14px;
+      }
+      .hmatias-update-notice-contact {
+        margin-left: 17px;
+      }
+    }
+  </style>
 </head>
 <body class="site-stable hmatias-type hmatias-home">
   <div class="topbar hmatias-topbar"><div class="container topbar-inner"><div class="header-contact"><a href="tel:+244948806673"><img class="contact-icon" src="images/contact-phone.svg?v=20261019-icons1" width="16" height="16" alt="" aria-hidden="true">+244 948 806 673</a><a href="mailto:geral@comercialhmatiasps.com"><img class="contact-icon" src="images/contact-email.svg?v=20261019-icons1" width="16" height="16" alt="" aria-hidden="true">geral@comercialhmatiasps.com</a></div><div class="header-social"><a href="https://wa.me/244948806673" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><img src="images/social-whatsapp.svg" width="19" height="19" alt=""></a></div></div></div>
   <header class="header hmatias-header" id="header"><div class="container nav"><a class="brand" href="/" aria-label="HMATIAS"><picture><img src="logo-hmatias.png" alt="HMATIAS – Prestação de Serviços SU, LDA" width="400" height="381"></picture></a><button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button><nav class="nav-menu" aria-label="Navegação principal"><a href="/">Início</a><a href="credibilidade.html">Sobre nós</a><a href="#servicos">Serviços</a><a href="#projetos">Projetos</a></nav><div class="nav-actions"><a class="lang-switch" data-lang-switch href="en.html" hreflang="en">EN</a><a class="btn btn-primary btn-small" href="#contacto" data-quote-link>Solicitar orçamento</a></div></div></header>
+
+<aside class="hmatias-update-notice" aria-label="Aviso de actualização da plataforma">
+  <div class="container hmatias-update-notice-inner">
+    <div class="hmatias-update-notice-copy">
+      <p class="hmatias-update-notice-title"><span class="hmatias-update-notice-dot" aria-hidden="true"></span><strong>A plataforma digital da HMATIAS está em actualização.</strong></p>
+      <p class="hmatias-update-notice-description">Estamos a melhorar a experiência digital. Os nossos serviços e canais de atendimento continuam disponíveis.</p>
+    </div>
+    <a class="hmatias-update-notice-contact" href="mailto:geral@comercialhmatiasps.com">Contacte-nos: geral@comercialhmatiasps.com</a>
+  </div>
+</aside>
 
 <main>
   <section class="hero" id="inicio"><div class="container hero-grid"><div class="hero-copy"><span class="eyebrow">HMATIAS · SERVIÇOS E FORNECIMENTOS</span><h1>Construção, manutenção, fornecimento e apoio a projetos em Angola.</h1><p>Apoiamos empresas e clientes particulares em projetos de construção e remodelação, manutenção de instalações, fornecimentos e apoio administrativo. Definimos o escopo e as condições comerciais antes de cada intervenção.</p><div class="hero-actions"><a class="btn btn-primary" href="#contacto">Solicitar orçamento <span aria-hidden="true">→</span></a><a class="btn btn-outline-light" href="https://wa.me/244948806673" target="_blank" rel="noopener noreferrer">Fale connosco</a></div><ul class="home-proof" aria-label="Informação institucional HMATIAS"><li><span aria-hidden="true">✓</span> Empresa angolana · Viana, Luanda</li><li><span aria-hidden="true">✓</span> Escopo e condições definidos antes da execução</li><li><span aria-hidden="true">✓</span> Alterações de escopo comunicadas antes de avançar</li></ul></div><div class="hero-visual"><div class="visual-card"><picture class="hero-photo"><img src="images/catalogue/instalacoes-embutidas-construcao.webp" alt="Interior de obra HMATIAS com alvenaria e instalações técnicas embutidas" width="1120" height="840" fetchpriority="high" decoding="async"></picture><div class="visual-overlay"><strong>OBRA REAL · HMATIAS</strong><small>Construção · Instalações · Execução</small></div></div></div></div></section>
