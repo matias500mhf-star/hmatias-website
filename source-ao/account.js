@@ -81,8 +81,8 @@ $('#accountForm').addEventListener('submit', async event => {
     renderSignedIn(user);
     setStatus(
       mode === 'register'
-        ? 'Conta criada. Enviámos uma mensagem para verificar o e-mail. A sua identidade foi registada no SOURCE AO.'
-        : 'Sessão iniciada e perfil SOURCE AO sincronizado.',
+        ? 'Conta criada. Enviámos uma mensagem para verificar o e-mail. A ligação ao perfil SOURCE AO está a ser confirmada.'
+        : 'Sessão iniciada. A ligação ao perfil SOURCE AO está a ser confirmada.',
       'success',
     );
   } catch (error) {
