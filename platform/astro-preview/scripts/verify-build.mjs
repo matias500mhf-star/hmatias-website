@@ -9,12 +9,12 @@ const indexPath = join(outDir, "index.html");
 assert.ok(existsSync(indexPath), "Astro build must generate dist/index.html");
 
 const html = readFileSync(indexPath, "utf8");
+const configuredSite = new URL(resolveSiteUrl(process.env));
 const expectedHomepageCanonical = new URL("/", configuredSite).toString();
 assert.ok(
   html.includes(`<link rel="canonical" href="${expectedHomepageCanonical}"`),
   "Homepage canonical must use the resolved deployment host",
 );
-const configuredSite = new URL(resolveSiteUrl(process.env));
 const productionIndexingEnabled = process.env.PUBLIC_INDEXING_ENABLED === "true"
   && configuredSite.protocol === "https:"
   && configuredSite.hostname === "comercialhmatiasps.com";
