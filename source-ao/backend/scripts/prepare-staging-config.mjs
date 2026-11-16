@@ -34,6 +34,7 @@ const config={
   vars:{
     PUBLIC_ORIGIN:origin,
     SOURCE_AO_ENV:'staging',
+    FIREBASE_PROJECT_ID:'hmatias-c660a',
     SOURCE_AO_RELEASE:process.env.GITHUB_SHA||'source-ao-v1',
     CONTACT_RETENTION_DAYS:'30'
   }
