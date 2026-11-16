@@ -5,6 +5,16 @@ Período do Search Console: 21 de agosto a 13 de novembro de 2026
 Branch: `feat/hmatias-platform-modernization-20261111`  
 Estado: análise e mapeamento para revisão; não activa redirects nem indexação em produção.
 
+> **Âmbito obrigatório dos dados:** os dados de Search Console usados neste documento foram recolhidos da propriedade associada ao domínio oficial actualmente publicado, `https://comercialhmatiasps.com/`. Não são métricas do preview nem do novo design no PR #316. O preview Astro mantém-se isolado e `noindex, nofollow`; não deve ser tratado como propriedade de medição nem como fonte destes resultados.
+
+
+## Âmbito da medição
+
+- A propriedade de pesquisa ligada no momento da recolha corresponde ao website público actual `comercialhmatiasps.com`.
+- Os cliques, impressões, CTR, posições e URLs desta análise descrevem o histórico do domínio publicado no período indicado; não descrevem a nova versão Astro.
+- O PR #316 não deve receber atribuição de tráfego, indexação, desempenho ou conversões a partir destes números. A sua avaliação técnica é feita separadamente no ambiente de preview e nos testes automatizados.
+- Estes dados servem apenas como linha de base para preservar URLs, identificar páginas com exposição e planear a migração. Antes de qualquer publicação, deve ser extraída uma nova fotografia do domínio oficial e confirmada a propriedade seleccionada na ferramenta.
+
 ## 1. Evidência do Search Console
 
 ### Desempenho global (gráfico diário e dispositivos)
