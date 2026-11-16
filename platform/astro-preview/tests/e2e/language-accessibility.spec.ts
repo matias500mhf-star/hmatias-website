@@ -75,6 +75,16 @@ test.describe("Bilingual brand and language accessibility", () => {
   });
 });
 
+test("footer partnership application follows the active language", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".footer-legal-links").getByRole("link", { name: "Parcerias" }))
+    .toHaveAttribute("href", "/source-ao/parceiros/");
+
+  await page.goto("/en/");
+  await expect(page.locator(".footer-legal-links").getByRole("link", { name: "Partnerships" }))
+    .toHaveAttribute("href", "/en/source-ao/partners/");
+});
+
 test("all English routes expose matching language, brand descriptions and reciprocal Portuguese links", async ({ page }) => {
   const routes = [
     ["/en/", "/"],
