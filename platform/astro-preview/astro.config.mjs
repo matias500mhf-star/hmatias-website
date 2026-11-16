@@ -1,8 +1,9 @@
 import { defineConfig } from "astro/config";
+import { resolveSiteUrl } from "./scripts/site-url.mjs";
 
 export default defineConfig({
   output: "static",
-  site: process.env.ASTRO_SITE_URL ?? process.env.ASTRO_PREVIEW_SITE_URL ?? "https://hmatias-astro-preview.onrender.com",
+  site: resolveSiteUrl(process.env),
   trailingSlash: "always",
   build: {
     format: "directory",
