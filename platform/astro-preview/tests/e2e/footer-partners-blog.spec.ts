@@ -61,6 +61,24 @@ for (const homepage of homepageRoutes) {
     await expect(page.locator(".footer-operations h2")).toContainText(homepage.language === "en" ? "Areas and services" : "Áreas e serviços");
     await expect(page.locator(".footer-explore h2")).toHaveText(homepage.explore);
     await expect(page.locator(".footer-contacts h2")).toHaveText(homepage.contact);
+
+    const quotationHref = homepage.language === "en"
+      ? "https://comercialhmatiasps.com/en.html#contact"
+      : "https://comercialhmatiasps.com/#contacto";
+    const quotationLink = page.locator('.footer-contacts a[href="' + quotationHref + '"]');
+    await expect(quotationLink).toBeVisible();
+    await expect(quotationLink).toHaveAttribute("target", "_blank");
+    await expect(quotationLink).toHaveAttribute("rel", "noopener noreferrer");
+
+    const footerTypography = await page.evaluate(() => ({
+      heading: parseFloat(getComputedStyle(document.querySelector(".footer-column h2")!).fontSize),
+      links: parseFloat(getComputedStyle(document.querySelector(".footer-explore a")!).fontSize),
+      legal: parseFloat(getComputedStyle(document.querySelector(".footer-legal-id")!).fontSize),
+    }));
+    expect(footerTypography.heading).toBeGreaterThanOrEqual(10);
+    expect(footerTypography.links).toBeGreaterThanOrEqual(11);
+    expect(footerTypography.legal).toBeGreaterThanOrEqual(9);
+
     await expect(page.locator(".footer-operations .footer-area-link")).toHaveCount(4);
     await expect(page.locator(".footer-operations .footer-subnav a")).toHaveCount(2);
     await expect(page.locator(".karta-feature")).toHaveCount(0);
