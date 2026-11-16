@@ -357,8 +357,8 @@ jobs:
               for link in mail_links:
                   # The temporary homepage notice is a plain-text action link, not a contact-detail row.
                   # Keep icon enforcement on actual contact links without changing the approved notice UI.
-                  is_notice_action = re.search(r'class="[^"]*\\bhmatias-update-notice-contact\\b', link.group(0), re.I)
-                  if not is_notice_action and not re.search(r'contact-email\\.svg', link.group(1), re.I):
+                  is_notice_action = re.search(r'class="[^"]*\bhmatias-update-notice-contact\b', link.group(0), re.I)
+                  if not is_notice_action and not re.search(r'contact-email\.svg', link.group(1), re.I):
                       raise SystemExit(f'Missing email icon inside contact-detail mail link in production page: {page}')
               phone_links = re.finditer(r'<a\b[^>]*href="tel:[^"]+"[^>]*>(.*?)</a>', html, re.I | re.S)
               for link in phone_links:
