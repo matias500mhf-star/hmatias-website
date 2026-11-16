@@ -148,14 +148,14 @@ function publicRef(){
   return `SAO-${stamp}-${suffix}`;
 }
 
-export async function createSourcingRequest(request,env){
+export async function createSourcingRequest(request,env,{firebaseUid=null}={}){
   if(!(request.headers.get('content-type')||'').includes('application/json')) return fail(env,415,'json_required','JSON body required.');
   const raw=await request.text();
   if(enc.encode(raw).byteLength>40000) return fail(env,413,'payload_too_large','Request exceeds 40 KB.');
   let data;
   try{data=JSON.parse(raw);}catch{return fail(env,400,'invalid_json','Invalid JSON request.');}
   if(!data || typeof data!=='object' || Array.isArray(data)) return fail(env,400,'invalid_request','Invalid request.');
-  if(data.rfq_version!=null) return createCatalogRfq(data,env);
+  if(data.rfq_version!=null) return createCatalogRfq(data,env,firebaseUid);
   const validated=validateSourcingRequestInput(data);
   if(!validated.ok){
     const messages={
@@ -182,11 +182,11 @@ export async function createSourcingRequest(request,env){
   await env.SOURCE_AO_DB.prepare(`
     INSERT INTO sourcing_requests(
       id,public_ref,access_token_hash,requirement_text,normalized_search,category,specification,
-      quantity,unit,location,needed_by,contact_channel,contact_encrypted,contact_hint,status,created_at,updated_at
-    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+      quantity,unit,location,needed_by,contact_channel,contact_encrypted,contact_hint,status,firebase_uid,created_at,updated_at
+    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
   `).bind(
     requestId,reference,tokenHash,v.requirement,normalized,v.category,v.specification,v.quantity,v.unit,v.location,
-    v.neededBy,channel,encryptedContact,contactHint(v.contact),'received',now,now
+    v.neededBy,channel,encryptedContact,contactHint(v.contact),'received',firebaseUid,now,now
   ).run();
 
   return json(env,{ok:true,request:{
@@ -195,7 +195,7 @@ export async function createSourcingRequest(request,env){
   }},201);
 }
 
-async function createCatalogRfq(data,env){
+async function createCatalogRfq(data,env,firebaseUid=null){
   const validated=validateRfq(data,catalog,new Date(Date.now()+3600000));
   if(!validated.ok) return fail(env,400,validated.code,'Please check the quotation request fields.');
   if(!env.PII_ENCRYPTION_KEY) return fail(env,503,'privacy_key_unavailable','Secure request intake is not configured.');
@@ -214,14 +214,14 @@ async function createCatalogRfq(data,env){
     INSERT INTO sourcing_requests (
       id,public_ref,access_token_hash,requirement_text,normalized_search,category,specification,
       quantity,unit,location,needed_by,contact_channel,contact_encrypted,contact_hint,status,created_at,updated_at,
-      rfq_details_encrypted,submission_key_hash,rfq_payload_hash
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+      rfq_details_encrypted,submission_key_hash,rfq_payload_hash,firebase_uid
+    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     ON CONFLICT(submission_key_hash) DO NOTHING
   `).bind(requestId,reference,tokenHash,requirement,
     normalizeRequirement(v.items.map(item=>item.description).join(' ')),category,
     v.items.length===1?first.specification:null,v.items.length===1?first.quantity:null,v.items.length===1?first.unit:null,
     v.location,v.needed_by,v.contact_channel,encryptedContact,contactHint(v.requester_contact),'received',now,now,
-    encryptedRfq,tokenHash,payloadHash).run();
+    encryptedRfq,tokenHash,payloadHash,firebaseUid).run();
   const row=await env.SOURCE_AO_DB.prepare('SELECT id,public_ref,status,created_at,rfq_payload_hash FROM sourcing_requests WHERE submission_key_hash=?').bind(tokenHash).first();
   if(!row) return fail(env,503,'registration_unconfirmed','Could not confirm registration. Retry the same request.');
   if(row.rfq_payload_hash!==payloadHash) return fail(env,409,'submission_changed','This submission key already belongs to another request.');
@@ -277,7 +277,7 @@ export async function listSourcingRequests(request,env){
       id:row.id,reference:row.public_ref,requirement_text:row.requirement_text,normalized_search:row.normalized_search,
       category:row.category,specification:row.specification,quantity:row.quantity,unit:row.unit,location:row.location,
       needed_by:row.needed_by,contact_channel:row.contact_channel,contact,contact_hint:row.contact_hint,status:row.status,
-      assigned_to:row.assigned_to,internal_notes:row.internal_notes,contact_purged_at:row.contact_purged_at||null,
+      assigned_to:row.assigned_to,internal_notes:row.internal_notes,customer_uid:row.firebase_uid||null,contact_purged_at:row.contact_purged_at||null,
       created_at:row.created_at,updated_at:row.updated_at,rfq
     });
   }
