@@ -2,17 +2,19 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolveSiteUrl } from "./site-url.mjs";
 
 const outDir = fileURLToPath(new URL("../dist/", import.meta.url));
 const indexPath = join(outDir, "index.html");
 assert.ok(existsSync(indexPath), "Astro build must generate dist/index.html");
 
 const html = readFileSync(indexPath, "utf8");
-const configuredSite = new URL(
-  process.env.ASTRO_SITE_URL
-    ?? process.env.ASTRO_PREVIEW_SITE_URL
-    ?? "https://hmatias-astro-preview.onrender.com"
+const expectedHomepageCanonical = new URL("/", configuredSite).toString();
+assert.ok(
+  html.includes(`<link rel="canonical" href="${expectedHomepageCanonical}"`),
+  "Homepage canonical must use the resolved deployment host",
 );
+const configuredSite = new URL(resolveSiteUrl(process.env));
 const productionIndexingEnabled = process.env.PUBLIC_INDEXING_ENABLED === "true"
   && configuredSite.protocol === "https:"
   && configuredSite.hostname === "comercialhmatiasps.com";
@@ -594,6 +596,27 @@ for (const [ptRoute, enRoute, ptHref, enHref] of languagePairs) {
 
   const ptHtml = readFileSync(ptPath, "utf8");
   const enHtml = readFileSync(enPath, "utf8");
+  const expectedPtUrl = new URL(ptHref, configuredSite).toString();
+  const expectedEnUrl = new URL(enHref, configuredSite).toString();
+  const getCanonical = (pageHtml, route) => {
+    const match = pageHtml.match(/<link rel="canonical" href="([^"]+)"/);
+    assert.ok(match, `Canonical link is missing from /${route}/`);
+    return match[1];
+  };
+  const getAlternate = (pageHtml, language, route) => {
+    const match = pageHtml.match(new RegExp(`<link rel="alternate" hreflang="${language}" href="([^"]+)"`));
+    assert.ok(match, `hreflang=${language} is missing from /${route}/`);
+    return match[1];
+  };
+
+  assert.equal(getCanonical(ptHtml, ptRoute), expectedPtUrl, `Portuguese canonical must use the resolved deployment host: /${ptRoute}/`);
+  assert.equal(getCanonical(enHtml, enRoute), expectedEnUrl, `English canonical must use the resolved deployment host: /${enRoute}/`);
+  assert.equal(getAlternate(ptHtml, "pt-AO", ptRoute), expectedPtUrl, `Portuguese hreflang must be self-referential: /${ptRoute}/`);
+  assert.equal(getAlternate(ptHtml, "en", ptRoute), expectedEnUrl, `Portuguese hreflang must point to the English counterpart: /${ptRoute}/`);
+  assert.equal(getAlternate(ptHtml, "x-default", ptRoute), expectedPtUrl, `x-default must point to the Portuguese counterpart: /${ptRoute}/`);
+  assert.equal(getAlternate(enHtml, "pt-AO", enRoute), expectedPtUrl, `English hreflang must point to the Portuguese counterpart: /${enRoute}/`);
+  assert.equal(getAlternate(enHtml, "en", enRoute), expectedEnUrl, `English hreflang must be self-referential: /${enRoute}/`);
+  assert.equal(getAlternate(enHtml, "x-default", enRoute), expectedPtUrl, `English x-default must point to the Portuguese counterpart: /${enRoute}/`);
   if (ptRoute === "source-ao/smart-rfq") {
     assert.ok(ptHtml.includes('id="rfqLanguage"'), "Portuguese RFQ must expose its language control");
     assert.ok(enHtml.includes('id="rfqLanguage"'), "English RFQ must expose its language control");
