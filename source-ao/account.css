@@ -26,3 +26,5 @@
 .account-session .btn{margin-top:16px;width:100%}
 .account-privacy{margin-top:18px!important;font-size:10px!important}
 @media(max-width:760px){.source-account .account-main{padding:38px 0 60px}.account-layout{grid-template-columns:1fr;gap:26px}.account-intro h1{font-size:42px}.account-intro p{font-size:14px}.account-card{padding:21px}}
+
+.account-legal{margin:12px 0 0!important;color:#627383;font-size:10px!important;line-height:1.55}.account-legal a{color:#276fb9;font-weight:800;text-decoration:underline;text-underline-offset:2px}
