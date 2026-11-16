@@ -928,18 +928,18 @@ main li {
   max-width: 62ch;
 }
 .editorial-card h3 {
-  min-height: 2.5em;
+  min-height: 3.75em;
 }
 .editorial-card-description {
   max-width: 58ch;
   text-wrap: pretty;
 }
-.editorial-card-meta,
-.editorial-card-link {
+.editorial-card-meta {
   margin-top: auto;
 }
 .editorial-card-link {
   align-self: flex-start;
+  margin-top: 15px;
 }
 .editorial-category-heading h2 {
   min-width: 0;
