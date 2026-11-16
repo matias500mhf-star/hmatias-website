@@ -80,7 +80,7 @@ const links = isEnglish
   <div class="footer-bottom">
     <p class="footer-legal-id">© {new Date().getFullYear()} {company.legalName} · {isEnglish ? "Tax ID" : "NIF"} {company.taxNumber} · {isEnglish ? "Commercial Registration" : "Registo Comercial"} {company.commercialRegistration}. {isEnglish ? "All rights reserved." : "Todos os direitos reservados."}</p>
     <nav class="footer-legal-links" aria-label={isEnglish ? "Legal information" : "Informação legal"}>
-      <a href={company.partnerApplicationUrl}>{isEnglish ? "Partnerships" : "Parcerias"}</a>
+      <a href={isEnglish ? company.partnerApplicationEnUrl : company.partnerApplicationUrl}>{isEnglish ? "Partnerships" : "Parcerias"}</a>
       <a href={links.credibility}>{isEnglish ? "Company information" : "Credibilidade"}</a>
       <a href={links.privacy}>{isEnglish ? "Privacy Policy" : "Política de Privacidade"}</a>
       <a href={links.terms}>{isEnglish ? "Terms and Conditions" : "Termos e Condições"}</a>
