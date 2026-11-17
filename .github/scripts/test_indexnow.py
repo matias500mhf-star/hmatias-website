@@ -8,7 +8,7 @@ class PublicSubmissionTests(unittest.TestCase):
         self.pages = {
             f"{BASE}/": "index.html",
             f"{BASE}/supply.html": "supply.html",
-            f"{BASE}/source-ao/index.html": "source-ao/index.html",
+            f"{BASE}/source-ao/": "source-ao/index.html",
         }
 
     def test_reject_private_external_and_parameterized_urls(self):
