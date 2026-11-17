@@ -10,9 +10,7 @@ export function resolveSiteUrl(env = process.env) {
 
   const netlifyHost = String(env.DEPLOY_PRIME_URL ?? env.URL ?? "").trim();
   if (netlifyHost) {
-    const netlifyUrl = new URL(/^[a-z][a-z\\d+.-]*:\\/\\//i.test(netlifyHost)
-      ? netlifyHost
-      : `https://${netlifyHost}`);
+    const netlifyUrl = new URL(netlifyHost.startsWith("https://") ? netlifyHost : `https://${netlifyHost}`);
     if (netlifyUrl.protocol !== "https:") {
       throw new Error("Netlify deployment URLs must use HTTPS.");
     }
