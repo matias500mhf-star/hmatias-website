@@ -6,6 +6,8 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const masterPath = resolve(scriptDir, "../../../source-ao/data/catalog.json");
 const publicPath = resolve(scriptDir, "../../../source-ao/data/public-catalog.json");
 const EXCLUDED_IDS = new Set(["item-formaldehyde"]);
+const EXCLUDED_PUBLIC_TAXONOMY_ALIASES = new Set(["formaldehyde", "formaldeido", "formol", "formalin", "cas 50 00 0"]);
+const isExcludedPublicTaxonomyAlias = (value) => EXCLUDED_PUBLIC_TAXONOMY_ALIASES.has(String(value).toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim());
 const PUBLIC_RULE = "Only curated public supply families are exposed. Prices, suppliers, stock, availability and internal commercial data are not included.";
 const ALLOWED_MASTER_KEYS = ["version", "updated_at", "items", "taxonomy"];
 const ALLOWED_ITEM_KEYS = [
