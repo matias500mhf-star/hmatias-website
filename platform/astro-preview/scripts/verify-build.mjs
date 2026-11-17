@@ -735,7 +735,7 @@ for (const pagePath of generatedPages) {
       assert.match(sourceFooter, isEnglishPage ? /A sourcing platform operated by HMATIAS/ : /Uma plataforma de sourcing operada pela HMATIAS/,
         "SOURCE AO footer description must match the page language: " + relativePagePath);
       assert.match(sourceFooter, /href="[^"]*(?:privacy|privacidade)[^"]*"/i, "SOURCE AO footer must provide a privacy link: " + relativePagePath);
-      assert.match(sourceFooter, /href="[^"]*terms[^"]*"/i, "SOURCE AO footer must provide a terms link: " + relativePagePath);
+      assert.match(sourceFooter, /href="[^"]*(?:terms|termos)[^"]*"/i, "SOURCE AO footer must provide a terms link: " + relativePagePath);
       assert.ok(sourceFooter.includes('href="https://wa.me/244948806673') || sourceFooter.includes('href="mailto:'),
         "SOURCE AO footer must provide a commercial contact route: " + relativePagePath);
     } else {
