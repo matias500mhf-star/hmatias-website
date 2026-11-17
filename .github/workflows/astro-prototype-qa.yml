@@ -51,9 +51,6 @@ jobs:
             npm install --no-audit --no-fund
           fi
 
-      - name: Check dependency security
-        run: npm audit --audit-level=high
-
       - name: Type-check Astro and TypeScript
         run: npm run check
 
@@ -105,6 +102,13 @@ jobs:
           path: platform/astro-preview/package-lock.json
           if-no-files-found: error
           retention-days: 7
+
+      # Keep the security gate, but run it after build and QA so reports are still produced.
+      # Current blocker: GHSA-fc5q-39xc-vjpf affects picomatch 2.3.2/4.0.7; no patched
+      # npm release is currently published. This step remains a hard failure until resolved.
+      - name: Check dependency security
+        if: always()
+        run: npm audit --audit-level=high
 
   deploy-cloudflare-pages-preview:
     name: Deploy isolated Cloudflare Pages preview
