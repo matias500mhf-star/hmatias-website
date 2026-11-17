@@ -671,6 +671,36 @@ for (const pagePath of generatedPages) {
   // SOURCE AO standalone product routes use dedicated footers, not the corporate footer.
   const isSourceAoLanding = relativePagePath === "source-ao/index.html" || relativePagePath === "en/source-ao/index.html";
   const isSourceAoPartner = relativePagePath === "source-ao/parceiros/index.html" || relativePagePath === "en/source-ao/partners/index.html";
+  const isSourceAoRadar = relativePagePath === "source-ao/radar/index.html" || relativePagePath === "en/source-ao/radar/index.html";
+  const isSourceAoRfq = relativePagePath === "source-ao/smart-rfq/index.html" || relativePagePath === "en/source-ao/smart-rfq/index.html";
+  if (isSourceAoRadar || isSourceAoRfq) {
+    const sourceFooterMatches = [...pageHtml.matchAll(/<footer\\b[^>]*>[\\s\\S]*?<\\/footer>/g)];
+    assert.equal(sourceFooterMatches.length, 1, "SOURCE AO application must render exactly one dedicated footer: " + relativePagePath);
+    const sourceFooter = sourceFooterMatches[0][0];
+    if (isSourceAoRadar) {
+      const radarHeader = pageHtml.match(/<header class="topbar op-topbar">[\\s\\S]*?<\\/header>/)?.[0];
+      assert.ok(radarHeader, "Opportunity Radar must render its dedicated product header: " + relativePagePath);
+      assert.match(pageHtml, /id="radarHomeLink" href="[^"]*source-ao\\//, "Radar must provide a return link to SOURCE AO: " + relativePagePath);
+      assert.match(radarHeader, /id="radarBackLink"/, "Radar header must provide a SOURCE AO back link: " + relativePagePath);
+      assert.match(radarHeader, /id="langToggle"/, "Radar header must provide an accessible language switch: " + relativePagePath);
+      assert.match(sourceFooter, /id="radarRfqLink"/, "Radar footer must link to Smart RFQ: " + relativePagePath);
+      assert.match(sourceFooter, /id="radarPartnerLink"/, "Radar footer must link to partner applications: " + relativePagePath);
+      assert.match(sourceFooter, /href="[^"]*privacy[^"]*"/i, "Radar footer must provide a privacy link: " + relativePagePath);
+      assert.match(sourceFooter, /href="[^"]*terms[^"]*"/i, "Radar footer must provide a terms link: " + relativePagePath);
+      assert.match(sourceFooter, /href="mailto:geral@comercialhmatiasps\\.com"/, "Radar footer must provide a commercial contact route: " + relativePagePath);
+    } else {
+      const rfqHeader = pageHtml.match(/<header class="rfq-header">[\\s\\S]*?<\\/header>/)?.[0];
+      assert.ok(rfqHeader, "Smart RFQ must render its dedicated product header: " + relativePagePath);
+      assert.match(rfqHeader, /id="sourceAoBackLink" href="[^"]*source-ao\\//, "Smart RFQ must link back to SOURCE AO: " + relativePagePath);
+      assert.match(rfqHeader, /mailto:geral@comercialhmatiasps\\.com/, "Smart RFQ header must provide commercial contact: " + relativePagePath);
+      assert.match(sourceFooter, /id="sourceAoSupplyLink"/, "Smart RFQ footer must link to HMATIAS Supply: " + relativePagePath);
+      assert.match(sourceFooter, /id="sourceAoPrivacyLink"[^>]*data-en="Privacy"/, "Smart RFQ footer must provide a bilingual privacy link: " + relativePagePath);
+      assert.match(sourceFooter, /id="sourceAoTermsLink"[^>]*data-en="Terms"/, "Smart RFQ footer must provide a bilingual terms link: " + relativePagePath);
+      assert.match(sourceFooter, /href="mailto:geral@comercialhmatiasps\\.com"/, "Smart RFQ footer must provide the institutional email: " + relativePagePath);
+      assert.match(sourceFooter, /href="mailto:info@comercialhmatiasps\\.com"/, "Smart RFQ footer must provide the institutional information email: " + relativePagePath);
+    }
+    continue;
+  }
   if (isSourceAoLanding || isSourceAoPartner) {
     const sourceFooterMatches = [...pageHtml.matchAll(/<footer\b[^>]*>[\s\S]*?<\/footer>/g)];
     assert.equal(sourceFooterMatches.length, 1, "SOURCE AO standalone page must render exactly one product footer: " + relativePagePath);
