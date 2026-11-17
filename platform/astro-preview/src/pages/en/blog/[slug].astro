@@ -4,7 +4,6 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 import { company } from "../../../data/site";
-import { getResponsiveUnsplashSrcSet } from "../../../data/responsive-images";
 type Props = { post: CollectionEntry<"blog"> };
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft && data.language === "en");
@@ -27,8 +26,8 @@ const dateLabel = post.data.pubDate.toLocaleDateString("en", { day:"2-digit", mo
     </section>
     <article class="article-content">
       <figure class="article-cover-figure">
-        <img src={post.data.coverImage} srcset={getResponsiveUnsplashSrcSet(post.data.coverImage)} sizes="(max-width: 900px) calc(100vw - 44px), 804px" alt={post.data.coverAlt} width="1200" height="675" loading="eager" fetchpriority="high" decoding="async" />
-        <figcaption>Illustrative image · Photo by <a href={post.data.photoCreditUrl} target="_blank" rel="noopener noreferrer">{post.data.photoCredit}</a> / <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash</a></figcaption>
+        <img src={post.data.coverImage} sizes="(max-width: 900px) calc(100vw - 44px), 804px" alt={post.data.coverAlt} width="1200" height="675" loading="eager" fetchpriority="high" decoding="async" />
+        <figcaption>Real photograph from the HMATIAS portfolio; it does not identify a client or claim that the photographed work is the case described in the article.</figcaption>
       </figure>
       <Content />
       <section class="article-cta" aria-labelledby="pages-en-blog-slug-section-2-heading">
