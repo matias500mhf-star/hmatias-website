@@ -20,7 +20,7 @@ assert.equal(files.length, 12, "The approved bilingual blog must contain six PT/
 
 for (const filename of files) {
   const source = readFileSync(resolve(contentRoot, filename), "utf8");
-  const frontmatter = source.match(/^---\\n([\\s\\S]*?)\\n---/);
+  const frontmatter = source.match(/^---\n([\s\S]*?)\n---/);
   assert.ok(frontmatter, "Missing frontmatter: " + filename);
   const metadata = frontmatter[1];
   assert.doesNotMatch(metadata, /unsplash|photoCredit|photoCreditUrl/i, "Stock image or external photo credit remains: " + filename);
@@ -35,20 +35,20 @@ for (const filename of files) {
   assert.ok(existsSync(resolve(distRoot, "." + imagePath)), "Portfolio image is missing from the production build: " + imagePath);
 
   const language = /language: "en"/.test(metadata) ? "en" : "pt-AO";
-  const slug = filename.replace(/\\.md$/, "");
+  const slug = filename.replace(/\.md$/, "");
   const htmlPath = language === "en"
     ? resolve(distRoot, "en", "blog", slug, "index.html")
     : resolve(distRoot, "blog", slug, "index.html");
   assert.ok(existsSync(htmlPath), "Generated blog article is missing: " + htmlPath);
   const html = readFileSync(htmlPath, "utf8");
   assert.ok(html.includes('src="' + imagePath + '"'), "Generated article does not use its approved HMATIAS image: " + filename);
-  assert.doesNotMatch(html, /images\\.unsplash\\.com|unsplash\\.com/i, "Generated article still references stock imagery: " + filename);
+  assert.doesNotMatch(html, /images\.unsplash\.com|unsplash\.com/i, "Generated article still references stock imagery: " + filename);
 }
 
 for (const languagePath of ["blog/index.html", "en/blog/index.html"]) {
   const html = readFileSync(resolve(distRoot, languagePath), "utf8");
-  assert.doesNotMatch(html, /images\\.unsplash\\.com|unsplash\\.com/i, "Blog index still references stock imagery: " + languagePath);
-  assert.match(html, /images\\/hmatias\\//, "Blog index must use HMATIAS portfolio photographs: " + languagePath);
+  assert.doesNotMatch(html, /images\.unsplash\.com|unsplash\.com/i, "Blog index still references stock imagery: " + languagePath);
+  assert.match(html, /images\/hmatias\//, "Blog index must use HMATIAS portfolio photographs: " + languagePath);
 }
 
 console.log("PASS: all 12 bilingual blog articles use approved HMATIAS portfolio photographs; no Unsplash stock imagery remains.");
