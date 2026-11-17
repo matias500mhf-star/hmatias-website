@@ -1,63 +1,72 @@
 ---
-title: "Caso prático: comparar três propostas para o mesmo fornecimento"
-description: "Um cenário ilustrativo de procurement para avaliar conformidade, prazo, custo total e reservas antes de recomendar uma proposta."
+title: "Como comparar propostas de perfis metálicos e chapas de cobertura"
+description: "Critérios para comparar perfis e chapas de cobertura em pedidos de fornecimento: dimensões, espessura, acabamento, unidade, transporte e documentação."
 pubDate: 2026-11-13
-category: "Casos práticos"
-author: "Equipa Editorial HMATIAS"
+category: "Procurement e fornecimento"
+author: "Equipa Comercial HMATIAS"
 coverImage: "/images/hmatias/chapas-cobertura-fornecimento.webp"
-coverAlt: "Chapas de cobertura documentadas no portefólio de fornecimentos HMATIAS; o cenário do artigo é ilustrativo."
+coverAlt: "Chapas metálicas perfiladas para cobertura, documentadas no portefólio de fornecimentos HMATIAS."
 readingMinutes: 5
-contentType: "case-study"
+contentType: "guide"
 language: "pt-AO"
 draft: false
 ---
 
-> **Nota editorial:** cenário fictício criado para explicar um método de análise. Não corresponde a uma aquisição real, fornecedor identificado ou adjudicação da HMATIAS.
+O arquivo visual da HMATIAS regista perfis metálicos preparados para montagem estrutural e chapas metálicas perfiladas destinadas a sistemas de cobertura. São categorias reais do portefólio; para comparar propostas, a designação genérica do material não é suficiente.
 
-Uma empresa precisa de adquirir um conjunto de equipamentos de protecção individual com especificações mínimas, quantidades e data de entrega definidas. Recebe três propostas, mas cada fornecedor apresenta a informação de forma diferente.
+Este guia reúne os campos que devem ser confirmados antes de comparar preços. Não apresenta cotações, fornecedores ou transacções específicas.
 
-A decisão não deve começar pelo preço final. Primeiro, é necessário colocar as propostas na mesma base de comparação.
+## 1. Perfis metálicos: compare a mesma secção
 
-## O cenário
+Uma proposta de perfis deve identificar, conforme o produto:
 
-- **Proposta A:** cumpre a especificação e apresenta preço e prazo, mas não anexa uma ficha técnica.
-- **Proposta B:** apresenta documentação técnica completa, mas propõe uma característica diferente da exigida e não explica a equivalência.
-- **Proposta C:** cumpre a especificação e apresenta documentação, mas indica um prazo de entrega posterior à data solicitada.
+- Tipo e geometria da secção;
+- Altura, largura e espessura;
+- Comprimento por peça e tolerâncias relevantes;
+- Qualidade ou classe do aço, quando especificada;
+- Revestimento ou protecção superficial;
+- Quantidade e unidade de fornecimento.
 
-Estas diferenças não são automaticamente eliminatórias em todos os contratos. Devem ser avaliadas face aos requisitos obrigatórios e às regras do processo de compra.
+Preço por peça, por metro e por quilograma não são bases directamente comparáveis. Normalize a unidade e confirme se o comprimento e a secção são iguais.
 
-## 1. Normalize as propostas
+## 2. Chapas de cobertura: confirme perfil e dimensão útil
 
-Confirme que as três propostas usam a mesma unidade de fornecimento, quantidade, referência e condição de entrega. Registe separadamente os encargos incluídos e os custos ainda por confirmar.
+Para chapas perfiladas, registe o perfil, espessura, material, revestimento, largura total e largura útil, comprimento, acabamento e cor quando aplicável.
 
-Não transforme um campo em branco numa resposta positiva. “Não indicado” é diferente de “incluído”.
+A largura útil e as sobreposições influenciam a quantidade necessária. A proposta deve esclarecer se inclui acessórios, remates, fixações e vedantes ou se estes serão cotados separadamente.
 
-## 2. Separe conformidade de preferência
+## 3. Coloque as propostas na mesma base comercial
 
-A característica diferente da Proposta B deve ser submetida a uma análise formal de equivalência. Se o requisito for obrigatório e não existir equivalência comprovada, a proposta não pode ser tratada como tecnicamente conforme.
+Compare a mesma quantidade, unidade, embalagem e destino. Separe preço do material, impostos aplicáveis, transporte, descarga e outros encargos confirmados.
 
-A falta de ficha técnica na Proposta A é uma pendência documental. Pode ser esclarecida, desde que o procedimento permita e não altere as regras de igualdade entre concorrentes.
+Em fornecimentos com origem fora da província ou do país, peça a origem de expedição, o prazo estimado, os documentos disponíveis e a indicação clara de quem trata cada etapa logística. Não presuma que o preço inclui transporte, desalfandegamento ou descarga.
 
-## 3. Avalie o prazo como critério de execução
+## 4. Verifique documentação e rastreabilidade
 
-A Proposta C pode ser tecnicamente adequada, mas o prazo declarado não responde à necessidade indicada. Só deve continuar em avaliação se existir margem para rever a data ou uma alternativa logística validada.
+Consoante a especificação e a utilização, podem ser necessários ficha técnica, certificado do material, identificação do lote, declaração de conformidade, garantia ou documentação de origem.
 
-Não substitua a data solicitada por uma promessa verbal sem confirmação.
+Um documento genérico não substitui a identificação do produto proposto. Registe a referência exacta a que cada documento corresponde.
 
-## Matriz de decisão ilustrativa
+## 5. Use uma matriz de comparação
 
-| Critério | Proposta A | Proposta B | Proposta C |
-|---|---|---|---|
-| Especificação | Declarada conforme | Diferença por validar | Declarada conforme |
-| Ficha técnica | Em falta | Apresentada | Apresentada |
-| Prazo | Dentro do pedido | Por confirmar | Posterior ao pedido |
-| Custo total | A confirmar | A confirmar | A confirmar |
-| Próxima acção | Pedir documento | Validar equivalência | Confirmar possibilidade de prazo |
+| Campo | O que deve ficar comparável | Quando fica pendente |
+|---|---|---|
+| Referência | Mesmo perfil ou especificação equivalente validada | Código ou modelo não identificado |
+| Dimensão | Secção, espessura e comprimento | Unidade ou medida incompleta |
+| Quantidade | Mesma quantidade e unidade | Embalagem ou conversão por confirmar |
+| Acabamento | Mesmo revestimento ou alternativa aceite | Protecção superficial não indicada |
+| Logística | Mesmo destino e condição de entrega | Transporte ou descarga por cotar |
+| Prazo | Data ou janela de entrega | Prazo apenas indicativo |
+| Documentação | Documentos associados ao artigo | Ficha ou certificado em falta |
 
-## 4. Registe a recomendação com reservas
+## 6. Não confunda pesquisa com confirmação
 
-O relatório deve apresentar o que está confirmado, o que depende de esclarecimento e quais os critérios que impedem uma decisão imediata. Não deve declarar uma proposta vencedora enquanto requisitos essenciais permanecerem por validar.
+Uma referência encontrada no catálogo ou numa pesquisa de sourcing não confirma, por si só, fornecedor, stock, preço ou prazo. A HMATIAS separa a identificação de uma possível opção da confirmação comercial necessária antes de apresentar uma proposta.
 
-A conclusão pode recomendar esclarecimentos adicionais, reavaliação de prazo ou encerramento de uma proposta por incumprimento objetivo. O registo deve permitir que outra pessoa compreenda a decisão sem depender de conversas informais.
+Se existir uma alternativa técnica, a equivalência deve ser analisada antes de a colocar lado a lado com a especificação original.
 
-Este método torna o procurement mais transparente e comparável. O exemplo é ilustrativo: em processos reais, prevalecem as especificações, regras contratuais e aprovações aplicáveis.
+## Informação necessária para iniciar o pedido
+
+Para perfis ou chapas, envie referência ou desenho, dimensões, espessura, quantidade, unidade, destino e data pretendida. Indique também se aceita alternativas equivalentes. O SOURCE AO Smart RFQ permite organizar estes dados num pedido estruturado.
+
+**Nota de transparência:** as fotografias pertencem ao arquivo visual da HMATIAS. Este artigo não divulga preços, fornecedores, propostas recebidas ou dados de clientes.
