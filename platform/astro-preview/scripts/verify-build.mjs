@@ -736,7 +736,7 @@ for (const pagePath of generatedPages) {
     assert.ok(pageNav.includes(label), "Primary navigation label " + label + " is missing: " + relativePagePath);
   }
   const expectedNavigationTargets = isEnglishPage
-    ? ["/en/#inicio", "/en/about/", "/en/credibility/", "/en/#partners", "/en/#services", "/en/construction/", "/en/facilities/", "/en/supply/", "/en/business-services/", "/en/#projects", "/en/works-catalogue/", "/en/integrated-yard/", "/en/source-ao/", "/en/source-ao/radar/", "/en/source-ao/smart-rfq/", "/en/source-ao/partners/", "/en/blog/"]
+    ? ["/en/#inicio", "/en/about/", "/en/credibility/", "/en/#partners", "/en/#servicos", "/en/construction/", "/en/facilities/", "/en/supply/", "/en/business-services/", "/en/#projetos", "/en/works-catalogue/", "/en/integrated-yard/", "/en/source-ao/", "/en/source-ao/radar/", "/en/source-ao/smart-rfq/", "/en/source-ao/partners/", "/en/blog/"]
     : ["/#inicio", "/empresa/", "/credibilidade/", "/#parceiros", "/#servicos", "/construcao/", "/facilities/", "/supply/", "/business-services/", "/#projetos", "/catalogo-obras/", "/estaleiro/", "/source-ao/", "/source-ao/radar/", "/source-ao/smart-rfq/", "/source-ao/parceiros/", "/blog/"];
   for (const href of expectedNavigationTargets) {
     assert.ok(pageNav.includes('href="' + href + '"'), "Primary navigation destination " + href + " is missing: " + relativePagePath);
