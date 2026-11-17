@@ -2,32 +2,67 @@
 import { Image } from "astro:assets";
 import logo from "../../../../logo-hmatias.png";
 import { getLanguageSwitchPath } from "../data/locales";
+import { company } from "../data/site";
 
 const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const isEnglish = pathname.startsWith("/en/");
 const languageHref = getLanguageSwitchPath(pathname, isEnglish);
 const homeUrl = isEnglish ? "/en/" : "/";
-const servicesAnchor = isEnglish ? "services" : "servicos";
-const projectsAnchor = isEnglish ? "projects" : "projetos";
-const companyAnchor = isEnglish ? "company" : "empresa";
-const contactAnchor = isEnglish ? "contact" : "contacto";
+const servicesHref = isEnglish ? "/en/#services" : "/#servicos";
+const projectsHref = isEnglish ? "/en/#projects" : "/#projetos";
+const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUrl;
 ---
 <header class="site-header" data-language={isEnglish ? "en" : "pt"}>
   <div class="header-inner">
     <a class="brand" href={`${homeUrl}#inicio`} aria-label={isEnglish ? "HMATIAS — home" : "HMATIAS — início"}>
       <Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services" : "HMATIAS — Prestação de Serviços"} widths={[128, 176]} sizes="88px" format="webp" quality={82} loading="eager" />
     </a>
+
     <button class="menu-toggle" type="button" aria-label={isEnglish ? "Open menu" : "Abrir menu"} aria-expanded="false" aria-controls="main-nav">
       <span></span><span></span>
     </button>
+
     <nav class="main-nav" id="main-nav" aria-label={isEnglish ? "Main navigation" : "Navegação principal"}>
-      <a href={`${homeUrl}#${servicesAnchor}`}>{isEnglish ? "Services" : "Serviços"}</a>
-      <a href={`${homeUrl}#${projectsAnchor}`}>{isEnglish ? "Projects" : "Projetos"}</a>
-      <a href={`${homeUrl}#${companyAnchor}`}>{isEnglish ? "Company" : "Empresa"}</a>
+      <a class="nav-link nav-home" href={`${homeUrl}#inicio`}>{isEnglish ? "Home" : "Início"}</a>
+      <a class="nav-link nav-about" href={isEnglish ? "/en/about/" : "/empresa/"}>{isEnglish ? "About us" : "Sobre nós"}</a>
+
+      <div class="nav-item">
+        <a class="nav-link" href={servicesHref}>{isEnglish ? "Services" : "Serviços"}</a>
+        <button class="submenu-toggle" type="button" aria-expanded="false" aria-label={isEnglish ? "Open Services submenu" : "Abrir submenu Serviços"}><span aria-hidden="true"></span></button>
+        <div class="nav-submenu" aria-label={isEnglish ? "HMATIAS services" : "Serviços HMATIAS"}>
+          <a href={isEnglish ? "/en/construction/" : "/construcao/"}>{isEnglish ? "Construction and remodelling" : "Construção e remodelação"}</a>
+          <a href={isEnglish ? "/en/facilities/" : "/facilities/"}>{isEnglish ? "Facilities and maintenance" : "Facilities e manutenção"}</a>
+          <a href={isEnglish ? "/en/supply/" : "/supply/"}>{isEnglish ? "Supply and procurement" : "Supply e procurement"}</a>
+          <a href={isEnglish ? "/en/business-services/" : "/business-services/"}>Business Services</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a class="nav-link" href={projectsHref}>{isEnglish ? "Projects" : "Projetos"}</a>
+        <button class="submenu-toggle" type="button" aria-expanded="false" aria-label={isEnglish ? "Open Projects submenu" : "Abrir submenu Projetos"}><span aria-hidden="true"></span></button>
+        <div class="nav-submenu" aria-label={isEnglish ? "Projects and work records" : "Projetos e registos de obras"}>
+          <a href={isEnglish ? "/en/works-catalogue/" : "/catalogo-obras/"}>{isEnglish ? "Works catalogue" : "Catálogo de obras"}</a>
+          <a href={isEnglish ? "/en/integrated-yard/" : "/estaleiro/"}>{isEnglish ? "Projects in development" : "Projetos em desenvolvimento"}</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a class="nav-link nav-source" href={isEnglish ? "/en/source-ao/" : "/source-ao/"}>SOURCE AO</a>
+        <button class="submenu-toggle" type="button" aria-expanded="false" aria-label={isEnglish ? "Open SOURCE AO submenu" : "Abrir submenu SOURCE AO"}><span aria-hidden="true"></span></button>
+        <div class="nav-submenu" aria-label={isEnglish ? "SOURCE AO platform" : "Plataforma SOURCE AO"}>
+          <a href={isEnglish ? "/en/source-ao/radar/" : "/source-ao/radar/"}>{isEnglish ? "Opportunity Radar" : "Radar de oportunidades"}</a>
+          <a href={isEnglish ? "/en/source-ao/smart-rfq/" : "/source-ao/smart-rfq/"}>Smart RFQ</a>
+          <a href={isEnglish ? "/en/source-ao/partners/" : "/source-ao/parceiros/"}>{isEnglish ? "Partner application" : "Candidatura de parceiros"}</a>
+        </div>
+      </div>
+
+      <a class="nav-link nav-blog" href={isEnglish ? "/en/blog/" : "/blog/"}>Blog</a>
+      <a class="nav-quote" href={contactHref} target="_blank" rel="noopener noreferrer">{isEnglish ? "Request a quote" : "Solicitar orçamento"} <span aria-hidden="true">↗</span></a>
     </nav>
+
     <div class="header-actions">
       <a class="language-switch" href={languageHref} lang={isEnglish ? "pt-AO" : "en"} aria-label={isEnglish ? "PT — Switch to Portuguese" : "EN — Mudar para inglês"}>{isEnglish ? "PT" : "EN"}</a>
-      <a class="header-cta" href={`${homeUrl}#${contactAnchor}`}>{isEnglish ? "Contact HMATIAS" : "Falar com a HMATIAS"} <span aria-hidden="true">↗</span></a>
+      <a class="header-cta" href={contactHref} target="_blank" rel="noopener noreferrer">{isEnglish ? "Request a quote" : "Solicitar orçamento"} <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 </header>
@@ -37,20 +72,57 @@ const contactAnchor = isEnglish ? "contact" : "contacto";
   const header = document.querySelector<HTMLElement>(".site-header");
   const isEnglish = header?.dataset.language === "en";
 
+  const closeMenu = () => {
+    toggle?.setAttribute("aria-expanded", "false");
+    toggle?.setAttribute("aria-label", isEnglish ? "Open menu" : "Abrir menu");
+    nav?.classList.remove("is-open");
+    nav?.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach((item) => {
+      item.classList.remove("submenu-open");
+      item.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded", "false");
+    });
+  };
+
   if (toggle && nav) {
     toggle.addEventListener("click", () => {
       const isOpen = toggle.getAttribute("aria-expanded") !== "true";
-      toggle.setAttribute("aria-expanded", String(isOpen));
-      toggle.setAttribute("aria-label", isOpen ? (isEnglish ? "Close menu" : "Fechar menu") : (isEnglish ? "Open menu" : "Abrir menu"));
-      nav.classList.toggle("is-open", isOpen);
+      if (isOpen) {
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.setAttribute("aria-label", isEnglish ? "Close menu" : "Fechar menu");
+        nav.classList.add("is-open");
+      } else {
+        closeMenu();
+      }
     });
 
-    nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.setAttribute("aria-label", isEnglish ? "Open menu" : "Abrir menu");
-        nav.classList.remove("is-open");
+    nav.querySelectorAll<HTMLButtonElement>(".submenu-toggle").forEach((button) => {
+      button.addEventListener("click", () => {
+        const item = button.closest<HTMLElement>(".nav-item");
+        if (!item) return;
+        const isOpen = button.getAttribute("aria-expanded") !== "true";
+        nav.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach((other) => {
+          if (other !== item) {
+            other.classList.remove("submenu-open");
+            other.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded", "false");
+          }
+        });
+        item.classList.toggle("submenu-open", isOpen);
+        button.setAttribute("aria-expanded", String(isOpen));
       });
+    });
+
+    nav.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && (nav.classList.contains("is-open") || nav.querySelector(".submenu-open"))) {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Node && header && !header.contains(event.target)) closeMenu();
     });
   }
 </script>
