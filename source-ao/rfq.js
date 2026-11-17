@@ -40,6 +40,7 @@ function staticLanguage(){
   const linkTargets = [
     ['#sourceAoSupplyLink', localizedLinks.supply],
     ['#sourceAoPrivacyLink', localizedLinks.privacy],
+    ['#sourceAoTermsLink', localizedLinks.terms],
     ['#rfqPrivacyNoticeLink', localizedLinks.privacy],
     ['#rfqTermsLink', localizedLinks.terms]
   ];
