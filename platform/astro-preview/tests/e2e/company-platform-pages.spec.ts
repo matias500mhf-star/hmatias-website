@@ -108,7 +108,6 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(page.locator(".profile-list")).toContainText("Prestação de serviços, coordenação de projectos");
     await expect(page.locator(".about-purpose")).toBeVisible();
     await expect(page.locator(".ceo-message")).toBeVisible();
-    await expect(page.locator(".ceo-message")).toBeVisible();
     await expect(page.locator(".purpose-card")).toHaveCount(2);
     await expect(page.locator(".purpose-card").filter({ hasText: "MISSÃO" }))
       .toContainText("Compreender cada solicitação, definir o seu âmbito e organizar uma resposta adequada");
@@ -124,7 +123,7 @@ test.describe("HMATIAS company and platform pages", () => {
     expect(aboutTitleSize).toBeLessThanOrEqual(43);
     const purposeColumns = await page.locator(".purpose-grid").evaluate((element) => getComputedStyle(element).gridTemplateColumns);
     expect(purposeColumns.trim().split(/\s+/)).toHaveLength(1);
-    const aboutColumns = await page.locator(".company-profile").evaluate((element) => getComputedStyle(element).gridTemplateColumns.trim().split(/\\s+/).length);
+    const aboutColumns = await page.locator(".company-profile").evaluate((element) => getComputedStyle(element).gridTemplateColumns.trim().split(/\s+/).length);
     expect(aboutColumns).toBe(1);
     const pageWidth = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
     expect(pageWidth.scroll).toBeLessThanOrEqual(pageWidth.client + 1);
