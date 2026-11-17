@@ -102,11 +102,13 @@ test.describe("HMATIAS company and platform pages", () => {
   test("company page presents its registered identity and four service areas", async ({ page }) => {
     await page.goto("/empresa/");
     await expect(page.locator(".about-intro h1")).toContainText(/Uma empresa angolana/);
-    await expect(page.locator(".about-lead").first()).toContainText("HMATIAS – Prestação de Serviços SU, LDA");
+    await expect(page.locator(".about-lead").first()).toContainText("HMATIAS – Prestação de Serviços, (SU), LDA");
     await expect(page.getByRole("heading", { name: "Identidade e enquadramento." })).toBeVisible();
     await expect(page.locator(".profile-list > div")).toHaveCount(4);
     await expect(page.locator(".profile-list")).toContainText("Prestação de serviços, coordenação de projectos");
     await expect(page.locator(".about-purpose")).toBeVisible();
+    await expect(page.locator(".ceo-message")).toBeVisible();
+    await expect(page.locator(".ceo-message")).toBeVisible();
     await expect(page.locator(".purpose-card")).toHaveCount(2);
     await expect(page.locator(".purpose-card").filter({ hasText: "MISSÃO" }))
       .toContainText("Compreender cada solicitação, definir o seu âmbito e organizar uma resposta adequada");
@@ -122,6 +124,8 @@ test.describe("HMATIAS company and platform pages", () => {
     expect(aboutTitleSize).toBeLessThanOrEqual(43);
     const purposeColumns = await page.locator(".purpose-grid").evaluate((element) => getComputedStyle(element).gridTemplateColumns);
     expect(purposeColumns.trim().split(/\s+/)).toHaveLength(1);
+    const aboutColumns = await page.locator(".company-profile").evaluate((element) => getComputedStyle(element).gridTemplateColumns.trim().split(/\\s+/).length);
+    expect(aboutColumns).toBe(1);
     const pageWidth = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
     expect(pageWidth.scroll).toBeLessThanOrEqual(pageWidth.client + 1);
   });
@@ -150,7 +154,7 @@ test.describe("HMATIAS company and platform pages", () => {
     await page.goto("/en/about/");
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
     await expect(page.locator(".about-intro h1")).toContainText(/An Angolan company/);
-    await expect(page.locator(".about-lead").first()).toContainText("HMATIAS – Prestação de Serviços SU, LDA");
+    await expect(page.locator(".about-lead").first()).toContainText("HMATIAS – Prestação de Serviços, (SU), LDA");
     await expect(page.getByRole("heading", { name: "Identity and profile." })).toBeVisible();
     await expect(page.locator(".profile-list > div")).toHaveCount(4);
     await expect(page.locator(".profile-list")).toContainText("Service delivery, project coordination");
@@ -180,7 +184,22 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(page.getByText("5001578065", { exact: true })).toBeVisible();
     await expect(page.getByText("24.094-23", { exact: true })).toBeVisible();
     await expect(page.locator(".credibility-principle")).toHaveCount(4);
+    await expect(page.locator(".identity-certifications")).toContainText("3451/2026");
+    await expect(page.locator(".identity-certifications")).toContainText("implementation in progress");
+    await expect(page.locator(".credibility-mpme")).toHaveCount(0);
     await expect(page.locator("main img")).toHaveCount(0);
+  });
+
+
+  test("Credibilidade PT apresenta certificação de forma discreta e qualidade em implementação", async ({ page }) => {
+    await page.goto("/credibilidade/");
+    await expect(page.locator(".identity-certifications")).toContainText("3451/2026");
+    await expect(page.locator(".identity-certifications")).toContainText("em fase de implementação");
+    await expect(page.locator(".credibility-mpme")).toHaveCount(0);
+    await expect(page.locator(".credibility-limits-text p")).toHaveCount(3);
+    await page.setViewportSize({ width: 390, height: 844 });
+    const overflow = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
+    expect(overflow.scroll).toBeLessThanOrEqual(overflow.client + 1);
   });
 
   test("KARTA page accurately presents Alpha status and future roadmap", async ({ page }) => {
