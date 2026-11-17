@@ -25,7 +25,8 @@ for (const filename of files) {
   assert.ok(frontmatter, "Missing frontmatter: " + filename);
   const metadata = frontmatter[1];
   assert.doesNotMatch(source, /fictional scenario|fictitious case|illustrative case study/i, "Fictional case-study content must not be published as HMATIAS editorial: " + filename);
-  assert.match(metadata, /contentType: "guide"/, "Published blog items must be factual guides or technical notes: " + filename);
+  const contentType = metadata.match(/^contentType: "([^"]+)"/m)?.[1] ?? "guide";
+  assert.equal(contentType, "guide", "Published blog items must be factual guides or technical notes: " + filename);
   assert.doesNotMatch(metadata, /unsplash|photoCredit|photoCreditUrl/i, "Stock image or external photo credit remains: " + filename);
   const imageMatch = metadata.match(/^coverImage: "([^"]+)"/m);
   const altMatch = metadata.match(/^coverAlt: "([^"]+)"/m);
