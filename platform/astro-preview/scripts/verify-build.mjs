@@ -119,7 +119,7 @@ assert.ok(englishNavHtml, "English primary navigation is missing");
 for (const label of ["Home", "About us", "Services", "Projects", "SOURCE AO", "Blog", "Request a quote"]) {
   assert.ok(englishNavHtml.includes(label), "English primary navigation is missing: " + label);
 }
-for (const href of ["/en/#inicio", "/en/about/", "/en/credibility/", "/en/#partners", "/en/#services", "/en/construction/", "/en/facilities/", "/en/supply/", "/en/business-services/", "/en/#projects", "/en/works-catalogue/", "/en/integrated-yard/", "/en/source-ao/", "/en/source-ao/radar/", "/en/source-ao/smart-rfq/", "/en/source-ao/partners/", "/en/blog/"]) {
+for (const href of ["/en/#inicio", "/en/about/", "/en/credibility/", "/en/#partners", "/en/#servicos", "/en/construction/", "/en/facilities/", "/en/supply/", "/en/business-services/", "/en/#projetos", "/en/works-catalogue/", "/en/integrated-yard/", "/en/source-ao/", "/en/source-ao/radar/", "/en/source-ao/smart-rfq/", "/en/source-ao/partners/", "/en/blog/"]) {
   assert.ok(englishNavHtml.includes('href="' + href + '"'), "English primary navigation destination is missing: " + href);
 }
 assert.doesNotMatch(englishNavHtml, /instagram|wa\.me/i, "Social networks must remain outside the English primary navigation");
