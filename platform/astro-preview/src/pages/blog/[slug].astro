@@ -4,7 +4,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import { company } from "../../data/site";
-import { getResponsiveUnsplashSrcSet } from "../../data/responsive-images";
 
 type Props = { post: CollectionEntry<"blog"> };
 
@@ -48,8 +47,8 @@ const dateLabel = post.data.pubDate.toLocaleDateString(
 
     <article class="article-content">
       <figure class="article-cover-figure">
-        <img src={post.data.coverImage} srcset={getResponsiveUnsplashSrcSet(post.data.coverImage)} sizes="(max-width: 900px) calc(100vw - 44px), 804px" alt={post.data.coverAlt} width="1200" height="675" loading="eager" fetchpriority="high" decoding="async" />
-        <figcaption>Imagem ilustrativa · Foto de <a href={post.data.photoCreditUrl} target="_blank" rel="noopener noreferrer">{post.data.photoCredit}</a> / <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash</a></figcaption>
+        <img src={post.data.coverImage} sizes="(max-width: 900px) calc(100vw - 44px), 804px" alt={post.data.coverAlt} width="1200" height="675" loading="eager" fetchpriority="high" decoding="async" />
+        <figcaption>Fotografia real do portefólio HMATIAS; não identifica um cliente nem atribui ao trabalho fotografado o cenário do artigo.</figcaption>
       </figure>
       <Content />
       <section class="article-cta" aria-labelledby="pages-blog-slug-section-2-heading">
