@@ -685,8 +685,8 @@ for (const pagePath of generatedPages) {
       assert.match(radarHeader, /id="langToggle"/, "Radar header must provide an accessible language switch: " + relativePagePath);
       assert.match(sourceFooter, /id="radarRfqLink"/, "Radar footer must link to Smart RFQ: " + relativePagePath);
       assert.match(sourceFooter, /id="radarPartnerLink"/, "Radar footer must link to partner applications: " + relativePagePath);
-      assert.match(sourceFooter, /href="[^"]*privacy[^"]*"/i, "Radar footer must provide a privacy link: " + relativePagePath);
-      assert.match(sourceFooter, /href="[^"]*terms[^"]*"/i, "Radar footer must provide a terms link: " + relativePagePath);
+      assert.match(sourceFooter, /href="[^"]*(?:privacy|privacidade)[^"]*"/i, "Radar footer must provide a privacy link: " + relativePagePath);
+      assert.match(sourceFooter, /href="[^"]*(?:terms|termos)[^"]*"/i, "Radar footer must provide a terms link: " + relativePagePath);
       assert.match(sourceFooter, /href="mailto:geral@comercialhmatiasps\.com"/, "Radar footer must provide a commercial contact route: " + relativePagePath);
     } else {
       const rfqHeader = pageHtml.match(/<header class="rfq-header">[\s\S]*?<\/header>/)?.[0];
