@@ -4,8 +4,10 @@ description: "A method for comparing technical compliance, total cost, lead time
 pubDate: 2026-11-13
 category: "Procurement and Supply"
 author: "HMATIAS Editorial Team"
-coverImage: "/images/hmatias/perfis-metalicos-estrutura.webp"
-coverAlt: "Metal profiles photographed in a project from the HMATIAS portfolio."
+coverImage: "https://images.unsplash.com/photo-1748347084012-075796185d56?auto=format&fit=crop&w=1440&q=80"
+coverAlt: "Technician inspecting industrial equipment inside a production facility."
+coverCredit: "TECNIC Bioprocess Solutions"
+coverCreditUrl: "https://unsplash.com/photos/a-man-inspects-equipment-in-a-modern-factory--Wt8AyCr9i4"
 readingMinutes: 5
 contentType: "guide"
 language: "en"
