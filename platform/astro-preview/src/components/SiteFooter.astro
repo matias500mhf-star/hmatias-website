@@ -14,7 +14,7 @@ const links = isEnglish
       construction: "/en/construction/", facilities: "/en/facilities/",
       supply: "/en/supply/", business: "/en/business-services/",
       works: "/en/works-catalogue/", projects: "/en/integrated-yard/",
-      privacy: "/en/privacy/", terms: "/en/terms/", accessibility: "/en/accessibility/",
+      privacy: "/en/privacy/", cookies: "/en/cookies/", terms: "/en/terms/", accessibility: "/en/accessibility/",
       contact: "/en/#contact"
     }
   : {
@@ -22,7 +22,7 @@ const links = isEnglish
       construction: company.constructionUrl, facilities: company.facilitiesUrl,
       supply: company.supplyUrl, business: company.businessServicesUrl,
       works: company.worksCatalogueUrl, projects: "/estaleiro/",
-      privacy: company.privacyUrl, terms: company.termsUrl,
+      privacy: company.privacyUrl, cookies: company.cookiePolicyUrl, terms: company.termsUrl,
       accessibility: "/acessibilidade/", contact: "/#contacto"
     };
 ---
@@ -83,6 +83,7 @@ const links = isEnglish
       <a href={isEnglish ? company.partnerApplicationEnUrl : company.partnerApplicationUrl}>{isEnglish ? "Partnerships" : "Parcerias"}</a>
       <a href={links.credibility}>{isEnglish ? "Company information" : "Credibilidade"}</a>
       <a href={links.privacy}>{isEnglish ? "Privacy Policy" : "Política de Privacidade"}</a>
+      <a href={links.cookies}>{isEnglish ? "Cookie Policy" : "Política de Cookies"}</a>
       <a href={links.terms}>{isEnglish ? "Terms and Conditions" : "Termos e Condições"}</a>
       <a href={links.accessibility}>{isEnglish ? "Accessibility" : "Acessibilidade"}</a>
     </nav>
