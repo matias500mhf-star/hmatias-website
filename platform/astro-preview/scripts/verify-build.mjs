@@ -54,7 +54,13 @@ assert.match(html, /Todos os direitos reservados/, "Footer legal copyright line 
 assert.match(html, /Voltar ao topo/, "Footer back-to-top link is missing");
 const mainNavHtml = html.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
 assert.ok(mainNavHtml, "Primary navigation is missing");
-assert.doesNotMatch(mainNavHtml, /SOURCE AO/i, "SOURCE AO must not appear in the primary navigation");
+for (const label of ["Início", "Sobre nós", "Serviços", "Projetos", "SOURCE AO", "Blog", "Solicitar orçamento"]) {
+  assert.ok(mainNavHtml.includes(label), "Portuguese primary navigation is missing: " + label);
+}
+for (const href of ["/#inicio", "/empresa/", "/credibilidade/", "/#parceiros", "/#servicos", "/construcao/", "/facilities/", "/supply/", "/business-services/", "/#projetos", "/catalogo-obras/", "/estaleiro/", "/source-ao/", "/source-ao/radar/", "/source-ao/smart-rfq/", "/source-ao/parceiros/", "/blog/"]) {
+  assert.ok(mainNavHtml.includes('href="' + href + '"'), "Portuguese primary navigation destination is missing: " + href);
+}
+assert.doesNotMatch(mainNavHtml, /instagram|wa\.me/i, "Social networks must remain outside the primary navigation");
 assert.match(html, /mailto:geral@comercialhmatiasps\.com/, "Footer commercial mail link is missing");
 assert.match(html, /tel:\+244948806673/, "Footer telephone link is missing");
 assert.match(html, /SOURCE AO/, "Source AO footer link is missing");
@@ -108,6 +114,15 @@ assert.doesNotMatch(html, /<section class="karta-feature"/, "KARTA must not be a
 assert.doesNotMatch(html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "", /SOURCE AO|source-ao-highlight/i, "Portuguese homepage main content must not promote SOURCE AO");
 assert.match(footerHtml ?? "", /footer-source-link/, "SOURCE AO must remain accessible from the footer");
 const englishHomeHtml = readFileSync(join(outDir, "en", "index.html"), "utf8");
+const englishNavHtml = englishHomeHtml.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+assert.ok(englishNavHtml, "English primary navigation is missing");
+for (const label of ["Home", "About us", "Services", "Projects", "SOURCE AO", "Blog", "Request a quote"]) {
+  assert.ok(englishNavHtml.includes(label), "English primary navigation is missing: " + label);
+}
+for (const href of ["/en/#inicio", "/en/about/", "/en/credibility/", "/en/#partners", "/en/#services", "/en/construction/", "/en/facilities/", "/en/supply/", "/en/business-services/", "/en/#projects", "/en/works-catalogue/", "/en/integrated-yard/", "/en/source-ao/", "/en/source-ao/radar/", "/en/source-ao/smart-rfq/", "/en/source-ao/partners/", "/en/blog/"]) {
+  assert.ok(englishNavHtml.includes('href="' + href + '"'), "English primary navigation destination is missing: " + href);
+}
+assert.doesNotMatch(englishNavHtml, /instagram|wa\.me/i, "Social networks must remain outside the English primary navigation");
 const englishFooterHtml = englishHomeHtml.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
 assert.ok(englishFooterHtml, "English homepage footer is missing");
 const englishFooterOrder = ["footer-explore", "footer-identity", "footer-operations", "footer-contacts"]
@@ -679,6 +694,25 @@ for (const pagePath of generatedPages) {
 
   const pageFooterMatches = [...pageHtml.matchAll(/<footer\b(?=[^>]*\bclass="site-footer")[^>]*>[\s\S]*?<\/footer>/g)];
   assert.equal(pageFooterMatches.length, 1, "Every generated corporate page must render exactly one shared footer: " + relativePagePath);
+
+  const pageHeader = pageHtml.match(/<header class="site-header"[^>]*>[\s\S]*?<\/header>/)?.[0];
+  assert.ok(pageHeader, "Every generated corporate page must render the shared HMATIAS header: " + relativePagePath);
+  const pageNav = pageHeader.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+  assert.ok(pageNav, "Every generated corporate page must render the primary navigation: " + relativePagePath);
+  const expectedNavigationLabels = isEnglishPage
+    ? ["Home", "About us", "Services", "Projects", "SOURCE AO", "Blog", "Request a quote"]
+    : ["Início", "Sobre nós", "Serviços", "Projetos", "SOURCE AO", "Blog", "Solicitar orçamento"];
+  for (const label of expectedNavigationLabels) {
+    assert.ok(pageNav.includes(label), "Primary navigation label " + label + " is missing: " + relativePagePath);
+  }
+  const expectedNavigationTargets = isEnglishPage
+    ? ["/en/#inicio", "/en/about/", "/en/credibility/", "/en/#partners", "/en/#services", "/en/construction/", "/en/facilities/", "/en/supply/", "/en/business-services/", "/en/#projects", "/en/works-catalogue/", "/en/integrated-yard/", "/en/source-ao/", "/en/source-ao/radar/", "/en/source-ao/smart-rfq/", "/en/source-ao/partners/", "/en/blog/"]
+    : ["/#inicio", "/empresa/", "/credibilidade/", "/#parceiros", "/#servicos", "/construcao/", "/facilities/", "/supply/", "/business-services/", "/#projetos", "/catalogo-obras/", "/estaleiro/", "/source-ao/", "/source-ao/radar/", "/source-ao/smart-rfq/", "/source-ao/parceiros/", "/blog/"];
+  for (const href of expectedNavigationTargets) {
+    assert.ok(pageNav.includes('href="' + href + '"'), "Primary navigation destination " + href + " is missing: " + relativePagePath);
+  }
+  assert.doesNotMatch(pageNav, /instagram|wa\.me/i, "Social channels must stay out of the primary navigation: " + relativePagePath);
+
   const pageFooter = pageFooterMatches[0][0];
   const columnNames = ["explore", "identity", "operations", "contacts"];
   const columnPositions = columnNames.map((name) => pageFooter.indexOf('class="footer-column footer-' + name + '"'));
