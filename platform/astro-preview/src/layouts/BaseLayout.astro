@@ -16,11 +16,11 @@ interface Props {
 const { title, description, lang = "pt-AO", ogType = "website", ogImage, ogImageAlt } = Astro.props;
 const isEnglish = lang === "en";
 const ogLocale = isEnglish ? "en_US" : "pt_AO";
-const ogImageUrl = ogImage ? new URL(ogImage, siteUrl).toString() : "https://comercialhmatiasps.com/og-hmatias.jpg";
 const brandImageAlt = isEnglish
   ? "HMATIAS — Construction, Facilities, Supply and Business Services"
   : "HMATIAS — Prestação de Serviços";
 const siteUrl = Astro.site ?? new URL("https://hmatias-astro-preview.onrender.com");
+const ogImageUrl = ogImage ? new URL(ogImage, siteUrl).toString() : "https://comercialhmatiasps.com/og-hmatias.jpg";
 const indexingEnabled = import.meta.env.PUBLIC_INDEXING_ENABLED === "true"
   && siteUrl.protocol === "https:"
   && siteUrl.hostname === "comercialhmatiasps.com";
