@@ -40,8 +40,8 @@ export const services: Service[] = [
 ];
 
 export const company = {
-  name: "HMATIAS – Prestação de Serviços, (SU), LDA.",
-  legalName: "HMATIAS – Prestação de Serviços, (SU), LDA.",
+  name: "HMATIAS - PRESTAÇÃO DE SERVIÇOS, (SU), LDA",
+  legalName: "HMATIAS - PRESTAÇÃO DE SERVIÇOS, (SU), LDA",
   phone: "+244 948 806 673",
   telephoneUri: "tel:+244948806673",
   whatsappUri: "https://wa.me/244948806673",
