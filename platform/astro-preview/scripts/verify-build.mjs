@@ -678,7 +678,7 @@ for (const pagePath of generatedPages) {
     assert.equal(sourceFooterMatches.length, 1, "SOURCE AO application must render exactly one dedicated footer: " + relativePagePath);
     const sourceFooter = sourceFooterMatches[0][0];
     if (isSourceAoRadar) {
-      const radarHeader = pageHtml.match(/<header class="topbar op-topbar">[\s\S]*?<\/header>/)?.[0];
+      const radarHeader = pageHtml.match(/<header\b[^>]*class="[^"]*\bop-topbar\b[^"]*"[^>]*>[\s\S]*?<\/header>/)?.[0];
       assert.ok(radarHeader, "Opportunity Radar must render its dedicated product header: " + relativePagePath);
       assert.match(pageHtml, /id="radarHomeLink" href="[^"]*source-ao\//, "Radar must provide a return link to SOURCE AO: " + relativePagePath);
       assert.match(radarHeader, /id="radarBackLink"/, "Radar header must provide a SOURCE AO back link: " + relativePagePath);
@@ -689,7 +689,7 @@ for (const pagePath of generatedPages) {
       assert.match(sourceFooter, /href="[^"]*(?:terms|termos)[^"]*"/i, "Radar footer must provide a terms link: " + relativePagePath);
       assert.match(sourceFooter, /href="mailto:geral@comercialhmatiasps\.com"/, "Radar footer must provide a commercial contact route: " + relativePagePath);
     } else {
-      const rfqHeader = pageHtml.match(/<header class="rfq-header">[\s\S]*?<\/header>/)?.[0];
+      const rfqHeader = pageHtml.match(/<header\b[^>]*class="[^"]*\brfq-header\b[^"]*"[^>]*>[\s\S]*?<\/header>/)?.[0];
       assert.ok(rfqHeader, "Smart RFQ must render its dedicated product header: " + relativePagePath);
       assert.match(rfqHeader, /id="sourceAoBackLink" href="[^"]*source-ao\//, "Smart RFQ must link back to SOURCE AO: " + relativePagePath);
       assert.match(rfqHeader, /mailto:geral@comercialhmatiasps\.com/, "Smart RFQ header must provide commercial contact: " + relativePagePath);
