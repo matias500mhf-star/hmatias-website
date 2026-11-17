@@ -46,6 +46,9 @@ for (const filename of files) {
   assert.ok(existsSync(htmlPath), "Generated blog article is missing: " + htmlPath);
   const html = readFileSync(htmlPath, "utf8");
   assert.ok(html.includes('src="' + imagePath + '"'), "Generated article does not use its approved HMATIAS image: " + filename);
+  assert.match(html, /<meta property="og:type" content="article"/, "Article Open Graph type is missing: " + filename);
+  const ogImage = html.match(/<meta property="og:image" content="([^"]+)"/)?.[1];
+  assert.ok(ogImage?.endsWith(imagePath), "Article social preview must use its authentic portfolio image: " + filename);
   assert.doesNotMatch(html, /images\.unsplash\.com|unsplash\.com/i, "Generated article still references stock imagery: " + filename);
 }
 
