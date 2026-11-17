@@ -387,9 +387,9 @@ assert.ok(credibilityHtml.includes("5001578065"), "Company NIF is missing from c
 assert.ok(credibilityHtml.includes("24.094-23"), "Commercial registration is missing from credibility page");
 assert.ok(credibilityHtml.includes("IDENTIFICAÇÃO EMPRESARIAL"), "Company identification section is missing");
 assert.ok(credibilityHtml.includes("CONTACTO OFICIAL"), "Official contact section is missing");
-assert.ok(credibilityHtml.includes("HMATIAS – Prestação de Serviços SU, LDA"), "Company legal name must use the shared approved display form");
+assert.ok(credibilityHtml.includes("HMATIAS - PRESTAÇÃO DE SERVIÇOS, (SU), LDA"), "Company legal name must match the INAPEM certificate");
 assert.equal((credibilityHtml.match(/class="credibility-principle"/g) || []).length, 4, "Credibility page must present four practical trust blocks");
-assert.ok(!credibilityHtml.includes("Prestação de Serviços, (SU)"), "Legacy punctuation in company name must not return");
+assert.ok(!credibilityHtml.includes("HMATIAS – Prestação de Serviços SU, LDA"), "Legacy company name without the registered (SU) form must not return");
 assert.ok(credibilityHtml.includes('href="/empresa/"'), "Credibility page must link back to About");
 
 for (const [route, heading, marker] of [
