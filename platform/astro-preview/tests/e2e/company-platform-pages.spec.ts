@@ -237,6 +237,7 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(page.locator(".credibility-principle")).toHaveCount(4);
     await expect(page.locator(".credibility-principle").nth(0)).toContainText("Identidade empresarial");
     await expect(page.locator(".credibility-principle").nth(2)).toContainText("Condições confirmadas");
+    await expect(page.getByRole("link", { name: "Portal institucional do INAPEM" })).toHaveAttribute("href", "https://inapem.gov.ao/");
   });
 
 
@@ -248,6 +249,10 @@ test.describe("HMATIAS company and platform pages", () => {
     await page.goto("/termos/");
     await expect(page.getByRole("heading", { level: 1, name: "Termos & Condições" })).toBeVisible();
     await expect(page.getByRole("heading", { name: /Propriedade intelectual/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Devoluções, cancelamentos e reembolsos/ })).toBeVisible();
+    await expect(page.getByText(/não disponibiliza checkout nem recebe pagamentos online/i)).toBeVisible();
+    await page.goto("/cookies/");
+    await expect(page.getByRole("heading", { level: 1, name: "Política de Cookies" })).toBeVisible();
 
     await page.goto("/acessibilidade/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/acessível a todos/i);
