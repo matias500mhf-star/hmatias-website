@@ -2,7 +2,7 @@ module.exports = {
   ci: {
     collect: {
       // Representative PT/EN routes cover the shared templates and highest-risk flows.
-      // Static verification and Playwright continue to cover the complete 58-page site.
+      // Static verification and Playwright continue to cover the complete bilingual route set.
       url: [
         "http://127.0.0.1:4321/",
         "http://127.0.0.1:4321/construcao/",
@@ -15,6 +15,11 @@ module.exports = {
         "http://127.0.0.1:4321/source-ao/parceiros/",
         "http://127.0.0.1:4321/clean/",
         "http://127.0.0.1:4321/catalogo-obras/",
+        "http://127.0.0.1:4321/credibilidade/",
+        "http://127.0.0.1:4321/privacidade/",
+        "http://127.0.0.1:4321/termos/",
+        "http://127.0.0.1:4321/cookies/",
+        "http://127.0.0.1:4321/blog/",
         "http://127.0.0.1:4321/blog/como-preparar-um-pedido-de-cotacao/",
         "http://127.0.0.1:4321/en/",
         "http://127.0.0.1:4321/en/construction/",
@@ -27,6 +32,11 @@ module.exports = {
         "http://127.0.0.1:4321/en/source-ao/partners/",
         "http://127.0.0.1:4321/en/clean/",
         "http://127.0.0.1:4321/en/works-catalogue/",
+        "http://127.0.0.1:4321/en/credibility/",
+        "http://127.0.0.1:4321/en/privacy/",
+        "http://127.0.0.1:4321/en/terms/",
+        "http://127.0.0.1:4321/en/cookies/",
+        "http://127.0.0.1:4321/en/blog/",
         "http://127.0.0.1:4321/en/blog/how-to-prepare-a-comparable-supply-quotation/",
       ],
       numberOfRuns: 2,
