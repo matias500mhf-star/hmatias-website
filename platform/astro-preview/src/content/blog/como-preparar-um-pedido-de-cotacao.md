@@ -4,8 +4,10 @@ description: "Um guia prático sobre especificações, quantidades, destino, pra
 pubDate: 2026-11-11
 category: "Procurement e fornecimento"
 author: "Equipa Comercial HMATIAS"
-coverImage: "/images/hmatias/logistica-estrutura-metalica.webp"
-coverAlt: "Fotografia de logística e estruturas metálicas do portefólio HMATIAS."
+coverImage: "https://images.unsplash.com/photo-1721937127582-ed331de95a04?auto=format&fit=crop&w=1440&q=80"
+coverAlt: "Interior de armazém com caixas e paletes organizadas em corredores de armazenamento."
+coverCredit: "Ashley (@ashleynva)"
+coverCreditUrl: "https://unsplash.com/photos/a-warehouse-filled-with-lots-of-boxes-and-pallets-28b8xlTT5t4"
 language: "pt-AO"
 draft: false
 ---
