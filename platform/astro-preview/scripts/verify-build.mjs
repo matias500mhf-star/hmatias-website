@@ -385,6 +385,7 @@ const credibilityPath = join(outDir, "credibilidade", "index.html");
 assert.ok(existsSync(credibilityPath), "Dedicated credibility page must be generated");
 const credibilityHtml = readFileSync(credibilityPath, "utf8");
 assert.ok(credibilityHtml.includes("5001578065"), "Company NIF is missing from credibility page");
+assert.ok(credibilityHtml.includes('href="https://inapem.gov.ao/"'), "Credibility page must link to the official issuing institution");
 assert.ok(credibilityHtml.includes("24.094-23"), "Commercial registration is missing from credibility page");
 assert.ok(credibilityHtml.includes("IDENTIFICAÇÃO EMPRESARIAL"), "Company identification section is missing");
 assert.ok(credibilityHtml.includes("CONTACTO OFICIAL"), "Official contact section is missing");
@@ -410,6 +411,8 @@ for (const [route, heading, marker] of [
   }
 }
 
+const englishCredibilityHtml = readFileSync(join(outDir, "en", "credibility", "index.html"), "utf8");
+assert.ok(englishCredibilityHtml.includes('href="https://inapem.gov.ao/"'), "English credibility page must link to the official issuing institution");
 const englishPrivacyHtml = readFileSync(join(outDir, "en", "privacy", "index.html"), "utf8");
 const englishCookieHtml = readFileSync(join(outDir, "en", "cookies", "index.html"), "utf8");
 assert.match(englishCookieHtml, /Cookiebot/, "English Cookie Policy must describe the consent platform");
