@@ -123,7 +123,7 @@ for (const homepage of homepageRoutes) {
     const footerColumnOrder = await footerColumns.evaluateAll((columns) =>
       columns.map((column) => [...column.classList].find((className) => /^footer-(?:explore|identity|operations|contacts)$/.test(className)))
     );
-    expect(footerColumnOrder).toEqual(["footer-explore", "footer-identity", "footer-operations", "footer-contacts"]);
+    expect(footerColumnOrder).toEqual(["footer-identity", "footer-explore", "footer-operations", "footer-contacts"]);
     await expect(page.locator(".footer-operations h2")).toContainText(homepage.language === "en" ? "Areas and services" : "Áreas e serviços");
     await expect(page.locator(".footer-explore h2")).toHaveText(homepage.explore);
     await expect(page.locator(".footer-contacts h2")).toHaveText(homepage.contact);
