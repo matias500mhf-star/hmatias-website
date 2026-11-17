@@ -1072,6 +1072,25 @@ main li {
 }
 
 
+/* Desktop editorial image geometry: balanced frames, not overly panoramic cards. */
+.editorial-feature-visual img,
+.editorial-card-cover img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 650px) {
+  .editorial-feature-visual img {
+    aspect-ratio: 16 / 9;
+    max-height: 210px;
+  }
+  .editorial-card-cover img {
+    aspect-ratio: 16 / 9;
+    max-height: 180px;
+  }
+}
+
 /* HMATIAS primary navigation — complete, bilingual and keyboard accessible */
 .site-header { z-index: 40; }
 .header-inner { gap: clamp(12px, 1.8vw, 25px); }
