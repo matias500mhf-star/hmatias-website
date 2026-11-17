@@ -13,7 +13,7 @@ const { post } = Astro.props as Props;
 const { Content } = await render(post);
 const dateLabel = post.data.pubDate.toLocaleDateString("en", { day:"2-digit", month:"long", year:"numeric" });
 ---
-<BaseLayout title={`${post.data.title} | HMATIAS Blog`} description={post.data.description} lang="en">
+<BaseLayout title={`${post.data.title} | HMATIAS Blog`} description={post.data.description} lang="en" ogType="article" ogImage={post.data.coverImage} ogImageAlt={post.data.coverAlt}>
   <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS BLOG</span><span>{post.data.category.toUpperCase()}</span></div>
   <SiteHeader />
   <main class="article-page">
