@@ -1,59 +1,53 @@
 ---
-title: "Caso prático: preparar uma intervenção numa cobertura industrial"
-description: "Um cenário ilustrativo para estruturar a vistoria, o escopo, os materiais, a segurança e a receção de uma intervenção numa cobertura."
+title: "Substituição localizada de cobertura metálica: critérios de intervenção"
+description: "Um registo do portefólio HMATIAS documenta a substituição localizada de chapas com fixação mecânica e integração na cobertura existente."
 pubDate: 2026-11-13
 category: "Obras e manutenção"
-author: "Equipa Editorial HMATIAS"
-coverImage: "/images/hmatias/anexo-coberto-estrutura-metalica.webp"
-coverAlt: "Anexo coberto com estrutura metálica, documentado no portefólio HMATIAS."
+author: "Equipa Técnica HMATIAS"
+coverImage: "/images/hmatias/cobertura-metalica-substituicao.webp"
+coverAlt: "Substituição localizada de chapas de cobertura metálica, registada no portefólio HMATIAS."
 readingMinutes: 6
-contentType: "case-study"
+contentType: "guide"
 language: "pt-AO"
 draft: false
 ---
 
-> **Nota editorial:** este é um caso prático fictício e didáctico. Não representa uma obra real, um cliente ou um resultado atribuído à HMATIAS.
+O arquivo visual da HMATIAS regista uma intervenção de substituição localizada de chapas de cobertura metálica, com fixação mecânica e integração com a cobertura existente. O registo público não identifica cliente, localização, área intervencionada, datas, custo ou especificação completa do material.
 
-Imagine um edifício industrial com infiltrações reportadas em vários pontos da cobertura. A primeira decisão não deve ser comprar chapas ou contratar uma substituição integral. É necessário perceber a origem do problema, a extensão afetada e as condições de segurança.
+Este artigo parte desse trabalho documentado para explicar os pontos que devem ser definidos numa intervenção deste tipo. Não acrescenta medições nem resultados que não constem do registo.
 
-## 1. Transforme o relato numa vistoria verificável
+## 1. A vistoria deve separar sintomas de causas
 
-Registe a localização das infiltrações, a área aproximada, o tipo de cobertura, a inclinação, os elementos de fixação, as caleiras e os pontos de atravessamento. Fotografe as áreas acessíveis e identifique o que não pôde ser observado.
+Antes de especificar materiais, identifique o tipo de cobertura, a estrutura de apoio, o estado das chapas existentes, as fixações, os remates, as caleiras e os pontos de ligação. Registe as zonas acessíveis e assinale as áreas que não puderam ser observadas.
 
-A vistoria deve distinguir sinais visíveis de causas confirmadas. Uma mancha interior pode estar relacionada com a cobertura, mas também com condensação, drenagem ou uma ligação mal executada.
+Uma infiltração ou deformação visível é um sintoma. A causa deve ser confirmada antes de decidir entre reaperto, substituição localizada, reparação de remates ou intervenção mais extensa.
 
-## 2. Defina o escopo por zonas
+## 2. Delimite a área e as interfaces
 
-Divida a cobertura em zonas e classifique a intervenção necessária: reaperto ou substituição de fixações, tratamento de remates, reparação de caleiras, substituição localizada de chapas ou renovação de uma área mais extensa.
+A substituição localizada exige atenção à ligação entre chapas novas e existentes. Defina a área, o sentido de montagem, as sobreposições, os remates laterais e superiores, as ligações à estrutura e a compatibilidade com o sistema de drenagem.
 
-Cada zona deve ter quantidade estimada, método proposto e condição de medição. Se a medição ainda não foi possível, mantenha o valor como estimativa e preveja confirmação antes da encomenda.
+O escopo deve indicar o que está incluído e o que fica fora da intervenção. Caleiras, rufos, cumeeiras, isolamento e trabalhos interiores não devem ser presumidos como incluídos.
 
-## 3. Prepare a especificação de materiais
+## 3. Especifique as chapas e fixações
 
-Para chapas, indique material, perfil, espessura, revestimento, comprimento, cor quando relevante e compatibilidade com a estrutura existente. Para fixações e acessórios, indique tipo, protecção, vedante e quantidade.
+A especificação deve identificar material, perfil, espessura, revestimento, comprimento, largura útil, acabamento e cor quando relevante. Para fixações, indique tipo, comprimento, protecção contra corrosão, anilha e vedante compatíveis.
 
-Não escolha uma chapa apenas pela aparência. O sistema precisa de ser compatível com a estrutura, exposição ambiental, drenagem e requisitos do fabricante.
+A escolha deve considerar a estrutura existente e as recomendações do fabricante. Não se deve substituir uma referência por outra apenas porque a aparência é semelhante.
 
-## 4. Planeie acesso, segurança e continuidade operacional
+## 4. Planeie acesso e segurança
 
-Antes de iniciar, avalie trabalho em altura, pontos de ancoragem, protecção colectiva, condições meteorológicas, circulação de pessoas e eventual necessidade de isolar áreas interiores. Defina quem autoriza o acesso e como será mantida a operação do edifício.
+Avalie trabalho em altura, acessos, protecção colectiva, pontos de ancoragem, circulação de pessoas e condições meteorológicas. Defina a sequência de isolamento da área e as condições para interromper a actividade.
 
-O plano deve prever interrupção por vento, chuva ou condições que comprometam a segurança. A pressa não substitui o controlo de risco.
+O plano de execução deve identificar responsabilidades, meios de acesso e verificação antes de iniciar a desmontagem.
 
-## 5. Controle a execução e a receção
+## 5. Controle recepção e execução
 
-Use uma lista de verificação para conferir materiais recebidos, quantidades instaladas, fixações, remates, limpeza, remoção de resíduos e registo fotográfico. Qualquer alteração ao escopo deve ser documentada e aprovada antes de executar trabalho adicional.
+Na recepção, confronte quantidade, perfil, espessura, comprimento e estado das chapas com a especificação aprovada. Registe danos de transporte e divergências antes da instalação.
 
-A receção deve registar pendências, responsáveis e prazo de correção. O encerramento só deve ocorrer depois da verificação dos pontos acordados.
+Durante a execução, verifique alinhamento, sobreposições, fixações, remates e integração com a cobertura existente. A aceitação deve seguir os critérios definidos no escopo e as recomendações técnicas aplicáveis.
 
-## Documentos úteis para organizar o trabalho
+## O que o registo público permite afirmar
 
-| Etapa | Registo recomendado |
-|---|---|
-| Vistoria | Ficha de inspeção e fotografias |
-| Planeamento | Mapa de zonas, medições e riscos |
-| Aquisição | Especificação e mapa comparativo |
-| Execução | Ordem de trabalho e registo diário |
-| Receção | Lista de verificação e termo de entrega |
+O portefólio documenta uma substituição localizada de chapas de cobertura, com fixação mecânica e integração na cobertura existente. Não permite afirmar a área, o prazo, o valor contratual, o cliente ou a localização exacta. A HMATIAS mantém esses dados fora da publicação quando não estão autorizados ou documentados.
 
-O valor do método está em reduzir decisões tomadas sem medição, sem especificação ou sem controlo de segurança. Em qualquer edifício real, o escopo final deve resultar de vistoria técnica e validação por profissionais competentes.
+**Nota de transparência:** a fotografia corresponde ao registo visual da intervenção no portefólio HMATIAS; este artigo não acrescenta dados contratuais nem identifica o cliente.
