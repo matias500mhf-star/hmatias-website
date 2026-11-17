@@ -105,6 +105,7 @@ test("all English routes expose matching language, brand descriptions and recipr
     ["/en/source-ao/smart-rfq/", "/source-ao/smart-rfq/"],
     ["/en/accessibility/", "/acessibilidade/"],
     ["/en/privacy/", "/privacidade/"],
+    ["/en/cookies/", "/cookies/"],
     ["/en/terms/", "/termos/"],
     ["/en/karta/", "/karta/"],
     ["/en/integrated-yard/", "/estaleiro/"],
