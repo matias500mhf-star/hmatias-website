@@ -102,7 +102,7 @@ for (const homepage of homepageRoutes) {
     await servicesToggle.click();
     await expect(servicesToggle).toHaveAttribute("aria-expanded", "true");
     await expect(nav.locator(".nav-item").nth(1).locator(".nav-submenu a").first()).toBeVisible();
-    await nav.locator(".nav-item").nth(0).locator(".nav-submenu a").first().click();
+    await nav.locator(".nav-item").nth(1).locator(".nav-submenu a").first().click();
     await expect(menuToggle).toHaveAttribute("aria-expanded", "false");
     await expect(nav).toBeHidden();
 
