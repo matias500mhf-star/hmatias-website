@@ -70,6 +70,15 @@ import SiteFooter from "../../components/SiteFooter.astro";
 .about-intro h1 em{color:#b9d8ed;font-family:var(--hm-serif);font-weight:400}
 .about-lead{margin:25px 0 0;color:#e3edf6;font-size:14px;line-height:1.9}
 .company-profile,.about-purpose{background:var(--hm-paper)}
+/* About-page headings must stack; the global section-heading flex row misaligns
+   the kicker and title inside the narrow first grid column on desktop. */
+.about-page .section-heading{display:block;min-width:0}
+.about-page .section-heading>.section-kicker{margin:0 0 14px;padding-top:0}
+.about-page .section-heading h2{margin:0;max-width:18ch}
+@media(min-width:701px) and (max-width:1100px){
+  .about-page .purpose-grid{grid-template-columns:1fr}
+  .about-page .purpose-card{min-height:0}
+}
 .about-ceo{background:var(--hm-light)}
 .company-profile,.about-purpose,.about-ceo{display:grid;grid-template-columns:minmax(210px,.72fr) minmax(0,1.28fr);column-gap:clamp(32px,6vw,78px);row-gap:22px;align-items:start}
 .company-profile .section-heading,.about-purpose .section-heading,.about-ceo .section-heading{min-width:0}
