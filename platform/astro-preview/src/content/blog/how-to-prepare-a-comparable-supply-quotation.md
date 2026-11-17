@@ -4,8 +4,10 @@ description: "A practical guide to product specifications, quantities, delivery 
 pubDate: 2026-11-11
 category: "Procurement and Supply"
 author: "HMATIAS Commercial Team"
-coverImage: "/images/hmatias/logistica-estrutura-metalica.webp"
-coverAlt: "Photograph of logistics and metal structures from the HMATIAS portfolio."
+coverImage: "https://images.unsplash.com/photo-1721937127582-ed331de95a04?auto=format&fit=crop&w=1440&q=80"
+coverAlt: "Warehouse interior with boxes and pallets arranged along storage aisles."
+coverCredit: "Ashley (@ashleynva)"
+coverCreditUrl: "https://unsplash.com/photos/a-warehouse-filled-with-lots-of-boxes-and-pallets-28b8xlTT5t4"
 language: "en"
 draft: false
 ---
