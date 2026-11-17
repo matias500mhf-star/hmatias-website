@@ -1,59 +1,53 @@
 ---
-title: "Illustrative case: planning an industrial roof intervention"
-description: "A practical scenario for structuring a survey, scope, materials, safety controls and acceptance checks for a roof intervention."
+title: "Localised metal roof replacement: intervention criteria"
+description: "A HMATIAS portfolio record documents localised sheet replacement with mechanical fastening and integration with the existing roof system."
 pubDate: 2026-11-13
 category: "Construction and Maintenance"
-author: "HMATIAS Editorial Team"
-coverImage: "/images/hmatias/anexo-coberto-estrutura-metalica.webp"
-coverAlt: "Covered annex with a metal structure, documented in the HMATIAS portfolio."
+author: "HMATIAS Technical Team"
+coverImage: "/images/hmatias/cobertura-metalica-substituicao.webp"
+coverAlt: "Localised replacement of metal roof sheets documented in the HMATIAS portfolio."
 readingMinutes: 6
-contentType: "case-study"
+contentType: "guide"
 language: "en"
 draft: false
 ---
 
-> **Editorial note:** this is a fictional teaching scenario. It does not describe a real project, client or result delivered by HMATIAS.
+The HMATIAS visual portfolio records a localised metal roof sheet replacement, using mechanical fastening and integration with the existing roof. The public record does not identify the client, location, intervention area, dates, cost or full material specification.
 
-Imagine an industrial building where leaks have been reported at several points on the roof. The first decision should not be to purchase sheets or commission a complete replacement. The cause, affected area and safety conditions need to be understood first.
+This article uses that documented work to explain the points that should be defined for an intervention of this type. It does not add measurements or results that are not present in the record.
 
-## 1. Turn the report into a verifiable survey
+## 1. A survey must separate symptoms from causes
 
-Record the location of leaks, approximate area, roof type, slope, fasteners, gutters and penetrations. Photograph accessible areas and identify what could not be inspected.
+Before specifying materials, identify the roof type, supporting structure, condition of existing sheets, fasteners, flashings, gutters and connection points. Record accessible areas and identify sections that could not be inspected.
 
-The survey must separate visible symptoms from confirmed causes. An internal stain may relate to the roof, but it may also be caused by condensation, drainage or a poorly executed connection.
+A visible leak or deformation is a symptom. Its cause should be confirmed before deciding between retightening, localised replacement, flashing repair or a wider intervention.
 
-## 2. Define the scope by zones
+## 2. Define the area and interfaces
 
-Divide the roof into zones and classify the intervention: tightening or replacing fasteners, repairing flashings, repairing gutters, replacing individual sheets or renewing a larger area.
+Localised replacement requires careful attention to the connection between new and existing sheets. Define the area, installation direction, overlaps, side and upper flashings, structural connections and compatibility with the drainage system.
 
-Each zone should have an estimated quantity, proposed method and measurement basis. Where measurement is not yet possible, keep the quantity as an estimate and require confirmation before ordering.
+The scope should state what is included and excluded. Gutters, flashings, ridges, insulation and internal works must not be assumed to be included.
 
-## 3. Prepare the material specification
+## 3. Specify sheets and fasteners
 
-For roof sheets, specify material, profile, thickness, coating, length, colour where relevant and compatibility with the existing structure. For fasteners and accessories, specify type, corrosion protection, seal and quantity.
+The specification should identify material, profile, thickness, coating, length, effective width, finish and colour where relevant. For fasteners, state type, length, corrosion protection, washer and compatible seal.
 
-Do not select a sheet on appearance alone. The system must be compatible with the structure, environmental exposure, drainage and manufacturer requirements.
+Selection should consider the existing structure and manufacturer guidance. A reference should not be replaced merely because another product looks similar.
 
-## 4. Plan access, safety and operational continuity
+## 4. Plan access and safety
 
-Assess work at height, anchor points, collective protection, weather conditions, pedestrian routes and whether internal areas must be isolated. Define who authorises access and how building operations will be maintained.
+Assess work at height, access, collective protection, anchor points, pedestrian routes and weather conditions. Define the sequence for isolating the area and the conditions that require work to stop.
 
-The plan should require work to stop during wind, rain or any condition that compromises safety. Urgency does not replace risk control.
+The execution plan should identify responsibilities, access equipment and checks before dismantling begins.
 
-## 5. Control execution and acceptance
+## 5. Control receipt and execution
 
-Use a checklist to verify received materials, installed quantities, fasteners, flashings, cleaning, waste removal and photographic records. Any scope change should be documented and approved before additional work begins.
+On receipt, compare quantity, profile, thickness, length and sheet condition with the approved specification. Record transport damage and discrepancies before installation.
 
-Acceptance should record outstanding items, responsible persons and correction dates. Close-out should only occur after the agreed checks have been completed.
+During execution, check alignment, overlaps, fasteners, flashings and integration with the existing roof. Acceptance should follow the scope criteria and applicable technical recommendations.
 
-## Useful records for organising the work
+## What the public record supports
 
-| Stage | Suggested record |
-|---|---|
-| Survey | Inspection sheet and photographs |
-| Planning | Zone map, measurements and risk review |
-| Procurement | Specification and comparison matrix |
-| Execution | Work order and daily record |
-| Handover | Inspection checklist and acceptance record |
+The portfolio documents a localised replacement of roof sheets, with mechanical fastening and integration with the existing roof. It does not support claims about the area, duration, contract value, client or exact location. HMATIAS keeps such details unpublished where they are not authorised or documented.
 
-The value of the method is to reduce decisions made without measurement, specification or safety control. For any real building, the final scope must follow a technical survey and validation by competent professionals.
+**Transparency note:** the photograph belongs to the intervention record in the HMATIAS portfolio; this article adds no contract data and does not identify the client.
