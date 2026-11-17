@@ -17,6 +17,7 @@ const ptToEn: Record<string, string> = {
   "/blog/": "/en/blog/",
   "/acessibilidade/": "/en/accessibility/",
   "/privacidade/": "/en/privacy/",
+  "/cookies/": "/en/cookies/",
   "/termos/": "/en/terms/",
   "/source-ao/": "/en/source-ao/",
   "/source-ao/smart-rfq/": "/en/source-ao/smart-rfq/",
