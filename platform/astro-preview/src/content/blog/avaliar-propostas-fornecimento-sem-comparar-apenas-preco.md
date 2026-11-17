@@ -4,8 +4,10 @@ description: "Um método para comparar conformidade técnica, custo total, prazo
 pubDate: 2026-11-13
 category: "Procurement e fornecimento"
 author: "Equipa Editorial HMATIAS"
-coverImage: "/images/hmatias/perfis-metalicos-estrutura.webp"
-coverAlt: "Perfis metálicos fotografados num trabalho do portefólio HMATIAS."
+coverImage: "https://images.unsplash.com/photo-1748347084012-075796185d56?auto=format&fit=crop&w=1440&q=80"
+coverAlt: "Técnico a inspecionar equipamento industrial numa instalação de produção."
+coverCredit: "TECNIC Bioprocess Solutions"
+coverCreditUrl: "https://unsplash.com/photos/a-man-inspects-equipment-in-a-modern-factory--Wt8AyCr9i4"
 readingMinutes: 5
 contentType: "guide"
 language: "pt-AO"
