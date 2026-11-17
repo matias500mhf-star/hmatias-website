@@ -4,10 +4,8 @@ description: "A practical scenario for structuring a survey, scope, materials, s
 pubDate: 2026-11-13
 category: "Construction and Maintenance"
 author: "HMATIAS Editorial Team"
-coverImage: "https://images.unsplash.com/photo-1758609554326-ebf110a4c142?auto=format&fit=crop&w=1440&q=82"
-coverAlt: "Illustrative photograph of construction materials arranged for a supply delivery."
-photoCredit: "skstrannik"
-photoCreditUrl: "https://unsplash.com/photos/construction-materials-stacked-outdoors-near-a-wall-ZpTwV-4jU08"
+coverImage: "/images/hmatias/anexo-coberto-estrutura-metalica.webp"
+coverAlt: "Covered annex with a metal structure, documented in the HMATIAS portfolio."
 readingMinutes: 6
 contentType: "case-study"
 language: "en"
