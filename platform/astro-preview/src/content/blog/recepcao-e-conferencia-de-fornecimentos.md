@@ -4,8 +4,10 @@ description: "Uma checklist para confirmar quantidades, especificações, estado
 pubDate: 2026-11-13
 category: "Procurement e fornecimento"
 author: "Equipa Editorial HMATIAS"
-coverImage: "/images/hmatias/pavilhoes-rurais-concluidos.webp"
-coverAlt: "Pavilhões rurais concluídos, documentados no portefólio HMATIAS."
+coverImage: "https://images.unsplash.com/photo-1779517226273-bcf843b759b9?auto=format&fit=crop&w=1440&q=80"
+coverAlt: "Empilhador a carregar paletes de mercadoria para um camião."
+coverCredit: "Bernd Dittrich"
+coverCreditUrl: "https://unsplash.com/photos/a-forklift-loads-pallets-of-goods-into-a-truck-qBD1__CH_MI"
 readingMinutes: 4
 contentType: "guide"
 language: "pt-AO"
