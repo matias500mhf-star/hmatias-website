@@ -28,14 +28,6 @@ const links = isEnglish
 ---
 <footer class="site-footer" data-language={isEnglish ? "en" : "pt"}>
   <div class="footer-main">
-    <nav class="footer-column footer-explore" aria-label={isEnglish ? "Explore HMATIAS" : "Explorar HMATIAS"}>
-      <h2>{isEnglish ? "Explore" : "Explorar"}</h2>
-      <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
-      <a class="footer-source-link" href={isEnglish ? "/en/source-ao/" : company.sourceAoUrl}>SOURCE AO</a>
-      <a href={links.blog}>{isEnglish ? "Blog · Business perspectives" : "Blog · Perspetivas empresariais"}</a>
-      <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
-    </nav>
-
     <div class="footer-column footer-identity">
       <a class="footer-logo" href={homeUrl + "#inicio"} aria-label={isEnglish ? "HMATIAS — back to home" : "HMATIAS — voltar ao início"}>
         <Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services in Angola" : "HMATIAS — Construção, Facilities, Supply e Business Services em Angola"} widths={[96, 128]} sizes="64px" format="webp" quality={82} />
@@ -45,6 +37,14 @@ const links = isEnglish
         ? "Construction, Facilities, Supply and Business Services for companies and projects in Angola."
         : "Construção, Facilities, Supply e Business Services para empresas e projetos em Angola."}</p>
     </div>
+
+    <nav class="footer-column footer-explore" aria-label={isEnglish ? "Explore HMATIAS" : "Explorar HMATIAS"}>
+      <h2>{isEnglish ? "Explore" : "Explorar"}</h2>
+      <a href={links.about}>{isEnglish ? "About HMATIAS" : "Sobre a HMATIAS"}</a>
+      <a class="footer-source-link" href={isEnglish ? "/en/source-ao/" : company.sourceAoUrl}>SOURCE AO</a>
+      <a href={links.blog}>{isEnglish ? "Blog · Business perspectives" : "Blog · Perspetivas empresariais"}</a>
+      <a href={isEnglish ? "/en/karta/" : "/karta/"}>KARTA Wallet · {isEnglish ? "Alpha project" : "Projeto Alpha"}</a>
+    </nav>
 
     <nav class="footer-column footer-operations" aria-label={isEnglish ? "Operational areas and services" : "Áreas e serviços operacionais"}>
       <h2>{isEnglish ? "Areas and services" : "Áreas e serviços"}</h2>
