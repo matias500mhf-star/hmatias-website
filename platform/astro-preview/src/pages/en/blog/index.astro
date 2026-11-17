@@ -10,7 +10,7 @@ const featuredDate = featured?.data.pubDate.toLocaleDateString("en",{day:"2-digi
 const categories = [...new Set(posts.map((post)=>post.data.category))];
 const categoryGroups = categories.map((category)=>({name:category,id:"category-"+category.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""),items:posts.filter((post)=>post.data.category===category&&post.id!==featured?.id)})).filter((group)=>group.items.length>0);
 ---
-<BaseLayout title="HMATIAS Blog | Business Perspectives and Practical Guides" description="Technical guides and procurement notes on construction, maintenance, supply and operations in Angola, grounded in the HMATIAS visual portfolio and working methods." lang="en">
+<BaseLayout title="HMATIAS Blog | Business Perspectives and Practical Guides" description="Technical guides and procurement notes on construction, maintenance, supply and operations in Angola, focused on practical methods and activities within the HMATIAS service areas." lang="en">
   <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS PUBLICATIONS</span><span>WORKS · PROCUREMENT · OPERATIONS</span></div>
   <SiteHeader />
   <main class="editorial-page">
@@ -42,7 +42,7 @@ const categoryGroups = categories.map((category)=>({name:category,id:"category-"
           <div class="editorial-card-grid">
             {group.items.map((post)=><article class="editorial-card">
               <figure class="editorial-card-cover">
-                <img src={responsiveImageUrl(post.data.coverImage, 1200)} srcset={responsiveImageSrcset(post.data.coverImage)} sizes="(max-width: 650px) calc(100vw - 44px), (max-width: 900px) calc((100vw - 72px) / 2), 30vw" alt={post.data.coverAlt} width="1200" height="675" loading="lazy" decoding="async" />
+                <img src={responsiveImageUrl(post.data.coverImage, 1200)} srcset={responsiveImageSrcset(post.data.coverImage)} sizes="(max-width: 650px) calc(100vw - 44px), (max-width: 900px) calc((100vw - 72px) / 2), 30vw" alt={post.data.coverAlt} width="1440" height="810" loading="lazy" decoding="async" />
                 <figcaption>Illustrative image only; it does not document a specific HMATIAS project. Photo credit: <a href={post.data.coverCreditUrl} target="_blank" rel="noopener noreferrer">{post.data.coverCredit}</a>, via Unsplash.</figcaption>
               </figure>
               <p class="editorial-card-type">{post.data.contentType==="case-study"?"Illustrative case study":"Technical guide"}</p>
@@ -54,7 +54,7 @@ const categoryGroups = categories.map((category)=>({name:category,id:"category-"
           </div>
         </section>)}
       </div>
-      <p class="editorial-archive-note">Photographs belong to the HMATIAS visual portfolio. Their use does not identify clients, locations or contracts where those details are not authorised for publication.</p>
+      <p class="editorial-archive-note">Blog images are illustrative and do not document specific HMATIAS projects. For documented interventions, consult the Works Catalogue.</p>
       <div class="editorial-contact"><p>For a specific supply requirement, describe the items, quantities and delivery location in SOURCE AO.</p><a class="button button-dark" href="/en/source-ao/smart-rfq/">Prepare a Smart RFQ <span aria-hidden="true">↗</span></a></div>
     </section>
   </main>
