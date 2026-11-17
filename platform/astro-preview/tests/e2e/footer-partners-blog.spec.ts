@@ -280,6 +280,23 @@ for (const route of [
         .map((figure) => figure.textContent?.trim() || "Uncredited editorial image")
     );
     expect(missingCredits).toEqual([]);
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    const featuredDesktopFrame = await page.locator(".editorial-feature-visual img").evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return { ratio: rect.width / rect.height, objectFit: getComputedStyle(element).objectFit };
+    });
+    expect(featuredDesktopFrame.ratio).toBeGreaterThan(1.30);
+    expect(featuredDesktopFrame.ratio).toBeLessThan(1.37);
+    expect(featuredDesktopFrame.objectFit).toBe("cover");
+
+    const archiveDesktopFrame = await page.locator(".editorial-card-cover img").first().evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return { ratio: rect.width / rect.height, objectFit: getComputedStyle(element).objectFit };
+    });
+    expect(archiveDesktopFrame.ratio).toBeGreaterThan(1.30);
+    expect(archiveDesktopFrame.ratio).toBeLessThan(1.37);
+    expect(archiveDesktopFrame.objectFit).toBe("cover");
+
     await expect(page.locator(".editorial-archive-note")).toContainText(
       route.language === "en" ? "do not represent HMATIAS projects" : "Não representam obras"
     );
