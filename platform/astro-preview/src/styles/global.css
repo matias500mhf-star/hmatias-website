@@ -1134,8 +1134,6 @@ main li {
   background: #fff;
   box-shadow: 0 14px 34px rgb(3 31 61 / 14%);
 }
-.nav-item:hover > .nav-submenu,
-.nav-item:focus-within > .nav-submenu,
 .nav-item.submenu-open > .nav-submenu { display: grid; }
 .nav-submenu a {
   min-height: 42px;
