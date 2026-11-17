@@ -28,11 +28,9 @@ concurrency:
 jobs:
   build-and-verify:
     runs-on: ubuntu-latest
-    # Simulate the Vercel preview environment so the generated canonical/hreflang
-    # URLs are verified against a deployment hostname rather than the Render fallback.
+    # Use the stable Cloudflare Pages branch-preview hostname for canonical/hreflang checks.
     env:
-      VERCEL_ENV: preview
-      VERCEL_URL: astro-preview-qa.hmatias.invalid
+      ASTRO_PREVIEW_SITE_URL: https://pr-316.hmatias-pr316-preview.pages.dev
     defaults:
       run:
         working-directory: platform/astro-preview
@@ -107,3 +105,64 @@ jobs:
           path: platform/astro-preview/package-lock.json
           if-no-files-found: error
           retention-days: 7
+
+  deploy-cloudflare-pages-preview:
+    name: Deploy isolated Cloudflare Pages preview
+    if: github.event_name == 'pull_request' && github.event.pull_request.number == 316
+    needs: build-and-verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+      CF_PAGES_PROJECT: hmatias-pr316-preview
+      CF_PAGES_BRANCH: pr-316
+    steps:
+      - name: Check Cloudflare credentials
+        id: credentials
+        shell: bash
+        run: |
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Cloudflare Pages deploy skipped. Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID to repository Actions secrets (or account ID as a variable)."
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Ensure isolated Pages project exists
+        if: steps.credentials.outputs.ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          api="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects"
+          status="$(curl --silent --show-error --output "$RUNNER_TEMP/pages-project.json" --write-out '%{http_code}' \
+            --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "$api/$CF_PAGES_PROJECT")"
+          if [ "$status" = "200" ]; then
+            echo "Cloudflare Pages preview project already exists."
+          elif [ "$status" = "404" ]; then
+            status="$(curl --silent --show-error --output "$RUNNER_TEMP/pages-create.json" --write-out '%{http_code}' \
+              --request POST "$api" \
+              --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              --header "Content-Type: application/json" \
+              --data "{\"name\":\"$CF_PAGES_PROJECT\",\"production_branch\":\"main\"}")"
+            [ "$status" = "200" ] || { cat "$RUNNER_TEMP/pages-create.json"; echo "::error::Could not create isolated Cloudflare Pages project (HTTP $status)."; exit 1; }
+          else
+            cat "$RUNNER_TEMP/pages-project.json"
+            echo "::error::Could not inspect Cloudflare Pages project (HTTP $status)."
+            exit 1
+          fi
+
+      - name: Download verified static site artifact
+        if: steps.credentials.outputs.ready == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: hmatias-astro-preview
+          path: ./cloudflare-pages-dist
+
+      - name: Publish Pull Request preview
+        if: steps.credentials.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy ./cloudflare-pages-dist --project-name=hmatias-pr316-preview --branch=pr-316
