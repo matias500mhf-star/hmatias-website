@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import { company } from "../../data/site";
+import { responsiveImageUrl, responsiveImageSrcset } from "../../utils/responsive-images";
 import { getCollection } from "astro:content";
 const posts = (await getCollection("blog", ({ data }) => !data.draft && data.language === "pt-AO")).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
 const featured = posts[0];
@@ -24,8 +25,8 @@ const categoryGroups = categories.map((category)=>({name:category,id:"categoria-
         <div class="editorial-label">EM DESTAQUE · {featuredDate?.toUpperCase()}</div>
         <article class="editorial-feature">
           <figure class="editorial-feature-visual">
-            <img src={featured.data.coverImage} sizes="(max-width: 760px) calc(100vw - 44px), 42vw" alt={featured.data.coverAlt} width="1200" height="675" loading="eager" fetchpriority="high" decoding="async" />
-            <figcaption>Fotografia real do portefólio HMATIAS; não identifica um cliente nem atribui ao trabalho fotografado o cenário do artigo.</figcaption>
+            <img src={responsiveImageUrl(featured.data.coverImage, 1200)} srcset={responsiveImageSrcset(featured.data.coverImage)} sizes="(max-width: 760px) calc(100vw - 44px), 42vw" alt={featured.data.coverAlt} width="1440" height="810" loading="eager" fetchpriority="high" decoding="async" />
+            <figcaption>Imagem ilustrativa; não representa um trabalho específico da HMATIAS. Crédito fotográfico: <a href={featured.data.coverCreditUrl} target="_blank" rel="noopener noreferrer">{featured.data.coverCredit}</a>, via Unsplash.</figcaption>
           </figure>
           <p class="editorial-meta">{featured.data.contentType==="case-study"?"CASO PRÁTICO ILUSTRATIVO":"GUIA TÉCNICO"} · {featured.data.category.toUpperCase()} · {featured.data.readingMinutes} MIN DE LEITURA</p>
           <h2><a href={"/blog/"+featured.id+"/"}>{featured.data.title}</a></h2>
@@ -42,8 +43,8 @@ const categoryGroups = categories.map((category)=>({name:category,id:"categoria-
           <div class="editorial-card-grid">
             {group.items.map((post)=><article class="editorial-card">
               <figure class="editorial-card-cover">
-                <img src={post.data.coverImage} sizes="(max-width: 650px) calc(100vw - 44px), (max-width: 900px) calc((100vw - 72px) / 2), 30vw" alt={post.data.coverAlt} width="1200" height="675" loading="lazy" decoding="async" />
-                <figcaption>Fotografia real do portefólio HMATIAS; não identifica um cliente nem atribui ao trabalho fotografado o cenário do artigo.</figcaption>
+                <img src={responsiveImageUrl(post.data.coverImage, 1200)} srcset={responsiveImageSrcset(post.data.coverImage)} sizes="(max-width: 650px) calc(100vw - 44px), (max-width: 900px) calc((100vw - 72px) / 2), 30vw" alt={post.data.coverAlt} width="1200" height="675" loading="lazy" decoding="async" />
+                <figcaption>Imagem ilustrativa; não representa um trabalho específico da HMATIAS. Crédito fotográfico: <a href={post.data.coverCreditUrl} target="_blank" rel="noopener noreferrer">{post.data.coverCredit}</a>, via Unsplash.</figcaption>
               </figure>
               <p class="editorial-card-type">{post.data.contentType==="case-study"?"Caso prático ilustrativo":"Guia técnico"}</p>
               <h3><a href={"/blog/"+post.id+"/"}>{post.data.title}</a></h3>
