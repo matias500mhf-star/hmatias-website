@@ -9,7 +9,7 @@ const EXCLUDED_IDS = new Set(["item-formaldehyde"]);
 const normalizePublicTaxonomyAlias = (value) => String(value).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 const isExcludedPublicTaxonomyAlias = (value) => {
   const alias = normalizePublicTaxonomyAlias(value);
-  return /^(formaldehyde|formaldeido|formol|formalin)(\\s|$)/.test(alias) || alias === "cas 50 00 0";
+  return /^(formaldehyde|formaldeido|formol|formalin)(\s|$)/.test(alias) || alias === "cas 50 00 0";
 };
 const PUBLIC_RULE = "Only curated public supply families are exposed. Prices, suppliers, stock, availability and internal commercial data are not included.";
 const ALLOWED_MASTER_KEYS = ["version", "updated_at", "items", "taxonomy"];
