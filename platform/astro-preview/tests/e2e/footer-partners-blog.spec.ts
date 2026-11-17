@@ -55,30 +55,36 @@ for (const homepage of homepageRoutes) {
     const nav = page.locator(".main-nav");
     const isEnglish = homepage.language === "en";
     await expect(nav.locator(":scope > .nav-link")).toHaveCount(3);
-    await expect(nav.locator(".nav-item")).toHaveCount(3);
+    await expect(nav.locator(".nav-item")).toHaveCount(4);
     await expect(nav.locator(".nav-home")).toHaveAttribute("href", isEnglish ? "/en/#inicio" : "/#inicio");
     await expect(nav.locator(".nav-about")).toHaveAttribute("href", isEnglish ? "/en/about/" : "/empresa/");
     await expect(nav.locator(".nav-blog")).toHaveAttribute("href", isEnglish ? "/en/blog/" : "/blog/");
     await expect(nav.getByRole("link", { name: isEnglish ? "Services" : "Serviços", exact: true })).toHaveAttribute("href", isEnglish ? "/en/#services" : "/#servicos");
     await expect(nav.getByRole("link", { name: isEnglish ? "Projects" : "Projetos", exact: true })).toHaveAttribute("href", isEnglish ? "/en/#projects" : "/#projetos");
     await expect(nav.getByRole("link", { name: "SOURCE AO", exact: true })).toHaveAttribute("href", homepage.sourceHref);
-    await expect(nav.locator(".nav-item").nth(0).locator(".nav-submenu a")).toHaveCount(4);
-    await expect(nav.locator(".nav-item").nth(1).locator(".nav-submenu a")).toHaveCount(2);
-    await expect(nav.locator(".nav-item").nth(2).locator(".nav-submenu a")).toHaveCount(3);
+    await expect(nav.locator(".nav-item").nth(0).locator(".nav-submenu a")).toHaveCount(3);
+    await expect(nav.locator(".nav-item").nth(1).locator(".nav-submenu a")).toHaveCount(4);
+    await expect(nav.locator(".nav-item").nth(2).locator(".nav-submenu a")).toHaveCount(2);
+    await expect(nav.locator(".nav-item").nth(3).locator(".nav-submenu a")).toHaveCount(3);
+    const expectedAboutTargets = isEnglish
+      ? ["/en/about/", "/en/credibility/", "/en/#partners"]
+      : ["/empresa/", "/credibilidade/", "/#parceiros"];
+    const aboutTargets = await nav.locator(".nav-item").nth(0).locator(".nav-submenu a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).getAttribute("href")));
+    expect(aboutTargets).toEqual(expectedAboutTargets);
     const expectedServiceTargets = isEnglish
       ? ["/en/construction/", "/en/facilities/", "/en/supply/", "/en/business-services/"]
       : ["/construcao/", "/facilities/", "/supply/", "/business-services/"];
-    const serviceTargets = await nav.locator(".nav-item").nth(0).locator(".nav-submenu a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).getAttribute("href")));
+    const serviceTargets = await nav.locator(".nav-item").nth(1).locator(".nav-submenu a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).getAttribute("href")));
     expect(serviceTargets).toEqual(expectedServiceTargets);
     const expectedProjectTargets = isEnglish
       ? ["/en/works-catalogue/", "/en/integrated-yard/"]
       : ["/catalogo-obras/", "/estaleiro/"];
-    const projectTargets = await nav.locator(".nav-item").nth(1).locator(".nav-submenu a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).getAttribute("href")));
+    const projectTargets = await nav.locator(".nav-item").nth(2).locator(".nav-submenu a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).getAttribute("href")));
     expect(projectTargets).toEqual(expectedProjectTargets);
     const expectedSourceTargets = isEnglish
       ? ["/en/source-ao/radar/", "/en/source-ao/smart-rfq/", "/en/source-ao/partners/"]
       : ["/source-ao/radar/", "/source-ao/smart-rfq/", "/source-ao/parceiros/"];
-    const sourceTargets = await nav.locator(".nav-item").nth(2).locator(".nav-submenu a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).getAttribute("href")));
+    const sourceTargets = await nav.locator(".nav-item").nth(3).locator(".nav-submenu a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).getAttribute("href")));
     expect(sourceTargets).toEqual(expectedSourceTargets);
     const quoteLink = nav.locator(".nav-quote");
     await expect(quoteLink).toHaveAttribute("href", isEnglish ? "https://comercialhmatiasps.com/en.html#contact" : "https://comercialhmatiasps.com/#contacto");
@@ -91,11 +97,11 @@ for (const homepage of homepageRoutes) {
     await menuToggle.click();
     await expect(menuToggle).toHaveAttribute("aria-expanded", "true");
     await expect(nav).toBeVisible();
-    const servicesToggle = nav.locator(".nav-item").nth(0).locator(".submenu-toggle");
+    const servicesToggle = nav.locator(".nav-item").nth(1).locator(".submenu-toggle");
     await expect(servicesToggle).toHaveAttribute("aria-expanded", "false");
     await servicesToggle.click();
     await expect(servicesToggle).toHaveAttribute("aria-expanded", "true");
-    await expect(nav.locator(".nav-item").nth(0).locator(".nav-submenu a").first()).toBeVisible();
+    await expect(nav.locator(".nav-item").nth(1).locator(".nav-submenu a").first()).toBeVisible();
     await nav.locator(".nav-item").nth(0).locator(".nav-submenu a").first().click();
     await expect(menuToggle).toHaveAttribute("aria-expanded", "false");
     await expect(nav).toBeHidden();
