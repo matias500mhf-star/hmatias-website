@@ -162,10 +162,12 @@ const blogHtml = readFileSync(blogPath, "utf8");
 assert.match(blogHtml, /Perspetivas empresariais/, "Blog page content is missing");
 assert.ok(blogHtml.includes("/blog/como-preparar-um-pedido-de-cotacao/"), "Blog must link to its published Supply guide");
 assert.ok(!blogHtml.includes("EM PREPARAÇÃO"), "The blog must not present the featured article as a placeholder");
-assert.match(blogHtml, /editorial-feature-visual/, "Featured Blog article must include an illustrative photo");
-assert.match(blogHtml, /Imagem ilustrativa/, "Portuguese Blog must label its photos as illustrative");
+assert.match(blogHtml, /editorial-feature-visual/, "Featured Blog article must include a portfolio photograph");
+assert.match(blogHtml, /Fotografia real do portefólio HMATIAS/, "Portuguese Blog must identify its real HMATIAS portfolio photographs");
+assert.doesNotMatch(blogHtml, /images\\.unsplash\\.com|unsplash\\.com/i, "Portuguese Blog must not load stock photography");
 const englishBlogHtml = readFileSync(join(outDir, "en", "blog", "index.html"), "utf8");
-assert.match(englishBlogHtml, /Illustrative image/, "English Blog must label its photos as illustrative");
+assert.match(englishBlogHtml, /Real photograph from the HMATIAS portfolio/, "English Blog must identify its real HMATIAS portfolio photographs");
+assert.doesNotMatch(englishBlogHtml, /images\\.unsplash\\.com|unsplash\\.com/i, "English Blog must not load stock photography");
 
 const supplyGuidePath = join(outDir, "blog", "como-preparar-um-pedido-de-cotacao", "index.html");
 assert.ok(existsSync(supplyGuidePath), "The published HMATIAS Supply guide must be generated");
@@ -175,7 +177,8 @@ assert.match(supplyGuideHtml, /quantidade e unidade/i, "Supply guide must explai
 assert.match(supplyGuideHtml, /local de entrega/i, "Supply guide must explain delivery destination");
 assert.match(supplyGuideHtml, /até 20 linhas/i, "Supply guide must reflect the Smart RFQ item limit");
 assert.ok(supplyGuideHtml.includes('href="/source-ao/smart-rfq/"'), "Supply guide must link to Smart RFQ");
-assert.match(supplyGuideHtml, /article-cover-figure/, "Supply article must include a credited illustrative cover image");
+assert.match(supplyGuideHtml, /article-cover-figure/, "Supply article must include its portfolio cover image");
+assert.match(supplyGuideHtml, /Fotografia real do portefólio HMATIAS/, "Supply article must disclose the contextual use of its portfolio photograph");
 const accessibilityPath = join(outDir, "acessibilidade", "index.html");
 assert.ok(existsSync(accessibilityPath), "Accessibility page must be generated");
 const accessibilityHtml = readFileSync(accessibilityPath, "utf8");
