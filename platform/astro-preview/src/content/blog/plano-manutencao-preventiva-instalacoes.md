@@ -4,8 +4,10 @@ description: "Um roteiro para inventariar activos, definir criticidade, calendar
 pubDate: 2026-11-13
 category: "Gestão operacional"
 author: "Equipa Editorial HMATIAS"
-coverImage: "/images/hmatias/instalacoes-embutidas-construcao.webp"
-coverAlt: "Instalações embutidas documentadas num trabalho do portefólio HMATIAS."
+coverImage: "https://images.unsplash.com/photo-1792799881226-e841c0f9c125?auto=format&fit=crop&w=1440&q=80"
+coverAlt: "Técnico a prestar manutenção numa unidade exterior de ar condicionado."
+coverCredit: "Joel Muniz"
+coverCreditUrl: "https://unsplash.com/photos/technician-servicing-outdoor-air-conditioning-unit-8RbiLgfqoqQ"
 readingMinutes: 5
 contentType: "guide"
 language: "pt-AO"
