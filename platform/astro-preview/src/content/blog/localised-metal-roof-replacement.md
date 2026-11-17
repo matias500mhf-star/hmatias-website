@@ -4,8 +4,10 @@ description: "A HMATIAS portfolio record documents localised sheet replacement w
 pubDate: 2026-11-13
 category: "Construction and Maintenance"
 author: "HMATIAS Technical Team"
-coverImage: "/images/hmatias/cobertura-metalica-substituicao.webp"
-coverAlt: "Localised replacement of metal roof sheets documented in the HMATIAS portfolio."
+coverImage: "https://images.unsplash.com/photo-1765808376054-e224c7dbcdee?auto=format&fit=crop&w=1440&q=80"
+coverAlt: "Two workers carrying out work on a sloped metal roof."
+coverCredit: "Mugabi Owen"
+coverCreditUrl: "https://unsplash.com/photos/two-men-working-on-a-red-metal-roof-construction-YAdADtnWOi4"
 readingMinutes: 6
 contentType: "guide"
 language: "en"
