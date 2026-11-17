@@ -51,6 +51,8 @@ for (const homepage of homepageRoutes) {
     expect(response?.status()).toBe(200);
     await expect(page.locator("html")).toHaveAttribute("lang", homepage.language);
     await expect(page.locator(".partner-section")).toBeVisible();
+    // Inspect menu links in a desktop layout even when this test runs in the mobile browser project.
+    await page.setViewportSize({ width: 1280, height: 900 });
 
     const nav = page.locator(".main-nav");
     const isEnglish = homepage.language === "en";
@@ -91,13 +93,15 @@ for (const homepage of homepageRoutes) {
     await expect(quoteLink).toHaveAttribute("target", "_blank");
     await expect(quoteLink).toHaveAttribute("rel", "noopener noreferrer");
 
-    const aboutItem = nav.locator(".nav-item").nth(0);
-    const aboutToggle = aboutItem.locator(".submenu-toggle");
-    await aboutItem.hover();
-    await expect(aboutToggle).toHaveAttribute("aria-expanded", "true");
-    await expect(aboutItem.locator(".nav-submenu a").first()).toBeVisible();
-    await page.mouse.move(0, 0);
-    await expect(aboutToggle).toHaveAttribute("aria-expanded", "false");
+    if (!testInfo.project.use.isMobile) {
+      const aboutItem = nav.locator(".nav-item").nth(0);
+      const aboutToggle = aboutItem.locator(".submenu-toggle");
+      await aboutItem.hover();
+      await expect(aboutToggle).toHaveAttribute("aria-expanded", "true");
+      await expect(aboutItem.locator(".nav-submenu a").first()).toBeVisible();
+      await page.mouse.move(0, 0);
+      await expect(aboutToggle).toHaveAttribute("aria-expanded", "false");
+    }
 
     await page.setViewportSize({ width: 390, height: 844 });
     const menuToggle = page.locator(".menu-toggle");
