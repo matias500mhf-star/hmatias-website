@@ -7,7 +7,7 @@ const taxonomy = [{
   id: "construction",
   name_en: "Construction materials",
   name_pt: "Materiais de construção",
-  aliases: ["cement", "cimento"]
+  aliases: ["cement", "cimento", "formol", "formaldeído 37%", "CAS 50-00-0"]
 }];
 
 test("public catalogue is an allowlisted projection and excludes the restricted chemical", () => {
@@ -45,10 +45,10 @@ test("public catalogue is an allowlisted projection and excludes the restricted 
   assert.deepEqual(Object.keys(output.items[0]), [
     "id", "name", "aliases", "category", "subcategory", "specification", "keywords", "name_pt"
   ]);
-  assert.deepEqual(output.taxonomy, taxonomy);
+  assert.deepEqual(output.taxonomy, [{...taxonomy[0], aliases:["cement", "cimento"]}]);
   assert.match(output.public_rule, /Prices, suppliers, stock, availability and internal commercial data are not included/);
   assert.equal(JSON.stringify(output).includes("item-formaldehyde"), false);
-  assert.equal(JSON.stringify(output).includes("formol"), false);
+  assert.equal(JSON.stringify(output).includes("formol"), false);\n  assert.equal(JSON.stringify(output).includes("formalde"), false);\n  assert.equal(JSON.stringify(output).includes("CAS 50-00-0"), false);
 });
 
 test("public catalogue fails closed when a source item adds an unreviewed field", () => {
