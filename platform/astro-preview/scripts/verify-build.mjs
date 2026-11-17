@@ -143,6 +143,7 @@ assert.doesNotMatch(englishHomeHtml, /<section class="karta-feature"/, "KARTA mu
 assert.ok(html.includes('href="/empresa/">Sobre a HMATIAS'), "Footer About link must point to the About page");
 assert.ok(html.includes('href="/credibilidade/">Credibilidade'), "Footer credibility link must point to the credibility page");
 assert.match(html, /Política de Privacidade/, "Privacy Policy footer link is missing");
+assert.match(html, /Política de Cookies/, "Cookie Policy footer link is missing");
 assert.match(html, /Termos e Condições/, "Terms footer link is missing");
 assert.match(html, /Acessibilidade/, "Accessibility footer link is missing");
 assert.match(html, /5001578065/, "Company tax number is missing");
@@ -394,6 +395,7 @@ assert.ok(credibilityHtml.includes('href="/empresa/"'), "Credibility page must l
 
 for (const [route, heading, marker] of [
   ["privacidade", /Política de Privacidade/, /Cookies, consentimento e estatísticas/],
+  ["cookies", /Política de Cookies/, /Cookiebot/],
   ["termos", /Termos &amp; Condições/, /Propriedade intelectual/],
 ]) {
   const path = join(outDir, route, "index.html");
@@ -409,6 +411,8 @@ for (const [route, heading, marker] of [
 }
 
 const englishPrivacyHtml = readFileSync(join(outDir, "en", "privacy", "index.html"), "utf8");
+const englishCookieHtml = readFileSync(join(outDir, "en", "cookies", "index.html"), "utf8");
+assert.match(englishCookieHtml, /Cookiebot/, "English Cookie Policy must describe the consent platform");
 assert.match(englishPrivacyHtml, /SOURCE AO partner applications may collect/i, "English privacy policy must describe partner application data");
 assert.match(englishPrivacyHtml, /encrypted private profile/i, "English privacy policy must describe encrypted partner contact storage");
 
@@ -474,6 +478,7 @@ const englishRoutes = [
   ["en/source-ao/smart-rfq", /<h1[^>]*data-en="What do you need to source\?"/, /Isolated preview: online registration/],
   ["en/accessibility", /more accessible to everyone/i, /independent audit/i],
   ["en/privacy", /Privacy Policy/, /Cookiebot/],
+  ["en/cookies", /Cookie Policy/, /Cookiebot/],
   ["en/terms", /Terms and Conditions/, /Intellectual property/],
   ["en/karta", /KARTA Wallet Mobile/, /not yet available for public download/i],
   ["en/integrated-yard", /HMATIAS Integrated Yard/, /preliminary site-layout study/i],
