@@ -8,11 +8,15 @@ interface Props {
   title: string;
   description: string;
   lang?: "pt-AO" | "en";
+  ogType?: "website" | "article";
+  ogImage?: string;
+  ogImageAlt?: string;
 }
 
-const { title, description, lang = "pt-AO" } = Astro.props;
+const { title, description, lang = "pt-AO", ogType = "website", ogImage, ogImageAlt } = Astro.props;
 const isEnglish = lang === "en";
 const ogLocale = isEnglish ? "en_US" : "pt_AO";
+const ogImageUrl = ogImage ? new URL(ogImage, siteUrl).toString() : "https://comercialhmatiasps.com/og-hmatias.jpg";
 const brandImageAlt = isEnglish
   ? "HMATIAS — Construction, Facilities, Supply and Business Services"
   : "HMATIAS — Prestação de Serviços";
@@ -64,18 +68,19 @@ const structuredData = JSON.stringify({
     <meta name="robots" content={robotsContent} />
     <meta name="theme-color" content="#062d56" />
     <meta name="description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="HMATIAS" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content="https://comercialhmatiasps.com/og-hmatias.jpg" />
-    <meta property="og:image:alt" content={brandImageAlt} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt ?? brandImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://comercialhmatiasps.com/og-hmatias.jpg" />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt ?? brandImageAlt} />
     <link rel="canonical" href={canonicalUrl} />
     {ptUrl && <link rel="alternate" hreflang="pt-AO" href={ptUrl} />}
     {enUrl && <link rel="alternate" hreflang="en" href={enUrl} />}
