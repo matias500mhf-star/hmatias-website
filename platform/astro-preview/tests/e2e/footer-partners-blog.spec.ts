@@ -54,7 +54,7 @@ for (const homepage of homepageRoutes) {
 
     const nav = page.locator(".main-nav");
     const isEnglish = homepage.language === "en";
-    await expect(nav.locator(":scope > .nav-link")).toHaveCount(3);
+    await expect(nav.locator(":scope > .nav-link")).toHaveCount(2);
     await expect(nav.locator(".nav-item")).toHaveCount(4);
     await expect(nav.locator(".nav-home")).toHaveAttribute("href", isEnglish ? "/en/#inicio" : "/#inicio");
     await expect(nav.locator(".nav-about")).toHaveAttribute("href", isEnglish ? "/en/about/" : "/empresa/");
@@ -90,6 +90,14 @@ for (const homepage of homepageRoutes) {
     await expect(quoteLink).toHaveAttribute("href", isEnglish ? "https://comercialhmatiasps.com/en.html#contact" : "https://comercialhmatiasps.com/#contacto");
     await expect(quoteLink).toHaveAttribute("target", "_blank");
     await expect(quoteLink).toHaveAttribute("rel", "noopener noreferrer");
+
+    const aboutItem = nav.locator(".nav-item").nth(0);
+    const aboutToggle = aboutItem.locator(".submenu-toggle");
+    await aboutItem.hover();
+    await expect(aboutToggle).toHaveAttribute("aria-expanded", "true");
+    await expect(aboutItem.locator(".nav-submenu a").first()).toBeVisible();
+    await page.mouse.move(0, 0);
+    await expect(aboutToggle).toHaveAttribute("aria-expanded", "false");
 
     await page.setViewportSize({ width: 390, height: 844 });
     const menuToggle = page.locator(".menu-toggle");
