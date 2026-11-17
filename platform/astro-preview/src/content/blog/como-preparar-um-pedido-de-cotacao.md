@@ -4,10 +4,8 @@ description: "Um guia prático sobre especificações, quantidades, destino, pra
 pubDate: 2026-11-11
 category: "Procurement e fornecimento"
 author: "Equipa Comercial HMATIAS"
-coverImage: "https://images.unsplash.com/photo-1758609554326-ebf110a4c142?auto=format&fit=crop&w=1440&q=82"
-coverAlt: "Imagem ilustrativa de materiais de construção organizados para um fornecimento."
-photoCredit: "skstrannik"
-photoCreditUrl: "https://unsplash.com/photos/construction-materials-stacked-outdoors-near-a-wall-ZpTwV-4jU08"
+coverImage: "/images/hmatias/logistica-estrutura-metalica.webp"
+coverAlt: "Fotografia de logística e estruturas metálicas do portefólio HMATIAS."
 language: "pt-AO"
 draft: false
 ---
