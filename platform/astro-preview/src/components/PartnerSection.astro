@@ -23,7 +23,7 @@ const isEnglish = Astro.url.pathname.startsWith("/en/");
     <div class="partner-logo partner-logo-dwood">
       <img src={dwoodLogo.src} alt="D&WOOD" width="320" height="142" loading="lazy" decoding="async" />
     </div>
-    <div class="partner-logo partner-logo-telewise">
+    <div class="partner-logo partner-logo-telewise" role="img" aria-label="Telewise">
       <span class="partner-name">Telewise</span>
     </div>
     <a class="partner-logo partner-logo-synvor" href="https://synvor-industrial.com/" target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? "SYNVOR Industrial official website" : "Website oficial da SYNVOR Industrial"}>
