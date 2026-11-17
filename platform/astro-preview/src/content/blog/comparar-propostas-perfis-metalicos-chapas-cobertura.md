@@ -4,8 +4,10 @@ description: "Critérios para comparar perfis e chapas de cobertura em pedidos d
 pubDate: 2026-11-13
 category: "Procurement e fornecimento"
 author: "Equipa Comercial HMATIAS"
-coverImage: "/images/hmatias/chapas-cobertura-fornecimento.webp"
-coverAlt: "Chapas metálicas perfiladas para cobertura, documentadas no portefólio de fornecimentos HMATIAS."
+coverImage: "https://images.unsplash.com/photo-1671022442106-c787685d9fed?auto=format&fit=crop&w=1440&q=80"
+coverAlt: "Vigas e perfis metálicos empilhados num armazém industrial."
+coverCredit: "Corey Willett"
+coverCreditUrl: "https://unsplash.com/photos/a-large-pile-of-steel-beams-in-a-warehouse-X6thX8FvMLA"
 readingMinutes: 5
 contentType: "guide"
 language: "pt-AO"
