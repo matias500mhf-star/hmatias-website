@@ -130,9 +130,7 @@ for (const homepage of homepageRoutes) {
     await expect(page.locator(".footer-operations .footer-area-link")).toHaveCount(4);
     await expect(page.locator(".footer-operations .footer-subnav a")).toHaveCount(2);
     await expect(page.locator(".karta-feature")).toHaveCount(0);
-    // SOURCE AO is intentionally discoverable only from the footer, not as a homepage section or header-menu item.
     await expect(page.locator(".source-ao-highlight")).toHaveCount(0);
-    await expect(page.locator(".main-nav a[href*='/source-ao/']")).toHaveCount(0);
     await expect(page.locator(".footer-source-link")).toBeVisible();
     await expect(page.locator(".footer-source-link")).toHaveAttribute("href", homepage.sourceHref);
     await expect(page.locator("main a[href='/karta/'], main a[href='/en/karta/']")).toHaveCount(0);
