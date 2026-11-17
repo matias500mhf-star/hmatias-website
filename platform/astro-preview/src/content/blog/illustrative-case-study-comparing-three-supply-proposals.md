@@ -1,63 +1,72 @@
 ---
-title: "Illustrative case: comparing three proposals for one supply requirement"
-description: "A procurement scenario showing how to assess compliance, lead time, total cost and reservations before recommending a supply proposal."
+title: "Comparing quotations for metal profiles and roofing sheets"
+description: "A practical comparison framework for metal profiles and roofing sheets, covering dimensions, thickness, finish, units, transport and technical documents."
 pubDate: 2026-11-13
-category: "Illustrative Case Studies"
-author: "HMATIAS Editorial Team"
+category: "Procurement and Supply"
+author: "HMATIAS Commercial Team"
 coverImage: "/images/hmatias/chapas-cobertura-fornecimento.webp"
-coverAlt: "Roofing sheets documented in the HMATIAS supply portfolio; the scenario in this article is illustrative."
+coverAlt: "Profiled metal roofing sheets documented in the HMATIAS supply portfolio."
 readingMinutes: 5
-contentType: "case-study"
+contentType: "guide"
 language: "en"
 draft: false
 ---
 
-> **Editorial note:** this is a fictional scenario created to explain an evaluation method. It does not describe a real purchase, named supplier or HMATIAS award.
+The HMATIAS visual portfolio records metal profiles prepared for structural assembly and profiled metal sheets intended for roofing systems. These are real supply categories in the portfolio; a generic material name is not enough to compare quotations.
 
-A business needs personal protective equipment with minimum specifications, quantities and a required delivery date. It receives three proposals, but each supplier presents the information differently.
+This guide sets out the fields that should be confirmed before comparing prices. It does not present specific quotations, suppliers or transactions.
 
-The decision should not start with the final price. First, the proposals must be placed on a comparable basis.
+## 1. Metal profiles: compare the same section
 
-## The scenario
+A profile quotation should identify, as relevant to the product:
 
-- **Proposal A:** states that it meets the specification and provides a price and lead time, but attaches no technical datasheet.
-- **Proposal B:** provides complete technical documentation but proposes a different feature and does not explain equivalence.
-- **Proposal C:** meets the specification and provides documentation, but states a delivery date later than requested.
+- Section type and geometry;
+- Height, width and thickness;
+- Length per piece and relevant tolerances;
+- Steel grade or class, where specified;
+- Coating or surface protection;
+- Quantity and unit of supply.
 
-These differences are not automatically disqualifying in every contract. They must be assessed against mandatory requirements and the applicable purchasing rules.
+A price per piece, metre and kilogram cannot be compared directly. Normalise the unit and confirm that the section and length are equivalent.
 
-## 1. Normalise the proposals
+## 2. Roofing sheets: confirm profile and effective dimensions
 
-Confirm that all three proposals use the same unit of supply, quantity, reference and delivery condition. List included charges separately from costs still awaiting confirmation.
+For profiled sheets, record the profile, thickness, material, coating, total width and effective cover width, length, finish and colour where relevant.
 
-Do not turn an empty field into a positive answer. “Not stated” is not the same as “included”.
+Effective cover width and overlaps affect the quantity required. The quotation should state whether accessories, flashings, fasteners and seals are included or quoted separately.
 
-## 2. Separate compliance from preference
+## 3. Put quotations on the same commercial basis
 
-Proposal B's different feature requires a formal equivalence assessment. Where the requirement is mandatory and equivalence is not demonstrated, the proposal cannot be treated as technically compliant.
+Compare the same quantity, unit, packaging and destination. Separate material price, applicable taxes, transport, unloading and other confirmed charges.
 
-Proposal A's missing datasheet is a documentation gap. It may be clarified where the process permits, without changing the rules of equal treatment.
+For supply originating outside the province or country, request the dispatch origin, estimated lead time, available documents and a clear statement of who handles each logistics stage. Do not assume that transport, customs clearance or unloading is included.
 
-## 3. Treat lead time as an execution criterion
+## 4. Check documentation and traceability
 
-Proposal C may be technically suitable, but its stated lead time does not meet the requirement. It should remain under consideration only if the requested date can be revised or an alternative logistics plan is validated.
+Depending on the specification and intended use, the request may require a technical datasheet, material certificate, batch identification, declaration of conformity, warranty or origin documentation.
 
-Do not replace the requested date with an unconfirmed verbal promise.
+A generic document does not replace identification of the proposed product. Record the exact reference covered by each document.
 
-## Illustrative decision matrix
+## 5. Use a comparison matrix
 
-| Criterion | Proposal A | Proposal B | Proposal C |
-|---|---|---|---|
-| Specification | Stated compliant | Difference to validate | Stated compliant |
-| Datasheet | Missing | Provided | Provided |
-| Lead time | Within request | To confirm | Later than requested |
-| Total cost | To confirm | To confirm | To confirm |
-| Next action | Request document | Validate equivalence | Confirm timing options |
+| Field | What must be comparable | When it remains pending |
+|---|---|---|
+| Reference | Same profile or validated equivalent specification | Code or model not identified |
+| Dimensions | Section, thickness and length | Unit or measurement incomplete |
+| Quantity | Same quantity and unit | Packaging or conversion not confirmed |
+| Finish | Same coating or accepted alternative | Surface protection not stated |
+| Logistics | Same destination and delivery condition | Transport or unloading not quoted |
+| Lead time | Delivery date or window | Timing remains indicative |
+| Documentation | Documents linked to the item | Datasheet or certificate missing |
 
-## 4. Record the recommendation with reservations
+## 6. Do not confuse discovery with confirmation
 
-The evaluation note should state what is confirmed, what depends on clarification and which criteria prevent an immediate decision. It should not declare a winning proposal while essential requirements remain unverified.
+A reference found in a catalogue or sourcing search does not, by itself, confirm a supplier, stock, price or lead time. HMATIAS separates the identification of a possible option from the commercial confirmation required before a proposal is issued.
 
-The conclusion may recommend clarification, a revised delivery plan or rejection for an objective non-compliance. The record should allow another reviewer to understand the decision without relying on informal conversations.
+Where a technical alternative is proposed, equivalence should be assessed before it is compared with the original specification.
 
-This method makes procurement more transparent and comparable. The example is illustrative; actual purchases must follow their specifications, contract terms and approval process.
+## Information needed to start a request
+
+For profiles or sheets, provide a reference or drawing, dimensions, thickness, quantity, unit, destination and required date. Also state whether equivalent alternatives may be considered. The SOURCE AO Smart RFQ can organise these details in a structured request.
+
+**Transparency note:** the photographs belong to the HMATIAS visual portfolio. This article does not disclose prices, suppliers, received quotations or customer information.
