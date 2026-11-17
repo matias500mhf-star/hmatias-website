@@ -11,7 +11,11 @@ import { company } from "../../../data/site";
     <section class="credibility-hero" aria-labelledby="pages-en-credibility-index-section-1-heading"><p class="eyebrow"><span class="eyebrow-line"></span> HMATIAS CREDIBILITY</p><h1 id="pages-en-credibility-index-section-1-heading">Legal details.<br /><em>Commercial conditions.</em></h1><p>This page brings together HMATIAS' legal identity, official contact details and the general conditions that apply to services and supplies.</p></section>
     <section class="credibility-identity section-pad" aria-labelledby="pages-en-credibility-index-section-2-heading">
       <div class="credibility-heading"><p class="section-kicker">01 / COMPANY IDENTIFICATION</p><h2 id="pages-en-credibility-index-section-2-heading">Company<br /><em>registration.</em></h2></div>
-      <div class="identity-card"><span class="identity-label">REGISTERED COMPANY NAME</span><h3>{company.legalName}</h3><dl>
+      <div class="identity-card"><span class="identity-label">REGISTERED COMPANY NAME</span><h3>{company.legalName}</h3>
+        <div class="identity-certifications">
+          <p><strong>INAPEM certification:</strong> Certified MPME enterprise — Certificate No. 3451/2026.</p>
+          <p><strong>Quality:</strong> Quality Management System (ISO 9001) — implementation in progress.</p>
+        </div><dl>
         <div><dt>Location</dt><dd>{company.address}</dd></div>
         <div><dt>Tax number (NIF)</dt><dd>{company.taxNumber}</dd></div>
         <div><dt>Commercial registration</dt><dd>{company.commercialRegistration}</dd></div>
@@ -19,35 +23,6 @@ import { company } from "../../../data/site";
         <div><dt>Commercial email</dt><dd><a href={"mailto:"+company.commercialEmail}>{company.commercialEmail}</a></dd></div>
         <div><dt>Institutional email</dt><dd><a href={"mailto:"+company.institutionalEmail}>{company.institutionalEmail}</a></dd></div>
       </dl></div>
-    </section>
-
-    <section class="credibility-mpme section-pad" aria-labelledby="credibility-mpme-heading">
-      <div class="credibility-mpme-intro">
-        <p class="section-kicker">02 / BUSINESS STATUS AND CERTIFICATION</p>
-        <h2 id="credibility-mpme-heading">Certified<br /><em>micro-enterprise.</em></h2>
-        <p>HMATIAS is registered within Angola's Micro, Small and Medium-Sized Enterprise (MSME) framework under Law No. 30/11 of 13 September. The certification formally recognises the company's classification as a micro-enterprise within the national MSME system.</p>
-        <div class="mpme-seal"><span>MSME</span><strong>MICRO-ENTERPRISE</strong><small>REPUBLIC OF ANGOLA · MINISTRY OF INDUSTRY AND COMMERCE</small></div>
-      </div>
-      <div class="mpme-details">
-        <div class="mpme-certificate">
-          <span class="identity-label">OFFICIAL CERTIFICATION</span>
-          <h3>MSME Certificate No. 3451/2026</h3>
-          <dl>
-            <div><dt>Classification</dt><dd>Micro-enterprise</dd></div>
-            <div><dt>Issue date</dt><dd>16 November 2026</dd></div>
-            <div><dt>Legal framework</dt><dd>Law No. 30/11 of 13 September</dd></div>
-            <div><dt>Activity stated on the card</dt><dd>Other business support service activities, n.e.c.</dd></div>
-            <div><dt>Registered location</dt><dd>Viana Municipality · Luanda Province</dd></div>
-          </dl>
-        </div>
-        <div class="mpme-incentives">
-          <h3>Incentives listed in the certification</h3>
-          <div><strong>Tax incentives</strong><p>For Industrial Tax, the MSME Identity Card indicates payment through the Special Account Tax at a rate of 2% of gross sales, under Article 42(1)(a) of the Tax Benefits Code. It also indicates an exemption from Stamp Duty on receipts acknowledging payment, under Article 42(2).</p><small>Stated period: 16/11/2026 to 16/11/2028.</small></div>
-          <div><strong>Fees and charges</strong><p>Exemption from fees and legal charges for an increase in the company's share capital, under Article 19 of the MSME Law.</p></div>
-          <div><strong>Business development</strong><p>The certification also identifies financial, organisational, innovation and technological capacity-building incentives.</p><small>Stated period: 16/11/2026 to 16/11/2027.</small></div>
-        </div>
-        <p class="mpme-note">The information above reflects the MSME Identity Card issued on 16 November 2026. The actual application of any benefit remains subject to applicable legal, tax and procedural requirements and confirmation by the competent authorities. Certification alone does not constitute automatic approval of credit, grants or financing.</p>
-      </div>
     </section>
 
     <section class="credibility-method section-pad" aria-labelledby="pages-en-credibility-index-section-3-heading">
@@ -88,32 +63,15 @@ import { company } from "../../../data/site";
 .credibility-heading h2 em,.credibility-limits h2 em,.credibility-contact h2 em { color:var(--hm-blue); font-family:var(--hm-serif); font-weight:400; }
 .identity-card { padding:30px; background:var(--hm-light); border:1px solid var(--hm-line); }
 .identity-label { color:var(--hm-blue); font-size:9px; font-weight:700; letter-spacing:.15em; }
-.identity-card h3 { margin:17px 0 24px; font-size:22px; line-height:1.35; font-weight:600; letter-spacing:-.035em; }
+.identity-card h3 { margin:17px 0 14px; font-size:22px; line-height:1.35; font-weight:600; letter-spacing:-.035em; }
+.identity-certifications { display:grid; gap:5px; margin:0 0 22px; padding:12px 14px; border-left:2px solid var(--hm-blue); background:var(--hm-paper); }
+.identity-certifications p { margin:0; color:var(--hm-muted); font-size:10px; line-height:1.65; }
+.identity-certifications strong { color:var(--hm-ink); font-weight:650; }
 .identity-card dl { margin:0; border-top:1px solid var(--hm-line); }
 .identity-card dl div { display:grid; grid-template-columns:minmax(120px,.7fr) minmax(0,1.3fr); gap:20px; padding:13px 0; border-bottom:1px solid var(--hm-line); font-size:11px; }
 .identity-card dt { color:var(--hm-muted); }
 .identity-card dd { margin:0; text-align:right; font-weight:600; overflow-wrap:anywhere; }
 .identity-card dd a { text-decoration:underline; text-decoration-color:#91bfe5; text-underline-offset:3px; }
-
-.credibility-mpme { display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(35px,7vw,95px); background:var(--hm-light); }
-.credibility-mpme-intro > p:last-of-type { max-width:470px; color:var(--hm-muted); font-size:13px; line-height:1.9; }
-.mpme-seal { display:flex; flex-direction:column; align-items:flex-start; gap:5px; margin-top:30px; padding:20px 22px; border-left:3px solid var(--hm-blue); background:var(--hm-paper); }
-.mpme-seal span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:34px; line-height:1; }
-.mpme-seal strong { font-size:10px; letter-spacing:.12em; }
-.mpme-seal small { color:var(--hm-muted); font-size:8px; letter-spacing:.06em; line-height:1.6; }
-.mpme-certificate { padding:28px; border:1px solid var(--hm-line); background:var(--hm-paper); }
-.mpme-certificate h3 { margin:14px 0 22px; font-size:21px; letter-spacing:-.035em; }
-.mpme-certificate dl { margin:0; border-top:1px solid var(--hm-line); }
-.mpme-certificate dl div { display:grid; grid-template-columns:minmax(125px,.75fr) minmax(0,1.25fr); gap:18px; padding:12px 0; border-bottom:1px solid var(--hm-line); font-size:11px; }
-.mpme-certificate dt { color:var(--hm-muted); }
-.mpme-certificate dd { margin:0; text-align:right; font-weight:600; overflow-wrap:anywhere; }
-.mpme-incentives { margin-top:22px; padding:26px 28px; background:var(--hm-paper); border:1px solid var(--hm-line); }
-.mpme-incentives h3 { margin:0 0 18px; font-size:17px; letter-spacing:-.025em; }
-.mpme-incentives > div { padding:15px 0; border-top:1px solid var(--hm-line); }
-.mpme-incentives strong { font-size:12px; }
-.mpme-incentives p { margin:7px 0; color:var(--hm-muted); font-size:11px; line-height:1.85; }
-.mpme-incentives small { color:var(--hm-blue); font-size:10px; font-weight:650; }
-.mpme-note { margin:14px 0 0; color:var(--hm-muted); font-size:10px; line-height:1.8; }
 
 .credibility-method { display:grid; grid-template-columns:.75fr 1.25fr; gap:clamp(35px,7vw,95px); background:var(--hm-light); }
 .method-list { margin:0; padding:0; list-style:none; border-top:1px solid var(--hm-line); }
@@ -121,9 +79,10 @@ import { company } from "../../../data/site";
 .method-list li > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:19px; }
 .method-list h3 { margin:0 0 8px; font-size:14px; }
 .method-list p { margin:0; color:var(--hm-muted); font-size:12px; line-height:1.8; }
-.credibility-limits { display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(35px,7vw,95px); background:var(--hm-paper); }
-.credibility-limits-text { max-width:650px; }
+.credibility-limits { display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(35px,7vw,95px); align-items:center; background:var(--hm-paper); }
+.credibility-limits-text { width:100%; max-width:650px; justify-self:end; align-self:center; }
 .credibility-limits-text p { margin:0 0 17px; color:var(--hm-muted); font-size:13px; line-height:1.9; }
+.credibility-limits-text p:last-child { margin-bottom:0; }
 .credibility-contact { display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(35px,7vw,95px); background:var(--hm-sky-soft); }
 .credibility-contact > div:first-child > p:last-child { max-width:420px; color:var(--hm-muted); font-size:12px; line-height:1.8; }
 .credibility-contact-links { border-top:1px solid #b9d8ed; }
@@ -133,11 +92,6 @@ import { company } from "../../../data/site";
 
 @media (max-width:520px) {
   .identity-card { padding:22px 18px; }
-
-  .credibility-mpme { grid-template-columns:1fr; }
-  .mpme-certificate,.mpme-incentives { padding:22px 18px; }
-  .mpme-certificate dl div { grid-template-columns:1fr; gap:5px; }
-  .mpme-certificate dd { text-align:left; }
 
   .identity-card dl div { grid-template-columns:1fr; gap:5px; }
   .identity-card dd { text-align:left; }
