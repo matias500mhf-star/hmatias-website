@@ -11,7 +11,7 @@ const requiredPhotos = [
   "logistica-estrutura-metalica.webp",
   "perfis-metalicos-estrutura.webp",
   "chapas-cobertura-fornecimento.webp",
-  "anexo-coberto-estrutura-metalica.webp",
+  "cobertura-metalica-substituicao.webp",
   "instalacoes-embutidas-construcao.webp",
   "pavilhoes-rurais-concluidos.webp"
 ];
