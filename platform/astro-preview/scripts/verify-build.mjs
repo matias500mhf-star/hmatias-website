@@ -303,8 +303,8 @@ for (const [route, language, privacyHref, languageHref] of partnerRoutes) {
 
 const lighthouseConfig = readFileSync(new URL("../lighthouserc.cjs", import.meta.url), "utf8");
 const lighthouseRoutes = [...lighthouseConfig.matchAll(/http:\/\/127\.0\.0\.1:4321([^"]+)/g)].map((match) => match[1]);
-assert.equal(lighthouseRoutes.length, 24, "Lighthouse must audit 24 representative PT/EN routes");
-assert.equal(new Set(lighthouseRoutes).size, 24, "Lighthouse route list must contain 24 unique routes");
+assert.equal(lighthouseRoutes.length, 34, "Lighthouse must audit 34 representative PT/EN routes");
+assert.equal(new Set(lighthouseRoutes).size, 34, "Lighthouse route list must contain 34 unique routes");
 assert.ok(lighthouseRoutes.includes("/") && lighthouseRoutes.includes("/en/"), "Lighthouse must include both homepages");
 for (const route of lighthouseRoutes) {
   const segments = route.split("/").filter(Boolean);
@@ -673,11 +673,21 @@ function collectGeneratedHtml(directory) {
 }
 
 const generatedPages = collectGeneratedHtml(outDir);
-assert.ok(generatedPages.length >= 59, "The complete 59-page PT/EN route set must be generated before footer auditing");
+assert.ok(generatedPages.length >= 61, "The complete 61-page PT/EN route set must be generated before footer auditing");
 for (const pagePath of generatedPages) {
   const pageHtml = readFileSync(pagePath, "utf8");
   const relativePagePath = pagePath.slice(outDir.length).replaceAll("\\", "/");
   const isEnglishPage = relativePagePath.startsWith("en/");
+  const imageTags = [...pageHtml.matchAll(/<img\\b[^>]*>/g)].map((match) => match[0]);
+  for (const imageTag of imageTags) {
+    assert.match(imageTag, /\\balt=/, "Every image must declare alternative text, including decorative empty alt: " + relativePagePath);
+  }
+  assert.match(pageHtml, /<title>[^<]+<\\/title>/, "Every generated page must have a non-empty title: " + relativePagePath);
+  assert.match(pageHtml, /<meta name="description" content="[^"]+"/, "Every generated page must have a meta description: " + relativePagePath);
+  assert.match(pageHtml, /<link rel="canonical" href="https:\\/\\//, "Every generated page must have an absolute canonical URL: " + relativePagePath);
+  assert.match(pageHtml, /<meta property="og:title" content="[^"]+"/, "Every generated page must have an Open Graph title: " + relativePagePath);
+  assert.match(pageHtml, /<meta property="og:description" content="[^"]+"/, "Every generated page must have an Open Graph description: " + relativePagePath);
+  assert.match(pageHtml, /<meta name="twitter:card" content="summary_large_image"/, "Every generated page must have a Twitter card: " + relativePagePath);
   const expectedLanguage = isEnglishPage ? "en" : "pt";
   // SOURCE AO standalone product routes use dedicated footers, not the corporate footer.
   const isSourceAoLanding = relativePagePath === "source-ao/index.html" || relativePagePath === "en/source-ao/index.html";
