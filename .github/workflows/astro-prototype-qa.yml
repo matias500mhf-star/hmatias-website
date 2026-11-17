@@ -112,9 +112,10 @@ jobs:
     needs: build-and-verify
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment: source-ao-staging
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID || '080c9eefe0c4dd70619fa213756e69ca' }}
       CF_PAGES_PROJECT: hmatias-pr316-preview
       CF_PAGES_BRANCH: pr-316
     steps:
