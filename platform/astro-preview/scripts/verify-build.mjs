@@ -683,7 +683,7 @@ for (const pagePath of generatedPages) {
     if (isSourceAoRadar) {
       const radarHeader = pageHtml.match(/<header\b[^>]*class="[^"]*\bop-topbar\b[^"]*"[^>]*>[\s\S]*?<\/header>/)?.[0];
       assert.ok(radarHeader, "Opportunity Radar must render its dedicated product header: " + relativePagePath);
-      assert.match(pageHtml, /id="radarHomeLink" href="[^"]*source-ao\//, "Radar must provide a return link to SOURCE AO: " + relativePagePath);
+      assert.match(pageHtml, /<a\\b(?=[^>]*id="radarHomeLink")(?=[^>]*href="[^"]*source-ao\\/")[^>]*>/, "Radar must provide a return link to SOURCE AO: " + relativePagePath);
       assert.match(radarHeader, /id="radarBackLink"/, "Radar header must provide a SOURCE AO back link: " + relativePagePath);
       assert.match(radarHeader, /id="langToggle"/, "Radar header must provide an accessible language switch: " + relativePagePath);
       assert.match(sourceFooter, /id="radarRfqLink"/, "Radar footer must link to Smart RFQ: " + relativePagePath);
@@ -694,7 +694,7 @@ for (const pagePath of generatedPages) {
     } else {
       const rfqHeader = pageHtml.match(/<header\b[^>]*class="[^"]*\brfq-header\b[^"]*"[^>]*>[\s\S]*?<\/header>/)?.[0];
       assert.ok(rfqHeader, "Smart RFQ must render its dedicated product header: " + relativePagePath);
-      assert.match(rfqHeader, /id="sourceAoBackLink" href="[^"]*source-ao\//, "Smart RFQ must link back to SOURCE AO: " + relativePagePath);
+      assert.match(rfqHeader, /<a\\b(?=[^>]*id="sourceAoBackLink")(?=[^>]*href="[^"]*source-ao\\/")[^>]*>/, "Smart RFQ must link back to SOURCE AO: " + relativePagePath);
       assert.match(rfqHeader, /mailto:geral@comercialhmatiasps\.com/, "Smart RFQ header must provide commercial contact: " + relativePagePath);
       assert.match(sourceFooter, /id="sourceAoSupplyLink"/, "Smart RFQ footer must link to HMATIAS Supply: " + relativePagePath);
       assert.match(sourceFooter, /id="sourceAoPrivacyLink"[^>]*data-en="Privacy"/, "Smart RFQ footer must provide a bilingual privacy link: " + relativePagePath);
