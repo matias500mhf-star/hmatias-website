@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { readdirSync } from "node:fs";
 import { join, relative } from "node:path";
 import { expect, test } from "@playwright/test";
@@ -24,9 +25,9 @@ function routeFromFile(file: string): string {
 
 const generatedRoutes = [...new Set(collectHtmlFiles(distRoot).map(routeFromFile))].sort();
 
-test("every generated page passes desktop and mobile structural layout checks", async ({ page }, testInfo) => {
+test("every generated page passes desktop, mobile and accessibility smoke checks", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop-chromium", "One Chromium run checks both viewport sizes for every generated route.");
-  test.setTimeout(6 * 60 * 1000);
+  test.setTimeout(10 * 60 * 1000);
 
   expect(generatedRoutes.length, "The static build must expose its complete HTML page set").toBeGreaterThanOrEqual(50);
 
@@ -34,12 +35,19 @@ test("every generated page passes desktop and mobile structural layout checks", 
     { name: "desktop 1440px", width: 1440, height: 1000 },
     { name: "mobile 390px", width: 390, height: 844 },
   ];
+  const issues: string[] = [];
 
   for (const route of generatedRoutes) {
+    let routeReady = true;
+
     for (const viewport of viewports) {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       const response = await page.goto(route, { waitUntil: "domcontentloaded" });
-      expect(response?.status(), route + " must load at " + viewport.name).toBe(200);
+      if (response?.status() !== 200) {
+        issues.push(route + ": HTTP " + (response?.status() ?? "sem resposta") + " em " + viewport.name);
+        routeReady = false;
+        break;
+      }
 
       const inspection = await page.evaluate(() => ({
         title: document.title.trim(),
@@ -52,20 +60,38 @@ test("every generated page passes desktop and mobile structural layout checks", 
           .map((image) => image.getAttribute("src") || "(source não identificada)"),
       }));
 
-      expect(inspection.title, route + " must have a page title at " + viewport.name).not.toBe("");
-      expect(inspection.headingCount, route + " must have an H1 at " + viewport.name).toBeGreaterThan(0);
-      expect(
-        inspection.language,
-        route + " must declare the correct language at " + viewport.name,
-      ).toBe(route === "/en/" || route.startsWith("/en/") ? "en" : "pt-AO");
-      expect(
-        inspection.documentWidth,
-        route + " must not overflow horizontally at " + viewport.name,
-      ).toBeLessThanOrEqual(inspection.viewportWidth + 1);
-      expect(
-        inspection.imagesWithoutAlt,
-        route + " must not contain images without an alt attribute at " + viewport.name,
-      ).toEqual([]);
+      if (!inspection.title) issues.push(route + ": título vazio em " + viewport.name);
+      if (inspection.headingCount === 0) issues.push(route + ": sem H1 em " + viewport.name);
+      const expectedLanguage = route === "/en/" || route.startsWith("/en/") ? "en" : "pt-AO";
+      if (inspection.language !== expectedLanguage) {
+        issues.push(route + ": idioma " + inspection.language + ", esperado " + expectedLanguage);
+      }
+      if (inspection.documentWidth > inspection.viewportWidth + 1) {
+        issues.push(
+          route + ": overflow horizontal de " +
+          (inspection.documentWidth - inspection.viewportWidth) + "px em " + viewport.name,
+        );
+      }
+      if (inspection.imagesWithoutAlt.length) {
+        issues.push(
+          route + ": imagens sem atributo alt em " + viewport.name + ": " +
+          inspection.imagesWithoutAlt.join(", "),
+        );
+      }
+    }
+
+    if (routeReady) {
+      await page.setViewportSize({ width: 1440, height: 1000 });
+      const axe = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+        .analyze();
+      for (const violation of axe.violations.filter((item) => item.impact === "critical" || item.impact === "serious")) {
+        const targets = violation.nodes.map((node) => node.target.join(" ")).join("; ");
+        issues.push(route + ": axe " + violation.impact + " / " + violation.id + " — " + targets);
+      }
     }
   }
+
+  console.log("All-page audit inspected " + generatedRoutes.length + " routes at 1440px and 390px.");
+  expect(issues, "All-page audit findings across " + generatedRoutes.length + " generated routes").toEqual([]);
 });
