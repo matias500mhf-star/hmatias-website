@@ -4,10 +4,8 @@ description: "A practical framework for asset registers, criticality, maintenanc
 pubDate: 2026-11-13
 category: "Operations Management"
 author: "HMATIAS Editorial Team"
-coverImage: "https://images.unsplash.com/photo-1764835994645-3faa2c40f708?auto=format&fit=crop&w=1440&q=82"
-coverAlt: "Illustrative photograph of industrial machinery inside a production facility."
-photoCredit: "xing bowen"
-photoCreditUrl: "https://unsplash.com/photos/industrial-machinery-in-a-large-factory-setting-mMgC9U15XR0"
+coverImage: "/images/hmatias/instalacoes-embutidas-construcao.webp"
+coverAlt: "Embedded building installations documented in a HMATIAS portfolio project."
 readingMinutes: 5
 contentType: "guide"
 language: "en"
