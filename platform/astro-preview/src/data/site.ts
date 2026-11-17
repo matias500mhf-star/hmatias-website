@@ -58,6 +58,7 @@ export const company = {
   partnerApplicationEnUrl: "/en/source-ao/partners/",
   opportunityRadarEnUrl: "/en/source-ao/radar/",
   privacyUrl: "/privacidade/",
+  cookiePolicyUrl: "/cookies/",
   termsUrl: "/termos/",
   aboutUrl: "/empresa/",
   credibilityUrl: "/credibilidade/",
