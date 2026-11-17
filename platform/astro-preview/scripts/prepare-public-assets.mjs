@@ -7,6 +7,8 @@ const repositoryFonts = resolve(scriptDir, "../../../fonts");
 const publicFonts = resolve(scriptDir, "../public/fonts");
 const repositoryPhotos = resolve(scriptDir, "../../../images/catalogue");
 const publicPhotos = resolve(scriptDir, "../public/images/hmatias");
+const repositoryRoot = resolve(scriptDir, "../../../");
+const requiredAssistantAssets = ["assistant.css", "assistant-api-bridge.js", "assistant.js", "assistant-knowledge.js"];
 const requiredPhotos = [
   "logistica-estrutura-metalica.webp",
   "perfis-metalicos-estrutura.webp",
@@ -37,4 +39,9 @@ for (const filename of requiredPhotos) {
   if (!existsSync(source)) throw new Error(`Required HMATIAS project photo is missing: ${filename}`);
   cpSync(source, resolve(publicPhotos, filename));
 }
-console.log(`Prepared ${requiredFonts.length} licensed font assets and ${requiredPhotos.length} authentic HMATIAS project photos for the Astro preview.`);
+for (const filename of requiredAssistantAssets) {
+  const source = resolve(repositoryRoot, filename);
+  if (!existsSync(source)) throw new Error(`Required HMATIAS assistant asset is missing: ${filename}`);
+  cpSync(source, resolve(scriptDir, "../public", filename));
+}
+console.log(`Prepared ${requiredFonts.length} licensed font assets, ${requiredPhotos.length} authentic HMATIAS project photos and ${requiredAssistantAssets.length} assistant assets.`);
