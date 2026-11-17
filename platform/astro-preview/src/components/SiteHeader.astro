@@ -8,8 +8,8 @@ const pathname = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astr
 const isEnglish = pathname.startsWith("/en/");
 const languageHref = getLanguageSwitchPath(pathname, isEnglish);
 const homeUrl = isEnglish ? "/en/" : "/";
-const servicesHref = isEnglish ? "/en/#services" : "/#servicos";
-const projectsHref = isEnglish ? "/en/#projects" : "/#projetos";
+const servicesHref = isEnglish ? "/en/#servicos" : "/#servicos";
+const projectsHref = isEnglish ? "/en/#projetos" : "/#projetos";
 const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUrl;
 ---
 <header class="site-header" data-language={isEnglish ? "en" : "pt"}>
