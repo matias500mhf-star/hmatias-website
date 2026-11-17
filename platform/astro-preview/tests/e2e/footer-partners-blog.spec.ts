@@ -1,6 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+const isEnglishRoute = (language: string) => language === "en";
+
 const homepageRoutes = [
   { route: "/", language: "pt-AO", explore: "Explorar", contact: "Contacto e localização", sourceHref: "/source-ao/" },
   { route: "/en/", language: "en", explore: "Explore", contact: "Contact and location", sourceHref: "/en/source-ao/" },
@@ -51,6 +53,12 @@ for (const homepage of homepageRoutes) {
     expect(response?.status()).toBe(200);
     await expect(page.locator("html")).toHaveAttribute("lang", homepage.language);
     await expect(page.locator(".partner-section")).toBeVisible();
+    const logoFits = await page.locator(".partner-logo img").evaluateAll((images) => images.every((image) => getComputedStyle(image).objectFit === "contain"));
+    expect(logoFits).toBe(true);
+    const partnerApplication = page.locator(".partner-section-foot a");
+    await expect(partnerApplication).toHaveAttribute("href", isEnglishRoute(homepage.language) ? "/en/source-ao/partners/" : "/source-ao/parceiros/");
+    const partnerExternalLinks = await page.locator(".partner-logo[href]").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).href));
+    expect(partnerExternalLinks.every((url) => !url.includes("comercialhmatiasps.com"))).toBe(true);
     // Inspect menu links in a desktop layout even when this test runs in the mobile browser project.
     await page.setViewportSize({ width: 1280, height: 900 });
 
