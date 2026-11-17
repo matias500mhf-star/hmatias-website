@@ -40,6 +40,8 @@ for (const filename of files) {
   const html = readFileSync(htmlPath, "utf8");
   assert.ok(html.includes(cover.pathname), "Generated article does not use its assigned image: " + filename);
   assert.match(html, /srcset=/, "Responsive srcset is missing: " + filename);
+  const articleSrcSet = html.match(/<img\\b[^>]*srcset="([^"]+)"/)?.[1] ?? "";
+  assert.match(articleSrcSet, /[?&]h=\\d+/, "Article cover must request an explicit crop height: " + filename);
   assert.match(html, /Illustrative image|Imagem ilustrativa/, "The image must be explicitly labelled illustrative: " + filename);
   assert.match(html, /Photo credit|Crédito fotográfico/, "The photo credit is missing from the article page: " + filename);
   assert.match(html, /<meta property="og:type" content="article"/, "Article Open Graph type is missing: " + filename);
@@ -54,6 +56,8 @@ for (const languagePath of ["blog/index.html", "en/blog/index.html"]) {
   const html = readFileSync(resolve(distRoot, languagePath), "utf8");
   assert.match(html, /images\.unsplash\.com/, "Blog index must show editorial imagery: " + languagePath);
   assert.match(html, /srcset=/, "Blog index images must be responsive: " + languagePath);
+  const indexSrcSet = html.match(/<img\\b[^>]*srcset="([^"]+)"/)?.[1] ?? "";
+  assert.match(indexSrcSet, /[?&]h=\\d+/, "Blog index images must request explicit crop heights: " + languagePath);
   assert.match(html, /Photo credit|Crédito fotográfico/, "Blog index must show image credits: " + languagePath);
   assert.match(html, /illustrative|ilustrativas/i, "Blog index must label stock images as illustrative: " + languagePath);
 }
