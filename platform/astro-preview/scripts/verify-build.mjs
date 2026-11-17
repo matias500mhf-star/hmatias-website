@@ -744,11 +744,11 @@ for (const pagePath of generatedPages) {
   assert.doesNotMatch(pageNav, /instagram|wa\.me/i, "Social channels must stay out of the primary navigation: " + relativePagePath);
 
   const pageFooter = pageFooterMatches[0][0];
-  const columnNames = ["explore", "identity", "operations", "contacts"];
+  const columnNames = ["identity", "explore", "operations", "contacts"];
   const columnPositions = columnNames.map((name) => pageFooter.indexOf('class="footer-column footer-' + name + '"'));
   assert.ok(columnPositions.every((position) => position >= 0), "All four footer columns must exist: " + relativePagePath);
   assert.ok(columnPositions.every((position, index) => index === 0 || position > columnPositions[index - 1]),
-    "Footer column order must remain Explore, Identity, Operations, Contacts: " + relativePagePath);
+    "Footer column order must remain Identity, Explore, Operations, Contacts: " + relativePagePath);
   assert.equal((pageFooter.match(/class="footer-column footer-(?:explore|identity|operations|contacts)"/g) || []).length, 4,
     "Footer must contain exactly four main columns: " + relativePagePath);
   assert.equal((pageFooter.match(/class="footer-legal-links"/g) || []).length, 1,
