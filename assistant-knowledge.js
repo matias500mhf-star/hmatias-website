@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: public website, project status, service pages and commercial rules, reviewed 2026-11-06. */
+   Source of truth: public website, project status, service pages and commercial rules, reviewed 2026-11-17. */
 (() => {
   'use strict';
 
@@ -14,7 +14,7 @@
   ];
 
   const kb = {
-    version: '2026-11-02.1',
+    version: '2026-11-17.1',
     updated: '2026-11-06',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
