@@ -4,8 +4,10 @@ description: "Um registo do portefólio HMATIAS documenta a substituição local
 pubDate: 2026-11-13
 category: "Obras e manutenção"
 author: "Equipa Técnica HMATIAS"
-coverImage: "/images/hmatias/cobertura-metalica-substituicao.webp"
-coverAlt: "Substituição localizada de chapas de cobertura metálica, registada no portefólio HMATIAS."
+coverImage: "https://images.unsplash.com/photo-1765808376054-e224c7dbcdee?auto=format&fit=crop&w=1440&q=80"
+coverAlt: "Dois trabalhadores a executar trabalhos numa cobertura metálica inclinada."
+coverCredit: "Mugabi Owen"
+coverCreditUrl: "https://unsplash.com/photos/two-men-working-on-a-red-metal-roof-construction-YAdADtnWOi4"
 readingMinutes: 6
 contentType: "guide"
 language: "pt-AO"
