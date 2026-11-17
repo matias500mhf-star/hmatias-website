@@ -10,14 +10,14 @@ const featuredDate = featured?.data.pubDate.toLocaleDateString("pt-AO",{day:"2-d
 const categories = [...new Set(posts.map((post)=>post.data.category))];
 const categoryGroups = categories.map((category)=>({name:category,id:"categoria-"+category.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""),items:posts.filter((post)=>post.data.category===category&&post.id!==featured?.id)})).filter((group)=>group.items.length>0);
 ---
-<BaseLayout title="Blog HMATIAS | Perspetivas empresariais e guias práticos" description="Guias técnicos, notas de procurement e casos práticos ilustrativos sobre construção, manutenção, fornecimento e gestão operacional em Angola.">
+<BaseLayout title="Blog HMATIAS | Perspetivas empresariais e guias práticos" description="Guias técnicos e notas de procurement sobre construção, manutenção, fornecimento e operações em Angola, com base no arquivo visual e nos métodos de trabalho HMATIAS.">
   <div class="preview-bar"><span><i aria-hidden="true"></i> PUBLICAÇÕES HMATIAS</span><span>OBRAS · PROCUREMENT · OPERAÇÕES</span></div>
   <SiteHeader />
   <main class="editorial-page">
     <section class="editorial-hero" aria-labelledby="pages-blog-index-section-1-heading">
       <p class="section-kicker">HMATIAS / BLOG</p>
       <h1 id="pages-blog-index-section-1-heading">Perspetivas empresariais.<br /><em>Conhecimento aplicável.</em></h1>
-      <p class="editorial-lead">Conteúdo técnico e comercial para apoiar decisões, preparar intervenções, estruturar fornecimentos e melhorar a gestão de operações.</p>
+      <p class="editorial-lead">Notas técnicas e critérios de trabalho para estruturar pedidos, avaliar fornecimentos, planear intervenções e gerir operações em Angola.</p>
     </section>
     <section class="editorial-body" aria-label="Artigos e temas">
       {featured && <>
@@ -54,7 +54,7 @@ const categoryGroups = categories.map((category)=>({name:category,id:"categoria-
           </div>
         </section>)}
       </div>
-      <p class="editorial-archive-note">Os casos práticos identificados como ilustrativos explicam métodos e critérios de decisão. Não representam obras, clientes ou resultados comerciais atribuídos à HMATIAS.</p>
+      <p class="editorial-archive-note">As fotografias pertencem ao arquivo visual da HMATIAS. A sua utilização não identifica clientes, locais ou contratos quando esses dados não estão autorizados para divulgação.</p>
       <div class="editorial-contact"><p>Para uma necessidade concreta de fornecimento, especifique os artigos, quantidades e local de entrega no SOURCE AO.</p><a class="button button-dark" href={company.smartRfqUrl}>Preparar Smart RFQ <span aria-hidden="true">↗</span></a></div>
     </section>
   </main>
