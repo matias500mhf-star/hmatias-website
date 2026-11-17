@@ -4,10 +4,8 @@ description: "Um cenário ilustrativo para estruturar a vistoria, o escopo, os m
 pubDate: 2026-11-13
 category: "Obras e manutenção"
 author: "Equipa Editorial HMATIAS"
-coverImage: "https://images.unsplash.com/photo-1758609554326-ebf110a4c142?auto=format&fit=crop&w=1440&q=82"
-coverAlt: "Imagem ilustrativa de materiais de construção organizados para um fornecimento."
-photoCredit: "skstrannik"
-photoCreditUrl: "https://unsplash.com/photos/construction-materials-stacked-outdoors-near-a-wall-ZpTwV-4jU08"
+coverImage: "/images/hmatias/anexo-coberto-estrutura-metalica.webp"
+coverAlt: "Anexo coberto com estrutura metálica, documentado no portefólio HMATIAS."
 readingMinutes: 6
 contentType: "case-study"
 language: "pt-AO"
