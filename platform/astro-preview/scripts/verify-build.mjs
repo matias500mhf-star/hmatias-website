@@ -678,13 +678,13 @@ for (const pagePath of generatedPages) {
   const pageHtml = readFileSync(pagePath, "utf8");
   const relativePagePath = pagePath.slice(outDir.length).replaceAll("\\", "/");
   const isEnglishPage = relativePagePath.startsWith("en/");
-  const imageTags = [...pageHtml.matchAll(/<img\\b[^>]*>/g)].map((match) => match[0]);
+  const imageTags = [...pageHtml.matchAll(/<img\b[^>]*>/g)].map((match) => match[0]);
   for (const imageTag of imageTags) {
-    assert.match(imageTag, /\\balt=/, "Every image must declare alternative text, including decorative empty alt: " + relativePagePath);
+    assert.match(imageTag, /\balt=/, "Every image must declare alternative text, including decorative empty alt: " + relativePagePath);
   }
-  assert.match(pageHtml, /<title>[^<]+<\\/title>/, "Every generated page must have a non-empty title: " + relativePagePath);
+  assert.match(pageHtml, /<title>[^<]+<\/title>/, "Every generated page must have a non-empty title: " + relativePagePath);
   assert.match(pageHtml, /<meta name="description" content="[^"]+"/, "Every generated page must have a meta description: " + relativePagePath);
-  assert.match(pageHtml, /<link rel="canonical" href="https:\\/\\//, "Every generated page must have an absolute canonical URL: " + relativePagePath);
+  assert.match(pageHtml, /<link rel="canonical" href="https:\/\//, "Every generated page must have an absolute canonical URL: " + relativePagePath);
   assert.match(pageHtml, /<meta property="og:title" content="[^"]+"/, "Every generated page must have an Open Graph title: " + relativePagePath);
   assert.match(pageHtml, /<meta property="og:description" content="[^"]+"/, "Every generated page must have an Open Graph description: " + relativePagePath);
   assert.match(pageHtml, /<meta name="twitter:card" content="summary_large_image"/, "Every generated page must have a Twitter card: " + relativePagePath);
