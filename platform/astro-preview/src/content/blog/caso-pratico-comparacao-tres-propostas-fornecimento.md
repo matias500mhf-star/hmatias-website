@@ -4,10 +4,8 @@ description: "Um cenário ilustrativo de procurement para avaliar conformidade, 
 pubDate: 2026-11-13
 category: "Casos práticos"
 author: "Equipa Editorial HMATIAS"
-coverImage: "https://images.unsplash.com/photo-1721937127582-ed331de95a04?auto=format&fit=crop&w=1440&q=82"
-coverAlt: "Imagem ilustrativa de um armazém com paletes e prateleiras de materiais."
-photoCredit: "Ashley"
-photoCreditUrl: "https://unsplash.com/photos/a-warehouse-filled-with-lots-of-boxes-and-pallets-28b8xlTT5t4"
+coverImage: "/images/hmatias/chapas-cobertura-fornecimento.webp"
+coverAlt: "Chapas de cobertura documentadas no portefólio de fornecimentos HMATIAS; o cenário do artigo é ilustrativo."
 readingMinutes: 5
 contentType: "case-study"
 language: "pt-AO"
