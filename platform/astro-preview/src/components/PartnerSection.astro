@@ -7,7 +7,7 @@ import kentOffshoreLogo from "../../../../images/partners/kent-offshore-logo.png
 import { company } from "../data/site";
 const isEnglish = Astro.url.pathname.startsWith("/en/");
 ---
-<section class="partner-section" aria-labelledby="partner-section-heading">
+<section class="partner-section" id={isEnglish ? "partners" : "parceiros"} aria-labelledby="partner-section-heading">
   <div class="partner-section-head"><div>
     <p class="section-kicker">{isEnglish ? "PARTNER NETWORK" : "REDE DE PARCEIROS"}</p>
     <h2 id="partner-section-heading">{isEnglish ? <>Working together.<br /><em>Delivering with reach.</em></> : <>Parcerias que ampliam<br /><em>a capacidade de resposta.</em></>}</h2>
