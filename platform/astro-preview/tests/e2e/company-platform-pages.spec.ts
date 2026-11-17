@@ -104,6 +104,21 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(page.locator(".about-intro h1")).toContainText(/Uma empresa angolana/);
     await expect(page.locator(".about-lead").first()).toContainText("HMATIAS – Prestação de Serviços, (SU), LDA");
     await expect(page.getByRole("heading", { name: "Identidade e enquadramento." })).toBeVisible();
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    const profileHeadingLayout = await page.locator(".company-profile .section-heading").evaluate((element) => {
+      const label = element.querySelector(".section-kicker")!;
+      const title = element.querySelector("h2")!;
+      const labelRect = label.getBoundingClientRect();
+      const titleRect = title.getBoundingClientRect();
+      return {
+        display: getComputedStyle(element).display,
+        leftDelta: Math.abs(labelRect.left - titleRect.left),
+        verticalGap: titleRect.top - labelRect.bottom,
+      };
+    });
+    expect(profileHeadingLayout.display).toBe("block");
+    expect(profileHeadingLayout.leftDelta).toBeLessThanOrEqual(1);
+    expect(profileHeadingLayout.verticalGap).toBeGreaterThanOrEqual(8);
     await expect(page.locator(".profile-list > div")).toHaveCount(4);
     await expect(page.locator(".profile-list")).toContainText("Prestação de serviços, coordenação de projectos");
     await expect(page.locator(".about-purpose")).toBeVisible();
@@ -155,6 +170,21 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(page.locator(".about-intro h1")).toContainText(/An Angolan company/);
     await expect(page.locator(".about-lead").first()).toContainText("HMATIAS – Prestação de Serviços, (SU), LDA");
     await expect(page.getByRole("heading", { name: "Identity and profile." })).toBeVisible();
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    const profileHeadingLayout = await page.locator(".company-profile .section-heading").evaluate((element) => {
+      const label = element.querySelector(".section-kicker")!;
+      const title = element.querySelector("h2")!;
+      const labelRect = label.getBoundingClientRect();
+      const titleRect = title.getBoundingClientRect();
+      return {
+        display: getComputedStyle(element).display,
+        leftDelta: Math.abs(labelRect.left - titleRect.left),
+        verticalGap: titleRect.top - labelRect.bottom,
+      };
+    });
+    expect(profileHeadingLayout.display).toBe("block");
+    expect(profileHeadingLayout.leftDelta).toBeLessThanOrEqual(1);
+    expect(profileHeadingLayout.verticalGap).toBeGreaterThanOrEqual(8);
     await expect(page.locator(".profile-list > div")).toHaveCount(4);
     await expect(page.locator(".profile-list")).toContainText("Service delivery, project coordination");
     await expect(page.locator(".about-purpose")).toBeVisible();
