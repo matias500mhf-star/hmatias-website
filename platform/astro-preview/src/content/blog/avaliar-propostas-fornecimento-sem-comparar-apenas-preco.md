@@ -4,10 +4,8 @@ description: "Um método para comparar conformidade técnica, custo total, prazo
 pubDate: 2026-11-13
 category: "Procurement e fornecimento"
 author: "Equipa Editorial HMATIAS"
-coverImage: "https://images.unsplash.com/photo-1764835994645-3faa2c40f708?auto=format&fit=crop&w=1440&q=82"
-coverAlt: "Imagem ilustrativa de maquinaria industrial numa unidade de produção."
-photoCredit: "xing bowen"
-photoCreditUrl: "https://unsplash.com/photos/industrial-machinery-in-a-large-factory-setting-mMgC9U15XR0"
+coverImage: "/images/hmatias/perfis-metalicos-estrutura.webp"
+coverAlt: "Perfis metálicos fotografados num trabalho do portefólio HMATIAS."
 readingMinutes: 5
 contentType: "guide"
 language: "pt-AO"
