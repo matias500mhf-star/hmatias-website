@@ -8,6 +8,17 @@ export function resolveSiteUrl(env = process.env) {
     return explicitUrl.origin;
   }
 
+  const netlifyHost = String(env.DEPLOY_PRIME_URL ?? env.URL ?? "").trim();
+  if (netlifyHost) {
+    const netlifyUrl = new URL(/^[a-z][a-z\\d+.-]*:\\/\\//i.test(netlifyHost)
+      ? netlifyHost
+      : `https://${netlifyHost}`);
+    if (netlifyUrl.protocol !== "https:") {
+      throw new Error("Netlify deployment URLs must use HTTPS.");
+    }
+    return netlifyUrl.origin;
+  }
+
   const vercelHost = String(
     env.VERCEL_ENV === "production"
       ? env.VERCEL_PROJECT_PRODUCTION_URL ?? env.VERCEL_URL ?? ""
