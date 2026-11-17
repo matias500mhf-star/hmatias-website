@@ -26,6 +26,9 @@ const dateLabel = post.data.pubDate.toLocaleDateString(
   title={`${post.data.title} | Blog HMATIAS`}
   description={post.data.description}
   lang={post.data.language}
+  ogType="article"
+  ogImage={post.data.coverImage}
+  ogImageAlt={post.data.coverAlt}
 >
   <div class="preview-bar"><span><i aria-hidden="true"></i> BLOG HMATIAS</span><span>{post.data.category.toUpperCase()}</span></div>
   <SiteHeader />
