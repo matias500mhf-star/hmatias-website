@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
+import { company } from "../../../data/site";
 ---
 <BaseLayout title="About HMATIAS | Company Profile" description="Company profile of HMATIAS – Prestação de Serviços, (SU), LDA, an Angolan company focused on business services and project delivery." lang="en">
   <div class="preview-bar"><span><i aria-hidden="true"></i> ABOUT HMATIAS</span><span>COMPANY PROFILE</span></div>
@@ -10,13 +11,13 @@ import SiteFooter from "../../../components/SiteFooter.astro";
     <section class="about-intro" aria-labelledby="about-heading">
       <p class="eyebrow"><span class="eyebrow-line"></span> WHO WE ARE</p>
       <h1 id="about-heading">An Angolan company with a <em>practical and responsible approach.</em></h1>
-      <p class="about-lead">HMATIAS – Prestação de Serviços SU, LDA is an Angolan company supporting businesses and projects. We start with each client's requirements and seek to define the service, the resources involved and the conditions for delivery clearly.</p>
+      <p class="about-lead">{company.legalName} is an Angolan company supporting businesses and projects. We start with each client's requirements and seek to define the service, the resources involved and the conditions for delivery clearly.</p>
       <p class="about-lead">Our organisation brings together complementary capabilities and a network of partners, allowing us to address different types of requests while keeping scope, feasibility and commitments in view.</p>
     </section>
     <section class="company-profile section-pad" aria-labelledby="profile-heading">
       <div class="section-heading"><p class="section-kicker">THE COMPANY</p><h2 id="profile-heading">Identity and profile.</h2></div>
       <dl class="profile-list">
-        <div><dt>Legal name</dt><dd>HMATIAS – Prestação de Serviços SU, LDA</dd></div>
+        <div><dt>Legal name</dt><dd>{company.legalName}</dd></div>
         <div><dt>Nature</dt><dd>Angolan services company</dd></div>
         <div><dt>Market</dt><dd>Angola</dd></div>
         <div><dt>Operating model</dt><dd>Service delivery, project coordination and collaboration with specialist partners.</dd></div>
