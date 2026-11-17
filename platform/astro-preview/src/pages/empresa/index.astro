@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+import { company } from "../../data/site";
 ---
 <BaseLayout
   title="Sobre a HMATIAS | Quem Somos"
@@ -13,7 +14,7 @@ import SiteFooter from "../../components/SiteFooter.astro";
     <section class="about-intro" aria-labelledby="about-heading">
       <p class="eyebrow"><span class="eyebrow-line"></span> QUEM SOMOS</p>
       <h1 id="about-heading">Uma empresa angolana, com uma abordagem <em>prática e responsável.</em></h1>
-      <p class="about-lead">A HMATIAS – Prestação de Serviços SU, LDA é uma empresa angolana que desenvolve a sua actividade no apoio a empresas e projectos. Trabalhamos a partir das necessidades de cada cliente, procurando definir claramente o serviço, os recursos envolvidos e as condições de execução.</p>
+      <p class="about-lead">A {company.legalName} é uma empresa angolana que desenvolve a sua actividade no apoio a empresas e projectos. Trabalhamos a partir das necessidades de cada cliente, procurando definir claramente o serviço, os recursos envolvidos e as condições de execução.</p>
       <p class="about-lead">A nossa organização reúne competências complementares e uma rede de parceiros, permitindo enquadrar solicitações de diferentes naturezas sem perder de vista o âmbito, a viabilidade e os compromissos assumidos.</p>
     </section>
 
@@ -23,7 +24,7 @@ import SiteFooter from "../../components/SiteFooter.astro";
         <h2 id="profile-heading">Identidade e enquadramento.</h2>
       </div>
       <dl class="profile-list">
-        <div><dt>Denominação</dt><dd>HMATIAS – Prestação de Serviços SU, LDA</dd></div>
+        <div><dt>Denominação</dt><dd>{company.legalName}</dd></div>
         <div><dt>Natureza</dt><dd>Empresa angolana de prestação de serviços</dd></div>
         <div><dt>Mercado</dt><dd>Angola</dd></div>
         <div><dt>Modelo de actuação</dt><dd>Prestação de serviços, coordenação de projectos e articulação com parceiros especializados.</dd></div>
