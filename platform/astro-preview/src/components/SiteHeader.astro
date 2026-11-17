@@ -122,11 +122,6 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
           setSubmenuExpanded(item, false);
         }
       });
-      item.addEventListener("focusin", () => setSubmenuExpanded(item, true));
-      item.addEventListener("focusout", (event) => {
-        const nextTarget = event.relatedTarget;
-        if (!(nextTarget instanceof Node) || !item.contains(nextTarget)) setSubmenuExpanded(item, false);
-      });
     });
 
     nav.querySelectorAll<HTMLButtonElement>(".submenu-toggle").forEach((button) => {
