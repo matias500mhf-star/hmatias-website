@@ -102,7 +102,7 @@ test.describe("HMATIAS company and platform pages", () => {
   test("company page presents its registered identity and four service areas", async ({ page }) => {
     await page.goto("/empresa/");
     await expect(page.locator(".about-intro h1")).toContainText(/Uma empresa angolana/);
-    await expect(page.locator(".about-lead").first()).toContainText("HMATIAS – Prestação de Serviços, (SU), LDA");
+    await expect(page.locator(".about-lead").first()).toContainText("HMATIAS - PRESTAÇÃO DE SERVIÇOS, (SU), LDA");
     await expect(page.getByRole("heading", { name: "Identidade e enquadramento." })).toBeVisible();
     await page.setViewportSize({ width: 1440, height: 1000 });
     const profileHeadingLayout = await page.locator(".company-profile .section-heading").evaluate((element) => {
@@ -168,7 +168,7 @@ test.describe("HMATIAS company and platform pages", () => {
     await page.goto("/en/about/");
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
     await expect(page.locator(".about-intro h1")).toContainText(/An Angolan company/);
-    await expect(page.locator(".about-lead").first()).toContainText("HMATIAS – Prestação de Serviços, (SU), LDA");
+    await expect(page.locator(".about-lead").first()).toContainText("HMATIAS - PRESTAÇÃO DE SERVIÇOS, (SU), LDA");
     await expect(page.getByRole("heading", { name: "Identity and profile." })).toBeVisible();
     await page.setViewportSize({ width: 1440, height: 1000 });
     const profileHeadingLayout = await page.locator(".company-profile .section-heading").evaluate((element) => {
