@@ -102,19 +102,38 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
       }
     });
 
+    const setSubmenuExpanded = (item: HTMLElement, expanded: boolean) => {
+      nav.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach((other) => {
+        if (other !== item) {
+          other.classList.remove("submenu-open");
+          other.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded", "false");
+        }
+      });
+      item.classList.toggle("submenu-open", expanded);
+      item.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded", String(expanded));
+    };
+
+    nav.querySelectorAll<HTMLElement>(".nav-item").forEach((item) => {
+      item.addEventListener("mouseenter", () => {
+        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) setSubmenuExpanded(item, true);
+      });
+      item.addEventListener("mouseleave", () => {
+        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches && !item.contains(document.activeElement)) {
+          setSubmenuExpanded(item, false);
+        }
+      });
+      item.addEventListener("focusin", () => setSubmenuExpanded(item, true));
+      item.addEventListener("focusout", (event) => {
+        const nextTarget = event.relatedTarget;
+        if (!(nextTarget instanceof Node) || !item.contains(nextTarget)) setSubmenuExpanded(item, false);
+      });
+    });
+
     nav.querySelectorAll<HTMLButtonElement>(".submenu-toggle").forEach((button) => {
       button.addEventListener("click", () => {
         const item = button.closest<HTMLElement>(".nav-item");
         if (!item) return;
-        const isOpen = button.getAttribute("aria-expanded") !== "true";
-        nav.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach((other) => {
-          if (other !== item) {
-            other.classList.remove("submenu-open");
-            other.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded", "false");
-          }
-        });
-        item.classList.toggle("submenu-open", isOpen);
-        button.setAttribute("aria-expanded", String(isOpen));
+        setSubmenuExpanded(item, button.getAttribute("aria-expanded") !== "true");
       });
     });
 
