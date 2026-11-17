@@ -3,7 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 ---
-<BaseLayout title="About HMATIAS | Company Profile" description="Company profile of HMATIAS – Prestação de Serviços SU, LDA, an Angolan company focused on business services and project delivery." lang="en">
+<BaseLayout title="About HMATIAS | Company Profile" description="Company profile of HMATIAS – Prestação de Serviços, (SU), LDA, an Angolan company focused on business services and project delivery." lang="en">
   <div class="preview-bar"><span><i aria-hidden="true"></i> ABOUT HMATIAS</span><span>COMPANY PROFILE</span></div>
   <SiteHeader />
   <main class="about-page">
@@ -38,6 +38,10 @@ import SiteFooter from "../../../components/SiteFooter.astro";
         </ul>
       </div>
     </section>
+    <section class="about-ceo section-pad" aria-labelledby="ceo-heading">
+      <div class="section-heading"><p class="section-kicker">MESSAGE FROM THE CEO</p><h2 id="ceo-heading">A clear commitment in every project.</h2></div>
+      <blockquote class="ceo-message"><p>At HMATIAS, we believe good results begin with understanding requirements and making realistic commitments. We work with rigour, responsibility and transparency, bringing together the right capabilities to respond to each project.</p></blockquote>
+    </section>
   </main>
   <SiteFooter />
   <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
@@ -48,6 +52,16 @@ import SiteFooter from "../../../components/SiteFooter.astro";
 .about-intro h1{margin:22px 0 0;font-size:clamp(39px,6vw,76px);line-height:1.04;font-weight:520;letter-spacing:-.06em}
 .about-intro h1 em{color:#b9d8ed;font-family:var(--hm-serif);font-weight:400}
 .about-lead{margin:25px 0 0;color:#e3edf6;font-size:14px;line-height:1.9}
+.company-profile,.about-purpose{background:var(--hm-paper)}
+.about-ceo{background:var(--hm-light)}
+.company-profile,.about-purpose,.about-ceo{display:grid;grid-template-columns:minmax(210px,.72fr) minmax(0,1.28fr);column-gap:clamp(32px,6vw,78px);row-gap:22px;align-items:start}
+.company-profile .section-heading,.about-purpose .section-heading,.about-ceo .section-heading{min-width:0}
+.company-profile .profile-list{max-width:none;width:100%;margin:0}
+.about-purpose .purpose-grid,.about-purpose .values-block{grid-column:2}
+.about-purpose .purpose-grid{margin-top:0}
+.about-purpose .values-block{max-width:none;margin-top:28px}
+.ceo-message{margin:0;padding:clamp(24px,3.2vw,38px);border-left:2px solid var(--hm-blue);background:var(--hm-paper)}
+.ceo-message p{max-width:700px;margin:0;color:var(--hm-muted);font-size:14px;line-height:1.9}
 .section-heading h2{max-width:760px;margin:15px 0 0;font-size:clamp(30px,4.5vw,52px);line-height:1.1;font-weight:520;letter-spacing:-.05em}
 .profile-list{max-width:920px;margin:36px 0 0;border-top:1px solid var(--hm-line)}
 .profile-list>div{display:grid;grid-template-columns:minmax(150px,.55fr) minmax(0,1.45fr);gap:24px;padding:19px 0;border-bottom:1px solid var(--hm-line)}
@@ -62,5 +76,5 @@ import SiteFooter from "../../../components/SiteFooter.astro";
 .values-list{margin:18px 0 0;padding:0;list-style:none;border-top:1px solid var(--hm-line)}
 .values-list li{display:grid;grid-template-columns:minmax(130px,.55fr) minmax(0,1.45fr);gap:24px;padding:17px 0;border-bottom:1px solid var(--hm-line)}
 .values-list strong{font-size:13px}.values-list span{color:var(--hm-muted);font-size:12px;line-height:1.7}
-@media(max-width:700px){.about-intro{padding-block:44px 48px}.about-intro h1{font-size:clamp(34px,9vw,43px);line-height:1.1}.about-lead{margin-top:18px;font-size:13px;line-height:1.8}.about-page .section-pad{padding-block:42px}.profile-list{margin-top:24px}.profile-list>div,.values-list li{grid-template-columns:1fr;gap:6px;padding:14px 0}.purpose-grid{grid-template-columns:1fr;gap:10px;margin-top:24px}.purpose-card{min-height:0;padding:21px}.purpose-card h3{margin:18px 0 11px;font-size:25px}.values-block{margin-top:36px}}
+@media(max-width:700px){.company-profile,.about-purpose,.about-ceo{grid-template-columns:1fr;gap:18px}.about-purpose .purpose-grid,.about-purpose .values-block{grid-column:1}.company-profile .profile-list{margin-top:4px}.about-purpose .purpose-grid{margin-top:8px}.about-purpose .values-block{margin-top:20px}.about-intro{padding-block:44px 48px}.about-intro h1{font-size:clamp(34px,9vw,43px);line-height:1.1}.about-lead{margin-top:18px;font-size:13px;line-height:1.8}.about-page .section-pad{padding-block:42px}.profile-list{margin-top:24px}.profile-list>div,.values-list li{grid-template-columns:1fr;gap:6px;padding:14px 0}.purpose-grid{grid-template-columns:1fr;gap:10px;margin-top:24px}.purpose-card{min-height:0;padding:21px}.purpose-card h3{margin:18px 0 11px;font-size:25px}.values-block{margin-top:36px}}
 </style>
