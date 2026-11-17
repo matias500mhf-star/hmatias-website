@@ -16,6 +16,7 @@ const approvedPhotos = new Set([
   "pavilhoes-rurais-concluidos.webp"
 ]);
 const files = readdirSync(contentRoot).filter((name) => name.endsWith(".md"));
+const imageCounts = new Map();
 assert.equal(files.length, 12, "The approved bilingual blog must contain six PT/EN article pairs.");
 
 for (const filename of files) {
@@ -23,6 +24,8 @@ for (const filename of files) {
   const frontmatter = source.match(/^---\n([\s\S]*?)\n---/);
   assert.ok(frontmatter, "Missing frontmatter: " + filename);
   const metadata = frontmatter[1];
+  assert.doesNotMatch(source, /fictional scenario|fictitious case|illustrative case study/i, "Fictional case-study content must not be published as HMATIAS editorial: " + filename);
+  assert.match(metadata, /contentType: "guide"/, "Published blog items must be factual guides or technical notes: " + filename);
   assert.doesNotMatch(metadata, /unsplash|photoCredit|photoCreditUrl/i, "Stock image or external photo credit remains: " + filename);
   const imageMatch = metadata.match(/^coverImage: "([^"]+)"/m);
   const altMatch = metadata.match(/^coverAlt: "([^"]+)"/m);
@@ -31,6 +34,7 @@ for (const filename of files) {
   const imagePath = imageMatch[1];
   assert.ok(imagePath.startsWith("/images/hmatias/"), "Blog cover must use the HMATIAS portfolio: " + filename);
   assert.ok(approvedPhotos.has(basename(imagePath)), "Unapproved portfolio image: " + filename);
+  imageCounts.set(imagePath, (imageCounts.get(imagePath) ?? 0) + 1);
   assert.ok(existsSync(resolve(publicRoot, "." + imagePath)), "Portfolio image was not copied to public assets: " + imagePath);
   assert.ok(existsSync(resolve(distRoot, "." + imagePath)), "Portfolio image is missing from the production build: " + imagePath);
 
@@ -44,6 +48,9 @@ for (const filename of files) {
   assert.ok(html.includes('src="' + imagePath + '"'), "Generated article does not use its approved HMATIAS image: " + filename);
   assert.doesNotMatch(html, /images\.unsplash\.com|unsplash\.com/i, "Generated article still references stock imagery: " + filename);
 }
+
+assert.equal(imageCounts.size, 6, "Each article pair must use its own distinct portfolio photograph.");
+for (const [imagePath, count] of imageCounts) assert.equal(count, 2, "Each portfolio image must be used only by its PT/EN pair: " + imagePath);
 
 for (const languagePath of ["blog/index.html", "en/blog/index.html"]) {
   const html = readFileSync(resolve(distRoot, languagePath), "utf8");
