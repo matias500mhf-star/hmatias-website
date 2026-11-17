@@ -27,7 +27,7 @@ const dateLabel = post.data.pubDate.toLocaleDateString("en", { day:"2-digit", mo
     </section>
     <article class="article-content">
       <figure class="article-cover-figure">
-        <img src={responsiveImageUrl(post.data.coverImage, 1200)} srcset={responsiveImageSrcset(post.data.coverImage)} sizes="(max-width: 900px) calc(100vw - 44px), 804px" alt={post.data.coverAlt} width="1440" height="810" loading="eager" fetchpriority="high" decoding="async" />
+        <img src={responsiveImageUrl(post.data.coverImage, 1440, 16 / 9)} srcset={responsiveImageSrcset(post.data.coverImage, 16 / 9)} sizes="(max-width: 900px) calc(100vw - 44px), 804px" alt={post.data.coverAlt} width="1440" height="810" loading="eager" fetchpriority="high" decoding="async" />
         <figcaption>Illustrative image only; it does not document a specific HMATIAS project. Photo credit: <a href={post.data.coverCreditUrl} target="_blank" rel="noopener noreferrer">{post.data.coverCredit}</a>, via Unsplash.</figcaption>
       </figure>
       <Content />
