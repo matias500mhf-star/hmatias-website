@@ -1,6 +1,6 @@
 {
-  "version": "0.6",
-  "updated_at": "2026-09-27T09:15:00+01:00",
+  "version": "0.7",
+  "updated_at": "2026-11-14T00:00:00+00:00",
   "items": [
     {
       "id": "item-construction-general",
@@ -741,6 +741,69 @@
         "residential"
       ],
       "name_pt": "Soluções Smart Home"
+    },
+    {
+      "id": "item-carbodiam-red-line-17",
+      "name": "Carbodiam Red Line 17",
+      "name_pt": "Carbodiam Red Line 17",
+      "name_en": "Carbodiam Red Line 17",
+      "category": "construction",
+      "subcategory": "diamond-cutting",
+      "aliases": [
+        "red line 17",
+        "disco diamantado red line",
+        "disco diamantado betão armado"
+      ],
+      "specification": "Disco diamantado para corte intensivo em materiais duros, betão e betão armado. Diâmetros indicados: Ø230, 300, 350 e 400 mm. Segmento: 17 mm. Confirmar furo, máquina e modo de corte.",
+      "keywords": [
+        "Carbodiam",
+        "diamond blade",
+        "betão armado"
+      ],
+      "source": "HMATIAS Supply Catalogue 2026, página 3",
+      "source_page": 3
+    },
+    {
+      "id": "item-carbodiam-spyrostar",
+      "name": "Carbodiam Spyrostar",
+      "name_pt": "Carbodiam Spyrostar",
+      "name_en": "Carbodiam Spyrostar",
+      "category": "construction",
+      "subcategory": "diamond-cutting",
+      "aliases": [
+        "spyrostar",
+        "disco spyrostar",
+        "disco diamantado corte fino"
+      ],
+      "specification": "Disco diamantado para corte fino e de alta precisão. Diâmetros indicados: Ø125, 230, 350 e 400 mm. Compatibilidade com rebarbadoras e cortadoras, conforme referência.",
+      "keywords": [
+        "Carbodiam",
+        "diamond blade",
+        "precision cutting"
+      ],
+      "source": "HMATIAS Supply Catalogue 2026, página 3",
+      "source_page": 3
+    },
+    {
+      "id": "item-carbodiam-pro-bf1",
+      "name": "Carbodiam PRO BF1",
+      "name_pt": "Carbodiam PRO BF1",
+      "name_en": "Carbodiam PRO BF1",
+      "category": "construction",
+      "subcategory": "diamond-cutting",
+      "aliases": [
+        "pro bf1",
+        "disco serra chão",
+        "disco diamantado pavimentos industriais"
+      ],
+      "specification": "Disco para serra de chão, destinado a pavimentos industriais duros. Diâmetros indicados: Ø300 e 350 mm. Confirmar máquina, furo e material.",
+      "keywords": [
+        "Carbodiam",
+        "floor saw",
+        "industrial floors"
+      ],
+      "source": "HMATIAS Supply Catalogue 2026, página 3",
+      "source_page": 3
     }
   ],
   "taxonomy": [

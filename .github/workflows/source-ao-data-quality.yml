@@ -31,6 +31,10 @@ jobs:
           node-version: '22'
       - name: Validate Source AO data
         run: node source-ao/validate-data.mjs
+      - name: Validate public partner catalogue
+        run: node source-ao/validate-partner-catalog.mjs
+      - name: Validate partner catalogue validator syntax
+        run: node --check source-ao/validate-partner-catalog.mjs
       - name: Validate institutional website leads migration
         run: python3 source-ao/backend/scripts/test-website-leads-migration.py
       - name: Validate synthetic RFQ alert isolation
@@ -54,6 +58,7 @@ jobs:
         run: |
           node --check source-ao/data-engine.js
           node --check source-ao/sourceao.js
+          node --check source-ao/product-catalogue.js
           node --check source-ao/verified-results.js
           node --check source-ao/runtime-config.js
           node --check source-ao/api-client.js
@@ -246,6 +251,8 @@ jobs:
           test -f .staging-web/privacy.html
           test -f .staging-web/terms.html
           test -f .staging-web/data/catalog.json
+          test -f .staging-web/data/hmatias-product-catalog.json
+          test -f .staging-web/data/partner-catalog.json
           test -f .staging-web/rfq.html
           test -f .staging-web/rfq-model.js
           test ! -e .staging-web/backend

@@ -121,6 +121,14 @@ The existing sourcing API accepts the versioned RFQ contract while preserving le
 The authenticated Sourcing Desk displays qualification and supports adjudication, purchasing and delivery states. Operators remain responsible for supplier selection, confirmed cost, margin, proposal, purchase and profit accounting; none of these actions or values is automatic or public.
 
 
+## Public partner catalogue
+
+The public partner-product feed is `data/partner-catalog.json`. It is delivered as a public static asset only after HMATIAS approves the partner and the product records. The feed is deliberately empty until real partner catalogues and image-publication permissions are received; existing supplier research records are not partner approvals.
+
+The feed supports public product identity, authorised product images, technical specifications, transparent availability states and optional explicitly public prices. It excludes private supplier contacts, acquisition costs, margins, internal notes and private evidence. A stock claim requires dated confirmation and an expiry. The public feed is checked by `validate-partner-catalog.mjs` in CI.
+
+See `docs/PARTNER_CATALOG_MODEL.md` for the publication workflow, data contract and RFQ hand-off boundary.
+
 ## Private commercial case
 
 Authenticated sourcing operations can attach a private commercial case to a customer request. The workflow is deliberately explicit:
