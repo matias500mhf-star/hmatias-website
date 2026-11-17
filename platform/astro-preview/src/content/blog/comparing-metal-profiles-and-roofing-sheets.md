@@ -4,8 +4,10 @@ description: "A practical comparison framework for metal profiles and roofing sh
 pubDate: 2026-11-13
 category: "Procurement and Supply"
 author: "HMATIAS Commercial Team"
-coverImage: "/images/hmatias/chapas-cobertura-fornecimento.webp"
-coverAlt: "Profiled metal roofing sheets documented in the HMATIAS supply portfolio."
+coverImage: "https://images.unsplash.com/photo-1671022442106-c787685d9fed?auto=format&fit=crop&w=1440&q=80"
+coverAlt: "Steel beams and metal profiles stacked in an industrial warehouse."
+coverCredit: "Corey Willett"
+coverCreditUrl: "https://unsplash.com/photos/a-large-pile-of-steel-beams-in-a-warehouse-X6thX8FvMLA"
 readingMinutes: 5
 contentType: "guide"
 language: "en"
