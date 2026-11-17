@@ -4,10 +4,8 @@ description: "Uma checklist para confirmar quantidades, especificações, estado
 pubDate: 2026-11-13
 category: "Procurement e fornecimento"
 author: "Equipa Editorial HMATIAS"
-coverImage: "https://images.unsplash.com/photo-1721937127582-ed331de95a04?auto=format&fit=crop&w=1440&q=82"
-coverAlt: "Imagem ilustrativa de um armazém com paletes e prateleiras de materiais."
-photoCredit: "Ashley"
-photoCreditUrl: "https://unsplash.com/photos/a-warehouse-filled-with-lots-of-boxes-and-pallets-28b8xlTT5t4"
+coverImage: "/images/hmatias/pavilhoes-rurais-concluidos.webp"
+coverAlt: "Pavilhões rurais concluídos, documentados no portefólio HMATIAS."
 readingMinutes: 4
 contentType: "guide"
 language: "pt-AO"
