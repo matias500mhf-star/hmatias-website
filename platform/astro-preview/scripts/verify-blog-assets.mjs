@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,7 +12,7 @@ assert.equal(files.length, 12, "The bilingual blog must contain six PT/EN articl
 
 for (const filename of files) {
   const source = readFileSync(resolve(contentRoot, filename), "utf8");
-  const frontmatter = source.match(/^---\\n([\\s\\S]*?)\\n---/);
+  const frontmatter = source.match(/^---\n([\s\S]*?)\n---/);
   assert.ok(frontmatter, "Missing frontmatter: " + filename);
   const metadata = frontmatter[1];
   assert.doesNotMatch(source, /fictional scenario|fictitious case/i, "Fictitious content must not be presented as HMATIAS work: " + filename);
@@ -32,11 +32,11 @@ for (const filename of files) {
   imageCounts.set(cover.pathname, (imageCounts.get(cover.pathname) ?? 0) + 1);
 
   const language = /language: "en"/.test(metadata) ? "en" : "pt-AO";
-  const slug = filename.replace(/\\.md$/, "");
+  const slug = filename.replace(/\.md$/, "");
   const htmlPath = language === "en"
     ? resolve(distRoot, "en", "blog", slug, "index.html")
     : resolve(distRoot, "blog", slug, "index.html");
-  assert.ok(existsSyncSafe(htmlPath), "Generated blog article is missing: " + htmlPath);
+  assert.ok(existsSync(htmlPath), "Generated blog article is missing: " + htmlPath);
   const html = readFileSync(htmlPath, "utf8");
   assert.ok(html.includes(cover.pathname), "Generated article does not use its assigned image: " + filename);
   assert.match(html, /srcset=/, "Responsive srcset is missing: " + filename);
@@ -52,13 +52,10 @@ for (const [imagePath, count] of imageCounts) assert.equal(count, 2, "Each edito
 
 for (const languagePath of ["blog/index.html", "en/blog/index.html"]) {
   const html = readFileSync(resolve(distRoot, languagePath), "utf8");
-  assert.match(html, /images\\.unsplash\\.com/, "Blog index must show editorial imagery: " + languagePath);
+  assert.match(html, /images\.unsplash\.com/, "Blog index must show editorial imagery: " + languagePath);
   assert.match(html, /srcset=/, "Blog index images must be responsive: " + languagePath);
   assert.match(html, /Photo credit|Crédito fotográfico/, "Blog index must show image credits: " + languagePath);
-}
-
-function existsSyncSafe(path) {
-  try { readFileSync(path); return true; } catch { return false; }
+  assert.match(html, /illustrative|ilustrativas/i, "Blog index must label stock images as illustrative: " + languagePath);
 }
 
 console.log("PASS: the 12 bilingual blog articles use six distinct, credited illustrative images with responsive variants.");
