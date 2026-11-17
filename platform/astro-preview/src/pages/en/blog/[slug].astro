@@ -4,6 +4,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 import { company } from "../../../data/site";
+import { responsiveImageUrl, responsiveImageSrcset } from "../../../utils/responsive-images";
 type Props = { post: CollectionEntry<"blog"> };
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft && data.language === "en");
@@ -26,8 +27,8 @@ const dateLabel = post.data.pubDate.toLocaleDateString("en", { day:"2-digit", mo
     </section>
     <article class="article-content">
       <figure class="article-cover-figure">
-        <img src={post.data.coverImage} sizes="(max-width: 900px) calc(100vw - 44px), 804px" alt={post.data.coverAlt} width="1200" height="675" loading="eager" fetchpriority="high" decoding="async" />
-        <figcaption>Real photograph from the HMATIAS portfolio; it does not identify a client or claim that the photographed work is the case described in the article.</figcaption>
+        <img src={responsiveImageUrl(post.data.coverImage, 1200)} srcset={responsiveImageSrcset(post.data.coverImage)} sizes="(max-width: 900px) calc(100vw - 44px), 804px" alt={post.data.coverAlt} width="1440" height="810" loading="eager" fetchpriority="high" decoding="async" />
+        <figcaption>Illustrative image only; it does not document a specific HMATIAS project. Photo credit: <a href={post.data.coverCreditUrl} target="_blank" rel="noopener noreferrer">{post.data.coverCredit}</a>, via Unsplash.</figcaption>
       </figure>
       <Content />
       <section class="article-cta" aria-labelledby="pages-en-blog-slug-section-2-heading">
