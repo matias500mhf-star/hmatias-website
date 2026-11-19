@@ -128,7 +128,8 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
       button.addEventListener("click", () => {
         const item = button.closest<HTMLElement>(".nav-item");
         if (!item) return;
-        setSubmenuExpanded(item, button.getAttribute("aria-expanded") !== "true");
+        const supportsDesktopHover = window.matchMedia("(min-width: 1121px) and (hover: hover) and (pointer: fine)").matches;
+        setSubmenuExpanded(item, supportsDesktopHover || button.getAttribute("aria-expanded") !== "true");
       });
     });
 
