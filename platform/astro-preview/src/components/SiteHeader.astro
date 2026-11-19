@@ -115,10 +115,10 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
 
     nav.querySelectorAll<HTMLElement>(".nav-item").forEach((item) => {
       item.addEventListener("mouseenter", () => {
-        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) setSubmenuExpanded(item, true);
+        if (window.matchMedia("(min-width: 1121px) and (hover: hover) and (pointer: fine)").matches) setSubmenuExpanded(item, true);
       });
       item.addEventListener("mouseleave", () => {
-        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches && !item.contains(document.activeElement)) {
+        if (window.matchMedia("(min-width: 1121px) and (hover: hover) and (pointer: fine)").matches && !item.contains(document.activeElement)) {
           setSubmenuExpanded(item, false);
         }
       });

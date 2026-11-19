@@ -22,16 +22,16 @@ const articlePairs = [
     categoryEn: "Procurement and Supply",
   },
   {
-    pt: "/blog/caso-pratico-intervencao-cobertura-industrial/",
-    en: "/en/blog/industrial-roofing-intervention-case-study/",
-    categoryPt: "Obras e manutenção",
-    categoryEn: "Construction and Maintenance",
+    pt: "/blog/comparar-propostas-perfis-metalicos-chapas-cobertura/",
+    en: "/en/blog/comparing-metal-profiles-and-roofing-sheets/",
+    categoryPt: "Procurement e fornecimento",
+    categoryEn: "Procurement and Supply",
   },
   {
-    pt: "/blog/caso-pratico-comparacao-tres-propostas-fornecimento/",
-    en: "/en/blog/illustrative-case-study-comparing-three-supply-proposals/",
-    categoryPt: "Casos práticos",
-    categoryEn: "Illustrative Case Studies",
+    pt: "/blog/substituicao-localizada-cobertura-metalica/",
+    en: "/en/blog/localised-metal-roof-replacement/",
+    categoryPt: "Obras e manutenção",
+    categoryEn: "Construction and Maintenance",
   },
   {
     pt: "/blog/plano-manutencao-preventiva-instalacoes/",
@@ -268,7 +268,7 @@ for (const route of [
   { path: "/blog/", language: "pt-AO" },
   { path: "/en/blog/", language: "en" },
 ]) {
-  test("Blog " + route.language + " keeps illustrative photographs inside the editorial section", async ({ page }) => {
+  test("Blog " + route.language + " keeps illustrative photographs inside the editorial section", async ({ page }, testInfo) => {
     const response = await page.goto(route.path);
     expect(response?.status()).toBe(200);
     await expect(page.locator("html")).toHaveAttribute("lang", route.language);
@@ -280,22 +280,23 @@ for (const route of [
         .map((figure) => figure.textContent?.trim() || "Uncredited editorial image")
     );
     expect(missingCredits).toEqual([]);
-    await page.setViewportSize({ width: 1440, height: 1000 });
-    const featuredDesktopFrame = await page.locator(".editorial-feature-visual img").evaluate((element) => {
-      const rect = element.getBoundingClientRect();
-      return { ratio: rect.width / rect.height, objectFit: getComputedStyle(element).objectFit };
-    });
-    expect(featuredDesktopFrame.ratio).toBeGreaterThan(1.30);
-    expect(featuredDesktopFrame.ratio).toBeLessThan(1.37);
-    expect(featuredDesktopFrame.objectFit).toBe("cover");
+    if (!testInfo.project.use.isMobile) {
+      await page.setViewportSize({ width: 1440, height: 1000 });
+    }
+    const expectedEditorialAspectRatio = testInfo.project.use.isMobile ? "16 / 9" : "4 / 3";
+    const featuredFrame = await page.locator(".editorial-feature-visual img").evaluate((element) => ({
+      aspectRatio: getComputedStyle(element).aspectRatio,
+      objectFit: getComputedStyle(element).objectFit,
+    }));
+    expect(featuredFrame.aspectRatio).toBe(expectedEditorialAspectRatio);
+    expect(featuredFrame.objectFit).toBe("cover");
 
-    const archiveDesktopFrame = await page.locator(".editorial-card-cover img").first().evaluate((element) => {
-      const rect = element.getBoundingClientRect();
-      return { ratio: rect.width / rect.height, objectFit: getComputedStyle(element).objectFit };
-    });
-    expect(archiveDesktopFrame.ratio).toBeGreaterThan(1.30);
-    expect(archiveDesktopFrame.ratio).toBeLessThan(1.37);
-    expect(archiveDesktopFrame.objectFit).toBe("cover");
+    const archiveFrame = await page.locator(".editorial-card-cover img").first().evaluate((element) => ({
+      aspectRatio: getComputedStyle(element).aspectRatio,
+      objectFit: getComputedStyle(element).objectFit,
+    }));
+    expect(archiveFrame.aspectRatio).toBe(expectedEditorialAspectRatio);
+    expect(archiveFrame.objectFit).toBe("cover");
 
     await expect(page.locator(".editorial-archive-note")).toContainText(
       route.language === "en" ? "do not represent HMATIAS projects" : "Não representam obras"

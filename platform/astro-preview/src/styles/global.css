@@ -1276,3 +1276,12 @@ main li {
   .brand img { height: 57px; }
   .menu-toggle { width: 40px; height: 40px; }
 }
+
+
+/* Desktop submenu controls meet the minimum accessible pointer target size. */
+@media (min-width: 1121px) {
+  .submenu-toggle {
+    width: 28px;
+    min-width: 28px;
+  }
+}
