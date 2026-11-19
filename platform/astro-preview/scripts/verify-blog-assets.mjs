@@ -8,6 +8,15 @@ const contentRoot = resolve(scriptDir, "../src/content/blog");
 const distRoot = resolve(scriptDir, "../dist");
 const files = readdirSync(contentRoot).filter((name) => name.endsWith(".md"));
 const imageCounts = new Map();
+
+function figuresWithClass(html, className) {
+  return [...html.matchAll(/<figure\b([^>]*)>([\s\S]*?)<\/figure>/gi)]
+    .filter(([, attributes]) => {
+      const classes = attributes.match(/\bclass="([^"]+)"/)?.[1]?.split(/\s+/) ?? [];
+      return classes.includes(className);
+    })
+    .map(([, , figureContent]) => figureContent);
+}
 assert.equal(files.length, 12, "The bilingual blog must contain six PT/EN article pairs.");
 
 for (const filename of files) {
@@ -40,8 +49,10 @@ for (const filename of files) {
   const html = readFileSync(htmlPath, "utf8");
   assert.ok(html.includes(cover.pathname), "Generated article does not use its assigned image: " + filename);
   assert.match(html, /srcset=/, "Responsive srcset is missing: " + filename);
-  const articleSrcSet = html.match(/<img\b[^>]*srcset="([^"]+)"/)?.[1] ?? "";
-  assert.match(articleSrcSet, /[?&]h=\d+/, "Article cover must request an explicit crop height: " + filename);
+  const articleFigures = figuresWithClass(html, "article-cover-figure");
+  assert.equal(articleFigures.length, 1, "Article must contain exactly one dedicated cover figure: " + filename);
+  const articleSrcSet = articleFigures[0].match(/<img\b[^>]*srcset="([^"]+)"/)?.[1] ?? "";
+  assert.match(articleSrcSet, /[?&](?:amp;)?h=\d+/, "Article cover must request an explicit crop height: " + filename);
   assert.match(html, /Illustrative image|Imagem ilustrativa/, "The image must be explicitly labelled illustrative: " + filename);
   assert.match(html, /Photo credit|Crédito fotográfico/, "The photo credit is missing from the article page: " + filename);
   assert.match(html, /<meta property="og:type" content="article"/, "Article Open Graph type is missing: " + filename);
@@ -56,8 +67,15 @@ for (const languagePath of ["blog/index.html", "en/blog/index.html"]) {
   const html = readFileSync(resolve(distRoot, languagePath), "utf8");
   assert.match(html, /images\.unsplash\.com/, "Blog index must show editorial imagery: " + languagePath);
   assert.match(html, /srcset=/, "Blog index images must be responsive: " + languagePath);
-  const indexSrcSet = html.match(/<img\b[^>]*srcset="([^"]+)"/)?.[1] ?? "";
-  assert.match(indexSrcSet, /[?&]h=\d+/, "Blog index images must request explicit crop heights: " + languagePath);
+  const indexFigures = [
+    ...figuresWithClass(html, "editorial-feature-visual"),
+    ...figuresWithClass(html, "editorial-card-cover"),
+  ];
+  assert.ok(indexFigures.length >= 1, "Blog index must contain dedicated editorial image figures: " + languagePath);
+  for (const [index, figure] of indexFigures.entries()) {
+    const imageSrcSet = figure.match(/<img\b[^>]*srcset="([^"]+)"/)?.[1] ?? "";
+    assert.match(imageSrcSet, /[?&](?:amp;)?h=\d+/, "Blog index image " + (index + 1) + " must request an explicit crop height: " + languagePath);
+  }
   assert.match(html, /Photo credit|Crédito fotográfico/, "Blog index must show image credits: " + languagePath);
   assert.match(html, /illustrative|ilustrativas/i, "Blog index must label stock images as illustrative: " + languagePath);
 }
