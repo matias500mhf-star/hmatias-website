@@ -430,7 +430,7 @@ assert.match(worksCatalogueHtml, /Apresente o seu projeto/, "Catalogue CTA must 
 assert.equal((worksCatalogueHtml.match(/<article class="works-catalogue-card"/g) || []).length, 12, "The complete 12-record catalogue must be present");
 const catalogueImgCount = (worksCatalogueHtml.match(/<img\b/g) || []).length;
 const catalogueImgWithAltCount = (worksCatalogueHtml.match(/<img\b[^>]*\balt=/g) || []).length;
-assert.equal(catalogueImgCount, 16, "Twelve catalogue photographs, two shared brand marks and two footer social icons must be rendered");
+assert.equal(catalogueImgCount, 19, "Fifteen documentary catalogue photographs, two shared brand marks and two footer social icons must be rendered");
 assert.equal(catalogueImgWithAltCount, catalogueImgCount, "Every catalogue image must have alt text");
 
 const assetDir = join(outDir, "_astro");
