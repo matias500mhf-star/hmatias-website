@@ -15,20 +15,23 @@ import metalProfiles from "../../../../../../images/catalogue/perfis-metalicos-e
 import roofSheets from "../../../../../../images/catalogue/chapas-cobertura-fornecimento.webp";
 import logistics from "../../../../../../images/catalogue/logistica-estrutura-metalica.webp";
 import embeddedServices from "../../../../../../images/catalogue/instalacoes-embutidas-construcao.webp";
+import luandaOverview from "../../../../../../images/catalogue/obra-privada-luanda-alvenaria-vista-geral.webp";
+import luandaFormwork from "../../../../../../images/catalogue/obra-privada-luanda-cofragem-armadura-fundacao.webp";
+import luandaMasonry from "../../../../../../images/catalogue/obra-privada-luanda-detalhe-alvenaria.webp";
 
 const works = [
-  {category:"Roofing · Maintenance",title:"Metal Roof Replacement",description:"Localised replacement of roof sheets, with mechanical fixing and integration into the existing roof.",image:roofMaintenance,alt:"Partial metal roof replacement using new profiled sheets"},
-  {category:"Metal Structures",title:"Metal-frame Building",description:"Assembly of a metal structure, roof covering and sheet cladding, with supporting masonry.",image:metalHall,alt:"Building under construction with metal frame and sheet roofing"},
-  {category:"Rural Construction · Infrastructure",title:"Completed Rural Pavilions",description:"Exterior view of completed pavilions with metal roofing and ventilated side areas.",image:ruralPavilions,alt:"Completed rural pavilions with red metal roofing"},
-  {category:"Earthworks",title:"Site Preparation",description:"Backhoe loader mobilised for earthmoving and initial ground levelling.",image:sitePreparation,alt:"Backhoe loader preparing and levelling a site"},
-  {category:"Masonry · Construction",title:"Masonry, Openings and Reinforcement",description:"Concrete block walls, defined openings, lintels and vertical reinforcement.",image:masonry,alt:"Masonry construction showing lintels and vertical reinforcement"},
-  {category:"Hydraulic Works · Concrete",title:"Compartmentalised Reservoir",description:"Concrete reservoir structure with internal divisions and cement finish for hydraulic support.",image:waterTank,alt:"Compartmentalised concrete reservoir with internal divisions"},
-  {category:"Ancillary Works",title:"Covered Annex with Metal Structure",description:"Metal roof structure creating an additional covered area beside an existing building.",image:coveredAnnex,alt:"Covered annex with metal structure and ceramic roof tiles"},
-  {category:"Aluminium Frames · Glazing",title:"Aluminium Frames and Tinted Glass",description:"Aluminium profiles and tinted glass panels, including sliding doors.",image:aluminiumGlass,alt:"Aluminium window framing and tinted glass enclosure"},
-  {category:"Structures · Materials",title:"Structural Metal Profiles",description:"Metal profiles prepared and organised on site for subsequent structural assembly.",image:metalProfiles,alt:"Metal profiles organised on site for structural assembly"},
-  {category:"Supply · Roofing",title:"Profiled Roofing Sheets",description:"Profiled metal sheets prepared for supply and use in roofing systems.",image:roofSheets,alt:"Profiled metal sheets for roof installation"},
-  {category:"Logistics · Structures",title:"Metal Structure Mobilisation",description:"Transport and mobilisation of metal elements for construction and assembly work.",image:logistics,alt:"Truck transporting metal elements for construction work"},
-  {category:"Construction · Installations",title:"Concealed Building Services",description:"Construction phase showing block walls and preparation of concealed electrical and plumbing points.",image:embeddedServices,alt:"Interior construction showing masonry and concealed service points"}
+  {category:"Roofing · Maintenance",title:"Metal roof intervention",description:"Record of new profiled sheets positioned alongside existing sheets, documenting a localised replacement phase.",image:roofMaintenance,alt:"New and existing profiled metal sheets on a roof under intervention"},
+  {category:"Metal Structures",title:"Metal-frame building",description:"Metal structure and roof under execution, with visible sheet cladding and supporting masonry.",image:metalHall,alt:"Building with metal frame, roof covering and sheet cladding"},
+  {category:"Rural Construction · Infrastructure",title:"Pavilions with metal roofing",description:"Exterior view of two elongated pavilions with metal roofing and partially open sides for ventilation.",image:ruralPavilions,alt:"Two rural pavilions with red metal roofing and ventilated sides"},
+  {category:"Earthworks",title:"Ground preparation and earthmoving",description:"Earthmoving equipment on natural ground, with visible tyre tracks and excavated material.",image:sitePreparation,alt:"Earthmoving equipment on red soil at a construction site"},
+  {category:"Masonry · Construction",title:"Masonry and wall openings",description:"Concrete block walls with access openings and visible concrete elements within the building composition.",image:masonry,alt:"Concrete block walls with openings and visible concrete elements"},
+  {category:"Hydraulic Works · Concrete",title:"Concrete reservoir with partitions",description:"Concrete structure with visible internal compartments and finished interior surfaces.",image:waterTank,alt:"Concrete reservoir with several internal compartments"},
+  {category:"Ancillary Works",title:"Annex with metal-supported roof",description:"Covered area beside an existing building, with an exposed metal structure and ceramic roof tiles.",image:coveredAnnex,alt:"Covered annex beside an existing building with metal structure and ceramic roof tiles"},
+  {category:"Aluminium Frames · Glazing",title:"Aluminium frames and tinted glass",description:"A set of openings with aluminium profiles, tinted glass panels and a central sliding door.",image:aluminiumGlass,alt:"Openings fitted with aluminium frames and tinted glass panels"},
+  {group:"supply",category:"Supply · Structures",title:"Metal profiles",description:"Metal profiles organised beside a masonry front. The photograph records the material stored on site, not its dimensions or specification.",image:metalProfiles,alt:"Metal profiles organised beside a masonry wall"},
+  {group:"supply",category:"Supply · Roofing",title:"Profiled roofing sheets",description:"Profiled metal sheets organised in stacks as a visual reference for roofing material.",image:roofSheets,alt:"Profiled metal roofing sheets organised in stacks"},
+  {group:"supply",category:"Logistics · Structures",title:"Transport of metal elements",description:"Metal elements loaded on a cargo vehicle, documenting a materials-logistics operation.",image:logistics,alt:"Cargo vehicle carrying metal elements for transport"},
+  {category:"Construction · Installations",title:"Technical services during construction",description:"Interior of a building under construction, with block walls, pipework and service boxes visible.",image:embeddedServices,alt:"Building interior under construction with masonry, pipework and service boxes"}
 ];
 ---
 <BaseLayout title="HMATIAS Works, Interventions and Supply Catalogue" description="Photographic records of HMATIAS construction works, interventions, execution stages, materials and supply references in Angola." lang="en">
@@ -43,19 +46,51 @@ const works = [
         <div class="hero-actions"><a class="button button-light" href="/en/#contact">Request an assessment <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="/en/construction/">Construction and Infrastructure <span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
-    <section class="works-catalogue-body section-pad" aria-labelledby="pages-en-works-catalogue-index-section-2-heading">
+    <section class="works-catalogue-featured section-pad" id="private-project-luanda" aria-labelledby="private-project-luanda-heading">
+      <div class="works-catalogue-featured-heading">
+        <div>
+          <p class="section-kicker">01 / DOCUMENTED PROJECT</p>
+          <h2 id="private-project-luanda-heading">Foundations and masonry<br /><em>private project · Luanda.</em></h2>
+        </div>
+        <dl class="works-catalogue-project-meta">
+          <div><dt>Location</dt><dd>Luanda, Angola</dd></div>
+          <div><dt>Client</dt><dd>Private entity · identity confidential</dd></div>
+        </dl>
+      </div>
+      <p class="works-catalogue-featured-description">Photographic record of civil construction works in Luanda. The images document formwork assembly and reinforcement positioned in a foundation element, concrete-block masonry and a wall with an access opening. The client's identity is withheld at their request.</p>
+      <div class="works-catalogue-featured-grid">
+        <figure><Picture src={luandaFormwork} alt="Formwork and reinforcement positioned in a foundation element on a private construction project in Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>01 · Formwork and reinforcement</strong><span>Foundation element preparation</span></figcaption></figure>
+        <figure><Picture src={luandaMasonry} alt="Detail of a concrete-block wall on a private construction project in Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>02 · Concrete-block masonry</strong><span>Masonry laying detail</span></figcaption></figure>
+        <figure><Picture src={luandaOverview} alt="Concrete-block wall with an access opening on a private construction project in Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>03 · Wall and access opening</strong><span>General view of the masonry front</span></figcaption></figure>
+      </div>
+      <p class="works-catalogue-case-note">The location is shown at municipality level to protect client confidentiality. The photographs document execution stages and do not, by themselves, constitute a measurement record or technical certificate.</p>
+    </section>
+    <section class="works-catalogue-body section-pad" id="works" aria-labelledby="pages-en-works-catalogue-index-section-2-heading">
       <div class="section-heading">
-        <div><div class="section-kicker">01 / PHOTOGRAPHIC RECORDS</div><h2 id="pages-en-works-catalogue-index-section-2-heading">Construction, infrastructure,<br /><em>maintenance and supply.</em></h2></div>
+        <div><div class="section-kicker">02 / EXECUTION RECORDS</div><h2 id="pages-en-works-catalogue-index-section-2-heading">Photographic records of<br /><em>works and interventions.</em></h2></div>
+        <p>Records of structures, site preparation, masonry, roofing, reservoirs and ancillary works. Each caption describes only what can be observed in the photograph.</p>
       </div>
       <div class="works-catalogue-grid">
-        {works.map((work,index) => (
+        {works.filter((work) => work.group !== "supply").map((work,index) => (
           <article class="works-catalogue-card">
-            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure>
+            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure>
             <div class="works-catalogue-copy"><span>{String(index+1).padStart(2,"0")} · {work.category}</span><h3>{work.title}</h3><p>{work.description}</p></div>
           </article>
         ))}
       </div>
-      <p class="works-catalogue-note">This is a commercial visual archive. It does not replace contracts, measurement records, invoices or other proof documents. HMATIAS identifies clients, dates and locations only where disclosure is appropriate or authorised.</p>
+    </section>
+    <section class="works-catalogue-supply section-pad" id="supply-records" aria-labelledby="works-catalogue-supply-heading">
+      <div class="section-heading"><div><div class="section-kicker">03 / MATERIALS AND LOGISTICS</div><h2 id="works-catalogue-supply-heading">Supply and mobilisation<br /><em>of materials.</em></h2></div><p>Visual records of materials and transport. These photographs do not confirm current stock or availability.</p></div>
+      <div class="works-catalogue-grid works-catalogue-supply-grid">
+        {works.filter((work) => work.group === "supply").map((work,index) => (
+          <article class="works-catalogue-card">
+            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" />
+            </figure>
+            <div class="works-catalogue-copy"><span>{String(index+1).padStart(2,"0")} · {work.category}</span><h3>{work.title}</h3><p>{work.description}</p></div>
+          </article>
+        ))}
+      </div>
+      <p class="works-catalogue-note">This catalogue is a commercial visual archive. It does not replace contracts, measurement records, invoices or other proof documents. HMATIAS identifies clients, dates and locations only where disclosure is appropriate or authorised.</p>
     </section>
     <section class="works-catalogue-cta" aria-labelledby="pages-en-works-catalogue-index-section-3-heading">
       <div><p class="section-kicker">PLANNING A PROJECT OR INTERVENTION?</p><h2 id="pages-en-works-catalogue-index-section-3-heading">Present your project<br /><em>to HMATIAS.</em></h2><p>Send the location, photographs, approximate measurements and a brief description so we can assess the next step.</p></div>
@@ -72,7 +107,24 @@ const works = [
 .works-catalogue-hero h1 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; }
 .works-catalogue-hero > div > p:not(.eyebrow) { max-width:680px; margin:26px 0 0; color:#dceafa; font-size:13px; line-height:1.85; }
 .works-catalogue-hero .hero-actions { margin-top:32px; }
-.works-catalogue-body { background:var(--hm-paper); }
+.works-catalogue-body,.works-catalogue-supply { background:var(--hm-paper); }
+.works-catalogue-featured { background:#f2f6f9; }
+.works-catalogue-featured-heading { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(220px,.8fr); gap:36px; align-items:end; }
+.works-catalogue-featured-heading h2 { margin:0; color:var(--hm-ink); font-size:clamp(30px,4vw,48px); font-weight:550; line-height:1.08; letter-spacing:-.055em; }
+.works-catalogue-featured-heading h2 em { color:var(--hm-blue); font-family:var(--hm-serif); font-weight:400; }
+.works-catalogue-project-meta { margin:0; display:grid; gap:12px; }
+.works-catalogue-project-meta div { padding:0 0 10px; border-bottom:1px solid var(--hm-line); }
+.works-catalogue-project-meta dt { color:var(--hm-muted); font-size:9px; font-weight:750; letter-spacing:.1em; text-transform:uppercase; }
+.works-catalogue-project-meta dd { margin:5px 0 0; color:var(--hm-ink); font-size:12px; line-height:1.5; font-weight:600; }
+.works-catalogue-featured-description { max-width:920px; margin:24px 0 0; color:var(--hm-muted); font-size:13px; line-height:1.85; }
+.works-catalogue-featured-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:32px; }
+.works-catalogue-featured-grid figure { margin:0; min-width:0; background:#fff; }
+.works-catalogue-featured-grid img { display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:contain; background:#fff; }
+.works-catalogue-featured-grid figcaption { display:grid; gap:5px; padding:13px 14px 16px; }
+.works-catalogue-featured-grid figcaption strong { color:var(--hm-ink); font-size:12px; line-height:1.4; }
+.works-catalogue-featured-grid figcaption span { color:var(--hm-muted); font-size:10px; line-height:1.5; }
+.works-catalogue-case-note { margin:24px 0 0; color:var(--hm-muted); font-size:10px; line-height:1.75; }
+.works-catalogue-supply { border-top:1px solid var(--hm-line); }
 .works-catalogue-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:start; gap:35px 22px; margin-top:55px; }
 .works-catalogue-card { min-width:0; }
 .works-catalogue-card figure { margin:0; background:var(--hm-light); }
@@ -88,5 +140,5 @@ const works = [
 .works-catalogue-cta h2 em { color:#b9d8ed; font-family:var(--hm-serif); font-weight:400; }
 .works-catalogue-cta > div > p:not(.section-kicker) { max-width:560px; margin:16px 0 0; color:#dceafa; font-size:11px; line-height:1.8; }
 @media(max-width:950px) { .works-catalogue-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-@media(max-width:650px) { .works-catalogue-grid { grid-template-columns:1fr; gap:28px; margin-top:35px; } .works-catalogue-cta { flex-direction:column; align-items:flex-start; } }
+@media(max-width:650px) { .works-catalogue-grid { grid-template-columns:1fr; gap:28px; margin-top:35px; } .works-catalogue-cta { flex-direction:column; align-items:flex-start; } .works-catalogue-featured-heading { grid-template-columns:1fr; gap:22px; } .works-catalogue-featured-grid { grid-template-columns:1fr; } }
 </style>

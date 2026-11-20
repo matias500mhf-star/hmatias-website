@@ -823,4 +823,38 @@ for (const [route, heading, category] of englishSpecialistRoutes) {
   assert.match(content, new RegExp(`href="\\/en\\/source-ao\\/smart-rfq\\/\\?category=${category}(?:&amp;|&)request=`), `English specialist request must prefill the English SOURCE AO RFQ category: /${route}/`);
 }
 
+const cataloguePtPath = join(outDir, "catalogo-obras", "index.html");
+const catalogueEnPath = join(outDir, "en", "works-catalogue", "index.html");
+assert.ok(existsSync(cataloguePtPath), "Portuguese works catalogue must be generated");
+assert.ok(existsSync(catalogueEnPath), "English works catalogue must be generated");
+const cataloguePt = readFileSync(cataloguePtPath, "utf8");
+const catalogueEn = readFileSync(catalogueEnPath, "utf8");
+const privateLuandaPt = cataloguePt.match(/<section[^>]*id="obra-privada-luanda"[^>]*>[\s\S]*?<\/section>/)?.[0];
+const privateLuandaEn = catalogueEn.match(/<section[^>]*id="private-project-luanda"[^>]*>[\s\S]*?<\/section>/)?.[0];
+assert.ok(privateLuandaPt, "Portuguese catalogue must contain the documented private Luanda project");
+assert.ok(privateLuandaEn, "English catalogue must contain the documented private Luanda project");
+for (const [content, label] of [[privateLuandaPt, "Portuguese"], [privateLuandaEn, "English"]]) {
+  assert.equal((content.match(/<img\b/g) || []).length, 3, label + " Luanda project must contain exactly three documentary photographs");
+  assert.doesNotMatch(content, /images\.unsplash\.com|pexels\.com|gemini|generated image/i, label + " project record must not use generic or AI imagery");
+}
+for (const [needle, label] of [["Fundações e alvenaria", "Portuguese title"], ["Luanda, Angola", "Portuguese location"], ["identidade confidencial", "Portuguese client privacy"], ["cofragem", "Portuguese formwork alt"], ["blocos de betão", "Portuguese masonry alt"], ["vão de acesso", "Portuguese access opening alt"]]) {
+  assert.ok(privateLuandaPt.toLowerCase().includes(needle.toLowerCase()), "Portuguese catalogue is missing " + label);
+}
+for (const [needle, label] of [["Foundations and masonry", "English title"], ["Luanda, Angola", "English location"], ["identity confidential", "English client privacy"], ["Formwork and reinforcement", "English formwork alt"], ["concrete-block wall", "English masonry alt"], ["access opening", "English access opening alt"]]) {
+  assert.ok(privateLuandaEn.toLowerCase().includes(needle.toLowerCase()), "English catalogue is missing " + label);
+}
+const worksPtSection = cataloguePt.match(/<section[^>]*id="obras"[^>]*>[\s\S]*?<\/section>/)?.[0];
+const supplyPtSection = cataloguePt.match(/<section[^>]*id="fornecimentos"[^>]*>[\s\S]*?<\/section>/)?.[0];
+const worksEnSection = catalogueEn.match(/<section[^>]*id="works"[^>]*>[\s\S]*?<\/section>/)?.[0];
+const supplyEnSection = catalogueEn.match(/<section[^>]*id="supply-records"[^>]*>[\s\S]*?<\/section>/)?.[0];
+for (const [section, count, label] of [[worksPtSection,9,"Portuguese works"],[supplyPtSection,3,"Portuguese supply"],[worksEnSection,9,"English works"],[supplyEnSection,3,"English supply"]]) {
+  assert.ok(section, label + " catalogue section must exist");
+  assert.equal((section.match(/class="works-catalogue-card"/g) || []).length,count,label + " catalogue section must contain " + count + " records");
+  assert.doesNotMatch(section,/images\.unsplash\.com|pexels\.com|gemini|generated image/i,label + " catalogue section must not contain generic or AI imagery");
+}
+const repoRoot = fileURLToPath(new URL("../../../", import.meta.url));
+for (const file of ["obra-privada-luanda-alvenaria-vista-geral.webp","obra-privada-luanda-cofragem-armadura-fundacao.webp","obra-privada-luanda-detalhe-alvenaria.webp"]) {
+  assert.ok(existsSync(join(repoRoot, "images", "catalogue", file)), "Documentary catalogue photograph must be versioned: " + file);
+}
+
 console.log(`Astro static output verified: homepage has ${htmlImgCount} accessible images; ${assets.length} processed assets emitted.`);

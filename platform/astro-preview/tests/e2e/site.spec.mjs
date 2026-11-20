@@ -68,6 +68,43 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     expect(overflow.scroll).toBeLessThanOrEqual(overflow.client + 1);
   });
 
+  test("catálogo documenta a obra privada de Luanda e separa execução de materiais", async ({ page }) => {
+    await page.goto("/catalogo-obras/");
+    const privateWork = page.locator("#obra-privada-luanda");
+    await expect(privateWork.getByRole("heading", { level: 2 })).toContainText("Fundações e alvenaria");
+    await expect(privateWork).toContainText("Luanda, Angola");
+    await expect(privateWork).toContainText("identidade confidencial");
+    await expect(privateWork.locator("img")).toHaveCount(3);
+    const portugueseAlts = await privateWork.locator("img").evaluateAll(images => images.map(image => image.alt));
+    expect(portugueseAlts.join(" ")).toContain("cofragem");
+    expect(portugueseAlts.join(" ")).toContain("blocos de betão");
+    expect(portugueseAlts.join(" ")).toContain("vão de acesso");
+    await expect(page.locator("#obras .works-catalogue-card")).toHaveCount(9);
+    await expect(page.locator("#fornecimentos .works-catalogue-card")).toHaveCount(3);
+    await expect(privateWork.locator('img[src*="images.unsplash.com"]')).toHaveCount(0);
+
+    await page.goto("/en/works-catalogue/");
+    const englishWork = page.locator("#private-project-luanda");
+    await expect(englishWork.getByRole("heading", { level: 2 })).toContainText("Foundations and masonry");
+    await expect(englishWork).toContainText("Luanda, Angola");
+    await expect(englishWork).toContainText("identity confidential");
+    await expect(englishWork.locator("img")).toHaveCount(3);
+    const englishAlts = await englishWork.locator("img").evaluateAll(images => images.map(image => image.alt));
+    expect(englishAlts.join(" ")).toContain("Formwork");
+    expect(englishAlts.join(" ")).toContain("concrete-block");
+    expect(englishAlts.join(" ")).toContain("access opening");
+    await expect(page.locator("#works .works-catalogue-card")).toHaveCount(9);
+    await expect(page.locator("#supply-records .works-catalogue-card")).toHaveCount(3);
+    await expect(englishWork.locator('img[src*="images.unsplash.com"]')).toHaveCount(0);
+
+    await page.goto("/construcao/");
+    await expect(page.getByRole("link", { name: /registo fotográfico de fundações e alvenaria em Luanda/i }))
+      .toHaveAttribute("href", "/catalogo-obras/#obra-privada-luanda");
+    await page.goto("/en/construction/");
+    await expect(page.getByRole("link", { name: /foundations and masonry record for Luanda/i }))
+      .toHaveAttribute("href", "/en/works-catalogue/#private-project-luanda");
+  });
+
   test("âncoras internas apontam para secções existentes", async ({ page }) => {
     await page.goto("/");
     const missingTargets = await page.locator('a[href^="#"]').evaluateAll((links) =>
