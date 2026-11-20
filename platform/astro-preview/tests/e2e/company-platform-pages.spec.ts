@@ -84,12 +84,15 @@ test.describe("HMATIAS company and platform pages", () => {
     await expect(contact).toHaveAttribute("rel", /noopener noreferrer/);
   });
 
-  test("works catalogue preserves all twelve archive records and image descriptions", async ({ page }) => {
+  test("works catalogue preserves the Luanda project, twelve archive records and image descriptions", async ({ page }) => {
     await page.goto("/catalogo-obras/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText(/Obras, intervenções/);
-    await expect(page.locator(".works-catalogue-card")).toHaveCount(12);
+    await expect(page.locator("#obra-privada-luanda .works-catalogue-featured-grid img[alt]")).toHaveCount(3);
+    await expect(page.locator("#obras .works-catalogue-card")).toHaveCount(9);
+    await expect(page.locator("#fornecimentos .works-catalogue-card")).toHaveCount(3);
     await expect(page.locator(".works-catalogue-card img[alt]")).toHaveCount(12);
-    await expect(page.getByText(/não substitui contratos, autos de medição/)).toBeVisible();
+    await expect(page.locator(".works-catalogue-case-note")).toContainText(/não constituem, isoladamente, um auto de medição ou certificado técnico/i);
+    await expect(page.locator(".works-catalogue-case-note")).toContainText("confidencialidade do cliente");
     const officialFormLinks = page.locator(".works-catalogue-hero a[href], .works-catalogue-cta a[href]").filter({ hasText: "Solicitar avaliação" });
     await expect(officialFormLinks).toHaveCount(2);
     for (const link of [officialFormLinks.nth(0), officialFormLinks.nth(1)]) {
