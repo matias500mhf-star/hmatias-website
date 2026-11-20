@@ -61,7 +61,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     expect(response?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Política de Cookies");
     await expect(page.locator(".legal-content p").filter({ hasText: "Cookiebot" }).first()).toBeVisible();
-    await expect(page.getByRole("link", { name: "Política de Privacidade" })).toHaveAttribute("href", "/privacidade/");
+    await expect(page.locator(".legal-content").getByRole("link", { name: "Política de Privacidade" })).toHaveAttribute("href", "/privacidade/");
     await expect(page.locator(".footer-legal-links").getByRole("link", { name: "Política de Cookies" })).toHaveAttribute("href", "/cookies/");
     await page.setViewportSize({ width: 390, height: 844 });
     const overflow = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
