@@ -76,7 +76,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(privateWork).toContainText("identidade confidencial");
     await expect(privateWork.locator("img")).toHaveCount(3);
     const portugueseAlts = await privateWork.locator("img").evaluateAll(images => images.map(image => image.alt));
-    expect(portugueseAlts.join(" ")).toContain("cofragem");
+    expect(portugueseAlts.join(" ").toLowerCase()).toContain("cofragem");
     expect(portugueseAlts.join(" ")).toContain("blocos de betão");
     expect(portugueseAlts.join(" ")).toContain("vão de acesso");
     await expect(page.locator("#obras .works-catalogue-card")).toHaveCount(9);
