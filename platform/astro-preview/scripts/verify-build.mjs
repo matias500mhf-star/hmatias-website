@@ -475,7 +475,7 @@ const englishRoutes = [
   ["en/clean", /HMATIAS Clean/, /Prepare a multi-item request/],
   ["en/supply", /Procurement and/, /does not hold its own stock/i],
   ["en/business-services", /Administrative,/, /Professional CV structuring/],
-  ["en/works-catalogue", /Works, interventions/, /Completed Rural Pavilions/],
+  ["en/works-catalogue", /Works, interventions/, /Pavilions with metal roofing/],
   ["en/blog", /Practical Guides/, /FEATURED/],
   ["en/blog/how-to-prepare-a-comparable-supply-quotation", /How to prepare a quotation request/, /quantity and unit/i],
   ["en/source-ao/smart-rfq", /<h1[^>]*data-en="What do you need to source\?"/, /Isolated preview: online registration/],
