@@ -78,7 +78,22 @@
   function updateApprovalState(card){
     const selected=card.querySelector('.catalog-select').value;
     const accepted=card.querySelector('.truth-checkbox').checked;
-    card.querySelector('.approve-button').disabled=!(selected&&accepted);
+    const available=card.querySelector('.supplier-answer').dataset.available==='true';
+    const evidenceCheck=card.querySelector('.stock-evidence-verified');
+    const evidenceType=card.querySelector('.stock-evidence-type');
+    const evidenceDate=card.querySelector('.stock-evidence-date');
+    const evidenceReference=card.querySelector('.stock-evidence-reference');
+
+    if(!available)evidenceCheck.checked=false;
+    evidenceCheck.disabled=!available;
+    const evidenceEnabled=available&&evidenceCheck.checked;
+    evidenceType.disabled=!evidenceEnabled;
+    evidenceDate.disabled=!evidenceEnabled;
+    evidenceReference.disabled=!evidenceEnabled;
+
+    const evidenceComplete=!evidenceCheck.checked ||
+      Boolean(evidenceType.value&&evidenceDate.value&&evidenceReference.value.trim());
+    card.querySelector('.approve-button').disabled=!(selected&&accepted&&evidenceComplete);
   }
 
   function fillCatalogSelect(select,items,selectedId=''){
@@ -153,6 +168,10 @@
     });
     card.querySelector('.catalog-select').addEventListener('change',()=>updateApprovalState(card));
     card.querySelector('.truth-checkbox').addEventListener('change',()=>updateApprovalState(card));
+    card.querySelector('.stock-evidence-verified').addEventListener('change',()=>updateApprovalState(card));
+    card.querySelector('.stock-evidence-type').addEventListener('change',()=>updateApprovalState(card));
+    card.querySelector('.stock-evidence-date').addEventListener('change',()=>updateApprovalState(card));
+    card.querySelector('.stock-evidence-reference').addEventListener('input',()=>updateApprovalState(card));
 
     card.querySelector('.create-item-button').addEventListener('click',async()=>{
       const name=card.querySelector('.new-item-name').value.trim();
@@ -191,6 +210,13 @@
       const checked=card.querySelector('.truth-checkbox').checked;
       if(!itemId||!checked){updateApprovalState(card);return;}
       const reviewer=$('#reviewerName').value.trim()||'HMATIAS review';
+      const evidenceVerified=card.querySelector('.stock-evidence-verified').checked;
+      const approvalBody={item_id:itemId,reviewer,evidence_verified:evidenceVerified};
+      if(evidenceVerified){
+        approvalBody.evidence_type=card.querySelector('.stock-evidence-type').value;
+        approvalBody.evidence_date=card.querySelector('.stock-evidence-date').value;
+        approvalBody.evidence_reference=card.querySelector('.stock-evidence-reference').value.trim();
+      }
       const button=card.querySelector('.approve-button');
       button.disabled=true;
       setMessage(card,'Approving verified observation…');
@@ -198,12 +224,18 @@
         const payload=await api('/api/admin/verification/'+encodeURIComponent(row.id)+'/approve',{
           method:'POST',
           headers:{'content-type':'application/json'},
-          body:JSON.stringify({item_id:itemId,reviewer})
+          body:JSON.stringify(approvalBody)
         });
         const observation=payload?.observation;
         card.classList.add('approved');
         card.querySelector('.response-status').textContent=observation?.verification_status?.replaceAll('_',' ')||'approved';
-        setMessage(card,`Approved. Expires ${fmtDate(observation?.expires_at)}.`,'success');
+        const outcome=observation?.verification_status;
+        const classification=outcome==='in_stock_confirmed'
+          ?'Physical stock evidence reviewed and recorded.'
+          :outcome==='supplier_confirmed'
+            ?'Supplier confirmation recorded; physical stock was not independently evidenced.'
+            :'Supplier reported unavailable.';
+        setMessage(card,`${classification} Expires ${fmtDate(observation?.expires_at)}.`,'success');
         pending=pending.filter(item=>item.id!==row.id);
         $('#pendingCount').textContent=String(pending.length);
       }catch(error){

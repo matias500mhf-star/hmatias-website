@@ -3,46 +3,60 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import { company } from "../../data/site";
+import { responsiveImageUrl, responsiveImageSrcset } from "../../utils/responsive-images";
+import { getCollection } from "astro:content";
+const posts = (await getCollection("blog", ({ data }) => !data.draft && data.language === "pt-AO")).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
+const featured = posts[0];
+const featuredDate = featured?.data.pubDate.toLocaleDateString("pt-AO",{day:"2-digit",month:"long",year:"numeric"});
+const categories = [...new Set(posts.map((post)=>post.data.category))];
+const categoryGroups = categories.map((category)=>({name:category,id:"categoria-"+category.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""),items:posts.filter((post)=>post.data.category===category&&post.id!==featured?.id)})).filter((group)=>group.items.length>0);
 ---
-<BaseLayout
-  title="Blog HMATIAS | Perspetivas empresariais"
-  description="Análises e guias práticos da HMATIAS sobre construção, procurement, fornecimento, facilities e mercado empresarial em Angola."
->
-  <div class="preview-bar">
-    <span><i aria-hidden="true"></i> PUBLICAÇÕES HMATIAS</span>
-    <span>Conhecimento · Análise · Mercado</span>
-  </div>
+<BaseLayout title="Blog HMATIAS | Perspetivas empresariais e guias práticos" description="Guias técnicos e notas de procurement sobre construção, manutenção, fornecimento e operações em Angola, com enfoque em critérios e métodos de trabalho aplicáveis às actividades da HMATIAS.">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> PUBLICAÇÕES HMATIAS</span><span>OBRAS · PROCUREMENT · OPERAÇÕES</span></div>
   <SiteHeader />
   <main class="editorial-page">
-    <section class="editorial-hero">
+    <section class="editorial-hero" aria-labelledby="pages-blog-index-section-1-heading">
       <p class="section-kicker">HMATIAS / BLOG</p>
-      <h1>Perspetivas empresariais<br /><em>para decisões melhores.</em></h1>
-      <p class="editorial-lead">Análises e guias práticos sobre construção, procurement, fornecimento, facilities e atividade empresarial em Angola.</p>
+      <h1 id="pages-blog-index-section-1-heading">Perspetivas empresariais.<br /><em>Conhecimento aplicável.</em></h1>
+      <p class="editorial-lead">Notas técnicas e critérios de trabalho para estruturar pedidos, avaliar fornecimentos, planear intervenções e gerir operações em Angola.</p>
     </section>
-
-    <section class="editorial-body">
-      <div class="editorial-label">EM PREPARAÇÃO · PT / EN</div>
-      <article class="editorial-feature">
-        <p class="editorial-meta">GUIA PRÁTICO · HMATIAS SUPPLY</p>
-        <h2>Como preparar um pedido de cotação de fornecimento.</h2>
-        <p>O primeiro guia está em preparação. Vai abordar os elementos que ajudam a tornar um pedido de cotação mais claro: especificações, quantidades, local e prazo de entrega, condições comerciais e comparação de propostas.</p>
-        <span class="editorial-status">Publicação em preparação</span>
-      </article>
-
-      <div class="editorial-topics">
-        <h2>Temas editoriais</h2>
-        <div class="editorial-topic-grid">
-          <div><span>01</span><strong>Construção e Engenharia</strong></div>
-          <div><span>02</span><strong>Procurement e Supply</strong></div>
-          <div><span>03</span><strong>Facilities e Manutenção</strong></div>
-          <div><span>04</span><strong>Mercado Empresarial</strong></div>
-        </div>
+    <section class="editorial-body" aria-label="Artigos e temas">
+      {featured && <>
+        <div class="editorial-label">EM DESTAQUE · {featuredDate?.toUpperCase()}</div>
+        <article class="editorial-feature">
+          <figure class="editorial-feature-visual">
+            <img src={responsiveImageUrl(featured.data.coverImage, 1200, 4 / 3)} srcset={responsiveImageSrcset(featured.data.coverImage, 4 / 3)} sizes="(max-width: 760px) calc(100vw - 44px), 42vw" alt={featured.data.coverAlt} width="1200" height="900" loading="eager" fetchpriority="high" decoding="async" />
+            <figcaption>Imagem ilustrativa; não representa um trabalho específico da HMATIAS. Crédito fotográfico: <a href={featured.data.coverCreditUrl} target="_blank" rel="noopener noreferrer">{featured.data.coverCredit}</a>, via Unsplash.</figcaption>
+          </figure>
+          <p class="editorial-meta">{featured.data.contentType==="case-study"?"CASO PRÁTICO ILUSTRATIVO":"GUIA TÉCNICO"} · {featured.data.category.toUpperCase()} · {featured.data.readingMinutes} MIN DE LEITURA</p>
+          <h2><a href={"/blog/"+featured.id+"/"}>{featured.data.title}</a></h2>
+          <p>{featured.data.description}</p>
+          <a class="editorial-read-link" href={"/blog/"+featured.id+"/"}>Ler o artigo <span aria-hidden="true">↗</span></a>
+        </article>
+      </>}
+      {categoryGroups.length>0 && <nav class="editorial-category-nav" aria-label="Navegar por temas">
+        {categoryGroups.map((group)=><a href={"#"+group.id}>{group.name} <span>({group.items.length})</span></a>)}
+      </nav>}
+      <div class="editorial-archive">
+        {categoryGroups.map((group)=><section class="editorial-category" id={group.id} aria-labelledby={group.id+"-heading"}>
+          <div class="editorial-category-heading"><h2 id={group.id+"-heading"}>{group.name}</h2><span>{group.items.length} ARTIGO(S)</span></div>
+          <div class="editorial-card-grid">
+            {group.items.map((post)=><article class="editorial-card">
+              <figure class="editorial-card-cover">
+                <img src={responsiveImageUrl(post.data.coverImage, 1200, 4 / 3)} srcset={responsiveImageSrcset(post.data.coverImage, 4 / 3)} sizes="(max-width: 650px) calc(100vw - 44px), (max-width: 900px) calc((100vw - 72px) / 2), 30vw" alt={post.data.coverAlt} width="1200" height="900" loading="lazy" decoding="async" />
+                <figcaption>Imagem ilustrativa; não representa um trabalho específico da HMATIAS. Crédito fotográfico: <a href={post.data.coverCreditUrl} target="_blank" rel="noopener noreferrer">{post.data.coverCredit}</a>, via Unsplash.</figcaption>
+              </figure>
+              <p class="editorial-card-type">{post.data.contentType==="case-study"?"Caso prático ilustrativo":"Guia técnico"}</p>
+              <h3><a href={"/blog/"+post.id+"/"}>{post.data.title}</a></h3>
+              <p class="editorial-card-description">{post.data.description}</p>
+              <div class="editorial-card-meta"><time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString("pt-AO",{day:"2-digit",month:"short",year:"numeric"})}</time><span>{post.data.readingMinutes} min de leitura</span></div>
+              <a class="editorial-card-link" href={"/blog/"+post.id+"/"}>Abrir artigo <span aria-hidden="true">↗</span></a>
+            </article>)}
+          </div>
+        </section>)}
       </div>
-
-      <div class="editorial-contact">
-        <p>Para assuntos comerciais ou pedidos de cotação, contacte diretamente a HMATIAS.</p>
-        <a class="button button-dark" href={company.smartRfqUrl}>Preparar Smart RFQ <span aria-hidden="true">↗</span></a>
-      </div>
+      <p class="editorial-archive-note">As imagens deste Blog são ilustrativas. Não representam obras executadas pela HMATIAS nem substituem o registo fotográfico do Catálogo de Obras.</p>
+      <div class="editorial-contact"><p>Para uma necessidade concreta de fornecimento, especifique os artigos, quantidades e local de entrega no SOURCE AO.</p><a class="button button-dark" href={company.smartRfqUrl}>Preparar Smart RFQ <span aria-hidden="true">↗</span></a></div>
     </section>
   </main>
   <SiteFooter />

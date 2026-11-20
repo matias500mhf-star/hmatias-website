@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+---
+<BaseLayout title="Política de Cookies | HMATIAS" description="Informação sobre cookies, consentimento e ferramentas de medição utilizadas no website HMATIAS.">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> INFORMAÇÃO LEGAL</span><span>COOKIES · CONSENTIMENTO · ESTATÍSTICAS</span></div>
+  <SiteHeader />
+  <main class="legal-page section-pad">
+    <article class="legal-content">
+      <p class="legal-meta">Última atualização: 17 de novembro de 2026</p>
+      <h1>Política de Cookies</h1>
+      <p>Esta política explica como o website público da HMATIAS utiliza cookies e tecnologias semelhantes, e como o visitante pode gerir as suas escolhas.</p>
+      <h2>1. Gestão do consentimento</h2>
+      <p>O website oficial utiliza o Cookiebot como plataforma de gestão de consentimento. O mecanismo apresenta as opções de consentimento disponíveis no momento da visita. O visitante pode aceitar ou recusar categorias não essenciais e alterar posteriormente as suas preferências através do mecanismo de consentimento disponibilizado no website.</p>
+      <h2>2. Cookies necessários</h2>
+      <p>Algumas tecnologias podem ser necessárias para disponibilizar funções essenciais do website ou para guardar e respeitar as escolhas de consentimento. Estas tecnologias não devem ser confundidas com ferramentas de estatística ou análise de utilização.</p>
+      <h2>3. Estatísticas e medição</h2>
+      <p>As tecnologias classificadas como estatísticas permanecem bloqueadas até existir autorização do visitante para essa categoria. Após consentimento, o website pode utilizar o Google Tag Manager para gerir etiquetas autorizadas e o Google Analytics 4 para compreender a utilização das páginas, a origem das visitas, características técnicas do dispositivo e interacções comerciais gerais.</p>
+      <p>O Microsoft Clarity pode também ser utilizado para analisar padrões de navegação e usabilidade, apenas após consentimento para estatísticas. A configuração descrita na Política de Privacidade limita o seu carregamento em páginas noindex e em áreas operacionais ou privadas.</p>
+      <h2>4. Dados enviados às ferramentas</h2>
+      <p>Os eventos analíticos destinam-se a registar categorias técnicas e comerciais. A configuração descrita pela HMATIAS não envia para o Google Analytics nomes, números de telefone, endereços de e-mail, conteúdo de formulários, mensagens preparadas para WhatsApp, pedidos de cotação ou conversas com o assistente como parâmetros personalizados.</p>
+      <h2>5. Lista e duração dos cookies</h2>
+      <p>Os cookies e tecnologias efectivamente activos, os respectivos fornecedores, finalidades e períodos de conservação podem variar conforme as funcionalidades disponibilizadas e as escolhas de consentimento. Consulte as informações apresentadas no mecanismo Cookiebot durante a visita para conhecer os elementos detectados na configuração activa.</p>
+      <h2>6. Alteração das preferências</h2>
+      <p>O visitante pode recusar categorias opcionais ou alterar as escolhas no mecanismo de gestão de consentimento do website oficial. A retirada do consentimento não afecta a licitude do tratamento efectuado antes dessa retirada.</p>
+      <h2>7. Relação com a Política de Privacidade</h2>
+      <p>Esta política complementa a <a href="/privacidade/">Política de Privacidade</a>, onde se encontram informações sobre os dados tratados, as finalidades, os canais de contacto e as práticas de conservação.</p>
+      <p><strong>Nota sobre esta pré-visualização:</strong> o protótipo Astro em avaliação não carrega actualmente Cookiebot, Google Tag Manager, Google Analytics 4 ou Microsoft Clarity. Esta página documenta a configuração descrita para o website oficial e não declara que essas integrações já foram migradas para o protótipo.</p>
+      <a class="legal-back" href="/">← Voltar à HMATIAS</a>
+    </article>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+</BaseLayout>
+<style>
+.legal-page{background:var(--hm-light)}.legal-content{width:min(900px,100%);margin:0 auto;padding:clamp(28px,5vw,56px);background:var(--hm-paper);border:1px solid var(--hm-line)}.legal-meta{margin:0 0 18px;color:var(--hm-muted);font-size:11px}.legal-content h1{margin:0 0 28px;font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-.06em;font-weight:520}.legal-content h2{margin:33px 0 10px;font-size:17px;line-height:1.35;font-weight:650;letter-spacing:-.025em}.legal-content p{color:var(--hm-muted);font-size:12px;line-height:1.9}.legal-content a:not(.legal-back){color:var(--hm-blue);text-decoration:underline;text-underline-offset:3px}.legal-back{display:inline-flex;margin-top:28px;padding:13px 18px;color:#fff;background:var(--hm-navy);font-size:11px;font-weight:650}
+</style>

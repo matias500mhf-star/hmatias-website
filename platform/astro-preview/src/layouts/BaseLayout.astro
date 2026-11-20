@@ -1,26 +1,108 @@
 ---
 import "../styles/global.css";
 import favicon from "../../../../images/favicon.png";
+import { company } from "../data/site";
+import { getLanguagePair } from "../data/locales";
 
 interface Props {
   title: string;
   description: string;
+  lang?: "pt-AO" | "en";
+  ogType?: "website" | "article";
+  ogImage?: string;
+  ogImageAlt?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, lang = "pt-AO", ogType = "website", ogImage, ogImageAlt } = Astro.props;
+const isEnglish = lang === "en";
+const ogLocale = isEnglish ? "en_US" : "pt_AO";
+const brandImageAlt = isEnglish
+  ? "HMATIAS — Construction, Facilities, Supply and Business Services"
+  : "HMATIAS — Prestação de Serviços";
+const siteUrl = Astro.site ?? new URL("https://hmatias-astro-preview.onrender.com");
+const ogImageUrl = ogImage ? new URL(ogImage, siteUrl).toString() : "https://comercialhmatiasps.com/og-hmatias.jpg";
+const indexingEnabled = import.meta.env.PUBLIC_INDEXING_ENABLED === "true"
+  && siteUrl.protocol === "https:"
+  && siteUrl.hostname === "comercialhmatiasps.com";
+const robotsContent = indexingEnabled ? "index, follow" : "noindex, nofollow";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const languagePair = getLanguagePair(Astro.url.pathname);
+const ptUrl = languagePair ? new URL(languagePair.pt, siteUrl).toString() : undefined;
+const enUrl = languagePair ? new URL(languagePair.en, siteUrl).toString() : undefined;
+const structuredData = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": ["GeneralContractor", "LocalBusiness"],
+  "@id": new URL("/#business", siteUrl).toString(),
+  name: company.name,
+  legalName: company.legalName,
+  url: new URL("/", siteUrl).toString(),
+  image: "https://comercialhmatiasps.com/og-hmatias.jpg",
+  logo: "https://comercialhmatiasps.com/logo-hmatias.png",
+  telephone: company.phone,
+  email: company.commercialEmail,
+  identifier: {
+    "@type": "PropertyValue",
+    name: isEnglish ? "Commercial registration" : "Registo Comercial",
+    value: company.commercialRegistration,
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Bairro 1 de Maio, Casa n.º 31",
+    addressLocality: "Viana",
+    addressRegion: "Luanda",
+    addressCountry: "AO",
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "Angola",
+  },
+  sameAs: [company.instagramUrl],
+  description,
+}).replace(/</g, "\\u003c");
 ---
 <!doctype html>
-<html lang="pt-AO">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content={robotsContent} />
     <meta name="theme-color" content="#062d56" />
     <meta name="description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="HMATIAS" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt ?? brandImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt ?? brandImageAlt} />
+    <link rel="canonical" href={canonicalUrl} />
+    {ptUrl && <link rel="alternate" hreflang="pt-AO" href={ptUrl} />}
+    {enUrl && <link rel="alternate" hreflang="en" href={enUrl} />}
+    {ptUrl && <link rel="alternate" hreflang="x-default" href={ptUrl} />}
     <title>{title}</title>
     <link rel="icon" type="image/png" href={favicon.src} />
+    <script type="application/ld+json" set:html={structuredData}></script>
   </head>
   <body>
     <slot />
+    <a class="hm-floating-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? "Contact HMATIAS on WhatsApp" : "Contactar a HMATIAS pelo WhatsApp"}>
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.02 3.2A12.7 12.7 0 0 0 5.1 22.38L3.4 28.6l6.37-1.67A12.7 12.7 0 1 0 16.02 3.2Zm0 23.2c-1.96 0-3.88-.53-5.55-1.54l-.4-.24-3.78.99 1.01-3.68-.26-.42a10.47 10.47 0 1 1 8.98 4.89Zm5.75-7.85c-.31-.16-1.84-.91-2.12-1.02-.29-.1-.5-.16-.71.16-.21.31-.81 1.02-.99 1.23-.18.21-.37.24-.68.08-.31-.16-1.31-.48-2.5-1.53-.92-.82-1.54-1.83-1.72-2.14-.18-.31-.02-.48.14-.64.14-.14.31-.37.47-.55.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.7-.97-2.32-.25-.6-.51-.52-.71-.53h-.6c-.21 0-.55.08-.84.39-.29.31-1.1 1.07-1.1 2.61s1.13 3.03 1.29 3.24c.16.21 2.22 3.39 5.38 4.75.75.32 1.34.51 1.8.65.76.24 1.45.2 1.99.12.61-.09 1.84-.75 2.1-1.49.26-.73.26-1.36.18-1.49-.08-.13-.29-.21-.6-.37Z"/></svg>
+      <span>{isEnglish ? "WhatsApp" : "WhatsApp"}</span>
+    </a>
+    <style>
+      .hm-floating-whatsapp{position:fixed;right:clamp(16px,2.4vw,30px);bottom:clamp(18px,2.8vh,28px);z-index:80;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 18px 0 14px;border:1px solid #ffffff35;border-radius:999px;background:#087f55;color:#fff;box-shadow:0 8px 26px rgb(3 31 61 / 22%);font:700 12px/1 var(--hm-sans);text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+      .hm-floating-whatsapp svg{width:25px;height:25px;flex:0 0 25px}
+      .hm-floating-whatsapp:hover{transform:translateY(-2px);background:#066d49;box-shadow:0 12px 30px rgb(3 31 61 / 28%)}
+      .hm-floating-whatsapp:focus-visible{outline:3px solid #f2c94c;outline-offset:4px}
+      @media(max-width:520px){.hm-floating-whatsapp{right:14px;bottom:calc(14px + env(safe-area-inset-bottom));width:52px;height:52px;min-height:52px;padding:0;justify-content:center;border-radius:50%}.hm-floating-whatsapp span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}}
+      @media(prefers-reduced-motion:reduce){.hm-floating-whatsapp{transition:none}}
+    </style>
+
   </body>
 </html>

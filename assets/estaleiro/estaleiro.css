@@ -12,10 +12,10 @@
 .yard-hero-panel img{display:block;width:185px;height:auto;max-height:90px;object-fit:contain;object-position:left center;padding:8px 12px;background:#fff;border-radius:8px;margin-bottom:18px}
 .yard-hero-panel strong{display:block;color:#fff;margin-bottom:9px;font-size:1rem}
 .yard-hero-panel span{display:block;color:#dce7f0;font-size:.88rem;margin:7px 0;line-height:1.5}
-.yard-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:30px;max-width:820px}
+.yard-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:30px 0 0;padding:0;max-width:820px}
 .yard-fact{border-left:2px solid #e98b2a;padding:3px 12px}
-.yard-fact b{display:block;color:#fff;font-size:1.35rem;line-height:1.25}
-.yard-fact small{display:block;color:#cbd9e4;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;margin-top:5px}
+.yard-fact dd{display:block;margin:5px 0 0;color:#fff;font-size:1.35rem;line-height:1.25}
+.yard-fact dt{display:block;color:#cbd9e4;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase}
 .yard-section{padding:66px 0}
 .yard-section.soft{background:#eef3f7}
 .yard-heading{max-width:820px;margin-bottom:28px}
@@ -67,7 +67,7 @@
 .yard-entry-inner .eyebrow{color:#ffbd78}
 .yard-entry-inner .btn{flex:0 0 auto}
 @media(max-width:850px){.yard-hero{padding:55px 0 44px}.yard-hero-grid{grid-template-columns:1fr;gap:25px}.yard-hero-panel{max-width:520px}.yard-options{grid-template-columns:1fr}.yard-purpose-grid{grid-template-columns:1fr}.yard-cta-inner,.yard-entry-inner{align-items:flex-start;flex-direction:column}.yard-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.yard-section{padding:48px 0}.yard-facts{grid-template-columns:1fr;gap:10px}.yard-fact{display:flex;align-items:baseline;gap:12px}.yard-fact b{font-size:1.18rem}.yard-option-copy{padding:18px}.yard-metrics{gap:7px}.yard-comparison{overflow-x:auto}.yard-gallery{grid-template-columns:1fr}.yard-entry-inner{padding:22px}}
+@media(max-width:560px){.yard-section{padding:48px 0}.yard-facts{grid-template-columns:1fr;gap:10px}.yard-fact{display:flex;align-items:baseline;gap:12px}.yard-fact dd{margin-top:0;font-size:1.18rem}.yard-option-copy{padding:18px}.yard-metrics{gap:7px}.yard-comparison{overflow-x:auto}.yard-gallery{grid-template-columns:1fr}.yard-entry-inner{padding:22px}}
 @media(print){.yard-page .topbar,.yard-page .hmatias-header,.yard-page footer,.yard-hero,.yard-cta,.yard-entry{display:none!important}.yard-section{padding:12px 0}.yard-option{box-shadow:none;break-inside:avoid}}
 
 .yard-plan-option .yard-option-visual{padding:10px;background:#f5f8fa}
@@ -211,13 +211,13 @@ body.yard-page .yard-hero-panel span{
   font-weight:550;
   line-height:1.55;
 }
-body.yard-page .yard-fact b{
+body.yard-page .yard-fact dd{
   font-family:var(--yard-display);
   font-size:25px;
   font-weight:700;
   letter-spacing:-.02em;
 }
-body.yard-page .yard-fact small{
+body.yard-page .yard-fact dt{
   color:#e1ebf2;
   font-family:var(--yard-body);
   font-size:12px;
@@ -337,7 +337,7 @@ body.yard-page .copyright{
   body.yard-page .hmatias-topbar .header-contact a{font-size:12px}
   body.yard-page .yard-hero h1{font-size:clamp(2.15rem,8.5vw,2.8rem);line-height:1.1}
   body.yard-page .yard-hero p{font-size:16px}
-  body.yard-page .yard-fact b{font-size:22px}
+  body.yard-page .yard-fact dd{font-size:22px}
   body.yard-page .yard-heading h2{font-size:28px}
   body.yard-page .yard-option h3{font-size:21px}
   body.yard-page .yard-metric b{font-size:18px}

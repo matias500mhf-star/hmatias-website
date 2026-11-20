@@ -23,6 +23,10 @@
     document.body.classList.toggle('internal-locked',!unlocked);
     const refresh=$('#refreshIntakeAlerts');
     if(refresh)refresh.disabled=!unlocked;
+    const catalogRefresh=$('#refreshCatalog');
+    const catalogCreate=$('#createCatalogItem');
+    if(catalogRefresh)catalogRefresh.disabled=!unlocked;
+    if(catalogCreate)catalogCreate.disabled=!unlocked;
     if(!unlocked){
       const status=$('#intakeAlertsStatus');
       if(status)status.textContent='Inicie sessão administrativa para consultar os pedidos pendentes de notificação.';
@@ -539,6 +543,209 @@
     }
   }
 
+  const CATALOG_CATEGORIES=[
+    ['construction','Construção'],
+    ['hvac-electrical','Climatização e electricidade'],
+    ['tools-equipment','Ferramentas e equipamentos'],
+    ['cleaning-facilities','Limpeza e facilities'],
+    ['services-contractors','Serviços e empreiteiros'],
+    ['industrial-supply','Indústria, EPI e consumíveis'],
+    ['other','Outra necessidade']
+  ];
+
+  function catalogField(labelText,name,value,{multiline=false,type='text',maxLength=1200}={}){
+    const label=document.createElement('label');
+    label.textContent=labelText;
+    const input=document.createElement(multiline?'textarea':'input');
+    input.name=name;
+    if(multiline)input.rows=3;
+    else input.type=type;
+    input.maxLength=maxLength;
+    input.value=value??'';
+    label.append(input);
+    return {label,input};
+  }
+
+  function catalogCategoryField(value){
+    const label=document.createElement('label');
+    label.textContent='Categoria';
+    const select=document.createElement('select');
+    select.name='category';
+    CATALOG_CATEGORIES.forEach(([id,title])=>{
+      const option=document.createElement('option');
+      option.value=id;
+      option.textContent=title;
+      select.append(option);
+    });
+    select.value=value;
+    label.append(select);
+    return {label,input:select};
+  }
+
+  function catalogEditorCard(item){
+    const card=document.createElement('article');
+    card.className='catalog-admin-card';
+    const top=document.createElement('div');
+    top.className='catalog-admin-top';
+    const identity=document.createElement('div');
+    const title=document.createElement('strong');
+    title.textContent=item.name_pt||item.name;
+    const id=document.createElement('small');
+    id.textContent=item.id;
+    identity.append(title,id);
+    const badge=document.createElement('span');
+    badge.className='catalog-visibility';
+    badge.dataset.visible=item.public_visible?'true':'false';
+    badge.textContent=item.public_visible?'Publicado':'Privado';
+    top.append(identity,badge);
+    card.append(top);
+
+    const form=document.createElement('form');
+    form.className='catalog-admin-form';
+    const fields=[
+      catalogField('Nome (EN)','name',item.name,{maxLength:160}),
+      catalogField('Nome (PT)','name_pt',item.name_pt,{maxLength:160}),
+      catalogCategoryField(item.category),
+      catalogField('Unidade','unit',item.unit,{maxLength:40}),
+      catalogField('Especificação pública','specification',item.specification,{multiline:true,maxLength:1200}),
+      catalogField('Sinónimos (separados por vírgula)','aliases',(item.aliases||[]).join(', ')),
+      catalogField('Palavras-chave (separadas por vírgula)','keywords',(item.keywords||[]).join(', '))
+    ];
+    fields.forEach(field=>form.append(field.label));
+
+    const publishLabel=document.createElement('label');
+    publishLabel.className='catalog-publish-toggle';
+    const publish=document.createElement('input');
+    publish.type='checkbox';
+    publish.name='public_visible';
+    publish.checked=item.public_visible===true;
+    publish.disabled=item.id==='item-formaldehyde';
+    const publishText=document.createElement('span');
+    publishText.textContent=item.id==='item-formaldehyde'
+      ?'Bloqueado para publicação pública'
+      :'Disponibilizar no Smart RFQ';
+    publishLabel.append(publish,publishText);
+    form.append(publishLabel);
+
+    const actions=document.createElement('div');
+    actions.className='catalog-admin-actions';
+    const save=document.createElement('button');
+    save.type='submit';
+    save.className='btn btn-primary btn-small';
+    save.textContent='Guardar alterações';
+    const modified=document.createElement('small');
+    modified.textContent=item.updated_at?'Actualizado: '+item.updated_at:'Sem actualização registada';
+    actions.append(save,modified);
+    form.append(actions);
+
+    form.addEventListener('submit',async event=>{
+      event.preventDefault();
+      if(!adminToken)return;
+      save.disabled=true;
+      save.textContent='A guardar…';
+      const byName=name=>form.elements.namedItem(name);
+      const splitWords=value=>String(value||'').split(',').map(part=>part.trim()).filter(Boolean);
+      const payload={
+        name:byName('name').value.trim(),
+        name_pt:byName('name_pt').value.trim(),
+        category:byName('category').value,
+        unit:byName('unit').value.trim(),
+        specification:byName('specification').value.trim(),
+        aliases:splitWords(byName('aliases').value),
+        keywords:splitWords(byName('keywords').value),
+        public_visible:publish.checked
+      };
+      try{
+        await api('/api/admin/catalog/items/'+encodeURIComponent(item.id),{
+          method:'PATCH',
+          headers:{'content-type':'application/json'},
+          body:JSON.stringify(payload)
+        });
+        const status=$('#catalogDeskStatus');
+        status.textContent='Alterações guardadas para '+item.id+'.';
+        await loadAdminCatalog();
+      }catch(error){
+        const status=$('#catalogDeskStatus');
+        status.textContent=error.message==='item_not_publishable'
+          ?'Este artigo está permanentemente bloqueado para publicação pública.'
+          :'Não foi possível guardar o artigo. Verifique os campos e a sessão administrativa.';
+        status.dataset.state='error';
+        save.disabled=false;
+        save.textContent='Guardar alterações';
+      }
+    });
+    card.append(form);
+    return card;
+  }
+
+  async function loadAdminCatalog(){
+    const status=$('#catalogDeskStatus');
+    const list=$('#catalogAdminList');
+    if(!status||!list||!adminToken||!apiBase())return false;
+    status.textContent='A consultar o catálogo central…';
+    status.dataset.state='loading';
+    try{
+      const result=await api('/api/admin/catalog/items');
+      if(result?.ok!==true||!Array.isArray(result.items))throw new Error('invalid_catalog');
+      list.replaceChildren();
+      result.items.forEach(item=>list.append(catalogEditorCard(item)));
+      $('#catalogDeskCount').textContent=result.items.length+' famílias';
+      status.textContent='Catálogo carregado. As alterações são guardadas no backend.';
+      status.dataset.state='ready';
+      return true;
+    }catch(error){
+      status.textContent='Não foi possível carregar o catálogo. Confirme a ligação e a autorização administrativa.';
+      status.dataset.state='error';
+      if(error.status===401){
+        adminToken='';
+        setInternalAccess(false);
+        setApiStatus('Token rejected','error');
+      }
+      return false;
+    }
+  }
+
+  $('#catalogCreateForm').addEventListener('submit',async event=>{
+    event.preventDefault();
+    if(!adminToken)return alert('Inicie a sessão administrativa primeiro.');
+    const form=event.currentTarget;
+    const button=$('#createCatalogItem');
+    const values=name=>form.elements.namedItem(name);
+    const splitWords=value=>String(value||'').split(',').map(part=>part.trim()).filter(Boolean);
+    const payload={
+      name:values('name').value.trim(),
+      name_pt:values('name_pt').value.trim(),
+      category:values('category').value,
+      unit:values('unit').value.trim(),
+      specification:values('specification').value.trim(),
+      aliases:splitWords(values('aliases').value),
+      keywords:splitWords(values('keywords').value),
+      public_visible:values('public_visible').checked
+    };
+    if(!payload.name||!payload.category)return;
+    button.disabled=true;
+    button.textContent='A criar…';
+    try{
+      const result=await api('/api/admin/items',{
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body:JSON.stringify(payload)
+      });
+      if(result?.ok!==true)throw new Error('catalog_create_failed');
+      form.reset();
+      $('#catalogDeskStatus').textContent='Nova família criada. Revise o conteúdo e o estado de publicação na lista.';
+      await loadAdminCatalog();
+    }catch(error){
+      $('#catalogDeskStatus').textContent='Não foi possível criar a família. Verifique os dados e a sessão administrativa.';
+      $('#catalogDeskStatus').dataset.state='error';
+    }finally{
+      button.disabled=!adminToken;
+      button.textContent='Criar família';
+    }
+  });
+
+  $('#refreshCatalog').addEventListener('click',()=>loadAdminCatalog());
+
   $('#connectApi').addEventListener('click',async()=>{
     const candidate=$('#adminToken').value.trim();
     if(!candidate){adminToken='';setInternalAccess(false);setApiStatus('API available · token required','ready');return;}
@@ -552,7 +759,7 @@
     }
     setInternalAccess(true);
     setApiStatus('Connected · private operations loaded','connected');
-    await Promise.all([loadPartnerNetwork(),loadOpportunityPursuits(),loadIntakeAlerts()]);
+    await Promise.all([loadPartnerNetwork(),loadOpportunityPursuits(),loadIntakeAlerts(),loadAdminCatalog()]);
   });
 
   $('#refreshIntakeAlerts').addEventListener('click',()=>loadIntakeAlerts());

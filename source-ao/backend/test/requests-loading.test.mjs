@@ -45,7 +45,7 @@ test('a successful empty response is the only case shown as an empty queue',asyn
   const d=desk();await d.connect();
   assert.equal(d.element('#openCount').textContent,'0');
   assert.match(d.element('#requestList').innerHTML,/No requests in this view/);
-  assert.equal(d.element('#commercialActionCount').textContent,'0 ação(ões)');
+  assert.equal(d.element('#commercialActionCount').textContent,'0 acção(ões)');
   assert.equal(d.element('#apiStatus').dataset.state,'connected');
 });
 
@@ -67,7 +67,7 @@ test('a commercial action failure is visible and a later refresh recovers',async
   assert.match(d.element('#commercialActionList').innerHTML,/Não foi possível carregar as ações/);
   assert.equal(d.element('#apiStatus').dataset.state,'error');
   d.failures.clear();await d.refresh();
-  assert.equal(d.element('#commercialActionCount').textContent,'0 ação(ões)');
+  assert.equal(d.element('#commercialActionCount').textContent,'0 acção(ões)');
   assert.equal(d.element('#apiStatus').dataset.state,'connected');
 });
 

@@ -15,13 +15,17 @@ test('expands Portuguese PP strapping query into bilingual supplier discovery te
   assert.equal(plan.claims.stock_confirmed,false);
 });
 
-test('maps formol and formaldehyde to the same chemical sourcing family',()=>{
+test('routes formaldehyde and formol requests to manual compliance review without supplier discovery',()=>{
   const plan=buildSmartSearchPlan({query:'formol 37% 1L urgente',location:'Luanda'});
   assert.equal(plan.interpretation.family_id,'formaldehyde-chemical');
   assert.equal(plan.interpretation.category,'industrial-supply');
+  assert.equal(plan.interpretation.requires_manual_compliance_review,true);
   assert.equal(plan.urgency,'urgent');
-  assert.ok(plan.query_variants.some(q=>q.toLowerCase().includes('formaldehyde 37%')));
-  assert.ok(plan.query_variants.some(q=>q.toLowerCase().includes('produtos químicos laboratoriais')));
+  assert.deepEqual(plan.search_lanes.map(lane=>lane.action),['route_to_manual_compliance_review']);
+  assert.equal(plan.query_variants.length,3);
+  assert.ok(!plan.query_variants.some(q=>q.toLowerCase().includes('produtos químicos laboratoriais')));
+  assert.ok(!plan.query_variants.some(q=>q.toLowerCase().includes('chemical supplier')));
+  assert.match(plan.next_action,/manual compliance review/i);
   assert.equal(plan.claims.stock_confirmed,false);
 });
 

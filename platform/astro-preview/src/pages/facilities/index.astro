@@ -1,0 +1,188 @@
+---
+import { Picture } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { company } from "../../data/site";
+
+const facilitiesWhatsapp = company.whatsappUri + "?text=" + encodeURIComponent(
+  "Olá, HMATIAS. Pretendo solicitar uma avaliação de facilities ou manutenção. Tipo e localização da instalação, áreas abrangidas, serviço necessário, frequência pretendida, horário e fotografias disponíveis:"
+);
+
+import heroPhoto from "../../../../../images/catalogue/caixilharia-vidro-fumado.webp";
+import roofMaintenance from "../../../../../images/catalogue/cobertura-metalica-substituicao.webp";
+import annexStructure from "../../../../../images/catalogue/anexo-coberto-estrutura-metalica.webp";
+
+const evidence = [
+  {
+    category: "MANUTENÇÃO · COBERTURAS",
+    title: "Substituição localizada de cobertura",
+    description: "Registo de intervenção em chapas de cobertura metálica numa instalação existente.",
+    image: roofMaintenance,
+    alt: "Substituição localizada de cobertura metálica numa instalação",
+  },
+  {
+    category: "INTERVENÇÃO · ESTRUTURAS",
+    title: "Estrutura metálica de cobertura",
+    description: "Registo de estrutura metálica aplicada a um anexo coberto de apoio às instalações.",
+    image: annexStructure,
+    alt: "Estrutura metálica de cobertura num anexo de apoio às instalações",
+  },
+];
+---
+<BaseLayout
+  title="Facilities e Manutenção | HMATIAS — Angola"
+  description="Facilities e manutenção de instalações em Angola: manutenção preventiva e corretiva, limpeza profissional, conservação de coberturas e apoio operacional."
+>
+  <div class="preview-bar">
+    <span><i aria-hidden="true"></i> PROTÓTIPO TECNOLÓGICO ASTRO</span>
+    <span>Facilities e Manutenção · HMATIAS</span>
+  </div>
+  <SiteHeader />
+
+  <main class="facilities-page">
+    <section class="construction-hero" id="inicio" aria-labelledby="pages-facilities-index-section-1-heading">
+      <div class="construction-hero-copy">
+        <nav class="construction-breadcrumb" aria-label="Navegação estrutural">
+          <a href="/">Início</a><span aria-hidden="true">/</span><span>Facilities e Manutenção</span>
+        </nav>
+        <p class="eyebrow"><span class="eyebrow-line"></span> FACILITIES · MANUTENÇÃO DE INSTALAÇÕES</p>
+        <h1 id="pages-facilities-index-section-1-heading">Facilities e<br /><em>manutenção.</em></h1>
+        <p class="hero-lead">Manutenção, conservação e apoio operacional para instalações empresariais e institucionais.</p>
+        <div class="hero-actions">
+          <a class="button button-light" href="#pedido">Solicitar avaliação <span aria-hidden="true">↓</span></a>
+          <a class="text-link text-link-light" href="#intervencoes">Ver intervenções <span aria-hidden="true">↘</span></a>
+        </div>
+        <div class="hero-meta">
+          <span>Manutenção · Limpeza · Apoio operacional</span>
+          <span>Luanda · Angola</span>
+        </div>
+      </div>
+      <figure class="construction-hero-image">
+        <Picture
+          src={heroPhoto}
+          alt="Caixilharia de alumínio e vidro fumado numa instalação"
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 900px) 100vw, 48vw"
+          formats={["avif", "webp"]} fallbackFormat="jpg"
+          quality={84}
+          loading="eager"
+          fetchpriority="high" decoding="async" />
+        <figcaption><span>01</span> REGISTO DE INTERVENÇÃO HMATIAS</figcaption>
+      </figure>
+      <span class="construction-hero-note" aria-hidden="true">CONSERVAÇÃO · MANUTENÇÃO · OPERAÇÃO</span>
+    </section>
+
+    <section class="construction-intro section-pad" id="empresa" aria-labelledby="pages-facilities-index-section-2-heading">
+      <div class="section-kicker">01 / ÁREA DE ATUAÇÃO</div>
+      <div class="construction-intro-content">
+        <h2 id="pages-facilities-index-section-2-heading">Instalações cuidadas.<br /><em>Serviços com escopo definido.</em></h2>
+        <div class="construction-intro-copy">
+          <p>A HMATIAS presta serviços de facilities e manutenção a empresas e instituições. A área integra manutenção de instalações, limpeza profissional, conservação de coberturas e apoio operacional.</p>
+          <p>Frequência, áreas, recursos, materiais e responsabilidades são definidos antes do início de cada serviço.</p>
+          <a class="underlined-link" href="#intervencoes">Consultar intervenções documentadas <span aria-hidden="true">↘</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="construction-scopes section-pad" id="servicos" aria-labelledby="pages-facilities-index-section-3-heading">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">02 / SERVIÇOS</div>
+          <h2 id="pages-facilities-index-section-3-heading">Manutenção e operação<br /><em>do espaço de trabalho.</em></h2>
+        </div>
+        <p>O serviço é organizado de acordo com as condições das instalações e as necessidades identificadas.</p>
+      </div>
+
+      <div class="construction-scope-grid">
+        <article class="construction-scope-card">
+          <span>01</span>
+          <h3>Manutenção de instalações</h3>
+          <p>Intervenções preventivas ou corretivas, pontuais ou planeadas, conforme o âmbito acordado.</p>
+        </article>
+        <article class="construction-scope-card">
+          <span>02</span>
+          <h3>Limpeza e conservação</h3>
+          <p>Limpeza de escritórios, instalações e áreas de utilização contínua, com frequência definida.</p>
+        </article>
+        <article class="construction-scope-card">
+          <span>03</span>
+          <h3>Apoio operacional</h3>
+          <p>Levantamento de necessidades, organização de intervenções e acompanhamento da execução.</p>
+        </article>
+        <article class="construction-scope-card">
+          <span>04</span>
+          <h3>Coberturas e estruturas</h3>
+          <p>Intervenções localizadas em coberturas, estruturas metálicas e elementos de fecho de edifícios.</p>
+        </article>
+      </div>
+      <div class="facilities-clean-link">
+        <div><p class="section-kicker">HMATIAS CLEAN</p><h3>Produtos de limpeza e higiene.</h3><p>Consulte referências profissionais, formatos indicados e prepare um pedido com vários artigos.</p></div>
+        <div class="facilities-clean-links">
+          <a class="underlined-link" href="/clean/">Consultar HMATIAS Clean <span aria-hidden="true">↗</span></a>
+          <a class="underlined-link" href="/limpeza-pos-obra/">Limpeza pós-obra <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="construction-work section-pad" id="intervencoes" aria-labelledby="pages-facilities-index-section-4-heading">
+      <div class="portfolio-top">
+        <div>
+          <div class="section-kicker">03 / REGISTOS REAIS</div>
+          <h2 id="pages-facilities-index-section-4-heading">Intervenções<br /><em>no terreno.</em></h2>
+        </div>
+        <p>Registos visuais de trabalhos de manutenção e apoio a instalações realizados pela HMATIAS.</p>
+      </div>
+
+      <div class="construction-work-grid facilities-work-grid">
+        {evidence.map((work, index) => (
+          <article class="construction-work-card facilities-work-card">
+            <figure>
+              <Picture
+                src={work.image}
+                alt={work.alt}
+                widths={[480, 720, 1040]}
+                sizes="(max-width: 650px) 100vw, 50vw"
+                formats={["avif", "webp"]} fallbackFormat="jpg"
+                quality={82} decoding="async" loading="lazy" />
+            </figure>
+            <div class="construction-work-caption">
+              <span>{String(index + 2).padStart(2, "0")} · {work.category}</span>
+              <h3>{work.title}</h3>
+              <p>{work.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="portfolio-note"><span>REGISTOS DE TRABALHOS HMATIAS</span><span>ANGOLA</span></div>
+    </section>
+
+
+
+    <section class="construction-request section-pad" id="pedido" aria-labelledby="pages-facilities-index-section-5-heading">
+      <div class="construction-request-copy">
+        <p class="section-kicker">04 / PEDIDO DE SERVIÇO</p>
+        <h2 id="pages-facilities-index-section-5-heading">Precisa de manutenção<br /><em>ou apoio operacional?</em></h2>
+        <p>Indique o tipo de instalação, a localização, as áreas abrangidas e a frequência pretendida. A HMATIAS poderá avaliar o âmbito e preparar uma proposta adequada ao pedido.</p>
+        <div class="construction-request-actions">
+          <a class="button button-light" href={facilitiesWhatsapp} target="_blank" rel="noopener noreferrer">Contactar por WhatsApp <span aria-hidden="true">↗</span></a>
+          <a class="construction-email-link" href={"mailto:" + company.commercialEmail + "?subject=Pedido%20de%20servi%C3%A7o%20-%20Facilities%20e%20Manuten%C3%A7%C3%A3o"}>Enviar e-mail <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <aside class="construction-request-guide">
+        <h3>Informação para avaliação</h3>
+        <ul>
+          <li>Localização e tipo de instalação</li>
+          <li>Áreas ou elementos a intervencionar</li>
+          <li>Tipo de serviço e frequência pretendida</li>
+          <li>Fotografias ou referências do local</li>
+          <li>Prazo e horário preferencial</li>
+        </ul>
+        <p>A mobilização para outras províncias é avaliada em função do serviço e dos recursos necessários.</p>
+      </aside>
+    </section>
+  </main>
+
+  <SiteFooter />
+  <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+</BaseLayout>

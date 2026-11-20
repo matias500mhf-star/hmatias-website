@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import SourceAoPartnerApplication from "../../../../components/SourceAoPartnerApplication.astro";
+
+const candidateApiBase = String(import.meta.env.PUBLIC_SOURCE_AO_API_BASE ?? "").trim();
+let sourceAoApiBase = "";
+try {
+  const parsed = new URL(candidateApiBase);
+  if (parsed.protocol === "https:" && parsed.hostname.toLowerCase().includes("staging")) {
+    sourceAoApiBase = parsed.origin;
+  }
+} catch {
+  sourceAoApiBase = "";
+}
+---
+<BaseLayout
+  title="Partner Application · SOURCE AO"
+  description="Submit your company's capabilities for HMATIAS assessment as a supplier, subcontractor or service provider. Every application is reviewed."
+  lang="en"
+>
+  <SourceAoPartnerApplication apiBase={sourceAoApiBase} lang="en" />
+</BaseLayout>

@@ -8,6 +8,8 @@ export const CATEGORY_LABELS = {
   'cleaning-facilities': ['Limpeza & facilities','Cleaning & facilities'],
   'services-contractors': ['Serviços & empreiteiros','Services & contractors'],
   'industrial-supply': ['Indústria, EPI & consumíveis','Industrial, PPE & consumables'],
+  'diamond-tools': ['Ferramentas diamantadas','Diamond tools'],
+  'measurement-instruments': ['Instrumentos de medição','Measurement instruments'],
   other: ['Outra necessidade','Other requirement']
 };
 export const categoryLabel = (id, en=false) => CATEGORY_LABELS[id]?.[en?1:0] || id;

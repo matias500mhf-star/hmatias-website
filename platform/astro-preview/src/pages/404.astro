@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+---
+
+<BaseLayout
+  title="Página não encontrada | HMATIAS"
+  description="O endereço solicitado não foi encontrado. Regresse à HMATIAS para consultar as áreas de actividade e os canais de contacto."
+>
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS</span><span>404 · PÁGINA NÃO ENCONTRADA</span></div>
+  <SiteHeader />
+  <main class="not-found-page">
+    <section class="not-found-card" aria-labelledby="not-found-heading">
+      <p class="section-kicker">ERRO 404 · ENDEREÇO INDISPONÍVEL</p>
+      <h1 id="not-found-heading">Esta página<br /><em>não foi encontrada.</em></h1>
+      <p>O endereço pode ter sido alterado ou já não estar disponível. Pode regressar à página inicial ou consultar as áreas de actividade da HMATIAS.</p>
+      <div class="not-found-actions">
+        <a class="button button-dark" href="/">Voltar à página inicial <span aria-hidden="true">↗</span></a>
+        <a class="underlined-link" href="/construcao/">Consultar serviços <span aria-hidden="true">↗</span></a>
+      </div>
+      <span class="not-found-code">HMATIAS · ANGOLA / 404</span>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+</BaseLayout>
+
+<style>
+  .not-found-page {
+    min-height: min(68vh, 720px);
+    display: grid;
+    place-items: center;
+    padding: clamp(56px, 9vw, 110px) var(--hm-gutter);
+    background: var(--hm-paper);
+  }
+  .not-found-card { width: min(760px, 100%); padding-block: clamp(24px, 5vw, 54px); }
+  .not-found-card .section-kicker { margin: 0 0 24px; color: var(--hm-blue); }
+  .not-found-card h1 {
+    margin: 0;
+    color: var(--hm-ink);
+    font-size: clamp(44px, 7vw, 76px);
+    font-weight: 520;
+    line-height: 1.02;
+    letter-spacing: -.065em;
+  }
+  .not-found-card h1 em {
+    color: var(--hm-blue);
+    font-family: var(--hm-serif);
+    font-weight: 400;
+  }
+  .not-found-card > p:not(.section-kicker) {
+    max-width: 540px;
+    margin: 24px 0 0;
+    color: var(--hm-muted);
+    font-size: 13px;
+    line-height: 1.85;
+  }
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 22px;
+    margin-top: 34px;
+  }
+  .not-found-code {
+    display: block;
+    margin-top: 66px;
+    padding-top: 16px;
+    border-top: 1px solid var(--hm-line);
+    color: var(--hm-muted);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .15em;
+  }
+  @media (max-width: 560px) {
+    .not-found-actions { align-items: flex-start; flex-direction: column; }
+    .not-found-code { margin-top: 46px; }
+  }
+</style>

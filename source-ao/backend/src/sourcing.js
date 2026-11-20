@@ -1,4 +1,4 @@
-import catalog from '../../data/catalog.json' with {type:'json'};
+import {loadPublicCatalogData} from './catalog.js';
 import {validateRfq} from '../../rfq-model.js';
 
 const enc = new TextEncoder();
@@ -196,6 +196,9 @@ export async function createSourcingRequest(request,env){
 }
 
 async function createCatalogRfq(data,env){
+  let catalog;
+  try{catalog=await loadPublicCatalogData(env);}
+  catch{return fail(env,503,'catalog_unavailable','The public supply catalog is temporarily unavailable. Please retry or contact HMATIAS.');}
   const validated=validateRfq(data,catalog,new Date(Date.now()+3600000));
   if(!validated.ok) return fail(env,400,validated.code,'Please check the quotation request fields.');
   if(!env.PII_ENCRYPTION_KEY) return fail(env,503,'privacy_key_unavailable','Secure request intake is not configured.');

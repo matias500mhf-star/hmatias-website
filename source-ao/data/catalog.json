@@ -1,6 +1,6 @@
 {
-  "version": "0.6",
-  "updated_at": "2026-09-27T09:15:00+01:00",
+  "version": "1.0",
+  "updated_at": "2026-11-14",
   "items": [
     {
       "id": "item-construction-general",
@@ -133,6 +133,76 @@
         "industrial"
       ],
       "name_pt": "Ferramentas e equipamentos"
+    },
+    {
+      "id": "item-diamond-tools",
+      "name": "Diamond cutting, drilling and grinding tools",
+      "aliases": [
+        "disco diamantado",
+        "discos diamantados",
+        "disco diamantado 115 mm",
+        "discos diamantados 115 mm",
+        "disco de diamante",
+        "discos de diamante",
+        "serra diamantada",
+        "serras diamantadas",
+        "coroa diamantada",
+        "coroas diamantadas",
+        "broca diamantada",
+        "brocas diamantadas",
+        "copos de desbaste diamantados",
+        "copo diamantado",
+        "segmentos de desbaste diamantados",
+        "ferramenta diamantada",
+        "ferramentas diamantadas",
+        "rebolos diamantados",
+        "polimento diamantado",
+        "diamond disc",
+        "diamond discs",
+        "diamond blade",
+        "diamond blades",
+        "diamond core bit",
+        "diamond core bits",
+        "diamond drilling crown",
+        "diamond drilling crowns",
+        "diamond grinding cup",
+        "diamond grinding cups",
+        "diamond polishing resin",
+        "Carbodiam",
+        "SAMEDIA"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "cutting-drilling-grinding",
+      "specification": "Family of diamond tools for cutting, core drilling, grinding and polishing. The published SYNVOR catalogue includes Carbodiam and SAMEDIA ranges for concrete, asphalt, natural stone and ceramic applications, with model-dependent diameters and machine interfaces. Specify material, application, diameter, machine/model, bore or connection, wet/dry operation and quantity. Exact reference, stock, price and delivery lead time to Angola require direct commercial confirmation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "SAMEDIA",
+        "diamond tools",
+        "cutting discs",
+        "diamond discs",
+        "core drilling",
+        "drilling crowns",
+        "grinding cups",
+        "polishing resins",
+        "concrete",
+        "reinforced concrete",
+        "asphalt",
+        "natural stone",
+        "ceramic",
+        "porcelain",
+        "marble",
+        "granite",
+        "floor saw",
+        "wall saw",
+        "angle grinder",
+        "floor grinder",
+        "115 mm",
+        "coroas diamantadas",
+        "desbaste",
+        "polimento"
+      ],
+      "name_pt": "Ferramentas diamantadas para corte, perfuração e desbaste"
     },
     {
       "id": "item-pvc-polymer",
@@ -741,6 +811,3201 @@
         "residential"
       ],
       "name_pt": "Soluções Smart Home"
+    },
+    {
+      "id": "item-carbodiam-pantera-115",
+      "name": "Carbodiam PANTERA diamond cutting disc Ø115 mm — Ref. 9193",
+      "aliases": [
+        "disco diamantado 115 mm",
+        "discos diamantados 115 mm",
+        "disco diamantado Carbodiam PANTERA 115 mm",
+        "discos diamantados Carbodiam PANTERA",
+        "Carbodiam PANTERA",
+        "PANTERA DIA 115 MM",
+        "9193",
+        "ref 9193",
+        "referência 9193",
+        "referencia 9193"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published factory reference: PANTERA DIA 115 MM, Carbodiam ref. 9193. SYNVOR indicates Ø115 mm as typically used with an angle grinder. The product page does not specify a bore dimension for this version. Confirm material/application, machine compatibility, fixing interface, wet/dry operation, quantity, stock and delivery before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "115 mm",
+        "9193",
+        "angle grinder",
+        "rebarbadora",
+        "diamond cutting disc",
+        "disco de corte diamantado"
+      ],
+      "name_pt": "Disco diamantado Carbodiam PANTERA Ø115 mm — Ref. 9193"
+    },
+    {
+      "id": "item-carbodiam-pantera-neutre-115",
+      "name": "Carbodiam PANTERA NEUTRE diamond cutting disc Ø115 mm — Ref. 15448",
+      "aliases": [
+        "disco diamantado 115 mm",
+        "discos diamantados 115 mm",
+        "disco diamantado Carbodiam PANTERA NEUTRE 115 mm",
+        "discos diamantados Carbodiam PANTERA NEUTRE",
+        "Carbodiam PANTERA NEUTRE",
+        "PANTERA NEUTRE DIA 115 MM",
+        "15448",
+        "ref 15448",
+        "referência 15448",
+        "referencia 15448"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published factory reference: PANTERA NEUTRE DIA 115 MM, Carbodiam ref. 15448. SYNVOR indicates Ø115 mm as typically used with an angle grinder. The product page does not specify a bore dimension for this version. Confirm material/application, machine compatibility, fixing interface, wet/dry operation, quantity, stock and delivery before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA NEUTRE",
+        "115 mm",
+        "15448",
+        "angle grinder",
+        "rebarbadora",
+        "diamond cutting disc",
+        "disco de corte diamantado"
+      ],
+      "name_pt": "Disco diamantado Carbodiam PANTERA NEUTRE Ø115 mm — Ref. 15448"
+    },
+    {
+      "id": "item-carbodiam-crack-chaser-115",
+      "name": "Carbodiam CRACK CHASER diamond cutting disc Ø115 mm — Ref. 12000",
+      "aliases": [
+        "disco diamantado 115 mm",
+        "discos diamantados 115 mm",
+        "disco diamantado Carbodiam CRACK CHASER 115 mm",
+        "discos diamantados Carbodiam CRACK CHASER",
+        "Carbodiam CRACK CHASER",
+        "CRACK CHASER DIA 115",
+        "12000",
+        "ref 12000",
+        "referência 12000",
+        "referencia 12000"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published factory reference: CRACK CHASER DIA 115, Carbodiam ref. 12000. SYNVOR indicates Ø115 mm as typically used with an angle grinder. The product page does not specify a bore dimension for this version. Confirm the intended crack-chasing application, machine compatibility, fixing interface, wet/dry operation, quantity, stock and delivery before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "CRACK CHASER",
+        "115 mm",
+        "12000",
+        "angle grinder",
+        "rebarbadora",
+        "crack chasing",
+        "diamond cutting disc",
+        "disco de corte diamantado"
+      ],
+      "name_pt": "Disco diamantado Carbodiam CRACK CHASER Ø115 mm — Ref. 12000"
+    },
+    {
+      "id": "item-disc-family-carbodiam-acier",
+      "name": "Carbodiam ACIER diamond cutting-disc family Ø300–400 mm",
+      "aliases": [
+        "disco diamantado ACIER",
+        "discos diamantados ACIER",
+        "disco Carbodiam ACIER",
+        "discos Carbodiam ACIER",
+        "Carbodiam ACIER",
+        "ACIER",
+        "ACIER 300–400 mm",
+        "diamond disc ACIER",
+        "diamond blade ACIER"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "The SYNVOR public catalogue lists Carbodiam ACIER, Ø300–400 mm, with 3 factory versions. The full public disc index reports 91 models and 749 factory versions across Carbodiam and SAMEDIA. This entry is a model family, not a single factory SKU. Confirm diameter, bore/interface, application, machine and exact reference before quotation; no current stock or price is implied.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "diamond cutting disc",
+        "ACIER",
+        "300–400mm",
+        "concrete",
+        "asphalt",
+        "stone",
+        "ceramic"
+      ],
+      "name_pt": "Família de discos diamantados Carbodiam ACIER Ø300–400 mm"
+    },
+    {
+      "id": "item-disc-family-carbodiam-beton",
+      "name": "Carbodiam BETON diamond cutting-disc family Ø400–900 mm",
+      "aliases": [
+        "disco diamantado BETON",
+        "discos diamantados BETON",
+        "disco Carbodiam BETON",
+        "discos Carbodiam BETON",
+        "Carbodiam BETON",
+        "BETON",
+        "BETON 400–900 mm",
+        "diamond disc BETON",
+        "diamond blade BETON"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "The SYNVOR public catalogue lists Carbodiam BETON, Ø400–900 mm, with 6 factory versions. The full public disc index reports 91 models and 749 factory versions across Carbodiam and SAMEDIA. This entry is a model family, not a single factory SKU. Confirm diameter, bore/interface, application, machine and exact reference before quotation; no current stock or price is implied.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "diamond cutting disc",
+        "BETON",
+        "400–900mm",
+        "concrete",
+        "asphalt",
+        "stone",
+        "ceramic"
+      ],
+      "name_pt": "Família de discos diamantados Carbodiam BETON Ø400–900 mm"
+    },
+    {
+      "id": "item-disc-family-carbodiam-beton-sol",
+      "name": "Carbodiam BETON SOL diamond cutting-disc family Ø600 mm",
+      "aliases": [
+        "disco diamantado BETON SOL",
+        "discos diamantados BETON SOL",
+        "disco Carbodiam BETON SOL",
+        "discos Carbodiam BETON SOL",
+        "Carbodiam BETON SOL",
+        "BETON SOL",
+        "BETON SOL 600 mm",
+        "diamond disc BETON SOL",
+        "diamond blade BETON SOL"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "The SYNVOR public catalogue lists Carbodiam BETON SOL, Ø600 mm, with 3 factory versions. The full public disc index reports 91 models and 749 factory versions across Carbodiam and SAMEDIA. This entry is a model family, not a single factory SKU. Confirm diameter, bore/interface, application, machine and exact reference before quotation; no current stock or price is implied.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "diamond cutting disc",
+        "BETON SOL",
+        "600mm",
+        "concrete",
+        "asphalt",
+        "stone",
+        "ceramic"
+      ],
+      "name_pt": "Família de discos diamantados Carbodiam BETON SOL Ø600 mm"
+    },
+    {
+      "id": "item-disc-family-carbodiam-crack-chaser",
+      "name": "Carbodiam CRACK CHASER diamond cutting-disc family Ø115–230 mm",
+      "aliases": [
+        "disco diamantado CRACK CHASER",
+        "discos diamantados CRACK CHASER",
+        "disco Carbodiam CRACK CHASER",
+        "discos Carbodiam CRACK CHASER",
+        "Carbodiam CRACK CHASER",
+        "CRACK CHASER",
+        "CRACK CHASER 115–230 mm",
+        "diamond disc CRACK CHASER",
+        "diamond blade CRACK CHASER",
+        "discos diamantados 115 mm",
+        "disco diamantado 115 mm"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "The SYNVOR public catalogue lists Carbodiam CRACK CHASER, Ø115–230 mm, with 4 factory versions. The full public disc index reports 91 models and 749 factory versions across Carbodiam and SAMEDIA. This entry is a model family, not a single factory SKU. Confirm diameter, bore/interface, application, machine and exact reference before quotation; no current stock or price is implied.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "diamond cutting disc",
+        "CRACK CHASER",
+        "115–230mm",
+        "concrete",
+        "asphalt",
+        "stone",
+        "ceramic"
+      ],
+      "name_pt": "Família de discos diamantados Carbodiam CRACK CHASER Ø115–230 mm"
+    },
+    {
+      "id": "item-disc-family-carbodiam-incisor",
+      "name": "Carbodiam INCISOR diamond cutting-disc family Ø125–400 mm",
+      "aliases": [
+        "disco diamantado INCISOR",
+        "discos diamantados INCISOR",
+        "disco Carbodiam INCISOR",
+        "discos Carbodiam INCISOR",
+        "Carbodiam INCISOR",
+        "INCISOR",
+        "INCISOR 125–400 mm",
+        "diamond disc INCISOR",
+        "diamond blade INCISOR"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "The SYNVOR public catalogue lists Carbodiam INCISOR, Ø125–400 mm, with 9 factory versions. The full public disc index reports 91 models and 749 factory versions across Carbodiam and SAMEDIA. This entry is a model family, not a single factory SKU. Confirm diameter, bore/interface, application, machine and exact reference before quotation; no current stock or price is implied.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "diamond cutting disc",
+        "INCISOR",
+        "125–400mm",
+        "concrete",
+        "asphalt",
+        "stone",
+        "ceramic"
+      ],
+      "name_pt": "Família de discos diamantados Carbodiam INCISOR Ø125–400 mm"
+    },
+    {
+      "id": "item-disc-family-carbodiam-mural",
+      "name": "Carbodiam MURAL diamond cutting-disc family Ø400–2200 mm",
+      "aliases": [
+        "disco diamantado MURAL",
+        "discos diamantados MURAL",
+        "disco Carbodiam MURAL",
+        "discos Carbodiam MURAL",
+        "Carbodiam MURAL",
+        "MURAL",
+        "MURAL 400–2200 mm",
+        "diamond disc MURAL",
+        "diamond blade MURAL"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "The SYNVOR public catalogue lists Carbodiam MURAL, Ø400–2200 mm, with 64 factory versions. The full public disc index reports 91 models and 749 factory versions across Carbodiam and SAMEDIA. This entry is a model family, not a single factory SKU. Confirm diameter, bore/interface, application, machine and exact reference before quotation; no current stock or price is implied.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "diamond cutting disc",
+        "MURAL",
+        "400–2200mm",
+        "concrete",
+        "asphalt",
+        "stone",
+        "ceramic"
+      ],
+      "name_pt": "Família de discos diamantados Carbodiam MURAL Ø400–2200 mm"
+    },
+    {
+      "id": "item-disc-family-carbodiam-pantera",
+      "name": "Carbodiam PANTERA diamond cutting-disc family Ø115–400 mm",
+      "aliases": [
+        "disco diamantado PANTERA",
+        "discos diamantados PANTERA",
+        "disco Carbodiam PANTERA",
+        "discos Carbodiam PANTERA",
+        "Carbodiam PANTERA",
+        "PANTERA",
+        "PANTERA 115–400 mm",
+        "diamond disc PANTERA",
+        "diamond blade PANTERA",
+        "discos diamantados 115 mm",
+        "disco diamantado 115 mm"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "The SYNVOR public catalogue lists Carbodiam PANTERA, Ø115–400 mm, with 11 factory versions. The full public disc index reports 91 models and 749 factory versions across Carbodiam and SAMEDIA. This entry is a model family, not a single factory SKU. Confirm diameter, bore/interface, application, machine and exact reference before quotation; no current stock or price is implied.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "diamond cutting disc",
+        "PANTERA",
+        "115–400mm",
+        "concrete",
+        "asphalt",
+        "stone",
+        "ceramic"
+      ],
+      "name_pt": "Família de discos diamantados Carbodiam PANTERA Ø115–400 mm"
+    },
+    {
+      "id": "item-disc-family-carbodiam-pantera-neutre",
+      "name": "Carbodiam PANTERA NEUTRE diamond cutting-disc family Ø115–400 mm",
+      "aliases": [
+        "disco diamantado PANTERA NEUTRE",
+        "discos diamantados PANTERA NEUTRE",
+        "disco Carbodiam PANTERA NEUTRE",
+        "discos Carbodiam PANTERA NEUTRE",
+        "Carbodiam PANTERA NEUTRE",
+        "PANTERA NEUTRE",
+        "PANTERA NEUTRE 115–400 mm",
+        "diamond disc PANTERA NEUTRE",
+        "diamond blade PANTERA NEUTRE",
+        "discos diamantados 115 mm",
+        "disco diamantado 115 mm"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "The SYNVOR public catalogue lists Carbodiam PANTERA NEUTRE, Ø115–400 mm, with 10 factory versions. The full public disc index reports 91 models and 749 factory versions across Carbodiam and SAMEDIA. This entry is a model family, not a single factory SKU. Confirm diameter, bore/interface, application, machine and exact reference before quotation; no current stock or price is implied.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "diamond cutting disc",
+        "PANTERA NEUTRE",
+        "115–400mm",
+        "concrete",
+        "asphalt",
+        "stone",
+        "ceramic"
+      ],
+      "name_pt": "Família de discos diamantados Carbodiam PANTERA NEUTRE Ø115–400 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-profor",
+      "name": "Carbodiam PROFOR diamond core-crown family Ø42–700 mm",
+      "aliases": [
+        "coroa diamantada PROFOR",
+        "coroas diamantadas PROFOR",
+        "coroa Carbodiam PROFOR",
+        "coroas Carbodiam PROFOR",
+        "Carbodiam PROFOR",
+        "PROFOR",
+        "diamond core bit PROFOR",
+        "diamond core bits PROFOR",
+        "diamond drilling crown PROFOR"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam PROFOR, Ø42–700 mm, 122 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PROFOR",
+        "diamond core crown",
+        "coroa diamantada",
+        "42–700 mm",
+        "122 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam PROFOR Ø42–700 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-rocket-line",
+      "name": "Carbodiam ROCKET LINE diamond core-crown family Ø51–526 mm",
+      "aliases": [
+        "coroa diamantada ROCKET LINE",
+        "coroas diamantadas ROCKET LINE",
+        "coroa Carbodiam ROCKET LINE",
+        "coroas Carbodiam ROCKET LINE",
+        "Carbodiam ROCKET LINE",
+        "ROCKET LINE",
+        "diamond core bit ROCKET LINE",
+        "diamond core bits ROCKET LINE",
+        "diamond drilling crown ROCKET LINE"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam ROCKET LINE, Ø51–526 mm, 95 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "ROCKET LINE",
+        "diamond core crown",
+        "coroa diamantada",
+        "51–526 mm",
+        "95 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam ROCKET LINE Ø51–526 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-foret-asphalte",
+      "name": "Carbodiam FORET ASPHALTE diamond core-crown family Ø101–151 mm",
+      "aliases": [
+        "coroa diamantada FORET ASPHALTE",
+        "coroas diamantadas FORET ASPHALTE",
+        "coroa Carbodiam FORET ASPHALTE",
+        "coroas Carbodiam FORET ASPHALTE",
+        "Carbodiam FORET ASPHALTE",
+        "FORET ASPHALTE",
+        "diamond core bit FORET ASPHALTE",
+        "diamond core bits FORET ASPHALTE",
+        "diamond drilling crown FORET ASPHALTE"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam FORET ASPHALTE, Ø101–151 mm, 2 factory versions; machine/application: manual or column; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "FORET ASPHALTE",
+        "diamond core crown",
+        "coroa diamantada",
+        "101–151 mm",
+        "2 versions",
+        "manual or column",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam FORET ASPHALTE Ø101–151 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-foret-score",
+      "name": "Carbodiam FORET SCORE diamond core-crown family Ø20–250 mm",
+      "aliases": [
+        "coroa diamantada FORET SCORE",
+        "coroas diamantadas FORET SCORE",
+        "coroa Carbodiam FORET SCORE",
+        "coroas Carbodiam FORET SCORE",
+        "Carbodiam FORET SCORE",
+        "FORET SCORE",
+        "diamond core bit FORET SCORE",
+        "diamond core bits FORET SCORE",
+        "diamond drilling crown FORET SCORE"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam FORET SCORE, Ø20–250 mm, 44 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "FORET SCORE",
+        "diamond core crown",
+        "coroa diamantada",
+        "20–250 mm",
+        "44 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam FORET SCORE Ø20–250 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-foret-silicate",
+      "name": "Carbodiam FORET SILICATE diamond core-crown family Ø71–180 mm",
+      "aliases": [
+        "coroa diamantada FORET SILICATE",
+        "coroas diamantadas FORET SILICATE",
+        "coroa Carbodiam FORET SILICATE",
+        "coroas Carbodiam FORET SILICATE",
+        "Carbodiam FORET SILICATE",
+        "FORET SILICATE",
+        "diamond core bit FORET SILICATE",
+        "diamond core bits FORET SILICATE",
+        "diamond drilling crown FORET SILICATE"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam FORET SILICATE, Ø71–180 mm, 6 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "FORET SILICATE",
+        "diamond core crown",
+        "coroa diamantada",
+        "71–180 mm",
+        "6 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam FORET SILICATE Ø71–180 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-profor-c",
+      "name": "Carbodiam PROFOR C diamond core-crown family Ø10–40 mm",
+      "aliases": [
+        "coroa diamantada PROFOR C",
+        "coroas diamantadas PROFOR C",
+        "coroa Carbodiam PROFOR C",
+        "coroas Carbodiam PROFOR C",
+        "Carbodiam PROFOR C",
+        "PROFOR C",
+        "diamond core bit PROFOR C",
+        "diamond core bits PROFOR C",
+        "diamond drilling crown PROFOR C"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam PROFOR C, Ø10–40 mm, 28 factory versions; machine/application: manual or column; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PROFOR C",
+        "diamond core crown",
+        "coroa diamantada",
+        "10–40 mm",
+        "28 versions",
+        "manual or column",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam PROFOR C Ø10–40 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-profor-s",
+      "name": "Carbodiam PROFOR S diamond core-crown family Ø28–40 mm",
+      "aliases": [
+        "coroa diamantada PROFOR S",
+        "coroas diamantadas PROFOR S",
+        "coroa Carbodiam PROFOR S",
+        "coroas Carbodiam PROFOR S",
+        "Carbodiam PROFOR S",
+        "PROFOR S",
+        "diamond core bit PROFOR S",
+        "diamond core bits PROFOR S",
+        "diamond drilling crown PROFOR S"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam PROFOR S, Ø28–40 mm, 10 factory versions; machine/application: manual or column; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PROFOR S",
+        "diamond core crown",
+        "coroa diamantada",
+        "28–40 mm",
+        "10 versions",
+        "manual or column",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam PROFOR S Ø28–40 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-foret",
+      "name": "Carbodiam FORET diamond core-crown family Ø10–110 mm",
+      "aliases": [
+        "coroa diamantada FORET",
+        "coroas diamantadas FORET",
+        "coroa Carbodiam FORET",
+        "coroas Carbodiam FORET",
+        "Carbodiam FORET",
+        "FORET",
+        "diamond core bit FORET",
+        "diamond core bits FORET",
+        "diamond drilling crown FORET"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam FORET, Ø10–110 mm, 24 factory versions; machine/application: angle grinder M14; process: dry. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "FORET",
+        "diamond core crown",
+        "coroa diamantada",
+        "10–110 mm",
+        "24 versions",
+        "angle grinder M14",
+        "dry"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam FORET Ø10–110 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-foret-electricien",
+      "name": "Carbodiam FORET ELECTRICIEN diamond core-crown family Ø31–131 mm",
+      "aliases": [
+        "coroa diamantada FORET ELECTRICIEN",
+        "coroas diamantadas FORET ELECTRICIEN",
+        "coroa Carbodiam FORET ELECTRICIEN",
+        "coroas Carbodiam FORET ELECTRICIEN",
+        "Carbodiam FORET ELECTRICIEN",
+        "FORET ELECTRICIEN",
+        "diamond core bit FORET ELECTRICIEN",
+        "diamond core bits FORET ELECTRICIEN",
+        "diamond drilling crown FORET ELECTRICIEN"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam FORET ELECTRICIEN, Ø31–131 mm, 38 factory versions; machine/application: manual M16; process: dry. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "FORET ELECTRICIEN",
+        "diamond core crown",
+        "coroa diamantada",
+        "31–131 mm",
+        "38 versions",
+        "manual M16",
+        "dry"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam FORET ELECTRICIEN Ø31–131 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-score",
+      "name": "Carbodiam SCORE diamond core-crown family Ø400 mm",
+      "aliases": [
+        "coroa diamantada SCORE",
+        "coroas diamantadas SCORE",
+        "coroa Carbodiam SCORE",
+        "coroas Carbodiam SCORE",
+        "Carbodiam SCORE",
+        "SCORE",
+        "diamond core bit SCORE",
+        "diamond core bits SCORE",
+        "diamond drilling crown SCORE"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam SCORE, Ø400 mm, 2 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "SCORE",
+        "diamond core crown",
+        "coroa diamantada",
+        "400 mm",
+        "2 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam SCORE Ø400 mm"
+    },
+    {
+      "id": "item-crown-family-carbodiam-foret-continu",
+      "name": "Carbodiam FORET CONTINU diamond core-crown family Ø35–50 mm",
+      "aliases": [
+        "coroa diamantada FORET CONTINU",
+        "coroas diamantadas FORET CONTINU",
+        "coroa Carbodiam FORET CONTINU",
+        "coroas Carbodiam FORET CONTINU",
+        "Carbodiam FORET CONTINU",
+        "FORET CONTINU",
+        "diamond core bit FORET CONTINU",
+        "diamond core bits FORET CONTINU",
+        "diamond drilling crown FORET CONTINU"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists Carbodiam FORET CONTINU, Ø35–50 mm, 2 factory versions; machine/application: manual or column; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "FORET CONTINU",
+        "diamond core crown",
+        "coroa diamantada",
+        "35–50 mm",
+        "2 versions",
+        "manual or column",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas Carbodiam FORET CONTINU Ø35–50 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-shoxx-dbx",
+      "name": "SAMEDIA SHOXX DBX diamond core-crown family Ø32–400 mm",
+      "aliases": [
+        "coroa diamantada SHOXX DBX",
+        "coroas diamantadas SHOXX DBX",
+        "coroa SAMEDIA SHOXX DBX",
+        "coroas SAMEDIA SHOXX DBX",
+        "SAMEDIA SHOXX DBX",
+        "SHOXX DBX",
+        "diamond core bit SHOXX DBX",
+        "diamond core bits SHOXX DBX",
+        "diamond drilling crown SHOXX DBX"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA SHOXX DBX, Ø32–400 mm, 39 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "SHOXX DBX",
+        "diamond core crown",
+        "coroa diamantada",
+        "32–400 mm",
+        "39 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA SHOXX DBX Ø32–400 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-master-dbk",
+      "name": "SAMEDIA MASTER DBK diamond core-crown family Ø32–400 mm",
+      "aliases": [
+        "coroa diamantada MASTER DBK",
+        "coroas diamantadas MASTER DBK",
+        "coroa SAMEDIA MASTER DBK",
+        "coroas SAMEDIA MASTER DBK",
+        "SAMEDIA MASTER DBK",
+        "MASTER DBK",
+        "diamond core bit MASTER DBK",
+        "diamond core bits MASTER DBK",
+        "diamond drilling crown MASTER DBK"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA MASTER DBK, Ø32–400 mm, 63 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "MASTER DBK",
+        "diamond core crown",
+        "coroa diamantada",
+        "32–400 mm",
+        "63 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA MASTER DBK Ø32–400 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-shoxx-dbw",
+      "name": "SAMEDIA SHOXX DBW diamond core-crown family Ø32–600 mm",
+      "aliases": [
+        "coroa diamantada SHOXX DBW",
+        "coroas diamantadas SHOXX DBW",
+        "coroa SAMEDIA SHOXX DBW",
+        "coroas SAMEDIA SHOXX DBW",
+        "SAMEDIA SHOXX DBW",
+        "SHOXX DBW",
+        "diamond core bit SHOXX DBW",
+        "diamond core bits SHOXX DBW",
+        "diamond drilling crown SHOXX DBW"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA SHOXX DBW, Ø32–600 mm, 30 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "SHOXX DBW",
+        "diamond core crown",
+        "coroa diamantada",
+        "32–600 mm",
+        "30 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA SHOXX DBW Ø32–600 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-master-dbk-s",
+      "name": "SAMEDIA MASTER DBK-S diamond core-crown family Ø138–226 mm",
+      "aliases": [
+        "coroa diamantada MASTER DBK-S",
+        "coroas diamantadas MASTER DBK-S",
+        "coroa SAMEDIA MASTER DBK-S",
+        "coroas SAMEDIA MASTER DBK-S",
+        "SAMEDIA MASTER DBK-S",
+        "MASTER DBK-S",
+        "diamond core bit MASTER DBK-S",
+        "diamond core bits MASTER DBK-S",
+        "diamond drilling crown MASTER DBK-S"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA MASTER DBK-S, Ø138–226 mm, 4 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "MASTER DBK-S",
+        "diamond core crown",
+        "coroa diamantada",
+        "138–226 mm",
+        "4 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA MASTER DBK-S Ø138–226 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-master-dbk-3l",
+      "name": "SAMEDIA MASTER DBK-3L diamond core-crown family Ø108–257 mm",
+      "aliases": [
+        "coroa diamantada MASTER DBK-3L",
+        "coroas diamantadas MASTER DBK-3L",
+        "coroa SAMEDIA MASTER DBK-3L",
+        "coroas SAMEDIA MASTER DBK-3L",
+        "SAMEDIA MASTER DBK-3L",
+        "MASTER DBK-3L",
+        "diamond core bit MASTER DBK-3L",
+        "diamond core bits MASTER DBK-3L",
+        "diamond drilling crown MASTER DBK-3L"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA MASTER DBK-3L, Ø108–257 mm, 18 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "MASTER DBK-3L",
+        "diamond core crown",
+        "coroa diamantada",
+        "108–257 mm",
+        "18 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA MASTER DBK-3L Ø108–257 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-master-dbr",
+      "name": "SAMEDIA MASTER DBR diamond core-crown family Ø16–35 mm",
+      "aliases": [
+        "coroa diamantada MASTER DBR",
+        "coroas diamantadas MASTER DBR",
+        "coroa SAMEDIA MASTER DBR",
+        "coroas SAMEDIA MASTER DBR",
+        "SAMEDIA MASTER DBR",
+        "MASTER DBR",
+        "diamond core bit MASTER DBR",
+        "diamond core bits MASTER DBR",
+        "diamond drilling crown MASTER DBR"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA MASTER DBR, Ø16–35 mm, 11 factory versions; machine/application: manual or column; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "MASTER DBR",
+        "diamond core crown",
+        "coroa diamantada",
+        "16–35 mm",
+        "11 versions",
+        "manual or column",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA MASTER DBR Ø16–35 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-master-dbh",
+      "name": "SAMEDIA MASTER DBH diamond core-crown family Ø41–200 mm",
+      "aliases": [
+        "coroa diamantada MASTER DBH",
+        "coroas diamantadas MASTER DBH",
+        "coroa SAMEDIA MASTER DBH",
+        "coroas SAMEDIA MASTER DBH",
+        "SAMEDIA MASTER DBH",
+        "MASTER DBH",
+        "diamond core bit MASTER DBH",
+        "diamond core bits MASTER DBH",
+        "diamond drilling crown MASTER DBH"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA MASTER DBH, Ø41–200 mm, 22 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "MASTER DBH",
+        "diamond core crown",
+        "coroa diamantada",
+        "41–200 mm",
+        "22 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA MASTER DBH Ø41–200 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-master-dbd",
+      "name": "SAMEDIA MASTER DBD diamond core-crown family Ø52–202 mm",
+      "aliases": [
+        "coroa diamantada MASTER DBD",
+        "coroas diamantadas MASTER DBD",
+        "coroa SAMEDIA MASTER DBD",
+        "coroas SAMEDIA MASTER DBD",
+        "SAMEDIA MASTER DBD",
+        "MASTER DBD",
+        "diamond core bit MASTER DBD",
+        "diamond core bits MASTER DBD",
+        "diamond drilling crown MASTER DBD"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA MASTER DBD, Ø52–202 mm, 17 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "MASTER DBD",
+        "diamond core crown",
+        "coroa diamantada",
+        "52–202 mm",
+        "17 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA MASTER DBD Ø52–202 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-master-dbd-ds",
+      "name": "SAMEDIA MASTER DBD-DS diamond core-crown family Ø68–82 mm",
+      "aliases": [
+        "coroa diamantada MASTER DBD-DS",
+        "coroas diamantadas MASTER DBD-DS",
+        "coroa SAMEDIA MASTER DBD-DS",
+        "coroas SAMEDIA MASTER DBD-DS",
+        "SAMEDIA MASTER DBD-DS",
+        "MASTER DBD-DS",
+        "diamond core bit MASTER DBD-DS",
+        "diamond core bits MASTER DBD-DS",
+        "diamond drilling crown MASTER DBD-DS"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA MASTER DBD-DS, Ø68–82 mm, 2 factory versions; machine/application: manual or column; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "MASTER DBD-DS",
+        "diamond core crown",
+        "coroa diamantada",
+        "68–82 mm",
+        "2 versions",
+        "manual or column",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA MASTER DBD-DS Ø68–82 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-master-dbs-l",
+      "name": "SAMEDIA MASTER DBS-L diamond core-crown family Ø32–257 mm",
+      "aliases": [
+        "coroa diamantada MASTER DBS-L",
+        "coroas diamantadas MASTER DBS-L",
+        "coroa SAMEDIA MASTER DBS-L",
+        "coroas SAMEDIA MASTER DBS-L",
+        "SAMEDIA MASTER DBS-L",
+        "MASTER DBS-L",
+        "diamond core bit MASTER DBS-L",
+        "diamond core bits MASTER DBS-L",
+        "diamond drilling crown MASTER DBS-L"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA MASTER DBS-L, Ø32–257 mm, 40 factory versions; machine/application: column; process: wet. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "MASTER DBS-L",
+        "diamond core crown",
+        "coroa diamantada",
+        "32–257 mm",
+        "40 versions",
+        "column",
+        "wet"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA MASTER DBS-L Ø32–257 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-shoxx-dax",
+      "name": "SAMEDIA SHOXX DAX diamond core-crown family Ø68–82 mm",
+      "aliases": [
+        "coroa diamantada SHOXX DAX",
+        "coroas diamantadas SHOXX DAX",
+        "coroa SAMEDIA SHOXX DAX",
+        "coroas SAMEDIA SHOXX DAX",
+        "SAMEDIA SHOXX DAX",
+        "SHOXX DAX",
+        "diamond core bit SHOXX DAX",
+        "diamond core bits SHOXX DAX",
+        "diamond drilling crown SHOXX DAX"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA SHOXX DAX, Ø68–82 mm, 2 factory versions; machine/application: manual M16; process: dry. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "SHOXX DAX",
+        "diamond core crown",
+        "coroa diamantada",
+        "68–82 mm",
+        "2 versions",
+        "manual M16",
+        "dry"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA SHOXX DAX Ø68–82 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-shoxx-dax-l",
+      "name": "SAMEDIA SHOXX DAX-L diamond core-crown family Ø68–82 mm",
+      "aliases": [
+        "coroa diamantada SHOXX DAX-L",
+        "coroas diamantadas SHOXX DAX-L",
+        "coroa SAMEDIA SHOXX DAX-L",
+        "coroas SAMEDIA SHOXX DAX-L",
+        "SAMEDIA SHOXX DAX-L",
+        "SHOXX DAX-L",
+        "diamond core bit SHOXX DAX-L",
+        "diamond core bits SHOXX DAX-L",
+        "diamond drilling crown SHOXX DAX-L"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA SHOXX DAX-L, Ø68–82 mm, 2 factory versions; machine/application: manual M16; process: dry. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "SHOXX DAX-L",
+        "diamond core crown",
+        "coroa diamantada",
+        "68–82 mm",
+        "2 versions",
+        "manual M16",
+        "dry"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA SHOXX DAX-L Ø68–82 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-master-dam",
+      "name": "SAMEDIA MASTER DAM diamond core-crown family Ø68–100 mm",
+      "aliases": [
+        "coroa diamantada MASTER DAM",
+        "coroas diamantadas MASTER DAM",
+        "coroa SAMEDIA MASTER DAM",
+        "coroas SAMEDIA MASTER DAM",
+        "SAMEDIA MASTER DAM",
+        "MASTER DAM",
+        "diamond core bit MASTER DAM",
+        "diamond core bits MASTER DAM",
+        "diamond drilling crown MASTER DAM"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA MASTER DAM, Ø68–100 mm, 3 factory versions; machine/application: manual M16; process: dry. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "MASTER DAM",
+        "diamond core crown",
+        "coroa diamantada",
+        "68–100 mm",
+        "3 versions",
+        "manual M16",
+        "dry"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA MASTER DAM Ø68–100 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-master-dsm",
+      "name": "SAMEDIA MASTER DSM diamond core-crown family Ø68–100 mm",
+      "aliases": [
+        "coroa diamantada MASTER DSM",
+        "coroas diamantadas MASTER DSM",
+        "coroa SAMEDIA MASTER DSM",
+        "coroas SAMEDIA MASTER DSM",
+        "SAMEDIA MASTER DSM",
+        "MASTER DSM",
+        "diamond core bit MASTER DSM",
+        "diamond core bits MASTER DSM",
+        "diamond drilling crown MASTER DSM"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA MASTER DSM, Ø68–100 mm, 3 factory versions; machine/application: manual M16; process: dry. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "MASTER DSM",
+        "diamond core crown",
+        "coroa diamantada",
+        "68–100 mm",
+        "3 versions",
+        "manual M16",
+        "dry"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA MASTER DSM Ø68–100 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-technic-dst",
+      "name": "SAMEDIA TECHNIC DST diamond core-crown family Ø68–82 mm",
+      "aliases": [
+        "coroa diamantada TECHNIC DST",
+        "coroas diamantadas TECHNIC DST",
+        "coroa SAMEDIA TECHNIC DST",
+        "coroas SAMEDIA TECHNIC DST",
+        "SAMEDIA TECHNIC DST",
+        "TECHNIC DST",
+        "diamond core bit TECHNIC DST",
+        "diamond core bits TECHNIC DST",
+        "diamond drilling crown TECHNIC DST"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA TECHNIC DST, Ø68–82 mm, 2 factory versions; machine/application: manual M16; process: dry. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "TECHNIC DST",
+        "diamond core crown",
+        "coroa diamantada",
+        "68–82 mm",
+        "2 versions",
+        "manual M16",
+        "dry"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA TECHNIC DST Ø68–82 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-solid-dse",
+      "name": "SAMEDIA SOLID DSE diamond core-crown family Ø82 mm",
+      "aliases": [
+        "coroa diamantada SOLID DSE",
+        "coroas diamantadas SOLID DSE",
+        "coroa SAMEDIA SOLID DSE",
+        "coroas SAMEDIA SOLID DSE",
+        "SAMEDIA SOLID DSE",
+        "SOLID DSE",
+        "diamond core bit SOLID DSE",
+        "diamond core bits SOLID DSE",
+        "diamond drilling crown SOLID DSE"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA SOLID DSE, Ø82 mm, 1 factory versions; machine/application: manual M16; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "SOLID DSE",
+        "diamond core crown",
+        "coroa diamantada",
+        "82 mm",
+        "1 versions",
+        "manual M16",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA SOLID DSE Ø82 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-shoxx-dbv",
+      "name": "SAMEDIA SHOXX DBV diamond core-crown family Ø6–125 mm",
+      "aliases": [
+        "coroa diamantada SHOXX DBV",
+        "coroas diamantadas SHOXX DBV",
+        "coroa SAMEDIA SHOXX DBV",
+        "coroas SAMEDIA SHOXX DBV",
+        "SAMEDIA SHOXX DBV",
+        "SHOXX DBV",
+        "diamond core bit SHOXX DBV",
+        "diamond core bits SHOXX DBV",
+        "diamond drilling crown SHOXX DBV"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA SHOXX DBV, Ø6–125 mm, 24 factory versions; machine/application: angle grinder M14; process: dry. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "SHOXX DBV",
+        "diamond core crown",
+        "coroa diamantada",
+        "6–125 mm",
+        "24 versions",
+        "angle grinder M14",
+        "dry"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA SHOXX DBV Ø6–125 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-technic-dbv-e",
+      "name": "SAMEDIA TECHNIC DBV-E diamond core-crown family Ø6–110 mm",
+      "aliases": [
+        "coroa diamantada TECHNIC DBV-E",
+        "coroas diamantadas TECHNIC DBV-E",
+        "coroa SAMEDIA TECHNIC DBV-E",
+        "coroas SAMEDIA TECHNIC DBV-E",
+        "SAMEDIA TECHNIC DBV-E",
+        "TECHNIC DBV-E",
+        "diamond core bit TECHNIC DBV-E",
+        "diamond core bits TECHNIC DBV-E",
+        "diamond drilling crown TECHNIC DBV-E"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA TECHNIC DBV-E, Ø6–110 mm, 26 factory versions; machine/application: angle grinder M14; process: dry. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "TECHNIC DBV-E",
+        "diamond core crown",
+        "coroa diamantada",
+        "6–110 mm",
+        "26 versions",
+        "angle grinder M14",
+        "dry"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA TECHNIC DBV-E Ø6–110 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-technic-dbv-e-set",
+      "name": "SAMEDIA TECHNIC DBV-E-SET diamond core-crown family Ø20 mm",
+      "aliases": [
+        "coroa diamantada TECHNIC DBV-E-SET",
+        "coroas diamantadas TECHNIC DBV-E-SET",
+        "coroa SAMEDIA TECHNIC DBV-E-SET",
+        "coroas SAMEDIA TECHNIC DBV-E-SET",
+        "SAMEDIA TECHNIC DBV-E-SET",
+        "TECHNIC DBV-E-SET",
+        "diamond core bit TECHNIC DBV-E-SET",
+        "diamond core bits TECHNIC DBV-E-SET",
+        "diamond drilling crown TECHNIC DBV-E-SET"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA TECHNIC DBV-E-SET, Ø20 mm, 2 factory versions; machine/application: manual or column; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "TECHNIC DBV-E-SET",
+        "diamond core crown",
+        "coroa diamantada",
+        "20 mm",
+        "2 versions",
+        "manual or column",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA TECHNIC DBV-E-SET Ø20 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-shoxx-dbt",
+      "name": "SAMEDIA SHOXX DBT diamond core-crown family Ø10–14 mm",
+      "aliases": [
+        "coroa diamantada SHOXX DBT",
+        "coroas diamantadas SHOXX DBT",
+        "coroa SAMEDIA SHOXX DBT",
+        "coroas SAMEDIA SHOXX DBT",
+        "SAMEDIA SHOXX DBT",
+        "SHOXX DBT",
+        "diamond core bit SHOXX DBT",
+        "diamond core bits SHOXX DBT",
+        "diamond drilling crown SHOXX DBT"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA SHOXX DBT, Ø10–14 mm, 3 factory versions; machine/application: manual or column; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "SHOXX DBT",
+        "diamond core crown",
+        "coroa diamantada",
+        "10–14 mm",
+        "3 versions",
+        "manual or column",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA SHOXX DBT Ø10–14 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-shoxx-dbz",
+      "name": "SAMEDIA SHOXX DBZ diamond core-crown family Ø40 mm",
+      "aliases": [
+        "coroa diamantada SHOXX DBZ",
+        "coroas diamantadas SHOXX DBZ",
+        "coroa SAMEDIA SHOXX DBZ",
+        "coroas SAMEDIA SHOXX DBZ",
+        "SAMEDIA SHOXX DBZ",
+        "SHOXX DBZ",
+        "diamond core bit SHOXX DBZ",
+        "diamond core bits SHOXX DBZ",
+        "diamond drilling crown SHOXX DBZ"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA SHOXX DBZ, Ø40 mm, 1 factory versions; machine/application: manual or column; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "SHOXX DBZ",
+        "diamond core crown",
+        "coroa diamantada",
+        "40 mm",
+        "1 versions",
+        "manual or column",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA SHOXX DBZ Ø40 mm"
+    },
+    {
+      "id": "item-crown-family-samedia-technic-dbt-e",
+      "name": "SAMEDIA TECHNIC DBT-E diamond core-crown family Ø10–14 mm",
+      "aliases": [
+        "coroa diamantada TECHNIC DBT-E",
+        "coroas diamantadas TECHNIC DBT-E",
+        "coroa SAMEDIA TECHNIC DBT-E",
+        "coroas SAMEDIA TECHNIC DBT-E",
+        "SAMEDIA TECHNIC DBT-E",
+        "TECHNIC DBT-E",
+        "diamond core bit TECHNIC DBT-E",
+        "diamond core bits TECHNIC DBT-E",
+        "diamond drilling crown TECHNIC DBT-E"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-core-crowns",
+      "specification": "SYNVOR public crown catalogue lists SAMEDIA TECHNIC DBT-E, Ø10–14 mm, 3 factory versions; machine/application: manual or column; process: confirm per version. The public category reports 33 models and 691 factory versions. Confirm core bit connection, working length, diameter, machine, wet/dry method, material and exact factory reference before quotation; no stock or price is inferred.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "SAMEDIA",
+        "TECHNIC DBT-E",
+        "diamond core crown",
+        "coroa diamantada",
+        "10–14 mm",
+        "3 versions",
+        "manual or column",
+        "confirm per version"
+      ],
+      "name_pt": "Família de coroas diamantadas SAMEDIA TECHNIC DBT-E Ø10–14 mm"
+    },
+    {
+      "id": "item-synvor-diamond-grinding-cups",
+      "name": "Diamond grinding cups Ø100–180 mm",
+      "aliases": [
+        "copos de desbaste diamantados",
+        "copo diamantado",
+        "copos diamantados",
+        "copo de desbaste",
+        "diamond grinding cup",
+        "diamond grinding cups"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-grinding-polishing",
+      "specification": "SYNVOR lists diamond grinding cups for angle grinders, Ø100–180 mm, single/double segment options, for removal of paint, adhesives and concrete irregularities. Confirm model, segment, mounting, substrate and quantity.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "rebarbadora",
+        "angle grinder",
+        "concrete",
+        "stone",
+        "paint removal",
+        "adhesive removal",
+        "single segment",
+        "double segment"
+      ],
+      "name_pt": "Copos de desbaste diamantados Ø100–180 mm"
+    },
+    {
+      "id": "item-synvor-metal-grinding-segments",
+      "name": "Metal floor-grinding segments, grit 16–150",
+      "aliases": [
+        "segmentos metálicos de desbaste",
+        "segmentos metalicos de desbaste",
+        "segmentos diamantados",
+        "segmento de desbaste",
+        "metal grinding segments",
+        "floor grinding segments"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-grinding-polishing",
+      "specification": "SYNVOR lists metal segments for floor-grinding machines, grit 16–150 and soft/medium/hard bonds. Confirm holder, machine, bond, grit, floor material and exact reference.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "floor grinder",
+        "industrial floor",
+        "grit 16",
+        "grit 150",
+        "soft bond",
+        "medium bond",
+        "hard bond"
+      ],
+      "name_pt": "Segmentos metálicos de desbaste para pavimentos, grão 16–150"
+    },
+    {
+      "id": "item-synvor-diamond-polishing-resins",
+      "name": "Diamond polishing resins, grit 50–3000",
+      "aliases": [
+        "resinas de polimento",
+        "discos de resina",
+        "resina diamantada",
+        "polimento diamantado",
+        "diamond polishing resin",
+        "resin polishing discs"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-grinding-polishing",
+      "specification": "SYNVOR lists resin polishing products with grit 50–3000. Confirm pad dimensions, holder, wet/dry method, substrate and sequence before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "grit 50",
+        "grit 3000",
+        "polishing",
+        "floor polishing",
+        "concrete",
+        "stone"
+      ],
+      "name_pt": "Resinas diamantadas de polimento, grão 50–3000"
+    },
+    {
+      "id": "item-carbodiam-diamond-grinding-plates",
+      "name": "Carbodiam diamond grinding plates",
+      "aliases": [
+        "placas diamantadas de desbaste",
+        "placa diamantada",
+        "Carbodiam diamond grinding plates",
+        "diamond grinding plates"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-grinding-polishing",
+      "specification": "SYNVOR features Carbodiam diamond grinding plates for industrial surface grinding. Exact geometry, segment layout, holder, grit and reference must be confirmed from the specific technical sheet.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "industrial floor",
+        "surface grinding",
+        "concrete",
+        "stone"
+      ],
+      "name_pt": "Placas diamantadas de desbaste Carbodiam"
+    },
+    {
+      "id": "item-carbodiam-multicut-400p",
+      "name": "Carbodiam Multicut 400P floor saw",
+      "aliases": [
+        "Multicut 400P",
+        "Carbodiam Multicut 400P",
+        "serra de chão Multicut",
+        "floor saw Multicut 400P"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "diamond-tools-machinery",
+      "specification": "Published listing: gasoline floor saw, 26.1 kW / 35 hp, disc up to Ø1000 mm and cut depth up to 415 mm. Confirm engine/version, blade fit, depth, accessories and reference.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "Lissmac",
+        "gasoline",
+        "26.1 kW",
+        "35 hp",
+        "1000 mm blade",
+        "415 mm cut depth"
+      ],
+      "name_pt": "Serra de chão Carbodiam Multicut 400P"
+    },
+    {
+      "id": "item-carbodiam-fb650-700",
+      "name": "Carbodiam FB650/700 table saw",
+      "aliases": [
+        "FB650/700",
+        "Carbodiam FB650/700",
+        "serra de mesa FB650",
+        "table saw FB650/700"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "diamond-tools-machinery",
+      "specification": "Published listing: professional Carbodiam table saw with Ø650 mm disc. Confirm exact model configuration, cutting capacity, power, water system and reference.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "table saw",
+        "650 mm blade",
+        "construction materials",
+        "stone",
+        "masonry"
+      ],
+      "name_pt": "Serra de mesa Carbodiam FB650/700"
+    },
+    {
+      "id": "item-weka-ts40",
+      "name": "WEKA TS40 manual diamond saw",
+      "aliases": [
+        "WEKA TS40",
+        "TS40",
+        "serra manual WEKA",
+        "serra diamantada WEKA TS40",
+        "WEKA manual saw"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "diamond-tools-machinery",
+      "specification": "Published listing: manual high-frequency diamond saw for concrete/masonry, cut depth up to 165 mm, 3700 W (230 V) / 6500 W (400 V), water-cooled motor. Confirm voltage and configuration.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "Carbodiam",
+        "3700 W",
+        "6500 W",
+        "165 mm depth",
+        "concrete",
+        "masonry",
+        "water cooled"
+      ],
+      "name_pt": "Serra diamantada manual WEKA TS40"
+    },
+    {
+      "id": "item-carbodiam-amphibia",
+      "name": "Carbodiam Amphibia wet/dry table saw",
+      "aliases": [
+        "Amphibia",
+        "Carbodiam Amphibia",
+        "serra Amphibia",
+        "serra de mesa Amphibia",
+        "Amphibia table saw"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "diamond-tools-machinery",
+      "specification": "Published listing: Ø350 mm table saw for wet/dry cutting, closed circuit and cyclone stated to separate over 90% of dust. Confirm exact configuration and technical specifications.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "350 mm blade",
+        "wet cutting",
+        "dry cutting",
+        "cyclone",
+        "dust separation",
+        "closed circuit"
+      ],
+      "name_pt": "Serra de mesa Carbodiam Amphibia a seco e a húmido"
+    },
+    {
+      "id": "item-hypergrinder-rtk-280-vs",
+      "name": "HG Hyper Grinder RTK 280 VS floor grinder",
+      "aliases": [
+        "RTK 280 VS",
+        "HG Hyper Grinder RTK 280 VS",
+        "Hyper Grinder RTK 280",
+        "máquina RTK 280 VS",
+        "floor grinder RTK 280"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "diamond-tools-machinery",
+      "specification": "Published listing: compact floor-grinding machine with variable speed. Motor power, working width, tooling and exact factory reference must be confirmed from the model sheet.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "HG Hyper Grinder",
+        "Carbodiam",
+        "variable speed",
+        "floor grinding",
+        "pavement"
+      ],
+      "name_pt": "Máquina de desbaste HG Hyper Grinder RTK 280 VS"
+    },
+    {
+      "id": "item-synvor-industrial-dust-slurry-extraction",
+      "name": "Industrial dust, vacuum and slurry extraction equipment",
+      "aliases": [
+        "aspirador industrial",
+        "aspiradores industriais",
+        "aspirador HEPA",
+        "aspiração de lamas",
+        "industrial vacuum",
+        "dust extractor",
+        "slurry extractor",
+        "Flex VCE 33",
+        "Flex VCE 44",
+        "220 iClean",
+        "Smart 280 Dry",
+        "Slurryvak 114",
+        "Junior Compact"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "diamond-tools-machinery",
+      "specification": "SYNVOR lists extraction models including Flex VCE 33/VCE 44, 220 iClean (HEPA), Smart 280 Dry, Slurryvak 114 and Junior Compact. Confirm airflow, filtration, tank capacity, power, accessories and exact reference per model.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "WEKA",
+        "HEPA",
+        "dust extraction",
+        "wet vacuum",
+        "dry vacuum",
+        "slurry",
+        "industrial cleaning"
+      ],
+      "name_pt": "Equipamentos industriais de aspiração de poeiras, líquidos e lamas"
+    },
+    {
+      "id": "item-weka-dk17",
+      "name": "WEKA DK17 core-drilling machine",
+      "aliases": [
+        "WEKA DK17",
+        "DK17",
+        "carotadora WEKA DK17",
+        "core drilling machine WEKA DK17"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "2000 W, 3 speeds; Ø20–160 mm on stand and up to Ø200 mm handheld in masonry. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "2000 W, 3 speeds; Ø20–160 mm on stand and up to Ø200 mm handheld in masonry."
+      ],
+      "name_pt": "Carotadora WEKA DK17"
+    },
+    {
+      "id": "item-weka-sr38",
+      "name": "WEKA SR38 stand core-drilling machine",
+      "aliases": [
+        "WEKA SR38",
+        "SR38",
+        "carotadora WEKA SR38",
+        "core drilling machine WEKA SR38"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "Wet core drilling, Ø40–400 mm, 3700 W and 18 speeds. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "Wet core drilling, Ø40–400 mm, 3700 W and 18 speeds."
+      ],
+      "name_pt": "Carotadora de coluna WEKA SR38"
+    },
+    {
+      "id": "item-weka-hd16",
+      "name": "WEKA HD16 high-frequency core-drilling machine",
+      "aliases": [
+        "WEKA HD16",
+        "HD16",
+        "carotadora WEKA HD16",
+        "core drilling machine WEKA HD16"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "Wet core drilling, Ø20–150 mm, 3700 W and 3 speeds. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "Wet core drilling, Ø20–150 mm, 3700 W and 3 speeds."
+      ],
+      "name_pt": "Carotadora de alta frequência WEKA HD16"
+    },
+    {
+      "id": "item-weka-dk09",
+      "name": "WEKA DK09 handheld core-drilling machine",
+      "aliases": [
+        "WEKA DK09",
+        "DK09",
+        "carotadora WEKA DK09",
+        "core drilling machine WEKA DK09"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "Wet/dry handheld core drilling, Ø30–200 mm, 1800 W and 2 speeds. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "Wet/dry handheld core drilling, Ø30–200 mm, 1800 W and 2 speeds."
+      ],
+      "name_pt": "Carotadora manual WEKA DK09"
+    },
+    {
+      "id": "item-weka-dk1603",
+      "name": "WEKA DK1603 core-drilling machine",
+      "aliases": [
+        "WEKA DK1603",
+        "DK1603",
+        "carotadora WEKA DK1603",
+        "core drilling machine WEKA DK1603"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "Wet core drilling, Ø20–160 mm, 2000 W and 3 speeds. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "Wet core drilling, Ø20–160 mm, 2000 W and 3 speeds."
+      ],
+      "name_pt": "Carotadora WEKA DK1603"
+    },
+    {
+      "id": "item-weka-dk118",
+      "name": "WEKA DK118 dry masonry core-drilling machine",
+      "aliases": [
+        "WEKA DK118",
+        "DK118",
+        "carotadora WEKA DK118",
+        "core drilling machine WEKA DK118"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "Dry drilling of large holes in masonry, Ø100–250 mm, 1600 W. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "Dry drilling of large holes in masonry, Ø100–250 mm, 1600 W."
+      ],
+      "name_pt": "Carotadora WEKA DK118 para alvenaria a seco"
+    },
+    {
+      "id": "item-weka-dk119",
+      "name": "WEKA DK119 wet concrete core-drilling machine",
+      "aliases": [
+        "WEKA DK119",
+        "DK119",
+        "carotadora WEKA DK119",
+        "core drilling machine WEKA DK119"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "Wet drilling in concrete, Ø100–250 mm, 1600 W. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "Wet drilling in concrete, Ø100–250 mm, 1600 W."
+      ],
+      "name_pt": "Carotadora WEKA DK119 para betão a húmido"
+    },
+    {
+      "id": "item-weka-dk32",
+      "name": "WEKA DK32 stand core-drilling machine",
+      "aliases": [
+        "WEKA DK32",
+        "DK32",
+        "carotadora WEKA DK32",
+        "core drilling machine WEKA DK32"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "Wet stand drilling, 3200 W, 230 V, 3 speeds, Ø55–350 mm. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "Wet stand drilling, 3200 W, 230 V, 3 speeds, Ø55–350 mm."
+      ],
+      "name_pt": "Carotadora de coluna WEKA DK32"
+    },
+    {
+      "id": "item-weka-dk34",
+      "name": "WEKA DK34 large-diameter stand core-drilling machine",
+      "aliases": [
+        "WEKA DK34",
+        "DK34",
+        "carotadora WEKA DK34",
+        "core drilling machine WEKA DK34"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "Wet stand drilling, 3200 W, 230 V, 3 speeds, Ø80–450 mm. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "Wet stand drilling, 3200 W, 230 V, 3 speeds, Ø80–450 mm."
+      ],
+      "name_pt": "Carotadora de coluna WEKA DK34 para grandes diâmetros"
+    },
+    {
+      "id": "item-weka-sr65",
+      "name": "WEKA SR65 stand core-drilling system",
+      "aliases": [
+        "WEKA SR65",
+        "SR65",
+        "carotadora WEKA SR65",
+        "core drilling machine WEKA SR65"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "Water-cooled SR motor, 7500 W, 400 V, 6 speeds, Ø120–500 mm. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "Water-cooled SR motor, 7500 W, 400 V, 6 speeds, Ø120–500 mm."
+      ],
+      "name_pt": "Sistema de carotagem de coluna WEKA SR65"
+    },
+    {
+      "id": "item-weka-sr75",
+      "name": "WEKA SR75 large-diameter stand core-drilling system",
+      "aliases": [
+        "WEKA SR75",
+        "SR75",
+        "carotadora WEKA SR75",
+        "core drilling machine WEKA SR75"
+      ],
+      "category": "tools-equipment",
+      "subcategory": "core-drilling-machinery",
+      "specification": "Wet large-diameter drilling, 7500 W, 400 V, 15 speeds, Ø150–900 mm. Confirm drill stand, connection, core bit, substrate, depth, power supply and version before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "WEKA",
+        "core drilling",
+        "carotagem",
+        "Wet large-diameter drilling, 7500 W, 400 V, 15 speeds, Ø150–900 mm."
+      ],
+      "name_pt": "Sistema de carotagem de coluna WEKA SR75 para grandes diâmetros"
+    },
+    {
+      "id": "item-carbodiam-sku-pantera-pantera-125-ref-9194",
+      "name": "Carbodiam PANTERA Ø125 mm · PANTERA DIA 125 MM · Ref. 9194",
+      "aliases": [
+        "Carbodiam PANTERA 125 mm",
+        "PANTERA 125",
+        "PANTERA DIA 125 MM",
+        "pantera dia 125 mm",
+        "disco diamantado 125 mm",
+        "discos diamantados 125 mm",
+        "Carbodiam ref 9194",
+        "referência 9194",
+        "referencia 9194",
+        "ref 9194",
+        "9194"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 9194: PANTERA DIA 125 MM. Diameter Ø125 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "diamond cutting disc",
+        "125 mm",
+        "reference 9194",
+        "ref 9194",
+        "PANTERA DIA 125 MM",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam PANTERA Ø125 mm · PANTERA DIA 125 MM · Ref. 9194"
+    },
+    {
+      "id": "item-carbodiam-sku-pantera-pantera-150-ref-9195",
+      "name": "Carbodiam PANTERA Ø150 mm · PANTERA DIA 150 MM · Ref. 9195",
+      "aliases": [
+        "Carbodiam PANTERA 150 mm",
+        "PANTERA 150",
+        "PANTERA DIA 150 MM",
+        "pantera dia 150 mm",
+        "disco diamantado 150 mm",
+        "discos diamantados 150 mm",
+        "Carbodiam ref 9195",
+        "referência 9195",
+        "referencia 9195",
+        "ref 9195",
+        "9195"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 9195: PANTERA DIA 150 MM. Diameter Ø150 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "diamond cutting disc",
+        "150 mm",
+        "reference 9195",
+        "ref 9195",
+        "PANTERA DIA 150 MM",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam PANTERA Ø150 mm · PANTERA DIA 150 MM · Ref. 9195"
+    },
+    {
+      "id": "item-carbodiam-sku-pantera-pantera-180-ref-13857",
+      "name": "Carbodiam PANTERA Ø180 mm · PANTERA DIA 180 MM · Ref. 13857",
+      "aliases": [
+        "Carbodiam PANTERA 180 mm",
+        "PANTERA 180",
+        "PANTERA DIA 180 MM",
+        "pantera dia 180 mm",
+        "disco diamantado 180 mm",
+        "discos diamantados 180 mm",
+        "Carbodiam ref 13857",
+        "referência 13857",
+        "referencia 13857",
+        "ref 13857",
+        "13857"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 13857: PANTERA DIA 180 MM. Diameter Ø180 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "diamond cutting disc",
+        "180 mm",
+        "reference 13857",
+        "ref 13857",
+        "PANTERA DIA 180 MM",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam PANTERA Ø180 mm · PANTERA DIA 180 MM · Ref. 13857"
+    },
+    {
+      "id": "item-carbodiam-sku-pantera-pantera-230-ref-8667",
+      "name": "Carbodiam PANTERA Ø230 mm · PANTERA DIA 230 MM · Ref. 8667",
+      "aliases": [
+        "Carbodiam PANTERA 230 mm",
+        "PANTERA 230",
+        "PANTERA DIA 230 MM",
+        "pantera dia 230 mm",
+        "disco diamantado 230 mm",
+        "discos diamantados 230 mm",
+        "Carbodiam ref 8667",
+        "referência 8667",
+        "referencia 8667",
+        "ref 8667",
+        "8667"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 8667: PANTERA DIA 230 MM. Diameter Ø230 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "diamond cutting disc",
+        "230 mm",
+        "reference 8667",
+        "ref 8667",
+        "PANTERA DIA 230 MM",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam PANTERA Ø230 mm · PANTERA DIA 230 MM · Ref. 8667"
+    },
+    {
+      "id": "item-carbodiam-sku-pantera-pantera-300-h20-ref-9197",
+      "name": "Carbodiam PANTERA Ø300 mm · PANTERA DIA 300 MM - H20 · Ref. 9197",
+      "aliases": [
+        "Carbodiam PANTERA 300 mm",
+        "PANTERA 300",
+        "PANTERA DIA 300 MM - H20",
+        "pantera dia 300 mm - h20",
+        "disco diamantado 300 mm",
+        "discos diamantados 300 mm",
+        "Carbodiam ref 9197",
+        "referência 9197",
+        "referencia 9197",
+        "ref 9197",
+        "9197"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 9197: PANTERA DIA 300 MM - H20. Diameter Ø300 mm; published bore/connection 20 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "diamond cutting disc",
+        "300 mm",
+        "reference 9197",
+        "ref 9197",
+        "PANTERA DIA 300 MM - H20",
+        "bore 20 mm"
+      ],
+      "name_pt": "Disco Carbodiam PANTERA Ø300 mm · PANTERA DIA 300 MM - H20 · Ref. 9197"
+    },
+    {
+      "id": "item-carbodiam-sku-pantera-pantera-300-h254-ref-9198",
+      "name": "Carbodiam PANTERA Ø300 mm · PANTERA DIA 300 MM - H25.4 · Ref. 9198",
+      "aliases": [
+        "Carbodiam PANTERA 300 mm",
+        "PANTERA 300",
+        "PANTERA DIA 300 MM - H25.4",
+        "pantera dia 300 mm - h25.4",
+        "disco diamantado 300 mm",
+        "discos diamantados 300 mm",
+        "Carbodiam ref 9198",
+        "referência 9198",
+        "referencia 9198",
+        "ref 9198",
+        "9198"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 9198: PANTERA DIA 300 MM - H25.4. Diameter Ø300 mm; published bore/connection 25.4 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "diamond cutting disc",
+        "300 mm",
+        "reference 9198",
+        "ref 9198",
+        "PANTERA DIA 300 MM - H25.4",
+        "bore 25.4 mm"
+      ],
+      "name_pt": "Disco Carbodiam PANTERA Ø300 mm · PANTERA DIA 300 MM - H25.4 · Ref. 9198"
+    },
+    {
+      "id": "item-carbodiam-sku-pantera-pantera-350-h20-ref-9199",
+      "name": "Carbodiam PANTERA Ø350 mm · PANTERA DIA 350 MM H20 · Ref. 9199",
+      "aliases": [
+        "Carbodiam PANTERA 350 mm",
+        "PANTERA 350",
+        "PANTERA DIA 350 MM H20",
+        "pantera dia 350 mm h20",
+        "disco diamantado 350 mm",
+        "discos diamantados 350 mm",
+        "Carbodiam ref 9199",
+        "referência 9199",
+        "referencia 9199",
+        "ref 9199",
+        "9199"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 9199: PANTERA DIA 350 MM H20. Diameter Ø350 mm; published bore/connection 20 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "diamond cutting disc",
+        "350 mm",
+        "reference 9199",
+        "ref 9199",
+        "PANTERA DIA 350 MM H20",
+        "bore 20 mm"
+      ],
+      "name_pt": "Disco Carbodiam PANTERA Ø350 mm · PANTERA DIA 350 MM H20 · Ref. 9199"
+    },
+    {
+      "id": "item-carbodiam-sku-pantera-pantera-350-h254-ref-9200",
+      "name": "Carbodiam PANTERA Ø350 mm · PANTERA DIA 350 MM H25.4 · Ref. 9200",
+      "aliases": [
+        "Carbodiam PANTERA 350 mm",
+        "PANTERA 350",
+        "PANTERA DIA 350 MM H25.4",
+        "pantera dia 350 mm h25.4",
+        "disco diamantado 350 mm",
+        "discos diamantados 350 mm",
+        "Carbodiam ref 9200",
+        "referência 9200",
+        "referencia 9200",
+        "ref 9200",
+        "9200"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 9200: PANTERA DIA 350 MM H25.4. Diameter Ø350 mm; published bore/connection 25.4 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "diamond cutting disc",
+        "350 mm",
+        "reference 9200",
+        "ref 9200",
+        "PANTERA DIA 350 MM H25.4",
+        "bore 25.4 mm"
+      ],
+      "name_pt": "Disco Carbodiam PANTERA Ø350 mm · PANTERA DIA 350 MM H25.4 · Ref. 9200"
+    },
+    {
+      "id": "item-carbodiam-sku-pantera-pantera-400-h20-ref-9202",
+      "name": "Carbodiam PANTERA Ø400 mm · PANTERA DIA 400 MM H20 · Ref. 9202",
+      "aliases": [
+        "Carbodiam PANTERA 400 mm",
+        "PANTERA 400",
+        "PANTERA DIA 400 MM H20",
+        "pantera dia 400 mm h20",
+        "disco diamantado 400 mm",
+        "discos diamantados 400 mm",
+        "Carbodiam ref 9202",
+        "referência 9202",
+        "referencia 9202",
+        "ref 9202",
+        "9202"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 9202: PANTERA DIA 400 MM H20. Diameter Ø400 mm; published bore/connection 20 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "diamond cutting disc",
+        "400 mm",
+        "reference 9202",
+        "ref 9202",
+        "PANTERA DIA 400 MM H20",
+        "bore 20 mm"
+      ],
+      "name_pt": "Disco Carbodiam PANTERA Ø400 mm · PANTERA DIA 400 MM H20 · Ref. 9202"
+    },
+    {
+      "id": "item-carbodiam-sku-pantera-pantera-400-h254-ref-9201",
+      "name": "Carbodiam PANTERA Ø400 mm · PANTERA DIA 400 MM H25.4 · Ref. 9201",
+      "aliases": [
+        "Carbodiam PANTERA 400 mm",
+        "PANTERA 400",
+        "PANTERA DIA 400 MM H25.4",
+        "pantera dia 400 mm h25.4",
+        "disco diamantado 400 mm",
+        "discos diamantados 400 mm",
+        "Carbodiam ref 9201",
+        "referência 9201",
+        "referencia 9201",
+        "ref 9201",
+        "9201"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 9201: PANTERA DIA 400 MM H25.4. Diameter Ø400 mm; published bore/connection 25.4 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "PANTERA",
+        "diamond cutting disc",
+        "400 mm",
+        "reference 9201",
+        "ref 9201",
+        "PANTERA DIA 400 MM H25.4",
+        "bore 25.4 mm"
+      ],
+      "name_pt": "Disco Carbodiam PANTERA Ø400 mm · PANTERA DIA 400 MM H25.4 · Ref. 9201"
+    },
+    {
+      "id": "item-carbodiam-sku-neutre-pantera-neutre-125-ref-15449",
+      "name": "Carbodiam NEUTRE Ø125 mm · PANTERA NEUTRE DIA 125 MM · Ref. 15449",
+      "aliases": [
+        "Carbodiam NEUTRE 125 mm",
+        "NEUTRE 125",
+        "PANTERA NEUTRE DIA 125 MM",
+        "pantera neutre dia 125 mm",
+        "disco diamantado 125 mm",
+        "discos diamantados 125 mm",
+        "Carbodiam ref 15449",
+        "referência 15449",
+        "referencia 15449",
+        "ref 15449",
+        "15449"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 15449: PANTERA NEUTRE DIA 125 MM. Diameter Ø125 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "NEUTRE",
+        "diamond cutting disc",
+        "125 mm",
+        "reference 15449",
+        "ref 15449",
+        "PANTERA NEUTRE DIA 125 MM",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam NEUTRE Ø125 mm · PANTERA NEUTRE DIA 125 MM · Ref. 15449"
+    },
+    {
+      "id": "item-carbodiam-sku-neutre-pantera-neutre-125-alt-ref-20435",
+      "name": "Carbodiam NEUTRE Ø125 mm · PANTERA NEUTRE DIA 125 MM · Ref. 20435",
+      "aliases": [
+        "Carbodiam NEUTRE 125 mm",
+        "NEUTRE 125",
+        "PANTERA NEUTRE DIA 125 MM",
+        "pantera neutre dia 125 mm",
+        "disco diamantado 125 mm",
+        "discos diamantados 125 mm",
+        "Carbodiam ref 20435",
+        "referência 20435",
+        "referencia 20435",
+        "ref 20435",
+        "20435"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 20435: PANTERA NEUTRE DIA 125 MM. Diameter Ø125 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "NEUTRE",
+        "diamond cutting disc",
+        "125 mm",
+        "reference 20435",
+        "ref 20435",
+        "PANTERA NEUTRE DIA 125 MM",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam NEUTRE Ø125 mm · PANTERA NEUTRE DIA 125 MM · Ref. 20435"
+    },
+    {
+      "id": "item-carbodiam-sku-neutre-pantera-neutre-150-ref-15450",
+      "name": "Carbodiam NEUTRE Ø150 mm · PANTERA NEUTRE DIA 150 MM · Ref. 15450",
+      "aliases": [
+        "Carbodiam NEUTRE 150 mm",
+        "NEUTRE 150",
+        "PANTERA NEUTRE DIA 150 MM",
+        "pantera neutre dia 150 mm",
+        "disco diamantado 150 mm",
+        "discos diamantados 150 mm",
+        "Carbodiam ref 15450",
+        "referência 15450",
+        "referencia 15450",
+        "ref 15450",
+        "15450"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 15450: PANTERA NEUTRE DIA 150 MM. Diameter Ø150 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "NEUTRE",
+        "diamond cutting disc",
+        "150 mm",
+        "reference 15450",
+        "ref 15450",
+        "PANTERA NEUTRE DIA 150 MM",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam NEUTRE Ø150 mm · PANTERA NEUTRE DIA 150 MM · Ref. 15450"
+    },
+    {
+      "id": "item-carbodiam-sku-neutre-pantera-neutre-180-ref-15451",
+      "name": "Carbodiam NEUTRE Ø180 mm · PANTERA NEUTRE DIA 180 MM · Ref. 15451",
+      "aliases": [
+        "Carbodiam NEUTRE 180 mm",
+        "NEUTRE 180",
+        "PANTERA NEUTRE DIA 180 MM",
+        "pantera neutre dia 180 mm",
+        "disco diamantado 180 mm",
+        "discos diamantados 180 mm",
+        "Carbodiam ref 15451",
+        "referência 15451",
+        "referencia 15451",
+        "ref 15451",
+        "15451"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 15451: PANTERA NEUTRE DIA 180 MM. Diameter Ø180 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "NEUTRE",
+        "diamond cutting disc",
+        "180 mm",
+        "reference 15451",
+        "ref 15451",
+        "PANTERA NEUTRE DIA 180 MM",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam NEUTRE Ø180 mm · PANTERA NEUTRE DIA 180 MM · Ref. 15451"
+    },
+    {
+      "id": "item-carbodiam-sku-neutre-pantera-neutre-230-ref-15452",
+      "name": "Carbodiam NEUTRE Ø230 mm · PANTERA NEUTRE DIA 230 MM · Ref. 15452",
+      "aliases": [
+        "Carbodiam NEUTRE 230 mm",
+        "NEUTRE 230",
+        "PANTERA NEUTRE DIA 230 MM",
+        "pantera neutre dia 230 mm",
+        "disco diamantado 230 mm",
+        "discos diamantados 230 mm",
+        "Carbodiam ref 15452",
+        "referência 15452",
+        "referencia 15452",
+        "ref 15452",
+        "15452"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 15452: PANTERA NEUTRE DIA 230 MM. Diameter Ø230 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "NEUTRE",
+        "diamond cutting disc",
+        "230 mm",
+        "reference 15452",
+        "ref 15452",
+        "PANTERA NEUTRE DIA 230 MM",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam NEUTRE Ø230 mm · PANTERA NEUTRE DIA 230 MM · Ref. 15452"
+    },
+    {
+      "id": "item-carbodiam-sku-neutre-pantera-neutre-300-h254-ref-19853",
+      "name": "Carbodiam NEUTRE Ø300 mm · PANTERA NEUTRE DIA 300 MM H25.4 · Ref. 19853",
+      "aliases": [
+        "Carbodiam NEUTRE 300 mm",
+        "NEUTRE 300",
+        "PANTERA NEUTRE DIA 300 MM H25.4",
+        "pantera neutre dia 300 mm h25.4",
+        "disco diamantado 300 mm",
+        "discos diamantados 300 mm",
+        "Carbodiam ref 19853",
+        "referência 19853",
+        "referencia 19853",
+        "ref 19853",
+        "19853"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 19853: PANTERA NEUTRE DIA 300 MM H25.4. Diameter Ø300 mm; published bore/connection 25.4 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "NEUTRE",
+        "diamond cutting disc",
+        "300 mm",
+        "reference 19853",
+        "ref 19853",
+        "PANTERA NEUTRE DIA 300 MM H25.4",
+        "bore 25.4 mm"
+      ],
+      "name_pt": "Disco Carbodiam NEUTRE Ø300 mm · PANTERA NEUTRE DIA 300 MM H25.4 · Ref. 19853"
+    },
+    {
+      "id": "item-carbodiam-sku-neutre-pantera-neutre-350-h20-ref-15453",
+      "name": "Carbodiam NEUTRE Ø350 mm · PANTERA NEUTRE DIA 350 MM H20 · Ref. 15453",
+      "aliases": [
+        "Carbodiam NEUTRE 350 mm",
+        "NEUTRE 350",
+        "PANTERA NEUTRE DIA 350 MM H20",
+        "pantera neutre dia 350 mm h20",
+        "disco diamantado 350 mm",
+        "discos diamantados 350 mm",
+        "Carbodiam ref 15453",
+        "referência 15453",
+        "referencia 15453",
+        "ref 15453",
+        "15453"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 15453: PANTERA NEUTRE DIA 350 MM H20. Diameter Ø350 mm; published bore/connection 20 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "NEUTRE",
+        "diamond cutting disc",
+        "350 mm",
+        "reference 15453",
+        "ref 15453",
+        "PANTERA NEUTRE DIA 350 MM H20",
+        "bore 20 mm"
+      ],
+      "name_pt": "Disco Carbodiam NEUTRE Ø350 mm · PANTERA NEUTRE DIA 350 MM H20 · Ref. 15453"
+    },
+    {
+      "id": "item-carbodiam-sku-neutre-pantera-neutre-350-h254-ref-15454",
+      "name": "Carbodiam NEUTRE Ø350 mm · PANTERA NEUTRE DIA 350 MM H25.4 · Ref. 15454",
+      "aliases": [
+        "Carbodiam NEUTRE 350 mm",
+        "NEUTRE 350",
+        "PANTERA NEUTRE DIA 350 MM H25.4",
+        "pantera neutre dia 350 mm h25.4",
+        "disco diamantado 350 mm",
+        "discos diamantados 350 mm",
+        "Carbodiam ref 15454",
+        "referência 15454",
+        "referencia 15454",
+        "ref 15454",
+        "15454"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 15454: PANTERA NEUTRE DIA 350 MM H25.4. Diameter Ø350 mm; published bore/connection 25.4 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "NEUTRE",
+        "diamond cutting disc",
+        "350 mm",
+        "reference 15454",
+        "ref 15454",
+        "PANTERA NEUTRE DIA 350 MM H25.4",
+        "bore 25.4 mm"
+      ],
+      "name_pt": "Disco Carbodiam NEUTRE Ø350 mm · PANTERA NEUTRE DIA 350 MM H25.4 · Ref. 15454"
+    },
+    {
+      "id": "item-carbodiam-sku-neutre-pantera-neutre-400-h254-ref-15460",
+      "name": "Carbodiam NEUTRE Ø400 mm · PANTERA NEUTRE DIA 400 MM H25.4 · Ref. 15460",
+      "aliases": [
+        "Carbodiam NEUTRE 400 mm",
+        "NEUTRE 400",
+        "PANTERA NEUTRE DIA 400 MM H25.4",
+        "pantera neutre dia 400 mm h25.4",
+        "disco diamantado 400 mm",
+        "discos diamantados 400 mm",
+        "Carbodiam ref 15460",
+        "referência 15460",
+        "referencia 15460",
+        "ref 15460",
+        "15460"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 15460: PANTERA NEUTRE DIA 400 MM H25.4. Diameter Ø400 mm; published bore/connection 25.4 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "NEUTRE",
+        "diamond cutting disc",
+        "400 mm",
+        "reference 15460",
+        "ref 15460",
+        "PANTERA NEUTRE DIA 400 MM H25.4",
+        "bore 25.4 mm"
+      ],
+      "name_pt": "Disco Carbodiam NEUTRE Ø400 mm · PANTERA NEUTRE DIA 400 MM H25.4 · Ref. 15460"
+    },
+    {
+      "id": "item-carbodiam-sku-crack-crack-chaser-125-ref-11603",
+      "name": "Carbodiam CRACK Ø125 mm · CRACK CHASER DIA125 · Ref. 11603",
+      "aliases": [
+        "Carbodiam CRACK 125 mm",
+        "CRACK 125",
+        "CRACK CHASER DIA125",
+        "crack chaser dia125",
+        "disco diamantado 125 mm",
+        "discos diamantados 125 mm",
+        "Carbodiam ref 11603",
+        "referência 11603",
+        "referencia 11603",
+        "ref 11603",
+        "11603"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 11603: CRACK CHASER DIA125. Diameter Ø125 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "CRACK",
+        "diamond cutting disc",
+        "125 mm",
+        "reference 11603",
+        "ref 11603",
+        "CRACK CHASER DIA125",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam CRACK Ø125 mm · CRACK CHASER DIA125 · Ref. 11603"
+    },
+    {
+      "id": "item-carbodiam-sku-crack-crack-chaser-150-ref-13408",
+      "name": "Carbodiam CRACK Ø150 mm · CRACK CHASER DIA 150 · Ref. 13408",
+      "aliases": [
+        "Carbodiam CRACK 150 mm",
+        "CRACK 150",
+        "CRACK CHASER DIA 150",
+        "crack chaser dia 150",
+        "disco diamantado 150 mm",
+        "discos diamantados 150 mm",
+        "Carbodiam ref 13408",
+        "referência 13408",
+        "referencia 13408",
+        "ref 13408",
+        "13408"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 13408: CRACK CHASER DIA 150. Diameter Ø150 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "CRACK",
+        "diamond cutting disc",
+        "150 mm",
+        "reference 13408",
+        "ref 13408",
+        "CRACK CHASER DIA 150",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam CRACK Ø150 mm · CRACK CHASER DIA 150 · Ref. 13408"
+    },
+    {
+      "id": "item-carbodiam-sku-crack-crack-chaser-230-ref-13409",
+      "name": "Carbodiam CRACK Ø230 mm · CRACK CHASER DIA 230 · Ref. 13409",
+      "aliases": [
+        "Carbodiam CRACK 230 mm",
+        "CRACK 230",
+        "CRACK CHASER DIA 230",
+        "crack chaser dia 230",
+        "disco diamantado 230 mm",
+        "discos diamantados 230 mm",
+        "Carbodiam ref 13409",
+        "referência 13409",
+        "referencia 13409",
+        "ref 13409",
+        "13409"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 13409: CRACK CHASER DIA 230. Diameter Ø230 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "CRACK",
+        "diamond cutting disc",
+        "230 mm",
+        "reference 13409",
+        "ref 13409",
+        "CRACK CHASER DIA 230",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam CRACK Ø230 mm · CRACK CHASER DIA 230 · Ref. 13409"
+    },
+    {
+      "id": "item-carbodiam-sku-acier-acier-300-h20-ref-14491",
+      "name": "Carbodiam ACIER Ø300 mm · DISQUE ACIER DIA 300 H20 · Ref. 14491",
+      "aliases": [
+        "Carbodiam ACIER 300 mm",
+        "ACIER 300",
+        "DISQUE ACIER DIA 300 H20",
+        "disque acier dia 300 h20",
+        "disco diamantado 300 mm",
+        "discos diamantados 300 mm",
+        "Carbodiam ref 14491",
+        "referência 14491",
+        "referencia 14491",
+        "ref 14491",
+        "14491"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 14491: DISQUE ACIER DIA 300 H20. Diameter Ø300 mm; published bore/connection 20 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "ACIER",
+        "diamond cutting disc",
+        "300 mm",
+        "reference 14491",
+        "ref 14491",
+        "DISQUE ACIER DIA 300 H20",
+        "bore 20 mm"
+      ],
+      "name_pt": "Disco Carbodiam ACIER Ø300 mm · DISQUE ACIER DIA 300 H20 · Ref. 14491"
+    },
+    {
+      "id": "item-carbodiam-sku-acier-acier-350-h20-ref-9776",
+      "name": "Carbodiam ACIER Ø350 mm · DISQUE ACIER DIA 350H20 · Ref. 9776",
+      "aliases": [
+        "Carbodiam ACIER 350 mm",
+        "ACIER 350",
+        "DISQUE ACIER DIA 350H20",
+        "disque acier dia 350h20",
+        "disco diamantado 350 mm",
+        "discos diamantados 350 mm",
+        "Carbodiam ref 9776",
+        "referência 9776",
+        "referencia 9776",
+        "ref 9776",
+        "9776"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 9776: DISQUE ACIER DIA 350H20. Diameter Ø350 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "ACIER",
+        "diamond cutting disc",
+        "350 mm",
+        "reference 9776",
+        "ref 9776",
+        "DISQUE ACIER DIA 350H20",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam ACIER Ø350 mm · DISQUE ACIER DIA 350H20 · Ref. 9776"
+    },
+    {
+      "id": "item-carbodiam-sku-acier-acier-400-h20-ref-9777",
+      "name": "Carbodiam ACIER Ø400 mm · DISQUE ACIER DIA 400 H20 · Ref. 9777",
+      "aliases": [
+        "Carbodiam ACIER 400 mm",
+        "ACIER 400",
+        "DISQUE ACIER DIA 400 H20",
+        "disque acier dia 400 h20",
+        "disco diamantado 400 mm",
+        "discos diamantados 400 mm",
+        "Carbodiam ref 9777",
+        "referência 9777",
+        "referencia 9777",
+        "ref 9777",
+        "9777"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 9777: DISQUE ACIER DIA 400 H20. Diameter Ø400 mm; published bore/connection 20 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "ACIER",
+        "diamond cutting disc",
+        "400 mm",
+        "reference 9777",
+        "ref 9777",
+        "DISQUE ACIER DIA 400 H20",
+        "bore 20 mm"
+      ],
+      "name_pt": "Disco Carbodiam ACIER Ø400 mm · DISQUE ACIER DIA 400 H20 · Ref. 9777"
+    },
+    {
+      "id": "item-carbodiam-sku-beton-beton-400-ref-19722",
+      "name": "Carbodiam BETON Ø400 mm · DISQUE BETON DIA 400H20 - T&P · Ref. 19722",
+      "aliases": [
+        "Carbodiam BETON 400 mm",
+        "BETON 400",
+        "DISQUE BETON DIA 400H20 - T&P",
+        "disque beton dia 400h20 - t&p",
+        "disco diamantado 400 mm",
+        "discos diamantados 400 mm",
+        "Carbodiam ref 19722",
+        "referência 19722",
+        "referencia 19722",
+        "ref 19722",
+        "19722"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 19722: DISQUE BETON DIA 400H20 - T&P. Diameter Ø400 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "BETON",
+        "diamond cutting disc",
+        "400 mm",
+        "reference 19722",
+        "ref 19722",
+        "DISQUE BETON DIA 400H20 - T&P",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam BETON Ø400 mm · DISQUE BETON DIA 400H20 - T&P · Ref. 19722"
+    },
+    {
+      "id": "item-carbodiam-sku-beton-beton-600-h60-ref-19703",
+      "name": "Carbodiam BETON Ø600 mm · DISQUE BETON DIA 600 SILENCIEUX H60 · Ref. 19703",
+      "aliases": [
+        "Carbodiam BETON 600 mm",
+        "BETON 600",
+        "DISQUE BETON DIA 600 SILENCIEUX H60",
+        "disque beton dia 600 silencieux h60",
+        "disco diamantado 600 mm",
+        "discos diamantados 600 mm",
+        "Carbodiam ref 19703",
+        "referência 19703",
+        "referencia 19703",
+        "ref 19703",
+        "19703"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 19703: DISQUE BETON DIA 600 SILENCIEUX H60. Diameter Ø600 mm; published bore/connection 60 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "BETON",
+        "diamond cutting disc",
+        "600 mm",
+        "reference 19703",
+        "ref 19703",
+        "DISQUE BETON DIA 600 SILENCIEUX H60",
+        "bore 60 mm"
+      ],
+      "name_pt": "Disco Carbodiam BETON Ø600 mm · DISQUE BETON DIA 600 SILENCIEUX H60 · Ref. 19703"
+    },
+    {
+      "id": "item-carbodiam-sku-beton-beton-800-h60-ref-14405",
+      "name": "Carbodiam BETON Ø800 mm · DISQUE BETON DIA 800 SILENCIEUX H60 · Ref. 14405",
+      "aliases": [
+        "Carbodiam BETON 800 mm",
+        "BETON 800",
+        "DISQUE BETON DIA 800 SILENCIEUX H60",
+        "disque beton dia 800 silencieux h60",
+        "disco diamantado 800 mm",
+        "discos diamantados 800 mm",
+        "Carbodiam ref 14405",
+        "referência 14405",
+        "referencia 14405",
+        "ref 14405",
+        "14405"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 14405: DISQUE BETON DIA 800 SILENCIEUX H60. Diameter Ø800 mm; published bore/connection 60 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "BETON",
+        "diamond cutting disc",
+        "800 mm",
+        "reference 14405",
+        "ref 14405",
+        "DISQUE BETON DIA 800 SILENCIEUX H60",
+        "bore 60 mm"
+      ],
+      "name_pt": "Disco Carbodiam BETON Ø800 mm · DISQUE BETON DIA 800 SILENCIEUX H60 · Ref. 14405"
+    },
+    {
+      "id": "item-carbodiam-sku-beton-beton-800-h60-laser-ref-19793",
+      "name": "Carbodiam BETON Ø800 mm · DISQUE BETON DIA 800 SILENCIEUX H60 - LASER · Ref. 19793",
+      "aliases": [
+        "Carbodiam BETON 800 mm",
+        "BETON 800",
+        "DISQUE BETON DIA 800 SILENCIEUX H60 - LASER",
+        "disque beton dia 800 silencieux h60 - laser",
+        "disco diamantado 800 mm",
+        "discos diamantados 800 mm",
+        "Carbodiam ref 19793",
+        "referência 19793",
+        "referencia 19793",
+        "ref 19793",
+        "19793"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 19793: DISQUE BETON DIA 800 SILENCIEUX H60 - LASER. Diameter Ø800 mm; published bore/connection 60 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "BETON",
+        "diamond cutting disc",
+        "800 mm",
+        "reference 19793",
+        "ref 19793",
+        "DISQUE BETON DIA 800 SILENCIEUX H60 - LASER",
+        "bore 60 mm"
+      ],
+      "name_pt": "Disco Carbodiam BETON Ø800 mm · DISQUE BETON DIA 800 SILENCIEUX H60 - LASER · Ref. 19793"
+    },
+    {
+      "id": "item-carbodiam-sku-beton-beton-900-h60-silencieux-ref-15144",
+      "name": "Carbodiam BETON Ø900 mm · DISQUE BETON DIA 900 SILENCIEUX H60 · Ref. 15144",
+      "aliases": [
+        "Carbodiam BETON 900 mm",
+        "BETON 900",
+        "DISQUE BETON DIA 900 SILENCIEUX H60",
+        "disque beton dia 900 silencieux h60",
+        "disco diamantado 900 mm",
+        "discos diamantados 900 mm",
+        "Carbodiam ref 15144",
+        "referência 15144",
+        "referencia 15144",
+        "ref 15144",
+        "15144"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 15144: DISQUE BETON DIA 900 SILENCIEUX H60. Diameter Ø900 mm; published bore/connection 60 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "BETON",
+        "diamond cutting disc",
+        "900 mm",
+        "reference 15144",
+        "ref 15144",
+        "DISQUE BETON DIA 900 SILENCIEUX H60",
+        "bore 60 mm"
+      ],
+      "name_pt": "Disco Carbodiam BETON Ø900 mm · DISQUE BETON DIA 900 SILENCIEUX H60 · Ref. 15144"
+    },
+    {
+      "id": "item-carbodiam-sku-beton-beton-900-h60-ref-15145",
+      "name": "Carbodiam BETON Ø900 mm · DISQUE BETON DIA 900 H60 · Ref. 15145",
+      "aliases": [
+        "Carbodiam BETON 900 mm",
+        "BETON 900",
+        "DISQUE BETON DIA 900 H60",
+        "disque beton dia 900 h60",
+        "disco diamantado 900 mm",
+        "discos diamantados 900 mm",
+        "Carbodiam ref 15145",
+        "referência 15145",
+        "referencia 15145",
+        "ref 15145",
+        "15145"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 15145: DISQUE BETON DIA 900 H60. Diameter Ø900 mm; published bore/connection 60 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "BETON",
+        "diamond cutting disc",
+        "900 mm",
+        "reference 15145",
+        "ref 15145",
+        "DISQUE BETON DIA 900 H60",
+        "bore 60 mm"
+      ],
+      "name_pt": "Disco Carbodiam BETON Ø900 mm · DISQUE BETON DIA 900 H60 · Ref. 15145"
+    },
+    {
+      "id": "item-carbodiam-sku-betonsol-beton-sol-600-1-ref-13745",
+      "name": "Carbodiam BETONSOL Ø600 mm · DISQUE BETON SOL DIA 600 · Ref. 13745",
+      "aliases": [
+        "Carbodiam BETONSOL 600 mm",
+        "BETONSOL 600",
+        "DISQUE BETON SOL DIA 600",
+        "disque beton sol dia 600",
+        "disco diamantado 600 mm",
+        "discos diamantados 600 mm",
+        "Carbodiam ref 13745",
+        "referência 13745",
+        "referencia 13745",
+        "ref 13745",
+        "13745"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 13745: DISQUE BETON SOL DIA 600. Diameter Ø600 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "BETONSOL",
+        "diamond cutting disc",
+        "600 mm",
+        "reference 13745",
+        "ref 13745",
+        "DISQUE BETON SOL DIA 600",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam BETONSOL Ø600 mm · DISQUE BETON SOL DIA 600 · Ref. 13745"
+    },
+    {
+      "id": "item-carbodiam-sku-betonsol-beton-sol-600-2-ref-14270",
+      "name": "Carbodiam BETONSOL Ø600 mm · DISQUE BETON SOL DIA 600 · Ref. 14270",
+      "aliases": [
+        "Carbodiam BETONSOL 600 mm",
+        "BETONSOL 600",
+        "DISQUE BETON SOL DIA 600",
+        "disque beton sol dia 600",
+        "disco diamantado 600 mm",
+        "discos diamantados 600 mm",
+        "Carbodiam ref 14270",
+        "referência 14270",
+        "referencia 14270",
+        "ref 14270",
+        "14270"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 14270: DISQUE BETON SOL DIA 600. Diameter Ø600 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "BETONSOL",
+        "diamond cutting disc",
+        "600 mm",
+        "reference 14270",
+        "ref 14270",
+        "DISQUE BETON SOL DIA 600",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam BETONSOL Ø600 mm · DISQUE BETON SOL DIA 600 · Ref. 14270"
+    },
+    {
+      "id": "item-carbodiam-sku-betonsol-beton-sol-600-bm15-ref-14475",
+      "name": "Carbodiam BETONSOL Ø600 mm · DISQUE BETON SOL DIA 600 BM15 · Ref. 14475",
+      "aliases": [
+        "Carbodiam BETONSOL 600 mm",
+        "BETONSOL 600",
+        "DISQUE BETON SOL DIA 600 BM15",
+        "disque beton sol dia 600 bm15",
+        "disco diamantado 600 mm",
+        "discos diamantados 600 mm",
+        "Carbodiam ref 14475",
+        "referência 14475",
+        "referencia 14475",
+        "ref 14475",
+        "14475"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 14475: DISQUE BETON SOL DIA 600 BM15. Diameter Ø600 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "BETONSOL",
+        "diamond cutting disc",
+        "600 mm",
+        "reference 14475",
+        "ref 14475",
+        "DISQUE BETON SOL DIA 600 BM15",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam BETONSOL Ø600 mm · DISQUE BETON SOL DIA 600 BM15 · Ref. 14475"
+    },
+    {
+      "id": "item-carbodiam-sku-incisor-incisor-125-ref-5182",
+      "name": "Carbodiam INCISOR Ø125 mm · INCISOR DIA 125 · Ref. 5182",
+      "aliases": [
+        "Carbodiam INCISOR 125 mm",
+        "INCISOR 125",
+        "INCISOR DIA 125",
+        "incisor dia 125",
+        "disco diamantado 125 mm",
+        "discos diamantados 125 mm",
+        "Carbodiam ref 5182",
+        "referência 5182",
+        "referencia 5182",
+        "ref 5182",
+        "5182"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 5182: INCISOR DIA 125. Diameter Ø125 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "INCISOR",
+        "diamond cutting disc",
+        "125 mm",
+        "reference 5182",
+        "ref 5182",
+        "INCISOR DIA 125",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam INCISOR Ø125 mm · INCISOR DIA 125 · Ref. 5182"
+    },
+    {
+      "id": "item-carbodiam-sku-incisor-incisor-230-ref-5097",
+      "name": "Carbodiam INCISOR Ø230 mm · INCISOR DIA 230 · Ref. 5097",
+      "aliases": [
+        "Carbodiam INCISOR 230 mm",
+        "INCISOR 230",
+        "INCISOR DIA 230",
+        "incisor dia 230",
+        "disco diamantado 230 mm",
+        "discos diamantados 230 mm",
+        "Carbodiam ref 5097",
+        "referência 5097",
+        "referencia 5097",
+        "ref 5097",
+        "5097"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 5097: INCISOR DIA 230. Diameter Ø230 mm; published bore/connection not specified. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "INCISOR",
+        "diamond cutting disc",
+        "230 mm",
+        "reference 5097",
+        "ref 5097",
+        "INCISOR DIA 230",
+        "bore not specified"
+      ],
+      "name_pt": "Disco Carbodiam INCISOR Ø230 mm · INCISOR DIA 230 · Ref. 5097"
+    },
+    {
+      "id": "item-carbodiam-sku-incisor-incisor-300-h20-ref-4237",
+      "name": "Carbodiam INCISOR Ø300 mm · INCISOR DIA 300 - H20 · Ref. 4237",
+      "aliases": [
+        "Carbodiam INCISOR 300 mm",
+        "INCISOR 300",
+        "INCISOR DIA 300 - H20",
+        "incisor dia 300 - h20",
+        "disco diamantado 300 mm",
+        "discos diamantados 300 mm",
+        "Carbodiam ref 4237",
+        "referência 4237",
+        "referencia 4237",
+        "ref 4237",
+        "4237"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 4237: INCISOR DIA 300 - H20. Diameter Ø300 mm; published bore/connection 20 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "INCISOR",
+        "diamond cutting disc",
+        "300 mm",
+        "reference 4237",
+        "ref 4237",
+        "INCISOR DIA 300 - H20",
+        "bore 20 mm"
+      ],
+      "name_pt": "Disco Carbodiam INCISOR Ø300 mm · INCISOR DIA 300 - H20 · Ref. 4237"
+    },
+    {
+      "id": "item-carbodiam-sku-incisor-incisor-300-h254-ref-4474",
+      "name": "Carbodiam INCISOR Ø300 mm · INCISOR DIA 300 - H25.4 · Ref. 4474",
+      "aliases": [
+        "Carbodiam INCISOR 300 mm",
+        "INCISOR 300",
+        "INCISOR DIA 300 - H25.4",
+        "incisor dia 300 - h25.4",
+        "disco diamantado 300 mm",
+        "discos diamantados 300 mm",
+        "Carbodiam ref 4474",
+        "referência 4474",
+        "referencia 4474",
+        "ref 4474",
+        "4474"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 4474: INCISOR DIA 300 - H25.4. Diameter Ø300 mm; published bore/connection 25.4 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "INCISOR",
+        "diamond cutting disc",
+        "300 mm",
+        "reference 4474",
+        "ref 4474",
+        "INCISOR DIA 300 - H25.4",
+        "bore 25.4 mm"
+      ],
+      "name_pt": "Disco Carbodiam INCISOR Ø300 mm · INCISOR DIA 300 - H25.4 · Ref. 4474"
+    },
+    {
+      "id": "item-carbodiam-sku-incisor-incisor-350-h20-ref-4475",
+      "name": "Carbodiam INCISOR Ø350 mm · INCISOR DIA 350 - H20 · Ref. 4475",
+      "aliases": [
+        "Carbodiam INCISOR 350 mm",
+        "INCISOR 350",
+        "INCISOR DIA 350 - H20",
+        "incisor dia 350 - h20",
+        "disco diamantado 350 mm",
+        "discos diamantados 350 mm",
+        "Carbodiam ref 4475",
+        "referência 4475",
+        "referencia 4475",
+        "ref 4475",
+        "4475"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 4475: INCISOR DIA 350 - H20. Diameter Ø350 mm; published bore/connection 20 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "INCISOR",
+        "diamond cutting disc",
+        "350 mm",
+        "reference 4475",
+        "ref 4475",
+        "INCISOR DIA 350 - H20",
+        "bore 20 mm"
+      ],
+      "name_pt": "Disco Carbodiam INCISOR Ø350 mm · INCISOR DIA 350 - H20 · Ref. 4475"
+    },
+    {
+      "id": "item-carbodiam-sku-incisor-incisor-350-h222-ref-5184",
+      "name": "Carbodiam INCISOR Ø350 mm · INCISOR DIA 350 - H22.2 · Ref. 5184",
+      "aliases": [
+        "Carbodiam INCISOR 350 mm",
+        "INCISOR 350",
+        "INCISOR DIA 350 - H22.2",
+        "incisor dia 350 - h22.2",
+        "disco diamantado 350 mm",
+        "discos diamantados 350 mm",
+        "Carbodiam ref 5184",
+        "referência 5184",
+        "referencia 5184",
+        "ref 5184",
+        "5184"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 5184: INCISOR DIA 350 - H22.2. Diameter Ø350 mm; published bore/connection 22.2 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "INCISOR",
+        "diamond cutting disc",
+        "350 mm",
+        "reference 5184",
+        "ref 5184",
+        "INCISOR DIA 350 - H22.2",
+        "bore 22.2 mm"
+      ],
+      "name_pt": "Disco Carbodiam INCISOR Ø350 mm · INCISOR DIA 350 - H22.2 · Ref. 5184"
+    },
+    {
+      "id": "item-carbodiam-sku-incisor-incisor-350-h254-ref-4476",
+      "name": "Carbodiam INCISOR Ø350 mm · INCISOR DIA 350 - H25.4 · Ref. 4476",
+      "aliases": [
+        "Carbodiam INCISOR 350 mm",
+        "INCISOR 350",
+        "INCISOR DIA 350 - H25.4",
+        "incisor dia 350 - h25.4",
+        "disco diamantado 350 mm",
+        "discos diamantados 350 mm",
+        "Carbodiam ref 4476",
+        "referência 4476",
+        "referencia 4476",
+        "ref 4476",
+        "4476"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 4476: INCISOR DIA 350 - H25.4. Diameter Ø350 mm; published bore/connection 25.4 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "INCISOR",
+        "diamond cutting disc",
+        "350 mm",
+        "reference 4476",
+        "ref 4476",
+        "INCISOR DIA 350 - H25.4",
+        "bore 25.4 mm"
+      ],
+      "name_pt": "Disco Carbodiam INCISOR Ø350 mm · INCISOR DIA 350 - H25.4 · Ref. 4476"
+    },
+    {
+      "id": "item-carbodiam-sku-incisor-incisor-400-h20-ref-5185",
+      "name": "Carbodiam INCISOR Ø400 mm · INCISOR DIA 400 - H20 · Ref. 5185",
+      "aliases": [
+        "Carbodiam INCISOR 400 mm",
+        "INCISOR 400",
+        "INCISOR DIA 400 - H20",
+        "incisor dia 400 - h20",
+        "disco diamantado 400 mm",
+        "discos diamantados 400 mm",
+        "Carbodiam ref 5185",
+        "referência 5185",
+        "referencia 5185",
+        "ref 5185",
+        "5185"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 5185: INCISOR DIA 400 - H20. Diameter Ø400 mm; published bore/connection 20 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "INCISOR",
+        "diamond cutting disc",
+        "400 mm",
+        "reference 5185",
+        "ref 5185",
+        "INCISOR DIA 400 - H20",
+        "bore 20 mm"
+      ],
+      "name_pt": "Disco Carbodiam INCISOR Ø400 mm · INCISOR DIA 400 - H20 · Ref. 5185"
+    },
+    {
+      "id": "item-carbodiam-sku-incisor-incisor-400-h254-ref-5176",
+      "name": "Carbodiam INCISOR Ø400 mm · INCISOR DIA 400 - H25.4 · Ref. 5176",
+      "aliases": [
+        "Carbodiam INCISOR 400 mm",
+        "INCISOR 400",
+        "INCISOR DIA 400 - H25.4",
+        "incisor dia 400 - h25.4",
+        "disco diamantado 400 mm",
+        "discos diamantados 400 mm",
+        "Carbodiam ref 5176",
+        "referência 5176",
+        "referencia 5176",
+        "ref 5176",
+        "5176"
+      ],
+      "category": "diamond-tools",
+      "subcategory": "diamond-cutting-discs",
+      "specification": "Published Carbodiam factory reference 5176: INCISOR DIA 400 - H25.4. Diameter Ø400 mm; published bore/connection 25.4 mm. This is a catalogue reference sourced from SYNVOR Industrial in Portugal, not confirmation of stock in Angola. Confirm material/application, machine, bore/interface compatibility, quantity, stock, price and export lead time before quotation.",
+      "keywords": [
+        "SYNVOR Industrial",
+        "Carbodiam",
+        "INCISOR",
+        "diamond cutting disc",
+        "400 mm",
+        "reference 5176",
+        "ref 5176",
+        "INCISOR DIA 400 - H25.4",
+        "bore 25.4 mm"
+      ],
+      "name_pt": "Disco Carbodiam INCISOR Ø400 mm · INCISOR DIA 400 - H25.4 · Ref. 5176"
     }
   ],
   "taxonomy": [
@@ -941,6 +4206,26 @@
         "workwear",
         "consumíveis industriais",
         "consumiveis industriais"
+      ]
+    },
+    {
+      "id": "diamond-tools",
+      "name_en": "Diamond tools",
+      "name_pt": "Ferramentas diamantadas",
+      "aliases": [
+        "disco diamantado",
+        "discos diamantados",
+        "disco de diamante",
+        "diamond disc",
+        "diamond discs",
+        "diamond blade",
+        "coroa diamantada",
+        "coroas diamantadas",
+        "diamond core bit",
+        "ferramenta diamantada",
+        "ferramentas diamantadas",
+        "Carbodiam",
+        "SAMEDIA"
       ]
     }
   ]

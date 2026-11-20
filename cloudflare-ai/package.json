@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node --check src/index.js"
+    "build": "node --check src/index.js",
+    "test": "node --test test/*.test.mjs",
+    "check": "npm run build && npm test"
   }
 }

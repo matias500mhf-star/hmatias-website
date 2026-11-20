@@ -13,7 +13,10 @@ on:
       - 'source-ao/*.css'
       - 'source-ao/data-contract.json'
       - 'source-ao/validate-data.mjs'
+      - 'platform/astro-preview/scripts/generate-public-catalog.mjs'
+      - 'source-ao/backend/test/public-catalog-generation.test.mjs'
       - '.github/workflows/source-ao-staging-deploy.yml'
+      - '.github/workflows/source-ao-data-quality.yml'
 
 permissions:
   contents: read
@@ -35,6 +38,25 @@ jobs:
         run: python3 source-ao/backend/scripts/test-website-leads-migration.py
       - name: Validate synthetic RFQ alert isolation
         run: python3 source-ao/backend/scripts/test-synthetic-alert-migration.py
+      - name: Regenerate sanitised public catalogue from canonical data
+        run: node platform/astro-preview/scripts/generate-public-catalog.mjs
+      - name: Validate sanitised static public catalog parity
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const master=JSON.parse(readFileSync('source-ao/data/catalog.json','utf8'));
+          const publicCatalog=JSON.parse(readFileSync('source-ao/data/public-catalog.json','utf8'));
+          const expected=master.items.filter(item=>item.id!=='item-formaldehyde');
+          if(JSON.stringify(publicCatalog.items)!==JSON.stringify(expected)){
+            throw new Error('Static public catalogue is not an exact safe projection of the master catalogue.');
+          }
+          if(publicCatalog.items.some(item=>item.id==='item-formaldehyde')){
+            throw new Error('Excluded catalogue entry is present in the public fallback.');
+          }
+          console.log('PASS: static public catalogue matches the authorised master projection.');
+          NODE
       - name: Validate public catalogue privacy boundary
         shell: bash
         run: |
@@ -46,13 +68,14 @@ jobs:
           grep -q '"item-vci-corrosion-protection"' source-ao/data/catalog.json
           grep -q '"item-industrial-protective-coatings"' source-ao/data/catalog.json
           grep -q '"item-hydrotest-corrosion-treatment"' source-ao/data/catalog.json
-          grep -q 'LINHAS COMPLEMENTARES DE FORNECIMENTO' supply.html
-          grep -q 'COMPLEMENTARY SUPPLY LINES' supply-en.html
+          grep -q 'PEDIDOS DE FORNECIMENTO' supply.html
+          grep -q 'SUPPLY REQUESTS' supply-en.html
           ! grep -RqiE 'commercial_priority|next_action|relationship_stage|private_contact|internal_notes' source-ao/data/catalog.json supply.html supply-en.html
 
       - name: Validate frontend scripts syntax
         run: |
           node --check source-ao/data-engine.js
+          grep -q "catalog:'data/public-catalog.json'" source-ao/data-engine.js
           node --check source-ao/sourceao.js
           node --check source-ao/verified-results.js
           node --check source-ao/runtime-config.js
@@ -66,6 +89,7 @@ jobs:
           node --check source-ao/requests.js
           node --check source-ao/rfq.js
           node --check source-ao/rfq-model.js
+          node --check source-ao/partner-application.js
       - name: Validate Ops Desk security contract
         shell: bash
         run: |
@@ -205,6 +229,23 @@ jobs:
           ! grep -Eq 'INSERT[[:space:]]+(OR[[:space:]]+IGNORE[[:space:]]+)?INTO[[:space:]]+commercial_partners|UPDATE[[:space:]]+commercial_partners[[:space:]]+SET' source-ao/backend/migrations/0011_commercial_partner_network.sql source-ao/backend/migrations/0012_partner_followup_pipeline.sql
           ! grep -Eq '@|\+244[0-9]' source-ao/backend/migrations/0011_commercial_partner_network.sql source-ao/backend/migrations/0012_partner_followup_pipeline.sql
 
+      - name: Validate live catalog publication boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "ALTER TABLE items ADD COLUMN public_visible" source-ao/backend/migrations/0028_public_catalog.sql
+          grep -q "ALTER TABLE items ADD COLUMN management_mode" source-ao/backend/migrations/0028_public_catalog.sql
+          grep -q "WHERE public_visible=1" source-ao/backend/src/catalog.js
+          grep -q "item-formaldehyde" source-ao/backend/src/catalog.js
+          grep -q "management_mode='managed'" source-ao/backend/src/catalog.js
+          grep -q "api/catalog" source-ao/backend/src/router.js
+          grep -q "PUBLIC_EXCLUDED_CATALOG_ITEMS" source-ao/backend/scripts/export-seed-sql.mjs
+          grep -q "catalogDesk" source-ao/ops.html
+          grep -q "loadAdminCatalog" source-ao/ops.js
+          grep -q "api('/api/admin/catalog/items'" source-ao/ops.js
+          grep -q "public_visible:values('public_visible').checked" source-ao/ops.js
+          grep -q "loadPublicCatalogData(env)" source-ao/backend/src/sourcing.js
+
       - name: Validate backend syntax
         run: |
           node --check source-ao/backend/src/index.js
@@ -214,6 +255,9 @@ jobs:
           node --check source-ao/backend/src/sourcing.js
           node --check source-ao/backend/src/security.js
           node --check source-ao/backend/src/health.js
+          node --check source-ao/backend/src/catalog.js
+          node --check platform/astro-preview/scripts/generate-public-catalog.mjs
+          node --check source-ao/backend/src/automation-status.js
           node --check source-ao/backend/src/maintenance.js
           node --check source-ao/backend/src/opportunity-pipeline.js
           node --check source-ao/backend/src/partner-network.js
@@ -246,6 +290,8 @@ jobs:
           test -f .staging-web/privacy.html
           test -f .staging-web/terms.html
           test -f .staging-web/data/catalog.json
+          test -f .staging-web/data/public-catalog.json
+          ! grep -q 'item-formaldehyde' .staging-web/data/public-catalog.json
           test -f .staging-web/rfq.html
           test -f .staging-web/rfq-model.js
           test ! -e .staging-web/backend

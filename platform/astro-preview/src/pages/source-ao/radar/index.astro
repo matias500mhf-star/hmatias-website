@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SourceAoOpportunityRadar from "../../../components/SourceAoOpportunityRadar.astro";
+
+const candidateApiBase = String(import.meta.env.PUBLIC_SOURCE_AO_API_BASE ?? "").trim();
+let sourceAoApiBase = "";
+try {
+  const parsed = new URL(candidateApiBase);
+  if (parsed.protocol === "https:" && parsed.hostname.toLowerCase().includes("staging")) {
+    sourceAoApiBase = parsed.origin;
+  }
+} catch {
+  sourceAoApiBase = "";
+}
+---
+<BaseLayout
+  title="Radar de Oportunidades · SOURCE AO"
+  description="Oportunidades públicas de procurement em Angola, filtradas por área, prazo, fonte e adequação comercial. A publicação depende de revisão."
+>
+  <SourceAoOpportunityRadar apiBase={sourceAoApiBase} lang="pt-AO" />
+</BaseLayout>

@@ -7,7 +7,10 @@ const dataDir=path.resolve(here,'../../data');
 const read=name=>JSON.parse(fs.readFileSync(path.join(dataDir,name),'utf8'));
 const esc=value=>value==null?'NULL':`'${String(value).replaceAll("'","''")}'`;
 const json=value=>esc(JSON.stringify(value??[]));
-const normalize=value=>(value||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+const normalize=value=>(value||'').toString().toLowerCase().normalize('NFD')
+  .replace(/[\u0300-\u036f]/g,'')
+  .replace(/(\d)\s+(mm|cm|m|kg|g|l|kw|kva|btu)\b/g,'$1$2')
+  .replace(/[^a-z0-9]+/g,' ').trim();
 
 const sourceTypeForSupplierUrl=(supplier,url)=>{
   try{
@@ -27,6 +30,7 @@ const catalog=read('catalog.json').items||[];
 const observations=read('observations.json').observations||[];
 const services=read('services.json').providers||[];
 const opportunities=read('opportunities.json').opportunities||[];
+const PUBLIC_EXCLUDED_CATALOG_ITEMS=new Set(['item-formaldehyde']);
 
 const sql=[];
 sql.push('PRAGMA foreign_keys = ON;');
@@ -56,10 +60,26 @@ for(const s of suppliers){
 }
 
 for(const item of catalog){
-  const searchText=normalize([item.name,item.specification,...(item.aliases||[]),...(item.keywords||[])].join(' '));
-  upsert('items','id,name,category,specification,unit,aliases_json,search_text',[
-    esc(item.id),esc(item.name),esc(item.category),esc(item.specification),esc(item.unit),json(item.aliases),esc(searchText)
-  ]);
+  const searchText=normalize([item.name,item.name_pt,item.specification,...(item.aliases||[]),...(item.keywords||[])].join(' '));
+  const publicVisible=item.public_visible===false||PUBLIC_EXCLUDED_CATALOG_ITEMS.has(item.id)?0:1;
+  sql.push(`INSERT INTO items(
+    id,name,name_pt,category,specification,unit,aliases_json,keywords_json,search_text,
+    public_visible,management_mode,updated_at
+  ) VALUES(
+    ${esc(item.id)},${esc(item.name)},${esc(item.name_pt||item.name)},${esc(item.category)},
+    ${esc(item.specification)},${esc(item.unit)},${json(item.aliases)},${json(item.keywords)},
+    ${esc(searchText)},${publicVisible},'seed',CURRENT_TIMESTAMP
+  ) ON CONFLICT(id) DO UPDATE SET
+    name=CASE WHEN items.management_mode='managed' THEN items.name ELSE excluded.name END,
+    name_pt=CASE WHEN items.management_mode='managed' THEN items.name_pt ELSE excluded.name_pt END,
+    category=CASE WHEN items.management_mode='managed' THEN items.category ELSE excluded.category END,
+    specification=CASE WHEN items.management_mode='managed' THEN items.specification ELSE excluded.specification END,
+    unit=CASE WHEN items.management_mode='managed' THEN items.unit ELSE excluded.unit END,
+    aliases_json=CASE WHEN items.management_mode='managed' THEN items.aliases_json ELSE excluded.aliases_json END,
+    keywords_json=CASE WHEN items.management_mode='managed' THEN items.keywords_json ELSE excluded.keywords_json END,
+    search_text=CASE WHEN items.management_mode='managed' THEN items.search_text ELSE excluded.search_text END,
+    updated_at=CASE WHEN items.management_mode='managed' THEN items.updated_at ELSE CURRENT_TIMESTAMP END;
+  `);
 }
 
 for(const o of observations){

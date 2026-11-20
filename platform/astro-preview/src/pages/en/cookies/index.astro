@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+---
+<BaseLayout title="Cookie Policy | HMATIAS" description="Information about cookies, consent and measurement tools used on the HMATIAS website." lang="en">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> LEGAL INFORMATION</span><span>COOKIES · CONSENT · ANALYTICS</span></div>
+  <SiteHeader />
+  <main class="legal-page section-pad">
+    <article class="legal-content">
+      <p class="legal-meta">Last updated: 17 November 2026</p>
+      <h1>Cookie Policy</h1>
+      <p>This policy explains how the public HMATIAS website uses cookies and similar technologies, and how visitors can manage their choices.</p>
+      <h2>1. Consent management</h2>
+      <p>The official website uses Cookiebot as its consent management platform. The consent mechanism presents the choices available at the time of the visit. Visitors may accept or reject non-essential categories and later change their preferences through the consent mechanism provided on the website.</p>
+      <h2>2. Necessary cookies</h2>
+      <p>Some technologies may be necessary to provide essential website functions or to store and respect consent choices. These technologies should not be confused with statistics or usage-analysis tools.</p>
+      <h2>3. Statistics and measurement</h2>
+      <p>Technologies classified as statistical remain blocked until the visitor authorises that category. After consent, the website may use Google Tag Manager to manage authorised tags and Google Analytics 4 to understand page usage, visit sources, technical device characteristics and general commercial interactions.</p>
+      <p>Microsoft Clarity may also be used to analyse browsing and usability patterns, only after consent to statistics. The configuration described in the Privacy Policy limits its loading on noindex pages and in operational or private areas.</p>
+      <h2>4. Information sent to tools</h2>
+      <p>Analytics events are intended to record technical and commercial categories. HMATIAS' described configuration does not send names, telephone numbers, email addresses, form content, WhatsApp message text, quotation requests or assistant conversations to Google Analytics as custom parameters.</p>
+      <h2>5. Cookie list and duration</h2>
+      <p>The cookies and technologies actually active, their providers, purposes and retention periods may vary according to the features available and the visitor's consent choices. Refer to the information presented by the Cookiebot mechanism during the visit to review the elements detected in the active configuration.</p>
+      <h2>6. Changing preferences</h2>
+      <p>Visitors may reject optional categories or change their choices through the consent management mechanism on the official website. Withdrawal of consent does not affect the lawfulness of processing carried out before withdrawal.</p>
+      <h2>7. Relationship with the Privacy Policy</h2>
+      <p>This policy supplements the <a href="/en/privacy/">Privacy Policy</a>, which explains the information processed, purposes, contact channels and retention practices.</p>
+      <p><strong>Preview notice:</strong> the Astro prototype under review does not currently load Cookiebot, Google Tag Manager, Google Analytics 4 or Microsoft Clarity. This page documents the configuration described for the official website and does not claim that those integrations have already been migrated to the prototype.</p>
+      <a class="legal-back" href="/en/">← Back to HMATIAS</a>
+    </article>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+</BaseLayout>
+<style>
+.legal-page{background:var(--hm-light)}.legal-content{width:min(900px,100%);margin:0 auto;padding:clamp(28px,5vw,56px);background:var(--hm-paper);border:1px solid var(--hm-line)}.legal-meta{margin:0 0 18px;color:var(--hm-muted);font-size:11px}.legal-content h1{margin:0 0 28px;font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-.06em;font-weight:520}.legal-content h2{margin:33px 0 10px;font-size:17px;line-height:1.35;font-weight:650;letter-spacing:-.025em}.legal-content p{color:var(--hm-muted);font-size:12px;line-height:1.9}.legal-content a:not(.legal-back){color:var(--hm-blue);text-decoration:underline;text-underline-offset:3px}.legal-back{display:inline-flex;margin-top:28px;padding:13px 18px;color:#fff;background:var(--hm-navy);font-size:11px;font-weight:650}
+</style>
