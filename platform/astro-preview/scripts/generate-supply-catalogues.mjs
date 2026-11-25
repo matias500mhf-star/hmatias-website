@@ -163,7 +163,8 @@ export function generateSupplyCatalogue(master) {
   if (items.length < 20) throw new Error("Insufficient technical references for public catalogue.");
   const pdf = renderPdf(buildPageContents(items));
   if (!pdf.startsWith("%PDF-1.4") || !pdf.endsWith("%%EOF\n")) throw new Error("Invalid PDF output.");
-  if (/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga/i.test(pdf)) throw new Error("Supplier identity found in generated PDF.");
+  const publicText = items.map((item) => [item.name, item.name_pt, cleanSupplierText(item.specification)].join(" ")).join(" ");
+  if (/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga|Würth/i.test(publicText)) throw new Error("Supplier identity found in generated catalogue content.");
   return { pdf, itemCount: items.length, pageCount: 2 + Math.ceil(items.length / 6) };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
