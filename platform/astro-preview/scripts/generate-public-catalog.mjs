@@ -12,7 +12,7 @@ const isExcludedPublicTaxonomyAlias = (value) => {
   return /^(formaldehyde|formaldeido|formol|formalin)(\s|$)/.test(alias) || alias === "cas 50 00 0";
 };
 const PUBLIC_RULE = "Only curated public supply families are exposed. Supplier identities, sourcing channels, prices, stock, availability and internal commercial data are not included.";
-const PRIVATE_SUPPLIER_NAMES = ["SYNVOR Industrial", "SYNVOR", "ADY-FERRAZ", "ADY FERRAZ", "Evolution Safety Namibia", "Evolution Safety", "Miliart Intemporal", "Miliart", "D Wood", "Kent Offshore", "Fransga", "Würth", "Wurth"];
+const PRIVATE_SUPPLIER_NAMES = ["SYNVOR Industrial", "SYNVOR", "ADY-FERRAZ", "ADY FERRAZ", "Evolution Safety Namibia", "Evolution Safety", "Miliart Intemporal", "Miliart", "D Wood", "Kent Offshore", "Fransga", "MATEANA", "Premier Yangue", "Vizers Consultores", "NovaEra Tech Solutions", "Telewise"];
 const PRIVATE_SUPPLIER_PATTERN = new RegExp(PRIVATE_SUPPLIER_NAMES.join("|"), "gi");
 const PRIVATE_SUPPLIER_DETECTION = new RegExp(PRIVATE_SUPPLIER_NAMES.join("|"), "i");
 function sanitizePublicText(value) {
