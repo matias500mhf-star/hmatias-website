@@ -36,7 +36,11 @@ export function sanitizePublicText(value) {
     .trim();
 }
 
-export function sanitizePublicId(value) {\n  return sanitizePublicText(value).replace(/-+/g, "-");\n}\n\nexport function sanitizePublicArray(values) {
+export function sanitizePublicId(value) {
+  return sanitizePublicText(value).replace(/-+/g, "-");
+}
+
+export function sanitizePublicArray(values) {
   return (Array.isArray(values) ? values : [])
     .map(sanitizePublicText)
     .filter((value) => value && !containsPrivateSupplierName(value));
