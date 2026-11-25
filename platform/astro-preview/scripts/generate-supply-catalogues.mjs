@@ -50,7 +50,7 @@ function cleanSupplierText(value) {
 }
 function technicalSummary(item, english) {
   const spec = cleanSupplierText(item.specification);
-  const diameter = spec.match(/Diameter\s*(?:Ø)?\s*(Ø?\d+(?:[–-]\d+)?\s*mm)/i);
+  const diameter = spec.match(/Diameter\s*(?:Ø)?\s*(Ø?\d+(?:[–-]\d+)?\s*mm)/i) || String(item.name_pt || item.name).match(/Ø\s*\d+(?:[–-]\d+)?\s*mm/i);
   const bore = spec.match(/(?:bore\/connection|connection|bore)\s*(?:of\s*)?(\d+(?:\.\d+)?)\s*mm/i);
   const machine = spec.match(/machine\/application:\s*([^.;]+)/i);
   const process = spec.match(/process:\s*([^.;]+)/i);
@@ -97,8 +97,12 @@ function buildPageContents(items, english) {
       const index = String(offset + i + 1).padStart(2, "0");
       const itemTitle = english ? item.name : (item.name_pt || item.name);
       body += text(40, y, 8, index, "F2", "0.12 0.39 0.63");
-      body += text(72, y, 9, itemTitle.slice(0, 88), "F2", "0.02 0.12 0.23");
-      let descY = y - 16;
+      let titleY = y;
+      for (const titleRow of wrap(itemTitle, 72).slice(0, 2)) {
+        body += text(72, titleY, 9, titleRow, "F2", "0.02 0.12 0.23");
+        titleY -= 11;
+      }
+      let descY = titleY - 5;
       for (const row of wrap(technicalSummary(item, english), 86).slice(0, 2)) {
         body += text(72, descY, 8, row, "F1", "0.30 0.39 0.48");
         descY -= 12;
