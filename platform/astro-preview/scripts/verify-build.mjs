@@ -857,4 +857,18 @@ for (const file of ["obra-privada-luanda-alvenaria-vista-geral.avif","obra-priva
   assert.ok(existsSync(join(repoRoot, "images", "catalogue", file)), "Documentary catalogue photograph must be versioned: " + file);
 }
 
+const genericImageHostPattern = /(?:images\.)?(?:unsplash\.com|pexels\.com|pixabay\.com|pixabayusercontent\.com|picsum\.photos|placehold\.co)/i;
+for (const pagePath of generatedPages) {
+  const relativePagePath = pagePath.slice(outDir.length).replaceAll("\\", "/");
+  const isBlogPage = /^(?:en\/)?blog(?:\/|$)/.test(relativePagePath);
+  if (!isBlogPage) {
+    const pageHtml = readFileSync(pagePath, "utf8");
+    assert.doesNotMatch(
+      pageHtml,
+      genericImageHostPattern,
+      "Generic editorial imagery is reserved for the Blog: " + relativePagePath,
+    );
+  }
+}
+
 console.log(`Astro static output verified: homepage has ${htmlImgCount} accessible images; ${assets.length} processed assets emitted.`);
