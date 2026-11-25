@@ -47,7 +47,7 @@ test("public catalogue is an allowlisted projection and excludes the restricted 
     "id", "name", "aliases", "category", "subcategory", "specification", "keywords", "name_pt"
   ]);
   assert.deepEqual(output.taxonomy, [{...taxonomy[0], aliases:["cement", "cimento"]}]);
-  assert.match(output.public_rule, /prices, stock, availability and internal commercial data are not included/i);
+  assert.match(output.public_rule, /Supplier identities, sourcing channels, prices, stock, availability and internal commercial data are not included/i);
   assert.equal(JSON.stringify(output).includes("item-formaldehyde"), false);
   assert.equal(JSON.stringify(output).includes("formol"), false);
   assert.equal(JSON.stringify(output).includes("formalde"), false);
