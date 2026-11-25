@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { resolveSiteUrl } from "./site-url.mjs";
 
 const outDir = fileURLToPath(new URL("../dist/", import.meta.url));
+const repoRoot = fileURLToPath(new URL("../../../", import.meta.url));
 const indexPath = join(outDir, "index.html");
 assert.ok(existsSync(indexPath), "Astro build must generate dist/index.html");
 
@@ -85,9 +86,18 @@ const publicSourceAoCatalogPath = join(outDir, "api", "source-ao", "catalog.json
 assert.ok(existsSync(publicSourceAoCatalogPath), "Sanitised static SOURCE AO catalogue endpoint must be generated");
 const publicSourceAoCatalog = JSON.parse(readFileSync(publicSourceAoCatalogPath, "utf8"));
 assert.equal(publicSourceAoCatalog.version, "1.0", "Static public catalogue version must match the reviewed release");
-assert.equal(publicSourceAoCatalog.items.length, 135, "Static public catalogue must include all 135 approved public entries");
-assert.equal(publicSourceAoCatalog.items.filter((item) => item.id.startsWith("item-carbodiam-sku-")).length, 43,
-  "Static public catalogue must include all 43 exact Carbodiam SKU references");
+const reviewedPublicCataloguePath = join(repoRoot, "source-ao", "data", "public-catalog.json");
+assert.ok(existsSync(reviewedPublicCataloguePath), "Reviewed public catalogue source must exist");
+const reviewedPublicCatalogue = JSON.parse(readFileSync(reviewedPublicCataloguePath, "utf8"));
+assert.equal(publicSourceAoCatalog.items.length, reviewedPublicCatalogue.items.length,
+  "Static public catalogue must include every reviewed public entry");
+assert.deepEqual(publicSourceAoCatalog.items, reviewedPublicCatalogue.items,
+  "Static public catalogue entries must match the reviewed and sanitised source");
+assert.equal(
+  publicSourceAoCatalog.items.filter((item) => item.id.startsWith("item-carbodiam-sku-")).length,
+  reviewedPublicCatalogue.items.filter((item) => item.id.startsWith("item-carbodiam-sku-")).length,
+  "Static public catalogue must preserve every reviewed Carbodiam SKU reference",
+);
 assert.ok(!publicSourceAoCatalog.items.some((item) => item.id === "item-formaldehyde"),
   "Restricted chemical item must remain excluded from the public catalogue");
 const publicCatalogueItemKeys = new Set(["id", "name", "aliases", "category", "subcategory", "specification", "keywords", "name_pt"]);
@@ -875,7 +885,6 @@ for (const [section, count, label] of [[worksPtSection,9,"Portuguese works"],[su
   assert.equal((section.match(/class="works-catalogue-card"/g) || []).length,count,label + " catalogue section must contain " + count + " records");
   assert.doesNotMatch(section,/images\.unsplash\.com|pexels\.com|gemini|generated image/i,label + " catalogue section must not contain generic or AI imagery");
 }
-const repoRoot = fileURLToPath(new URL("../../../", import.meta.url));
 for (const file of ["obra-privada-luanda-alvenaria-vista-geral.avif","obra-privada-luanda-cofragem-armadura-fundacao.avif","obra-privada-luanda-detalhe-alvenaria.avif"]) {
   assert.ok(existsSync(join(repoRoot, "images", "catalogue", file)), "Documentary catalogue photograph must be versioned: " + file);
 }
