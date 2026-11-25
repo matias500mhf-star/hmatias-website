@@ -63,11 +63,19 @@ function technicalSummary(item, english) {
 }
 function buildPageContents(items, english) {
   const pages = [];
+  const groups = [
+    { key: "diamond-cutting-discs", titlePt: "Discos diamantados de corte", titleEn: "Diamond cutting discs" },
+    { key: "diamond-core-crowns", titlePt: "Coroas diamantadas de perfuração", titleEn: "Diamond core-drilling crowns" },
+    { key: "diamond-grinding-polishing", titlePt: "Desbaste e polimento", titleEn: "Grinding and polishing" }
+  ].map((group) => ({ ...group, items: items.filter((item) => item.subcategory === group.key) })).filter((group) => group.items.length);
   const title = english ? "DIAMOND TOOLS" : "FERRAMENTAS DIAMANTADAS";
   const subtitle = english ? "Cutting  ·  Drilling  ·  Grinding  ·  Polishing" : "Corte  ·  Perfuração  ·  Desbaste  ·  Polimento";
   const edition = english ? "2026 EDITION  |  ENGLISH" : "EDIÇÃO 2026  |  PORTUGUÊS";
   const coverLead = english ? "Product references and available technical parameters." : "Referências de produto e parâmetros técnicos disponíveis.";
   const coverSub = english ? "A reference document to support quotation requests." : "Documento de apoio à preparação de pedidos de cotação.";
+  const discCount = items.filter((item) => item.subcategory === "diamond-cutting-discs").length;
+  const crownCount = items.filter((item) => item.subcategory === "diamond-core-crowns").length;
+  const grindCount = items.filter((item) => item.subcategory === "diamond-grinding-polishing").length;
   let cover = rect(0, 0, 595, 842, "0.02 0.12 0.23") + rect(42, 758, 64, 4, "0.18 0.63 0.91");
   cover += text(42, 725, 10, "HMATIAS  /  SUPPLY", "F2", "0.72 0.86 0.97");
   if (english) {
@@ -80,41 +88,44 @@ function buildPageContents(items, english) {
   cover += text(42, 425, 12, english ? "TECHNICAL CATALOGUE" : "CATÁLOGO TÉCNICO", "F2", "0.42 0.76 0.98");
   cover += text(42, 398, 11, coverLead, "F1", "0.91 0.95 0.98");
   cover += text(42, 376, 11, coverSub, "F1", "0.91 0.95 0.98");
+  cover += text(42, 338, 9, english ? (discCount + " cutting-disc entries  ·  " + crownCount + " core-crown entries  ·  " + grindCount + " grinding/polishing entries") : (discCount + " referências de discos  ·  " + crownCount + " famílias de coroas  ·  " + grindCount + " entradas de desbaste/polimento"), "F2", "0.72 0.86 0.97");
   cover += text(42, 92, 9, edition, "F2", "0.72 0.86 0.97");
   cover += text(42, 68, 9, "comercialhmatiasps.com  ·  geral@comercialhmatiasps.com", "F1", "0.72 0.86 0.97");
   pages.push(cover);
 
   const perPage = 6;
-  for (let offset = 0; offset < items.length; offset += perPage) {
-    const subset = items.slice(offset, offset + perPage);
-    let body = rect(0, 0, 595, 842, "0.98 0.99 1") + rect(0, 790, 595, 52, "0.02 0.12 0.23");
-    body += text(38, 811, 9, "HMATIAS  /  SUPPLY", "F2", "0.82 0.91 0.98");
-    body += text(38, 765, 18, english ? "Diamond tools" : "Ferramentas diamantadas", "F2", "0.02 0.12 0.23");
-    body += text(38, 746, 8, english ? "PRODUCT FAMILIES AND TECHNICAL REFERENCES" : "FAMÍLIAS E REFERÊNCIAS TÉCNICAS", "F2", "0.12 0.39 0.63") + line(38, 733, 557, 733, "0.82 0.87 0.92");
-    let y = 714;
-    for (let i = 0; i < subset.length; i++) {
-      const item = subset[i];
-      const index = String(offset + i + 1).padStart(2, "0");
-      const itemTitle = english ? item.name : (item.name_pt || item.name);
-      body += text(40, y, 8, index, "F2", "0.12 0.39 0.63");
-      let titleY = y;
-      for (const titleRow of wrap(itemTitle, 72).slice(0, 2)) {
-        body += text(72, titleY, 9, titleRow, "F2", "0.02 0.12 0.23");
-        titleY -= 11;
+  for (const group of groups) {
+    for (let offset = 0; offset < group.items.length; offset += perPage) {
+      const subset = group.items.slice(offset, offset + perPage);
+      let body = rect(0, 0, 595, 842, "0.98 0.99 1") + rect(0, 790, 595, 52, "0.02 0.12 0.23");
+      body += text(38, 811, 9, "HMATIAS  /  SUPPLY", "F2", "0.82 0.91 0.98");
+      body += text(38, 765, 18, english ? group.titleEn : group.titlePt, "F2", "0.02 0.12 0.23");
+      body += text(38, 746, 8, english ? "PRODUCT FAMILY  ·  TECHNICAL REFERENCES" : "FAMÍLIA DE PRODUTO  ·  REFERÊNCIAS TÉCNICAS", "F2", "0.12 0.39 0.63") + line(38, 733, 557, 733, "0.82 0.87 0.92");
+      let y = 714;
+      for (let i = 0; i < subset.length; i++) {
+        const item = subset[i];
+        const index = String(offset + i + 1).padStart(2, "0");
+        const itemTitle = english ? item.name : (item.name_pt || item.name);
+        body += text(40, y, 8, index, "F2", "0.12 0.39 0.63");
+        let titleY = y;
+        for (const titleRow of wrap(itemTitle, 72).slice(0, 2)) {
+          body += text(72, titleY, 9, titleRow, "F2", "0.02 0.12 0.23");
+          titleY -= 11;
+        }
+        let descY = titleY - 5;
+        for (const row of wrap(technicalSummary(item, english), 86).slice(0, 2)) {
+          body += text(72, descY, 8, row, "F1", "0.30 0.39 0.48");
+          descY -= 12;
+        }
+        body += text(72, descY - 1, 7, english ? "Price, stock, lead time and compatibility: confirm before ordering." : "Preço, stock, prazo e compatibilidade: confirmar antes da encomenda.", "F1", "0.38 0.46 0.54");
+        body += line(40, descY - 12, 557, descY - 12, "0.86 0.90 0.94");
+        y -= 105;
       }
-      let descY = titleY - 5;
-      for (const row of wrap(technicalSummary(item, english), 86).slice(0, 2)) {
-        body += text(72, descY, 8, row, "F1", "0.30 0.39 0.48");
-        descY -= 12;
-      }
-      body += text(72, descY - 1, 7, english ? "Price, stock, lead time and compatibility: confirm before ordering." : "Preço, stock, prazo e compatibilidade: confirmar antes da encomenda.", "F1", "0.38 0.46 0.54");
-      body += line(40, descY - 12, 557, descY - 12, "0.86 0.90 0.94");
-      y -= 105;
+      body += line(38, 42, 557, 42, "0.82 0.87 0.92");
+      body += text(38, 25, 7, english ? "HMATIAS  |  Technical reference catalogue  |  Commercial details subject to confirmation" : "HMATIAS  |  Catálogo técnico de consulta  |  Informação sujeita a confirmação comercial", "F1", "0.38 0.46 0.54");
+      body += text(530, 25, 7, String(pages.length + 1), "F2", "0.12 0.39 0.63");
+      pages.push(body);
     }
-    body += line(38, 42, 557, 42, "0.82 0.87 0.92");
-    body += text(38, 25, 7, english ? "HMATIAS  |  Technical reference catalogue  |  Commercial details subject to confirmation" : "HMATIAS  |  Catálogo técnico de consulta  |  Informação sujeita a confirmação comercial", "F1", "0.38 0.46 0.54");
-    body += text(530, 25, 7, String(pages.length + 1), "F2", "0.12 0.39 0.63");
-    pages.push(body);
   }
 
   let end = rect(0, 0, 595, 842, "0.95 0.97 0.99") + rect(0, 790, 595, 52, "0.02 0.12 0.23");
@@ -185,7 +196,7 @@ function renderPdf(pages) {
 }
 export function generateSupplyCatalogues(master) {
   if (!master || !Array.isArray(master.items)) throw new Error("Invalid master catalogue.");
-  const items = master.items.filter((item) => item.category === "diamond-tools");
+  const items = master.items.filter((item) => item.category === "diamond-tools" && item.subcategory !== "cutting-drilling-grinding");
   if (items.length < 20) throw new Error("Insufficient technical references for public catalogues.");
   const publicText = items.map((item) => [item.name, item.name_pt, cleanSupplierText(item.specification)].join(" ")).join(" ");
   if (/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga|Würth/i.test(publicText)) throw new Error("Supplier identity found in generated catalogue content.");
@@ -194,7 +205,8 @@ export function generateSupplyCatalogues(master) {
   for (const pdf of [ptPdf, enPdf]) {
     if (!pdf.startsWith("%PDF-1.4") || !pdf.endsWith("%%EOF\n")) throw new Error("Invalid PDF output.");
   }
-  return { ptPdf, enPdf, itemCount: items.length, pageCount: 2 + Math.ceil(items.length / 6) };
+  const pageCount = 2 + ["diamond-cutting-discs", "diamond-core-crowns", "diamond-grinding-polishing"].reduce((sum, key) => sum + Math.ceil(items.filter((item) => item.subcategory === key).length / 6), 0);
+  return { ptPdf, enPdf, itemCount: items.length, pageCount };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const master = JSON.parse(readFileSync(sourcePath, "utf8"));
