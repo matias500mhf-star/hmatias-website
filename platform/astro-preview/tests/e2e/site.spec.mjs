@@ -13,22 +13,24 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.getByRole("link", { name: /Contactar a equipa/ })).toBeVisible();
     await expect(page.getByText("geral@comercialhmatiasps.com").first()).toBeAttached();
   });
-  test("página de construção apresenta serviços e registos reais", async ({ page }) => {
+  test("página de construção apresenta serviços e referências visuais", async ({ page }) => {
     const response = await page.goto("/construcao/");
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle(/Construção e Remodelação/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Construção e");
     await expect(page.getByRole("heading", { name: "Construção civil" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Preparação de terreno" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Pavilhões rurais concluídos" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Pavilhões com cobertura metálica" })).toBeVisible();
     await expect(page.locator(".construction-work-card img")).toHaveCount(4);
+    await expect(page.locator("#trabalhos")).toContainText(/arquivo visual/i);
+    await expect(page.locator("#trabalhos")).not.toContainText(/registos de trabalhos HMATIAS/i);
     const constructionWhatsApp = new URL(await page.locator(".construction-request-actions a[href^='https://wa.me/']").getAttribute("href"));
     expect(constructionWhatsApp.searchParams.get("text")?.toLowerCase()).toContain("localização da obra");
     await expect(page.locator('.main-nav a[href="/#servicos"]')).toHaveCount(1);
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
 
-  test("página de Facilities apresenta serviços e intervenções reais", async ({ page }) => {
+  test("página de Facilities apresenta serviços e referências visuais", async ({ page }) => {
     const response = await page.goto("/facilities/");
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle(/Facilities e Manutenção/);
@@ -36,8 +38,10 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.getByRole("heading", { name: "Manutenção de instalações" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Limpeza e conservação" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Apoio operacional", exact: true })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Substituição localizada de cobertura" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Chapas de cobertura perfilada" })).toBeVisible();
     await expect(page.locator(".facilities-work-card img")).toHaveCount(2);
+    await expect(page.locator("#intervencoes")).toContainText(/arquivo fotográfico/i);
+    await expect(page.locator("#intervencoes")).not.toContainText(/realizados pela HMATIAS|registos de trabalhos HMATIAS/i);
     const facilitiesWhatsApp = new URL(await page.locator(".construction-request-actions a[href^='https://wa.me/']").getAttribute("href"));
     expect(facilitiesWhatsApp.searchParams.get("text")?.toLowerCase()).toContain("localização da instalação");
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");

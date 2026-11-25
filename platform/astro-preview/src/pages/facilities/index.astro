@@ -14,20 +14,8 @@ import roofMaintenance from "../../../../../images/catalogue/cobertura-metalica-
 import annexStructure from "../../../../../images/catalogue/anexo-coberto-estrutura-metalica.webp";
 
 const evidence = [
-  {
-    category: "MANUTENÇÃO · COBERTURAS",
-    title: "Substituição localizada de cobertura",
-    description: "Registo de intervenção em chapas de cobertura metálica numa instalação existente.",
-    image: roofMaintenance,
-    alt: "Substituição localizada de cobertura metálica numa instalação",
-  },
-  {
-    category: "INTERVENÇÃO · ESTRUTURAS",
-    title: "Estrutura metálica de cobertura",
-    description: "Registo de estrutura metálica aplicada a um anexo coberto de apoio às instalações.",
-    image: annexStructure,
-    alt: "Estrutura metálica de cobertura num anexo de apoio às instalações",
-  },
+  { category: "COBERTURAS · CHAPAS PERFILADAS", title: "Chapas de cobertura perfilada", description: "Chapas perfiladas novas junto a chapas existentes numa cobertura em intervenção.", image: roofMaintenance, alt: "Chapas perfiladas novas junto a chapas existentes numa cobertura em intervenção" },
+  { category: "ESTRUTURAS · ÁREA COBERTA", title: "Estrutura metálica de cobertura", description: "Área coberta junto a uma edificação, com estrutura metálica e cobertura.", image: annexStructure, alt: "Área coberta junto a uma edificação, com estrutura metálica e cobertura" },
 ];
 ---
 <BaseLayout
@@ -51,7 +39,7 @@ const evidence = [
         <p class="hero-lead">Manutenção, conservação e apoio operacional para instalações empresariais e institucionais.</p>
         <div class="hero-actions">
           <a class="button button-light" href="#pedido">Solicitar avaliação <span aria-hidden="true">↓</span></a>
-          <a class="text-link text-link-light" href="#intervencoes">Ver intervenções <span aria-hidden="true">↘</span></a>
+          <a class="text-link text-link-light" href="#intervencoes">Ver referências visuais <span aria-hidden="true">↘</span></a>
         </div>
         <div class="hero-meta">
           <span>Manutenção · Limpeza · Apoio operacional</span>
@@ -61,14 +49,14 @@ const evidence = [
       <figure class="construction-hero-image">
         <Picture
           src={heroPhoto}
-          alt="Caixilharia de alumínio e vidro fumado numa instalação"
+          alt="Vãos com perfis de alumínio, painéis de vidro fumado e porta de correr"
           widths={[640, 960, 1280]}
           sizes="(max-width: 900px) 100vw, 48vw"
           formats={["avif", "webp"]} fallbackFormat="jpg"
           quality={84}
           loading="eager"
           fetchpriority="high" decoding="async" />
-        <figcaption><span>01</span> REGISTO DE INTERVENÇÃO HMATIAS</figcaption>
+        <figcaption><span>01</span> CAIXILHARIA · PERFIS DE ALUMÍNIO E VIDRO FUMADO</figcaption>
       </figure>
       <span class="construction-hero-note" aria-hidden="true">CONSERVAÇÃO · MANUTENÇÃO · OPERAÇÃO</span>
     </section>
@@ -80,7 +68,7 @@ const evidence = [
         <div class="construction-intro-copy">
           <p>A HMATIAS presta serviços de facilities e manutenção a empresas e instituições. A área integra manutenção de instalações, limpeza profissional, conservação de coberturas e apoio operacional.</p>
           <p>Frequência, áreas, recursos, materiais e responsabilidades são definidos antes do início de cada serviço.</p>
-          <a class="underlined-link" href="#intervencoes">Consultar intervenções documentadas <span aria-hidden="true">↘</span></a>
+          <a class="underlined-link" href="#intervencoes">Consultar referências visuais <span aria-hidden="true">↘</span></a>
         </div>
       </div>
     </section>
@@ -128,10 +116,10 @@ const evidence = [
     <section class="construction-work section-pad" id="intervencoes" aria-labelledby="pages-facilities-index-section-4-heading">
       <div class="portfolio-top">
         <div>
-          <div class="section-kicker">03 / REGISTOS REAIS</div>
-          <h2 id="pages-facilities-index-section-4-heading">Intervenções<br /><em>no terreno.</em></h2>
+          <div class="section-kicker">03 / ELEMENTOS DE REFERÊNCIA</div>
+          <h2 id="pages-facilities-index-section-4-heading">Coberturas e estruturas<br /><em>em detalhe.</em></h2>
         </div>
-        <p>Registos visuais de trabalhos de manutenção e apoio a instalações realizados pela HMATIAS.</p>
+        <p>As imagens mostram chapas de cobertura perfilada e uma área coberta com estrutura metálica, tal como observáveis no arquivo fotográfico.</p>
       </div>
 
       <div class="construction-work-grid facilities-work-grid">
@@ -154,7 +142,7 @@ const evidence = [
           </article>
         ))}
       </div>
-      <div class="portfolio-note"><span>REGISTOS DE TRABALHOS HMATIAS</span><span>ANGOLA</span></div>
+      <div class="portfolio-note"><span>ARQUIVO VISUAL · ELEMENTOS DE CONSTRUÇÃO</span><span>ANGOLA</span></div>
     </section>
 
 

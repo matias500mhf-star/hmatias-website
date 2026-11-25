@@ -16,39 +16,15 @@ import roofWorks from "../../../../../images/catalogue/cobertura-metalica-substi
 import ruralPavilions from "../../../../../images/catalogue/pavilhoes-rurais-concluidos.webp";
 
 const workRecords = [
-  {
-    category: "Estruturas metálicas",
-    title: "Galpão com estrutura metálica",
-    description: "Montagem de estrutura metálica, cobertura e fechamentos em chapa, com alvenaria de apoio.",
-    image: metalStructure,
-    alt: "Galpão com estrutura metálica e cobertura em chapa",
-  },
-  {
-    category: "Infraestrutura",
-    title: "Preparação de terreno",
-    description: "Mobilização de retroescavadora para movimentação de terras e regularização inicial do terreno.",
-    image: sitePreparation,
-    alt: "Retroescavadora na preparação e regularização de terreno",
-  },
-  {
-    category: "Facilities · Manutenção",
-    title: "Substituição de cobertura",
-    description: "Substituição localizada de chapas de cobertura, com integração na estrutura existente.",
-    image: roofWorks,
-    alt: "Substituição de cobertura metálica com novas chapas perfiladas",
-  },
-  {
-    category: "Construção rural",
-    title: "Pavilhões rurais concluídos",
-    description: "Vista exterior de pavilhões concluídos, com cobertura metálica e áreas laterais ventiladas.",
-    image: ruralPavilions,
-    alt: "Pavilhões rurais concluídos com cobertura metálica",
-  },
+  { category: "Estruturas metálicas", title: "Estrutura metálica e alvenaria de apoio", description: "Estrutura metálica, cobertura em chapa e alvenaria de apoio em fase de execução.", image: metalStructure, alt: "Estrutura metálica com cobertura em chapa e alvenaria de apoio" },
+  { category: "Infraestrutura", title: "Movimentação e regularização de terreno", description: "Equipamento de movimentação de terras sobre terreno natural, com material escavado e superfície regularizada visíveis.", image: sitePreparation, alt: "Equipamento de movimentação de terras num terreno natural" },
+  { category: "Facilities · Manutenção", title: "Chapas de cobertura perfilada", description: "Chapas perfiladas novas junto a chapas existentes numa cobertura em intervenção.", image: roofWorks, alt: "Chapas perfiladas novas junto a chapas existentes numa cobertura em intervenção" },
+  { category: "Construção rural", title: "Pavilhões com cobertura metálica", description: "Dois pavilhões alongados com cobertura metálica e laterais parcialmente abertas.", image: ruralPavilions, alt: "Dois pavilhões alongados com cobertura metálica e laterais parcialmente abertas" },
 ];
 ---
 <BaseLayout
   title="Construção e Remodelação | HMATIAS — Angola"
-  description="Construção civil, remodelação, pavimentos, preparação de terrenos, coberturas e estruturas metálicas. Conheça trabalhos reais da HMATIAS."
+  description="Serviços de construção civil, remodelação, pavimentos, preparação de terrenos, coberturas e estruturas metálicas para empresas e projectos em Angola."
 >
   <div class="preview-bar">
     <span><i aria-hidden="true"></i> PROTÓTIPO TECNOLÓGICO ASTRO</span>
@@ -67,7 +43,7 @@ const workRecords = [
         <p class="hero-lead">Obras, reabilitação e intervenções em instalações e infraestruturas para empresas e projetos em Angola.</p>
         <div class="hero-actions">
           <a class="button button-light" href="#pedido">Falar sobre a obra <span aria-hidden="true">↓</span></a>
-          <a class="text-link text-link-light" href="#trabalhos">Ver trabalhos reais <span aria-hidden="true">↘</span></a>
+          <a class="text-link text-link-light" href="#trabalhos">Ver referências visuais <span aria-hidden="true">↘</span></a>
         </div>
         <div class="hero-meta">
           <span>Construção · Remodelação · Pavimentos</span>
@@ -84,7 +60,7 @@ const workRecords = [
           quality={84}
           loading="eager"
           fetchpriority="high" decoding="async" />
-        <figcaption><span>01</span> REGISTO DE OBRA HMATIAS</figcaption>
+        <figcaption><span>01</span> ESTRUTURA METÁLICA · COBERTURA EM ANEXO</figcaption>
       </figure>
       <span class="construction-hero-note" aria-hidden="true">OBRA · REABILITAÇÃO · INFRAESTRUTURA</span>
     </section>
@@ -94,9 +70,9 @@ const workRecords = [
       <div class="construction-intro-content">
         <h2 id="pages-construcao-index-section-2-heading">Intervenções pensadas<br /><em>para o espaço e a sua utilização.</em></h2>
         <div class="construction-intro-copy">
-          <p>A HMATIAS executa trabalhos de construção civil e remodelação, incluindo intervenções em instalações existentes, preparação de terrenos, pavimentos, coberturas e estruturas de apoio.</p>
+          <p>A área de Construção e Remodelação da HMATIAS abrange serviços de construção civil e remodelação, incluindo intervenções em instalações existentes, preparação de terrenos, pavimentos, coberturas e estruturas de apoio.</p>
           
-          <a class="underlined-link" href="#trabalhos">Consultar trabalhos realizados <span aria-hidden="true">↘</span></a>
+          <a class="underlined-link" href="#trabalhos">Consultar referências visuais <span aria-hidden="true">↘</span></a>
         </div>
       </div>
     </section>
@@ -141,10 +117,10 @@ const workRecords = [
     <section class="construction-work section-pad" id="trabalhos" aria-labelledby="pages-construcao-index-section-4-heading">
       <div class="portfolio-top">
         <div>
-          <div class="section-kicker">03 / TRABALHO REAL</div>
-          <h2 id="pages-construcao-index-section-4-heading">O trabalho<br /><em>fala por si.</em></h2>
+          <div class="section-kicker">03 / REFERÊNCIAS VISUAIS</div>
+          <h2 id="pages-construcao-index-section-4-heading">Construção em detalhe<br /><em>elementos e fases visíveis.</em></h2>
         </div>
-        <p>Registos visuais de trabalhos e frentes de atividade da HMATIAS.</p>
+        <p>As fotografias mostram elementos construtivos e fases de execução presentes no arquivo visual. Não são associadas a contratos ou clientes específicos.</p>
       </div>
 
       <div class="construction-work-grid">
@@ -168,7 +144,7 @@ const workRecords = [
         ))}
       </div>
       <p class="construction-record-link"><a class="underlined-link" href="/catalogo-obras/#obra-privada-luanda">Consultar o registo fotográfico de fundações e alvenaria em Luanda ↗</a></p>
-      <div class="portfolio-note"><span>REGISTOS DE TRABALHOS HMATIAS</span><span>ANGOLA</span></div>
+      <div class="portfolio-note"><span>ARQUIVO FOTOGRÁFICO · ELEMENTOS VISÍVEIS</span><span>ANGOLA</span></div>
     </section>
 
 
