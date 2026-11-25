@@ -54,7 +54,7 @@ assert.match(html, /Todos os direitos reservados/, "Footer legal copyright line 
 assert.match(html, /Voltar ao topo/, "Footer back-to-top link is missing");
 const mainNavHtml = html.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
 assert.ok(mainNavHtml, "Primary navigation is missing");
-for (const label of ["Início", "Sobre nós", "Serviços", "Projetos", "SOURCE AO", "Blog", "Solicitar orçamento"]) {
+for (const label of ["Início", "Sobre nós", "Áreas de negócio", "Projetos", "SOURCE AO", "Blog", "Solicitar orçamento"]) {
   assert.ok(mainNavHtml.includes(label), "Portuguese primary navigation is missing: " + label);
 }
 for (const href of ["/#inicio", "/empresa/", "/credibilidade/", "/#parceiros", "/#servicos", "/construcao/", "/facilities/", "/supply/", "/business-services/", "/#projetos", "/catalogo-obras/", "/estaleiro/", "/source-ao/", "/source-ao/radar/", "/source-ao/smart-rfq/", "/source-ao/parceiros/", "/blog/"]) {
@@ -64,6 +64,17 @@ assert.doesNotMatch(mainNavHtml, /instagram|wa\.me/i, "Social networks must rema
 assert.match(html, /mailto:geral@comercialhmatiasps\.com/, "Footer commercial mail link is missing");
 assert.match(html, /tel:\+244948806673/, "Footer telephone link is missing");
 assert.match(html, /SOURCE AO/, "Source AO footer link is missing");
+for (const [relativePath, destination] of [
+  ["areas-de-negocio/index.html", "/#servicos"],
+  ["en/business-areas/index.html", "/en/#services"],
+]) {
+  const redirectPath = join(outDir, relativePath);
+  assert.ok(existsSync(redirectPath), `Retired business-area URL must remain available as a redirect: /${relativePath}`);
+  const redirectHtml = readFileSync(redirectPath, "utf8");
+  assert.match(redirectHtml, /http-equiv=["']refresh["']/i, `Retired route must redirect automatically: /${relativePath}`);
+  assert.ok(redirectHtml.includes(destination), `Retired route must lead to ${destination}: /${relativePath}`);
+}
+
 const publicSourceAoCatalogPath = join(outDir, "api", "source-ao", "catalog.json");
 assert.ok(existsSync(publicSourceAoCatalogPath), "Sanitised static SOURCE AO catalogue endpoint must be generated");
 const publicSourceAoCatalog = JSON.parse(readFileSync(publicSourceAoCatalogPath, "utf8"));
@@ -116,10 +127,10 @@ assert.match(footerHtml ?? "", /footer-source-link/, "SOURCE AO must remain acce
 const englishHomeHtml = readFileSync(join(outDir, "en", "index.html"), "utf8");
 const englishNavHtml = englishHomeHtml.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
 assert.ok(englishNavHtml, "English primary navigation is missing");
-for (const label of ["Home", "About us", "Services", "Projects", "SOURCE AO", "Blog", "Request a quote"]) {
+for (const label of ["Home", "About us", "Business areas", "Projects", "SOURCE AO", "Blog", "Request a quote"]) {
   assert.ok(englishNavHtml.includes(label), "English primary navigation is missing: " + label);
 }
-for (const href of ["/en/#inicio", "/en/about/", "/en/credibility/", "/en/#partners", "/en/#servicos", "/en/construction/", "/en/facilities/", "/en/supply/", "/en/business-services/", "/en/#projetos", "/en/works-catalogue/", "/en/integrated-yard/", "/en/source-ao/", "/en/source-ao/radar/", "/en/source-ao/smart-rfq/", "/en/source-ao/partners/", "/en/blog/"]) {
+for (const href of ["/en/#inicio", "/en/about/", "/en/credibility/", "/en/#partners", "/en/#services", "/en/construction/", "/en/facilities/", "/en/supply/", "/en/business-services/", "/en/#projetos", "/en/works-catalogue/", "/en/integrated-yard/", "/en/source-ao/", "/en/source-ao/radar/", "/en/source-ao/smart-rfq/", "/en/source-ao/partners/", "/en/blog/"]) {
   assert.ok(englishNavHtml.includes('href="' + href + '"'), "English primary navigation destination is missing: " + href);
 }
 assert.doesNotMatch(englishNavHtml, /instagram|wa\.me/i, "Social networks must remain outside the English primary navigation");
@@ -680,6 +691,7 @@ assert.ok(generatedPages.length >= 61, "The complete 61-page PT/EN route set mus
 for (const pagePath of generatedPages) {
   const pageHtml = readFileSync(pagePath, "utf8");
   const relativePagePath = pagePath.slice(outDir.length).replaceAll("\\", "/");
+  if (["areas-de-negocio/index.html", "en/business-areas/index.html"].includes(relativePagePath)) continue;
   const isEnglishPage = relativePagePath.startsWith("en/");
   const imageTags = [...pageHtml.matchAll(/<img\b[^>]*>/g)].map((match) => match[0]);
   for (const imageTag of imageTags) {

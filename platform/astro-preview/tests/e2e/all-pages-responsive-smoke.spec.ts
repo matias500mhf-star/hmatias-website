@@ -12,6 +12,7 @@ function collectHtmlFiles(directory: string): string[] {
     if (!entry.isFile() || !entry.name.endsWith(".html")) return [];
     const rel = relative(distRoot, fullPath).replaceAll("\\", "/");
     if (rel === "404.html" || rel.endsWith("/404.html")) return [];
+    if (rel === "areas-de-negocio/index.html" || rel === "en/business-areas/index.html") return [];
     return [fullPath];
   });
 }

@@ -4,7 +4,6 @@ const ptToEn: Record<string, string> = {
   "/karta/": "/en/karta/",
   "/estaleiro/": "/en/integrated-yard/",
   "/credibilidade/": "/en/credibility/",
-  "/areas-de-negocio/": "/en/business-areas/",
   "/brochura-institucional/": "/en/company-brochure/",
   "/construcao/": "/en/construction/",
   "/facilities/": "/en/facilities/",

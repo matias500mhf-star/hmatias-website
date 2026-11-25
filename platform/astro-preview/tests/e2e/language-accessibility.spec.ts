@@ -68,7 +68,7 @@ test.describe("Bilingual brand and language accessibility", () => {
     await expect(toggle).toHaveAttribute("aria-label", "Close menu");
     await expect(nav).toHaveClass(/is-open/);
 
-    await nav.getByRole("link", { name: "Services" }).click();
+    await nav.getByRole("link", { name: "Business areas" }).click();
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
     await expect(toggle).toHaveAttribute("aria-label", "Open menu");
     await expect(nav).not.toHaveClass(/is-open/);
@@ -77,16 +77,26 @@ test.describe("Bilingual brand and language accessibility", () => {
 
 test("primary navigation section links follow the active language", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("link", { name: "Serviços", exact: true }))
+  await expect(page.getByRole("link", { name: "Áreas de negócio", exact: true }))
     .toHaveAttribute("href", "/#servicos");
   await expect(page.getByRole("link", { name: "Projetos", exact: true }))
     .toHaveAttribute("href", "/#projetos");
 
   await page.goto("/en/");
-  await expect(page.getByRole("link", { name: "Services", exact: true }))
+  await expect(page.getByRole("link", { name: "Business areas", exact: true }))
     .toHaveAttribute("href", "/en/#services");
   await expect(page.getByRole("link", { name: "Projects", exact: true }))
     .toHaveAttribute("href", "/en/#projects");
+});
+
+test("retired business-area overview URLs redirect to the homepage service sections", async ({ page }) => {
+  await page.goto("/areas-de-negocio/");
+  await expect(page).toHaveURL(/#servicos$/);
+  await expect(page.locator("#servicos")).toBeVisible();
+
+  await page.goto("/en/business-areas/");
+  await expect(page).toHaveURL(/#services$/);
+  await expect(page.locator("#services")).toBeVisible();
 });
 
 test("footer partnership application follows the active language", async ({ page }) => {
