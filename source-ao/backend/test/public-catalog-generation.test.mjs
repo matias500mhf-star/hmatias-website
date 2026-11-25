@@ -68,7 +68,7 @@ test("public catalogue removes supplier identities and sourcing details from pub
     taxonomy: [{id:"diamond-tools",name_en:"Diamond tools",name_pt:"Ferramentas diamantadas",aliases:["diamond","SYNVOR"]}]
   };
   const output = JSON.stringify(buildPublicCatalog(master));
-  assert.equal(/SYNVOR|ADY-FERRAZ|Evolution Safety|Miliart|Kent Offshore|Fransga|Würth/i.test(output), false);
+  assert.equal(/SYNVOR|ADY-FERRAZ|Evolution Safety|Miliart|Kent Offshore|Fransga|MATEANA|Premier Yangue|Vizers Consultores|NovaEra Tech Solutions|Telewise/i.test(output), false);
   assert.match(output, /Carbodiam/);
   assert.match(output, /The product range includes/);
 });
