@@ -116,9 +116,10 @@ test("public catalogue rejects duplicate ids, incomplete items and unsafe taxono
 test("HMATIAS diamond-tools catalogues generate valid PT and EN PDFs without sourcing identities", () => {
   const master = JSON.parse(readFileSync(new URL("../../data/catalog.json", import.meta.url), "utf8"));
   const result = generateSupplyCatalogues(master);
-  const expectedCount = master.items.filter((item) => item.category === "diamond-tools").length;
+  const expectedCount = master.items.filter((item) => item.category === "diamond-tools" && item.subcategory !== "cutting-drilling-grinding").length;
   assert.equal(result.itemCount, expectedCount);
-  assert.equal(result.pageCount, 2 + Math.ceil(expectedCount / 6));
+  const groupedPages = ["diamond-cutting-discs", "diamond-core-crowns", "diamond-grinding-polishing"].reduce((sum, key) => sum + Math.ceil(master.items.filter((item) => item.category === "diamond-tools" && item.subcategory === key).length / 6), 0);
+  assert.equal(result.pageCount, 2 + groupedPages);
   for (const pdf of [result.ptPdf, result.enPdf]) {
     assert.ok(pdf.startsWith("%PDF-1.4"));
     assert.ok(pdf.endsWith("%%EOF\n"));
