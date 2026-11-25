@@ -63,6 +63,19 @@ import { company } from "../data/site";
 
     <ServiceSection />
     <ProjectGallery />
+    <section class="supply-home-highlight section-pad" aria-labelledby="supply-home-heading">
+      <div class="supply-home-copy">
+        <p class="section-kicker">HMATIAS SUPPLY / PROCUREMENT E FORNECIMENTO</p>
+        <h2 id="supply-home-heading">Fornecimento orientado<br /><em>por requisitos reais.</em></h2>
+        <p>Apoiamos empresas na identificação e consulta de materiais, consumíveis, equipamentos, EPI e outras necessidades de fornecimento. Cada proposta é preparada a partir da especificação, quantidade, destino e prazo indicados pelo cliente.</p>
+        <a class="button button-dark" href="/supply/">Explorar Supply e catálogos <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="supply-home-points" aria-label="Modelo de fornecimento HMATIAS">
+        <div><span>01</span><p><strong>Consulta por especificação</strong><small>Referência, aplicação e requisitos técnicos.</small></p></div>
+        <div><span>02</span><p><strong>Verificação comercial</strong><small>Disponibilidade, documentação e condições sujeitas a confirmação.</small></p></div>
+        <div><span>03</span><p><strong>Pedido de cotação</strong><small>Um percurso claro para apresentar a necessidade.</small></p></div>
+      </div>
+    </section>
     <PartnerSection />
 
     <section class="statement" aria-labelledby="pages-index-section-3-heading">
@@ -78,4 +91,22 @@ import { company } from "../data/site";
   </main>
   <SiteFooter />
   <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+<style>
+.supply-home-highlight{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:clamp(32px,7vw,100px);align-items:center;background:var(--hm-light)}
+.supply-home-copy h2,.supply-catalogue-copy h2{margin:18px 0 20px;font-family:var(--hm-serif);font-size:clamp(34px,5vw,62px);font-weight:450;line-height:1.04;letter-spacing:-.045em}
+.supply-home-copy h2 em,.supply-catalogue-copy h2 em{font-weight:400}
+.supply-home-copy>p:not(.section-kicker),.supply-catalogue-copy>p:not(.section-kicker){max-width:650px;color:var(--hm-muted);font-size:14px;line-height:1.85}
+.supply-home-copy .button{margin-top:18px}
+.supply-home-points{border-top:1px solid var(--hm-line)}
+.supply-home-points>div{display:grid;grid-template-columns:38px 1fr;gap:14px;padding:20px 0;border-bottom:1px solid var(--hm-line)}
+.supply-home-points>div>span{color:var(--hm-blue);font-family:var(--hm-serif);font-size:18px}
+.supply-home-points p{display:grid;gap:5px;margin:0}
+.supply-home-points strong{color:var(--hm-ink);font-size:13px;font-weight:650}
+.supply-home-points small{color:var(--hm-muted);font-size:11px;line-height:1.65}
+.supply-catalogue-note{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);gap:40px;align-items:center;background:var(--hm-light)}
+.supply-catalogue-action{padding:25px;border:1px solid var(--hm-line);background:var(--hm-paper)}
+.supply-catalogue-action p{margin:0 0 18px;color:var(--hm-ink);font-size:15px;line-height:1.6}
+.supply-catalogue-action small{display:block;margin-top:14px;color:var(--hm-muted);font-size:11px;line-height:1.65}
+@media(max-width:760px){.supply-home-highlight,.supply-catalogue-note{grid-template-columns:1fr;gap:26px}.supply-catalogue-action{padding:20px}}
+</style>
 </BaseLayout>
