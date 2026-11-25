@@ -853,7 +853,7 @@ for (const [section, count, label] of [[worksPtSection,9,"Portuguese works"],[su
   assert.doesNotMatch(section,/images\.unsplash\.com|pexels\.com|gemini|generated image/i,label + " catalogue section must not contain generic or AI imagery");
 }
 const repoRoot = fileURLToPath(new URL("../../../", import.meta.url));
-for (const file of ["obra-privada-luanda-alvenaria-vista-geral.webp","obra-privada-luanda-cofragem-armadura-fundacao.webp","obra-privada-luanda-detalhe-alvenaria.webp"]) {
+for (const file of ["obra-privada-luanda-alvenaria-vista-geral.avif","obra-privada-luanda-cofragem-armadura-fundacao.avif","obra-privada-luanda-detalhe-alvenaria.avif"]) {
   assert.ok(existsSync(join(repoRoot, "images", "catalogue", file)), "Documentary catalogue photograph must be versioned: " + file);
 }
 
