@@ -1285,3 +1285,48 @@ main li {
     min-width: 28px;
   }
 }
+
+/* HMATIAS navigation polish: persistent orientation and restrained motion. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  isolation: isolate;
+  box-shadow: 0 5px 18px rgb(3 31 61 / 4%);
+}
+html { scroll-padding-top: 104px; }
+.main-nav > a[aria-current="page"],
+.nav-item > a[aria-current="page"] {
+  color: var(--hm-blue);
+}
+.main-nav > a[aria-current="page"]::after,
+.nav-item > a[aria-current="page"]::after {
+  width: 100%;
+}
+@media (min-width: 1121px) {
+  .nav-submenu {
+    display: grid;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(7px);
+    transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+  }
+  .nav-item.submenu-open > .nav-submenu {
+    display: grid;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .nav-submenu,
+  .main-nav a,
+  .submenu-toggle span,
+  .header-cta,
+  .language-switch {
+    transition: none !important;
+  }
+}
