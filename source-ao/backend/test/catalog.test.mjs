@@ -21,7 +21,8 @@ function databaseMock({items=[],item=null}={}){
 
 test('public catalog exposes only explicitly visible items and never the excluded chemical',async()=>{
   const env={PUBLIC_ORIGIN:'https://preview.example',SOURCE_AO_DB:databaseMock({items:[
-    {id:'item-a',name:'Paint',name_pt:'Tinta',category:'construction',aliases_json:'["paint"]',keywords_json:'["obra"]',public_visible:1,updated_at:'2026-11-13 10:00:00'},
+    {id:'item-a',name:'Diamond disc',name_pt:'Disco diamantado',category:'diamond-tools',specification:'The published SYNVOR catalogue includes Carbodiam products. This is a catalogue reference sourced from SYNVOR Industrial in Portugal.',aliases_json:'["SYNVOR Industrial","cutting disc"]',keywords_json:'["SYNVOR","Carbodiam"]',unit:'un',public_visible:1,updated_at:'2026-11-13 10:00:00'},
+    {id:'item-synvor-private',name:'Private sourcing record',name_pt:'Registo privado',category:'industrial-supply',specification:'SYNVOR Industrial source note',aliases_json:'[]',keywords_json:'[]',public_visible:1,updated_at:'2026-11-13 10:00:00'},
     {id:'item-formaldehyde',name:'Formaldehyde',name_pt:'Formaldeído',category:'industrial-supply',aliases_json:'[]',keywords_json:'[]',public_visible:0,updated_at:'2026-11-13 10:00:00'}
   ]})};
   const response=await listPublicCatalog(new Request('https://api.example/api/catalog'),env);
@@ -32,7 +33,11 @@ test('public catalog exposes only explicitly visible items and never the exclude
   assert.equal(response.headers.get('access-control-allow-origin'),'https://preview.example');
   assert.equal(body.ok,true);
   assert.equal(body.items.length,1);
-  assert.equal(body.items[0].name_pt,'Tinta');
+  assert.equal(body.items[0].name_pt,'Disco diamantado');
+  assert.match(body.items[0].specification,/The product range includes Carbodiam products/i);
+  assert.deepEqual(body.items[0].aliases,['cutting disc']);
+  assert.deepEqual(body.items[0].keywords,['Carbodiam']);
+  assert.doesNotMatch(JSON.stringify(body),/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|MATEANA|Premier Yangue|Vizers Consultores|NovaEra Tech Solutions|Telewise/i);
   assert.equal(body.items.some(item=>item.id==='item-formaldehyde'),false);
   assert.ok(Array.isArray(body.taxonomy));
   assert.ok(body.taxonomy.some(row=>row.id==='construction'));
@@ -41,6 +46,22 @@ test('public catalog exposes only explicitly visible items and never the exclude
   assert.equal('public_visible' in body.items[0],false);
   assert.equal('updated_at' in body.items[0],false);
   assert.equal('price' in body.items[0],false);
+});
+
+
+test('admin catalogue retains internal supplier metadata while public reads sanitise it',async()=>{
+  const row={id:'item-internal',name:'Diamond disc',name_pt:'Disco diamantado',category:'diamond-tools',
+    specification:'Internal supplier note: SYNVOR Industrial supplied this reference.',
+    unit:'un',aliases_json:'["SYNVOR Industrial"]',keywords_json:'["SYNVOR"]',public_visible:1,updated_at:'2026-11-13 10:00:00'};
+  const token='a'.repeat(40);
+  const env={ADMIN_API_TOKEN:token,SOURCE_AO_DB:databaseMock({items:[row]})};
+  const response=await listAdminCatalog(new Request('https://api.example/api/admin/catalog/items',{
+    headers:{authorization:'Bearer '+token}
+  }),env);
+  const body=await response.json();
+  assert.equal(response.status,200);
+  assert.match(body.items[0].specification,/SYNVOR Industrial/);
+  assert.deepEqual(body.items[0].aliases,['SYNVOR Industrial']);
 });
 
 test('public catalog fails closed when the database is unavailable',async()=>{
