@@ -118,6 +118,7 @@ test("HMATIAS diamond-tools catalogues generate valid PT and EN PDFs without sou
   const result = generateSupplyCatalogues(master);
   const expectedCount = master.items.filter((item) => item.category === "diamond-tools" && item.subcategory !== "cutting-drilling-grinding").length;
   assert.equal(result.itemCount, expectedCount);
+  assert.notEqual(result.ptPdf, result.enPdf, 'Portuguese and English catalogues must be separate files.');
   const groupedPages = ["diamond-cutting-discs", "diamond-core-crowns", "diamond-grinding-polishing"].reduce((sum, key) => sum + Math.ceil(master.items.filter((item) => item.category === "diamond-tools" && item.subcategory === key).length / 6), 0);
   assert.equal(result.pageCount, 2 + groupedPages);
   for (const pdf of [result.ptPdf, result.enPdf]) {
