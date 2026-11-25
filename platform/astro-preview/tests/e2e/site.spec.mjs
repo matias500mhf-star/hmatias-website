@@ -47,6 +47,21 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page.getByRole("link", { name: "Voltar ao topo" })).toHaveAttribute("href", "/#inicio");
   });
 
+  test("catalogue EPI opens as a public PDF in Portuguese and English", async ({ page }) => {
+    for (const [route, linkName] of [["/supply/", "Abrir catálogo PDF"], ["/en/supply/", "Open PDF catalogue"]]) {
+      await page.goto(route);
+      const catalogueLink = page.getByRole("link", { name: linkName, exact: true });
+      await expect(catalogueLink).toHaveAttribute("href", "/catalogos/ady-ferraz-catalogo-epi.pdf");
+      await expect(catalogueLink).toHaveAttribute("target", "_blank");
+      await expect(catalogueLink).toHaveAttribute("rel", "noopener noreferrer");
+      const response = await page.request.get(new URL("/catalogos/ady-ferraz-catalogo-epi.pdf", page.url()).href);
+      expect(response.status()).toBe(200);
+      expect(response.headers()["content-type"]).toContain("application/pdf");
+      const pdf = await response.body();
+      expect(pdf.subarray(0, 5).toString("ascii")).toBe("%PDF-");
+    }
+  });
+
   test("página HMATIAS Supply explica procurement e categorias de fornecimento", async ({ page }) => {
     const response = await page.goto("/supply/");
     expect(response?.status()).toBe(200);
