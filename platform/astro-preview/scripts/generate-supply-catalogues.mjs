@@ -45,7 +45,7 @@ function cleanSupplierText(value) {
     .replace(/SYNVOR indicates/gi, "A documentação técnica indica")
     .replace(/sourced from SYNVOR Industrial in Portugal/gi, "")
     .replace(/SYNVOR(?: Industrial)?/gi, "")
-    .replace(/ADY-FERRAZ|Evolution Safety(?: Namibia)?|Miliart Intemporal|Miliart|Kent Offshore|Fransga|MATEANA|Premier Yangue|Vizers Consultores|NovaEra Tech Solutions|Telewise/gi, "")
+    .replace(/ADY-FERRAZ|ADY FERRAZ|D Wood|Evolution Safety(?: Namibia)?|Miliart Intemporal|Miliart|Kent Offshore|Fransga|MATEANA|Premier Yangue|Vizers Consultores|NovaEra Tech Solutions|Telewise/gi, "")
     .replace(/\s{2,}/g, " ").replace(/\s+([,.;:])/g, "$1").trim();
 }
 function technicalSummary(item, english) {
@@ -199,7 +199,7 @@ export function generateSupplyCatalogues(master) {
   const items = master.items.filter((item) => item.category === "diamond-tools" && item.subcategory !== "cutting-drilling-grinding");
   if (items.length < 20) throw new Error("Insufficient technical references for public catalogues.");
   const publicText = items.map((item) => [item.name, item.name_pt, cleanSupplierText(item.specification)].join(" ")).join(" ");
-  if (/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga|MATEANA|Premier Yangue|Vizers Consultores|NovaEra Tech Solutions|Telewise/i.test(publicText)) throw new Error("Supplier identity found in generated catalogue content.");
+  if (/SYNVOR|ADY-FERRAZ|ADY FERRAZ|D Wood|Evolution Safety|Kent Offshore|Miliart|Fransga|MATEANA|Premier Yangue|Vizers Consultores|NovaEra Tech Solutions|Telewise/i.test(publicText)) throw new Error("Supplier identity found in generated catalogue content.");
   const ptPdf = renderPdf(buildPageContents(items, false), false);
   const enPdf = renderPdf(buildPageContents(items, true), true);
   for (const pdf of [ptPdf, enPdf]) {
