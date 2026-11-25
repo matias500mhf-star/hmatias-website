@@ -6,6 +6,9 @@ export function rateLimitPolicy(request, pathname='') {
   if (request.method === 'POST' && pathname === '/api/website-leads') {
     return {bucket:'website-lead-create', limit:4, windowSeconds:600};
   }
+  if (request.method === 'POST' && pathname === '/api/auth/session') {
+    return {bucket:'firebase-session', limit:20, windowSeconds:60};
+  }
   if (request.method === 'POST' && pathname === '/api/sourcing-requests') {
     return {bucket:'sourcing-create', limit:6, windowSeconds:600};
   }

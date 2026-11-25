@@ -57,6 +57,14 @@
       </section>
 
       <section>
+        <h2>1-A. Conta e autenticação (quando activadas)</h2>
+        <p>O utilizador pode, opcionalmente, criar uma conta SOURCE AO ou iniciar sessão com e-mail e palavra-passe. A autenticação, a verificação do endereço de e-mail e a recuperação da palavra-passe são processadas pelo Firebase Authentication, disponibilizado pela Google. A palavra-passe é introduzida directamente no serviço de autenticação e não é enviada à API Cloudflare nem guardada na base de dados operacional da HMATIAS.</p>
+        <p>Quando existe sessão iniciada, o website ou a aplicação móvel envia à API SOURCE AO um token de identidade assinado e de duração limitada. O Worker valida a assinatura e o projecto emissor antes de associar o identificador Firebase (UID) ao perfil e, quando aplicável, ao pedido de sourcing. A tabela de identidade da API conserva o UID, o perfil atribuído no servidor e o indicador de verificação do e-mail; não conserva a palavra-passe, o endereço de e-mail nem o nome de apresentação provenientes do token.</p>
+        <p>As contas novas recebem por defeito o perfil de cliente. Os perfis de fornecedor e de operação HMATIAS só podem ser atribuídos pela equipa autorizada através dos controlos internos do servidor; o próprio utilizador não pode elevar as suas permissões. A criação de conta é opcional: a pesquisa pública e o registo de pedidos sem sessão continuam disponíveis.</p>
+        <p>O Firebase e a Google tratam os dados necessários à autenticação, envio de mensagens de verificação e recuperação de acesso segundo os respectivos termos e avisos de privacidade. A utilização do mesmo projecto Firebase permite iniciar sessão no website e na aplicação móvel SOURCE AO com a mesma conta, quando a integração móvel estiver activada.</p>
+      </section>
+
+      <section>
         <h2>2. Finalidades</h2>
         <p>Tratamos estes dados para executar pedidos de sourcing, localizar potenciais fornecedores, verificar informação comercial, acompanhar pedidos, avaliar candidaturas de fornecedores/subempreiteiros/parceiros, melhorar a qualidade da pesquisa, produzir análise agregada de procura e proteger a plataforma contra abuso.</p>
       </section>

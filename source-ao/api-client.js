@@ -9,7 +9,10 @@
     const controller=new AbortController();
     const timeout=setTimeout(()=>controller.abort(),timeoutMs);
     try{
-      const res=await fetch(base()+path,{headers:{accept:'application/json'},cache:'no-store',signal:controller.signal});
+      const authorization=await window.SourceAOAuth?.getAuthorizationHeader?.();
+      const headers={accept:'application/json'};
+      if(authorization) headers.authorization=authorization;
+      const res=await fetch(base()+path,{headers,cache:'no-store',signal:controller.signal});
       if(!res.ok) throw new Error(`Source AO API HTTP ${res.status}`);
       return await res.json();
     }finally{

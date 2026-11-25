@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8">
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="897cdf5d-fed3-4b7d-874a-2c229775d46e" data-blockingmode="auto" type="text/javascript"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071f34">
+  <meta name="robots" content="noindex,follow">
+  <meta name="description" content="Aceda à sua conta SOURCE AO da HMATIAS.">
+  <link rel="canonical" href="https://comercialhmatiasps.com/source-ao/account.html">
+  <link rel="preload" href="../fonts/inter-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="sourceao.css?v=20261028-footer-contrast1">
+  <link rel="stylesheet" href="account.css?v=20261116-firebase1">
+  <title>A minha conta · SOURCE AO</title>
+</head>
+<body class="source-account">
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="source-brand" href="index.html" aria-label="SOURCE AO by HMATIAS"><img src="../images/source-ao-logo.svg" alt="SOURCE AO by HMATIAS" width="760" height="360"></a>
+      <div class="nav-actions">
+        <a class="hmatias-return" href="index.html">← SOURCE AO</a>
+        <a class="btn btn-outline btn-small" href="../">HMATIAS ↗</a>
+      </div>
+    </div>
+  </header>
+  <main class="account-main">
+    <div class="account-layout">
+      <section class="account-intro">
+        <p class="eyebrow">IDENTIDADE ÚNICA · SOURCE AO</p>
+        <h1>A sua conta SOURCE AO.</h1>
+        <p>Use a mesma conta no website e na aplicação móvel SOURCE AO para manter a sua identidade e os seus pedidos associados.</p>
+        <ul class="account-points">
+          <li><span>✓</span> Sessão partilhada entre o website e a aplicação, através do Firebase Authentication</li>
+          <li><span>✓</span> Acompanhamento associado à sua conta, além do link privado do pedido</li>
+          <li><span>✓</span> Permissões de clientes, fornecedores e equipa atribuídas pela HMATIAS</li>
+        </ul>
+      </section>
+      <section class="account-card" aria-labelledby="accountTitle">
+        <div id="signedOutPanel">
+          <h2 id="accountTitle">Entrar na sua conta</h2>
+          <p id="accountIntro">Aceda à sua área SOURCE AO ou crie uma conta de cliente.</p>
+          <form class="account-form" id="accountForm" novalidate>
+            <label id="nameField" hidden>Nome
+              <input id="displayName" type="text" maxlength="120" autocomplete="name">
+            </label>
+            <label>E-mail
+              <input id="email" type="email" maxlength="254" autocomplete="email" required>
+            </label>
+            <label>Palavra-passe
+              <input id="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" required>
+            </label>
+            <button class="btn" id="submitAccount" type="submit">Entrar</button>
+          </form>
+          <p class="account-legal">Ao criar uma conta, consulte o <a href="privacy.html" target="_blank" rel="noopener noreferrer">Aviso de Privacidade</a> e os <a href="terms.html" target="_blank" rel="noopener noreferrer">Termos de utilização</a> do SOURCE AO.</p>
+          <div class="account-links">
+            <button id="toggleMode" type="button">Criar conta de cliente</button>
+            <button id="resetPassword" type="button">Recuperar palavra-passe</button>
+          </div>
+        </div>
+        <div id="signedInPanel" hidden>
+          <h2>A sua sessão</h2>
+          <p>A identidade foi reconhecida pelo Firebase e sincronizada com a plataforma SOURCE AO.</p>
+          <div class="account-session">
+            <strong id="accountEmail">—</strong>
+            <small id="accountRole">A confirmar permissões…</small>
+            <small id="verificationState">A confirmar estado do e-mail…</small>
+            <button class="btn" id="signOut" type="button">Terminar sessão</button>
+          </div>
+        </div>
+        <p class="account-status" id="accountStatus" role="status" aria-live="polite" hidden></p>
+        <p class="account-privacy">Os dados de autenticação são geridos pelo Firebase. A API SOURCE AO recebe apenas o token de identidade e o identificador interno do utilizador. Não introduza dados comerciais confidenciais neste formulário.</p>
+      </section>
+    </div>
+  </main>
+  <script src="runtime-config.js"></script>
+  <script type="module" src="account.js?v=20261116-firebase1"></script>
+</body>
+</html>
