@@ -88,10 +88,12 @@ test('public search resolves exact Carbodiam 115 mm references without implying 
   }
   db.prepare('INSERT INTO items VALUES(?,?,?,?,?,?,?)').run('item-private','Disco diamantado privado','diamond-tools','Registo privado','un','discos diamantados 115mm 9193',0);
   db.prepare('INSERT INTO suppliers VALUES(?,?)').run('sup-synvor-industrial','Portugal');
+  const freshVerifiedAt=new Date(Date.now()-60*60*1000).toISOString();
+  const freshExpiresAt=new Date(Date.now()+6*24*60*60*1000).toISOString();
   for(const item of [...products,...exactSkus,...sampleFamilies]){
     db.prepare('INSERT INTO observations VALUES(?,?,?,?,?,?,?,?,?)').run(
-      'obs-'+item.id,'sup-synvor-industrial',item.id,'2026-11-14T12:00:00+01:00','Portugal',
-      'source_checked','2026-11-14T12:00:00+01:00','2026-11-21T12:00:00+01:00','supplier_official_channel'
+      'obs-'+item.id,'sup-synvor-industrial',item.id,freshVerifiedAt,'Portugal',
+      'source_checked',freshVerifiedAt,freshExpiresAt,'supplier_official_channel'
     );
   }
   const adapter={
@@ -115,7 +117,7 @@ test('public search resolves exact Carbodiam 115 mm references without implying 
   assert.ok(pantera,'factory reference 9193 must resolve to the exact PANTERA product');
   assert.equal(pantera.status,'source_checked');
   assert.equal(pantera.verification.source_type,'supplier_official_channel');
-  assert.equal(pantera.verification.verified_at,'2026-11-14T12:00:00+01:00');
+  assert.equal(pantera.verification.verified_at,freshVerifiedAt);
   assert.equal(Object.hasOwn(pantera,'supplier'),false);
   assert.equal(Object.hasOwn(pantera,'price'),false);
   const exactReference=await publicSearch(new Request('https://api.test/api/search?q=19722&location=Portugal'),{SOURCE_AO_DB:adapter,PUBLIC_ORIGIN:'https://preview.example'});
