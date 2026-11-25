@@ -1298,10 +1298,7 @@ html { scroll-padding-top: 104px; }
 .main-nav > a[aria-current="page"],
 .nav-item > a[aria-current="page"] {
   color: var(--hm-blue);
-}
-.main-nav > a[aria-current="page"]::after,
-.nav-item > a[aria-current="page"]::after {
-  width: 100%;
+  box-shadow: inset 0 -2px 0 var(--hm-blue);
 }
 @media (min-width: 1121px) {
   .nav-submenu {
