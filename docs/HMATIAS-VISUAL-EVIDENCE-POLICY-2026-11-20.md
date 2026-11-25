@@ -31,3 +31,11 @@
 4. Confirmar que o texto descreve apenas evidência suportada.
 5. Verificar texto alternativo, qualidade, enquadramento e comportamento responsivo.
 6. Executar os testes E2E e a verificação estática PT/EN.
+
+### 5. Regra de localização pública — confidencialidade reforçada
+- Para fotografias de obras e intervenções, a única localização pública permitida, quando confirmada e necessária, é **Luanda, Angola**.
+- Nunca publicar bairro, rua, morada, coordenadas, nome de instalação, referência de edifício, geolocalização ou elementos que permitam deduzir o local exacto.
+- Não atribuir Luanda a fotografias cuja localização real não esteja confirmada. Nesses casos, omitir a localização em vez de a inferir.
+- Antes da publicação, inspeccionar e remover metadados EXIF/IPTC/XMP de localização, incluindo GPS, e rever placas, matrículas, fachadas, documentos, uniformes, rostos e outros elementos identificadores visíveis.
+- A localização da sede/contacto institucional da HMATIAS é informação distinta da localização de cada obra. Não a reutilizar como localização automática de projectos.
+- Nas legendas e textos alternativos, usar apenas a designação técnica da actividade e, quando aplicável e confirmada, a referência geral **Luanda, Angola**.
