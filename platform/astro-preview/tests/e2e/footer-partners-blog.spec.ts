@@ -72,7 +72,7 @@ for (const homepage of homepageRoutes) {
     await expect(nav.locator(".nav-services")).toHaveAttribute("href", isEnglish ? "/en/#services" : "/#servicos");
     await expect(nav.locator(".nav-item").nth(2).locator(":scope > .nav-link")).toHaveAttribute("href", isEnglish ? "/en/#projects" : "/#projetos");
     await expect(nav.getByRole("link", { name: "SOURCE AO", exact: true })).toHaveAttribute("href", homepage.sourceHref);
-    await expect(nav.locator(".nav-item").nth(0).locator(".nav-submenu a")).toHaveCount(3);
+    await expect(nav.locator(".nav-item").nth(0).locator(".nav-submenu a")).toHaveCount(4);
     await expect(nav.locator(".nav-item").nth(1).locator(".nav-submenu a")).toHaveCount(4);
     await expect(nav.locator(".nav-item").nth(2).locator(".nav-submenu a")).toHaveCount(2);
     await expect(nav.locator(".nav-item").nth(3).locator(".nav-submenu a")).toHaveCount(3);
