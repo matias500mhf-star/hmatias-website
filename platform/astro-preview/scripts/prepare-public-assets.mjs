@@ -11,6 +11,7 @@ const publicCatalogues = resolve(scriptDir, "../public/catalogos");
 const repositoryRoot = resolve(scriptDir, "../../../");
 const requiredAssistantAssets = ["assistant.css", "assistant-api-bridge.js", "assistant.js", "assistant-knowledge.js"];
 const requiredCatalogues = ["hmatias-ferramentas-diamantadas-2026.pdf", "hmatias-diamond-tools-2026.pdf"];
+const approvedEpiCatalogue = "ady-ferraz-catalogo-epi.pdf";
 const requiredPhotos = [
   "logistica-estrutura-metalica.webp",
   "perfis-metalicos-estrutura.webp",
@@ -47,6 +48,9 @@ for (const filename of requiredAssistantAssets) {
   cpSync(source, resolve(scriptDir, "../public", filename));
 }
 mkdirSync(publicCatalogues, { recursive: true });
+const epiSource = resolve(repositoryRoot, "catalogos", approvedEpiCatalogue);
+if (!existsSync(epiSource)) throw new Error("Approved EPI catalogue is missing: " + approvedEpiCatalogue);
+cpSync(epiSource, resolve(publicCatalogues, approvedEpiCatalogue));
 for (const filename of requiredCatalogues) {
   const generated = resolve(publicCatalogues, filename);
   if (!existsSync(generated)) throw new Error(`Generated HMATIAS catalogue is missing: ${filename}`);
