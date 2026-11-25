@@ -3,129 +3,150 @@ import { Picture } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
-import PartnerSection from "../../components/PartnerSection.astro";
-import heroPhoto from "../../../../../images/catalogue/instalacoes-embutidas-construcao.webp";
-import metalStructure from "../../../../../images/catalogue/galpao-estrutura-metalica.webp";
-import sitePreparation from "../../../../../images/catalogue/terraplanagem-preparacao-terreno.webp";
-import roofWorks from "../../../../../images/catalogue/cobertura-metalica-substituicao.webp";
-import ruralPavilions from "../../../../../images/catalogue/pavilhoes-rurais-concluidos.webp";
 import { company } from "../../data/site";
+import luandaOverview from "../../../../../images/catalogue/obra-privada-luanda-alvenaria-vista-geral.avif";
+import luandaFormwork from "../../../../../images/catalogue/obra-privada-luanda-cofragem-armadura-fundacao.avif";
+import luandaMasonry from "../../../../../images/catalogue/obra-privada-luanda-detalhe-alvenaria.avif";
 ---
-<BaseLayout
-  title="HMATIAS | Construction, Facilities, Supply and Business Services in Angola"
-  description="Construction, maintenance, procurement and business support for companies and projects in Angola."
-  lang="en"
->
-  <div class="preview-bar"><span><i aria-hidden="true"></i> ASTRO TECHNOLOGY PREVIEW</span><span>HMATIAS · ENGLISH VERSION</span></div>
+<BaseLayout title="HMATIAS | Construction, Facilities, Supply and Procurement in Angola" description="HMATIAS – Prestação de Serviços, Lda. Civil construction and remodelling, facilities maintenance, procurement, industrial supply and business services in Angola." lang="en">
   <SiteHeader />
-  <main>
-    <section class="hero" id="inicio" aria-labelledby="pages-en-index-section-1-heading">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> CONSTRUCTION · FACILITIES · SUPPLY · BUSINESS SERVICES</p>
-        <h1 id="pages-en-index-section-1-heading">Capability to<br /><em>make it happen.</em></h1>
-        <p class="hero-lead">Construction, facilities, procurement and business support for companies and projects in Angola.</p>
-        <div class="hero-actions">
-          <a class="button button-light" href="#services">Explore our services <span aria-hidden="true">↓</span></a>
-          <a class="text-link text-link-light" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contact our team <span aria-hidden="true">↗</span></a>
+  <main class="home-final">
+    <section class="home-hero" id="inicio" aria-labelledby="home-hero-title">
+      <div class="home-hero-copy">
+        <p class="home-eyebrow">HMATIAS <span></span> LUANDA · ANGOLA</p>
+        <h1 id="home-hero-title">Civil construction.<br /><em>Business supply.</em></h1>
+        <p class="home-hero-lead">Construction and remodelling, facilities maintenance, and procurement of materials, equipment and consumables for businesses in Angola.</p>
+        <div class="home-hero-actions"><a class="home-button home-button-light" href={company.contactFormEnUrl} target="_blank" rel="noopener noreferrer">Request a proposal <span>↗</span></a><a class="home-text-link" href="#areas">Business areas <span>↓</span></a></div>
+        <div class="home-hero-foot"><span>{company.legalName}</span><span>Viana · Luanda</span></div>
+      </div>
+      <figure class="home-hero-visual">
+        <Picture src={luandaOverview} alt="Overview of concrete block wall and access opening at a private construction site in Luanda" widths={[720,1080,1440]} sizes="(max-width:900px) 100vw, 54vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={88} loading="eager" fetchpriority="high" decoding="async" />
+        <figcaption><span>DOCUMENTED WORK</span><strong>Civil construction · Luanda</strong><small>Private client · identity confidential</small></figcaption>
+      </figure>
+      <div class="home-hero-index" aria-hidden="true">HM / 01</div>
+    </section>
+    <section class="home-proof" aria-label="HMATIAS operational references">
+      <div><strong>55 m</strong><span>Paving and drainage channels · airport terminal</span></div>
+      <div><strong>2025</strong><span>Office and sanitary facility refurbishment</span></div>
+      <div><strong>2021–24</strong><span>Poultry houses and feed factory project</span></div>
+      <div><strong>Angola</strong><span>Operational base in Viana, Luanda</span></div>
+    </section>
+    <section class="home-intro section-pad" aria-labelledby="home-intro-title">
+      <div class="home-section-index">01 <span>·</span> COMPANY</div>
+      <div class="home-intro-main">
+        <h2 id="home-intro-title">One point of contact for<br /><em>construction, operations and supply.</em></h2>
+        <div><p>HMATIAS – Prestação de Serviços, (SU), Lda is an Angolan company operating in civil construction, facilities and maintenance, procurement and business support services.</p><p>Each request is assessed against its specifications, quantities, location and delivery conditions. Scope, resources, deadlines and costs are defined before a service or supply is accepted.</p><a class="home-inline-link" href="/en/about/">HMATIAS company profile <span>↗</span></a></div>
+      </div>
+    </section>
+    <section class="home-areas section-pad" id="areas" aria-labelledby="home-areas-title">
+      <div class="home-section-head"><div><p class="home-kicker">02 / BUSINESS AREAS</p><h2 id="home-areas-title">Four areas.<br /><em>Defined capabilities.</em></h2></div><p>Review each service area and submit your requirements for commercial and operational assessment.</p></div>
+      <div class="home-area-grid">
+        <a class="home-area-card" href="/en/construction/"><span class="home-area-no">01 / CONSTRUCTION</span><h3>Construction and remodelling</h3><p>Civil works, masonry, paving, drainage, roofing and refurbishment of buildings and spaces.</p><span class="home-area-more">Explore services <b>↗</b></span></a>
+        <a class="home-area-card" href="/en/facilities/"><span class="home-area-no">02 / OPERATIONS</span><h3>Facilities and maintenance</h3><p>Building and facility maintenance, corrective interventions, roof repairs and operational support.</p><span class="home-area-more">Explore services <b>↗</b></span></a>
+        <a class="home-area-card" href="/en/supply/"><span class="home-area-no">03 / SUPPLY</span><h3>Supply and procurement</h3><p>Enquiries and supply of construction materials, PPE, workwear, tools, consumables and lubricants.</p><span class="home-area-more">Categories and catalogues <b>↗</b></span></a>
+        <a class="home-area-card" href="/en/business-services/"><span class="home-area-no">04 / BUSINESS SUPPORT</span><h3>Business Services</h3><p>Institutional documents, commercial proposals, document organisation and administrative support for businesses.</p><span class="home-area-more">Explore services <b>↗</b></span></a>
+      </div>
+    </section>
+    <section class="home-case section-pad" id="projects" aria-labelledby="home-case-title">
+      <div class="home-case-heading"><div><p class="home-kicker">03 / DOCUMENTED WORK</p><h2 id="home-case-title">Civil construction<br /><em>in Luanda.</em></h2></div><div class="home-case-meta"><span>LOCATION</span><strong>Luanda, Angola</strong><span>CLIENT</span><strong>Private entity · identity confidential</strong></div></div>
+      <p class="home-case-summary">Photographic record of a civil construction intervention. The images document foundation preparation with formwork and reinforcement, concrete block laying and the construction of a wall with an access opening. The client's identity is withheld at their request.</p>
+      <div class="home-case-gallery">
+        <figure class="home-case-main"><Picture src={luandaOverview} alt="Overview of a concrete block wall with access opening at the private construction site in Luanda" widths={[720,1080,1440]} sizes="(max-width:760px) 100vw, 60vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={86} loading="lazy" decoding="async" /><figcaption><strong>01</strong><span>Overview · masonry workfront</span></figcaption></figure>
+        <div class="home-case-secondary">
+          <figure><Picture src={luandaFormwork} alt="Formwork and reinforcement positioned for a foundation element" widths={[480,720]} sizes="(max-width:760px) 100vw, 34vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={84} loading="lazy" decoding="async" /><figcaption><strong>02</strong><span>Foundation preparation</span></figcaption></figure>
+          <figure><Picture src={luandaMasonry} alt="Close-up of concrete block laying at the private construction site in Luanda" widths={[480,720]} sizes="(max-width:760px) 100vw, 34vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={84} loading="lazy" decoding="async" /><figcaption><strong>03</strong><span>Masonry detail</span></figcaption></figure>
         </div>
-        <div class="hero-meta"><span>{company.name}</span><span>Viana, Luanda · Angola</span></div>
       </div>
-      <div class="hero-image-wrap">
-        <Picture src={heroPhoto} alt="Building interior under construction, with visible block walls, pipes and technical boxes" widths={[640,960,1280]} sizes="(max-width: 900px) 100vw, 50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={84} loading="eager" fetchpriority="high" decoding="async" />
-        <div class="image-index"><span>01</span><span>MASONRY · VISIBLE TECHNICAL INSTALLATIONS</span></div>
-      </div>
-      <div class="hero-side-note">DELIVERY · SUPPLY · OPERATIONS</div>
+      <a class="home-inline-link" href="/en/works-catalogue/">View works and interventions catalogue <span>↗</span></a>
     </section>
-
-    <section class="intro section-pad" id="company" aria-labelledby="pages-en-index-section-2-heading">
-      <div class="section-kicker">01 / WHO WE ARE</div>
-      <div class="intro-content">
-        <h2 id="pages-en-index-section-2-heading">A service company.<br /><em>Four areas of delivery.</em></h2>
-        <div class="intro-text">
-          <p>HMATIAS supports companies, institutions and private clients through construction and remodelling, facilities and maintenance, procurement and supply, and administrative and business services.</p>
-          <p>From the initial requirement to delivery: clear scope, direct communication and follow-up throughout the agreed work.</p>
-          <a class="underlined-link" href="/en/about/">Meet HMATIAS <span aria-hidden="true">↗</span></a>
-        </div>
+    <section class="home-references section-pad" aria-labelledby="home-references-title">
+      <div class="home-section-head"><div><p class="home-kicker">04 / EXPERIENCE AND REFERENCES</p><h2 id="home-references-title">Project and work<br /><em>references.</em></h2></div><p>Project and work references identified in the company's portfolio.</p></div>
+      <div class="home-reference-list">
+        <article><span>01</span><div><h3>Paving and drainage</h3><p>Intervention at the airport terminal, including paving and drainage channels, with a stated linear extent of 55 metres.</p></div><small>55 LINEAR METRES</small></article>
+        <article><span>02</span><div><h3>Poultry houses and feed factory</h3><p>Construction and development project involving poultry infrastructure and a feed production facility.</p></div><small>2021–2024</small></article>
+        <article><span>03</span><div><h3>Facilities refurbishment</h3><p>Renovation of offices and sanitary facilities within administrative premises.</p></div><small>2025</small></article>
+        <article><span>04</span><div><h3>Industrial roof restoration</h3><p>Roof recovery works at a factory facility.</p></div><small>MAINTENANCE</small></article>
       </div>
+      <p class="home-reference-note">Detailed presentation of each reference is subject to the relevant documentation and disclosure permissions.</p>
     </section>
-
-    <section class="services section-pad" id="services" aria-labelledby="pages-en-index-section-3-heading">
-      <div class="section-heading">
-        <div><div class="section-kicker">02 / WHAT WE DO</div><h2 id="pages-en-index-section-3-heading">Services designed<br /><em>around real requirements.</em></h2></div>
-        <p>Four service areas, one point of contact to assess the requirement and define a suitable scope of work.</p>
-      </div>
-      <div class="service-list">
-        <a class="service-row" href="/en/construction/"><span class="service-number">01</span><span class="service-icon" aria-hidden="true">⌂</span><span class="service-main"><strong>Construction and remodelling</strong><small>Buildings · Infrastructure · Paving · Finishes</small></span><span class="service-arrow">↗</span></a>
-        <a class="service-row" href="/en/facilities/"><span class="service-number">02</span><span class="service-icon" aria-hidden="true">⌘</span><span class="service-main"><strong>Facilities and maintenance</strong><small>Building maintenance · Cleaning · Operational support</small></span><span class="service-arrow">↗</span></a>
-        <a class="service-row" href="/en/supply/"><span class="service-number">03</span><span class="service-icon" aria-hidden="true">▤</span><span class="service-main"><strong>Supply and procurement</strong><small>Sourcing · Materials · Consumables · Equipment</small></span><span class="service-arrow">↗</span></a>
-        <a class="service-row" href="/en/business-services/"><span class="service-number">04</span><span class="service-icon" aria-hidden="true">▣</span><span class="service-main"><strong>Business Services</strong><small>Administrative support · Documentation · Business services</small></span><span class="service-arrow">↗</span></a>
-      </div>
-      <div class="services-foot"><span>01—04</span><span>HMATIAS SERVICE AREAS</span></div>
+    <section class="home-supply section-pad" aria-labelledby="home-supply-title">
+      <div class="home-supply-copy"><p class="home-kicker">05 / HMATIAS SUPPLY</p><h2 id="home-supply-title">Procurement and supply<br /><em>to specification.</em></h2><p>We receive requirements for materials, equipment, tools, PPE, workwear, industrial consumables and lubricants. Enquiries are assessed by reference, brand, quantity, destination and required delivery date.</p><div class="home-supply-actions"><a class="home-button home-button-dark" href="/en/supply/">Explore Supply <span>↗</span></a><a class="home-inline-link" href="/en/supply/#catalogues">Commercial catalogues <span>↗</span></a></div></div>
+      <aside class="home-supply-panel"><span>ENQUIRY PROCESS</span><ol><li><b>01</b><div><strong>Specification</strong><small>Reference, application, quantity and destination.</small></div></li><li><b>02</b><div><strong>Market enquiry</strong><small>Verification of origin, availability and documentation.</small></div></li><li><b>03</b><div><strong>Commercial proposal</strong><small>Price, lead time and logistics subject to confirmation.</small></div></li></ol></aside>
     </section>
-
-
-    <section class="portfolio section-pad" id="projects" aria-labelledby="pages-en-index-section-4-heading">
-      <div class="portfolio-top">
-        <div><div class="section-kicker">03 / VISUAL REFERENCES</div><h2 id="pages-en-index-section-4-heading">Construction elements<br /><em>and visible stages.</em></h2></div>
-        <p>A selection of construction elements and execution stages in the visual archive. Captions describe only what can be observed.</p>
-      </div>
-      <div class="project-grid">
-        <article class="project-card"><figure class="project-photo"><Picture src={metalStructure} alt="Galvanised metal structure and roof sheeting on a building" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure><div class="project-caption"><span>METAL STRUCTURES</span><h3>Metal structure and supporting masonry</h3><p>Metal structure, sheet roof covering and supporting masonry visible during an execution stage.</p></div></article>
-        <article class="project-card"><figure class="project-photo"><Picture src={sitePreparation} alt="Earthmoving equipment on natural ground, with excavated and levelled material visible" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure><div class="project-caption"><span>INFRASTRUCTURE</span><h3>Earthmoving equipment on natural ground</h3><p>Earthmoving equipment on natural ground, with excavated and levelled material visible.</p></div></article>
-        <article class="project-card"><figure class="project-photo"><Picture src={roofWorks} alt="New profiled sheets beside existing sheets on a roof under intervention" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure><div class="project-caption"><span>FACILITIES · MAINTENANCE</span><h3>Profiled roof sheets</h3><p>New profiled sheets positioned beside existing sheets on a roof under intervention.</p></div></article>
-        <article class="project-card"><figure class="project-photo"><Picture src={ruralPavilions} alt="Two elongated pavilions with metal roofing and partially open sides" widths={[640,960]} sizes="(max-width:700px) 100vw, 50vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure><div class="project-caption"><span>RURAL CONSTRUCTION</span><h3>Rural pavilions with metal roofing</h3><p>Two elongated pavilions with metal roofing and partially open sides.</p></div></article>
-      </div>
-      <div class="portfolio-note"><span>VISUAL ARCHIVE · VISIBLE ELEMENTS</span><span>HMATIAS · ANGOLA</span></div>
-      <a class="underlined-link" href="/en/works-catalogue/">View the works catalogue <span aria-hidden="true">↗</span></a>
+    <section class="home-digital section-pad" aria-labelledby="home-digital-title">
+      <div><p class="home-kicker">06 / DIGITAL PLATFORM</p><h2 id="home-digital-title">SOURCE AO<br /><em>Procurement and opportunities.</em></h2><p>A digital platform for structuring quotation requests, organising supply information and connecting business buyers with suppliers.</p><div class="home-digital-actions"><a class="home-button home-button-light" href="/en/source-ao/">Explore SOURCE AO <span>↗</span></a><a class="home-digital-secondary" href="/en/source-ao/smart-rfq/">Prepare a quotation request <span>↗</span></a></div></div>
+      <div class="home-digital-side"><span>HMATIAS DIGITAL ECOSYSTEM</span><strong>SOURCE AO</strong><small>Quotation requests · suppliers · opportunities</small><a href="/en/karta/">Explore KARTA Wallet <span>↗</span></a></div>
     </section>
-
-    <section class="supply-home-highlight section-pad" aria-labelledby="supply-home-heading">
-      <div class="supply-home-copy">
-        <p class="section-kicker">HMATIAS SUPPLY / PROCUREMENT & BUSINESS SUPPLY</p>
-        <h2 id="supply-home-heading">Supply shaped<br /><em>around real requirements.</em></h2>
-        <p>We support businesses in sourcing materials, consumables, equipment, PPE and other supply requirements. Each proposal is prepared against the client's specification, quantity, destination and required timing.</p>
-        <a class="button button-dark" href="/en/supply/">Explore Supply and catalogues <span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="supply-home-points" aria-label="HMATIAS supply model">
-        <div><span>01</span><p><strong>Specification-led sourcing</strong><small>Reference, application and technical requirements.</small></p></div>
-        <div><span>02</span><p><strong>Commercial verification</strong><small>Availability, documentation and terms subject to confirmation.</small></p></div>
-        <div><span>03</span><p><strong>Quotation request</strong><small>A clear route to submit a supply requirement.</small></p></div>
-      </div>
-    </section>
-    <PartnerSection />
-
-    <section class="statement" aria-labelledby="pages-en-index-section-5-heading">
-      <div class="statement-mark" aria-hidden="true">“</div>
-      <div class="statement-content">
-        <h2 id="pages-en-index-section-5-heading">Every project starts with a clear conversation about what needs to be done.</h2><a class="button button-dark" href="#contact">Submit a requirement <span aria-hidden="true">↗</span></a></div>
-      <span class="statement-label">HMATIAS · AO</span>
-    </section>
-
-    <section class="contact section-pad" id="contact" aria-labelledby="pages-en-index-section-6-heading">
-      <div class="contact-grid">
-        <div class="contact-copy"><div class="section-kicker">04 / CONTACT</div><h2 id="pages-en-index-section-6-heading">Let's discuss<br /><em>your project.</em></h2><p>Share the service required, the location and what you intend to achieve. The HMATIAS team can review the request and outline the next steps.</p><div class="contact-details"><a href={company.telephoneUri}>{company.phone}</a><a href={`mailto:${company.commercialEmail}`}>{company.commercialEmail}</a><a href={`mailto:${company.institutionalEmail}`}>{company.institutionalEmail}</a><span class="contact-address">{company.address}</span></div></div>
-        <div class="contact-actions"><a class="contact-action" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contact us on WhatsApp <b>↗</b></a><a class="contact-action" href={`mailto:${company.commercialEmail}?subject=HMATIAS%20service%20enquiry`}>Send an email <b>↗</b></a><a class="contact-action" href={company.contactFormEnUrl} target="_blank" rel="noopener noreferrer">Open official contact form <b>↗</b></a><a class="contact-action" href="/en/source-ao/smart-rfq/">Prepare a supply request <b>↗</b></a><p class="contact-small">A submitted enquiry is subject to review and does not constitute acceptance of a contract or confirmation of supply availability.</p></div>
-      </div>
-    </section>
+    <section class="contact section-pad" id="contact" aria-labelledby="home-contact-title"><div class="contact-grid"><div class="contact-copy"><div class="section-kicker">07 / CONTACT</div><h2 id="home-contact-title">Discuss your<br /><em>next requirement.</em></h2><p>Send the scope, location, quantities and timing required. HMATIAS will review the information and confirm the next steps.</p><div class="contact-details"><a href={company.telephoneUri}>{company.phone}</a><a href={"mailto:"+company.commercialEmail}>{company.commercialEmail}</a><a href={"mailto:"+company.institutionalEmail}>{company.institutionalEmail}</a><span class="contact-address">{company.address}</span></div></div><div class="contact-actions"><a class="contact-action" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contact via WhatsApp <b>↗</b></a><a class="contact-action" href={"mailto:"+company.commercialEmail+"?subject=HMATIAS%20business%20enquiry"}>Send an email <b>↗</b></a><a class="contact-action" href={company.contactFormEnUrl} target="_blank" rel="noopener noreferrer">Open official contact form <b>↗</b></a><a class="contact-action" href="/en/source-ao/smart-rfq/">Submit a supply enquiry <b>↗</b></a><p class="contact-small">All enquiries are subject to review and confirmation of scope, availability and commercial terms.</p></div></div></section>
   </main>
   <SiteFooter />
-  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
 <style>
-.supply-home-highlight{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:clamp(32px,7vw,100px);align-items:center;background:var(--hm-light)}
-.supply-home-copy h2,.supply-catalogue-copy h2{margin:18px 0 20px;font-family:var(--hm-serif);font-size:clamp(34px,5vw,62px);font-weight:450;line-height:1.04;letter-spacing:-.045em}
-.supply-home-copy h2 em,.supply-catalogue-copy h2 em{font-weight:400}
-.supply-home-copy>p:not(.section-kicker),.supply-catalogue-copy>p:not(.section-kicker){max-width:650px;color:var(--hm-muted);font-size:14px;line-height:1.85}
-.supply-home-copy .button{margin-top:18px}
-.supply-home-points{border-top:1px solid var(--hm-line)}
-.supply-home-points>div{display:grid;grid-template-columns:38px 1fr;gap:14px;padding:20px 0;border-bottom:1px solid var(--hm-line)}
-.supply-home-points>div>span{color:var(--hm-blue);font-family:var(--hm-serif);font-size:18px}
-.supply-home-points p{display:grid;gap:5px;margin:0}
-.supply-home-points strong{color:var(--hm-ink);font-size:13px;font-weight:650}
-.supply-home-points small{color:var(--hm-muted);font-size:11px;line-height:1.65}
-.supply-catalogue-note{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);gap:40px;align-items:center;background:var(--hm-light)}
-.supply-catalogue-action{padding:25px;border:1px solid var(--hm-line);background:var(--hm-paper)}
-.supply-catalogue-action p{margin:0 0 18px;color:var(--hm-ink);font-size:15px;line-height:1.6}
-.supply-catalogue-action small{display:block;margin-top:14px;color:var(--hm-muted);font-size:11px;line-height:1.65}
-@media(max-width:760px){.supply-home-highlight,.supply-catalogue-note{grid-template-columns:1fr;gap:26px}.supply-catalogue-action{padding:20px}}
+.home-final{--home-gutter:clamp(22px,6.2vw,104px);color:var(--hm-ink)}
+.home-hero{position:relative;min-height:min(720px,calc(100svh - 84px));display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);align-items:stretch;padding:0 var(--home-gutter);background:var(--hm-navy);color:#fff;overflow:hidden}
+.home-hero-copy{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:clamp(54px,7vw,104px) clamp(22px,4vw,64px) clamp(48px,6vw,78px) 0}
+.home-eyebrow,.home-kicker,.home-section-index,.home-area-no,.home-case-meta>span,.home-supply-panel>span,.home-digital-side>span{font-family:var(--hm-mono);font-size:9px;letter-spacing:.14em;font-weight:600}
+.home-eyebrow{display:flex;align-items:center;gap:12px;color:#b9d8ed}.home-eyebrow span{width:32px;height:1px;background:#48baf5}
+.home-hero h1{max-width:660px;margin:26px 0 0;font-size:clamp(43px,5.8vw,78px);font-weight:560;line-height:1.01;letter-spacing:-.065em}
+.home-hero h1 em,.home-intro h2 em,.home-section-head h2 em,.home-case-heading h2 em,.home-supply h2 em,.home-digital h2 em{font-family:var(--hm-serif);font-weight:400;color:#8fc8ef}
+.home-hero-lead{max-width:560px;margin:26px 0 0;color:#dceafa;font-size:14px;line-height:1.9}
+.home-hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:24px;margin-top:34px}
+.home-button{min-height:49px;padding:0 19px;display:inline-flex;align-items:center;justify-content:space-between;gap:22px;font-size:11px;font-weight:750;transition:transform .18s ease,background .18s ease}
+.home-button:hover{transform:translateY(-2px)}.home-button-light{color:var(--hm-navy);background:#fff}.home-button-dark{color:#fff;background:var(--hm-navy)}
+.home-text-link{color:#fff;font-size:11px;font-weight:650}
+.home-hero-foot{display:flex;flex-wrap:wrap;gap:20px;margin-top:clamp(38px,6vw,72px);padding-top:16px;border-top:1px solid #ffffff35;color:#b9cadd;font-size:9px;letter-spacing:.04em}
+.home-hero-visual{position:relative;min-height:540px;margin:0 calc(var(--home-gutter) * -1) 0 0;overflow:hidden;background:#dbe5ec}
+.home-hero-visual:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,#031f3dc9)}
+.home-hero-visual img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center}
+.home-hero-visual figcaption{position:absolute;z-index:1;left:clamp(20px,3vw,42px);right:24px;bottom:30px;display:grid;gap:7px;color:#fff}
+.home-hero-visual figcaption span{font-family:var(--hm-mono);font-size:9px;letter-spacing:.14em;color:#b9d8ed}.home-hero-visual figcaption strong{font-size:17px;font-weight:650}.home-hero-visual figcaption small{font-size:11px;color:#e2edf5}
+.home-hero-index{position:absolute;z-index:2;right:var(--home-gutter);top:22px;color:#fff;font-family:var(--hm-mono);font-size:9px;letter-spacing:.15em}
+.home-proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:0 var(--home-gutter);background:#fff;border-bottom:1px solid var(--hm-line)}
+.home-proof>div{min-height:112px;padding:23px 22px 22px 0;display:flex;flex-direction:column;justify-content:center;gap:7px;border-right:1px solid var(--hm-line)}.home-proof>div+div{padding-left:22px}.home-proof>div:last-child{border-right:0}
+.home-proof strong{color:var(--hm-navy);font-family:var(--hm-display);font-size:25px;font-weight:650;letter-spacing:-.04em}.home-proof span{max-width:245px;color:var(--hm-muted);font-size:10px;line-height:1.6}
+.section-pad{padding:clamp(58px,7.5vw,104px) var(--home-gutter)}
+.home-intro{display:grid;grid-template-columns:minmax(120px,.45fr) minmax(0,1.55fr);gap:clamp(28px,5vw,70px);background:var(--hm-paper)}
+.home-section-index{color:var(--hm-blue)}.home-section-index span{color:#9bb0c2}
+.home-intro-main{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(250px,.9fr);gap:clamp(30px,5vw,70px)}
+.home-intro h2,.home-section-head h2,.home-case-heading h2,.home-supply h2,.home-digital h2{margin:0;font-size:clamp(34px,4.5vw,58px);font-weight:550;line-height:1.06;letter-spacing:-.055em}
+.home-intro h2 em,.home-section-head h2 em,.home-case-heading h2 em,.home-supply h2 em{color:var(--hm-blue)}
+.home-intro-main>div p{margin:0 0 14px;color:var(--hm-muted);font-size:12px;line-height:1.9}
+.home-inline-link{display:inline-flex;align-items:center;gap:14px;margin-top:14px;padding-bottom:8px;border-bottom:1px solid var(--hm-blue);color:var(--hm-blue);font-size:10px;font-weight:750}
+.home-areas{background:var(--hm-light)}.home-section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:35px}.home-kicker{margin:0 0 18px;color:var(--hm-blue)}.home-section-head>p{max-width:310px;margin:0;color:var(--hm-muted);font-size:11px;line-height:1.85}
+.home-area-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:42px}
+.home-area-card{min-height:290px;padding:24px 20px;display:flex;flex-direction:column;border:1px solid var(--hm-line);background:#fff;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.home-area-card:hover{transform:translateY(-4px);border-color:#9bbbd7;box-shadow:0 14px 30px #062d5610}.home-area-no{color:var(--hm-blue);font-size:8px}
+.home-area-card h3{margin:34px 0 12px;font-size:19px;font-weight:650;line-height:1.2;letter-spacing:-.035em}.home-area-card p{margin:0;color:var(--hm-muted);font-size:11px;line-height:1.8}
+.home-area-more{display:flex;justify-content:space-between;gap:10px;margin-top:auto;padding-top:25px;color:var(--hm-blue);font-size:10px;font-weight:750}.home-area-more b{font-size:14px}
+.home-case{background:#fff}.home-case-heading{display:grid;grid-template-columns:1fr minmax(220px,.55fr);gap:30px;align-items:end}
+.home-case-meta{display:grid;grid-template-columns:1fr;gap:6px;padding:15px 18px;border-left:2px solid var(--hm-blue);background:var(--hm-light)}.home-case-meta>span{margin-top:5px;color:var(--hm-muted);font-size:8px}.home-case-meta strong{font-size:11px;font-weight:650}
+.home-case-summary{max-width:780px;margin:24px 0 32px;color:var(--hm-muted);font-size:12px;line-height:1.9}
+.home-case-gallery{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(220px,.65fr);gap:12px}.home-case-gallery figure{position:relative;margin:0;min-width:0;overflow:hidden;background:var(--hm-light)}
+.home-case-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}.home-case-gallery figure:hover img{transform:scale(1.025)}
+.home-case-main{min-height:500px}.home-case-secondary{display:grid;grid-template-rows:1fr 1fr;gap:12px}.home-case-secondary figure{min-height:240px}
+.home-case-gallery figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:15px 17px;color:#fff;background:linear-gradient(transparent,#031f3dc9)}
+.home-case-gallery figcaption strong{font-family:var(--hm-mono);font-size:10px;color:#b9d8ed}.home-case-gallery figcaption span{font-size:10px;font-weight:650}
+.home-references{background:var(--hm-navy);color:#fff}.home-references .home-section-head h2{color:#fff}.home-references .home-section-head h2 em{color:#8fc8ef}.home-references .home-kicker{color:#8fc8ef}.home-references .home-section-head>p{color:#dceafa}
+.home-reference-list{margin-top:38px;border-top:1px solid #ffffff35}.home-reference-list article{display:grid;grid-template-columns:42px minmax(0,1fr) minmax(120px,.35fr);gap:18px;align-items:center;padding:21px 0;border-bottom:1px solid #ffffff35}
+.home-reference-list article>span{color:#8fc8ef;font-family:var(--hm-mono);font-size:11px}.home-reference-list h3{margin:0 0 7px;color:#fff;font-size:15px;font-weight:650}
+.home-reference-list p{max-width:720px;margin:0;color:#dceafa;font-size:11px;line-height:1.75}.home-reference-list small{color:#b9d8ed;font-family:var(--hm-mono);font-size:8px;letter-spacing:.1em;text-align:right}
+.home-reference-note{margin:17px 0 0;color:#b9cadd;font-size:9px;line-height:1.7}
+.home-supply{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:clamp(35px,7vw,95px);align-items:center;background:var(--hm-light)}
+.home-supply h2 em{color:var(--hm-blue)}.home-supply-copy>p:not(.home-kicker){max-width:620px;margin:20px 0 0;color:var(--hm-muted);font-size:12px;line-height:1.9}
+.home-supply-actions{display:flex;align-items:center;flex-wrap:wrap;gap:22px;margin-top:25px}.home-supply-panel{padding:27px;background:#fff;border:1px solid var(--hm-line)}
+.home-supply-panel>span{color:var(--hm-blue)}.home-supply-panel ol{display:grid;gap:0;margin:18px 0 0;padding:0;list-style:none}
+.home-supply-panel li{display:grid;grid-template-columns:35px 1fr;gap:12px;padding:16px 0;border-top:1px solid var(--hm-line)}.home-supply-panel li>b{color:var(--hm-blue);font-family:var(--hm-mono);font-size:11px}
+.home-supply-panel li div{display:grid;gap:5px}.home-supply-panel li strong{font-size:12px}.home-supply-panel li small{color:var(--hm-muted);font-size:10px;line-height:1.65}
+.home-digital{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(250px,.85fr);gap:50px;align-items:center;color:#fff;background:#031f3d}
+.home-digital .home-kicker{color:#8fc8ef}.home-digital h2 em{color:#8fc8ef}
+.home-digital>div:first-child>p:not(.home-kicker){max-width:640px;margin:20px 0 0;color:#dceafa;font-size:12px;line-height:1.9}
+.home-digital-actions{display:flex;align-items:center;flex-wrap:wrap;gap:22px;margin-top:25px}.home-digital-secondary{color:#fff;font-size:10px;font-weight:650}
+.home-digital-side{padding:26px;border:1px solid #ffffff3a;background:#ffffff09}.home-digital-side>span{color:#8fc8ef}
+.home-digital-side>strong{display:block;margin-top:20px;color:#fff;font-family:var(--hm-display);font-size:clamp(27px,3vw,39px);letter-spacing:-.04em}
+.home-digital-side>small{display:block;margin-top:8px;color:#dceafa;font-size:11px;line-height:1.7}
+.home-digital-side>a{display:inline-flex;gap:12px;margin-top:25px;padding-bottom:8px;border-bottom:1px solid #8fc8ef;color:#fff;font-size:10px;font-weight:700}
+@media(max-width:1050px){.home-area-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-hero{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}.home-intro-main{grid-template-columns:1fr}.home-case-main{min-height:420px}}
+@media(max-width:760px){.home-hero{min-height:0;grid-template-columns:1fr;padding:0}.home-hero-copy{padding:54px var(--home-gutter) 38px}.home-hero h1{font-size:clamp(42px,11vw,62px)}.home-hero-visual{min-height:390px;margin:0}.home-hero-index{top:18px;right:var(--home-gutter)}.home-proof{grid-template-columns:repeat(2,minmax(0,1fr))}.home-proof>div{min-height:100px;padding:18px 12px 18px 0}.home-proof>div+div{padding-left:14px}.home-proof>div:nth-child(2){border-right:0}.home-proof>div:nth-child(n+3){border-top:1px solid var(--hm-line)}.home-intro{grid-template-columns:1fr;gap:20px}.home-intro-main{gap:20px}.home-section-head{display:block}.home-section-head>p{margin-top:18px}.home-area-grid{margin-top:28px}.home-area-card{min-height:260px;padding:19px 16px}.home-area-card h3{font-size:17px;margin-top:25px}.home-case-heading{grid-template-columns:1fr;gap:22px}.home-case-gallery{grid-template-columns:1fr}.home-case-main{min-height:340px}.home-case-secondary{grid-template-columns:1fr 1fr;grid-template-rows:1fr}.home-case-secondary figure{min-height:190px}.home-reference-list article{grid-template-columns:28px minmax(0,1fr);gap:12px}.home-reference-list small{grid-column:2;text-align:left}.home-supply,.home-digital{grid-template-columns:1fr;gap:28px}.home-supply-panel{padding:21px}}
+@media(max-width:430px){.home-area-grid{grid-template-columns:1fr}.home-area-card{min-height:220px}.home-case-main{min-height:270px}.home-case-secondary figure{min-height:140px}.home-case-gallery figcaption{padding:10px 11px}.home-case-gallery figcaption span{font-size:9px}.home-hero-visual{min-height:310px}}
+@media(prefers-reduced-motion:reduce){.home-area-card,.home-button,.home-case-gallery img{transition:none}}
 </style>
 </BaseLayout>
