@@ -26,6 +26,10 @@
   --hm-blue: #0065cc;
   --hm-blue-mid: #0b477c;
   --hm-sky: #48baf5;
+  --hm-cyan-light: #83e1ff;
+  --hm-glow-soft: 0 0 26px rgb(72 186 245 / 16%);
+  --hm-content-width: 1320px;
+  --hm-reading-width: 760px;
   --hm-sky-soft: #eaf4fd;
   --hm-paper: #f8fbfe;
   --hm-light: #f4f8fc;
@@ -1325,5 +1329,74 @@ html { scroll-padding-top: 104px; }
   .header-cta,
   .language-switch {
     transition: none !important;
+  }
+}
+
+
+/* HMATIAS visual system — controlled light, consistent hierarchy and responsive media */
+.hero,
+.construction-hero,
+.editorial-hero,
+.specialist-hero {
+  background-image: radial-gradient(ellipse at 82% 18%, rgb(72 186 245 / 13%), transparent 36%);
+  background-color: var(--hm-navy);
+}
+.hero h1 em,
+.editorial-hero h1 em,
+.specialist-copy h1 em {
+  text-shadow: 0 0 28px rgb(72 186 245 / 13%);
+}
+.button-light:hover,
+.button-dark:hover,
+.header-cta:hover {
+  box-shadow: var(--hm-glow-soft);
+}
+.button-light span,
+.button-dark span,
+.header-cta span {
+  color: var(--hm-cyan-light);
+}
+.section-heading,
+.portfolio-top,
+.partner-section-head {
+  scroll-margin-top: 110px;
+}
+.section-heading > div,
+.portfolio-top > div,
+.partner-section-head > div {
+  min-width: 0;
+}
+.section-heading h2,
+.portfolio-top h2,
+.partner-section-head h2 {
+  text-wrap: balance;
+}
+.construction-hero-image,
+.hero-image-wrap,
+.supply-evidence-photo,
+.construction-work-card figure,
+.project-photo {
+  min-width: 0;
+}
+.construction-hero-image img,
+.hero-image-wrap img,
+.supply-evidence-photo img,
+.construction-work-card figure img,
+.project-photo img {
+  max-width: 100%;
+}
+@media (max-width: 650px) {
+  .hero,
+  .construction-hero,
+  .editorial-hero,
+  .specialist-hero {
+    background-image: radial-gradient(ellipse at 90% 8%, rgb(72 186 245 / 11%), transparent 42%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button-light:hover,
+  .button-dark:hover,
+  .header-cta:hover {
+    box-shadow: none;
   }
 }
