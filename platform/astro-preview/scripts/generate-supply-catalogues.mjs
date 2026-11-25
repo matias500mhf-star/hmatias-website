@@ -76,7 +76,7 @@ function buildPageContents(items, english) {
   const crownCount = items.filter((item) => item.subcategory === "diamond-core-crowns").length;
   const grindCount = items.filter((item) => item.subcategory === "diamond-grinding-polishing").length;
   let cover = rect(0, 0, 595, 842, "0.02 0.12 0.23") + rect(42, 758, 64, 4, "0.18 0.63 0.91");
-  cover += text(42, 725, 10, "HMATIAS  /  SUPPLY", "F2", "0.72 0.86 0.97");
+  cover += text(42, 725, 10, "HMATIAS", "F2", "0.72 0.86 0.97");
   if (english) {
     cover += text(42, 610, 36, "DIAMOND", "F2", "1 1 1") + text(42, 565, 36, "TOOLS", "F2", "1 1 1");
   } else {
@@ -87,7 +87,7 @@ function buildPageContents(items, english) {
   cover += text(42, 425, 12, english ? "TECHNICAL CATALOGUE" : "CATÁLOGO TÉCNICO", "F2", "0.42 0.76 0.98");
   cover += text(42, 398, 11, coverLead, "F1", "0.91 0.95 0.98");
   cover += text(42, 376, 11, coverSub, "F1", "0.91 0.95 0.98");
-  cover += text(42, 338, 9, english ? (discCount + " cutting-disc entries  ·  " + crownCount + " core-crown entries  ·  " + grindCount + " grinding/polishing entries") : (discCount + " referências de discos  ·  " + crownCount + " famílias de coroas  ·  " + grindCount + " entradas de desbaste/polimento"), "F2", "0.72 0.86 0.97");
+  cover += text(42, 338, 9, english ? (discCount + " cutting-disc entries  ·  " + crownCount + " core-crown entries  ·  " + grindCount + " grinding/polishing entries") : (discCount + " referências de discos  ·  " + crownCount + " referências de coroas  ·  " + grindCount + " entradas de desbaste/polimento"), "F2", "0.72 0.86 0.97");
   cover += text(42, 92, 9, edition, "F2", "0.72 0.86 0.97");
   cover += text(42, 68, 9, "comercialhmatiasps.com  ·  geral@comercialhmatiasps.com", "F1", "0.72 0.86 0.97");
   pages.push(cover);
@@ -97,7 +97,7 @@ function buildPageContents(items, english) {
     for (let offset = 0; offset < group.items.length; offset += perPage) {
       const subset = group.items.slice(offset, offset + perPage);
       let body = rect(0, 0, 595, 842, "0.98 0.99 1") + rect(0, 790, 595, 52, "0.02 0.12 0.23");
-      body += text(38, 811, 9, "HMATIAS  /  SUPPLY", "F2", "0.82 0.91 0.98");
+      body += text(38, 811, 9, "HMATIAS", "F2", "0.82 0.91 0.98");
       body += text(38, 765, 18, english ? group.titleEn : group.titlePt, "F2", "0.02 0.12 0.23");
       body += text(38, 746, 8, english ? "PRODUCT FAMILY  ·  TECHNICAL REFERENCES" : "FAMÍLIA DE PRODUTO  ·  REFERÊNCIAS TÉCNICAS", "F2", "0.12 0.39 0.63") + line(38, 733, 557, 733, "0.82 0.87 0.92");
       let y = 714;
@@ -128,7 +128,7 @@ function buildPageContents(items, english) {
   }
 
   let end = rect(0, 0, 595, 842, "0.95 0.97 0.99") + rect(0, 790, 595, 52, "0.02 0.12 0.23");
-  end += text(38, 811, 9, "HMATIAS  /  SUPPLY", "F2", "0.82 0.91 0.98");
+  end += text(38, 811, 9, "HMATIAS", "F2", "0.82 0.91 0.98");
   end += text(42, 716, 24, english ? "Prepare your enquiry" : "Prepare o seu pedido", "F2", "0.02 0.12 0.23");
   end += text(42, 680, 11, english ? "For a comparable quotation, please provide:" : "Para uma consulta comparável, indique:", "F1", "0.30 0.39 0.48");
   const checklist = english ? [
@@ -175,7 +175,7 @@ function renderPdf(pages, english) {
   objects[2] = null;
   objects[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
   objects[4] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
-  objects[5] = "<< /Title <" + hexText(english ? "HMATIAS | Diamond Tools Technical Catalogue" : "HMATIAS | Catalogo Tecnico de Ferramentas Diamantadas") + "> /Author <" + hexText("HMATIAS - Prestacao de Servicos, (SU), Lda.") + "> /Subject <" + hexText("Technical product references and specification summary") + "> /Creator <" + hexText("HMATIAS Supply Catalogue Generator") + "> >>";
+  objects[5] = "<< /Title <" + hexText(english ? "HMATIAS | Diamond Tools Technical Catalogue" : "HMATIAS | Catalogo Tecnico de Ferramentas Diamantadas") + "> /Author <" + hexText("HMATIAS - Prestacao de Servicos, (SU), Lda.") + "> /Subject <" + hexText("Technical product references and specification summary") + "> /Creator <" + hexText("HMATIAS Catalogue Generator") + "> >>";
   const refs = [];
   for (const content of pages) {
     const streamId = objects.length;
