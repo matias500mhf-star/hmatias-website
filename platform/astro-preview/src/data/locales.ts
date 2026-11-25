@@ -4,6 +4,8 @@ const ptToEn: Record<string, string> = {
   "/karta/": "/en/karta/",
   "/estaleiro/": "/en/integrated-yard/",
   "/credibilidade/": "/en/credibility/",
+  "/areas-de-negocio/": "/en/business-areas/",
+  "/brochura-institucional/": "/en/company-brochure/",
   "/construcao/": "/en/construction/",
   "/facilities/": "/en/facilities/",
   "/clean/": "/en/clean/",
@@ -30,29 +32,11 @@ const ptToEn: Record<string, string> = {
   "/blog/recepcao-e-conferencia-de-fornecimentos/": "/en/blog/receiving-and-inspecting-supply-deliveries/",
   "/blog/comparar-propostas-perfis-metalicos-chapas-cobertura/": "/en/blog/comparing-metal-profiles-and-roofing-sheets/",
 };
-
-const enToPt: Record<string, string> = Object.fromEntries(
-  Object.entries(ptToEn).map(([portuguese, english]) => [english, portuguese]),
-);
-
-const normalizePath = (pathname: string) =>
-  pathname.endsWith("/") ? pathname : `${pathname}/`;
-
-export function getLanguagePair(pathname: string): { pt: string; en: string } | undefined {
-  const path = normalizePath(pathname);
-  const portuguesePath = enToPt[path] ?? path;
-  const englishPath = ptToEn[portuguesePath];
-
-  if (!englishPath) return undefined;
-  return { pt: portuguesePath, en: englishPath };
+const enToPt: Record<string, string> = Object.fromEntries(Object.entries(ptToEn).map(([pt,en]) => [en,pt]));
+const normalizePath=(pathname:string)=>pathname.endsWith("/")?pathname:`${pathname}/`;
+export function getLanguagePair(pathname:string):{pt:string;en:string}|undefined{
+  const path=normalizePath(pathname);const portuguesePath=enToPt[path]??path;const englishPath=ptToEn[portuguesePath];if(!englishPath)return undefined;return {pt:portuguesePath,en:englishPath};
 }
-
-export function getLanguageSwitchPath(pathname: string, isEnglish: boolean): string {
-  const pair = getLanguagePair(pathname);
-  if (pair) return isEnglish ? pair.pt : pair.en;
-
-  const path = normalizePath(pathname);
-  if (path.startsWith("/en/blog/")) return "/blog/";
-  if (path.startsWith("/blog/")) return "/en/blog/";
-  return isEnglish ? "/" : "/en/";
+export function getLanguageSwitchPath(pathname:string,isEnglish:boolean):string{
+  const pair=getLanguagePair(pathname);if(pair)return isEnglish?pair.pt:pair.en;const path=normalizePath(pathname);if(path.startsWith("/en/blog/"))return "/blog/";if(path.startsWith("/blog/"))return "/en/blog/";return isEnglish?"/":"/en/";
 }

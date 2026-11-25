@@ -1,0 +1,57 @@
+---
+import { Picture } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { company } from "../../data/site";
+import constructionPhoto from "../../../../../images/catalogue/instalacoes-embutidas-construcao.webp";
+import facilitiesPhoto from "../../../../../images/catalogue/caixilharia-vidro-fumado.webp";
+import supplyPhoto from "../../../../../images/catalogue/perfis-metalicos-estrutura.webp";
+import "../../styles/business-areas.css";
+---
+<BaseLayout title="Áreas de Negócio | HMATIAS — Angola" description="Conheça as quatro áreas de negócio da HMATIAS: construção e remodelação, facilities e manutenção, supply e procurement, e apoio administrativo e empresarial em Angola.">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS · ÁREAS DE NEGÓCIO</span><span>QUATRO ÁREAS · UM PONTO DE CONTACTO</span></div>
+  <SiteHeader />
+  <main class="business-areas-page">
+    <section class="areas-hero" aria-labelledby="areas-title">
+      <div class="areas-hero-copy">
+        <nav class="areas-breadcrumb" aria-label="Navegação estrutural"><a href="/">Início</a><span>/</span><span>Áreas de Negócio</span></nav>
+        <p class="eyebrow"><span class="eyebrow-line"></span> CAPACIDADES HMATIAS · ANGOLA</p>
+        <h1 id="areas-title">Quatro áreas.<br /><em>Uma resposta integrada.</em></h1>
+        <p class="areas-lead">A HMATIAS apoia empresas, instituições e clientes particulares em necessidades de construção, operação de instalações, fornecimento e organização administrativa.</p>
+        <div class="areas-actions"><a class="button button-light" href="#areas">Explorar áreas de negócio <span aria-hidden="true">↓</span></a><a class="text-link text-link-light" href="/brochura-institucional/">Abrir brochura institucional <span aria-hidden="true">↗</span></a></div>
+        <div class="areas-meta"><span>{company.legalName}</span><span>{company.shortAddress}</span></div>
+      </div>
+      <aside class="areas-index"><span class="areas-index-label">ÁREAS OPERACIONAIS</span><ol><li><span>01</span> Construção e remodelação</li><li><span>02</span> Facilities e manutenção</li><li><span>03</span> Supply e procurement</li><li><span>04</span> Business Services</li></ol><small>O âmbito de cada pedido é avaliado antes da apresentação de uma proposta.</small></aside>
+    </section>
+    <section class="areas-intro section-pad">
+      <p class="section-kicker">01 / ESTRUTURA DE SERVIÇOS</p>
+      <div class="areas-intro-content"><h2>Capacidade organizada<br /><em>em torno do que precisa.</em></h2><div><p>As áreas de negócio da HMATIAS facilitam o enquadramento de cada necessidade e encaminham o pedido para o serviço adequado.</p><p>O âmbito, as quantidades, a localização, os entregáveis, os prazos e as condições comerciais são clarificados antes de qualquer compromisso.</p></div></div>
+    </section>
+    <section class="areas-grid-section section-pad" id="areas" aria-labelledby="areas-grid-title">
+      <div class="areas-heading"><div><p class="section-kicker">02 / ÁREAS DE NEGÓCIO</p><h2 id="areas-grid-title">Quatro frentes de atuação.<br /><em>Um processo claro.</em></h2></div><p>Consulte o âmbito de cada área e aceda à respectiva página especializada.</p></div>
+      <div class="areas-grid">
+        <article class="area-card">
+          <figure class="area-photo"><Picture src={constructionPhoto} alt="Registo fotográfico HMATIAS de alvenaria e instalações técnicas embutidas" widths={[480,720,960]} sizes="(max-width:760px) 100vw,50vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={88} loading="lazy" decoding="async" /><figcaption>01 · CONSTRUÇÃO</figcaption></figure>
+          <div class="area-body"><p class="area-kicker">OBRAS · REABILITAÇÃO · INFRAESTRUTURA</p><h3>Construção e<br /><em>remodelação.</em></h3><p>Trabalhos de construção civil e intervenção em instalações e infraestruturas existentes.</p><ul><li>Construção civil e remodelação de espaços</li><li>Preparação de terrenos e pavimentação</li><li>Coberturas e estruturas metálicas</li><li>Intervenções em escritórios e áreas de apoio</li></ul><a class="area-link" href="/construcao/">Explorar Construção e Remodelação <span>↗</span></a></div>
+        </article>
+        <article class="area-card">
+          <figure class="area-photo"><Picture src={facilitiesPhoto} alt="Caixilharia de alumínio e vidro numa instalação existente" widths={[480,720,960]} sizes="(max-width:760px) 100vw,50vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={88} loading="lazy" decoding="async" /><figcaption>02 · FACILITIES</figcaption></figure>
+          <div class="area-body"><p class="area-kicker">MANUTENÇÃO · CONSERVAÇÃO · OPERAÇÃO</p><h3>Facilities e<br /><em>manutenção.</em></h3><p>Manutenção, conservação e apoio operacional para instalações empresariais e institucionais.</p><ul><li>Manutenção preventiva e correctiva</li><li>Limpeza profissional e conservação</li><li>Apoio operacional e acompanhamento</li><li>Intervenções localizadas em coberturas e estruturas</li></ul><a class="area-link" href="/facilities/">Explorar Facilities e Manutenção <span>↗</span></a></div>
+        </article>
+        <article class="area-card">
+          <figure class="area-photo"><Picture src={supplyPhoto} alt="Perfis metálicos para aplicações de construção" widths={[480,720,960]} sizes="(max-width:760px) 100vw,50vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={88} loading="lazy" decoding="async" /><figcaption>03 · SUPPLY & PROCUREMENT</figcaption></figure>
+          <div class="area-body"><p class="area-kicker">SOURCING · CONSULTA · FORNECIMENTO</p><h3>Supply e<br /><em>procurement.</em></h3><p>Consulta e organização de soluções de fornecimento a partir dos requisitos técnicos e comerciais do cliente.</p><ul><li>Materiais de construção e perfis metálicos</li><li>Consumíveis industriais e ferramentas</li><li>EPI, fardamento e equipamentos</li><li>Lubrificantes e fluidos técnicos</li></ul><a class="area-link" href="/supply/">Explorar Supply e Procurement <span>↗</span></a><small class="area-note">A HMATIAS trabalha sob consulta. Disponibilidade, preço, documentação e logística são confirmados por pedido.</small></div>
+        </article>
+        <article class="area-card">
+          <div class="area-visual" aria-hidden="true"><span class="area-visual-label">HMATIAS BUSINESS SERVICES</span><div class="area-document"><i></i><i></i><i></i><i></i><b>DOC</b></div><div class="area-visual-tags"><span>DOCUMENTAÇÃO</span><span>PROPOSTAS</span><span>ORGANIZAÇÃO</span></div><span class="area-visual-number">04</span></div>
+          <div class="area-body"><p class="area-kicker">DOCUMENTAÇÃO · ADMINISTRAÇÃO · APOIO EMPRESARIAL</p><h3>Business<br /><em>Services.</em></h3><p>Apoio administrativo e documental para profissionais e pequenas e médias empresas, com âmbito e entregáveis previamente definidos.</p><ul><li>Redação e formatação institucional</li><li>Gestão e organização documental</li><li>Propostas, cotações e materiais comerciais</li><li>CV profissional e apresentações empresariais</li></ul><a class="area-link" href="/business-services/">Explorar Business Services <span>↗</span></a></div>
+        </article>
+      </div>
+    </section>
+    <section class="areas-method section-pad"><div><p class="section-kicker">03 / FORMA DE TRABALHO</p><h2>Do pedido à proposta.<br /><em>Sem pressupostos.</em></h2></div><div class="areas-method-list"><article><span>01</span><div><h3>Compreender a necessidade</h3><p>Reunimos a informação disponível: serviço, especificações, quantidades, localização e prazo pretendido.</p></div></article><article><span>02</span><div><h3>Definir o âmbito</h3><p>Clarificamos tarefas, entregáveis, responsabilidades, recursos e eventuais condições de mobilização.</p></div></article><article><span>03</span><div><h3>Confirmar condições</h3><p>Preço, disponibilidade, documentação, prazo e logística são confirmados para cada pedido antes da proposta.</p></div></article></div></section>
+    <section class="areas-contact section-pad"><div><p class="section-kicker">04 / CONTACTO COMERCIAL</p><h2>Tem uma necessidade<br /><em>para avaliar?</em></h2><p>Indique a área, descreva o que precisa e partilhe os elementos disponíveis. A equipa HMATIAS analisará o enquadramento e indicará os próximos passos.</p></div><div class="areas-contact-actions"><a class="button button-light" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contactar por WhatsApp <span>↗</span></a><a class="areas-email" href={"mailto:"+company.commercialEmail+"?subject=Pedido%20de%20informa%C3%A7%C3%A3o%20-%20%C3%81reas%20de%20Neg%C3%B3cio"}>Enviar e-mail ↗</a><a class="areas-brochure" href="/brochura-institucional/">Consultar brochura institucional para impressão ↗</a></div></section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+</BaseLayout>
