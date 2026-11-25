@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { buildPublicCatalog, renderPublicCatalog } from "../../../platform/astro-preview/scripts/generate-public-catalog.mjs";
+import { generateSupplyCatalogues } from "../../../platform/astro-preview/scripts/generate-supply-catalogues.mjs";
 
 const taxonomy = [{
   id: "construction",
@@ -109,6 +110,20 @@ test("public catalogue rejects duplicate ids, incomplete items and unsafe taxono
   assert.throws(() => buildPublicCatalog({...base, items:[...base.items, ...base.items]}), /Duplicate catalogue item id/);
   assert.throws(() => buildPublicCatalog({...base, items:[{...base.items[0], specification:""}]}), /has no specification/);
   assert.throws(() => buildPublicCatalog({...base, taxonomy:[{...taxonomy[0], internal_notes:"private"}]}), /not approved for public export: internal_notes/);
+});
+
+
+test("HMATIAS diamond-tools catalogues generate valid PT and EN PDFs without sourcing identities", () => {
+  const master = JSON.parse(readFileSync(new URL("../../data/catalog.json", import.meta.url), "utf8"));
+  const result = generateSupplyCatalogues(master);
+  const expectedCount = master.items.filter((item) => item.category === "diamond-tools").length;
+  assert.equal(result.itemCount, expectedCount);
+  assert.equal(result.pageCount, 2 + Math.ceil(expectedCount / 6));
+  for (const pdf of [result.ptPdf, result.enPdf]) {
+    assert.ok(pdf.startsWith("%PDF-1.4"));
+    assert.ok(pdf.endsWith("%%EOF\n"));
+    assert.doesNotMatch(pdf, /SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga|Würth/i);
+  }
 });
 
 test("generated public catalogue exactly matches the committed safe projection", () => {
