@@ -7,12 +7,12 @@ const businessWhatsapp = company.whatsappUri + "?text=" + encodeURIComponent(
   "Hello HMATIAS. I would like to request an assessment from Business Services. Service required, documents or source information, volume, preferred format and deadline:"
 );
 const serviceItems = [
-  ["01","Administrative documentation and business correspondence","Preparation, editing and organisation of drafts, letters, declarations, notices and other administrative documents."],
-  ["02","Professional CV structuring","Organisation and presentation of a professional profile using information supplied by the client."],
-  ["03","Document management and organisation","Sorting, digitisation, file naming and preparation of document sets for administrative use."],
-  ["04","Commercial proposals and business support","Preparation of quotations, commercial proposals, supporting documentation and materials for business opportunities."],
-  ["05","Business presentations","Visual and documentary structuring of institutional and commercial presentations."],
-  ["06","Ongoing administrative support for SMEs","Recurring administrative support with a monthly scope agreed in advance."]
+  ["01","Administrative documentation and business correspondence","Preparation and review of drafts, letters, declarations, notices and institutional correspondence, with an editable version and final PDF where requested."],
+  ["02","Professional CV structuring","A CV organised around experience, education and skills, with consistent presentation. Factual content is based exclusively on information supplied and approved by the client."],
+  ["03","Document management and organisation","File classification, document inventories, consistent naming and digital folder organisation; digitisation where appropriate to the material received."],
+  ["04","Commercial proposals and business support","Preparation of proposals, quotations, introduction letters and commercial attachments, organised against the recipient's stated requirements."],
+  ["05","Business presentations","Institutional and commercial presentations with a clear narrative sequence, visual hierarchy and review of client-supplied content."],
+  ["06","Ongoing administrative support for SMEs","Support over an agreed period, with tasks, frequency, responsibilities, communication channels and reporting defined in advance."]
 ];
 ---
 <BaseLayout title="Business Services | HMATIAS Administrative and Business Support" description="Administrative documentation, professional CVs, document organisation, commercial proposals and recurring support for small and medium-sized businesses." lang="en">
@@ -43,6 +43,7 @@ const serviceItems = [
       <div class="business-service-grid">
         {serviceItems.map(([number,title,description]) => <article class="business-service-card"><span>{number}</span><h3>{title}</h3><p>{description}</p></article>)}
       </div>
+      <div class="business-scope-note"><strong>Scope and validation</strong><p>Documents are prepared using information supplied and approved by the client. This service area does not include legal, accounting or tax opinions, professional certification, or any guarantee of approval by public or private entities.</p></div>
     </section>
 
     <section class="business-process section-pad" aria-labelledby="pages-en-business-services-index-section-4-heading">
@@ -104,6 +105,9 @@ const serviceItems = [
 .business-service-card > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:17px; }
 .business-service-card h3 { max-width:280px; margin:30px 0 12px; font-size:16px; line-height:1.35; font-weight:650; letter-spacing:-.025em; }
 .business-service-card p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
+ .business-scope-note{margin-top:22px;padding:19px 22px;border-left:3px solid var(--hm-blue);background:var(--hm-paper)}
+.business-scope-note strong{display:block;margin-bottom:7px;color:var(--hm-ink);font-size:12px}
+.business-scope-note p{margin:0;color:var(--hm-muted);font-size:11px;line-height:1.8}
 .business-process-list { margin-top:45px; border-top:1px solid var(--hm-line); }
 .business-process-list article { display:grid; grid-template-columns:55px 1fr; gap:15px; padding:22px 0; border-bottom:1px solid var(--hm-line); }
 .business-process-list article > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:17px; }
