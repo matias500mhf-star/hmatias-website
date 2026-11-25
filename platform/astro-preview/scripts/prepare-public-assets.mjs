@@ -7,11 +7,10 @@ const repositoryFonts = resolve(scriptDir, "../../../fonts");
 const publicFonts = resolve(scriptDir, "../public/fonts");
 const repositoryPhotos = resolve(scriptDir, "../../../images/catalogue");
 const publicPhotos = resolve(scriptDir, "../public/images/hmatias");
-const repositoryCatalogues = resolve(scriptDir, "../../../catalogos");
 const publicCatalogues = resolve(scriptDir, "../public/catalogos");
 const repositoryRoot = resolve(scriptDir, "../../../");
 const requiredAssistantAssets = ["assistant.css", "assistant-api-bridge.js", "assistant.js", "assistant-knowledge.js"];
-const requiredCatalogues = ["ady-ferraz-catalogo-epi.pdf"];
+const requiredCatalogues = ["hmatias-ferramentas-diamantadas-2026.pdf"];
 const requiredPhotos = [
   "logistica-estrutura-metalica.webp",
   "perfis-metalicos-estrutura.webp",
@@ -47,11 +46,9 @@ for (const filename of requiredAssistantAssets) {
   if (!existsSync(source)) throw new Error(`Required HMATIAS assistant asset is missing: ${filename}`);
   cpSync(source, resolve(scriptDir, "../public", filename));
 }
-if (!existsSync(repositoryCatalogues)) throw new Error("Approved catalogue directory was not found.");
 mkdirSync(publicCatalogues, { recursive: true });
 for (const filename of requiredCatalogues) {
-  const source = resolve(repositoryCatalogues, filename);
-  if (!existsSync(source)) throw new Error(`Required supply catalogue is missing: ${filename}`);
-  cpSync(source, resolve(publicCatalogues, filename));
+  const generated = resolve(publicCatalogues, filename);
+  if (!existsSync(generated)) throw new Error(`Generated HMATIAS catalogue is missing: ${filename}`);
 }
-console.log(`Prepared ${requiredFonts.length} licensed font assets, ${requiredPhotos.length} authentic HMATIAS project photos, ${requiredAssistantAssets.length} assistant assets and ${requiredCatalogues.length} approved supply catalogues.`);
+console.log(`Prepared ${requiredFonts.length} licensed font assets, ${requiredPhotos.length} authentic HMATIAS project photos, ${requiredAssistantAssets.length} assistant assets and ${requiredCatalogues.length} generated HMATIAS supply catalogues.`);
