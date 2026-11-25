@@ -106,7 +106,7 @@ for (const item of publicSourceAoCatalog.items) {
     assert.ok(publicCatalogueItemKeys.has(key), `Unapproved field ${key} in static public catalogue item ${item.id}`);
   }
 }
-assert.match(publicSourceAoCatalog.public_rule, /Prices, suppliers, stock, availability and internal commercial data are not included/,
+assert.match(publicSourceAoCatalog.public_rule, /Supplier identities, sourcing channels, prices, stock, availability and internal commercial data are not included/i,
   "Static public catalogue must declare its privacy boundary");
 
 const sourceAoLanding = readFileSync(join(outDir, "source-ao", "index.html"), "utf8");
