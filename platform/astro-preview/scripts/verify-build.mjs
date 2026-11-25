@@ -160,11 +160,13 @@ assert.match(html, /Acessibilidade/, "Accessibility footer link is missing");
 assert.match(html, /5001578065/, "Company tax number is missing");
 assert.match(html, /24\.094-23/, "Company commercial registration is missing");
 assert.match(html, /Instagram/, "Instagram footer link is missing");
+assert.match(html, /ARQUIVO FOTOGRÁFICO · ELEMENTOS VISÍVEIS/, "Portuguese homepage project gallery must use evidence-safe visual-reference wording");
+assert.doesNotMatch(html, /OBRA REAL HMATIAS|IMAGENS DE TRABALHOS REAIS/, "Portuguese homepage must not attribute unverified archive photos to HMATIAS work");
 
 for (const activity of ["Construção e remodelação", "Facilities e manutenção", "Supply e procurement", "Business Services"]) {
   assert.ok(html.includes(activity), `Activity missing: ${activity}`);
 }
-for (const project of ["Galpão com estrutura metálica", "Preparação de terreno", "Substituição de cobertura", "Pavilhões rurais concluídos"]) {
+for (const project of ["Estrutura metálica e alvenaria de apoio", "Movimentação e regularização de terreno", "Chapas de cobertura perfilada", "Pavilhões com cobertura metálica"]) {
   assert.ok(html.includes(project), `Project missing: ${project}`);
 }
 
@@ -573,6 +575,9 @@ assert.ok(englishAbout.includes('class="language-switch" href="/empresa/"'), "En
 assert.ok(portugueseArticle.includes('class="language-switch" href="/en/blog/how-to-prepare-a-comparable-supply-quotation/"'), "Portuguese article must switch to its English counterpart");
 assert.ok(englishBlogArticle.includes('class="language-switch" href="/blog/como-preparar-um-pedido-de-cotacao/"'), "English article must switch to its Portuguese counterpart");
 
+const englishHomepagePortfolio = englishHomepage.match(/<section class="portfolio section-pad"[^>]*>([\s\S]*?)<\/section>/)?.[1] ?? "";
+assert.match(englishHomepagePortfolio, /VISUAL ARCHIVE · VISIBLE ELEMENTS/, "English homepage gallery must use evidence-safe visual-reference wording");
+assert.doesNotMatch(englishHomepage, /REAL WORK RECORDS|HMATIAS PROJECT RECORD|Completed rural pavilions/, "English homepage must not attribute unverified archive photos to HMATIAS work");
 const englishConstruction = readFileSync(join(outDir, "en", "construction", "index.html"), "utf8");
 assert.match(englishConstruction, /anexo-coberto-estrutura-metalica/i, "English construction hero must use its distinct construction-archive photograph");
 assert.doesNotMatch(englishConstruction, /instalacoes-embutidas-construcao/i, "English construction hero must not reuse the homepage photograph");
