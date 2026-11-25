@@ -75,6 +75,20 @@ test.describe("Bilingual brand and language accessibility", () => {
   });
 });
 
+test("primary navigation section links follow the active language", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("link", { name: "Serviços", exact: true }))
+    .toHaveAttribute("href", "/#servicos");
+  await expect(page.getByRole("link", { name: "Projetos", exact: true }))
+    .toHaveAttribute("href", "/#projetos");
+
+  await page.goto("/en/");
+  await expect(page.getByRole("link", { name: "Services", exact: true }))
+    .toHaveAttribute("href", "/en/#services");
+  await expect(page.getByRole("link", { name: "Projects", exact: true }))
+    .toHaveAttribute("href", "/en/#projects");
+});
+
 test("footer partnership application follows the active language", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".footer-legal-links").getByRole("link", { name: "Parcerias" }))
