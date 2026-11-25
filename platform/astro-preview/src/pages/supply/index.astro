@@ -53,9 +53,22 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
         <article class="supply-category-card"><span>02</span><h3>Consumíveis industriais</h3><p>Discos diamantados, coroas de perfuração e consumíveis técnicos sujeitos a consulta por marca e especificação.</p></article>
         <article class="supply-category-card"><span>03</span><h3>EPI e fardamento</h3><p>Equipamentos de protecção individual e vestuário profissional, com verificação de tamanhos, normas e documentação exigida.</p></article>
         <article class="supply-category-card"><span>04</span><h3>Equipamentos e ferramentas</h3><p>Equipamentos e ferramentas avaliados conforme requisitos técnicos, disponibilidade, condições comerciais e logística.</p></article>
+        <article class="supply-category-card"><span>05</span><h3>Lubrificantes e fluidos técnicos</h3><p>Gamas de lubrificação para aplicações automóveis e industriais, consultadas por marca, tipo, viscosidade, embalagem e documentação técnica.</p></article>
       </div>
       <div class="specialist-inline-links">
         <a href="/fornecimento-de-epi-e-fardamento/">Página especializada: EPI e fardamento ↗</a>
+      </div>
+    </section>
+    <section class="supply-catalogue-note section-pad" id="catalogos" aria-labelledby="supply-catalogue-heading">
+      <div class="supply-catalogue-copy">
+        <p class="section-kicker">03 / CATÁLOGOS COMERCIAIS</p>
+        <h2 id="supply-catalogue-heading">Informação organizada<br /><em>por família de produto.</em></h2>
+        <p>Os catálogos e documentos técnicos são organizados por categoria para facilitar a consulta, a partilha e a preparação de pedidos. Os ficheiros são disponibilizados separadamente da homepage; cada referência é apresentada apenas quando a informação comercial e técnica relevante estiver validada.</p>
+      </div>
+      <div class="supply-catalogue-action">
+        <p>Procura um catálogo ou uma ficha técnica específica?</p>
+        <a class="button button-dark" href="#pedido">Solicitar documentação <span aria-hidden="true">↗</span></a>
+        <small>Disponibilidade, especificações e condições comerciais são confirmadas antes da proposta.</small>
       </div>
     </section>
     <section class="supply-partners section-pad" id="parceiros" aria-labelledby="pages-supply-index-section-4-heading">
@@ -115,11 +128,18 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
 .supply-hero-image { aspect-ratio:auto; }
 .supply-hero-image img { height:auto; background:transparent; }
 .supply-categories { background:var(--hm-paper); }
-.supply-category-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:42px; }
+.supply-category-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:42px; }
 .supply-category-card { min-height:220px; padding:22px 20px; border:1px solid var(--hm-line); background:var(--hm-paper); }
 .supply-category-card > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:17px; }
 .supply-category-card h3 { margin:28px 0 12px; font-size:16px; line-height:1.35; font-weight:650; letter-spacing:-.025em; }
 .supply-category-card p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
+.supply-catalogue-note{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);gap:40px;align-items:center;background:var(--hm-light)}
+.supply-catalogue-copy h2{margin:18px 0 20px;font-family:var(--hm-serif);font-size:clamp(32px,4.5vw,56px);font-weight:450;line-height:1.05;letter-spacing:-.045em}
+.supply-catalogue-copy h2 em{font-weight:400}
+.supply-catalogue-copy>p:not(.section-kicker){max-width:650px;color:var(--hm-muted);font-size:14px;line-height:1.85}
+.supply-catalogue-action{padding:25px;border:1px solid var(--hm-line);background:var(--hm-paper)}
+.supply-catalogue-action p{margin:0 0 18px;color:var(--hm-ink);font-size:15px;line-height:1.6}
+.supply-catalogue-action small{display:block;margin-top:14px;color:var(--hm-muted);font-size:11px;line-height:1.65}
 .supply-partners { background:var(--hm-light); }
 .supply-partner-list { margin-top:48px; border-top:1px solid var(--hm-line); }
 .supply-partner { display:grid; grid-template-columns:54px minmax(0,1fr) minmax(190px,.42fr); gap:25px; align-items:start; padding:30px 0; border-bottom:1px solid var(--hm-line); }
@@ -143,6 +163,7 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
  .supply-partner { grid-template-columns:36px minmax(0,1fr); gap:15px; }
  .supply-partner-action { grid-column:2; padding-top:0; }
 }
+@media(max-width:760px) { .supply-catalogue-note{grid-template-columns:1fr;gap:26px} .supply-catalogue-action{padding:20px} }
 @media(max-width:650px) {
  .supply-partner-list { margin-top:34px; }
  .supply-partner { padding:24px 0; }
