@@ -13,7 +13,8 @@ const isExcludedPublicTaxonomyAlias = (value) => {
 };
 const PUBLIC_RULE = "Only curated public supply families are exposed. Supplier identities, sourcing channels, prices, stock, availability and internal commercial data are not included.";
 const PRIVATE_SUPPLIER_NAMES = ["SYNVOR Industrial", "SYNVOR", "ADY-FERRAZ", "ADY FERRAZ", "Evolution Safety Namibia", "Evolution Safety", "Miliart Intemporal", "Miliart", "D Wood", "Kent Offshore", "Fransga", "Würth", "Wurth"];
-const PRIVATE_SUPPLIER_PATTERN = new RegExp(PRIVATE_SUPPLIER_NAMES.map((name) => name.replace(/[|\\{}()[\]^$+*?.]/g, "\\const PUBLIC_RULE = "Only curated public supply families are exposed. Prices, suppliers, stock, availability and internal commercial data are not included.";")).join("|"), "gi");
+const PRIVATE_SUPPLIER_PATTERN = new RegExp(PRIVATE_SUPPLIER_NAMES.join("|"), "gi");
+const PRIVATE_SUPPLIER_DETECTION = new RegExp(PRIVATE_SUPPLIER_NAMES.join("|"), "i");
 function sanitizePublicText(value) {
   return String(value)
     .replace(/The published SYNVOR catalogue includes/gi, "The product range includes")
@@ -27,7 +28,7 @@ function sanitizePublicText(value) {
     .trim();
 }
 function sanitizePublicArray(values) {
-  return values.map(sanitizePublicText).filter((value) => value && !PRIVATE_SUPPLIER_PATTERN.test(value));
+  return values.map(sanitizePublicText).filter((value) => value && !PRIVATE_SUPPLIER_DETECTION.test(value));
 }
 const ALLOWED_MASTER_KEYS = ["version", "updated_at", "items", "taxonomy"];
 const ALLOWED_ITEM_KEYS = [
