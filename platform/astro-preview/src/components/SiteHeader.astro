@@ -38,9 +38,19 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
     nav?.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach((item) => { item.classList.remove("submenu-open"); item.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded","false"); });
   };
   if(toggle&&nav){
+    const currentPath = window.location.pathname.replace(/\\/+$/, "") || "/";
+    let currentMarked = false;
+    nav.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
+      const destination = new URL(link.href, window.location.origin);
+      const destinationPath = destination.pathname.replace(/\\/+$/, "") || "/";
+      if (!currentMarked && destinationPath === currentPath && (!destination.hash || destination.hash === "#inicio")) {
+        link.setAttribute("aria-current", "page");
+        currentMarked = true;
+      }
+    });
     toggle.addEventListener("click",()=>{const open=toggle.getAttribute("aria-expanded")!=="true";if(open){toggle.setAttribute("aria-expanded","true");toggle.setAttribute("aria-label",isEnglish?"Close menu":"Fechar menu");nav.classList.add("is-open");}else closeMenu();});
     const setSubmenuExpanded=(item:HTMLElement,expanded:boolean)=>{nav.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach(other=>{if(other!==item){other.classList.remove("submenu-open");other.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded","false");}});item.classList.toggle("submenu-open",expanded);item.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded",String(expanded));};
-    nav.querySelectorAll<HTMLElement>(".nav-item").forEach(item=>{item.addEventListener("mouseenter",()=>{if(window.matchMedia("(min-width:1121px) and (hover:hover) and (pointer:fine)").matches)setSubmenuExpanded(item,true);});item.addEventListener("mouseleave",()=>{if(window.matchMedia("(min-width:1121px) and (hover:hover) and (pointer:fine)").matches&&!item.contains(document.activeElement))setSubmenuExpanded(item,false);});});
+    nav.querySelectorAll<HTMLElement>(".nav-item").forEach(item=>{item.addEventListener("mouseenter",()=>{if(window.matchMedia("(min-width:1121px) and (hover:hover) and (pointer:fine)").matches)setSubmenuExpanded(item,true);});item.addEventListener("mouseleave",()=>{if(window.matchMedia("(min-width:1121px) and (hover:hover) and (pointer:fine)").matches&&!item.contains(document.activeElement))setSubmenuExpanded(item,false);});item.addEventListener("focusin",()=>{if(window.matchMedia("(min-width:1121px)").matches)setSubmenuExpanded(item,true);});item.addEventListener("focusout",event=>{if(window.matchMedia("(min-width:1121px)").matches&&event.relatedTarget instanceof Node&&!item.contains(event.relatedTarget))setSubmenuExpanded(item,false);});});
     nav.querySelectorAll<HTMLButtonElement>(".submenu-toggle").forEach(button=>button.addEventListener("click",()=>{const item=button.closest<HTMLElement>(".nav-item");if(!item)return;const desktop=window.matchMedia("(min-width:1121px) and (hover:hover) and (pointer:fine)").matches;setSubmenuExpanded(item,desktop||button.getAttribute("aria-expanded")!=="true");}));
     nav.querySelectorAll<HTMLAnchorElement>("a").forEach(link=>link.addEventListener("click",closeMenu));
     document.addEventListener("keydown",event=>{if(event.key==="Escape"&&(nav.classList.contains("is-open")||nav.querySelector(".submenu-open"))){closeMenu();toggle.focus();}});
