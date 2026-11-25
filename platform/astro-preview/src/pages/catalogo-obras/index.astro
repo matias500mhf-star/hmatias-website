@@ -1,5 +1,5 @@
 ---
-import { Picture } from "astro:assets";
+import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
@@ -63,9 +63,9 @@ const works = [
       </div>
       <p class="works-catalogue-featured-description">Registo fotográfico de uma intervenção de construção civil em Luanda. As imagens documentam a montagem de cofragem e o posicionamento de armaduras num elemento de fundação, o assentamento de blocos de betão e a execução de uma parede com vão de acesso. A identificação do cliente é omitida a seu pedido.</p>
       <div class="works-catalogue-featured-grid">
-        <figure><Picture src={luandaFormwork} alt="Cofragem e armaduras posicionadas num elemento de fundação numa obra privada em Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>01 · Cofragem e armadura</strong><span>Preparação de elemento de fundação</span></figcaption></figure>
-        <figure><Picture src={luandaMasonry} alt="Pormenor de parede em blocos de betão numa obra privada em Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>02 · Alvenaria em blocos</strong><span>Detalhe de assentamento</span></figcaption></figure>
-        <figure><Picture src={luandaOverview} alt="Parede em blocos de betão com vão de acesso numa obra privada em Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>03 · Parede e vão de acesso</strong><span>Vista geral da frente de alvenaria</span></figcaption></figure>
+        <figure><Image src={luandaFormwork} alt="Cofragem e armaduras posicionadas num elemento de fundação numa obra privada em Luanda" width={480} format="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>01 · Cofragem e armadura</strong><span>Preparação de elemento de fundação</span></figcaption></figure>
+        <figure><Image src={luandaMasonry} alt="Pormenor de parede em blocos de betão numa obra privada em Luanda" width={480} format="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>02 · Alvenaria em blocos</strong><span>Detalhe de assentamento</span></figcaption></figure>
+        <figure><Image src={luandaOverview} alt="Parede em blocos de betão com vão de acesso numa obra privada em Luanda" width={480} format="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>03 · Parede e vão de acesso</strong><span>Vista geral da frente de alvenaria</span></figcaption></figure>
       </div>
       <p class="works-catalogue-case-note">A localização é indicada ao nível do município para preservar a confidencialidade do cliente. As fotografias documentam fases de execução e não constituem, isoladamente, um auto de medição ou certificado técnico.</p>
     </section>
