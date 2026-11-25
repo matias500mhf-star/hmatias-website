@@ -62,10 +62,10 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     }
   });
 
-  test("página HMATIAS Supply explica procurement e categorias de fornecimento", async ({ page }) => {
+  test("página Supply explica procurement e categorias de fornecimento", async ({ page }) => {
     const response = await page.goto("/supply/");
     expect(response?.status()).toBe(200);
-    await expect(page).toHaveTitle(/HMATIAS Supply/);
+    await expect(page).toHaveTitle(/Supply \| Procurement/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Fornecimento");
     await expect(page.getByRole("heading", { name: "Materiais de construção" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "EPI e fardamento" })).toBeVisible();
@@ -250,7 +250,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
       expect(response?.status()).toBe(200);
       await expect(page.locator("main")).toBeVisible();
       await expect(page.locator("h1").first()).toBeVisible();
-      await expect(page).toHaveTitle(/HMATIAS|SOURCE AO/);
+      await expect(page).toHaveTitle(/HMATIAS|SOURCE AO|Supply/);
       await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.+/);
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
       await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", await page.title());
