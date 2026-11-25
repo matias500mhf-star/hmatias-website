@@ -9,6 +9,12 @@ const indexPath = join(outDir, "index.html");
 assert.ok(existsSync(indexPath), "Astro build must generate dist/index.html");
 
 const html = readFileSync(indexPath, "utf8");
+
+const epiCataloguePath = join(outDir, "catalogos", "ady-ferraz-catalogo-epi.pdf");
+assert.ok(existsSync(epiCataloguePath), "Approved EPI catalogue PDF must be copied into the public static output");
+const epiCatalogue = readFileSync(epiCataloguePath);
+assert.ok(epiCatalogue.length > 1000, "EPI catalogue PDF must not be empty or truncated");
+assert.equal(epiCatalogue.subarray(0, 5).toString("ascii"), "%PDF-", "EPI catalogue asset must have a valid PDF signature");
 const configuredSite = new URL(resolveSiteUrl(process.env));
 const expectedHomepageCanonical = new URL("/", configuredSite).toString();
 assert.ok(
