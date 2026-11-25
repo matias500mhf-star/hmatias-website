@@ -1,5 +1,6 @@
 import {isAdmin} from './index.js';
 import publicCatalog from '../../data/public-catalog.json' with { type: 'json' };
+import {containsPrivateSupplierName,sanitizePublicText,sanitizePublicArray} from '../../data/public-catalog-privacy.mjs';
 
 const PUBLIC_EXCLUDED_ITEMS=new Set(['item-formaldehyde']);
 const ALLOWED_CATEGORIES=new Set([
@@ -56,16 +57,21 @@ const response=(env,data,status=200,options={})=>
 
 const fail=(env,status,code)=>response(env,{ok:false,error:{code}},status);
 
-function publicItem(row){
+function publicItem(row,{sanitize=true}={}){
+  const text=value=>sanitize?sanitizePublicText(value||''):(value||'');
+  const array=value=>{
+    const parsed=jsonArray(value);
+    return sanitize?sanitizePublicArray(parsed):parsed;
+  };
   return {
-    id:row.id,
-    name:row.name,
-    name_pt:row.name_pt||row.name,
+    id:sanitize?sanitizePublicText(row.id):row.id,
+    name:text(row.name),
+    name_pt:text(row.name_pt||row.name),
     category:row.category,
-    specification:row.specification||'',
+    specification:text(row.specification),
     unit:row.unit||'',
-    aliases:jsonArray(row.aliases_json),
-    keywords:jsonArray(row.keywords_json)
+    aliases:array(row.aliases_json),
+    keywords:array(row.keywords_json)
   };
 }
 
@@ -77,7 +83,7 @@ export async function loadPublicCatalogData(env){
     WHERE public_visible=1 AND id NOT IN ('item-formaldehyde')
     ORDER BY category ASC,name ASC
   `).all();
-  const rows=(result.results||[]).filter(row=>Number(row.public_visible)===1&&!PUBLIC_EXCLUDED_ITEMS.has(row.id));
+  const rows=(result.results||[]).filter(row=>Number(row.public_visible)===1&&!PUBLIC_EXCLUDED_ITEMS.has(row.id)&&!containsPrivateSupplierName(row.id));
   const timestamps=rows.map(row=>row.updated_at).filter(Boolean).sort();
   return {
     ok:true,
@@ -111,7 +117,7 @@ export async function listAdminCatalog(request,env){
     return response(env,{
       ok:true,
       items:(result.results||[]).map(row=>({
-        ...publicItem(row),
+        ...publicItem(row,{sanitize:false}),
         name_pt:row.name_pt||'',
         public_visible:Number(row.public_visible)===1,
         updated_at:row.updated_at||null
