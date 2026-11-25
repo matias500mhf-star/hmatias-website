@@ -7,12 +7,12 @@ const businessWhatsapp = company.whatsappUri + "?text=" + encodeURIComponent(
   "Olá, HMATIAS. Pretendo solicitar uma avaliação dos serviços administrativos e empresariais. Serviço pretendido, documentos ou informação disponível, volume, formato e prazo:"
 );
 const serviceItems = [
-  ["01","Expediente Administrativo e Redação Institucional","Formatação, revisão e organização de minutas, cartas, declarações, ofícios e outros documentos administrativos."],
-  ["02","Estruturação de CV Profissional","Organização e apresentação do perfil profissional com base nas informações fornecidas pelo cliente."],
-  ["03","Gestão e Organização Documental","Triagem, digitalização, nomenclatura e preparação de conjuntos documentais para utilização administrativa."],
-  ["04","Propostas Comerciais e Apoio Empresarial","Estruturação de cotações, propostas, documentação comercial e materiais de apoio a oportunidades empresariais."],
-  ["05","Apresentações Empresariais","Estruturação visual e documental de apresentações institucionais e comerciais."],
-  ["06","Apoio Administrativo Recorrente para PME","Apoio administrativo continuado com escopo mensal previamente definido."]
+  ["01","Expediente Administrativo e Redação Institucional","Preparação e revisão de minutas, cartas, declarações, ofícios e comunicações institucionais, com versão editável e PDF final conforme o pedido."],
+  ["02","Estruturação de CV Profissional","CV organizado por experiência, formação e competências, com apresentação consistente. O conteúdo factual é construído exclusivamente a partir dos dados fornecidos e validados pelo cliente."],
+  ["03","Gestão e Organização Documental","Classificação de ficheiros, inventário documental, nomenclatura uniforme e organização de pastas digitais; digitalização quando aplicável ao material recebido."],
+  ["04","Propostas Comerciais e Apoio Empresarial","Preparação de propostas, cotações, cartas de apresentação e anexos comerciais, organizados segundo os requisitos comunicados pelo destinatário."],
+  ["05","Apresentações Empresariais","Apresentações institucionais e comerciais com sequência narrativa, hierarquia visual e revisão dos conteúdos fornecidos pelo cliente."],
+  ["06","Apoio Administrativo Recorrente para PME","Apoio por período acordado, com tarefas, frequência, responsáveis, canais de comunicação e reporte definidos previamente."]
 ];
 ---
 <BaseLayout
@@ -69,6 +69,7 @@ const serviceItems = [
           </article>
         ))}
       </div>
+      <div class="business-scope-note"><strong>Limites e validação</strong><p>Os documentos são preparados com base na informação disponibilizada e validada pelo cliente. Esta área não inclui pareceres jurídicos, contabilísticos ou fiscais, certificação profissional, nem garantia de aprovação por entidades públicas ou privadas.</p></div>
     </section>
 
     <section class="business-process section-pad" aria-labelledby="pages-business-services-index-section-4-heading">
@@ -134,6 +135,9 @@ const serviceItems = [
 .business-service-card > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:17px; }
 .business-service-card h3 { max-width:280px; margin:30px 0 12px; font-size:16px; line-height:1.35; font-weight:650; letter-spacing:-.025em; }
 .business-service-card p { margin:0; color:var(--hm-muted); font-size:11px; line-height:1.8; }
+ .business-scope-note{margin-top:22px;padding:19px 22px;border-left:3px solid var(--hm-blue);background:var(--hm-paper)}
+.business-scope-note strong{display:block;margin-bottom:7px;color:var(--hm-ink);font-size:12px}
+.business-scope-note p{margin:0;color:var(--hm-muted);font-size:11px;line-height:1.8}
 .business-process-list { margin-top:45px; border-top:1px solid var(--hm-line); }
 .business-process-list article { display:grid; grid-template-columns:55px 1fr; gap:15px; padding:22px 0; border-bottom:1px solid var(--hm-line); }
 .business-process-list article > span { color:var(--hm-blue); font-family:var(--hm-serif); font-size:17px; }
