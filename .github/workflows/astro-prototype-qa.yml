@@ -7,6 +7,10 @@ on:
       - "platform/astro-preview/**"
       - "source-ao/data/catalog.json"
       - "source-ao/data/public-catalog.json"
+      - "source-ao/data/public-catalog-privacy.mjs"
+      - "source-ao/backend/src/catalog.js"
+      - "source-ao/backend/test/catalog.test.mjs"
+      - "source-ao/backend/test/public-catalog-generation.test.mjs"
       - "source-ao/opportunity-radar.js"
       - "source-ao/opportunity-radar.css"
       - "source-ao/api-client.js"
@@ -64,6 +68,8 @@ jobs:
         run: |
           node --check ../../source-ao/rfq.js
           node --test ../../source-ao/backend/test/rfq.test.mjs
+          node --test ../../source-ao/backend/test/catalog.test.mjs
+          node --test ../../source-ao/backend/test/public-catalog-generation.test.mjs
 
       - name: Install pinned browser QA tools
         run: npm install --no-save --no-package-lock @playwright/test@1.65.0 @axe-core/playwright@4.14.0 @lhci/cli@0.16.0
