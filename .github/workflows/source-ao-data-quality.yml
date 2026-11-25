@@ -62,7 +62,7 @@ jobs:
           if(publicCatalog.items.some(item=>item.id==='item-formaldehyde')){
             throw new Error('Excluded catalogue entry is present in the public fallback.');
           }
-          if(/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga|Würth/i.test(JSON.stringify(publicCatalog))){
+          if(/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga|MATEANA|Premier Yangue|Vizers Consultores|NovaEra Tech Solutions|Telewise/i.test(JSON.stringify(publicCatalog))){
             throw new Error('Supplier identity found in the public catalogue.');
           }
           console.log('PASS: public catalogue matches the sanitised master projection and excludes supplier identities.');
