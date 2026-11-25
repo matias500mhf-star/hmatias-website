@@ -38,11 +38,11 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
     nav?.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach((item) => { item.classList.remove("submenu-open"); item.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded","false"); });
   };
   if(toggle&&nav){
-    const currentPath = window.location.pathname.replace(/\\/+$/, "") || "/";
+    const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
     let currentMarked = false;
     nav.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
       const destination = new URL(link.href, window.location.origin);
-      const destinationPath = destination.pathname.replace(/\\/+$/, "") || "/";
+      const destinationPath = destination.pathname.replace(/\/+$/, "") || "/";
       if (!currentMarked && destinationPath === currentPath && (!destination.hash || destination.hash === "#inicio")) {
         link.setAttribute("aria-current", "page");
         currentMarked = true;
