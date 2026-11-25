@@ -40,6 +40,12 @@ jobs:
         run: python3 source-ao/backend/scripts/test-synthetic-alert-migration.py
       - name: Regenerate sanitised public catalogue from canonical data
         run: node platform/astro-preview/scripts/generate-public-catalog.mjs
+      - name: Validate catalogue sanitisation and generate bilingual PDFs
+        run: |
+          node --test source-ao/backend/test/public-catalog-generation.test.mjs
+          node platform/astro-preview/scripts/generate-supply-catalogues.mjs
+          test -s platform/astro-preview/public/catalogos/hmatias-ferramentas-diamantadas-2026.pdf
+          test -s platform/astro-preview/public/catalogos/hmatias-diamond-tools-2026.pdf
       - name: Validate sanitised static public catalog parity
         shell: bash
         run: |
