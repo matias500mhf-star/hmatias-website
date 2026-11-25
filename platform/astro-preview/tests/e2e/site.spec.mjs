@@ -220,7 +220,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
       await expect(toggle).toHaveAttribute("aria-expanded", "true");
       await expect(toggle).toHaveAttribute("aria-label", "Fechar menu");
       await expect(nav).toHaveClass(/is-open/);
-      await nav.getByRole("link", { name: "Serviços" }).click();
+      await nav.locator(".nav-services").click();
       await expect(toggle).toHaveAttribute("aria-expanded", "false");
       await expect(toggle).toHaveAttribute("aria-label", "Abrir menu");
       await expect(nav).not.toHaveClass(/is-open/);
