@@ -47,33 +47,26 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
         <a href="/en/ppe-workwear/">Specialist page: PPE and workwear supply ↗</a>
       </div>
     </section>
-    <section class="supply-catalogue-note section-pad" id="catalogues" aria-labelledby="supply-catalogue-heading">
-      <div class="supply-catalogue-copy">
-        <p class="section-kicker">03 / PRODUCT CATALOGUES</p>
-        <h2 id="supply-catalogue-heading">Information organised<br /><em>by product family.</em></h2>
-        <p>Catalogues and technical documents are organised by category to make consultation, sharing and quotation preparation easier. Files are served separately from the homepage; a product reference is presented only when the relevant commercial and technical information has been checked.</p>
+    <section class="supply-catalogue-library section-pad" id="catalogues" aria-labelledby="supply-catalogue-heading">
+      <div class="section-heading">
+        <div><div class="section-kicker">03 / COMMERCIAL CATALOGUES</div><h2 id="supply-catalogue-heading">Technical information.<br /><em>Clear commercial boundaries.</em></h2></div>
+        <p>HMATIAS publications, organised by product family. Each catalogue presents available references and technical data to help identify the required item and prepare a quotation request.</p>
       </div>
-      <div class="supply-catalogue-action">
-        <p class="catalogue-file-label">DOCUMENT AVAILABLE · PDF</p>
-        <h3>PPE Catalogue — ADY-FERRAZ</h3>
-        <p>Reference document for the personal protective equipment range.</p>
-        <a class="button button-dark" href="/catalogos/ady-ferraz-catalogo-epi.pdf" target="_blank" rel="noopener noreferrer">Open PDF catalogue <span aria-hidden="true">↗</span></a>
-        <small>The document does not confirm current availability, sizes, compliance of each reference, price or lead time. These details are checked for every request.</small>
+      <div class="supply-catalogue-grid">
+        <article class="supply-catalogue-card">
+          <div class="supply-catalogue-card-top"><span>TECHNICAL CATALOGUE</span><span>PDF · EN</span></div>
+          <p class="supply-catalogue-number">01</p>
+          <h3>Diamond tools</h3>
+          <p>Cutting discs, core-drilling crowns and grinding and polishing solutions. Includes product families, technical references and dimensions identified in the available documentation.</p>
+          <ul><li>Cutting concrete, asphalt, stone and ceramic</li><li>Drilling and core drilling</li><li>Diameters and interfaces by reference</li></ul>
+          <a class="button button-dark" href="/catalogos/hmatias-ferramentas-diamantadas-2026.pdf" target="_blank" rel="noopener noreferrer">Open PDF catalogue <span aria-hidden="true">↗</span></a>
+          <small>Availability, compatibility, price and lead time are subject to confirmation for each request.</small>
+        </article>
       </div>
-    </section>
-    <section class="supply-partners section-pad" id="partners" aria-labelledby="pages-en-supply-index-section-4-heading">
-      <div class="section-heading"><div><div class="section-kicker">04 / SUPPLY CATEGORIES & SOURCING</div><h2 id="pages-en-supply-index-section-4-heading">A selected<br /><em>supply offer.</em></h2></div><p>We present supply categories and sourcing channels. Availability and commercial terms are checked for each individual request.</p></div>
-      <div class="supply-partner-list">
-        <article class="supply-partner">
-          <div class="supply-partner-index">01</div>
-          <div class="supply-partner-main"><p class="supply-partner-type">DIAMOND CONSUMABLES</p><h3>SYNVOR Industrial</h3><p>Sourcing channel for Carbodiam and SAMEDIA solutions, including diamond cutting discs, drilling crowns and core-drilling systems. References and terms are checked for each request.</p><div class="supply-tags"><span>Carbodiam</span><span>SAMEDIA</span><span>Cutting discs</span><span>Drilling crowns</span></div></div>
-          <div class="supply-partner-action"><a href="#request">Request catalogue and quotation <span aria-hidden="true">↗</span></a></div>
-        </article>
-        <article class="supply-partner">
-          <div class="supply-partner-index">02</div>
-          <div class="supply-partner-main"><p class="supply-partner-type">WORKWEAR & PERSONAL PROTECTION</p><h3>Evolution Safety Namibia</h3><p>Sourcing channel for professional workwear and personal protective equipment, assessed against the client's technical requirements, sizes and quantities.</p><div class="supply-tags"><span>Workwear</span><span>PPE</span><span>Specification-led sourcing</span></div></div>
-          <div class="supply-partner-action"><a href="#request">Enquire about supply <span aria-hidden="true">↗</span></a></div>
-        </article>
+      <div class="supply-catalogue-principles">
+        <p class="section-kicker">PUBLICATION STANDARD</p>
+        <p>Catalogues identify the offer and technical references without disclosing suppliers, sourcing channels, third-party commercial contacts, purchase prices or internal terms. We do not publish a reference without enough information to describe it accurately.</p>
+        <p>Further product families — including PPE, workwear and lubricants — will be added when their datasheets, images and technical information have been validated.</p>
       </div>
     </section>
 
@@ -144,4 +137,20 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
  .supply-partner-main > p:not(.supply-partner-type) { font-size:14px; }
 }
 .specialist-inline-links{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:22px;padding:18px 20px;background:var(--hm-sky-soft);border-left:3px solid var(--hm-blue)}.specialist-inline-links a{color:var(--hm-blue);font-size:11px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+
+.supply-catalogue-library{background:var(--hm-light)}
+.supply-catalogue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:42px}
+.supply-catalogue-card{display:flex;flex-direction:column;min-height:100%;padding:28px;border:1px solid var(--hm-line);background:var(--hm-paper)}
+.supply-catalogue-card-top{display:flex;justify-content:space-between;gap:12px;color:var(--hm-blue-accessible);font:700 9px/1.5 var(--hm-mono);letter-spacing:.12em}
+.supply-catalogue-number{margin:30px 0 8px;color:var(--hm-blue);font:400 20px/1 var(--hm-serif)}
+.supply-catalogue-card h3{margin:0 0 14px;color:var(--hm-navy);font-size:clamp(22px,2.5vw,30px);font-weight:620;letter-spacing:-.04em}
+.supply-catalogue-card>p:not(.supply-catalogue-number){margin:0;color:var(--hm-muted);font-size:13px;line-height:1.8}
+.supply-catalogue-card ul{display:grid;gap:9px;margin:22px 0 26px;padding-left:18px;color:var(--hm-ink);font-size:12px;line-height:1.6}
+.supply-catalogue-card .button{align-self:flex-start;margin-top:auto}
+.supply-catalogue-card small{display:block;margin-top:14px;color:var(--hm-muted);font-size:10px;line-height:1.65}
+.supply-catalogue-principles{display:grid;grid-template-columns:minmax(180px,.55fr) minmax(0,1fr);gap:14px 34px;margin-top:28px;padding:22px 24px;border-left:3px solid var(--hm-blue);background:var(--hm-sky-soft)}
+.supply-catalogue-principles .section-kicker{grid-row:1 / span 2;margin:0;color:var(--hm-blue);font:700 10px/1.6 var(--hm-mono);letter-spacing:.1em}
+.supply-catalogue-principles p:not(.section-kicker){margin:0;color:var(--hm-ink);font-size:12px;line-height:1.75}
+@media(max-width:760px){.supply-catalogue-grid{grid-template-columns:1fr}.supply-catalogue-card{padding:22px}.supply-catalogue-principles{grid-template-columns:1fr;gap:10px}.supply-catalogue-principles .section-kicker{grid-row:auto}}
+
 </style>
