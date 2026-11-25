@@ -77,8 +77,8 @@ for (const homepage of homepageRoutes) {
     await expect(nav.locator(".nav-item").nth(2).locator(".nav-submenu a")).toHaveCount(2);
     await expect(nav.locator(".nav-item").nth(3).locator(".nav-submenu a")).toHaveCount(3);
     const expectedAboutTargets = isEnglish
-      ? ["/en/about/", "/en/credibility/", "/en/#partners"]
-      : ["/empresa/", "/credibilidade/", "/#parceiros"];
+      ? ["/en/about/", "/en/credibility/", "/en/#partners", "/en/company-brochure/"]
+      : ["/empresa/", "/credibilidade/", "/#parceiros", "/brochura-institucional/"];
     const aboutTargets = await nav.locator(".nav-item").nth(0).locator(".nav-submenu a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).getAttribute("href")));
     expect(aboutTargets).toEqual(expectedAboutTargets);
     const expectedServiceTargets = isEnglish
