@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
+import { sanitizePublicText, sanitizePublicArray } from "../../../source-ao/data/public-catalog-privacy.mjs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
@@ -12,24 +13,7 @@ const isExcludedPublicTaxonomyAlias = (value) => {
   return /^(formaldehyde|formaldeido|formol|formalin)(\s|$)/.test(alias) || alias === "cas 50 00 0";
 };
 const PUBLIC_RULE = "Only curated public supply families are exposed. Supplier identities, sourcing channels, prices, stock, availability and internal commercial data are not included.";
-const PRIVATE_SUPPLIER_NAMES = ["SYNVOR Industrial", "SYNVOR", "ADY-FERRAZ", "ADY FERRAZ", "Evolution Safety Namibia", "Evolution Safety", "Miliart Intemporal", "Miliart", "D Wood", "Kent Offshore", "Fransga", "MATEANA", "Premier Yangue", "Vizers Consultores", "NovaEra Tech Solutions", "Telewise"];
-const PRIVATE_SUPPLIER_PATTERN = new RegExp(PRIVATE_SUPPLIER_NAMES.join("|"), "gi");
-const PRIVATE_SUPPLIER_DETECTION = new RegExp(PRIVATE_SUPPLIER_NAMES.join("|"), "i");
-function sanitizePublicText(value) {
-  return String(value)
-    .replace(/The published SYNVOR catalogue includes/gi, "The product range includes")
-    .replace(/The SYNVOR public catalogue lists/gi, "The published product range includes")
-    .replace(/SYNVOR public crown catalogue lists/gi, "The published product range includes")
-    .replace(/SYNVOR indicates/gi, "Published technical data indicates")
-    .replace(/sourced from SYNVOR Industrial in Portugal/gi, "")
-    .replace(PRIVATE_SUPPLIER_PATTERN, "")
-    .replace(/\s{2,}/g, " ")
-    .replace(/\s+([,.;:])/g, "$1")
-    .trim();
-}
-function sanitizePublicArray(values) {
-  return values.map(sanitizePublicText).filter((value) => value && !PRIVATE_SUPPLIER_DETECTION.test(value));
-}
+
 const ALLOWED_MASTER_KEYS = ["version", "updated_at", "items", "taxonomy"];
 const ALLOWED_ITEM_KEYS = [
   "id",
