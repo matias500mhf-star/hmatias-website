@@ -9,7 +9,7 @@ A classificação abaixo descreve o conteúdo visual observável nos ficheiros l
 - **Material/logística:** a imagem mostra material armazenado ou transportado; não prova disponibilidade actual nem stock.
 - **Associação de obra:** pendente enquanto não existir ligação a contrato, relatório, ordem de serviço, registo fotográfico original ou outro arquivo interno aprovado.
 
-## Registos de execução — 9 imagens no catálogo (incluindo o caso novo de Luanda)
+## Registos de execução — 9 imagens do arquivo anterior
 
 | Ficheiro | O que a imagem permite descrever | Limite editorial |
 |---|---|---|
@@ -31,7 +31,7 @@ A classificação abaixo descreve o conteúdo visual observável nos ficheiros l
 | `chapas-cobertura-fornecimento.webp` | Chapas metálicas perfiladas organizadas em pilhas | Não afirmar stock, disponibilidade actual, preço ou origem |
 | `logistica-estrutura-metalica.webp` | Viatura de carga com elementos metálicos para transporte | Não afirmar destino, propriedade, data ou entrega a cliente específico |
 
-## Registo privado de Luanda — 3 fotografias originais fornecidas pelo utilizador
+## Registo privado de Luanda — 3 fotografias originais fornecidas pelo utilizador (secção destacada adicional)
 Os três ficheiros abaixo foram convertidos a partir das fotografias originais no arquivo `HMATIAS_fotos_reais_para_website.zip`. O caso está destacado separadamente nas páginas PT/EN do catálogo.
 
 | Ficheiro publicado | Origem | Conteúdo visível |
