@@ -24,7 +24,7 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
         <nav class="construction-breadcrumb" aria-label="Navegação estrutural"><a href="/">Início</a><span aria-hidden="true">/</span><span>Supply</span></nav>
         <p class="eyebrow"><span class="eyebrow-line"></span> SUPPLY · PROCUREMENT</p>
         <h1 id="pages-supply-index-section-1-heading">Fornecimento<br /><em>com critério.</em></h1>
-        <p class="hero-lead">Identificamos soluções de fornecimento a partir da especificação do cliente, consultamos parceiros e verificamos as condições comerciais antes de apresentar uma proposta.</p>
+        <p class="hero-lead">Identificamos soluções de fornecimento a partir da especificação do cliente, consultamos o mercado e verificamos as condições comerciais antes de apresentar uma proposta.</p>
         <div class="hero-actions"><a class="button button-light" href="#pedido">Solicitar cotação <span aria-hidden="true">↓</span></a><a class="text-link text-link-light" href={company.sourceAoUrl}>SOURCE AO <span aria-hidden="true">↗</span></a></div>
         <div class="hero-meta"><span>Materiais de construção · Consumíveis · EPI e fardamento · Equipamentos</span><span>Angola · consultas regionais quando aplicável</span></div>
       </div>
@@ -59,46 +59,26 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
         <a href="/fornecimento-de-epi-e-fardamento/">Página especializada: EPI e fardamento ↗</a>
       </div>
     </section>
-    <section class="supply-catalogue-note section-pad" id="catalogos" aria-labelledby="supply-catalogue-heading">
-      <div class="supply-catalogue-copy">
-        <p class="section-kicker">03 / CATÁLOGOS COMERCIAIS</p>
-        <h2 id="supply-catalogue-heading">Informação organizada<br /><em>por família de produto.</em></h2>
-        <p>Os catálogos e documentos técnicos são organizados por categoria para facilitar a consulta, a partilha e a preparação de pedidos. Os ficheiros são disponibilizados separadamente da homepage; cada referência é apresentada apenas quando a informação comercial e técnica relevante estiver validada.</p>
-      </div>
-      <div class="supply-catalogue-action">
-        <p class="catalogue-file-label">DOCUMENTO DISPONÍVEL · PDF</p>
-        <h3>Catálogo de EPI — ADY-FERRAZ</h3>
-        <p>Documento de consulta da gama de equipamentos de protecção individual.</p>
-        <a class="button button-dark" href="/catalogos/ady-ferraz-catalogo-epi.pdf" target="_blank" rel="noopener noreferrer">Abrir catálogo PDF <span aria-hidden="true">↗</span></a>
-        <small>O documento não confirma disponibilidade, tamanhos, conformidade de cada referência, preço ou prazo. Estes elementos são verificados para cada pedido.</small>
-      </div>
-    </section>
-    <section class="supply-partners section-pad" id="parceiros" aria-labelledby="pages-supply-index-section-4-heading">
+    <section class="supply-catalogue-library section-pad" id="catalogos" aria-labelledby="supply-catalogue-heading">
       <div class="section-heading">
-        <div><div class="section-kicker">04 / CATEGORIAS E FONTES DE FORNECIMENTO</div><h2 id="pages-supply-index-section-4-heading">Uma oferta<br /><em>seleccionada.</em></h2></div>
-        <p>Apresentamos categorias de fornecimento e fontes de consulta. A disponibilidade e as condições de cada artigo são verificadas pedido a pedido.</p>
+        <div><div class="section-kicker">03 / CATÁLOGOS COMERCIAIS</div><h2 id="supply-catalogue-heading">Consulta técnica.<br /><em>Sem ruído comercial.</em></h2></div>
+        <p>Documentos próprios da HMATIAS, organizados por família de produto. Cada catálogo apresenta referências e dados técnicos disponíveis para apoiar a identificação do artigo e a preparação de um pedido de cotação.</p>
       </div>
-      <div class="supply-partner-list">
-        <article class="supply-partner">
-          <div class="supply-partner-index">01</div>
-          <div class="supply-partner-main">
-            <p class="supply-partner-type">CONSUMÍVEIS DIAMANTADOS</p>
-            <h3>SYNVOR Industrial</h3>
-            <p>Fonte de consulta para soluções Carbodiam e SAMEDIA, incluindo discos diamantados, coroas de perfuração e sistemas de carotagem. As referências e condições são confirmadas para cada pedido.</p>
-            <div class="supply-tags"><span>Carbodiam</span><span>SAMEDIA</span><span>Discos</span><span>Coroas</span></div>
-          </div>
-          <div class="supply-partner-action"><a href="#pedido">Solicitar catálogo e cotação <span aria-hidden="true">↗</span></a></div>
+      <div class="supply-catalogue-grid">
+        <article class="supply-catalogue-card">
+          <div class="supply-catalogue-card-top"><span>CATÁLOGO TÉCNICO</span><span>PDF · PT</span></div>
+          <p class="supply-catalogue-number">01</p>
+          <h3>Ferramentas diamantadas</h3>
+          <p>Discos de corte, coroas de perfuração e soluções de desbaste e polimento. Inclui famílias de produto, referências técnicas e dimensões identificadas na documentação disponível.</p>
+          <ul><li>Corte de betão, asfalto, pedra e cerâmica</li><li>Perfuração e carotagem</li><li>Diâmetros e interfaces por referência</li></ul>
+          <a class="button button-dark" href="/catalogos/hmatias-ferramentas-diamantadas-2026.pdf" target="_blank" rel="noopener noreferrer">Abrir catálogo PDF <span aria-hidden="true">↗</span></a>
+          <small>Disponibilidade, compatibilidade, preço e prazo sujeitos a confirmação por pedido.</small>
         </article>
-        <article class="supply-partner">
-          <div class="supply-partner-index">02</div>
-          <div class="supply-partner-main">
-            <p class="supply-partner-type">FARDAMENTO E PROTECÇÃO INDIVIDUAL</p>
-            <h3>Evolution Safety Namibia</h3>
-            <p>Fonte de consulta para fardamento profissional e equipamentos de protecção individual, mediante requisitos técnicos, tamanhos e quantidades indicados pelo cliente.</p>
-            <div class="supply-tags"><span>Fardamento</span><span>EPI</span><span>Consulta sob especificação</span></div>
-          </div>
-          <div class="supply-partner-action"><a href="#pedido">Consultar fornecimento <span aria-hidden="true">↗</span></a></div>
-        </article>
+      </div>
+      <div class="supply-catalogue-principles">
+        <p class="section-kicker">CRITÉRIO EDITORIAL</p>
+        <p>Os catálogos identificam a oferta e as referências técnicas, sem divulgar fornecedores, canais de aquisição, contactos comerciais de terceiros, preços de compra ou condições internas. Não publicamos uma referência sem informação suficiente para a descrever com rigor.</p>
+        <p>Novas famílias — incluindo EPI, fardamento e lubrificantes — serão adicionadas quando as respectivas fichas, imagens e dados técnicos estiverem validados.</p>
       </div>
     </section>
 
@@ -178,4 +158,20 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
  .supply-partner-main > p:not(.supply-partner-type) { font-size:14px; }
 }
 .specialist-inline-links{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:22px;padding:18px 20px;background:var(--hm-sky-soft);border-left:3px solid var(--hm-blue)}.specialist-inline-links a{color:var(--hm-blue);font-size:11px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+
+.supply-catalogue-library{background:var(--hm-light)}
+.supply-catalogue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:42px}
+.supply-catalogue-card{display:flex;flex-direction:column;min-height:100%;padding:28px;border:1px solid var(--hm-line);background:var(--hm-paper)}
+.supply-catalogue-card-top{display:flex;justify-content:space-between;gap:12px;color:var(--hm-blue-accessible);font:700 9px/1.5 var(--hm-mono);letter-spacing:.12em}
+.supply-catalogue-number{margin:30px 0 8px;color:var(--hm-blue);font:400 20px/1 var(--hm-serif)}
+.supply-catalogue-card h3{margin:0 0 14px;color:var(--hm-navy);font-size:clamp(22px,2.5vw,30px);font-weight:620;letter-spacing:-.04em}
+.supply-catalogue-card>p:not(.supply-catalogue-number){margin:0;color:var(--hm-muted);font-size:13px;line-height:1.8}
+.supply-catalogue-card ul{display:grid;gap:9px;margin:22px 0 26px;padding-left:18px;color:var(--hm-ink);font-size:12px;line-height:1.6}
+.supply-catalogue-card .button{align-self:flex-start;margin-top:auto}
+.supply-catalogue-card small{display:block;margin-top:14px;color:var(--hm-muted);font-size:10px;line-height:1.65}
+.supply-catalogue-principles{display:grid;grid-template-columns:minmax(180px,.55fr) minmax(0,1fr);gap:14px 34px;margin-top:28px;padding:22px 24px;border-left:3px solid var(--hm-blue);background:var(--hm-sky-soft)}
+.supply-catalogue-principles .section-kicker{grid-row:1 / span 2;margin:0;color:var(--hm-blue);font:700 10px/1.6 var(--hm-mono);letter-spacing:.1em}
+.supply-catalogue-principles p:not(.section-kicker){margin:0;color:var(--hm-ink);font-size:12px;line-height:1.75}
+@media(max-width:760px){.supply-catalogue-grid{grid-template-columns:1fr}.supply-catalogue-card{padding:22px}.supply-catalogue-principles{grid-template-columns:1fr;gap:10px}.supply-catalogue-principles .section-kicker{grid-row:auto}}
+
 </style>
