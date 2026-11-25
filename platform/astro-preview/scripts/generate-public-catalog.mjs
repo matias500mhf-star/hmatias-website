@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { sanitizePublicText, sanitizePublicArray } from "../../../source-ao/data/public-catalog-privacy.mjs";
+import { sanitizePublicText, sanitizePublicArray, sanitizePublicId } from "../../../source-ao/data/public-catalog-privacy.mjs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
@@ -93,7 +93,7 @@ export function buildPublicCatalog(master) {
 
     // Allowlist projection: any newly added field requires explicit review above.
     items.push(Object.fromEntries(
-      ALLOWED_ITEM_KEYS.filter((key) => Object.hasOwn(item, key)).map((key) => [key, Array.isArray(item[key]) ? sanitizePublicArray(item[key]) : typeof item[key] === "string" ? sanitizePublicText(item[key]) : item[key]])
+      ALLOWED_ITEM_KEYS.filter((key) => Object.hasOwn(item, key)).map((key) => [key, key === "id" ? sanitizePublicId(item[key]) : Array.isArray(item[key]) ? sanitizePublicArray(item[key]) : typeof item[key] === "string" ? sanitizePublicText(item[key]) : item[key]])
     ));
   }
 
