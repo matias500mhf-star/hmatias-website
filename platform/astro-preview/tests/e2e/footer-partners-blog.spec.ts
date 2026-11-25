@@ -69,8 +69,8 @@ for (const homepage of homepageRoutes) {
     await expect(nav.locator(".nav-home")).toHaveAttribute("href", isEnglish ? "/en/#inicio" : "/#inicio");
     await expect(nav.locator(".nav-about")).toHaveAttribute("href", isEnglish ? "/en/about/" : "/empresa/");
     await expect(nav.locator(".nav-blog")).toHaveAttribute("href", isEnglish ? "/en/blog/" : "/blog/");
-    await expect(nav.getByRole("link", { name: isEnglish ? "Services" : "Serviços", exact: true })).toHaveAttribute("href", isEnglish ? "/en/#servicos" : "/#servicos");
-    await expect(nav.getByRole("link", { name: isEnglish ? "Projects" : "Projetos", exact: true })).toHaveAttribute("href", isEnglish ? "/en/#projetos" : "/#projetos");
+    await expect(nav.locator(".nav-services")).toHaveAttribute("href", isEnglish ? "/en/#services" : "/#servicos");
+    await expect(nav.locator(".nav-item").nth(2).locator(":scope > .nav-link")).toHaveAttribute("href", isEnglish ? "/en/#projects" : "/#projetos");
     await expect(nav.getByRole("link", { name: "SOURCE AO", exact: true })).toHaveAttribute("href", homepage.sourceHref);
     await expect(nav.locator(".nav-item").nth(0).locator(".nav-submenu a")).toHaveCount(3);
     await expect(nav.locator(".nav-item").nth(1).locator(".nav-submenu a")).toHaveCount(4);
