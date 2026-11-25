@@ -6,7 +6,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "../../..");
 const sourcePath = resolve(root, "source-ao/data/catalog.json");
 const outputDir = resolve(here, "../public/catalogos");
-const outputPath = resolve(outputDir, "hmatias-ferramentas-diamantadas-2026.pdf");
+const outputPathPt = resolve(outputDir, "hmatias-ferramentas-diamantadas-2026.pdf");
+const outputPathEn = resolve(outputDir, "hmatias-diamond-tools-2026.pdf");
 
 const special = new Map([["€",128],["‘",145],["’",146],["“",147],["”",148],["•",149],["–",150],["—",151],["Ø",216],["ø",248],["×",215],["°",176],["·",183]]);
 function hexText(value) {
@@ -47,30 +48,39 @@ function cleanSupplierText(value) {
     .replace(/ADY-FERRAZ|Evolution Safety(?: Namibia)?|Miliart Intemporal|Miliart|Kent Offshore|Fransga|Würth|Wurth/gi, "")
     .replace(/\s{2,}/g, " ").replace(/\s+([,.;:])/g, "$1").trim();
 }
-function technicalSummary(item) {
+function technicalSummary(item, english) {
   const spec = cleanSupplierText(item.specification);
   const diameter = spec.match(/Diameter\s*(?:Ø)?\s*(Ø?\d+(?:[–-]\d+)?\s*mm)/i);
   const bore = spec.match(/(?:bore\/connection|connection|bore)\s*(?:of\s*)?(\d+(?:\.\d+)?)\s*mm/i);
   const machine = spec.match(/machine\/application:\s*([^.;]+)/i);
   const process = spec.match(/process:\s*([^.;]+)/i);
   const details = [];
-  if (diameter) details.push("Diâmetro: " + diameter[1]);
-  if (bore) details.push("Furo/interface: " + bore[1] + " mm");
-  if (machine) details.push("Máquina/aplicação: " + machine[1]);
-  if (process) details.push("Processo: " + process[1]);
-  return details.length ? details.join(" · ") : "Referência técnica; confirmar configuração e compatibilidade na consulta.";
+  if (diameter) details.push((english ? "Diameter: " : "Diâmetro: ") + diameter[1]);
+  if (bore) details.push((english ? "Bore/interface: " : "Furo/interface: ") + bore[1] + " mm");
+  if (machine) details.push((english ? "Machine/application: " : "Máquina/aplicação: ") + machine[1]);
+  if (process) details.push((english ? "Process: " : "Processo: ") + process[1]);
+  return details.length ? details.join(" · ") : (english ? "Technical reference; confirm configuration and compatibility during enquiry." : "Referência técnica; confirmar configuração e compatibilidade na consulta.");
 }
-function buildPageContents(items) {
+function buildPageContents(items, english) {
   const pages = [];
+  const title = english ? "DIAMOND TOOLS" : "FERRAMENTAS DIAMANTADAS";
+  const subtitle = english ? "Cutting  ·  Drilling  ·  Grinding  ·  Polishing" : "Corte  ·  Perfuração  ·  Desbaste  ·  Polimento";
+  const edition = english ? "2026 EDITION  |  ENGLISH" : "EDIÇÃO 2026  |  PORTUGUÊS";
+  const coverLead = english ? "Product references and available technical parameters." : "Referências de produto e parâmetros técnicos disponíveis.";
+  const coverSub = english ? "A reference document to support quotation requests." : "Documento de apoio à preparação de pedidos de cotação.";
   let cover = rect(0, 0, 595, 842, "0.02 0.12 0.23") + rect(42, 758, 64, 4, "0.18 0.63 0.91");
   cover += text(42, 725, 10, "HMATIAS  /  SUPPLY", "F2", "0.72 0.86 0.97");
-  cover += text(42, 610, 36, "FERRAMENTAS", "F2", "1 1 1") + text(42, 565, 36, "DIAMANTADAS", "F2", "1 1 1");
-  cover += text(42, 510, 14, "Corte  ·  Perfuração  ·  Desbaste  ·  Polimento", "F1", "0.65 0.82 0.94");
+  if (english) {
+    cover += text(42, 610, 36, "DIAMOND", "F2", "1 1 1") + text(42, 565, 36, "TOOLS", "F2", "1 1 1");
+  } else {
+    cover += text(42, 610, 36, "FERRAMENTAS", "F2", "1 1 1") + text(42, 565, 36, "DIAMANTADAS", "F2", "1 1 1");
+  }
+  cover += text(42, 510, 14, subtitle, "F1", "0.65 0.82 0.94");
   cover += line(42, 468, 553, 468, "0.25 0.43 0.58");
-  cover += text(42, 425, 12, "CATÁLOGO TÉCNICO", "F2", "0.42 0.76 0.98");
-  cover += text(42, 398, 11, "Referências de produto e parâmetros técnicos disponíveis.", "F1", "0.91 0.95 0.98");
-  cover += text(42, 376, 11, "Documento de apoio à preparação de pedidos de cotação.", "F1", "0.91 0.95 0.98");
-  cover += text(42, 92, 9, "EDIÇÃO 2026  |  PORTUGUÊS", "F2", "0.72 0.86 0.97");
+  cover += text(42, 425, 12, english ? "TECHNICAL CATALOGUE" : "CATÁLOGO TÉCNICO", "F2", "0.42 0.76 0.98");
+  cover += text(42, 398, 11, coverLead, "F1", "0.91 0.95 0.98");
+  cover += text(42, 376, 11, coverSub, "F1", "0.91 0.95 0.98");
+  cover += text(42, 92, 9, edition, "F2", "0.72 0.86 0.97");
   cover += text(42, 68, 9, "comercialhmatiasps.com  ·  geral@comercialhmatiasps.com", "F1", "0.72 0.86 0.97");
   pages.push(cover);
 
@@ -79,35 +89,42 @@ function buildPageContents(items) {
     const subset = items.slice(offset, offset + perPage);
     let body = rect(0, 0, 595, 842, "0.98 0.99 1") + rect(0, 790, 595, 52, "0.02 0.12 0.23");
     body += text(38, 811, 9, "HMATIAS  /  SUPPLY", "F2", "0.82 0.91 0.98");
-    body += text(38, 765, 18, "Ferramentas diamantadas", "F2", "0.02 0.12 0.23");
-    body += text(38, 746, 8, "FAMÍLIAS E REFERÊNCIAS TÉCNICAS", "F2", "0.12 0.39 0.63") + line(38, 733, 557, 733, "0.82 0.87 0.92");
+    body += text(38, 765, 18, english ? "Diamond tools" : "Ferramentas diamantadas", "F2", "0.02 0.12 0.23");
+    body += text(38, 746, 8, english ? "PRODUCT FAMILIES AND TECHNICAL REFERENCES" : "FAMÍLIAS E REFERÊNCIAS TÉCNICAS", "F2", "0.12 0.39 0.63") + line(38, 733, 557, 733, "0.82 0.87 0.92");
     let y = 714;
     for (let i = 0; i < subset.length; i++) {
       const item = subset[i];
       const index = String(offset + i + 1).padStart(2, "0");
-      const title = item.name_pt || item.name;
+      const itemTitle = english ? item.name : (item.name_pt || item.name);
       body += text(40, y, 8, index, "F2", "0.12 0.39 0.63");
-      body += text(72, y, 9, title.slice(0, 88), "F2", "0.02 0.12 0.23");
+      body += text(72, y, 9, itemTitle.slice(0, 88), "F2", "0.02 0.12 0.23");
       let descY = y - 16;
-      for (const row of wrap(technicalSummary(item), 86).slice(0, 2)) {
+      for (const row of wrap(technicalSummary(item, english), 86).slice(0, 2)) {
         body += text(72, descY, 8, row, "F1", "0.30 0.39 0.48");
         descY -= 12;
       }
-      body += text(72, descY - 1, 7, "Preço, stock, prazo e compatibilidade: confirmar antes da encomenda.", "F1", "0.38 0.46 0.54");
+      body += text(72, descY - 1, 7, english ? "Price, stock, lead time and compatibility: confirm before ordering." : "Preço, stock, prazo e compatibilidade: confirmar antes da encomenda.", "F1", "0.38 0.46 0.54");
       body += line(40, descY - 12, 557, descY - 12, "0.86 0.90 0.94");
       y -= 105;
     }
     body += line(38, 42, 557, 42, "0.82 0.87 0.92");
-    body += text(38, 25, 7, "HMATIAS  |  Catálogo técnico de consulta  |  Informação sujeita a confirmação comercial", "F1", "0.38 0.46 0.54");
+    body += text(38, 25, 7, english ? "HMATIAS  |  Technical reference catalogue  |  Commercial details subject to confirmation" : "HMATIAS  |  Catálogo técnico de consulta  |  Informação sujeita a confirmação comercial", "F1", "0.38 0.46 0.54");
     body += text(530, 25, 7, String(pages.length + 1), "F2", "0.12 0.39 0.63");
     pages.push(body);
   }
 
   let end = rect(0, 0, 595, 842, "0.95 0.97 0.99") + rect(0, 790, 595, 52, "0.02 0.12 0.23");
   end += text(38, 811, 9, "HMATIAS  /  SUPPLY", "F2", "0.82 0.91 0.98");
-  end += text(42, 716, 24, "Prepare o seu pedido", "F2", "0.02 0.12 0.23");
-  end += text(42, 680, 11, "Para uma consulta comparável, indique:", "F1", "0.30 0.39 0.48");
-  const checklist = [
+  end += text(42, 716, 24, english ? "Prepare your enquiry" : "Prepare o seu pedido", "F2", "0.02 0.12 0.23");
+  end += text(42, 680, 11, english ? "For a comparable quotation, please provide:" : "Para uma consulta comparável, indique:", "F1", "0.30 0.39 0.48");
+  const checklist = english ? [
+    "01  Technical reference or required model",
+    "02  Diameter, bore/interface and compatible machine",
+    "03  Material to be worked and intended operation",
+    "04  Wet or dry operation, where applicable",
+    "05  Quantity and delivery location",
+    "06  Required timing and documentation"
+  ] : [
     "01  Referência técnica ou modelo pretendido",
     "02  Diâmetro, furo/interface e máquina compatível",
     "03  Material a trabalhar e tipo de operação",
@@ -117,8 +134,13 @@ function buildPageContents(items) {
   ];
   let cy = 638;
   for (const row of checklist) { end += text(48, cy, 10, row, "F2", "0.02 0.12 0.23"); cy -= 32; }
-  end += line(42, 425, 553, 425, "0.82 0.87 0.92") + text(42, 390, 13, "Condições de fornecimento", "F2", "0.02 0.12 0.23");
-  const notes = [
+  end += line(42, 425, 553, 425, "0.82 0.87 0.92") + text(42, 390, 13, english ? "Supply conditions" : "Condições de fornecimento", "F2", "0.02 0.12 0.23");
+  const notes = english ? [
+    "This catalogue supports technical identification and quotation preparation.",
+    "Listing a reference does not confirm stock in Angola or immediate availability,",
+    "price, delivery lead time, compatibility with any machine or certification.",
+    "Final validation depends on the exact reference and written commercial confirmation."
+  ] : [
     "Este catálogo apoia a identificação técnica e a preparação de pedidos.",
     "A inclusão de uma referência não confirma stock em Angola, disponibilidade imediata,",
     "preço, prazo de entrega, compatibilidade com qualquer máquina ou certificação.",
@@ -157,20 +179,24 @@ function renderPdf(pages) {
   pdf += "trailer\n<< /Size " + objects.length + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF\n";
   return pdf;
 }
-export function generateSupplyCatalogue(master) {
+export function generateSupplyCatalogues(master) {
   if (!master || !Array.isArray(master.items)) throw new Error("Invalid master catalogue.");
   const items = master.items.filter((item) => item.category === "diamond-tools");
-  if (items.length < 20) throw new Error("Insufficient technical references for public catalogue.");
-  const pdf = renderPdf(buildPageContents(items));
-  if (!pdf.startsWith("%PDF-1.4") || !pdf.endsWith("%%EOF\n")) throw new Error("Invalid PDF output.");
+  if (items.length < 20) throw new Error("Insufficient technical references for public catalogues.");
   const publicText = items.map((item) => [item.name, item.name_pt, cleanSupplierText(item.specification)].join(" ")).join(" ");
   if (/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga|Würth/i.test(publicText)) throw new Error("Supplier identity found in generated catalogue content.");
-  return { pdf, itemCount: items.length, pageCount: 2 + Math.ceil(items.length / 6) };
+  const ptPdf = renderPdf(buildPageContents(items, false));
+  const enPdf = renderPdf(buildPageContents(items, true));
+  for (const pdf of [ptPdf, enPdf]) {
+    if (!pdf.startsWith("%PDF-1.4") || !pdf.endsWith("%%EOF\n")) throw new Error("Invalid PDF output.");
+  }
+  return { ptPdf, enPdf, itemCount: items.length, pageCount: 2 + Math.ceil(items.length / 6) };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const master = JSON.parse(readFileSync(sourcePath, "utf8"));
-  const result = generateSupplyCatalogue(master);
+  const result = generateSupplyCatalogues(master);
   mkdirSync(outputDir, { recursive: true });
-  writeFileSync(outputPath, result.pdf, "binary");
-  console.log("Generated HMATIAS diamond-tools catalogue: " + result.itemCount + " references, " + result.pageCount + " pages.");
+  writeFileSync(outputPathPt, result.ptPdf, "binary");
+  writeFileSync(outputPathEn, result.enPdf, "binary");
+  console.log("Generated HMATIAS diamond-tools catalogues in Portuguese and English: " + result.itemCount + " references, " + result.pageCount + " pages each.");
 }
