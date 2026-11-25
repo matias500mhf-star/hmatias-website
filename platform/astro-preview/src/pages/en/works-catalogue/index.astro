@@ -15,9 +15,9 @@ import metalProfiles from "../../../../../../images/catalogue/perfis-metalicos-e
 import roofSheets from "../../../../../../images/catalogue/chapas-cobertura-fornecimento.webp";
 import logistics from "../../../../../../images/catalogue/logistica-estrutura-metalica.webp";
 import embeddedServices from "../../../../../../images/catalogue/instalacoes-embutidas-construcao.webp";
-import luandaOverview from "../../../../../../images/catalogue/obra-privada-luanda-alvenaria-vista-geral.webp";
-import luandaFormwork from "../../../../../../images/catalogue/obra-privada-luanda-cofragem-armadura-fundacao.webp";
-import luandaMasonry from "../../../../../../images/catalogue/obra-privada-luanda-detalhe-alvenaria.webp";
+import luandaOverview from "../../../../../../images/catalogue/obra-privada-luanda-alvenaria-vista-geral.avif";
+import luandaFormwork from "../../../../../../images/catalogue/obra-privada-luanda-cofragem-armadura-fundacao.avif";
+import luandaMasonry from "../../../../../../images/catalogue/obra-privada-luanda-detalhe-alvenaria.avif";
 
 const works = [
   {category:"Roofing · Maintenance",title:"Metal roof intervention",description:"Record of new profiled sheets positioned alongside existing sheets, documenting a localised replacement phase.",image:roofMaintenance,alt:"New and existing profiled metal sheets on a roof under intervention"},
@@ -59,9 +59,9 @@ const works = [
       </div>
       <p class="works-catalogue-featured-description">Photographic record of civil construction works in Luanda. The images document formwork assembly and reinforcement positioned in a foundation element, concrete-block masonry and a wall with an access opening. The client's identity is withheld at their request.</p>
       <div class="works-catalogue-featured-grid">
-        <figure><Picture src={luandaFormwork} alt="Formwork and reinforcement positioned in a foundation element on a private construction project in Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>01 · Formwork and reinforcement</strong><span>Foundation element preparation</span></figcaption></figure>
-        <figure><Picture src={luandaMasonry} alt="Detail of a concrete-block wall on a private construction project in Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>02 · Concrete-block masonry</strong><span>Masonry laying detail</span></figcaption></figure>
-        <figure><Picture src={luandaOverview} alt="Concrete-block wall with an access opening on a private construction project in Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>03 · Wall and access opening</strong><span>General view of the masonry front</span></figcaption></figure>
+        <figure><Picture src={luandaFormwork} alt="Formwork and reinforcement positioned in a foundation element on a private construction project in Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>01 · Formwork and reinforcement</strong><span>Foundation element preparation</span></figcaption></figure>
+        <figure><Picture src={luandaMasonry} alt="Detail of a concrete-block wall on a private construction project in Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>02 · Concrete-block masonry</strong><span>Masonry laying detail</span></figcaption></figure>
+        <figure><Picture src={luandaOverview} alt="Concrete-block wall with an access opening on a private construction project in Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>03 · Wall and access opening</strong><span>General view of the masonry front</span></figcaption></figure>
       </div>
       <p class="works-catalogue-case-note">The location is shown at municipality level to protect client confidentiality. The photographs document execution stages and do not, by themselves, constitute a measurement record or technical certificate.</p>
     </section>
@@ -73,7 +73,7 @@ const works = [
       <div class="works-catalogue-grid">
         {works.filter((work) => work.group !== "supply").map((work,index) => (
           <article class="works-catalogue-card">
-            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure>
+            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure>
             <div class="works-catalogue-copy"><span>{String(index+1).padStart(2,"0")} · {work.category}</span><h3>{work.title}</h3><p>{work.description}</p></div>
           </article>
         ))}
@@ -84,7 +84,7 @@ const works = [
       <div class="works-catalogue-grid works-catalogue-supply-grid">
         {works.filter((work) => work.group === "supply").map((work,index) => (
           <article class="works-catalogue-card">
-            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" />
+            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" />
             </figure>
             <div class="works-catalogue-copy"><span>{String(index+1).padStart(2,"0")} · {work.category}</span><h3>{work.title}</h3><p>{work.description}</p></div>
           </article>
