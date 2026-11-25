@@ -75,14 +75,22 @@ test.describe("Bilingual brand and language accessibility", () => {
   });
 });
 
-test("primary navigation section links follow the active language", async ({ page }) => {
+test("primary navigation section links follow the active language", async ({ page }, testInfo) => {
+  const openMobileMenu = async () => {
+    if (testInfo.project.name === "mobile-webkit") {
+      await page.locator(".menu-toggle").click();
+      await expect(page.locator("#main-nav")).toHaveClass(/is-open/);
+    }
+  };
   await page.goto("/");
+  await openMobileMenu();
   await expect(page.getByRole("link", { name: "Áreas de negócio", exact: true }))
     .toHaveAttribute("href", "/#servicos");
   await expect(page.getByRole("link", { name: "Projetos", exact: true }))
     .toHaveAttribute("href", "/#projetos");
 
   await page.goto("/en/");
+  await openMobileMenu();
   await expect(page.getByRole("link", { name: "Business areas", exact: true }))
     .toHaveAttribute("href", "/en/#services");
   await expect(page.getByRole("link", { name: "Projects", exact: true }))
