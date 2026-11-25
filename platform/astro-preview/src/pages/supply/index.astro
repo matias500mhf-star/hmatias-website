@@ -66,14 +66,16 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
         <p>Os catálogos e documentos técnicos são organizados por categoria para facilitar a consulta, a partilha e a preparação de pedidos. Os ficheiros são disponibilizados separadamente da homepage; cada referência é apresentada apenas quando a informação comercial e técnica relevante estiver validada.</p>
       </div>
       <div class="supply-catalogue-action">
-        <p>Procura um catálogo ou uma ficha técnica específica?</p>
-        <a class="button button-dark" href="#pedido">Solicitar documentação <span aria-hidden="true">↗</span></a>
-        <small>Disponibilidade, especificações e condições comerciais são confirmadas antes da proposta.</small>
+        <p class="catalogue-file-label">DOCUMENTO DISPONÍVEL · PDF</p>
+        <h3>Catálogo de EPI — ADY-FERRAZ</h3>
+        <p>Documento de consulta da gama de equipamentos de protecção individual.</p>
+        <a class="button button-dark" href="/catalogos/ady-ferraz-catalogo-epi.pdf" target="_blank" rel="noopener noreferrer">Abrir catálogo PDF <span aria-hidden="true">↗</span></a>
+        <small>O documento não confirma disponibilidade, tamanhos, conformidade de cada referência, preço ou prazo. Estes elementos são verificados para cada pedido.</small>
       </div>
     </section>
     <section class="supply-partners section-pad" id="parceiros" aria-labelledby="pages-supply-index-section-4-heading">
       <div class="section-heading">
-        <div><div class="section-kicker">03 / CATEGORIAS E FONTES DE FORNECIMENTO</div><h2 id="pages-supply-index-section-4-heading">Uma oferta<br /><em>seleccionada.</em></h2></div>
+        <div><div class="section-kicker">04 / CATEGORIAS E FONTES DE FORNECIMENTO</div><h2 id="pages-supply-index-section-4-heading">Uma oferta<br /><em>seleccionada.</em></h2></div>
         <p>Apresentamos categorias de fornecimento e fontes de consulta. A disponibilidade e as condições de cada artigo são verificadas pedido a pedido.</p>
       </div>
       <div class="supply-partner-list">
@@ -102,7 +104,7 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
 
     <section class="supply-evidence section-pad" id="materiais" aria-labelledby="pages-supply-index-section-5-heading">
       <div class="portfolio-top">
-        <div><div class="section-kicker">04 / REGISTOS DE FORNECIMENTO</div><h2 id="pages-supply-index-section-5-heading">Materiais e logística<br /><em>em contexto.</em></h2></div>
+        <div><div class="section-kicker">05 / REGISTOS DE FORNECIMENTO</div><h2 id="pages-supply-index-section-5-heading">Materiais e logística<br /><em>em contexto.</em></h2></div>
         <p>Registos visuais existentes da actividade HMATIAS. Não representam confirmação de stock ou disponibilidade actual.</p>
       </div>
       <div class="supply-evidence-grid">
@@ -113,7 +115,7 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
 
     <section class="construction-request section-pad supply-request" id="pedido" aria-labelledby="pages-supply-index-section-6-heading">
       <div class="construction-request-copy">
-        <p class="section-kicker">05 / PEDIDO DE FORNECIMENTO</p>
+        <p class="section-kicker">06 / PEDIDO DE FORNECIMENTO</p>
         <h2 id="pages-supply-index-section-6-heading">Indique o que<br /><em>precisa.</em></h2>
         <p>Envie a referência ou descrição técnica, quantidade, local de entrega e prazo pretendido. A HMATIAS analisará o pedido e confirmará as condições antes de apresentar uma proposta.</p>
         <div class="construction-request-actions"><a class="button button-light" href={company.sourceAoRfqUrl + "?from=supply"}>Registar pedido de cotação <span aria-hidden="true">↗</span></a><a class="construction-email-link" href={whatsappSupply} target="_blank" rel="noopener noreferrer">Enviar pelo WhatsApp <span aria-hidden="true">↗</span></a></div>
@@ -138,7 +140,9 @@ const whatsappSupply = company.whatsappUri + "?text=" + encodeURIComponent(
 .supply-catalogue-copy h2 em{font-weight:400}
 .supply-catalogue-copy>p:not(.section-kicker){max-width:650px;color:var(--hm-muted);font-size:14px;line-height:1.85}
 .supply-catalogue-action{padding:25px;border:1px solid var(--hm-line);background:var(--hm-paper)}
-.supply-catalogue-action p{margin:0 0 18px;color:var(--hm-ink);font-size:15px;line-height:1.6}
+.supply-catalogue-action .catalogue-file-label{margin:0 0 12px;color:var(--hm-blue-accessible);font:700 9px/1.5 var(--hm-mono);letter-spacing:.12em}
+.supply-catalogue-action h3{margin:0 0 12px;color:var(--hm-navy);font-size:21px;line-height:1.25}
+.supply-catalogue-action p:not(.catalogue-file-label){margin:0 0 18px;color:var(--hm-muted);font-size:13px;line-height:1.65}
 .supply-catalogue-action small{display:block;margin-top:14px;color:var(--hm-muted);font-size:11px;line-height:1.65}
 .supply-partners { background:var(--hm-light); }
 .supply-partner-list { margin-top:48px; border-top:1px solid var(--hm-line); }
