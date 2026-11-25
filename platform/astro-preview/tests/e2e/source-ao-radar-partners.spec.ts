@@ -174,9 +174,9 @@ test("the public SOURCE AO catalogue contains reviewed SYNVOR families without p
     "item-carbodiam-sku-incisor-incisor-125-ref-5182",
     "item-crown-family-carbodiam-profor",
     "item-crown-family-samedia-master-dbk",
-    "item-synvor-diamond-grinding-cups",
-    "item-synvor-metal-grinding-segments",
-    "item-synvor-diamond-polishing-resins",
+    "item-diamond-grinding-cups",
+    "item-metal-grinding-segments",
+    "item-diamond-polishing-resins",
     "item-carbodiam-multicut-400p",
     "item-weka-dk17",
   ]) {
