@@ -53,6 +53,25 @@ test("public catalogue is an allowlisted projection and excludes the restricted 
   assert.equal(JSON.stringify(output).includes("CAS 50-00-0"), false);
 });
 
+
+test("public catalogue removes supplier identities and sourcing details from public text", () => {
+  const master = {
+    version: "1.0", updated_at: "2026-11-13T10:00:00Z",
+    items: [{
+      id: "item-diamond", name: "Diamond cutting disc",
+      aliases: ["cutting disc", "SYNVOR Industrial"], category: "diamond-tools",
+      subcategory: "cutting",
+      specification: "The published SYNVOR catalogue includes Carbodiam products. This reference is sourced from SYNVOR Industrial in Portugal.",
+      keywords: ["diamond", "SYNVOR", "Carbodiam"], name_pt: "Disco diamantado"
+    }],
+    taxonomy: [{id:"diamond-tools",name_en:"Diamond tools",name_pt:"Ferramentas diamantadas",aliases:["diamond","SYNVOR"]}]
+  };
+  const output = JSON.stringify(buildPublicCatalog(master));
+  assert.equal(/SYNVOR|ADY-FERRAZ|Evolution Safety|Miliart|Kent Offshore|Fransga|Würth/i.test(output), false);
+  assert.match(output, /Carbodiam/);
+  assert.match(output, /The product range includes/);
+});
+
 test("public catalogue fails closed when a source item adds an unreviewed field", () => {
   const master = {
     version: "1.0",
