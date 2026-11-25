@@ -16,9 +16,9 @@ import metalProfiles from "../../../../../images/catalogue/perfis-metalicos-estr
 import roofSheets from "../../../../../images/catalogue/chapas-cobertura-fornecimento.webp";
 import logistics from "../../../../../images/catalogue/logistica-estrutura-metalica.webp";
 import embeddedServices from "../../../../../images/catalogue/instalacoes-embutidas-construcao.webp";
-import luandaOverview from "../../../../../images/catalogue/obra-privada-luanda-alvenaria-vista-geral.webp";
-import luandaFormwork from "../../../../../images/catalogue/obra-privada-luanda-cofragem-armadura-fundacao.webp";
-import luandaMasonry from "../../../../../images/catalogue/obra-privada-luanda-detalhe-alvenaria.webp";
+import luandaOverview from "../../../../../images/catalogue/obra-privada-luanda-alvenaria-vista-geral.avif";
+import luandaFormwork from "../../../../../images/catalogue/obra-privada-luanda-cofragem-armadura-fundacao.avif";
+import luandaMasonry from "../../../../../images/catalogue/obra-privada-luanda-detalhe-alvenaria.avif";
 
 const works = [
   {category:"Coberturas · Manutenção",title:"Intervenção em cobertura metálica",description:"Registo de chapas perfiladas novas colocadas junto às chapas existentes, documentando uma fase de substituição localizada.",image:roofMaintenance,alt:"Chapas metálicas perfiladas novas e existentes numa cobertura em intervenção"},
@@ -63,9 +63,9 @@ const works = [
       </div>
       <p class="works-catalogue-featured-description">Registo fotográfico de uma intervenção de construção civil em Luanda. As imagens documentam a montagem de cofragem e o posicionamento de armaduras num elemento de fundação, o assentamento de blocos de betão e a execução de uma parede com vão de acesso. A identificação do cliente é omitida a seu pedido.</p>
       <div class="works-catalogue-featured-grid">
-        <figure><Picture src={luandaFormwork} alt="Cofragem e armaduras posicionadas num elemento de fundação numa obra privada em Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>01 · Cofragem e armadura</strong><span>Preparação de elemento de fundação</span></figcaption></figure>
-        <figure><Picture src={luandaMasonry} alt="Pormenor de parede em blocos de betão numa obra privada em Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>02 · Alvenaria em blocos</strong><span>Detalhe de assentamento</span></figcaption></figure>
-        <figure><Picture src={luandaOverview} alt="Parede em blocos de betão com vão de acesso numa obra privada em Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>03 · Parede e vão de acesso</strong><span>Vista geral da frente de alvenaria</span></figcaption></figure>
+        <figure><Picture src={luandaFormwork} alt="Cofragem e armaduras posicionadas num elemento de fundação numa obra privada em Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>01 · Cofragem e armadura</strong><span>Preparação de elemento de fundação</span></figcaption></figure>
+        <figure><Picture src={luandaMasonry} alt="Pormenor de parede em blocos de betão numa obra privada em Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>02 · Alvenaria em blocos</strong><span>Detalhe de assentamento</span></figcaption></figure>
+        <figure><Picture src={luandaOverview} alt="Parede em blocos de betão com vão de acesso numa obra privada em Luanda" widths={[480,720]} sizes="(max-width:650px) 100vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} loading="lazy" decoding="async" /><figcaption><strong>03 · Parede e vão de acesso</strong><span>Vista geral da frente de alvenaria</span></figcaption></figure>
       </div>
       <p class="works-catalogue-case-note">A localização é indicada ao nível do município para preservar a confidencialidade do cliente. As fotografias documentam fases de execução e não constituem, isoladamente, um auto de medição ou certificado técnico.</p>
     </section>
@@ -77,7 +77,7 @@ const works = [
       <div class="works-catalogue-grid">
         {works.filter((work) => work.group !== "supply").map((work,index) => (
           <article class="works-catalogue-card">
-            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure>
+            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure>
             <div class="works-catalogue-copy"><span>{String(index+1).padStart(2,"0")} · {work.category}</span><h3>{work.title}</h3><p>{work.description}</p></div>
           </article>
         ))}
@@ -88,7 +88,7 @@ const works = [
       <div class="works-catalogue-grid works-catalogue-supply-grid">
         {works.filter((work) => work.group === "supply").map((work,index) => (
           <article class="works-catalogue-card">
-            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure>
+            <figure><Picture src={work.image} alt={work.alt} widths={[480,720,1040]} sizes="(max-width:650px) 100vw, (max-width:1000px) 50vw, 33vw" formats={["webp"]} fallbackFormat="jpg" quality={82} decoding="async" loading="lazy" /></figure>
             <div class="works-catalogue-copy"><span>{String(index+1).padStart(2,"0")} · {work.category}</span><h3>{work.title}</h3><p>{work.description}</p></div>
           </article>
         ))}
