@@ -10,7 +10,7 @@ const publicPhotos = resolve(scriptDir, "../public/images/hmatias");
 const publicCatalogues = resolve(scriptDir, "../public/catalogos");
 const repositoryRoot = resolve(scriptDir, "../../../");
 const requiredAssistantAssets = ["assistant.css", "assistant-api-bridge.js", "assistant.js", "assistant-knowledge.js"];
-const requiredCatalogues = ["hmatias-ferramentas-diamantadas-2026.pdf"];
+const requiredCatalogues = ["hmatias-ferramentas-diamantadas-2026.pdf", "hmatias-diamond-tools-2026.pdf"];
 const requiredPhotos = [
   "logistica-estrutura-metalica.webp",
   "perfis-metalicos-estrutura.webp",
