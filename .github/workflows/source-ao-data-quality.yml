@@ -46,16 +46,20 @@ jobs:
           set -euo pipefail
           node --input-type=module <<'NODE'
           import {readFileSync} from 'node:fs';
+          import {buildPublicCatalog} from './platform/astro-preview/scripts/generate-public-catalog.mjs';
           const master=JSON.parse(readFileSync('source-ao/data/catalog.json','utf8'));
           const publicCatalog=JSON.parse(readFileSync('source-ao/data/public-catalog.json','utf8'));
-          const expected=master.items.filter(item=>item.id!=='item-formaldehyde');
-          if(JSON.stringify(publicCatalog.items)!==JSON.stringify(expected)){
-            throw new Error('Static public catalogue is not an exact safe projection of the master catalogue.');
+          const expected=buildPublicCatalog(master);
+          if(JSON.stringify(publicCatalog)!==JSON.stringify(expected)){
+            throw new Error('Static public catalogue is not an exact sanitised projection of the master catalogue.');
           }
           if(publicCatalog.items.some(item=>item.id==='item-formaldehyde')){
             throw new Error('Excluded catalogue entry is present in the public fallback.');
           }
-          console.log('PASS: static public catalogue matches the authorised master projection.');
+          if(/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga|Würth/i.test(JSON.stringify(publicCatalog))){
+            throw new Error('Supplier identity found in the public catalogue.');
+          }
+          console.log('PASS: public catalogue matches the sanitised master projection and excludes supplier identities.');
           NODE
       - name: Validate public catalogue privacy boundary
         shell: bash
