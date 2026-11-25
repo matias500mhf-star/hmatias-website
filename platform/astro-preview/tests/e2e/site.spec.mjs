@@ -19,7 +19,7 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     await expect(page).toHaveTitle(/Construção e Remodelação/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Construção e");
     await expect(page.getByRole("heading", { name: "Construção civil" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Preparação de terreno" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Movimentação e regularização de terreno" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Pavilhões com cobertura metálica" })).toBeVisible();
     await expect(page.locator(".construction-work-card img")).toHaveCount(4);
     await expect(page.locator("#trabalhos")).toContainText(/arquivo visual/i);
