@@ -37,17 +37,7 @@ function wrap(value, max) {
   if (current) lines.push(current);
   return lines;
 }
-function cleanSupplierText(value) {
-  return String(value || "")
-    .replace(/The published SYNVOR catalogue includes/gi, "A gama de produto inclui")
-    .replace(/The SYNVOR public catalogue lists/gi, "A documentação técnica identifica")
-    .replace(/SYNVOR public crown catalogue lists/gi, "A documentação técnica identifica")
-    .replace(/SYNVOR indicates/gi, "A documentação técnica indica")
-    .replace(/sourced from SYNVOR Industrial in Portugal/gi, "")
-    .replace(/SYNVOR(?: Industrial)?/gi, "")
-    .replace(/ADY-FERRAZ|ADY FERRAZ|D Wood|Evolution Safety(?: Namibia)?|Miliart Intemporal|Miliart|Kent Offshore|Fransga|MATEANA|Premier Yangue|Vizers Consultores|NovaEra Tech Solutions|Telewise/gi, "")
-    .replace(/\s{2,}/g, " ").replace(/\s+([,.;:])/g, "$1").trim();
-}
+function cleanSupplierText(value) { return sanitizePublicText(value); }
 function technicalSummary(item, english) {
   const spec = cleanSupplierText(item.specification);
   const diameter = spec.match(/Diameter\s*(?:Ø)?\s*(Ø?\d+(?:[–-]\d+)?\s*mm)/i) || String(item.name_pt || item.name).match(/Ø\s*\d+(?:[–-]\d+)?\s*mm/i);
@@ -199,7 +189,7 @@ export function generateSupplyCatalogues(master) {
   const items = master.items.filter((item) => item.category === "diamond-tools" && item.subcategory !== "cutting-drilling-grinding");
   if (items.length < 20) throw new Error("Insufficient technical references for public catalogues.");
   const publicText = items.map((item) => [item.name, item.name_pt, cleanSupplierText(item.specification)].join(" ")).join(" ");
-  if (/SYNVOR|ADY-FERRAZ|ADY FERRAZ|D Wood|Evolution Safety|Kent Offshore|Miliart|Fransga|MATEANA|Premier Yangue|Vizers Consultores|NovaEra Tech Solutions|Telewise/i.test(publicText)) throw new Error("Supplier identity found in generated catalogue content.");
+  if (containsPrivateSupplierName(publicText)) throw new Error("Supplier identity found in generated catalogue content.");
   const ptPdf = renderPdf(buildPageContents(items, false), false);
   const enPdf = renderPdf(buildPageContents(items, true), true);
   for (const pdf of [ptPdf, enPdf]) {
