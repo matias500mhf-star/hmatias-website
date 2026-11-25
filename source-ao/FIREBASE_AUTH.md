@@ -5,7 +5,7 @@
 - Project ID: `hmatias-c660a`
 - Web app ID: `1:865045791253:web:90cfa05e71083f09f7041c`
 - Web origin: `https://comercialhmatiasps.com`
-- Android preview package to register: `com.comercialhmatias.sourceao.preview`
+- Android preview package already registered: `com.comercialhmatias.sourceao.preview`
 
 The public web configuration is embedded in `firebase-auth.js`. Firebase web API keys and app identifiers are client configuration, not Admin credentials. Do not add a service-account JSON, private key or Admin SDK credential to the website or mobile app.
 
@@ -58,4 +58,4 @@ Do not deploy this branch directly to production. Use the normal HMATIAS staging
 
 ## Mobile app follow-up
 
-Register an Android app in this same Firebase project using the exact preview package name `com.comercialhmatias.sourceao.preview`. Download the Firebase-generated `google-services.json` and provide it for the isolated Flutter SOURCE AO branch. The mobile app will then use `firebase_core` and `firebase_auth` with the same Firebase project ID, allowing the same Firebase user to sign into website and app. Do not use the KARTA Android package or KARTA Firebase registration.
+The Android preview app `com.comercialhmatias.sourceao.preview` is already registered in this Firebase project. Download its generated `google-services.json` and store its complete contents in the KARTA repository Actions secret `SOURCE_AO_GOOGLE_SERVICES_JSON`; never commit the file or paste its contents into source control. The isolated Flutter branch uses `firebase_core` and `firebase_auth` with the same Firebase project ID, allowing the same Firebase user to sign into website and app. The CI validates the project and package identifiers before Android packaging. The intended production app package `com.comercialhmatias.sourceao` must be registered separately before a signed pilot release. Do not use the KARTA Android package or KARTA Firebase registration.
