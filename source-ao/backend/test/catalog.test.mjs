@@ -36,7 +36,7 @@ test('public catalog exposes only explicitly visible items and never the exclude
   assert.equal(body.items.some(item=>item.id==='item-formaldehyde'),false);
   assert.ok(Array.isArray(body.taxonomy));
   assert.ok(body.taxonomy.some(row=>row.id==='construction'));
-  assert.match(body.public_rule,/Prices, suppliers, stock, availability and internal commercial data are not included/);
+  assert.match(body.public_rule,/Supplier identities, sourcing channels, prices, stock, availability and internal commercial data are not included/);
   assert.equal(body.version,'1.0');
   assert.equal('public_visible' in body.items[0],false);
   assert.equal('updated_at' in body.items[0],false);
