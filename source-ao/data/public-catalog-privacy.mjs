@@ -29,7 +29,7 @@ export function sanitizePublicText(value) {
     .replace(/The SYNVOR public catalogue lists/gi, "The published product range includes")
     .replace(/SYNVOR public crown catalogue lists/gi, "The published product range includes")
     .replace(/SYNVOR indicates/gi, "Published technical data indicates")
-    .replace(/sourced from SYNVOR Industrial in Portugal/gi, "")
+    .replace(/[^.]*sourced from SYNVOR Industrial in Portugal[^.]*(?:\.|$)/gi, " ")
     .replace(replacePattern, "")
     .replace(/\s{2,}/g, " ")
     .replace(/\s+([,.;:])/g, "$1")
