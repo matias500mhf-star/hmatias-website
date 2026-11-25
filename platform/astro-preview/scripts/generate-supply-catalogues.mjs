@@ -68,7 +68,6 @@ function buildPageContents(items, english) {
     { key: "diamond-core-crowns", titlePt: "Coroas diamantadas de perfuração", titleEn: "Diamond core-drilling crowns" },
     { key: "diamond-grinding-polishing", titlePt: "Desbaste e polimento", titleEn: "Grinding and polishing" }
   ].map((group) => ({ ...group, items: items.filter((item) => item.subcategory === group.key) })).filter((group) => group.items.length);
-  const title = english ? "DIAMOND TOOLS" : "FERRAMENTAS DIAMANTADAS";
   const subtitle = english ? "Cutting  ·  Drilling  ·  Grinding  ·  Polishing" : "Corte  ·  Perfuração  ·  Desbaste  ·  Polimento";
   const edition = english ? "2026 EDITION  |  ENGLISH" : "EDIÇÃO 2026  |  PORTUGUÊS";
   const coverLead = english ? "Product references and available technical parameters." : "Referências de produto e parâmetros técnicos disponíveis.";
@@ -170,12 +169,13 @@ function buildPageContents(items, english) {
   pages.push(end);
   return pages;
 }
-function renderPdf(pages) {
+function renderPdf(pages, english) {
   const objects = [];
-  objects[1] = "<< /Type /Catalog /Pages 2 0 R >>";
+  objects[1] = "<< /Type /Catalog /Pages 2 0 R /Lang (" + (english ? "en" : "pt-PT") + ") >>";
   objects[2] = null;
   objects[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
   objects[4] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
+  objects[5] = "<< /Title <" + hexText(english ? "HMATIAS | Diamond Tools Technical Catalogue" : "HMATIAS | Catalogo Tecnico de Ferramentas Diamantadas") + "> /Author <" + hexText("HMATIAS - Prestacao de Servicos, (SU), Lda.") + "> /Subject <" + hexText("Technical product references and specification summary") + "> /Creator <" + hexText("HMATIAS Supply Catalogue Generator") + "> >>";
   const refs = [];
   for (const content of pages) {
     const streamId = objects.length;
@@ -191,7 +191,7 @@ function renderPdf(pages) {
   const xref = pdf.length;
   pdf += "xref\n0 " + objects.length + "\n0000000000 65535 f \n";
   for (let i = 1; i < objects.length; i++) pdf += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
-  pdf += "trailer\n<< /Size " + objects.length + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF\n";
+  pdf += "trailer\n<< /Size " + objects.length + " /Root 1 0 R /Info 5 0 R >>\nstartxref\n" + xref + "\n%%EOF\n";
   return pdf;
 }
 export function generateSupplyCatalogues(master) {
@@ -200,8 +200,8 @@ export function generateSupplyCatalogues(master) {
   if (items.length < 20) throw new Error("Insufficient technical references for public catalogues.");
   const publicText = items.map((item) => [item.name, item.name_pt, cleanSupplierText(item.specification)].join(" ")).join(" ");
   if (/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga|Würth/i.test(publicText)) throw new Error("Supplier identity found in generated catalogue content.");
-  const ptPdf = renderPdf(buildPageContents(items, false));
-  const enPdf = renderPdf(buildPageContents(items, true));
+  const ptPdf = renderPdf(buildPageContents(items, false), false);
+  const enPdf = renderPdf(buildPageContents(items, true), true);
   for (const pdf of [ptPdf, enPdf]) {
     if (!pdf.startsWith("%PDF-1.4") || !pdf.endsWith("%%EOF\n")) throw new Error("Invalid PDF output.");
   }
