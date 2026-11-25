@@ -11,7 +11,24 @@ const isExcludedPublicTaxonomyAlias = (value) => {
   const alias = normalizePublicTaxonomyAlias(value);
   return /^(formaldehyde|formaldeido|formol|formalin)(\s|$)/.test(alias) || alias === "cas 50 00 0";
 };
-const PUBLIC_RULE = "Only curated public supply families are exposed. Prices, suppliers, stock, availability and internal commercial data are not included.";
+const PUBLIC_RULE = "Only curated public supply families are exposed. Supplier identities, sourcing channels, prices, stock, availability and internal commercial data are not included.";
+const PRIVATE_SUPPLIER_NAMES = ["SYNVOR Industrial", "SYNVOR", "ADY-FERRAZ", "ADY FERRAZ", "Evolution Safety Namibia", "Evolution Safety", "Miliart Intemporal", "Miliart", "D Wood", "Kent Offshore", "Fransga", "Würth", "Wurth"];
+const PRIVATE_SUPPLIER_PATTERN = new RegExp(PRIVATE_SUPPLIER_NAMES.map((name) => name.replace(/[|\\{}()[\]^$+*?.]/g, "\\const PUBLIC_RULE = "Only curated public supply families are exposed. Prices, suppliers, stock, availability and internal commercial data are not included.";")).join("|"), "gi");
+function sanitizePublicText(value) {
+  return String(value)
+    .replace(/The published SYNVOR catalogue includes/gi, "The product range includes")
+    .replace(/The SYNVOR public catalogue lists/gi, "The published product range includes")
+    .replace(/SYNVOR public crown catalogue lists/gi, "The published product range includes")
+    .replace(/SYNVOR indicates/gi, "Published technical data indicates")
+    .replace(/sourced from SYNVOR Industrial in Portugal/gi, "")
+    .replace(PRIVATE_SUPPLIER_PATTERN, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([,.;:])/g, "$1")
+    .trim();
+}
+function sanitizePublicArray(values) {
+  return values.map(sanitizePublicText).filter((value) => value && !PRIVATE_SUPPLIER_PATTERN.test(value));
+}
 const ALLOWED_MASTER_KEYS = ["version", "updated_at", "items", "taxonomy"];
 const ALLOWED_ITEM_KEYS = [
   "id",
@@ -91,7 +108,7 @@ export function buildPublicCatalog(master) {
 
     // Allowlist projection: any newly added field requires explicit review above.
     items.push(Object.fromEntries(
-      ALLOWED_ITEM_KEYS.filter((key) => Object.hasOwn(item, key)).map((key) => [key, item[key]])
+      ALLOWED_ITEM_KEYS.filter((key) => Object.hasOwn(item, key)).map((key) => [key, Array.isArray(item[key]) ? sanitizePublicArray(item[key]) : typeof item[key] === "string" ? sanitizePublicText(item[key]) : item[key]])
     ));
   }
 
@@ -109,7 +126,7 @@ export function buildPublicCatalog(master) {
     return Object.fromEntries(
       ALLOWED_TAXONOMY_KEYS.filter((key) => Object.hasOwn(entry, key)).map((key) => [
         key,
-        key === "aliases" ? entry.aliases.filter((alias) => !isExcludedPublicTaxonomyAlias(alias)) : entry[key]
+        key === "aliases" ? sanitizePublicArray(entry.aliases.filter((alias) => !isExcludedPublicTaxonomyAlias(alias))) : typeof entry[key] === "string" ? sanitizePublicText(entry[key]) : entry[key]
       ])
     );
   });
