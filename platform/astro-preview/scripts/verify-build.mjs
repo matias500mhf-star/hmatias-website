@@ -820,10 +820,10 @@ for (const pagePath of generatedPages) {
   const expectedContactForm = isEnglishPage
     ? "https://comercialhmatiasps.com/en.html#contact"
     : "https://comercialhmatiasps.com/#contacto";
-  const contactLink = [...pageFooter.matchAll(/<a\\b[^>]*>/g)]
+  const contactLink = [...pageFooter.matchAll(/<a\b[^>]*>/g)]
     .map((match) => match[0])
     .find((anchor) => {
-      const href = anchor.match(/\\bhref="([^"]+)"/)?.[1];
+      const href = anchor.match(/\bhref="([^"]+)"/)?.[1];
       return href === expectedContactForm;
     });
   assert.ok(contactLink, "Quotation CTA must preserve the approved official form handoff: " + relativePagePath);
