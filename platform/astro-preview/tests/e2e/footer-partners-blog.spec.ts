@@ -230,7 +230,9 @@ for (const homepage of homepageRoutes) {
     const operations = page.locator(".footer-operations");
     await expect(operations.getByRole("link", { name: /Construction|Construção/ })).toBeVisible();
     await expect(operations.getByRole("link", { name: /Facilities/ })).toBeVisible();
-    await expect(operations.getByRole("link", { name: "HMATIAS Supply" })).toBeVisible();
+    const supplyLink = operations.getByRole("link", { name: "Supply", exact: true });
+    await expect(supplyLink).toBeVisible();
+    await expect(supplyLink).toHaveAttribute("href", homepage.language === "en" ? "/en/supply/" : "/supply/");
     await expect(operations.getByRole("link", { name: "Business Services" })).toBeVisible();
     await expect(operations.locator(".footer-subnav").getByRole("link", { name: /Works catalogue|Catálogo de Obras/ }))
       .toHaveAttribute("href", homepage.language === "en" ? "/en/works-catalogue/" : "/catalogo-obras/");
