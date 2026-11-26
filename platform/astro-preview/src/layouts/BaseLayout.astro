@@ -100,7 +100,7 @@ const structuredData = JSON.stringify({
       <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.02 3.2A12.7 12.7 0 0 0 5.1 22.38L3.4 28.6l6.37-1.67A12.7 12.7 0 1 0 16.02 3.2Zm0 23.2c-1.96 0-3.88-.53-5.55-1.54l-.4-.24-3.78.99 1.01-3.68-.26-.42a10.47 10.47 0 1 1 8.98 4.89Zm5.75-7.85c-.31-.16-1.84-.91-2.12-1.02-.29-.1-.5-.16-.71.16-.21.31-.81 1.02-.99 1.23-.18.21-.37.24-.68.08-.31-.16-1.31-.48-2.5-1.53-.92-.82-1.54-1.83-1.72-2.14-.18-.31-.02-.48.14-.64.14-.14.31-.37.47-.55.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.7-.97-2.32-.25-.6-.51-.52-.71-.53h-.6c-.21 0-.55.08-.84.39-.29.31-1.1 1.07-1.1 2.61s1.13 3.03 1.29 3.24c.16.21 2.22 3.39 5.38 4.75.75.32 1.34.51 1.8.65.76.24 1.45.2 1.99.12.61-.09 1.84-.75 2.1-1.49.26-.73.26-1.36.18-1.49-.08-.13-.29-.21-.6-.37Z"/></svg>
       <span>{isEnglish ? "WhatsApp" : "WhatsApp"}</span>
     </a>
-    {analyticsEnabled && <script>import "../scripts/analytics";</script>}
+    {analyticsEnabled && <script data-cookieconsent="ignore">import "../scripts/analytics";</script>}
     <style>
       .hm-floating-whatsapp{position:fixed;right:clamp(16px,2.4vw,30px);bottom:clamp(18px,2.8vh,28px);z-index:80;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 18px 0 14px;border:1px solid #ffffff35;border-radius:999px;background:#087f55;color:#fff;box-shadow:0 8px 26px rgb(3 31 61 / 22%);font:700 12px/1 var(--hm-sans);text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
       .hm-floating-whatsapp svg{width:25px;height:25px;flex:0 0 25px}
