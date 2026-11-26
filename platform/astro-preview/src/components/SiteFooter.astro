@@ -50,7 +50,7 @@ const links = isEnglish
       <h2>{isEnglish ? "Areas and services" : "Áreas e serviços"}</h2>
       <a class="footer-area-link" href={links.construction}>{isEnglish ? "Construction and remodelling" : "Construção e remodelação"}</a>
       <div class="footer-subnav" aria-label={isEnglish ? "Construction resources" : "Recursos de construção"}>
-        <a href={links.works}>{isEnglish ? "Works catalogue" : "Catálogo de Obras"}</a>
+        <a data-analytics-event="catalogue_open" data-analytics-catalogue="works" href={links.works}>{isEnglish ? "Works catalogue" : "Catálogo de Obras"}</a>
         <a href={links.projects}>{isEnglish ? "Projects in development" : "Projetos em desenvolvimento"}</a>
       </div>
       <a class="footer-area-link" href={links.facilities}>{isEnglish ? "Facilities and Maintenance" : "Facilities e Manutenção"}</a>
