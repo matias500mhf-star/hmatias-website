@@ -110,6 +110,16 @@ if (
     if (initialEventsSent || !statisticsAllowed()) return;
     initialEventsSent = true;
     if (service) emit("service_view", { service_name: service });
+    if (/^\\/(?:catalogo-obras|en\\/works-catalogue)\\/$/.test(path)) {
+      emit("catalogue_view", { catalogue_id: "works" });
+    }
+    if (path.startsWith("/source-ao/") || path.startsWith("/en/source-ao/")) {
+      const sourceSurface = path.includes("/radar/") ? "radar"
+        : path.includes("/parceiros/") || path.includes("/partners/") ? "partners"
+        : path.includes("/smart-rfq/") ? "smart_rfq"
+        : "home";
+      emit("source_ao_view", { source_surface: sourceSurface });
+    }
 
     // AI attribution is provider-only; no search text or full referrer URL is transmitted.
     try {
