@@ -66,10 +66,10 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
   };
 
   if (menuToggle && mainNav) {
-    const currentPath = window.location.pathname.replace(/\\/+$/, "") || "/";
+    const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
     mainNav.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
       const destination = new URL(link.href, window.location.origin);
-      const destinationPath = destination.pathname.replace(/\\/+$/, "") || "/";
+      const destinationPath = destination.pathname.replace(/\/+$/, "") || "/";
       if (destinationPath === currentPath && (!destination.hash || destination.hash === "#inicio")) {
         link.setAttribute("aria-current", "page");
         link.closest<HTMLElement>(".nav-item")?.classList.add("has-current-page");
