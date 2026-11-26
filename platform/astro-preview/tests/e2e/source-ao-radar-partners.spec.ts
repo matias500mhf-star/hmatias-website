@@ -188,5 +188,5 @@ test("the public SOURCE AO catalogue contains reviewed SYNVOR families without p
   for (const item of catalogue.items) {
     for (const key of Object.keys(item)) expect(allowed.has(key), "unapproved public field " + key).toBe(true);
   }
-  expect(catalogue.public_rule).toContain("Prices, suppliers, stock, availability and internal commercial data are not included");
+  expect(catalogue.public_rule).toContain("Supplier identities, sourcing channels, prices, stock, availability and internal commercial data are not included");
 });
