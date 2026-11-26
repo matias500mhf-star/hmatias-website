@@ -35,6 +35,9 @@ test("analytics source contains no form-field extraction or raw query/referrer t
   assert.doesNotMatch(analytics, /searchParams\.toString\(/);
   assert.match(analytics, /page_path: path/);
   assert.match(analytics, /ai_provider/);
+  for (const eventName of ["service_click", "phone_click", "email_click", "whatsapp_click", "trust_center_click", "smart_route_click", "project_engagement", "catalogue_open", "file_download"]) {
+    assert.ok(analytics.includes(`emit("${eventName}"`), `missing legacy-compatible event: ${eventName}`);
+  }
 });
 
 test("confirmed lead event is separate from form submission", () => {
