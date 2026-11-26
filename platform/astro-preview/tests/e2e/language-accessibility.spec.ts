@@ -170,3 +170,59 @@ test("all English routes expose matching language, brand descriptions and recipr
     }
   }
 });
+
+
+test("navigation submenus expose their controlled panel and support Escape in both layouts", async ({ page }, testInfo) => {
+  const isMobile = testInfo.project.name === "mobile-webkit";
+  await page.goto("/credibilidade/");
+
+  const activeNavItem = page.locator(".nav-item.has-current-page");
+  await expect(activeNavItem).toHaveCount(1);
+  const disclosure = activeNavItem.locator(".submenu-toggle");
+  const submenuId = await disclosure.getAttribute("aria-controls");
+  expect(submenuId).toBe("nav-about-submenu");
+  await expect(disclosure).toHaveAttribute("aria-expanded", "false");
+  await expect(disclosure).toHaveAttribute("aria-label", "Abrir submenu Sobre nós");
+  await expect(activeNavItem.locator(".nav-submenu a[aria-current='page']")).toHaveAttribute("href", "/credibilidade/");
+
+  if (isMobile) {
+    await page.locator(".menu-toggle").click();
+    await expect(page.locator("#main-nav")).toHaveClass(/is-open/);
+  }
+
+  const submenu = page.locator(`#${submenuId}`);
+  await disclosure.click();
+  await expect(disclosure).toHaveAttribute("aria-expanded", "true");
+  await expect(disclosure).toHaveAttribute("aria-label", "Fechar submenu Sobre nós");
+  await expect(submenu).toHaveAttribute("aria-hidden", "false");
+  await expect(submenu).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(disclosure).toHaveAttribute("aria-expanded", "false");
+  await expect(disclosure).toHaveAttribute("aria-label", "Abrir submenu Sobre nós");
+  await expect(submenu).toHaveAttribute("aria-hidden", "true");
+  await expect(submenu).toBeHidden();
+
+  if (isMobile) {
+    await expect(page.locator("#main-nav")).toHaveClass(/is-open/);
+    await page.keyboard.press("Escape");
+    await expect(page.locator("#main-nav")).not.toHaveClass(/is-open/);
+    await expect(page.locator(".menu-toggle")).toHaveAttribute("aria-expanded", "false");
+  }
+});
+
+test("English navigation submenus keep labels and controlled panels in English", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium", "Desktop English disclosure check.");
+  await page.goto("/en/credibility/");
+
+  const activeNavItem = page.locator(".nav-item.has-current-page");
+  const disclosure = activeNavItem.locator(".submenu-toggle");
+  const submenuId = await disclosure.getAttribute("aria-controls");
+  expect(submenuId).toBe("nav-about-submenu");
+  await expect(disclosure).toHaveAttribute("aria-label", "Open About us submenu");
+
+  await disclosure.focus();
+  await expect(disclosure).toHaveAttribute("aria-expanded", "true");
+  await expect(disclosure).toHaveAttribute("aria-label", "Close about us submenu");
+  await expect(page.locator(`#${submenuId}`)).toHaveAttribute("aria-hidden", "false");
+});
