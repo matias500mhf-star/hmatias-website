@@ -4,6 +4,10 @@ type AnalyticsWindow = Window & {
   Cookiebot?: { consent?: ConsentState };
   dataLayer?: unknown[];
   gtag?: (...args: unknown[]) => void;
+  hmatiasAnalytics?: {
+    track: (event: string, params?: Record<string, unknown>) => void;
+    confirmLead: (leadType: string, method: string) => void;
+  };
 };
 
 declare global {
@@ -11,6 +15,10 @@ declare global {
     Cookiebot?: { consent?: ConsentState };
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    hmatiasAnalytics?: {
+      track: (event: string, params?: Record<string, unknown>) => void;
+      confirmLead: (leadType: string, method: string) => void;
+    };
   }
 }
 
@@ -103,6 +111,38 @@ if (
       ...(service ? { service_name: service } : {}),
       ...safe
     });
+  };
+
+  const trackableEvents = new Set([
+    "rfq_service_selected", "rfq_built", "rfq_handoff", "rfq_copy",
+    "source_rfq_submit_attempt", "source_rfq_registered", "source_rfq_registration_failed",
+    "partner_application_duplicate", "partner_application_registered"
+  ]);
+  const allowedParameterKeys = new Set([
+    "service_name", "method", "item_count", "buyer_type", "urgency",
+    "purchase_intent", "contact_channel", "source_origin", "source_language",
+    "partner_type", "country_code", "capability_count", "status_code"
+  ]);
+
+  // Shared interface for the existing SOURCE AO and Smart RFQ scripts.
+  // Only event names and parameter keys defined above are forwarded.
+  w.hmatiasAnalytics = {
+    track(eventName, params = {}) {
+      if (!trackableEvents.has(eventName)) return;
+      const safeParams: Record<string, string> = {};
+      for (const [key, value] of Object.entries(params)) {
+        if (!allowedParameterKeys.has(key)) continue;
+        const normalized = String(value);
+        if (/^[a-z0-9_-]{1,64}$/i.test(normalized)) safeParams[key] = normalized;
+      }
+      emit(eventName, safeParams);
+    },
+    confirmLead(leadType, method) {
+      if (!/^[a-z0-9_-]{1,48}$/i.test(leadType) || !/^[a-z0-9_-]{1,32}$/i.test(method)) return;
+      window.dispatchEvent(new CustomEvent("hmatias:lead-confirmed", {
+        detail: { leadType, method }
+      }));
+    }
   };
 
   let initialEventsSent = false;
