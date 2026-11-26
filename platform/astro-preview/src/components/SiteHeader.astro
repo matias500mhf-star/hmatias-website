@@ -17,43 +17,116 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
     <button class="menu-toggle" type="button" aria-label={isEnglish ? "Open menu" : "Abrir menu"} aria-expanded="false" aria-controls="main-nav"><span></span><span></span></button>
     <nav class="main-nav" id="main-nav" aria-label={isEnglish ? "Main navigation" : "Navegação principal"}>
       <a class="nav-link nav-home" href={`${homeUrl}#inicio`}>{isEnglish ? "Home" : "Início"}</a>
-      <div class="nav-item"><a class="nav-link nav-about" href={isEnglish ? "/en/about/" : "/empresa/"}>{isEnglish ? "About us" : "Sobre nós"}</a><button class="submenu-toggle" type="button" aria-expanded="false" aria-label={isEnglish ? "Open About us submenu" : "Abrir submenu Sobre nós"}><span aria-hidden="true"></span></button><div class="nav-submenu" role="group" aria-label={isEnglish ? "Company information" : "Informação institucional"}><a href={isEnglish ? "/en/about/" : "/empresa/"}>{isEnglish ? "Company profile" : "Perfil da empresa"}</a><a href={isEnglish ? "/en/credibility/" : "/credibilidade/"}>{isEnglish ? "Credibility" : "Credibilidade"}</a><a href={isEnglish ? "/en/#partners" : "/#parceiros"}>{isEnglish ? "Partner network" : "Rede de parceiros"}</a><a href={isEnglish ? "/en/company-brochure/" : "/brochura-institucional/"}>{isEnglish ? "Company brochure" : "Brochura institucional"}</a></div></div>
-      <div class="nav-item"><a class="nav-link nav-services" href={servicesHref}>{isEnglish ? "Business areas" : "Áreas de negócio"}</a><button class="submenu-toggle" type="button" aria-expanded="false" aria-label={isEnglish ? "Open Business areas submenu" : "Abrir submenu Áreas de negócio"}><span aria-hidden="true"></span></button><div class="nav-submenu" role="group" aria-label={isEnglish ? "HMATIAS business areas" : "Áreas de negócio HMATIAS"}><a href={isEnglish ? "/en/construction/" : "/construcao/"}>{isEnglish ? "Construction and remodelling" : "Construção e remodelação"}</a><a href={isEnglish ? "/en/facilities/" : "/facilities/"}>{isEnglish ? "Facilities and maintenance" : "Facilities e manutenção"}</a><a href={isEnglish ? "/en/supply/" : "/supply/"}>{isEnglish ? "Supply and procurement" : "Supply e procurement"}</a><a href={isEnglish ? "/en/business-services/" : "/business-services/"}>Business Services</a></div></div>
-      <div class="nav-item"><a class="nav-link" href={projectsHref}>{isEnglish ? "Projects" : "Projetos"}</a><button class="submenu-toggle" type="button" aria-expanded="false" aria-label={isEnglish ? "Open Projects submenu" : "Abrir submenu Projetos"}><span aria-hidden="true"></span></button><div class="nav-submenu" role="group" aria-label={isEnglish ? "Projects and work records" : "Projetos e registos de obras"}><a href={isEnglish ? "/en/works-catalogue/" : "/catalogo-obras/"}>{isEnglish ? "Works catalogue" : "Catálogo de obras"}</a><a href={isEnglish ? "/en/integrated-yard/" : "/estaleiro/"}>{isEnglish ? "Projects in development" : "Projetos em desenvolvimento"}</a></div></div>
-      <div class="nav-item"><a class="nav-link nav-source" href={isEnglish ? "/en/source-ao/" : "/source-ao/"}>SOURCE AO</a><button class="submenu-toggle" type="button" aria-expanded="false" aria-label={isEnglish ? "Open SOURCE AO submenu" : "Abrir submenu SOURCE AO"}><span aria-hidden="true"></span></button><div class="nav-submenu" role="group" aria-label={isEnglish ? "SOURCE AO platform" : "Plataforma SOURCE AO"}><a href={isEnglish ? "/en/source-ao/radar/" : "/source-ao/radar/"}>{isEnglish ? "Opportunity Radar" : "Radar de oportunidades"}</a><a href={isEnglish ? "/en/source-ao/smart-rfq/" : "/source-ao/smart-rfq/"}>Smart RFQ</a><a href={isEnglish ? "/en/source-ao/partners/" : "/source-ao/parceiros/"}>{isEnglish ? "Partner application" : "Candidatura de parceiros"}</a></div></div>
+      <div class="nav-item"><a class="nav-link nav-about" href={isEnglish ? "/en/about/" : "/empresa/"}>{isEnglish ? "About us" : "Sobre nós"}</a><button class="submenu-toggle" type="button" aria-expanded="false" aria-controls="nav-about-submenu" data-label-open={isEnglish ? "Open About us submenu" : "Abrir submenu Sobre nós"} data-label-close={isEnglish ? "Close about us submenu submenu" : "Fechar submenu Sobre nós"} aria-label={isEnglish ? "Open About us submenu" : "Abrir submenu Sobre nós"}><span aria-hidden="true"></span></button><div id="nav-about-submenu" class="nav-submenu" role="group" aria-label={isEnglish ? "Company information" : "Informação institucional"}><a href={isEnglish ? "/en/about/" : "/empresa/"}>{isEnglish ? "Company profile" : "Perfil da empresa"}</a><a href={isEnglish ? "/en/credibility/" : "/credibilidade/"}>{isEnglish ? "Credibility" : "Credibilidade"}</a><a href={isEnglish ? "/en/#partners" : "/#parceiros"}>{isEnglish ? "Partner network" : "Rede de parceiros"}</a><a href={isEnglish ? "/en/company-brochure/" : "/brochura-institucional/"}>{isEnglish ? "Company brochure" : "Brochura institucional"}</a></div></div>
+      <div class="nav-item"><a class="nav-link nav-services" href={servicesHref}>{isEnglish ? "Business areas" : "Áreas de negócio"}</a><button class="submenu-toggle" type="button" aria-expanded="false" aria-controls="nav-services-submenu" data-label-open={isEnglish ? "Open Business areas submenu" : "Abrir submenu Áreas de negócio"} data-label-close={isEnglish ? "Close business areas submenu submenu" : "Fechar submenu Áreas de negócio"} aria-label={isEnglish ? "Open Business areas submenu" : "Abrir submenu Áreas de negócio"}><span aria-hidden="true"></span></button><div id="nav-services-submenu" class="nav-submenu" role="group" aria-label={isEnglish ? "HMATIAS business areas" : "Áreas de negócio HMATIAS"}><a href={isEnglish ? "/en/construction/" : "/construcao/"}>{isEnglish ? "Construction and remodelling" : "Construção e remodelação"}</a><a href={isEnglish ? "/en/facilities/" : "/facilities/"}>{isEnglish ? "Facilities and maintenance" : "Facilities e manutenção"}</a><a href={isEnglish ? "/en/supply/" : "/supply/"}>{isEnglish ? "Supply and procurement" : "Supply e procurement"}</a><a href={isEnglish ? "/en/business-services/" : "/business-services/"}>Business Services</a></div></div>
+      <div class="nav-item"><a class="nav-link nav-projects" href={projectsHref}>{isEnglish ? "Projects" : "Projetos"}</a><button class="submenu-toggle" type="button" aria-expanded="false" aria-controls="nav-projects-submenu" data-label-open={isEnglish ? "Open Projects submenu" : "Abrir submenu Projetos"} data-label-close={isEnglish ? "Close projects submenu submenu" : "Fechar submenu Projetos"} aria-label={isEnglish ? "Open Projects submenu" : "Abrir submenu Projetos"}><span aria-hidden="true"></span></button><div id="nav-projects-submenu" class="nav-submenu" role="group" aria-label={isEnglish ? "Projects and work records" : "Projetos e registos de obras"}><a href={isEnglish ? "/en/works-catalogue/" : "/catalogo-obras/"}>{isEnglish ? "Works catalogue" : "Catálogo de obras"}</a><a href={isEnglish ? "/en/integrated-yard/" : "/estaleiro/"}>{isEnglish ? "Projects in development" : "Projetos em desenvolvimento"}</a></div></div>
+      <div class="nav-item"><a class="nav-link nav-source" href={isEnglish ? "/en/source-ao/" : "/source-ao/"}>SOURCE AO</a><button class="submenu-toggle" type="button" aria-expanded="false" aria-controls="nav-source-submenu" data-label-open={isEnglish ? "Open SOURCE AO submenu" : "Abrir submenu SOURCE AO"} data-label-close={isEnglish ? "Close source ao submenu submenu" : "Fechar submenu SOURCE AO"} aria-label={isEnglish ? "Open SOURCE AO submenu" : "Abrir submenu SOURCE AO"}><span aria-hidden="true"></span></button><div id="nav-source-submenu" class="nav-submenu" role="group" aria-label={isEnglish ? "SOURCE AO platform" : "Plataforma SOURCE AO"}><a href={isEnglish ? "/en/source-ao/radar/" : "/source-ao/radar/"}>{isEnglish ? "Opportunity Radar" : "Radar de oportunidades"}</a><a href={isEnglish ? "/en/source-ao/smart-rfq/" : "/source-ao/smart-rfq/"}>Smart RFQ</a><a href={isEnglish ? "/en/source-ao/partners/" : "/source-ao/parceiros/"}>{isEnglish ? "Partner application" : "Candidatura de parceiros"}</a></div></div>
       <a class="nav-link nav-blog" href={isEnglish ? "/en/blog/" : "/blog/"}>Blog</a><a class="nav-quote" href={contactHref} target="_blank" rel="noopener noreferrer">{isEnglish ? "Request a quote" : "Solicitar orçamento"} <span aria-hidden="true">↗</span></a>
     </nav>
     <div class="header-actions"><a class="language-switch" href={languageHref} lang={isEnglish ? "pt-AO" : "en"} aria-label={isEnglish ? "PT — Switch to Portuguese" : "EN — Mudar para inglês"}>{isEnglish ? "PT" : "EN"}</a><a class="header-cta" href={contactHref} target="_blank" rel="noopener noreferrer">{isEnglish ? "Request a quote" : "Solicitar orçamento"} <span aria-hidden="true">↗</span></a></div>
   </div>
 </header>
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
-  const nav = document.querySelector<HTMLElement>("#main-nav");
-  const header = document.querySelector<HTMLElement>(".site-header");
-  const isEnglish = header?.dataset.language === "en";
-  const closeMenu = () => {
-    toggle?.setAttribute("aria-expanded","false");
-    toggle?.setAttribute("aria-label",isEnglish ? "Open menu" : "Abrir menu");
-    nav?.classList.remove("is-open");
-    nav?.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach((item) => { item.classList.remove("submenu-open"); item.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded","false"); });
+  const menuToggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
+  const mainNav = document.querySelector<HTMLElement>("#main-nav");
+  const siteHeader = document.querySelector<HTMLElement>(".site-header");
+  const isEnglish = siteHeader?.dataset.language === "en";
+  const desktopPointer = window.matchMedia("(min-width:1121px) and (hover:hover) and (pointer:fine)");
+
+  const setSubmenuExpanded = (item: HTMLElement, expanded: boolean) => {
+    if (!mainNav) return;
+    mainNav.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach((other) => {
+      if (other !== item) setSubmenuExpanded(other, false);
+    });
+    const button = item.querySelector<HTMLButtonElement>(".submenu-toggle");
+    const submenuId = button?.getAttribute("aria-controls");
+    const submenu = submenuId ? document.getElementById(submenuId) : null;
+    item.classList.toggle("submenu-open", expanded);
+    button?.setAttribute("aria-expanded", String(expanded));
+    if (button) {
+      const label = expanded ? button.dataset.labelClose : button.dataset.labelOpen;
+      if (label) button.setAttribute("aria-label", label);
+    }
+    submenu?.setAttribute("aria-hidden", String(!expanded));
   };
-  if(toggle&&nav){
-    const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
-    let currentMarked = false;
-    nav.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
+
+  const closeMenu = () => {
+    menuToggle?.setAttribute("aria-expanded", "false");
+    menuToggle?.setAttribute("aria-label", isEnglish ? "Open menu" : "Abrir menu");
+    mainNav?.classList.remove("is-open");
+    mainNav?.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach((item) => {
+      setSubmenuExpanded(item, false);
+    });
+  };
+
+  if (menuToggle && mainNav) {
+    const currentPath = window.location.pathname.replace(/\\/+$/, "") || "/";
+    mainNav.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
       const destination = new URL(link.href, window.location.origin);
-      const destinationPath = destination.pathname.replace(/\/+$/, "") || "/";
-      if (!currentMarked && destinationPath === currentPath && (!destination.hash || destination.hash === "#inicio")) {
+      const destinationPath = destination.pathname.replace(/\\/+$/, "") || "/";
+      if (destinationPath === currentPath && (!destination.hash || destination.hash === "#inicio")) {
         link.setAttribute("aria-current", "page");
-        currentMarked = true;
+        link.closest<HTMLElement>(".nav-item")?.classList.add("has-current-page");
       }
     });
-    toggle.addEventListener("click",()=>{const open=toggle.getAttribute("aria-expanded")!=="true";if(open){toggle.setAttribute("aria-expanded","true");toggle.setAttribute("aria-label",isEnglish?"Close menu":"Fechar menu");nav.classList.add("is-open");}else closeMenu();});
-    const setSubmenuExpanded=(item:HTMLElement,expanded:boolean)=>{nav.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach(other=>{if(other!==item){other.classList.remove("submenu-open");other.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded","false");}});item.classList.toggle("submenu-open",expanded);item.querySelector<HTMLButtonElement>(".submenu-toggle")?.setAttribute("aria-expanded",String(expanded));};
-    nav.querySelectorAll<HTMLElement>(".nav-item").forEach(item=>{item.addEventListener("mouseenter",()=>{if(window.matchMedia("(min-width:1121px) and (hover:hover) and (pointer:fine)").matches)setSubmenuExpanded(item,true);});item.addEventListener("mouseleave",()=>{if(window.matchMedia("(min-width:1121px) and (hover:hover) and (pointer:fine)").matches&&!item.contains(document.activeElement))setSubmenuExpanded(item,false);});item.addEventListener("focusin",()=>{if(window.matchMedia("(min-width:1121px)").matches)setSubmenuExpanded(item,true);});item.addEventListener("focusout",event=>{if(window.matchMedia("(min-width:1121px)").matches&&event.relatedTarget instanceof Node&&!item.contains(event.relatedTarget))setSubmenuExpanded(item,false);});});
-    nav.querySelectorAll<HTMLButtonElement>(".submenu-toggle").forEach(button=>button.addEventListener("click",()=>{const item=button.closest<HTMLElement>(".nav-item");if(!item)return;const desktop=window.matchMedia("(min-width:1121px) and (hover:hover) and (pointer:fine)").matches;setSubmenuExpanded(item,desktop||button.getAttribute("aria-expanded")!=="true");}));
-    nav.querySelectorAll<HTMLAnchorElement>("a").forEach(link=>link.addEventListener("click",closeMenu));
-    document.addEventListener("keydown",event=>{if(event.key==="Escape"&&(nav.classList.contains("is-open")||nav.querySelector(".submenu-open"))){closeMenu();toggle.focus();}});
-    document.addEventListener("click",event=>{if(event.target instanceof Node&&header&&!header.contains(event.target))closeMenu();});
+
+    menuToggle.addEventListener("click", () => {
+      const open = menuToggle.getAttribute("aria-expanded") !== "true";
+      if (open) {
+        menuToggle.setAttribute("aria-expanded", "true");
+        menuToggle.setAttribute("aria-label", isEnglish ? "Close menu" : "Fechar menu");
+        mainNav.classList.add("is-open");
+      } else {
+        closeMenu();
+      }
+    });
+
+    mainNav.querySelectorAll<HTMLElement>(".nav-item").forEach((item) => {
+      item.addEventListener("mouseenter", () => {
+        if (desktopPointer.matches) setSubmenuExpanded(item, true);
+      });
+      item.addEventListener("mouseleave", () => {
+        if (desktopPointer.matches && !item.contains(document.activeElement)) {
+          setSubmenuExpanded(item, false);
+        }
+      });
+      item.addEventListener("focusin", () => {
+        if (window.matchMedia("(min-width:1121px)").matches) setSubmenuExpanded(item, true);
+      });
+      item.addEventListener("focusout", (event) => {
+        const nextTarget = event.relatedTarget;
+        if (window.matchMedia("(min-width:1121px)").matches && nextTarget instanceof Node && !item.contains(nextTarget)) {
+          setSubmenuExpanded(item, false);
+        }
+      });
+    });
+
+    mainNav.querySelectorAll<HTMLButtonElement>(".submenu-toggle").forEach((button) => {
+      button.addEventListener("click", () => {
+        const item = button.closest<HTMLElement>(".nav-item");
+        if (!item) return;
+        setSubmenuExpanded(item, button.getAttribute("aria-expanded") !== "true");
+      });
+    });
+
+    mainNav.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const expandedItem = mainNav.querySelector<HTMLElement>(".nav-item.submenu-open");
+      if (expandedItem) {
+        setSubmenuExpanded(expandedItem, false);
+        expandedItem.querySelector<HTMLButtonElement>(".submenu-toggle")?.focus();
+      } else if (mainNav.classList.contains("is-open")) {
+        closeMenu();
+        menuToggle.focus();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Node && siteHeader && !siteHeader.contains(event.target)) closeMenu();
+    });
   }
 </script>
