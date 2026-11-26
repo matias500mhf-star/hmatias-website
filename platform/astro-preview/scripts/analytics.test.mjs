@@ -38,7 +38,7 @@ test("analytics source contains no form-field extraction or raw query/referrer t
 });
 
 test("confirmed lead event is separate from form submission", () => {
-  assert.match(analytics, /event,\s*\n\s*"form_submit"/);
+  assert.match(analytics, /emit\("form_submit"/);
   assert.match(analytics, /hmatias:lead-confirmed/);
   assert.match(analytics, /"generate_lead"/);
 });
