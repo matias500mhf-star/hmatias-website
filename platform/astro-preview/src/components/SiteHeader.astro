@@ -96,14 +96,15 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
           setSubmenuExpanded(item, false);
         }
       });
-      item.addEventListener("focusin", () => {
-        if (window.matchMedia("(min-width:1121px)").matches) setSubmenuExpanded(item, true);
+      item.addEventListener("focusin", (event) => {
+        const previousTarget = event.relatedTarget;
+        const focusEnteredItem = !(previousTarget instanceof Node && item.contains(previousTarget));
+        if (window.matchMedia("(min-width:1121px)").matches && focusEnteredItem) setSubmenuExpanded(item, true);
       });
       item.addEventListener("focusout", (event) => {
         const nextTarget = event.relatedTarget;
-        if (window.matchMedia("(min-width:1121px)").matches && nextTarget instanceof Node && !item.contains(nextTarget)) {
-          setSubmenuExpanded(item, false);
-        }
+        const focusLeftItem = !(nextTarget instanceof Node && item.contains(nextTarget));
+        if (window.matchMedia("(min-width:1121px)").matches && focusLeftItem) setSubmenuExpanded(item, false);
       });
     });
 
