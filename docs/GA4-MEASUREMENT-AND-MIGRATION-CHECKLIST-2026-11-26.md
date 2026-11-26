@@ -137,3 +137,14 @@ The following code has now been added to the Astro branch:
 - `PUBLIC_INDEXING_ENABLED`: remains `false` for previews.
 - Production enablement requires an approved production build with `PUBLIC_INDEXING_ENABLED=true`, `PUBLIC_ANALYTICS_ENABLED=true`, the verified GTM container ID and the Cookiebot consent ID.
 - No production environment variables, GTM container, GA4 property, Cookiebot account, Resend route, DNS, production site, merge or deployment were changed by this implementation.
+
+
+### Integration refinement — existing SOURCE AO and event vocabulary
+
+- The shared `window.hmatiasAnalytics` bridge now exposes `track` and `confirmLead` to the existing SOURCE AO and Smart RFQ scripts. Event names and parameter keys are allowlisted; values are reduced to short, non-identifying tokens.
+- SOURCE AO RFQ emits a confirmed lead only after the API returns an accepted response with a valid reference and private status path. Partner applications emit a confirmed lead only after the API returns `ok: true` with a reference and the application is not a duplicate.
+- The browser-only Smart RFQ builder remains an RFQ brief/handoff, not a confirmed lead. Email/WhatsApp clicks are contact handoffs, not successful lead receipts.
+- Added compatibility events used by the existing production event vocabulary: `service_click`, `phone_click`, `email_click`, `whatsapp_click`, `trust_center_click`, `smart_route_click`, `project_engagement`, plus catalogue and file-download events. All remain consent-gated and omit visitor-entered data.
+- The production `analytics.js`, `tag-manager.js`, `analytics-events.js`, Resend routing and form endpoints remain unchanged. The known possibility of both direct GA4 and GTM page-view tags in the current production site must still be checked in the live GTM workspace before cutover.
+- A Vercel preview build for commit `9daad16302070f9d50d212a6aee88b925d80d337` completed successfully and generated 63 pages. This build includes the corrected catalogue path matcher, but predates the latest SOURCE AO bridge/test commits. The latest branch HEAD has not yet completed a full QA run.
+- Vercel refused another preview deployment with `402 payment_required` / `api-deployments-free-per-day` (retry after 24 hours). The connected GitHub action controls do not expose workflow dispatch in this session, and no successful Actions run is associated with the latest HEAD. Full Playwright, axe, Lighthouse and dependency-audit results therefore remain pending.
