@@ -89,6 +89,7 @@
         country_code:String(data.get('country_code')||'unknown'),
         capability_count:capabilities.length
       });
+      if(!body.duplicate)window.hmatiasAnalytics?.confirmLead?.('partner_application','website');
       if(!body.duplicate)form.reset();
     }catch(error){
       const validation={
