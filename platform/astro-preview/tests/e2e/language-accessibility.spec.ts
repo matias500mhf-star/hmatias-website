@@ -227,3 +227,25 @@ test("English navigation submenus keep labels and controlled panels in English",
   await expect(disclosure).toHaveAttribute("aria-label", "Close about us submenu");
   await expect(page.locator(`#${submenuId}`)).toHaveAttribute("aria-hidden", "false");
 });
+
+
+test("skip-to-content shortcut targets the main content in Portuguese and English", async ({ page }) => {
+  const routes = [
+    { path: "/", label: "Saltar para o conteúdo principal" },
+    { path: "/en/", label: "Skip to main content" },
+  ] as const;
+
+  for (const route of routes) {
+    await page.goto(route.path);
+    const skipLink = page.getByRole("link", { name: route.label });
+    await expect(skipLink).toHaveAttribute("href", /#.+/);
+    const href = await skipLink.getAttribute("href");
+    expect(href).toBeTruthy();
+    const targetId = href!.slice(1);
+    const main = page.locator(`#${targetId}`);
+    await expect(main).toHaveCount(1);
+    await expect(main).toHaveAttribute("tabindex", "-1");
+    await skipLink.focus();
+    await expect(skipLink).toBeFocused();
+  }
+});
