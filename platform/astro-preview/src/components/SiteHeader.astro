@@ -111,7 +111,7 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
       button.addEventListener("click", () => {
         const item = button.closest<HTMLElement>(".nav-item");
         if (!item) return;
-        setSubmenuExpanded(item, button.getAttribute("aria-expanded") !== "true");
+        setSubmenuExpanded(item, desktopPointer.matches || button.getAttribute("aria-expanded") !== "true");
       });
     });
 
