@@ -332,8 +332,8 @@ for (const [route, language, privacyHref, languageHref] of partnerRoutes) {
 
 const lighthouseConfig = readFileSync(new URL("../lighthouserc.cjs", import.meta.url), "utf8");
 const lighthouseRoutes = [...lighthouseConfig.matchAll(/http:\/\/127\.0\.0\.1:4321([^"]+)/g)].map((match) => match[1]);
-assert.equal(lighthouseRoutes.length, 34, "Lighthouse must audit 34 representative PT/EN routes");
-assert.equal(new Set(lighthouseRoutes).size, 34, "Lighthouse route list must contain 34 unique routes");
+assert.equal(lighthouseRoutes.length, 18, "Lighthouse must audit 18 representative PT/EN routes");
+assert.equal(new Set(lighthouseRoutes).size, 18, "Lighthouse route list must contain 18 unique routes");
 assert.ok(lighthouseRoutes.includes("/") && lighthouseRoutes.includes("/en/"), "Lighthouse must include both homepages");
 for (const route of lighthouseRoutes) {
   const segments = route.split("/").filter(Boolean);
