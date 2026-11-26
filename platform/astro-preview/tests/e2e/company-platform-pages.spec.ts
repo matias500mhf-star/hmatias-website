@@ -453,8 +453,12 @@ test.describe("HMATIAS company and platform pages", () => {
     for (const item of cases) {
       await page.goto(item.route);
       await expect(page.getByRole("heading", { name: /Ferramentas diamantadas|Diamond tools/ })).toBeVisible();
-      await expect(page.locator(".supply-catalogue-card")).toHaveCount(1);
-      await expect(page.getByRole("link", { name: item.link })).toHaveAttribute("href", item.pdf);
+      await expect(page.locator(".supply-catalogue-card")).toHaveCount(2);
+      const diamondCatalogue = page.locator(".supply-catalogue-card").filter({
+        hasText: /Ferramentas diamantadas|Diamond tools/,
+      });
+      await expect(diamondCatalogue).toHaveCount(1);
+      await expect(diamondCatalogue.getByRole("link", { name: item.link })).toHaveAttribute("href", item.pdf);
       await expect(page.locator(".supply-partner")).toHaveCount(0);
       const visibleText = await page.locator("main").innerText();
       expect(visibleText).not.toMatch(/SYNVOR|ADY-FERRAZ|Evolution Safety|Kent Offshore|Miliart|Fransga/i);
