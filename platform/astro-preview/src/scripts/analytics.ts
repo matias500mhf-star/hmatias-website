@@ -187,17 +187,46 @@ if (
     if (!anchor) return;
 
     const href = (anchor.getAttribute("href") || "").toLowerCase();
-    if (href.startsWith("tel:")) emit("contact_click", { contact_method: "phone" });
-    else if (href.startsWith("mailto:")) emit("contact_click", { contact_method: "email" });
+    let contactMethod: "phone" | "email" | "whatsapp" | null = null;
+    if (href.startsWith("tel:")) contactMethod = "phone";
+    else if (href.startsWith("mailto:")) contactMethod = "email";
     else {
       try {
         const host = new URL(anchor.href, window.location.href).hostname.toLowerCase();
         if (host === "wa.me" || host === "whatsapp.com" || host.endsWith(".whatsapp.com")) {
-          emit("contact_click", { contact_method: "whatsapp" });
+          contactMethod = "whatsapp";
         }
       } catch {
         // Invalid or non-URL href; ignore.
       }
+    }
+    if (contactMethod) {
+      emit("contact_click", { contact_method: contactMethod });
+      emit(`${contactMethod}_click`, { contact_method: contactMethod });
+    }
+
+    if (anchor.hasAttribute("data-trust-link")) {
+      emit("trust_center_click", { trust_origin: anchor.dataset.trustLink || "unknown" });
+    }
+    if (anchor.dataset.smartRoute) {
+      emit("smart_route_click", { service_name: anchor.dataset.smartRoute });
+    }
+    if (anchor.hasAttribute("data-email-fallback")) {
+      emit("lead_handoff", { method: "email", lead_type: service || "general_quote" });
+    }
+
+    try {
+      const targetService = serviceForPath(new URL(anchor.href, window.location.href).pathname);
+      if (targetService && targetService !== service) {
+        emit("service_click", { service_name: targetService });
+      }
+    } catch {
+      // Ignore invalid or non-local destinations.
+    }
+
+    const projectCard = anchor.closest<HTMLElement>("[data-project-id]");
+    if (projectCard?.dataset.projectId) {
+      emit("project_engagement", { project_id: projectCard.dataset.projectId });
     }
 
     if (anchor.dataset.analyticsEvent === "quote_cta_click") {
