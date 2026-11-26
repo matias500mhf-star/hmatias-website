@@ -1,0 +1,44 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+
+const analytics = await readFile(new URL("../src/scripts/analytics.ts", import.meta.url), "utf8");
+const layout = await readFile(new URL("../src/layouts/BaseLayout.astro", import.meta.url), "utf8");
+
+test("Astro analytics is disabled unless explicitly enabled for the indexed production host", () => {
+  assert.match(analytics, /PUBLIC_ANALYTICS_ENABLED === "true"/);
+  assert.match(analytics, /comercialhmatiasps\.com/);
+  assert.match(analytics, /noindex/i);
+  assert.match(layout, /PUBLIC_ANALYTICS_ENABLED === "true" && indexingEnabled/);
+});
+
+test("GTM and all analytics events require Cookiebot statistics consent", () => {
+  assert.match(analytics, /Cookiebot\?\.consent\?\.statistics/);
+  assert.match(analytics, /if \(!statisticsAllowed\(\) \|\| gtmLoaded/);
+  assert.match(analytics, /if \(!statisticsAllowed\(\)\) return/);
+  assert.match(analytics, /CookiebotOnConsentReady/);
+  assert.match(analytics, /CookiebotOnDecline/);
+});
+
+test("GTM is the only tag loader and advertising consent remains denied", () => {
+  assert.match(analytics, /PUBLIC_GTM_CONTAINER_ID/);
+  assert.match(analytics, /GTM-\[A-Z0-9\]/);
+  assert.match(analytics, /ad_storage: "denied"/);
+  assert.doesNotMatch(analytics, /googletagmanager\.com\/gtag\/js/);
+  assert.doesNotMatch(analytics, /G-JNJDL6LZFY/);
+});
+
+test("analytics source contains no form-field extraction or raw query/referrer transmission", () => {
+  assert.doesNotMatch(analytics, /FormData\(/);
+  assert.doesNotMatch(analytics, /\.value\b/);
+  assert.doesNotMatch(analytics, /page_location\s*:/);
+  assert.doesNotMatch(analytics, /searchParams\.toString\(/);
+  assert.match(analytics, /page_path: path/);
+  assert.match(analytics, /ai_provider/);
+});
+
+test("confirmed lead event is separate from form submission", () => {
+  assert.match(analytics, /event,\s*\n\s*"form_submit"/);
+  assert.match(analytics, /hmatias:lead-confirmed/);
+  assert.match(analytics, /"generate_lead"/);
+});
