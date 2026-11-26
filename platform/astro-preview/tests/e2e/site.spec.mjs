@@ -50,7 +50,8 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
   test("catalogue EPI opens as a public PDF in Portuguese and English", async ({ page }) => {
     for (const [route, linkName] of [["/supply/", "Abrir catálogo PDF"], ["/en/supply/", "Open PDF catalogue"]]) {
       await page.goto(route);
-      const catalogueLink = page.getByRole("link", { name: linkName, exact: true });
+      const catalogueLink = page.locator('a[href="/catalogos/ady-ferraz-catalogo-epi.pdf"]');
+      await expect(catalogueLink).toHaveCount(1);
       await expect(catalogueLink).toHaveAttribute("href", "/catalogos/ady-ferraz-catalogo-epi.pdf");
       await expect(catalogueLink).toHaveAttribute("target", "_blank");
       await expect(catalogueLink).toHaveAttribute("rel", "noopener noreferrer");
@@ -67,8 +68,8 @@ test.describe("HMATIAS — navegação e conteúdo", () => {
     expect(response?.status()).toBe(200);
     await expect(page).toHaveTitle(/Supply \| Procurement/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Fornecimento");
-    await expect(page.getByRole("heading", { name: "Materiais de construção" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "EPI e fardamento" })).toBeVisible();
+    await expect(page.locator("#categorias").getByRole("heading", { name: "Materiais de construção" })).toBeVisible();
+    await expect(page.locator("#categorias").getByRole("heading", { name: "EPI e fardamento" })).toBeVisible();
     await expect(page.getByText("A HMATIAS não mantém stock próprio.", { exact: false })).toBeVisible();
     await expect(page.locator(".supply-evidence-photo img")).toHaveCount(2);
     await expect(page.getByRole("link", { name: "Registar pedido de cotação" })).toBeVisible();
