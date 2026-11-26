@@ -11,6 +11,7 @@ const servicesHref = isEnglish ? "/en/#services" : "/#servicos";
 const projectsHref = isEnglish ? "/en/#projects" : "/#projetos";
 const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUrl;
 ---
+<a class="skip-link" href="#main-content">{isEnglish ? "Skip to main content" : "Saltar para o conteúdo principal"}</a>
 <header class="site-header" data-language={isEnglish ? "en" : "pt"}>
   <div class="header-inner">
     <a class="brand" href={`${homeUrl}#inicio`} aria-label={isEnglish ? "HMATIAS — home" : "HMATIAS — início"}><Image src={logo} alt={isEnglish ? "HMATIAS — Construction, Facilities, Supply and Business Services" : "HMATIAS — Prestação de Serviços"} widths={[128,176]} sizes="88px" format="webp" quality={82} loading="eager" /></a>
@@ -27,6 +28,13 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
   </div>
 </header>
 <script>
+  const skipLink = document.querySelector<HTMLAnchorElement>(".skip-link");
+  const mainContent = document.querySelector<HTMLElement>("main");
+  if (skipLink && mainContent) {
+    if (!mainContent.id) mainContent.id = "main-content";
+    skipLink.href = `#${mainContent.id}`;
+    if (!mainContent.hasAttribute("tabindex")) mainContent.tabIndex = -1;
+  }
   const menuToggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
   const mainNav = document.querySelector<HTMLElement>("#main-nav");
   const siteHeader = document.querySelector<HTMLElement>(".site-header");
