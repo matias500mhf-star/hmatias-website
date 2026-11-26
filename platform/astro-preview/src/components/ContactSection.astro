@@ -30,13 +30,13 @@ const officialContactFormUrl = isEnglish ? company.contactFormEnUrl : company.co
       </div>
     </div>
     <div class="contact-actions">
-      <a class="contact-action" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">
+      <a class="contact-action" data-analytics-event="quote_cta_click" data-analytics-service="general" data-analytics-method="whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">
         <span>WhatsApp</span><b aria-hidden="true">↗</b>
       </a>
-      <a class="contact-action" href={`mailto:${company.commercialEmail}?subject=Pedido%20de%20informa%C3%A7%C3%A3o%20-%20HMATIAS`}>
+      <a class="contact-action" data-analytics-event="quote_cta_click" data-analytics-service="general" data-analytics-method="email" href={`mailto:${company.commercialEmail}?subject=Pedido%20de%20informa%C3%A7%C3%A3o%20-%20HMATIAS`}>
         <span>Enviar e-mail</span><b aria-hidden="true">↗</b>
       </a>
-      <a class="contact-action" href={officialContactFormUrl} target="_blank" rel="noopener noreferrer">
+      <a class="contact-action" data-analytics-event="quote_cta_click" data-analytics-service="general" data-analytics-method="official_form" href={officialContactFormUrl} target="_blank" rel="noopener noreferrer">
         <span>{isEnglish ? "Open official contact form" : "Abrir formulário oficial de contacto"}</span><b aria-hidden="true">↗</b>
       </a>
       <div class="contact-small">{company.name}<br />Construção · Facilities · Supply · Business Services</div>
