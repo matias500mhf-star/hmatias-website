@@ -54,6 +54,16 @@
   --hm-space-3: 1.5rem;
   --hm-space-4: 2rem;
   --hm-shadow-soft: 0 10px 28px rgb(3 31 61 / 8%);
+  /* Shared site-wide layout and component rhythm */
+  --hm-section-block: clamp(64px, 7.5vw, 108px);
+  --hm-section-block-mobile: 52px;
+  --hm-grid-gap: clamp(12px, 1.6vw, 22px);
+  --hm-card-padding: clamp(18px, 2vw, 28px);
+  --hm-card-padding-mobile: 18px;
+  --hm-control-min-height: 48px;
+  --hm-catalogue-cover-width: 180px;
+  --hm-catalogue-cover-ratio: 3 / 4;
+  --hm-reading-measure: 72ch;
   color-scheme: light;
 }
 * { box-sizing: border-box; }
@@ -1398,5 +1408,50 @@ html { scroll-padding-top: 104px; }
   .button-dark:hover,
   .header-cta:hover {
     box-shadow: none;
+  }
+}
+
+
+/* HMATIAS site-wide design standard — consistent rhythm across PT/EN and all business areas. */
+.section-pad {
+  padding-block: var(--hm-section-block);
+}
+:where(
+  .editorial-card,
+  .supply-catalogue-card,
+  .supply-category-card,
+  .construction-scope-card,
+  .purpose-card,
+  .credibility-principle,
+  .partner-logo,
+  .project-card,
+  .construction-work-card
+) {
+  min-width: 0;
+}
+:where(
+  .editorial-card-grid,
+  .supply-catalogue-grid,
+  .supply-category-grid,
+  .construction-scope-grid,
+  .credibility-principle-grid,
+  .purpose-grid,
+  .partner-logos
+) {
+  column-gap: var(--hm-grid-gap);
+  row-gap: var(--hm-grid-gap);
+}
+main :where(p, li, dd, dt, figcaption) {
+  text-align: start;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+}
+main :where(img, video) {
+  max-width: 100%;
+}
+@media (max-width: 650px) {
+  .section-pad {
+    padding-block: var(--hm-section-block-mobile);
   }
 }
