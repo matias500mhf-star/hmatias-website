@@ -197,9 +197,7 @@ test("navigation submenus expose their controlled panel and support Escape in bo
   await expect(submenu).toHaveAttribute("aria-hidden", "false");
   await expect(submenu).toBeVisible();
 
-  await submenu.getByRole("link", { name: "Credibility" }).focus().catch(async () => {
-    await submenu.getByRole("link", { name: "Credibilidade" }).focus();
-  });
+  await submenu.getByRole("link", { name: "Credibilidade" }).focus();
   await page.keyboard.press("Escape");
   await expect(disclosure).toHaveAttribute("aria-expanded", "false");
   await expect(disclosure).toHaveAttribute("aria-label", "Abrir submenu Sobre nós");
