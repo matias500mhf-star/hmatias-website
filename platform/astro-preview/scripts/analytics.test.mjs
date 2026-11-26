@@ -42,3 +42,15 @@ test("confirmed lead event is separate from form submission", () => {
   assert.match(analytics, /hmatias:lead-confirmed/);
   assert.match(analytics, /"generate_lead"/);
 });
+
+test("existing SOURCE AO and Smart RFQ scripts are connected to the privacy-safe analytics bridge", async () => {
+  const sourceRfq = await readFile(new URL("../../../../source-ao/rfq.js", import.meta.url), "utf8");
+  const partnerApplication = await readFile(new URL("../../../../source-ao/partner-application.js", import.meta.url), "utf8");
+  const smartRfq = await readFile(new URL("../src/scripts/smart-rfq.js", import.meta.url), "utf8");
+  assert.match(analytics, /hmatiasAnalytics =/);
+  assert.match(analytics, /trackableEvents/);
+  assert.match(analytics, /allowedParameterKeys/);
+  assert.match(sourceRfq, /hmatiasAnalytics\?\.confirmLead\?\./);
+  assert.match(partnerApplication, /confirmLead\?\.\('partner_application'/);
+  assert.match(smartRfq, /hmatiasAnalytics\?\.track/);
+});
