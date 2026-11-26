@@ -202,7 +202,7 @@ if (
     }
     if (contactMethod) {
       emit("contact_click", { contact_method: contactMethod });
-      emit(`${contactMethod}_click`, { contact_method: contactMethod });
+      emit(contactMethod === "phone" ? "phone_click" : contactMethod === "email" ? "email_click" : "whatsapp_click", { contact_method: contactMethod });
     }
 
     if (anchor.hasAttribute("data-trust-link")) {
