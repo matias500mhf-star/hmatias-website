@@ -65,7 +65,7 @@ const links = isEnglish
       <a href={"mailto:" + company.commercialEmail}>{company.commercialEmail}</a>
       <a href={"mailto:" + company.institutionalEmail}>{company.institutionalEmail}</a>
       <address>{company.address}</address>
-      <a href={isEnglish ? company.contactFormEnUrl : company.contactFormUrl} target="_blank" rel="noopener noreferrer">{isEnglish ? "Request a quotation" : "Solicitar orçamento"}</a>
+      <a data-analytics-event="quote_cta_click" data-analytics-service="general" data-analytics-method="official_form" href={isEnglish ? company.contactFormEnUrl : company.contactFormUrl} target="_blank" rel="noopener noreferrer">{isEnglish ? "Request a quotation" : "Solicitar orçamento"}</a>
       <div class="footer-socials" aria-label={isEnglish ? "Social media" : "Redes sociais"}>
         <a class="footer-icon-link footer-whatsapp" href={company.whatsappUri} target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? "Contact HMATIAS on WhatsApp" : "Contactar a HMATIAS pelo WhatsApp"}>
           <img src={whatsappIcon.src} width="26" height="26" alt="" aria-hidden="true" />
