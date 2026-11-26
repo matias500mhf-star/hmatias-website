@@ -817,18 +817,23 @@ for (const pagePath of generatedPages) {
   assert.equal((pageFooter.match(/class="footer-icon-link/g) || []).length, 2,
     "Footer must contain the approved WhatsApp and Instagram links: " + relativePagePath);
 
-  const expectedContactForm = isEnglishPage
-    ? "https://comercialhmatiasps.com/en.html#contact"
-    : "https://comercialhmatiasps.com/#contacto";
-  const contactLink = [...pageFooter.matchAll(/<a\b[^>]*>/g)]
-    .map((match) => match[0])
-    .find((anchor) => {
-      const href = anchor.match(/\bhref="([^"]+)"/)?.[1];
-      return href === expectedContactForm;
-    });
-  assert.ok(contactLink, "Quotation CTA must preserve the approved official form handoff: " + relativePagePath);
-  assert.match(contactLink, /target="_blank"/, "Official form must open in a new tab: " + relativePagePath);
-  assert.match(contactLink, /rel="noopener noreferrer"/, "Official form handoff must be isolated from the preview tab: " + relativePagePath);
+  // The 404 page is a recovery route, not a quotation landing page. Keep
+  // its shared footer structure/navigation checks, but do not require the
+  // commercial form handoff on this system page.
+  if (relativePagePath !== "404.html") {
+    const expectedContactForm = isEnglishPage
+      ? "https://comercialhmatiasps.com/en.html#contact"
+      : "https://comercialhmatiasps.com/#contacto";
+    const contactLink = [...pageFooter.matchAll(/<a\b[^>]*>/g)]
+      .map((match) => match[0])
+      .find((anchor) => {
+        const href = anchor.match(/\bhref="([^"]+)"/)?.[1];
+        return href === expectedContactForm;
+      });
+    assert.ok(contactLink, "Quotation CTA must preserve the approved official form handoff: " + relativePagePath);
+    assert.match(contactLink, /target="_blank"/, "Official form must open in a new tab: " + relativePagePath);
+    assert.match(contactLink, /rel="noopener noreferrer"/, "Official form handoff must be isolated from the preview tab: " + relativePagePath);
+  }
 }
 console.log("Shared footer structure and language verified on all " + generatedPages.length + " generated HTML pages.");
 
