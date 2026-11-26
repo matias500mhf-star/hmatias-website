@@ -1,31 +1,33 @@
 ---
 import { services } from "../data/site";
 ---
-<section class="services section-pad" id="servicos">
+<section class="services section-pad" id="servicos" aria-labelledby="components-servicesection-section-1-heading">
   <div class="section-heading">
     <div>
       <div class="section-kicker">02 / O QUE FAZEMOS</div>
-      <h2>Serviços que respondem<br /><em>a necessidades reais.</em></h2>
+      <h2 id="components-servicesection-section-1-heading">Serviços que respondem<br /><em>a necessidades reais.</em></h2>
     </div>
     <p>Quatro áreas de atuação. Um ponto de contacto para analisar o pedido e definir a melhor forma de execução.</p>
   </div>
 
   <div class="service-list">
     {services.map((service) => (
-      <a class="service-row" href={service.href}>
-        <span class="service-number">{service.number}</span>
-        <span class="service-icon" aria-hidden="true">
-          {service.icon === "building" && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4v18M19 21V11l-7-4M8 9h1M8 13h1M8 17h1M15 13h1M15 17h1" /></svg>}
-          {service.icon === "maintenance" && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5 5L4 17v3h3l5.7-5.7a4 4 0 0 0 5-5l-2.3 2.3-3-3 2.3-2.3Z" /></svg>}
-          {service.icon === "supply" && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 4.5v9L12 21l-9-4.5v-9L12 3Z" /><path d="m3.5 7.7 8.5 4.5 8.5-4.5M12 12.2V21M7.5 5.2l9 4.6" /></svg>}
-          {service.icon === "business" && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2" /></svg>}
-        </span>
-        <span class="service-main">
-          <strong>{service.title}</strong>
-          <small>{service.description}</small>
-        </span>
-        <span class="service-arrow" aria-hidden="true">↗</span>
-      </a>
+      <article class="service-item">
+        <a class="service-row" href={service.href}>
+          <span class="service-number">{service.number}</span>
+          <span class="service-icon" aria-hidden="true">
+            {service.icon === "building" && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4v18M19 21V11l-7-4M8 9h1M8 13h1M8 17h1M15 13h1M15 17h1" /></svg>}
+            {service.icon === "maintenance" && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5 5L4 17v3h3l5.7-5.7a4 4 0 0 0 5-5l-2.3 2.3-3-3 2.3-2.3Z" /></svg>}
+            {service.icon === "supply" && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 4.5v9L12 21l-9-4.5v-9L12 3Z" /><path d="m3.5 7.7 8.5 4.5 8.5-4.5M12 12.2V21M7.5 5.2l9 4.6" /></svg>}
+            {service.icon === "business" && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2" /></svg>}
+          </span>
+          <span class="service-main">
+            <strong>{service.title}</strong>
+            <small>{service.description}</small>
+          </span>
+          <span class="service-arrow" aria-hidden="true">↗</span>
+        </a>
+      </article>
     ))}
   </div>
   <div class="services-foot"><span>01—04</span><span>CAPACIDADES HMATIAS</span></div>

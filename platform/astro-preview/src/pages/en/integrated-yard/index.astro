@@ -1,0 +1,146 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import planAUrl from "../../../../../../assets/estaleiro/implantacao-alternativa-a.svg?url";
+import planBUrl from "../../../../../../assets/estaleiro/implantacao-alternativa-b.svg?url";
+---
+<BaseLayout
+  title="HMATIAS Integrated Yard | Development Project"
+  description="Preliminary HMATIAS Integrated Yard study in Viana–Capalanga: site-layout alternatives for materials storage, distribution and operational support."
+  lang="en"
+>
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS PROJECTS</span><span>PRELIMINARY STUDY · IN DEVELOPMENT</span></div>
+  <SiteHeader />
+  <main class="yard-page">
+    <section class="yard-hero" aria-labelledby="yard-hero-heading">
+      <div class="yard-hero-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> DEVELOPMENT PROJECT</p>
+        <h1 id="yard-hero-heading">HMATIAS Integrated Yard</h1>
+        <p class="yard-lead">HMATIAS is developing a new operational base for materials storage, distribution, customer service and support for the company’s commercial activities and construction projects.</p>
+        <dl class="yard-facts">
+          <div><dt>Plot area</dt><dd>378.53 m²</dd></div>
+          <div><dt>Plot dimensions</dt><dd>15.141 × 25 m</dd></div>
+          <div><dt>Layout alternatives</dt><dd>2</dd></div>
+        </dl>
+      </div>
+      <aside class="yard-purpose-panel" aria-label="Planned project purpose">
+        <span>PLANNED PURPOSE</span>
+        <ul>
+          <li>Materials storage and stock management</li>
+          <li>Distribution and loading operations</li>
+          <li>Administrative and customer-service support</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="yard-section yard-plans" aria-labelledby="yard-plans-heading">
+      <div class="yard-section-heading">
+        <p class="section-kicker">PROJECT CONCEPT</p>
+        <h2 id="yard-plans-heading">Dimensioned site-layout plans.</h2>
+        <p>The two alternatives are vector concept studies based on the plot reference dimensions. They show the main dimensions, space labels and area schedules.</p>
+      </div>
+      <div class="yard-plan-grid">
+        <article class="yard-plan-card">
+          <div class="yard-plan-card-head">
+            <span>ALTERNATIVE A</span>
+            <h3>Compact warehouse with side canopy</h3>
+            <p>A 96 m² warehouse, side canopy and separate customer-service and technical-support spaces.</p>
+          </div>
+          <a class="yard-plan-image" href={planAUrl} target="_blank" rel="noopener noreferrer" aria-label="Open Alternative A plan at full size">
+            <img src={planAUrl} width="1680" height="1188" alt="Concept plan for Alternative A, with an 8 by 12 metre warehouse, side canopy, office and technical-support space." loading="lazy" decoding="async" />
+          </a>
+          <a class="yard-plan-open" href={planAUrl} target="_blank" rel="noopener noreferrer">View full-size plan <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="yard-plan-card">
+          <div class="yard-plan-card-head">
+            <span>ALTERNATIVE B</span>
+            <h3>Larger warehouse with side access</h3>
+            <p>A 140 m² warehouse, dedicated side access corridor and front yard for vehicle manoeuvring and loading.</p>
+          </div>
+          <a class="yard-plan-image" href={planBUrl} target="_blank" rel="noopener noreferrer" aria-label="Open Alternative B plan at full size">
+            <img src={planBUrl} width="1680" height="1188" alt="Concept plan for Alternative B, with a 10 by 14 metre warehouse, office, side access corridor and front yard." loading="lazy" decoding="async" />
+          </a>
+          <a class="yard-plan-open" href={planBUrl} target="_blank" rel="noopener noreferrer">View full-size plan <span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="yard-section yard-operations" aria-labelledby="yard-operations-heading">
+      <div class="yard-section-heading">
+        <p class="section-kicker">OPERATIONAL PURPOSE</p>
+        <h2 id="yard-operations-heading">Planned functions of the facility.</h2>
+        <p>The proposed yard is intended to support HMATIAS commercial, logistics and operational activities.</p>
+      </div>
+      <div class="yard-operation-grid">
+        <article><span>01</span><h3>Materials storage</h3><p>Areas for receiving, storing and dispatching materials, organised by category.</p></article>
+        <article><span>02</span><h3>Distribution and operations</h3><p>Routes and support areas planned for the movement and distribution of materials.</p></article>
+        <article><span>03</span><h3>Administrative support</h3><p>Space for customer service, recording incoming and outgoing goods, and coordinating operations.</p></article>
+      </div>
+    </section>
+
+    <section class="yard-disclaimer-section" aria-labelledby="yard-status-heading">
+      <div class="yard-disclaimer">
+        <p class="section-kicker">CURRENT PROJECT STATUS</p>
+        <h2 id="yard-status-heading">Preliminary site-layout study.</h2>
+        <p>The project remains at preliminary study stage. These dimensioned concept plans do not replace the architectural and engineering designs, statutory approvals or construction documents required before work begins.</p>
+        <p>Before construction, the selected option must be developed using a verified topographic survey, confirmed plot boundaries and statutory setbacks, together with architectural, structural, drainage, fire-safety and building-services designs.</p>
+      </div>
+    </section>
+
+    <section class="yard-contact" aria-labelledby="yard-contact-heading">
+      <div>
+        <p class="section-kicker">PROJECT ENQUIRIES</p>
+        <h2 id="yard-contact-heading">Project information, supply proposals and technical partnerships.</h2>
+        <p>For project information, supply proposals or technical partnerships, contact HMATIAS. The final configuration and construction start date will be defined after the required studies and reviews are complete.</p>
+      </div>
+      <a class="button button-dark" href="mailto:geral@comercialhmatiasps.com?subject=HMATIAS%20Integrated%20Yard%20project">Contact HMATIAS <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+</BaseLayout>
+
+<style>
+.yard-hero{padding:clamp(62px,8vw,108px) var(--hm-gutter);display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.65fr);align-items:center;gap:clamp(36px,6vw,82px);color:#fff;background:var(--hm-navy)}
+.yard-hero-copy{max-width:760px}
+.yard-hero h1{max-width:760px;margin:0;font-size:clamp(43px,6.2vw,78px);font-weight:520;line-height:1.03;letter-spacing:-.065em}
+.yard-lead{max-width:680px;margin:22px 0 0;color:#edf5fc;font-size:14px;line-height:1.85}
+.yard-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:34px 0 0;padding:0}
+.yard-facts>div{padding:4px 0 4px 14px;border-left:2px solid #e98b2a}
+.yard-facts dt{color:#d4e3ef;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.yard-facts dd{margin:8px 0 0;color:#fff;font-family:var(--hm-mono);font-size:clamp(16px,1.8vw,22px);font-weight:600}
+.yard-purpose-panel{padding:28px;border:1px solid #ffffff38;background:#ffffff0b}
+.yard-purpose-panel>span{color:#b9d8ed;font-size:9px;font-weight:750;letter-spacing:.14em}
+.yard-purpose-panel ul{display:grid;gap:16px;margin:23px 0 0;padding:0;list-style:none}
+.yard-purpose-panel li{padding-top:14px;border-top:1px solid #ffffff2b;color:#f1f6fb;font-size:12px;line-height:1.65}
+.yard-section{padding:clamp(58px,7.5vw,96px) var(--hm-gutter)}
+.yard-plans{background:var(--hm-light)}
+.yard-section-heading{max-width:780px}
+.yard-section-heading h2{margin:18px 0 0;color:var(--hm-ink);font-size:clamp(32px,4.5vw,55px);font-weight:520;line-height:1.08;letter-spacing:-.055em}
+.yard-section-heading>p:last-child{max-width:680px;margin:17px 0 0;color:var(--hm-muted);font-size:13px;line-height:1.85}
+.yard-plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:40px}
+.yard-plan-card{min-width:0;padding:22px;background:#fff;border:1px solid var(--hm-line)}
+.yard-plan-card-head>span{color:var(--hm-blue);font-size:9px;font-weight:750;letter-spacing:.14em}
+.yard-plan-card h3{margin:14px 0 0;color:var(--hm-ink);font-size:20px;font-weight:600;line-height:1.25}
+.yard-plan-card-head p{min-height:44px;margin:10px 0 18px;color:var(--hm-muted);font-size:11px;line-height:1.75}
+.yard-plan-image{display:block;padding:10px;background:#f1f5f8;border:1px solid var(--hm-line)}
+.yard-plan-image img{display:block;width:100%;height:auto;aspect-ratio:1680/1188;object-fit:contain}
+.yard-plan-open{display:inline-flex;gap:8px;align-items:center;margin-top:14px;color:var(--hm-blue);font-size:11px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.yard-operations{background:var(--hm-paper)}
+.yard-operation-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:40px}
+.yard-operation-grid article{min-height:185px;padding:24px;border:1px solid var(--hm-line);background:#fff}
+.yard-operation-grid article>span{color:var(--hm-blue);font-family:var(--hm-mono);font-size:12px}
+.yard-operation-grid h3{margin:22px 0 9px;color:var(--hm-ink);font-size:16px;font-weight:600}
+.yard-operation-grid p{margin:0;color:var(--hm-muted);font-size:11px;line-height:1.8}
+.yard-disclaimer-section{padding:0 var(--hm-gutter) clamp(58px,7vw,86px);background:var(--hm-paper)}
+.yard-disclaimer{max-width:1050px;padding:clamp(24px,4vw,42px);border-left:3px solid var(--hm-blue);background:var(--hm-light)}
+.yard-disclaimer h2{margin:12px 0 17px;color:var(--hm-navy);font-size:clamp(25px,3.2vw,38px);font-weight:550;line-height:1.15}
+.yard-disclaimer p:not(.section-kicker){max-width:880px;margin:12px 0 0;color:#3a5368;font-size:12px;line-height:1.85}
+.yard-contact{padding:clamp(48px,6vw,72px) var(--hm-gutter);display:flex;justify-content:space-between;align-items:center;gap:30px;background:var(--hm-sky-soft)}
+.yard-contact>div{max-width:700px}
+.yard-contact h2{margin:12px 0 0;color:var(--hm-navy);font-size:clamp(28px,4vw,43px);font-weight:520;line-height:1.1;letter-spacing:-.05em}
+.yard-contact p:not(.section-kicker){margin:13px 0 0;color:#34536d;font-size:12px;line-height:1.8}
+@media(max-width:900px){.yard-hero{grid-template-columns:1fr}.yard-purpose-panel{max-width:580px}.yard-plan-grid{grid-template-columns:1fr}.yard-plan-card-head p{min-height:0}.yard-operation-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.yard-hero h1{font-size:clamp(39px,11vw,58px)}.yard-facts{grid-template-columns:1fr;gap:13px}.yard-facts>div{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:12px}.yard-facts dd{margin:0;text-align:right}.yard-plan-card{padding:13px}.yard-contact{align-items:flex-start;flex-direction:column}.yard-contact .button{width:100%;justify-content:center}}
+</style>

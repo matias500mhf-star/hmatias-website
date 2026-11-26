@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SourceAoPartnerApplication from "../../../components/SourceAoPartnerApplication.astro";
+
+const candidateApiBase = String(import.meta.env.PUBLIC_SOURCE_AO_API_BASE ?? "").trim();
+let sourceAoApiBase = "";
+try {
+  const parsed = new URL(candidateApiBase);
+  if (parsed.protocol === "https:" && parsed.hostname.toLowerCase().includes("staging")) {
+    sourceAoApiBase = parsed.origin;
+  }
+} catch {
+  sourceAoApiBase = "";
+}
+---
+<BaseLayout
+  title="Candidatura de Parceiros · SOURCE AO"
+  description="Apresente a capacidade da sua empresa à rede de fornecedores, subempreiteiros e prestadores da HMATIAS. Toda candidatura é sujeita a avaliação."
+>
+  <SourceAoPartnerApplication apiBase={sourceAoApiBase} lang="pt-AO" />
+</BaseLayout>

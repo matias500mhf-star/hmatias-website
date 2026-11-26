@@ -1,0 +1,60 @@
+---
+import { Image, Picture } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { company } from "../../data/site";
+import logo from "../../../../../logo-hmatias.png";
+import constructionPhoto from "../../../../../images/catalogue/instalacoes-embutidas-construcao.webp";
+import supplyPhoto from "../../../../../images/catalogue/perfis-metalicos-estrutura.webp";
+import "../../styles/company-brochure.css";
+---
+<BaseLayout title="Brochura Institucional | HMATIAS" description="Brochura institucional HMATIAS: perfil empresarial, áreas de negócio, âmbito de serviços e contactos oficiais.">
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS · BROCHURA INSTITUCIONAL</span><span>DOCUMENTO DIGITAL · FORMATO DE IMPRESSÃO</span></div><SiteHeader />
+  <main class="brochure-page">
+    <div class="brochure-toolbar"><div><span class="brochure-toolbar-label">HMATIAS / PERFIL INSTITUCIONAL</span><p>Brochura preparada para impressão A4 ou gravação em PDF.</p></div><button class="button button-dark" type="button" id="brochure-print">Imprimir / guardar PDF <span>↗</span></button></div>
+    <section class="brochure-sheet brochure-cover">
+      <div class="brochure-head"><Image src={logo} alt="Logótipo oficial HMATIAS" widths={[160,240]} sizes="145px" format="webp" quality={90} /><span>PERFIL INSTITUCIONAL · ANGOLA</span></div>
+      <div class="brochure-cover-grid"><div class="brochure-cover-copy"><p class="brochure-kicker">CONSTRUÇÃO · FACILITIES · SUPPLY · BUSINESS SERVICES</p><h1>Capacidade para<br /><em>fazer acontecer.</em></h1><p>A HMATIAS apoia empresas, instituições e clientes particulares com serviços de construção e remodelação, facilities e manutenção, procurement e fornecimento, e apoio administrativo e empresarial.</p><div class="brochure-meta"><span>Luanda · Angola</span><span>Desde 2023</span></div></div><figure class="brochure-cover-photo"><Picture src={constructionPhoto} alt="Interior em construção com paredes de bloco, tubagens e caixas técnicas visíveis" widths={[640,960]} sizes="45vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={90} loading="eager" decoding="async" /><figcaption>ALVENARIA · TUBAGENS · CAIXAS TÉCNICAS</figcaption></figure></div>
+      <div class="brochure-footer"><span>HMATIAS - PRESTAÇÃO DE SERVIÇOS, (SU), LDA</span><span>01 / 04</span></div>
+    </section>
+    <section class="brochure-sheet">
+      <div class="brochure-page-head"><Image src={logo} alt="HMATIAS" widths={[100,150]} sizes="98px" format="webp" quality={88} /><span>02 / ÁREAS DE NEGÓCIO</span></div>
+      <div class="brochure-title"><p class="brochure-kicker">QUATRO ÁREAS OPERACIONAIS</p><h2>Uma estrutura de serviços<br /><em>orientada à execução.</em></h2><p>As áreas de negócio estão organizadas para enquadrar necessidades diferentes num processo claro, com âmbito e condições definidos antes da execução.</p></div>
+      <div class="brochure-area-grid">
+        <article><span>01</span><h3>Construção e remodelação</h3><p>Construção civil, reabilitação de espaços, preparação de terrenos, pavimentos, coberturas e estruturas metálicas.</p></article>
+        <article><span>02</span><h3>Facilities e manutenção</h3><p>Manutenção de instalações, limpeza profissional, conservação de coberturas e apoio operacional.</p></article>
+        <article><span>03</span><h3>Supply e procurement</h3><p>Consulta e fornecimento de materiais, consumíveis industriais, EPI, fardamento, equipamentos e lubrificantes.</p></article>
+        <article><span>04</span><h3>Business Services</h3><p>Redação institucional, organização documental, propostas comerciais, apresentações e apoio administrativo.</p></article>
+      </div>
+      <div class="brochure-note"><strong>Modelo de trabalho</strong><p>Da necessidade à proposta: clarificação do pedido, definição do âmbito e confirmação das condições relevantes antes de qualquer compromisso.</p></div>
+      <div class="brochure-page-footer"><span>HMATIAS · Viana · Luanda · Angola</span><span>02 / 04</span></div>
+    </section>
+    <section class="brochure-sheet">
+      <div class="brochure-page-head"><Image src={logo} alt="HMATIAS" widths={[100,150]} sizes="98px" format="webp" quality={88} /><span>03 / CONSTRUÇÃO E OPERAÇÃO</span></div>
+      <div class="brochure-heading"><p class="brochure-kicker">01 · CONSTRUÇÃO E REMODELAÇÃO</p><h2>Construção, reabilitação<br /><em>e intervenção em instalações.</em></h2></div>
+      <div class="brochure-split"><div class="brochure-copy"><p>A área de Construção e Remodelação da HMATIAS abrange serviços de construção civil e remodelação, incluindo intervenções em instalações existentes e infraestruturas.</p><ul><li>Construção civil e remodelação de espaços</li><li>Preparação de terrenos e pavimentação</li><li>Coberturas e estruturas metálicas</li><li>Intervenções em escritórios e áreas de apoio</li></ul><a class="brochure-link" href="/construcao/">Consultar Construção e Remodelação ↗</a></div><figure class="brochure-photo"><Picture src={constructionPhoto} alt="Interior em construção com paredes de bloco, tubagens e caixas técnicas visíveis" widths={[640,960]} sizes="45vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={90} loading="lazy" decoding="async" /><figcaption>PAREDES DE BLOCO · INSTALAÇÕES TÉCNICAS VISÍVEIS</figcaption></figure></div>
+      <div class="brochure-divider"></div>
+      <div class="brochure-heading"><p class="brochure-kicker">02 · FACILITIES E MANUTENÇÃO</p><h2>Conservação e apoio<br /><em>à operação diária.</em></h2></div>
+      <p class="brochure-description">A área integra manutenção preventiva ou correctiva, limpeza profissional, conservação de coberturas e apoio operacional. Frequência, áreas abrangidas, recursos, materiais e responsabilidades são definidos antes do início de cada serviço.</p>
+      <div class="brochure-pills"><span>Manutenção de instalações</span><span>Limpeza e conservação</span><span>Apoio operacional</span><span>Coberturas e estruturas</span></div>
+      <a class="brochure-link" href="/facilities/">Consultar Facilities e Manutenção ↗</a>
+      <div class="brochure-page-footer"><span>Intervenções e mobilização sujeitas à avaliação do âmbito e dos recursos.</span><span>03 / 04</span></div>
+    </section>
+    <section class="brochure-sheet brochure-supply">
+      <div class="brochure-page-head"><Image src={logo} alt="HMATIAS" widths={[100,150]} sizes="98px" format="webp" quality={88} /><span>04 / FORNECIMENTO E APOIO EMPRESARIAL</span></div>
+      <div class="brochure-split">
+        <div><p class="brochure-kicker">03 · SUPPLY E PROCUREMENT</p><h2>Fornecimento<br /><em>com critério.</em></h2><p class="brochure-description">A HMATIAS presta serviços de procurement e fornecimento sob consulta. Cada pedido é analisado por referência, quantidade, aplicação, destino e prazo pretendido.</p><ul class="brochure-list"><li>Materiais de construção e perfis metálicos</li><li>Consumíveis industriais e ferramentas</li><li>EPI e fardamento profissional</li><li>Equipamentos e lubrificantes</li></ul><p class="brochure-caution">A HMATIAS não mantém stock próprio. Disponibilidade, preço, documentação e logística são confirmados para cada pedido.</p><a class="brochure-link" href="/supply/">Consultar Supply e Procurement ↗</a></div>
+        <figure class="brochure-photo"><Picture src={supplyPhoto} alt="Perfis metálicos para aplicações de construção" widths={[640,960]} sizes="45vw" formats={["avif","webp"]} fallbackFormat="jpg" quality={90} loading="lazy" decoding="async" /><figcaption>MATERIAIS DE CONSTRUÇÃO</figcaption></figure>
+      </div>
+      <div class="brochure-divider"></div>
+      <div class="brochure-business"><p class="brochure-kicker">04 · BUSINESS SERVICES</p><h2>Apoio administrativo,<br /><em>documental e empresarial.</em></h2><p class="brochure-description">Organização documental, correspondência institucional e preparação de materiais comerciais para profissionais e pequenas e médias empresas.</p><div class="brochure-pills"><span>Redação e formatação institucional</span><span>CV profissional</span><span>Gestão documental</span><span>Propostas e cotações</span><span>Apresentações empresariais</span><span>Apoio administrativo recorrente</span></div><a class="brochure-link" href="/business-services/">Consultar Business Services ↗</a></div>
+      <div class="brochure-contact"><div><p class="brochure-kicker">CONTACTO COMERCIAL</p><h2>Vamos analisar<br /><em>o seu pedido.</em></h2></div><div class="brochure-contact-lines"><a href={company.telephoneUri}>{company.phone}</a><a href={"mailto:"+company.commercialEmail}>{company.commercialEmail}</a><a href={"mailto:"+company.institutionalEmail}>{company.institutionalEmail}</a><span>{company.shortAddress}</span><a href="/">Website HMATIAS ↗</a></div></div>
+      <div class="brochure-page-footer"><span>Âmbito, entregáveis, prazos e condições sujeitos a avaliação e confirmação.</span><span>04 / 04</span></div>
+    </section>
+  </main>
+  <SiteFooter /><div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+</BaseLayout>
+<script>
+  document.querySelector<HTMLButtonElement>("#brochure-print")?.addEventListener("click", () => window.print());
+</script>

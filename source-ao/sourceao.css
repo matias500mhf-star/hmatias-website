@@ -380,3 +380,14 @@ img,svg{max-width:100%}
 .workflow-item li{margin:5px 0;font-size:.9rem}
 .workflow-truth{margin:12px 0 0;padding-top:10px;border-top:1px solid var(--line,#d8e1ea);font-size:.85rem;font-weight:600}
 .process-sourcing:disabled,.view-sourcing-workflow:disabled{opacity:.55;cursor:not-allowed}
+
+
+/* SOURCE AO product identity: explicit, bounded market coverage. */
+.source-market-scope{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:24px;border:1px solid rgba(185,216,237,.24);background:rgba(7,31,52,.42)}
+.source-market-scope>div{display:flex;align-items:flex-start;gap:13px;padding:17px 16px;min-width:0}
+.source-market-scope>div+div{border-left:1px solid rgba(185,216,237,.2)}
+.source-market-scope .scope-code{display:grid;place-items:center;flex:0 0 34px;height:34px;border:1px solid rgba(185,216,237,.45);color:#dceafa;font-size:10px;font-weight:750;letter-spacing:.08em}
+.source-market-scope p{display:grid;gap:5px;margin:0;min-width:0}
+.source-market-scope strong{color:#fff;font-size:11px;line-height:1.45;font-weight:650}
+.source-market-scope small{color:#b9d8ed;font-size:10px;line-height:1.6}
+@media(max-width:760px){.source-market-scope{grid-template-columns:1fr}.source-market-scope>div{padding:13px 14px}.source-market-scope>div+div{border-left:0;border-top:1px solid rgba(185,216,237,.2)}}

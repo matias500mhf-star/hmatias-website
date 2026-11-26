@@ -1,9 +1,10 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import ServiceSection from "../components/ServiceSection.astro";
 import ProjectGallery from "../components/ProjectGallery.astro";
+import PartnerSection from "../components/PartnerSection.astro";
 import ContactSection from "../components/ContactSection.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import heroPhoto from "../../../../images/catalogue/instalacoes-embutidas-construcao.webp";
@@ -19,11 +20,11 @@ import { company } from "../data/site";
   </div>
   <SiteHeader />
   <main>
-    <section class="hero" id="inicio">
+    <section class="hero" id="inicio" aria-labelledby="pages-index-section-1-heading">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> Construção · Facilities · Supply</p>
-        <h1>Capacidade para<br /><em>fazer acontecer.</em></h1>
-        <p class="hero-lead">Construção, manutenção e fornecimento para empresas e projetos em Angola.</p>
+        <p class="eyebrow"><span class="eyebrow-line"></span> Construção · Facilities · Supply · Business Services</p>
+        <h1 id="pages-index-section-1-heading">Capacidade para<br /><em>fazer acontecer.</em></h1>
+        <p class="hero-lead">Construção, facilities, fornecimento e apoio administrativo e empresarial para empresas e projetos em Angola.</p>
         <div class="hero-actions">
           <a class="button button-light" href="#servicos">Conhecer serviços <span aria-hidden="true">↓</span></a>
           <a class="text-link text-link-light" href={company.whatsappUri} target="_blank" rel="noopener noreferrer">Contactar a equipa <span aria-hidden="true">↗</span></a>
@@ -34,40 +35,53 @@ import { company } from "../data/site";
         </div>
       </div>
       <div class="hero-image-wrap">
-        <Image
+        <Picture
           src={heroPhoto}
-          alt="Interior de obra HMATIAS com alvenaria e instalações técnicas embutidas"
+          alt="Interior em construção com paredes de bloco, tubagens e caixas técnicas visíveis"
           widths={[640, 960, 1280]}
           sizes="(max-width: 900px) 100vw, 50vw"
-          format="webp"
+          formats={["avif", "webp"]} fallbackFormat="jpg"
           quality={84}
           loading="eager"
-          fetchpriority="high"
-        />
-        <div class="image-index"><span>01</span><span>OBRA REAL HMATIAS</span></div>
+          fetchpriority="high" decoding="async" />
+        <div class="image-index"><span>01</span><span>ALVENARIA · INSTALAÇÕES TÉCNICAS VISÍVEIS</span></div>
       </div>
       <div class="hero-side-note">EXECUÇÃO · FORNECIMENTO · OPERAÇÃO</div>
     </section>
 
-    <section class="intro section-pad" id="empresa">
+    <section class="intro section-pad" id="empresa" aria-labelledby="pages-index-section-2-heading">
       <div class="section-kicker">01 / QUEM SOMOS</div>
       <div class="intro-content">
-        <h2>Uma empresa de serviços.<br /><em>Várias frentes de execução.</em></h2>
+        <h2 id="pages-index-section-2-heading">Uma empresa de serviços.<br /><em>Várias frentes de execução.</em></h2>
         <div class="intro-text">
-          <p>A HMATIAS apoia empresas, instituições e clientes particulares com soluções de construção e remodelação, manutenção de instalações, procurement e fornecimento.</p>
+          <p>A HMATIAS apoia empresas, instituições e clientes particulares com soluções de construção e remodelação, facilities e manutenção, procurement e fornecimento, e apoio administrativo e empresarial.</p>
           <p>Da necessidade à execução: escopo claro, comunicação direta e acompanhamento do trabalho.</p>
-          <a class="underlined-link" href="https://comercialhmatiasps.com/credibilidade.html">Conhecer a HMATIAS <span aria-hidden="true">↗</span></a>
+          <a class="underlined-link" href={company.aboutUrl}>Conhecer a HMATIAS <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
 
     <ServiceSection />
     <ProjectGallery />
+    <section class="supply-home-highlight section-pad" aria-labelledby="supply-home-heading">
+      <div class="supply-home-copy">
+        <p class="section-kicker">SUPPLY / PROCUREMENT E FORNECIMENTO</p>
+        <h2 id="supply-home-heading">Fornecimento orientado<br /><em>por requisitos reais.</em></h2>
+        <p>Apoiamos empresas na identificação e consulta de materiais, consumíveis, equipamentos, EPI e outras necessidades de fornecimento. Cada proposta é preparada a partir da especificação, quantidade, destino e prazo indicados pelo cliente.</p>
+        <a class="button button-dark" href="/supply/">Consultar Supply e pedir cotação <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="supply-home-points" aria-label="Modelo de fornecimento HMATIAS">
+        <div><span>01</span><p><strong>Consulta por especificação</strong><small>Referência, aplicação e requisitos técnicos.</small></p></div>
+        <div><span>02</span><p><strong>Verificação comercial</strong><small>Disponibilidade, documentação e condições sujeitas a confirmação.</small></p></div>
+        <div><span>03</span><p><strong>Pedido de cotação</strong><small>Um percurso claro para apresentar a necessidade.</small></p></div>
+      </div>
+    </section>
+    <PartnerSection />
 
-    <section class="statement">
+    <section class="statement" aria-labelledby="pages-index-section-3-heading">
       <div class="statement-mark" aria-hidden="true">“</div>
       <div class="statement-content">
-        <p>O próximo projeto começa com uma conversa clara sobre o que precisa de ser feito.</p>
+        <h2 id="pages-index-section-3-heading">O próximo projeto começa com uma conversa clara sobre o que precisa de ser feito.</h2>
         <a class="button button-dark" href="#contacto">Apresentar um pedido <span aria-hidden="true">↗</span></a>
       </div>
       <span class="statement-label">HMATIAS · AO</span>
@@ -77,4 +91,22 @@ import { company } from "../data/site";
   </main>
   <SiteFooter />
   <div class="preview-disclaimer">Protótipo tecnológico independente. Não substitui nem modifica o website oficial da HMATIAS.</div>
+<style>
+.supply-home-highlight{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:clamp(32px,7vw,100px);align-items:center;background:var(--hm-light)}
+.supply-home-copy h2,.supply-catalogue-copy h2{margin:18px 0 20px;font-family:var(--hm-serif);font-size:clamp(34px,5vw,62px);font-weight:450;line-height:1.04;letter-spacing:-.045em}
+.supply-home-copy h2 em,.supply-catalogue-copy h2 em{font-weight:400}
+.supply-home-copy>p:not(.section-kicker),.supply-catalogue-copy>p:not(.section-kicker){max-width:650px;color:var(--hm-muted);font-size:14px;line-height:1.85}
+.supply-home-copy .button{margin-top:18px}
+.supply-home-points{border-top:1px solid var(--hm-line)}
+.supply-home-points>div{display:grid;grid-template-columns:38px 1fr;gap:14px;padding:20px 0;border-bottom:1px solid var(--hm-line)}
+.supply-home-points>div>span{color:var(--hm-blue);font-family:var(--hm-serif);font-size:18px}
+.supply-home-points p{display:grid;gap:5px;margin:0}
+.supply-home-points strong{color:var(--hm-ink);font-size:13px;font-weight:650}
+.supply-home-points small{color:var(--hm-muted);font-size:11px;line-height:1.65}
+.supply-catalogue-note{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);gap:40px;align-items:center;background:var(--hm-light)}
+.supply-catalogue-action{padding:25px;border:1px solid var(--hm-line);background:var(--hm-paper)}
+.supply-catalogue-action p{margin:0 0 18px;color:var(--hm-ink);font-size:15px;line-height:1.6}
+.supply-catalogue-action small{display:block;margin-top:14px;color:var(--hm-muted);font-size:11px;line-height:1.65}
+@media(max-width:760px){.supply-home-highlight,.supply-catalogue-note{grid-template-columns:1fr;gap:26px}.supply-catalogue-action{padding:20px}}
+</style>
 </BaseLayout>

@@ -16,7 +16,7 @@
   <header class="topbar">
     <div class="shell nav">
       <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span><strong>Source AO</strong><small>Verification Desk</small></span></a>
-      <div class="nav-actions"><span class="ops-private">Internal · noindex</span><a class="btn btn-outline btn-small" href="supplier-discovery.html">Pesquisa de fornecedores</a><a class="btn btn-outline btn-small" href="review.html">Review Desk</a><a class="btn btn-outline btn-small" href="index.html">Public preview</a></div>
+      <div class="nav-actions"><span class="ops-private">Internal · noindex</span><a class="btn btn-outline btn-small" href="#catalogDesk">Catálogo</a><a class="btn btn-outline btn-small" href="supplier-discovery.html">Pesquisa de fornecedores</a><a class="btn btn-outline btn-small" href="review.html">Review Desk</a><a class="btn btn-outline btn-small" href="index.html">Public preview</a></div>
     </div>
   </header>
 
@@ -122,6 +122,40 @@
         <div class="empty-state"><strong>Admin session required.</strong><p>Load the API token above to inspect the private partner, supplier and subcontractor network.</p></div>
       </div>
       <p class="ops-note">This network is internal. Public opportunity pages never expose partner contacts or private conversation content. SOURCE Copilot uses capabilities only to suggest possible commercial matches for human review.</p>
+    </section>
+
+    <section class="ops-card queue-card catalog-desk" id="catalogDesk">
+      <div class="ops-card-head">
+        <div><small>07</small><h2>Catálogo público SOURCE AO</h2></div>
+        <div class="ops-actions compact"><span id="catalogDeskCount">—</span><button class="btn btn-outline btn-small" id="refreshCatalog" type="button" disabled>Actualizar catálogo</button></div>
+      </div>
+      <p id="catalogDeskStatus" role="status" aria-live="polite">Inicie sessão administrativa para gerir as famílias de fornecimento publicadas no Smart RFQ.</p>
+      <form id="catalogCreateForm" class="catalog-create-form">
+        <strong>Nova família de fornecimento</strong>
+        <div class="catalog-admin-grid">
+          <label>Nome (EN)<input name="name" maxlength="160" required></label>
+          <label>Nome (PT)<input name="name_pt" maxlength="160"></label>
+          <label>Categoria<select name="category" required>
+            <option value="construction">Construção</option>
+            <option value="hvac-electrical">Climatização e electricidade</option>
+            <option value="tools-equipment">Ferramentas e equipamentos</option>
+            <option value="cleaning-facilities">Limpeza e facilities</option>
+            <option value="services-contractors">Serviços e empreiteiros</option>
+            <option value="industrial-supply">Indústria, EPI e consumíveis</option>
+            <option value="other">Outra necessidade</option>
+          </select></label>
+          <label>Unidade<input name="unit" maxlength="40" placeholder="un / kg / m / serviço"></label>
+          <label class="wide">Especificação pública<textarea name="specification" rows="2" maxlength="1200"></textarea></label>
+          <label>Sinónimos (separados por vírgula)<input name="aliases" maxlength="1200"></label>
+          <label>Palavras-chave (separadas por vírgula)<input name="keywords" maxlength="1200"></label>
+        </div>
+        <label class="catalog-publish-toggle"><input name="public_visible" type="checkbox"> Publicar no Smart RFQ imediatamente</label>
+        <button class="btn btn-primary btn-small" id="createCatalogItem" type="submit" disabled>Criar família</button>
+      </form>
+      <div id="catalogAdminList" class="catalog-admin-list">
+        <div class="empty-state"><strong>Sessão administrativa necessária.</strong><p>O catálogo público só pode ser alterado após autenticação.</p></div>
+      </div>
+      <p class="ops-note">As alterações são guardadas no backend e reflectem-se no Smart RFQ quando a API actualizada estiver publicada. Artigos não publicados permanecem apenas na área interna. Não introduza preços, fornecedores, margens ou stock nesta área.</p>
     </section>
 
     <section class="ops-principles">

@@ -33,3 +33,25 @@ The Worker:
 - does not ask visitors for passwords, banking information or unnecessary sensitive data.
 
 The website bridge and Worker are separately validated by the GitHub Actions workflow. A successful GitHub Actions run confirms the dedicated assistant deployment; it does not prove that the separate `hmatias-website1` native Cloudflare Builds project is healthy.
+
+
+## SOURCE AO — recuperação pública e limites de ligação
+
+O assistente pode enriquecer perguntas de fornecimento com uma consulta **read-only** ao endpoint público `GET /api/search` do Worker `source-ao-api-staging`.
+
+- O Worker de IA **não recebe binding D1** e não consulta a base diretamente.
+- A ligação é opcional e só é usada quando a variável `SOURCE_AO_PUBLIC_API_BASE` aponta para um hostname HTTPS `.workers.dev` com a etiqueta `staging` (por exemplo, o hostname do Worker `source-ao-api-staging`). O código rejeita hosts de produção, domínios personalizados e URLs com path/query/hash.
+- Configure essa variável apenas num Worker de IA de staging separado, depois de o endpoint público e a D1 `source-ao-staging` estarem preparados e validados. A configuração Wrangler desta PR não define a variável, pelo que a integração fica inativa por omissão. Não configure a variável no Worker público `hmatias-ai-assistant` nesta fase.
+- A consulta só usa `GET /api/search`; não chama rotas administrativas, descoberta externa, inteligência privada ou operações de escrita.
+- O assistente envia ao modelo apenas uma allowlist de campos públicos: tipo, identificador público, nome, categoria, especificação, unidade, estado e datas de verificação. Campos inesperados — incluindo fornecedor, contacto, preço, custo e quantidade — são descartados.
+- O código limita a pesquisa a uma chamada por pergunta elegível, até 8 termos, 12 resultados e timeout de 2,5 segundos. A falha ou ausência da API não interrompe o chat.
+- Estados como `discovered`, `source_checked`, `supplier_confirmed` e `in_stock_confirmed` são distintos. Mesmo uma observação de stock confirmada não é uma cotação nem uma garantia futura.
+
+### Ativação controlada em staging
+
+1. Confirmar que `source-ao-api-staging` está publicado com a D1 de staging, migrações aplicadas, rota `GET /api/search` funcional e o secret `RATE_LIMIT_SECRET` configurado no próprio Worker SOURCE AO (a API devolve 503 sem esse controlo). Esse secret nunca é partilhado com o Worker de IA.
+2. Criar/configurar um Worker de IA de staging separado do Worker público e apontar `SOURCE_AO_PUBLIC_API_BASE` para o hostname HTTPS `.workers.dev` desse backend de staging.
+3. Testar pesquisa, ausência de resultados, indisponibilidade da API e rejeição de hosts de produção. O Worker de IA público e o domínio oficial permanecem sem ligação.
+4. Só ponderar uma ligação ao Worker público depois de aceitação funcional, revisão de privacidade e autorização explícita. Não há ativação em produção nesta PR.
+
+Os testes locais executam-se com `npm test` dentro de `cloudflare-ai` ou com `node --test cloudflare-ai/test/*.test.mjs` na raiz do repositório.

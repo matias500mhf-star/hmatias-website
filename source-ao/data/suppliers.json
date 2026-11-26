@@ -127,7 +127,7 @@
         "https://farwell.co.ao/wp-content/uploads/2024/03/Catalogo_Farwell_2024.pdf",
         "https://farwell.co.ao/a-nossa-equipa/"
       ],
-      "verification_status": "source_checked",
+      "verification_status": "needs_reconfirmation",
       "last_verified_at": "2026-09-25T19:50:00+01:00",
       "capabilities": [
         "laboratory chemicals",
@@ -412,6 +412,45 @@
       "phone": "+244 952 824 464",
       "email": "Info@angoayiti.com",
       "contact_source": "https://www.angoayiti.com/contact"
+    },
+    {
+      "id": "sup-synvor-industrial",
+      "name": "SYNVOR Industrial",
+      "location": "Portugal — fornecimento para Angola",
+      "website": "https://synvor-industrial.com/",
+      "source_urls": [
+        "https://synvor-industrial.com/",
+        "https://synvor-industrial.com/angola",
+        "https://synvor-industrial.com/discos-diamantados",
+        "https://synvor-industrial.com/discos/carbodiam-pantera",
+        "https://synvor-industrial.com/discos/carbodiam-pantera-neutre",
+        "https://synvor-industrial.com/discos/carbodiam-crack-chaser",
+        "https://synvor-industrial.com/coroas-diamantadas",
+        "https://synvor-industrial.com/perfuracao",
+        "https://synvor-industrial.com/desbaste-e-polimento",
+        "https://synvor-industrial.com/serras-e-maquinas",
+        "https://synvor-industrial.com/weka",
+        "https://synvor-industrial.com/discos/carbodiam-acier",
+        "https://synvor-industrial.com/discos/carbodiam-beton",
+        "https://synvor-industrial.com/discos/carbodiam-beton-sol",
+        "https://synvor-industrial.com/discos/carbodiam-incisor"
+      ],
+      "category": [
+        "diamond-tools",
+        "tools-equipment"
+      ],
+      "capabilities": [
+        "Carbodiam diamond cutting discs and factory-referenced variants",
+        "SAMEDIA diamond cutting discs and factory-referenced variants",
+        "Carbodiam and SAMEDIA diamond core-drilling crowns",
+        "Diamond grinding cups, metal floor-grinding segments and polishing resins",
+        "Carbodiam diamond grinding plates",
+        "Carbodiam and WEKA saws and core-drilling machinery",
+        "Industrial dust, vacuum and slurry extraction equipment",
+        "Technical selection and quotation for Angola; stock, price and export lead time confirmed per order"
+      ],
+      "verification_status": "source_checked",
+      "last_verified_at": "2026-11-14"
     }
   ],
   "rules": {

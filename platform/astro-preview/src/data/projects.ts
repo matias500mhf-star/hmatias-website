@@ -15,30 +15,30 @@ export interface Project {
 export const projects: Project[] = [
   {
     category: "Estruturas metálicas",
-    title: "Galpão com estrutura metálica",
-    description: "Montagem de estrutura metálica, cobertura e fechamentos em chapa, com alvenaria de apoio.",
+    title: "Estrutura metálica e alvenaria de apoio",
+    description: "Estrutura metálica, cobertura em chapa e alvenaria de apoio em fase de execução.",
     image: galpao,
-    alt: "Galpão com estrutura metálica e cobertura em chapa"
+    alt: "Estrutura metálica com cobertura em chapa e alvenaria de apoio"
   },
   {
     category: "Infraestrutura",
-    title: "Preparação de terreno",
-    description: "Mobilização de retroescavadora para movimentação de terras e regularização inicial do terreno.",
+    title: "Movimentação e regularização de terreno",
+    description: "Equipamento de movimentação de terras sobre terreno natural, com material escavado e superfície regularizada visíveis.",
     image: terraplanagem,
-    alt: "Retroescavadora na preparação e regularização de terreno"
+    alt: "Equipamento de movimentação de terras num terreno natural"
   },
   {
     category: "Facilities · Manutenção",
-    title: "Substituição de cobertura",
-    description: "Substituição localizada de chapas de cobertura, com integração na estrutura existente.",
+    title: "Chapas de cobertura perfilada",
+    description: "Chapas perfiladas novas junto a chapas existentes numa cobertura em intervenção.",
     image: cobertura,
-    alt: "Substituição de cobertura metálica com novas chapas perfiladas"
+    alt: "Chapas perfiladas novas junto a chapas existentes numa cobertura em intervenção"
   },
   {
     category: "Construção rural",
-    title: "Pavilhões rurais concluídos",
-    description: "Vista exterior de pavilhões concluídos, com cobertura metálica e áreas laterais ventiladas.",
+    title: "Pavilhões com cobertura metálica",
+    description: "Dois pavilhões alongados com cobertura metálica e laterais parcialmente abertas.",
     image: pavilhoes,
-    alt: "Pavilhões rurais concluídos com cobertura metálica"
+    alt: "Dois pavilhões alongados com cobertura metálica e laterais parcialmente abertas"
   }
 ];

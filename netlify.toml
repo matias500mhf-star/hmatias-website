@@ -1,15 +1,13 @@
 [build]
-  command = ""
-  publish = "."
+  base = "platform/astro-preview"
+  command = "npm ci && npm run build"
+  publish = "dist"
 
-# Este projeto Netlify destina-se exclusivamente à avaliação da branch de preview.
-# Não associar o domínio oficial HMATIAS a este site.
-[[redirects]]
-  from = "/"
-  to = "/preview/hmatias/"
-  status = 302
-  force = true
+[build.environment]
+  NODE_VERSION = "26.13.0"
 
+# Preview isolado: nunca associar o domínio oficial HMATIAS a este site.
+# O cabeçalho impede indexação de todos os deploys deste projecto.
 [[headers]]
   for = "/*"
   [headers.values]

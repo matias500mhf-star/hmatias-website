@@ -163,7 +163,10 @@ export function buildSmartSearchPlan({query,location='Luanda',neededBy='',quanti
   const urgency=detectUrgency(clean,neededBy);
   const suppliedQuantity=quantity==null||quantity===''?null:Number(quantity);
   const effectiveQuantity=Number.isFinite(suppliedQuantity)?suppliedQuantity:specs.quantity?.value??null;
-  const variants=buildVariants(clean,loc,family,specs);
+  const requiresManualComplianceReview=family?.id==='formaldehyde-chemical';
+  const variants=requiresManualComplianceReview
+    ?unique([clean, clean+' '+loc, clean+' Angola']).slice(0,3)
+    :buildVariants(clean,loc,family,specs);
 
   return {
     query:clean,
@@ -178,11 +181,19 @@ export function buildSmartSearchPlan({query,location='Luanda',neededBy='',quanti
       label_en:family?.name_en||'General sourcing',
       label_pt:family?.name_pt||'Sourcing geral',
       semantic_match:family?(detected.score>=2?'high':'medium'):'general',
+      requires_manual_compliance_review:requiresManualComplianceReview,
       specifications:specs.specifications,
       quantity:effectiveQuantity
     },
     query_variants:variants,
-    search_lanes:[
+    search_lanes:requiresManualComplianceReview?[
+      {
+        id:'manual-compliance-review',
+        priority:1,
+        action:'route_to_manual_compliance_review',
+        purpose:'Pause supplier discovery until product identity, intended use, handling requirements and legal/compliance conditions are reviewed by a qualified person.'
+      }
+    ]:[
       {
         id:'verified-index',
         priority:1,
@@ -216,9 +227,11 @@ export function buildSmartSearchPlan({query,location='Luanda',neededBy='',quanti
       price_confirmed:false,
       supplier_availability_confirmed:false
     },
-    next_action:urgency==='urgent'
-      ?'Run local supplier discovery immediately and send a concise RFQ to the strongest candidates.'
-      :'Run verified search, then supplier discovery and direct confirmation where required.'
+    next_action:requiresManualComplianceReview
+      ?'Keep the request as free text and route it for manual compliance review. Do not generate supplier searches or supplier RFQs until review is complete.'
+      :urgency==='urgent'
+        ?'Run local supplier discovery immediately and send a concise RFQ to the strongest candidates.'
+        :'Run verified search, then supplier discovery and direct confirmation where required.'
   };
 }
 
@@ -350,8 +363,12 @@ export async function smartSearchPlan(request,env){
   const quantity=url.searchParams.get('quantity');
   try{
     const plan=buildSmartSearchPlan({query,location,neededBy,quantity});
-    const gemini=await callGeminiVariants(env,{query:plan.query});
-    const engine=gemini.variants.length?'source-ao-gemini-free-v1':'source-ao-smart-search-v2';
+    const gemini=plan.interpretation.requires_manual_compliance_review
+      ?{variants:[],diagnostic:{code:'manual_compliance_review_required'}}
+      :await callGeminiVariants(env,{query:plan.query});
+    const engine=plan.interpretation.requires_manual_compliance_review
+      ?'source-ao-manual-review-v1'
+      :gemini.variants.length?'source-ao-gemini-free-v1':'source-ao-smart-search-v2';
     if(gemini.variants.length){
       plan.query_variants=[...new Set([plan.query,...gemini.variants,...plan.query_variants])].slice(0,24);
     }

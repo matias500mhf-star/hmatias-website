@@ -91,12 +91,36 @@
           </details>
         </section>
 
+        <section class="stock-evidence">
+          <div class="stock-evidence-copy">
+            <small>STOCK EVIDENCE</small>
+            <h3>Physical stock evidence (optional)</h3>
+            <p>A supplier's quantity statement alone is not proof of physical stock. Without inspected documentary evidence, approval is recorded as <strong>Supplier Confirmed</strong>, not <strong>In-stock Confirmed</strong>.</p>
+          </div>
+          <label class="stock-evidence-attestation"><input class="stock-evidence-verified" type="checkbox"> <span>I inspected current, dated evidence that supports the physical stock claim.</span></label>
+          <div class="stock-evidence-fields">
+            <label>Evidence type
+              <select class="stock-evidence-type" disabled>
+                <option value="">Select evidence type</option>
+                <option value="dated_photo">Dated stock photograph</option>
+                <option value="warehouse_record">Warehouse / inventory record</option>
+                <option value="import_document">Import or transport document</option>
+                <option value="supplier_inventory_record">Supplier inventory statement</option>
+                <option value="other">Other documentary evidence</option>
+              </select>
+            </label>
+            <label>Evidence date<input class="stock-evidence-date" type="date" disabled></label>
+            <label class="stock-evidence-reference-field">Secure document reference<input class="stock-evidence-reference" type="text" maxlength="500" placeholder="HTTPS link or internal document reference" disabled></label>
+          </div>
+          <p class="stock-evidence-note">Use a reference to a controlled document. Evidence references remain private and are never published in public search results.</p>
+        </section>
+
         <div class="approval-truth">
           <label><input class="truth-checkbox" type="checkbox"> <span>I reviewed this supplier response and the selected catalog mapping. I understand approval creates a time-limited commercial observation.</span></label>
         </div>
 
         <div class="approval-actions">
-          <button class="btn btn-primary approve-button" type="button" disabled>Approve verified observation</button>
+          <button class="btn btn-primary approve-button" type="button" disabled>Approve supplier confirmation</button>
           <span class="card-message" aria-live="polite"></span>
         </div>
       </article>

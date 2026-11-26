@@ -1,5 +1,5 @@
 /* HMATIAS Assistant — central official knowledge base.
-   Source of truth: public website, project status, service pages and commercial rules, reviewed 2026-11-06. */
+   Source of truth: public website, project status, service pages and commercial rules, reviewed 2026-11-17. */
 (() => {
   'use strict';
 
@@ -14,7 +14,7 @@
   ];
 
   const kb = {
-    version: '2026-11-02.1',
+    version: '2026-11-17.1',
     updated: '2026-11-06',
     company: {
       name: 'HMATIAS – Prestação de Serviços SU, LDA', shortName: 'HMATIAS',
@@ -69,7 +69,7 @@
       summaryEn: 'Cleaning and hygiene products for domestic and professional use. Products are supplied on order; stock, lead time and delivery are subject to commercial confirmation.',
       featured: {
         pine500: {name:'123 Pine Gel',format:'500 ml',price:'Sob consulta',status:'Sob encomenda',descriptionPt:'Gel de limpeza multiusos para utilização doméstica e profissional. Consulte e respeite sempre as instruções do rótulo.'},
-        taurusPine: {code:'T563P',name:'Taurus Pine Gel',formats:'Formato e capacidade sujeitos a confirmação comercial',status:'Sob encomenda',descriptionPt:'Gel multiuso com ação germicida, indicado para remoção de sujidade, manchas, gordura e odores em diversas superfícies.',featuresPt:'Gel verde, odor a pinho, pH 7, completamente solúvel e biodegradável.',applicationsPt:['Cerâmica de banho','Sanitas','Lavatórios','Pias','Pisos','Carpetes','Estofos'],dilutionsPt:['Pisos e banheiras/lavatórios 1:25','Carpetes aproximadamente 1:10','Vinil aproximadamente 1:20'],warningPt:'O fabricante não aconselha a utilização em superfícies em contacto com alimentos.'}
+        taurusPine: {code:'T563P',name:'Taurus Pine Gel',formats:'Formato e capacidade sujeitos a confirmação comercial',status:'Sob encomenda',descriptionPt:'Gel multiuso com ação germicida, indicado para remoção de sujidade, manchas, gordura e odores em diversas superfícies.',featuresPt:'Gel rosa, odor a pinho, pH 7, completamente solúvel e biodegradável.',applicationsPt:['Cerâmica de banho','Sanitas','Lavatórios','Pias','Pisos','Carpetes','Estofos'],dilutionsPt:['Pisos e banheiras/lavatórios 1:25','Carpetes aproximadamente 1:10','Vinil aproximadamente 1:20'],warningPt:'O fabricante não aconselha a utilização em superfícies em contacto com alimentos.'}
       },
       catalogNotePt: 'O catálogo profissional inclui produtos por código e categoria. A HMATIAS não publica preços, formatos ou stock confirmados sem validação comercial da referência; encaminhar para cotação.',
       brandNotePt: 'A referência à Taurus identifica produtos do fabricante e não implica representação exclusiva, parceria ou exclusividade comercial.', cleanCatalog

@@ -43,7 +43,19 @@ export async function publicSearch(request,env){
   if(location.length>120) return fail(env,400,'invalid_location','Location is too long.');
 
   const q=normalizeSearch(raw);
-  const like=`%${q}%`;
+  const tokens=[...new Set(q.split(/\s+/).filter(Boolean))];
+  if(!tokens.length) return fail(env,400,'invalid_query','Search query must contain searchable terms.');
+  if(tokens.length>8) return fail(env,400,'too_many_terms','Use no more than eight search terms.');
+
+  const tokenVariants=token=>token.length>4&&token.endsWith('s')
+    ?[token,token.slice(0,-1)]
+    :[token];
+  const searchClause=column=>tokens.map(token=>
+    `(${tokenVariants(token).map(()=>`${column} LIKE ?`).join(' OR ')})`
+  ).join(' AND ');
+  const searchParams=tokens.flatMap(token=>tokenVariants(token).map(value=>`%${value}%`));
+  const itemSearchClause=searchClause('i.search_text');
+  const serviceSearchClause=searchClause('search_text');
   const normalizedLocation=normalizeSearch(location);
   const locationLike=`%${normalizedLocation}%`;
 
@@ -61,7 +73,8 @@ export async function publicSearch(request,env){
       ORDER BY oo.verified_at DESC
       LIMIT 1
     )
-    WHERE i.search_text LIKE ?
+    WHERE i.public_visible=1 AND i.id NOT IN ('item-formaldehyde')
+      AND ${itemSearchClause}
     ORDER BY CASE o.verification_status
       WHEN 'in_stock_confirmed' THEN 1
       WHEN 'supplier_confirmed' THEN 2
@@ -70,15 +83,15 @@ export async function publicSearch(request,env){
       ELSE 9 END,
       o.verified_at DESC
     LIMIT 12
-  `).bind(normalizedLocation,locationLike,like).all();
+  `).bind(normalizedLocation,locationLike,...searchParams).all();
 
   const serviceRows=await env.SOURCE_AO_DB.prepare(`
     SELECT service_category,MAX(last_verified_at) last_verified_at
     FROM service_providers
-    WHERE search_text LIKE ? AND (?='angola' OR lower(location) LIKE ?)
+    WHERE ${serviceSearchClause} AND (?='angola' OR lower(location) LIKE ?)
     GROUP BY service_category
     ORDER BY last_verified_at DESC LIMIT 8
-  `).bind(like,normalizedLocation,locationLike).all();
+  `).bind(...searchParams,normalizedLocation,locationLike).all();
 
   const items=(itemRows.results||[]).map(r=>mapPublicItemRow(r));
   // Provider identities and supplier shortlists belong to the authenticated desk.

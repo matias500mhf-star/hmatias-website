@@ -1,28 +1,28 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import { projects } from "../data/projects";
+import { company } from "../data/site";
 ---
-<section class="portfolio section-pad" id="projetos">
+<section class="portfolio section-pad" id="projetos" aria-labelledby="components-projectgallery-section-1-heading">
   <div class="portfolio-top">
     <div>
-      <div class="section-kicker">03 / TRABALHO REAL</div>
-      <h2>O trabalho<br /><em>fala por si.</em></h2>
+      <div class="section-kicker">03 / REFERÊNCIAS VISUAIS</div>
+      <h2 id="components-projectgallery-section-1-heading">Construção em detalhe<br /><em>elementos e fases visíveis.</em></h2>
     </div>
-    <p>Uma seleção de trabalhos e registos visuais da atividade da HMATIAS.</p>
+    <p>Uma seleção de elementos construtivos e fases de execução presentes no arquivo visual. As legendas descrevem apenas o que é observável.</p>
   </div>
 
   <div class="project-grid">
     {projects.map((project) => (
       <article class="project-card">
         <figure class="project-photo">
-          <Image
+          <Picture
             src={project.image}
             alt={project.alt}
             widths={[480, 720, 1040]}
             sizes="(max-width: 650px) 100vw, 50vw"
-            format="webp"
-            quality={82}
-          />
+            formats={["avif", "webp"]} fallbackFormat="jpg"
+            quality={82} decoding="async" loading="lazy" />
         </figure>
         <div class="project-caption">
           <span>{project.category}</span>
@@ -32,5 +32,7 @@ import { projects } from "../data/projects";
       </article>
     ))}
   </div>
-  <div class="portfolio-note"><span>IMAGENS DE TRABALHOS REAIS</span><span>HMATIAS · ANGOLA</span></div>
+  <div class="portfolio-note"><span>ARQUIVO FOTOGRÁFICO · ELEMENTOS VISÍVEIS</span><span>HMATIAS · ANGOLA</span></div>
+  <div class="portfolio-catalogue-link"><a data-analytics-event="catalogue_open" data-analytics-catalogue="works" href={company.worksCatalogueUrl}>Ver catálogo de obras, intervenções e fornecimentos <span aria-hidden="true">↗</span></a></div>
+  <style>.portfolio-catalogue-link { display:flex; justify-content:flex-end; margin-top:24px; } .portfolio-catalogue-link a { display:inline-flex; align-items:center; gap:18px; padding-bottom:9px; color:var(--hm-blue); border-bottom:1px solid var(--hm-blue); font-size:11px; font-weight:700; }</style>
 </section>

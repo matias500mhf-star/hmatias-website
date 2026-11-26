@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync} from 'node:fs';
+import masterCatalog from '../../data/catalog.json' with {type:'json'};
 
 const here=path.dirname(fileURLToPath(import.meta.url));
 const script=path.resolve(here,'../scripts/export-seed-sql.mjs');
@@ -26,6 +27,15 @@ test('redeployment preserves commercial pursuits, evidence links and operational
   }
   const sql=execFileSync(process.execPath,[script],{encoding:'utf8'});
   db.exec(sql);
+  const publicItem=db.prepare("SELECT id,name,name_pt,public_visible FROM items WHERE id<>'item-formaldehyde' LIMIT 1").get();
+  assert.ok(publicItem, 'curated public catalog item must be seeded');
+  assert.equal(publicItem.public_visible,1);
+  db.prepare("UPDATE items SET name='Admin managed name',name_pt='Nome administrado',management_mode='managed',public_visible=0 WHERE id=?").run(publicItem.id);
+  const seedManaged=db.prepare("SELECT id,name FROM items WHERE id<>? AND id<>'item-formaldehyde' LIMIT 1").get(publicItem.id);
+  assert.ok(seedManaged, 'a second seed-managed catalog item must exist');
+  db.prepare("UPDATE items SET name='Stale seed value' WHERE id=?").run(seedManaged.id);
+  const excludedItem=db.prepare("SELECT public_visible FROM items WHERE id='item-formaldehyde'").get();
+  assert.equal(excludedItem.public_visible,0);
   const opportunity=db.prepare('SELECT id,title FROM opportunities LIMIT 1').get();
   db.prepare(`UPDATE opportunities SET title='Outdated seed title',fit_score=87,
     fit_tags_json='["synthetic-fit"]',created_at='2020-01-01' WHERE id=?`).run(opportunity.id);
@@ -59,5 +69,45 @@ test('redeployment preserves commercial pursuits, evidence links and operational
   assert.equal(collected.evidence_text,'Keep collected evidence');
   assert.equal(db.prepare("SELECT supplier_id FROM supplier_sources WHERE id='seed-test-additional-source'").get().supplier_id,source.supplier_id);
   assert.equal(db.prepare('SELECT count(*) n FROM supplier_sources').get().n,countSources);
+  const managedAfter=db.prepare('SELECT name,name_pt,management_mode,public_visible FROM items WHERE id=?').get(publicItem.id);
+  assert.equal(managedAfter.name,'Admin managed name');
+  assert.equal(managedAfter.name_pt,'Nome administrado');
+  assert.equal(managedAfter.management_mode,'managed');
+  assert.equal(managedAfter.public_visible,0);
+  assert.equal(db.prepare('SELECT name FROM items WHERE id=?').get(seedManaged.id).name,seedManaged.name);
   assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(),[]);
+});
+
+
+test('D1 seed exporter indexes diamond-tool dimensions using the API search token format',()=>{
+  const sql=execFileSync(process.execPath,[script],{encoding:'utf8',maxBuffer:8*1024*1024});
+  const itemBlock=sql.split('INSERT INTO items(').find(block=>block.includes("'item-diamond-tools'"));
+  assert.ok(itemBlock,'seed SQL must include the canonical diamond tools family');
+  assert.match(itemBlock,/'[^']*115mm[^']*'/,'seeded search_text must merge 115 mm into 115mm');
+  assert.match(itemBlock,/'diamond-tools'/,'seeded item must retain the dedicated category');
+  const exactSkuItems=masterCatalog.items.filter(item=>item.id.startsWith('item-carbodiam-sku-'));
+  assert.equal(exactSkuItems.length,43,'canonical catalogue must contain 43 newly indexed exact Carbodiam SKU variants');
+  for(const item of exactSkuItems){
+    assert.ok(sql.includes("'"+item.id+"'"),'D1 seed must contain exact SKU '+item.id);
+  }
+  for(const reference of ['9194','15449','11603','14491','19722','13745','5182']){
+    assert.ok(sql.includes(reference),'D1 seed must contain factory reference '+reference);
+  }
+  for(const id of [
+    'item-disc-family-carbodiam-acier',
+    'item-crown-family-carbodiam-profor',
+    'item-crown-family-samedia-master-dbk',
+    'item-synvor-diamond-grinding-cups',
+    'item-weka-dk17',
+    'item-carbodiam-multicut-400p'
+  ]){
+    const block=sql.split('INSERT INTO items(').find(candidate=>candidate.includes("'"+id+"'"));
+    assert.ok(block,'D1 seed must contain catalogue family '+id);
+  }
+  for(const id of ['item-carbodiam-pantera-115','item-carbodiam-pantera-neutre-115','item-carbodiam-crack-chaser-115']){
+    const block=sql.split('INSERT INTO items(').find(candidate=>candidate.includes("'"+id+"'"));
+    assert.ok(block,'D1 seed SQL must include '+id);
+    assert.match(block,/'[^']*115mm[^']*'/,id+' must index the exact 115 mm dimension');
+    assert.match(block,/'diamond-tools'/,id+' must retain the diamond-tools category');
+  }
 });

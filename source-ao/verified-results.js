@@ -12,6 +12,10 @@
     .catch(error=>console.warn('[Source AO technical requirement]',error));
 
   const isPt=()=>document.documentElement.lang.toLowerCase().startsWith('pt');
+  const requiresManualComplianceReview=query=>{
+    const normalized=String(query||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
+    return /\\b(formol|formalin|formaldehyde|formaldeido)\\b|\\bcas\\s*50[-\\s]?00[-\\s]?0\\b|\\b50[-\\s]?00[-\\s]?0\\b/.test(normalized);
+  };
   const labels={
     en:{discovered:'Verification required',supplier_candidate:'Potential supplier — product unconfirmed',recently_seen:'Recently seen',source_checked:'Source checked',supplier_confirmed:'Supplier confirmed',in_stock_confirmed:'In stock — confirmed',needs_reconfirmation:'Needs reconfirmation',unavailable:'Unavailable',none:'No verified indexed match',awaiting:'Awaiting verified source',verified:'Verified indexed result'},
     pt:{discovered:'Requer verificação',supplier_candidate:'Fornecedor potencial — produto não confirmado',recently_seen:'Informação recente',source_checked:'Fonte verificada',supplier_confirmed:'Fornecedor confirmou',in_stock_confirmed:'Stock confirmado',needs_reconfirmation:'Requer nova confirmação',unavailable:'Indisponível',none:'Sem resultado verificado na base',awaiting:'Aguardando fonte verificada',verified:'Resultado verificado na base'}
@@ -103,13 +107,18 @@
 
     const note=document.createElement('small');
     const aiActive=payload.engine==='source-ao-gemini-free-v1';
-    note.textContent=isPt()
-      ?(aiActive
-        ?'O Gemini está a organizar termos de pesquisa. Isto não confirma fornecedor, stock, preço nem prazo; valide as fontes públicas antes de decidir.'
-        :'Pesquisa local ativa; o Gemini não respondeu nesta consulta. Use os links de pesquisa pública abaixo ou envie um pedido à HMATIAS.')
-      :(aiActive
-        ?'Gemini is expanding the search terms. This does not confirm a supplier, stock, price or lead time; verify public sources before deciding.'
-        :'Local search is active; Gemini did not respond to this request. Use the public search links below or send a request to HMATIAS.');
+    const manualReview=plan.interpretation?.requires_manual_compliance_review===true;
+    note.textContent=manualReview
+      ?(isPt()
+        ?'Este pedido fica em revisão manual de conformidade. A pesquisa de fornecedores e a geração de RFQ para fornecedores estão suspensas até à validação.'
+        :'This request is held for manual compliance review. Supplier discovery and supplier RFQ generation are paused until it is cleared.')
+      :isPt()
+        ?(aiActive
+          ?'O Gemini está a organizar termos de pesquisa. Isto não confirma fornecedor, stock, preço nem prazo; valide as fontes públicas antes de decidir.'
+          :'Pesquisa local ativa; o Gemini não respondeu nesta consulta. Use os links de pesquisa pública abaixo ou envie um pedido à HMATIAS.')
+        :(aiActive
+          ?'Gemini is expanding the search terms. This does not confirm a supplier, stock, price or lead time; verify public sources before deciding.'
+          :'Local search is active; Gemini did not respond to this request. Use the public search links below or send a request to HMATIAS.');
 
     panel.append(head,summary,terms,note);
   }
@@ -137,13 +146,16 @@
     const eyebrow=document.createElement('small');eyebrow.textContent=isPt()?'MISSÃO DE PROCUREMENT':'PROCUREMENT MISSION';
     const heading=document.createElement('strong');heading.textContent=isPt()?'Prepare o seu pedido à HMATIAS':'Prepare your request to HMATIAS';
     title.append(eyebrow,heading);
+    const manualReview=mission.manual_review?.required===true||mission.interpretation?.requires_manual_compliance_review===true;
     const status=document.createElement('span');status.className='data-badge data-source_checked';
     const requirement=technical?.technicalRequirement(mission.requirement?.query||'');
     const exact=[...(mission.product_matches||mission.exact_matches||[])]
       .filter(row=>!requirement||technical.matchesTechnicalRequirement(row.item,requirement));
-    status.textContent=exact.some(row=>['in_stock_confirmed','supplier_confirmed'].includes(row.status))
-      ?(isPt()?'CONFIRMAÇÃO DISPONÍVEL':'CONFIRMATION AVAILABLE')
-      :(isPt()?'A CONFIRMAR':'TO CONFIRM');
+    status.textContent=manualReview
+      ?(isPt()?'REVISÃO DE CONFORMIDADE':'COMPLIANCE REVIEW')
+      :exact.some(row=>['in_stock_confirmed','supplier_confirmed'].includes(row.status))
+        ?(isPt()?'CONFIRMAÇÃO DISPONÍVEL':'CONFIRMATION AVAILABLE')
+        :(isPt()?'A CONFIRMAR':'TO CONFIRM');
     head.append(title,status);
 
     const grid=document.createElement('div');grid.className='mission-grid';
@@ -175,7 +187,9 @@
     if(mission.requirement?.needed_by) requestParams.set('needed_by',mission.requirement.needed_by);
     if(mission.urgency==='urgent') requestParams.set('urgency','urgent');
     requestLink.href='rfq.html?'+requestParams.toString();
-    requestLink.textContent=isPt()?'Pedir cotação à HMATIAS':'Request a quote from HMATIAS';
+    requestLink.textContent=manualReview
+      ?(isPt()?'Enviar pedido à HMATIAS para revisão':'Send request to HMATIAS for review')
+      :(isPt()?'Pedir cotação à HMATIAS':'Request a quote from HMATIAS');
 
     const rfq=document.createElement('div');rfq.className='mission-rfq';
     const rfqHead=document.createElement('div');
@@ -198,11 +212,16 @@
       }catch{}
     });
     rfq.append(rfqHead,pre);
+    rfq.hidden=manualReview;
 
     const truth=document.createElement('small');truth.className='mission-truth';
-    truth.textContent=isPt()
-      ?'Fornecedor potencial não significa stock confirmado. O Source AO só confirma após evidência comercial atual.'
-      :'Potential supplier does not mean confirmed stock. Source AO confirms only with current commercial evidence.';
+    truth.textContent=manualReview
+      ?(isPt()
+        ?'O pedido permanece em texto livre e será revisto antes de qualquer pesquisa ou contacto com fornecedores.'
+        :'The request remains free text and will be reviewed before any supplier search or contact.')
+      :isPt()
+        ?'Fornecedor potencial não significa stock confirmado. O Source AO só confirma após evidência comercial atual.'
+        :'Potential supplier does not mean confirmed stock. Source AO confirms only with current commercial evidence.';
 
     panel.append(head,grid,requestLink,rfq,truth);
   }
@@ -337,6 +356,20 @@
       ?(pt?'Não foi possível atualizar a pesquisa neste momento. Pode preparar um pedido à HMATIAS para verificarmos a referência pretendida. As referências apresentadas ainda exigem confirmação comercial.':'We could not update the search at this time. You can prepare a request for HMATIAS to verify the required reference. Displayed references still require commercial confirmation.')
       :(pt?'A consultar o índice de referências Source AO. Não efetuamos pesquisa exaustiva ao mercado em tempo real.':'Checking the Source AO reference index. This is not an exhaustive real-time market search.');
     const links=document.createElement('div');links.className='source-research-links';
+    if(requiresManualComplianceReview(query)){
+      note.textContent=pt
+        ?'Este pedido exige revisão manual de conformidade. Não são disponibilizadas pesquisas externas de fornecedores nesta fase.'
+        :'This request requires manual compliance review. External supplier searches are not offered at this stage.';
+      const direct=document.createElement('a');
+      direct.className='source-direct-request';
+      direct.href='rfq.html?'+new URLSearchParams({request:query,location:$('#locationInput')?.value.trim()||'Luanda',lang:pt?'pt':'en',review:'manual'}).toString();
+      direct.textContent=pt?'Enviar pedido à HMATIAS para revisão':'Send request to HMATIAS for review';
+      links.append(direct);
+      const tip=document.createElement('small');
+      tip.textContent=pt?'O pedido será avaliado antes de qualquer contacto com fornecedores.':'The request will be reviewed before any supplier contact.';
+      root.append(header,note,links,tip);
+      return;
+    }
     if(status==='offline'){
       const direct=document.createElement('a');
       direct.className='source-direct-request';

@@ -1,0 +1,251 @@
+import { expect, test } from "@playwright/test";
+
+test.describe("Bilingual brand and language accessibility", () => {
+  test("English pages expose English brand descriptions and language controls", async ({ page }) => {
+    await page.goto("/en/");
+
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator(".brand img")).toHaveAttribute(
+      "alt",
+      "HMATIAS — Construction, Facilities, Supply and Business Services",
+    );
+    await expect(page.locator(".footer-logo img")).toHaveAttribute(
+      "alt",
+      "HMATIAS — Construction, Facilities, Supply and Business Services",
+    );
+
+    const languageSwitch = page.locator(".language-switch");
+    await expect(languageSwitch).toHaveAttribute("href", "/");
+    await expect(languageSwitch).toHaveAttribute("lang", "pt-AO");
+    await expect(languageSwitch).toHaveAttribute("aria-label", "PT — Switch to Portuguese");
+
+    await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
+      "content",
+      "HMATIAS — Construction, Facilities, Supply and Business Services",
+    );
+
+    const legalIdentity = page.locator(".footer-legal-id");
+    await expect(legalIdentity).toContainText("Tax ID");
+    await expect(legalIdentity).toContainText("Commercial Registration");
+    await expect(legalIdentity).not.toContainText("NIF");
+    await expect(legalIdentity).not.toContainText("Registo Comercial");
+  });
+
+  test("Portuguese pages retain Portuguese brand descriptions and language controls", async ({ page }) => {
+    await page.goto("/");
+
+    await expect(page.locator("html")).toHaveAttribute("lang", "pt-AO");
+    await expect(page.locator(".brand img")).toHaveAttribute(
+      "alt",
+      "HMATIAS — Prestação de Serviços",
+    );
+    await expect(page.locator(".footer-logo img")).toHaveAttribute(
+      "alt",
+      "HMATIAS — Prestação de Serviços",
+    );
+
+    const languageSwitch = page.locator(".language-switch");
+    await expect(languageSwitch).toHaveAttribute("href", "/en/");
+    await expect(languageSwitch).toHaveAttribute("lang", "en");
+    await expect(languageSwitch).toHaveAttribute("aria-label", "EN — Mudar para inglês");
+
+    await expect(page.locator(".footer-legal-id")).toContainText("NIF");
+    await expect(page.locator(".footer-legal-id")).toContainText("Registo Comercial");
+  });
+
+  test("English mobile navigation announces its state in English", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "mobile-webkit", "Mobile viewport test only.");
+    await page.goto("/en/");
+
+    const toggle = page.locator(".menu-toggle");
+    const nav = page.locator("#main-nav");
+
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await expect(toggle).toHaveAttribute("aria-label", "Open menu");
+
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await expect(toggle).toHaveAttribute("aria-label", "Close menu");
+    await expect(nav).toHaveClass(/is-open/);
+
+    await nav.getByRole("link", { name: "Business areas" }).click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await expect(toggle).toHaveAttribute("aria-label", "Open menu");
+    await expect(nav).not.toHaveClass(/is-open/);
+  });
+});
+
+test("primary navigation section links follow the active language", async ({ page }, testInfo) => {
+  const openMobileMenu = async () => {
+    if (testInfo.project.name === "mobile-webkit") {
+      await page.locator(".menu-toggle").click();
+      await expect(page.locator("#main-nav")).toHaveClass(/is-open/);
+    }
+  };
+  await page.goto("/");
+  await openMobileMenu();
+  await expect(page.getByRole("link", { name: "Áreas de negócio", exact: true }))
+    .toHaveAttribute("href", "/#servicos");
+  await expect(page.getByRole("link", { name: "Projetos", exact: true }))
+    .toHaveAttribute("href", "/#projetos");
+
+  await page.goto("/en/");
+  await openMobileMenu();
+  await expect(page.getByRole("link", { name: "Business areas", exact: true }))
+    .toHaveAttribute("href", "/en/#services");
+  await expect(page.getByRole("link", { name: "Projects", exact: true }))
+    .toHaveAttribute("href", "/en/#projects");
+});
+
+test("retired business-area overview URLs redirect to the homepage service sections", async ({ page }) => {
+  await page.goto("/areas-de-negocio/");
+  await expect(page).toHaveURL(/#servicos$/);
+  await expect(page.locator("#servicos")).toBeVisible();
+
+  await page.goto("/en/business-areas/");
+  await expect(page).toHaveURL(/#services$/);
+  await expect(page.locator("#services")).toBeVisible();
+});
+
+test("footer partnership application follows the active language", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".footer-legal-links").getByRole("link", { name: "Parcerias" }))
+    .toHaveAttribute("href", "/source-ao/parceiros/");
+
+  await page.goto("/en/");
+  await expect(page.locator(".footer-legal-links").getByRole("link", { name: "Partnerships" }))
+    .toHaveAttribute("href", "/en/source-ao/partners/");
+});
+
+test("all English routes expose matching language, brand descriptions and reciprocal Portuguese links", async ({ page }) => {
+  const routes = [
+    ["/en/", "/"],
+    ["/en/about/", "/empresa/"],
+    ["/en/credibility/", "/credibilidade/"],
+    ["/en/construction/", "/construcao/"],
+    ["/en/facilities/", "/facilities/"],
+    ["/en/industrial-roofing/", "/coberturas-industriais/"],
+    ["/en/post-construction-cleaning/", "/limpeza-pos-obra/"],
+    ["/en/ppe-workwear/", "/fornecimento-de-epi-e-fardamento/"],
+    ["/en/office-remodelling/", "/remodelacao-de-escritorios/"],
+    ["/en/clean/", "/clean/"],
+    ["/en/supply/", "/supply/"],
+    ["/en/business-services/", "/business-services/"],
+    ["/en/works-catalogue/", "/catalogo-obras/"],
+    ["/en/blog/", "/blog/"],
+    ["/en/blog/how-to-prepare-a-comparable-supply-quotation/", "/blog/como-preparar-um-pedido-de-cotacao/"],
+    ["/en/source-ao/smart-rfq/", "/source-ao/smart-rfq/"],
+    ["/en/accessibility/", "/acessibilidade/"],
+    ["/en/privacy/", "/privacidade/"],
+    ["/en/cookies/", "/cookies/"],
+    ["/en/terms/", "/termos/"],
+    ["/en/karta/", "/karta/"],
+    ["/en/integrated-yard/", "/estaleiro/"],
+  ] as const;
+
+  for (const [englishRoute, portugueseRoute] of routes) {
+    await page.goto(englishRoute);
+    await expect(page.locator("html"), englishRoute).toHaveAttribute("lang", "en");
+    await expect(page.locator('meta[property="og:image:alt"]'), englishRoute).toHaveAttribute("content", /.+/);
+
+    if (englishRoute === "/en/source-ao/smart-rfq/") {
+      await expect(page.locator(".rfq-header img"), englishRoute).toHaveAttribute("alt", "SOURCE AO by HMATIAS");
+      await expect(page.locator("#rfqLanguage"), englishRoute).toBeVisible();
+      await expect(page.locator("#sourceAoPreviewHomeLink"), englishRoute).toHaveAttribute("href", "/en/source-ao/");
+      await expect(page.locator("#sourceAoSupplyLink"), englishRoute).toHaveAttribute("href", "/en/supply/");
+    } else {
+      await expect(page.locator(".brand img"), englishRoute).toHaveAttribute(
+        "alt",
+        "HMATIAS — Construction, Facilities, Supply and Business Services",
+      );
+      await expect(page.locator(".footer-logo img"), englishRoute).toHaveAttribute(
+        "alt",
+        "HMATIAS — Construction, Facilities, Supply and Business Services",
+      );
+      await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("href", portugueseRoute);
+      await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("lang", "pt-AO");
+      await expect(page.locator(".language-switch"), englishRoute).toHaveAttribute("aria-label", "PT — Switch to Portuguese");
+      await expect(page.locator(".footer-legal-id"), englishRoute).toContainText("Tax ID");
+      await expect(page.locator(".footer-legal-id"), englishRoute).toContainText("Commercial Registration");
+    }
+  }
+});
+
+
+test("navigation submenus expose their controlled panel and support Escape in both layouts", async ({ page }, testInfo) => {
+  const isMobile = testInfo.project.name === "mobile-webkit";
+  await page.goto("/credibilidade/");
+
+  const activeNavItem = page.locator(".nav-item.has-current-page");
+  await expect(activeNavItem).toHaveCount(1);
+  const disclosure = activeNavItem.locator(".submenu-toggle");
+  const submenuId = await disclosure.getAttribute("aria-controls");
+  expect(submenuId).toBe("nav-about-submenu");
+  await expect(disclosure).toHaveAttribute("aria-expanded", "false");
+  await expect(disclosure).toHaveAttribute("aria-label", "Abrir submenu Sobre nós");
+  await expect(activeNavItem.locator(".nav-submenu a[aria-current='page']")).toHaveAttribute("href", "/credibilidade/");
+
+  if (isMobile) {
+    await page.locator(".menu-toggle").click();
+    await expect(page.locator("#main-nav")).toHaveClass(/is-open/);
+  }
+
+  const submenu = page.locator(`#${submenuId}`);
+  await disclosure.click();
+  await expect(disclosure).toHaveAttribute("aria-expanded", "true");
+  await expect(disclosure).toHaveAttribute("aria-label", "Fechar submenu Sobre nós");
+  await expect(submenu).toHaveAttribute("aria-hidden", "false");
+  await expect(submenu).toBeVisible();
+
+  await submenu.getByRole("link", { name: "Credibilidade" }).focus();
+  await page.keyboard.press("Escape");
+  await expect(disclosure).toHaveAttribute("aria-expanded", "false");
+  await expect(disclosure).toHaveAttribute("aria-label", "Abrir submenu Sobre nós");
+  await expect(submenu).toHaveAttribute("aria-hidden", "true");
+  await expect(submenu).toBeHidden();
+
+  if (isMobile) {
+    await expect(page.locator("#main-nav")).toHaveClass(/is-open/);
+    await page.keyboard.press("Escape");
+    await expect(page.locator("#main-nav")).not.toHaveClass(/is-open/);
+    await expect(page.locator(".menu-toggle")).toHaveAttribute("aria-expanded", "false");
+  }
+});
+
+test("English navigation submenus keep labels and controlled panels in English", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-chromium", "Desktop English disclosure check.");
+  await page.goto("/en/credibility/");
+
+  const activeNavItem = page.locator(".nav-item.has-current-page");
+  const disclosure = activeNavItem.locator(".submenu-toggle");
+  const submenuId = await disclosure.getAttribute("aria-controls");
+  expect(submenuId).toBe("nav-about-submenu");
+  await expect(disclosure).toHaveAttribute("aria-label", "Open About us submenu");
+
+  await disclosure.focus();
+  await expect(disclosure).toHaveAttribute("aria-expanded", "true");
+  await expect(disclosure).toHaveAttribute("aria-label", "Close about us submenu");
+  await expect(page.locator(`#${submenuId}`)).toHaveAttribute("aria-hidden", "false");
+});
+
+
+test("skip-to-content shortcut targets the main content in Portuguese and English", async ({ page }) => {
+  const routes = [
+    { path: "/", label: "Saltar para o conteúdo principal" },
+    { path: "/en/", label: "Skip to main content" },
+  ] as const;
+
+  for (const route of routes) {
+    await page.goto(route.path);
+    const skipLink = page.getByRole("link", { name: route.label });
+    await expect(skipLink).toHaveAttribute("href", /#.+/);
+    const href = await skipLink.getAttribute("href");
+    expect(href).toBeTruthy();
+    const targetId = href!.slice(1);
+    const main = page.locator(`#${targetId}`);
+    await expect(main).toHaveCount(1);
+    await expect(main).toHaveAttribute("tabindex", "-1");
+    await skipLink.focus();
+    await expect(skipLink).toBeFocused();
+  }
+});

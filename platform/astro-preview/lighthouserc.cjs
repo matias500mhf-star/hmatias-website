@@ -1,0 +1,55 @@
+module.exports = {
+  ci: {
+    collect: {
+      // Representative PT/EN routes cover the shared templates and highest-risk flows.
+      // Static verification and Playwright continue to cover the complete bilingual route set.
+      url: [
+        "http://127.0.0.1:4321/",
+        "http://127.0.0.1:4321/construcao/",
+        "http://127.0.0.1:4321/facilities/",
+        "http://127.0.0.1:4321/supply/",
+        "http://127.0.0.1:4321/business-services/",
+        "http://127.0.0.1:4321/source-ao/",
+        "http://127.0.0.1:4321/source-ao/smart-rfq/",
+        "http://127.0.0.1:4321/source-ao/radar/",
+        "http://127.0.0.1:4321/catalogo-obras/",
+        "http://127.0.0.1:4321/blog/",
+        "http://127.0.0.1:4321/en/",
+        "http://127.0.0.1:4321/en/construction/",
+        "http://127.0.0.1:4321/en/facilities/",
+        "http://127.0.0.1:4321/en/supply/",
+        "http://127.0.0.1:4321/en/business-services/",
+        "http://127.0.0.1:4321/en/source-ao/",
+        "http://127.0.0.1:4321/en/source-ao/smart-rfq/",
+        "http://127.0.0.1:4321/en/source-ao/radar/",
+        "http://127.0.0.1:4321/source-ao/parceiros/",
+        "http://127.0.0.1:4321/en/source-ao/partners/",
+        "http://127.0.0.1:4321/en/works-catalogue/",
+      ],
+      numberOfRuns: 2,
+      startServerCommand: "npm run preview -- --host 127.0.0.1 --port 4321 --strictPort",
+      startServerReadyPattern: "127\\.0\\.0\\.1:4321",
+      startServerReadyTimeout: 30_000,
+      settings: {
+        preset: "desktop",
+        chromeFlags: "--no-sandbox",
+      },
+    },
+    assert: {
+      assertions: {
+        "categories:performance": ["warn", { minScore: 0.75 }],
+        "categories:accessibility": ["warn", { minScore: 0.9 }],
+        "categories:best-practices": ["warn", { minScore: 0.9 }],
+        // Preview is intentionally noindex; measured SEO baseline is 0.66–0.69 solely because is-crawlable is blocked.
+        // Keep this guard below that expected preview baseline; production SEO is reviewed separately before release.
+        "categories:seo": ["warn", { minScore: 0.65 }],
+        "largest-contentful-paint": ["warn", { maxNumericValue: 4000 }],
+        "cumulative-layout-shift": ["warn", { maxNumericValue: 0.1 }],
+      },
+    },
+    upload: {
+      target: "filesystem",
+      outputDir: ".lighthouseci",
+    },
+  },
+};

@@ -20,22 +20,21 @@ test('PP strapping mission ranks packaging suppliers above unrelated industrial 
   assert.ok(scoreSupplierCandidate(plan,packaging)>scoreSupplierCandidate(plan,chemical));
 });
 
-test('formaldehyde mission ranks chemical supplier and preserves concentration in RFQ',()=>{
-  const plan=buildSmartSearchPlan({query:'formol 37% 1L urgente',location:'Luanda'});
-  const chemical={
-    name:'Lab Supplier',
-    categories_json:JSON.stringify(['industrial-supply']),
-    capabilities_json:JSON.stringify(['formaldehyde','formalin','laboratory chemicals']),
-    whatsapp:'+244900000002'
-  };
-  assert.equal(plan.interpretation.item_id,'item-formaldehyde');
-  assert.ok(plan.interpretation.specifications.includes('37%'));
-  assert.ok(plan.interpretation.specifications.includes('1l'));
-  assert.ok(scoreSupplierCandidate(plan,chemical)>=20);
-  const rfq=buildRfq(plan,{});
-  assert.match(rfq.pt,/37%/);
-  assert.match(rfq.pt,/1l/i);
-  assert.match(rfq.pt,/stock atual/i);
+test('formaldehyde mission pauses before database lookup, supplier ranking or RFQ creation',async()=>{
+  const {buildProcurementMission}=await import('../src/procurement-mission.js');
+  const env={SOURCE_AO_DB:{prepare(){throw new Error('database lookup must not run before compliance review')}}};
+  const mission=await buildProcurementMission(env,{query:'formol 37% 1L urgente',location:'Luanda'});
+  assert.equal(mission.status,'manual_compliance_review_required');
+  assert.equal(mission.interpretation.item_id,'item-formaldehyde');
+  assert.equal(mission.interpretation.requires_manual_compliance_review,true);
+  assert.ok(mission.interpretation.specifications.includes('37%'));
+  assert.ok(mission.interpretation.specifications.includes('1l'));
+  assert.deepEqual(mission.exact_matches,[]);
+  assert.deepEqual(mission.supplier_candidates,[]);
+  assert.equal(mission.contactable_candidates,0);
+  assert.equal(mission.rfq,null);
+  assert.equal(mission.fast_path,null);
+  assert.equal(mission.manual_review.supplier_discovery_paused,true);
 });
 
 test('RFQ never states that stock is already confirmed',()=>{

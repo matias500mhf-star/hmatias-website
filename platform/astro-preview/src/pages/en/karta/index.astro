@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+---
+<BaseLayout
+  title="KARTA Wallet Mobile | HMATIAS Digital Project"
+  description="KARTA Identity Wallet is an Alpha-stage HMATIAS digital project. Review its current development status, components under validation and future objectives."
+  lang="en"
+>
+  <div class="preview-bar"><span><i aria-hidden="true"></i> HMATIAS DIGITAL PROJECTS</span><span>ALPHA PROJECT · IN DEVELOPMENT</span></div>
+  <SiteHeader />
+  <main class="karta-page">
+    <section class="karta-hero" aria-labelledby="karta-hero-heading">
+      <div class="karta-hero-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> DIGITAL PROJECT · ALPHA</p>
+        <h1 id="karta-hero-heading">KARTA Wallet Mobile</h1>
+        <p class="karta-tagline">Your identity. Your documents. Your control.</p>
+        <p class="karta-lead">KARTA is being developed as a digital identity wallet with a mobile-first experience and a foundation designed around the protected, controlled management of identity information.</p>
+        <div class="karta-actions">
+          <a class="button button-light" href="mailto:geral@comercialhmatiasps.com?subject=KARTA%20Wallet%20-%20Launch%20interest">Register interest <span aria-hidden="true">↗</span></a>
+          <a class="text-link text-link-light" href="/en/">Back to HMATIAS</a>
+        </div>
+      </div>
+      <aside class="karta-status-panel" aria-label="Current product status">
+        <span class="karta-status-label">PRODUCT STATUS</span>
+        <strong>ALPHA</strong>
+        <p>In development and validation. Not yet available for public download.</p>
+      </aside>
+    </section>
+
+    <section class="karta-section karta-current" aria-labelledby="karta-current-heading">
+      <div class="karta-section-heading">
+        <p class="section-kicker">PRODUCT STATUS</p>
+        <h2 id="karta-current-heading">A secure foundation before advanced capabilities.</h2>
+        <p>KARTA remains in development. This page distinguishes components under validation from objectives planned for later milestones.</p>
+      </div>
+      <ul class="karta-current-list">
+        <li><span>01</span><div><strong>Mobile interface</strong><p>Mobile-first experience and document organisation are in development.</p></div></li>
+        <li><span>02</span><div><strong>Access and authentication</strong><p>Access and authentication flows remain subject to validation.</p></div></li>
+        <li><span>03</span><div><strong>Profile and documents</strong><p>Identity profile and document management are still evolving.</p></div></li>
+        <li><span>04</span><div><strong>Security and storage</strong><p>Protection, storage and auditability remain subject to testing.</p></div></li>
+      </ul>
+      <p class="karta-disclaimer">Commercial status: pre-launch / Alpha. KARTA is not presented as a publicly downloadable application. No certifications or future capabilities are represented as completed features.</p>
+    </section>
+
+    <section class="karta-section karta-roadmap" aria-labelledby="karta-roadmap-heading">
+      <div class="karta-section-heading">
+        <p class="section-kicker">ROADMAP</p>
+        <h2 id="karta-roadmap-heading">Capabilities planned for later milestones.</h2>
+        <p>The items below are future project objectives and should not be interpreted as features already available.</p>
+      </div>
+      <div class="karta-roadmap-grid">
+        <article><span>01 · FUTURE OBJECTIVE</span><h3>Document reading</h3><p>OCR/MRZ processing is planned to support document-data reading and structuring in future milestones.</p></article>
+        <article><span>02 · FUTURE OBJECTIVE</span><h3>Selective sharing and verification</h3><p>Selective disclosure and QR verification are roadmap items, not part of the current feature set.</p></article>
+        <article><span>03 · FUTURE OBJECTIVE</span><h3>KARTA Verify and API</h3><p>Business verification tools and a verification API are planned for later product stages.</p></article>
+      </div>
+    </section>
+
+    <section class="karta-contact" aria-labelledby="karta-contact-heading">
+      <div><p class="section-kicker">INTERESTED IN KARTA?</p><h2 id="karta-contact-heading">Follow the product development.</h2><p>Companies, partners and users can contact HMATIAS to receive institutional information when an appropriate presentation or testing phase becomes available.</p></div>
+      <a class="button button-dark" href="mailto:geral@comercialhmatiasps.com?subject=KARTA%20Wallet%20-%20Launch%20interest">Contact about KARTA <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+  <SiteFooter />
+  <div class="preview-disclaimer">Independent technology preview. It does not replace or modify the official HMATIAS website.</div>
+</BaseLayout>
+
+<style>
+.karta-hero{padding:clamp(62px,8vw,108px) var(--hm-gutter);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.55fr);align-items:center;gap:clamp(36px,7vw,96px);color:#fff;background:var(--hm-navy)}
+.karta-hero-copy{max-width:760px}
+.karta-hero h1{max-width:740px;margin:0;font-size:clamp(46px,6.4vw,82px);font-weight:520;line-height:1.02;letter-spacing:-.065em}
+.karta-tagline{margin:21px 0 0;color:#b9d8ed;font-family:var(--hm-serif);font-size:clamp(24px,3.1vw,38px);line-height:1.22}
+.karta-lead{max-width:640px;margin:19px 0 0;color:#edf5fc;font-size:14px;line-height:1.85}
+.karta-actions{display:flex;flex-wrap:wrap;align-items:center;gap:22px;margin-top:32px}
+.karta-status-panel{padding:28px;border:1px solid #ffffff38;background:#ffffff0b}
+.karta-status-label{display:block;color:#b9d8ed;font-size:9px;font-weight:750;letter-spacing:.15em}
+.karta-status-panel strong{display:block;margin-top:18px;color:#fff;font-family:var(--hm-mono);font-size:42px;letter-spacing:.08em}
+.karta-status-panel p{margin:13px 0 0;color:#e0ebf4;font-size:12px;line-height:1.75}
+.karta-section{padding:clamp(58px,7.5vw,95px) var(--hm-gutter)}
+.karta-current{background:var(--hm-light)}
+.karta-section-heading{max-width:760px}
+.karta-section-heading h2{margin:18px 0 0;color:var(--hm-ink);font-size:clamp(31px,4.5vw,54px);font-weight:520;line-height:1.08;letter-spacing:-.055em}
+.karta-section-heading>p:last-child{max-width:650px;margin:18px 0 0;color:var(--hm-muted);font-size:13px;line-height:1.85}
+.karta-current-list{max-width:920px;margin:42px 0 0;padding:0;list-style:none;border-top:1px solid var(--hm-line)}
+.karta-current-list li{display:grid;grid-template-columns:62px minmax(0,1fr);gap:15px;padding:20px 0;border-bottom:1px solid var(--hm-line)}
+.karta-current-list li>span{color:var(--hm-blue);font-family:var(--hm-mono);font-size:13px}
+.karta-current-list strong{color:var(--hm-ink);font-size:15px}
+.karta-current-list p{margin:6px 0 0;color:var(--hm-muted);font-size:12px;line-height:1.75}
+.karta-disclaimer{max-width:920px;margin:25px 0 0;padding:16px 18px;border-left:3px solid var(--hm-blue);color:#314a60;background:#e2edf5;font-size:11px;line-height:1.75}
+.karta-roadmap{background:var(--hm-paper)}
+.karta-roadmap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:40px}
+.karta-roadmap-grid article{min-height:210px;padding:24px;border:1px solid var(--hm-line);background:#fff}
+.karta-roadmap-grid article>span{color:var(--hm-blue);font-size:9px;font-weight:750;letter-spacing:.12em}
+.karta-roadmap-grid h3{margin:28px 0 10px;color:var(--hm-ink);font-size:17px;font-weight:600}
+.karta-roadmap-grid p{margin:0;color:var(--hm-muted);font-size:12px;line-height:1.8}
+.karta-contact{padding:clamp(48px,6vw,72px) var(--hm-gutter);display:flex;justify-content:space-between;align-items:center;gap:30px;background:var(--hm-sky-soft)}
+.karta-contact>div{max-width:690px}
+.karta-contact h2{margin:12px 0 0;color:var(--hm-navy);font-size:clamp(28px,4vw,43px);font-weight:520;line-height:1.1;letter-spacing:-.05em}
+.karta-contact p:not(.section-kicker){margin:13px 0 0;color:#34536d;font-size:12px;line-height:1.8}
+@media(max-width:850px){.karta-hero{grid-template-columns:1fr}.karta-status-panel{max-width:480px}.karta-roadmap-grid{grid-template-columns:1fr 1fr}.karta-contact{align-items:flex-start;flex-direction:column}}
+@media(max-width:560px){.karta-hero h1{font-size:clamp(42px,12vw,59px)}.karta-roadmap-grid{grid-template-columns:1fr}.karta-current-list li{grid-template-columns:42px minmax(0,1fr)}.karta-contact .button{width:100%;justify-content:center}}
+</style>
