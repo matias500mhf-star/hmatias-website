@@ -35,6 +35,8 @@ jobs:
     # Use the stable Cloudflare Pages branch-preview hostname for canonical/hreflang checks.
     env:
       ASTRO_PREVIEW_SITE_URL: https://pr-316.hmatias-pr316-preview.pages.dev
+      PUBLIC_INDEXING_ENABLED: "false"
+      PUBLIC_ANALYTICS_ENABLED: "false"
     defaults:
       run:
         working-directory: platform/astro-preview
