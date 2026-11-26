@@ -820,10 +820,13 @@ for (const pagePath of generatedPages) {
   const expectedContactForm = isEnglishPage
     ? "https://comercialhmatiasps.com/en.html#contact"
     : "https://comercialhmatiasps.com/#contacto";
-  const contactLinkStart = pageFooter.indexOf('<a href="' + expectedContactForm + '"');
-  assert.ok(contactLinkStart >= 0, "Quotation CTA must preserve the approved official form handoff: " + relativePagePath);
-  const contactLinkEnd = pageFooter.indexOf(">", contactLinkStart);
-  const contactLink = pageFooter.slice(contactLinkStart, contactLinkEnd + 1);
+  const contactLink = [...pageFooter.matchAll(/<a\\b[^>]*>/g)]
+    .map((match) => match[0])
+    .find((anchor) => {
+      const href = anchor.match(/\\bhref="([^"]+)"/)?.[1];
+      return href === expectedContactForm;
+    });
+  assert.ok(contactLink, "Quotation CTA must preserve the approved official form handoff: " + relativePagePath);
   assert.match(contactLink, /target="_blank"/, "Official form must open in a new tab: " + relativePagePath);
   assert.match(contactLink, /rel="noopener noreferrer"/, "Official form handoff must be isolated from the preview tab: " + relativePagePath);
 }
