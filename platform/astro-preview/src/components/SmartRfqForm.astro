@@ -57,7 +57,7 @@ const isEn = lang === "en";
           <span>{isEn ? "2 · Requirement" : "2 · Necessidade"}</span>
           <span>{isEn ? "3 · Review" : "3 · Revisão"}</span>
         </div>
-        <form id="smartRfqForm" novalidate>
+        <form id="smartRfqForm" data-analytics-form="smart_rfq_brief" data-analytics-lead-type="request_brief" novalidate>
           <div class="rfq-honeypot sr-only" aria-hidden="true">
             <label for="rfqWebsite">Leave this field empty</label>
             <input id="rfqWebsite" name="website_url" type="text" tabindex="-1" autocomplete="off" />
