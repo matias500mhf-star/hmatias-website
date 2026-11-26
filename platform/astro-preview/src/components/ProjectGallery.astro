@@ -33,6 +33,6 @@ import { company } from "../data/site";
     ))}
   </div>
   <div class="portfolio-note"><span>ARQUIVO FOTOGRÁFICO · ELEMENTOS VISÍVEIS</span><span>HMATIAS · ANGOLA</span></div>
-  <div class="portfolio-catalogue-link"><a href={company.worksCatalogueUrl}>Ver catálogo de obras, intervenções e fornecimentos <span aria-hidden="true">↗</span></a></div>
+  <div class="portfolio-catalogue-link"><a data-analytics-event="catalogue_open" data-analytics-catalogue="works" href={company.worksCatalogueUrl}>Ver catálogo de obras, intervenções e fornecimentos <span aria-hidden="true">↗</span></a></div>
   <style>.portfolio-catalogue-link { display:flex; justify-content:flex-end; margin-top:24px; } .portfolio-catalogue-link a { display:inline-flex; align-items:center; gap:18px; padding-bottom:9px; color:var(--hm-blue); border-bottom:1px solid var(--hm-blue); font-size:11px; font-weight:700; }</style>
 </section>
