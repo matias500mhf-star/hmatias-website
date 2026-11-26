@@ -150,7 +150,7 @@ if (
     if (initialEventsSent || !statisticsAllowed()) return;
     initialEventsSent = true;
     if (service) emit("service_view", { service_name: service });
-    if (/^\\/(?:catalogo-obras|en\\/works-catalogue)\\/$/.test(path)) {
+    if (/^\/(?:catalogo-obras|en\/works-catalogue)\/$/.test(path)) {
       emit("catalogue_view", { catalogue_id: "works" });
     }
     if (path.startsWith("/source-ao/") || path.startsWith("/en/source-ao/")) {
