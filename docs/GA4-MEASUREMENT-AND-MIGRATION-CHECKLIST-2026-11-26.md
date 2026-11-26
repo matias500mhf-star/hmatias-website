@@ -111,3 +111,29 @@ Use a rolling 28-day view alongside week-over-week comparisons. Annotate low sam
 ## 9. Current decision
 
 This document defines the analytics requirements for PR #316. It does not activate tracking in preview, change the live GA4 property, modify GTM, Cookiebot, Resend, DNS or the production website, or authorise a merge or deployment. Production analytics must only be enabled as part of an explicitly approved release after the gates above pass.
+
+
+## 10. Implementation added to PR #316 — 26 November 2026
+
+The following code has now been added to the Astro branch:
+
+- `src/scripts/analytics.ts`: a production-host-only GTM loader, guarded by `PUBLIC_ANALYTICS_ENABLED=true`, an indexed production build, and Cookiebot Statistics consent. It keeps advertising consent denied, excludes noindex and private operational routes, and sends only allowlisted event values.
+- `BaseLayout.astro`: Cookiebot and the analytics module are rendered only when the production indexing and explicit analytics build flags are both enabled. Render/Vercel/Cloudflare preview builds remain analytics-disabled by default.
+- Event instrumentation has been added for service-page views, AI-assistant referral provider, phone/email/WhatsApp clicks, quote CTAs, PDF downloads, approved catalogue opens and form submission attempts. Form field values, full URLs, query strings, search text, names, emails, phone numbers, RFQ content and private identifiers are not included in event payloads.
+- `generate_lead` is separate from `form_submit` and is only emitted when a trusted success handler dispatches `hmatias:lead-confirmed` after a server-confirmed receipt. No existing form has been changed to claim success without that confirmation.
+- Node regression checks have been added to `npm run verify` for production gating, consent, advertising defaults, PII exclusions and the distinction between form attempts and confirmed leads.
+- The production GA4 direct loader is deliberately not copied into Astro. GTM is the single tag-loader path for the Astro release, avoiding a second direct GA4 configuration in this new layout.
+
+### Validation still blocked
+
+- The connected GSC Wizard account refused the GA4 property inspection because its trial ended / it has no active subscription (`payment_required`). The linked GA4 property, configured key events and custom dimensions therefore could not be read in this session.
+- The GTM container workspace/configuration is not available through the connected tools. Its GA4 Configuration/Google tag, page_view behaviour, custom event triggers and consent checks must be inspected in Google Tag Manager before the production flag is enabled.
+- Until that inspection is complete, keep `PUBLIC_ANALYTICS_ENABLED` unset/false. Do not enable GA4/GTM in production and do not claim that events are arriving in GA4.
+- After GTM inspection, configure the GTM container to receive the named dataLayer events, define the agreed GA4 key events (only confirmed `generate_lead` should count as a lead conversion), and test in Preview/DebugView and GA4 Realtime. Confirm there is exactly one page_view per page load.
+
+### Current safe configuration
+
+- `PUBLIC_ANALYTICS_ENABLED`: unset or `false` for all preview environments.
+- `PUBLIC_INDEXING_ENABLED`: remains `false` for previews.
+- Production enablement requires an approved production build with `PUBLIC_INDEXING_ENABLED=true`, `PUBLIC_ANALYTICS_ENABLED=true`, the verified GTM container ID and the Cookiebot consent ID.
+- No production environment variables, GTM container, GA4 property, Cookiebot account, Resend route, DNS, production site, merge or deployment were changed by this implementation.
