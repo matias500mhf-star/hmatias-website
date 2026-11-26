@@ -2,14 +2,14 @@
 type ConsentState = { statistics?: boolean };
 type AnalyticsWindow = Window & {
   Cookiebot?: { consent?: ConsentState };
-  dataLayer?: Array<Record<string, unknown>>;
+  dataLayer?: unknown[];
   gtag?: (...args: unknown[]) => void;
 };
 
 declare global {
   interface Window {
     Cookiebot?: { consent?: ConsentState };
-    dataLayer?: Array<Record<string, unknown>>;
+    dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
   }
 }
@@ -31,7 +31,7 @@ if (
   const w = window as AnalyticsWindow;
   w.dataLayer = w.dataLayer || [];
   w.gtag = w.gtag || function (...args: unknown[]) {
-    w.dataLayer?.push({ gtag: args });
+    w.dataLayer?.push(args);
   };
 
   // Consent is denied by default. GTM is not requested until Statistics consent is granted.
@@ -70,7 +70,10 @@ if (
       personalization_storage: "denied",
       security_storage: "granted"
     });
-    if (granted) loadGtm();
+    if (granted) {
+      loadGtm();
+      sendInitialEvents();
+    }
   };
 
   const language = (document.documentElement.lang || "pt-AO").toLowerCase();
@@ -102,26 +105,31 @@ if (
     });
   };
 
-  if (service) emit("service_view", { service_name: service });
+  let initialEventsSent = false;
+  const sendInitialEvents = () => {
+    if (initialEventsSent || !statisticsAllowed()) return;
+    initialEventsSent = true;
+    if (service) emit("service_view", { service_name: service });
 
-  // AI attribution is provider-only; no search text or full referrer URL is transmitted.
-  try {
-    const referrerHost = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : "";
-    const utmSource = new URLSearchParams(window.location.search).get("utm_source")?.toLowerCase() || "";
-    const aiProvider =
-      ["chatgpt", "chatgpt.com"].includes(utmSource) || referrerHost === "chatgpt.com" || referrerHost.endsWith(".chatgpt.com") || referrerHost === "chat.openai.com"
-        ? "chatgpt"
-        : ["perplexity.ai"].includes(referrerHost) || referrerHost.endsWith(".perplexity.ai")
-          ? "perplexity"
-          : referrerHost === "gemini.google.com"
-            ? "gemini"
-            : referrerHost === "copilot.microsoft.com"
-              ? "copilot"
-              : null;
-    if (aiProvider) emit("ai_referral_view", { ai_provider: aiProvider });
-  } catch {
-    // Ignore malformed or unavailable referrer data.
-  }
+    // AI attribution is provider-only; no search text or full referrer URL is transmitted.
+    try {
+      const referrerHost = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : "";
+      const utmSource = new URLSearchParams(window.location.search).get("utm_source")?.toLowerCase() || "";
+      const aiProvider =
+        ["chatgpt", "chatgpt.com"].includes(utmSource) || referrerHost === "chatgpt.com" || referrerHost.endsWith(".chatgpt.com") || referrerHost === "chat.openai.com"
+          ? "chatgpt"
+          : referrerHost === "perplexity.ai" || referrerHost.endsWith(".perplexity.ai")
+            ? "perplexity"
+            : referrerHost === "gemini.google.com"
+              ? "gemini"
+              : referrerHost === "copilot.microsoft.com"
+                ? "copilot"
+                : null;
+      if (aiProvider) emit("ai_referral_view", { ai_provider: aiProvider });
+    } catch {
+      // Ignore malformed or unavailable referrer data.
+    }
+  };
 
   document.addEventListener("click", (event) => {
     if (!(event.target instanceof Element)) return;
