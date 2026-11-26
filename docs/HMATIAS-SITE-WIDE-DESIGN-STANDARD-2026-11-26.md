@@ -61,3 +61,14 @@
 ## 8. Completion rule
 
 A page is not considered uniform merely because it uses the same colours. It must also follow the same layout rhythm, hierarchy, image rules, card geometry, responsive behaviour, accessibility and interaction standards. Exceptions must be intentional, documented and visually justified.
+
+
+## Implementation note — navigation and form controls (26/11/2026)
+
+- Main navigation submenus now declare the panel they control through unique `aria-controls` IDs and update `aria-expanded` and the accessible open/close label in Portuguese and English.
+- The active route is marked at the matching navigation link and its parent navigation group; Escape closes a submenu first and then closes the mobile navigation on a second press.
+- Desktop hover/focus disclosure and mobile touch toggling are handled separately to avoid a hover-open menu closing when its disclosure button is clicked.
+- Navigation links, disclosure controls, language switch and menu toggle have consistent minimum interaction dimensions; mobile submenu links remain full-width and scroll within the viewport.
+- Smart RFQ inputs, labels, focus indicators and action controls now follow the shared control-height and mobile text-size rules.
+- Regression tests cover active submenu identification, PT/EN accessible labels, controlled-panel visibility and Escape behaviour on desktop and mobile.
+- These changes still require a successful Astro QA run and visual preview review before they can be considered fully validated.
