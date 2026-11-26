@@ -36,7 +36,13 @@ const contactHref = isEnglish ? company.contactFormEnUrl : company.contactFormUr
   const setSubmenuExpanded = (item: HTMLElement, expanded: boolean) => {
     if (!mainNav) return;
     mainNav.querySelectorAll<HTMLElement>(".nav-item.submenu-open").forEach((other) => {
-      if (other !== item) setSubmenuExpanded(other, false);
+      if (other === item) return;
+      other.classList.remove("submenu-open");
+      const otherButton = other.querySelector<HTMLButtonElement>(".submenu-toggle");
+      otherButton?.setAttribute("aria-expanded", "false");
+      if (otherButton?.dataset.labelOpen) otherButton.setAttribute("aria-label", otherButton.dataset.labelOpen);
+      const otherSubmenuId = otherButton?.getAttribute("aria-controls");
+      if (otherSubmenuId) document.getElementById(otherSubmenuId)?.setAttribute("aria-hidden", "true");
     });
     const button = item.querySelector<HTMLButtonElement>(".submenu-toggle");
     const submenuId = button?.getAttribute("aria-controls");
